@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Power Unit Conversion</title>
+    <meta name="description"
+        content="Power unit conversion involves converting measurements of power from one unit to another. Power is the rate at which work is done or energy is transferred or converted. It's a crucial concept in physics, engineering, and various industries. Learn how to convert between different units of power such as watts, kilowatts, horsepower, and more.">
+    <meta name="keywords"
+        content="power conversion, unit conversion, power units, watts, kilowatts, horsepower, energy conversion, physics, engineering, power measurement, conversion tools, online conversion, power unit conversion guide, practical examples of power conversion">
+     <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="copyright" content="© 2024 GK Learn Study">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+    <!-- Open Graph Meta Tags for Facebook -->
+    <meta property="og:title" content="Power Unit Conversion - Learn How to Convert Power Measurements">
+    <meta property="og:description"
+        content="Power unit conversion involves converting measurements of power from one unit to another. Power is the rate at which work is done or energy is transferred or converted. It's a crucial concept in physics, engineering, and various industries. Learn how to convert between different units of power such as watts, kilowatts, horsepower, and more.">
+    <meta property="og:image" content="https://gklearnstudy.in/power-unit-conversion.png">
+    <meta property="og:url" content="https://gklearnstudy.in/power-unit-conversion.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Power Unit Conversion - Learn How to Convert Power Measurements">
+    <meta name="twitter:description"
+        content="Power unit conversion involves converting measurements of power from one unit to another. Power is the rate at which work is done or energy is transferred or converted. It's a crucial concept in physics, engineering, and various industries. Learn how to convert between different units of power such as watts, kilowatts, horsepower, and more.">
+    <meta name="twitter:image" content="https://gklearnstudy.in/power-unit-conversion.png">
+    <meta name="twitter:site" content="@gklearnstudy">
+    <meta name="twitter:creator" content="@gklearnstudy">
+    <meta name="twitter:image:alt" content="Power Conversion Tools">
+
+    <!-- Additional Meta Tags -->
+    <meta property="article:section" content="Education">
+    <meta property="article:tag" content="Power Conversion, Measurement, Tools, Online Conversion">
+    <meta name="theme-color" content="#90EE90">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Power Unit Conversion">
+    <meta name="application-name" content="Power Unit Conversion">
+    <meta name="msapplication-TileColor" content="#90EE90">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/power-unit-conversion.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+
+    <!-- Favicon and Stylesheets -->
+    <link rel="stylesheet" href="..\style.css">
+   
+</head>
+
+<body>
+
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+            <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                    oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+            <div id="suggestions" class="suggestions-list"></div>
+        </form>
+
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+            <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+    </main>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li> <a href="angle-unit-conversion.html">Angle Conversion</a></li>
+        <li> <a href="area-unit-conversion.html">Area Conversion</a></li>
+        <li> <a href="length-unit-conversion.html">Length Conversion</a></li>
+        <li> <a class="active" href="power-unit-conversion.html">Power Conversion</a></li>
+        <li> <a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+        <li> <a href="speed-unit-conversion.html">Speed Conversion</a></li>
+        <li> <a href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+        <li> <a href="time-unit-conversion.html">Time Conversion</a></li>
+        <li> <a href="volume-unit-conversion.html">Volume Conversion</a></li>
+        <li> <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a></li>
+
+
+        <br>
+    </ul>
+    <div class="container">
+        <div class="content" id="">
+            <div class="color-content1">
+                <h2>Power Unit Conversion - Definition, Types, Importance</h2>
+            </div>
+            <div class="custom-container">
+                <div class="custom-row">
+                    <div class="custom-column">
+                        <div class="content" id="Area"></div>
+                        <div class="color-content2">
+                            <h2> Power Conversion</h2>
+                        </div><br>
+                        <table id="myTable">
+                            <h7>
+                                <div>
+                                    <tr>
+                                        <td>Watts</td>
+                                        <td><input id="inputWatts" placeholder="Watts"
+                                                oninput="powerConverter(this.id,this.value)"
+                                                onchange="powerConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Kilowatts</td>
+                                        <td><input id="inputKilowatts" placeholder="Kilowatts"
+                                                oninput="powerConverter(this.id,this.value)"
+                                                onchange="powerConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Horsepower</td>
+                                        <td><input id="inputHorsepower" placeholder="Horsepower"
+                                                oninput="powerConverter(this.id,this.value)"
+                                                onchange="powerConverter(this.id,this.value)"></td>
+                                    </tr>
+                        </table>
+                    </div>
+                    <div class="custom-column">
+                        <div class="color-content2">
+                            <h2>Power Unit Conversion</h2>
+                        </div><br>
+                        <table id="myTable">
+                            <tr>
+                                <td>1 kilowatts</td>
+                                <td>=</td>
+                                <td> 1 × 10<sup>3</sup> watts</td>
+                            </tr>
+                            <tr>
+                                <td>1 horsepower</td>
+                                <td>=</td>
+                                <td> 745.699 watts</td>
+                            </tr>
+                            <tr>
+                                <td>1 watts</td>
+                                <td>= </td>
+                                <td> 0.001 kilowatts</td>
+                            </tr>
+                        </table> <br>
+                    </div>
+                </div> <br>
+                <div class="color-content1">
+                    <h4>Definition - </h4><span class="color-content2">
+                        <p>Power unit conversion involves converting measurements of power from one unit to another.
+                            Power is the rate at which work is done or energy is transferred or converted. It's a
+                            crucial concept in physics, engineering, and various industries. Different units of power
+                            are used depending on the context, and conversion helps ensure accurate communication and
+                            calculations.</p>
+                    </span> <br><br>
+                </div> <br>
+                <h2><svg fill="#a4eaa9" height="200px" width="200px" alt="Power Unit Conversion" version="1.1"
+                        id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 463 463" xml:space="preserve" stroke="#a4eaa9">
+                        <path
+                            d="M367.5,159c4.142,0,7.5-3.357,7.5-7.5v-32c0-0.278-0.018-0.552-0.047-0.822c-0.004-0.037-0.012-0.074-0.017-0.111 c-0.039-0.313-0.1-0.619-0.176-0.919c-0.015-0.061-0.03-0.121-0.046-0.181c-0.093-0.332-0.206-0.656-0.342-0.967 c-0.013-0.03-0.029-0.058-0.042-0.087c-0.132-0.291-0.282-0.57-0.448-0.839c-0.031-0.051-0.06-0.103-0.093-0.153 c-0.183-0.281-0.384-0.549-0.602-0.802c-0.044-0.052-0.092-0.101-0.138-0.152c-0.225-0.248-0.462-0.483-0.718-0.699 c-0.011-0.009-0.019-0.02-0.03-0.029l-0.026-0.022c-0.003-0.002-0.006-0.005-0.008-0.007l-95.292-79.41L253.5,3 c-1.417-1.889-3.639-3-6-3h-32c-2.361,0-4.583,1.111-6,3l-23.474,31.299l-95.292,79.41c-0.003,0.002-0.006,0.005-0.008,0.007 l-0.026,0.022c-0.011,0.009-0.019,0.02-0.03,0.029c-0.256,0.216-0.493,0.452-0.718,0.699c-0.046,0.051-0.093,0.1-0.138,0.152 c-0.218,0.253-0.419,0.521-0.602,0.802c-0.033,0.05-0.062,0.102-0.093,0.153c-0.166,0.269-0.317,0.548-0.448,0.839 c-0.013,0.029-0.029,0.057-0.042,0.087c-0.136,0.312-0.248,0.635-0.342,0.967c-0.017,0.06-0.031,0.12-0.046,0.181 c-0.076,0.3-0.137,0.606-0.176,0.919c-0.005,0.037-0.013,0.074-0.017,0.111C88.018,118.948,88,119.222,88,119.5v32 c0,4.143,3.358,7.5,7.5,7.5s7.5-3.357,7.5-7.5V127h81v68.987l-93.267,77.722c-0.003,0.002-0.006,0.005-0.008,0.007l-0.026,0.022 c-0.011,0.009-0.019,0.02-0.03,0.029c-0.256,0.216-0.493,0.452-0.718,0.699c-0.046,0.051-0.093,0.1-0.138,0.152 c-0.218,0.253-0.419,0.521-0.602,0.802c-0.033,0.05-0.062,0.102-0.093,0.153c-0.166,0.269-0.317,0.548-0.448,0.839 c-0.013,0.029-0.029,0.057-0.042,0.087c-0.136,0.312-0.248,0.635-0.342,0.967c-0.017,0.06-0.031,0.12-0.046,0.181 c-0.076,0.3-0.137,0.606-0.176,0.919c-0.005,0.037-0.013,0.074-0.017,0.111C88.018,278.948,88,279.222,88,279.5v32 c0,4.143,3.358,7.5,7.5,7.5s7.5-3.357,7.5-7.5V287h77.792l-58.545,161H111.5c-4.142,0-7.5,3.357-7.5,7.5s3.358,7.5,7.5,7.5h40 c4.142,0,7.5-3.357,7.5-7.5s-3.358-7.5-7.5-7.5h-8.173L231.5,340.233L319.673,448H319.5c-4.142,0-7.5,3.357-7.5,7.5 s3.358,7.5,7.5,7.5h40c4.142,0,7.5-3.357,7.5-7.5s-3.358-7.5-7.5-7.5h-18.747l-58.545-161H360v24.5c0,4.143,3.358,7.5,7.5,7.5 s7.5-3.357,7.5-7.5v-32c0-0.278-0.018-0.552-0.047-0.822c-0.004-0.037-0.012-0.074-0.017-0.111c-0.039-0.313-0.1-0.619-0.176-0.919 c-0.015-0.061-0.03-0.121-0.046-0.181c-0.093-0.332-0.206-0.656-0.342-0.967c-0.013-0.03-0.029-0.058-0.042-0.087 c-0.132-0.291-0.282-0.57-0.448-0.839c-0.031-0.051-0.06-0.103-0.093-0.153c-0.183-0.281-0.384-0.549-0.602-0.802 c-0.044-0.052-0.092-0.101-0.138-0.152c-0.225-0.248-0.462-0.483-0.718-0.699c-0.011-0.009-0.019-0.02-0.03-0.029l-0.026-0.022 c-0.003-0.002-0.006-0.005-0.008-0.007L279,195.987V127h81v24.5C360,155.643,363.358,159,367.5,159z M220.893,79.5L199,101.393 V57.607L220.893,79.5z M209.607,47h43.786L231.5,68.893L209.607,47z M209.607,112L231.5,90.107L253.393,112H209.607z M253.393,127 L231.5,148.893L209.607,127H253.393z M220.893,159.5L199,181.393v-43.786L220.893,159.5z M209.607,192l21.893-21.893L253.393,192 H209.607z M253.393,207L231.5,228.893L209.607,207H253.393z M220.893,239.5L199,261.393v-43.786L220.893,239.5z M231.5,250.107 L253.393,272h-43.786L231.5,250.107z M255.673,287L231.5,316.545L207.327,287H255.673z M242.107,239.5L264,217.607v43.786 L242.107,239.5z M242.107,159.5L264,137.607v43.786L242.107,159.5z M242.107,79.5L264,57.607v43.786L242.107,79.5z M219.25,15h24.5 l12.75,17h-50L219.25,15z M184,55.513V112h-67.785L184,55.513z M184,215.513V272h-67.785L184,215.513z M149.617,416.624 l44.426-122.172l27.766,33.937L149.617,416.624z M241.19,328.389l27.766-33.937l44.426,122.172L241.19,328.389z M279,272v-56.487 L346.785,272H279z M279,112V55.513L346.785,112H279z" />
+                    </svg></h2> <br>
+                <div class="color-content1">
+                    <h2>Types of Power Units</h2>
+                </div><br> <br> <br>
+                <div class="color-content1">
+                    <h4>Watt (W):</h4>
+                </div>
+                <p>The watt is the fundamental unit of power in the SI system. One watt is defined as one joule per
+                    second, indicating the rate of energy transfer. </p> <br>
+                <div class="color-content1">
+                    <h4>Kilowatt (kW):</h4>
+                </div>
+                <p>The kilowatt is a larger unit of power, equivalent to 1,000 watts. It is commonly used for measuring
+                    electrical power in homes and small businesses.</p> <br>
+                <div class="color-content1">
+                    <h4>Megawatt (MW):</h4>
+                </div>
+                <p>The megawatt is an even larger unit of power, equal to 1,000,000 watts or one million watts. It is
+                    typically used for larger electrical applications, such as industrial machinery or power generation.
+                </p><br>
+                <div class="color-content1">
+                    <h4>Gigawatt (GW) :</h4>
+                </div>
+                <p>The gigawatt is an even larger unit of power, equal to 1,000,000,000 watts or one billion watts. It
+                    is commonly associated with large-scale power generation, such as power plants </p> <br>
+                <div class="color-content1">
+                    <h4>Calorie per Second (cal/s):</h4>
+                </div>
+                <p> A unit of power sometimes used in the field of nutrition and thermodynamics.</p>
+                </li>
+                </ol>
+            </div><br>
+            <div class="pink-background">
+                <div style="margin:5px" ;>
+                    <div class="color-content1"> <b>Importance :</b></div>Power unit conversion is important in
+                    engineering, energy production, electrical systems, and various industries where power measurements
+                    are critical. It ensures that power values are accurately understood and compared across different
+                    units and systems.
+                </div>
+            </div>
+            <p style="text-align: center;"><span style="font-size: 24px;">&nbsp;</span><strong><span
+                        style="color: #41a85f; font-size: 24px;">Some Basic Question</span></strong></p><br>
+            <h4><span class="color-content1"> Question 1 : </span>Convert 500 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 500 watts = 500 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 500 watts = 0.5 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 2 : </span>Convert 2.5 kilowatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 2.5 kilowatts = 2.5 × 1000 watts</p>
+            <p><strong>Answer:</strong> 2.5 kilowatts = 2500 watts</p> <br>
+            <h4><span class="color-content1"> Question 3 : </span>Convert 750 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 750 watts = 750 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 750 watts = 0.75 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 4 : </span>Convert 1.25 kilowatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 1.25 kilowatts = 1.25 × 1000 watts</p>
+            <p><strong>Answer:</strong> 1.25 kilowatts = 1250 watts</p> <br>
+            <h4><span class="color-content1"> Question 5 : </span>Convert 3200 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 3200 watts = 3200 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 3200 watts = 3.2 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 6 : </span>Convert 1.5 megawatts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 1.5 megawatts = 1.5 × 1,000 kilowatts</p>
+            <p><strong>Answer:</strong> 1.5 megawatts = 1500 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 7 : </span>Convert 8000 kilowatts to megawatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 8000 kilowatts = 8000 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                megawatts</p>
+            <p><strong>Answer:</strong> 8000 kilowatts = 8 megawatts</p> <br>
+            <h4><span class="color-content1"> Question 8 : </span>Convert 2.75 megawatts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 2.75 megawatts = 2.75 × 1,000 kilowatts
+            </p>
+            <p><strong>Answer:</strong> 2.75 megawatts = 2750 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 9 : </span>Convert 1200 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 1200 watts = 1200 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 1200 watts = 1.2 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 10 : </span>Convert 4.5 kilowatts to megawatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 4.5 kilowatts = 4.5 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1,000</span></span>
+                megawatts</p>
+            <p><strong>Answer:</strong> 4.5 kilowatts = 0.0045 megawatts</p> <br>
+            <h4><span class="color-content1"> Question 11 : </span>Convert 15,000 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 15,000 watts = 15,000 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 15,000 watts = 15 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 12 : </span>Convert 3.5 kilowatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 3.5 kilowatts = 3.5 × 1000 watts</p>
+            <p><strong>Answer:</strong> 3.5 kilowatts = 3,500 watts</p> <br>
+            <h4><span class="color-content1"> Question 13 : </span>Convert 750 megawatts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 750 megawatts = 750 × 1,000 kilowatts</p>
+            <p><strong>Answer:</strong> 750 megawatts = 750,000 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 14 : </span>Convert 10,000 milliwatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 10,000 milliwatts = 10,000 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                watts</p>
+            <p><strong>Answer:</strong> 10,000 milliwatts = 10 watts</p> <br>
+            <h4><span class="color-content1"> Question 15 : </span>Convert 2.7 watts to milliwatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 2.7 watts = 2.7 × 1000 milliwatts</p>
+            <p><strong>Answer:</strong> 2.7 watts = 2,700 milliwatts</p> <br>
+            <h4><span class="color-content1"> Question 16 : </span>Convert 8.5 kilowatts to megawatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 8.5 kilowatts = 8.5 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1,000</span></span>
+                megawatts</p>
+            <p><strong>Answer:</strong> 8.5 kilowatts = 0.0085 megawatts</p> <br>
+            <h4><span class="color-content1"> Question 17 : </span>Convert 6.25 megawatts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 6.25 megawatts = 6.25 × 1,000 kilowatts
+            </p>
+            <p><strong>Answer:</strong> 6.25 megawatts = 6,250 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 18 : </span>Convert 1800 watts to kilowatts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 1800 watts = 1800 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                kilowatts</p>
+            <p><strong>Answer:</strong> 1800 watts = 1.8 kilowatts</p> <br>
+            <h4><span class="color-content1"> Question 19 : </span>Convert 4.75 kilowatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 4.75 kilowatts = 4.75 × 1000 watts</p>
+            <p><strong>Answer:</strong> 4.75 kilowatts = 4,750 watts</p> <br>
+            <h4><span class="color-content1"> Question 20 : </span>Convert 3200 milliwatts to watts.</h4>
+            <p><span class="color-content2"><strong>Solution :</strong></span> 3200 milliwatts = 3200 <span
+                    class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+                watts</p>
+            <p><strong>Answer:</strong> 3200 milliwatts = 3.2 watts</p>
+            <div class="important_link"><br><br>
+                <p style="font-size:24px;">Important Links</p><br>
+                <div id="links-container">
+                    <ul id="links-list"></ul>
+                </div>
+            </div>
+            <hr>
+            <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+            <script src="..\script.js"></script>
+            <script src="..\search.js"></script>
+            <script src="..\menusearch1.js"></script>
+</body>
+
+</html>

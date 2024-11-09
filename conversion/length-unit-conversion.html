@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Length Unit Conversion</title>
+    <meta name="description"
+        content="Length unit conversion is the process of converting measurements of length from one unit to another. It's a fundamental concept used in various fields, including science, engineering, and everyday life. Learn about different length units, how to convert between them, and practical examples of length conversions.">
+    <meta name="keywords"
+        content="length conversion, unit conversion, length units, meters, feet, inches, yards, kilometers, miles, conversion tools, measurement conversions, length measurement, online conversion, length conversion calculator, length unit conversion guide, length units conversion, practical examples of length conversion">
+     <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="copyright" content="© 2024 GK Learn Study">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+    <!-- Open Graph Meta Tags for Facebook -->
+    <meta property="og:title" content="Length Unit Conversion - Learn How to Convert Length Measurements">
+    <meta property="og:description"
+        content="Length unit conversion is the process of converting measurements of length from one unit to another. It's a fundamental concept used in various fields, including science, engineering, and everyday life. Learn about different length units, how to convert between them, and practical examples of length conversions.">
+    <meta property="og:image" content="https://gklearnstudy.in/length-unit-conversion.png">
+    <meta property="og:url" content="https://gklearnstudy.in/length-unit-conversion.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Length Unit Conversion - Learn How to Convert Length Measurements">
+    <meta name="twitter:description"
+        content="Length unit conversion is the process of converting measurements of length from one unit to another. It's a fundamental concept used in various fields, including science, engineering, and everyday life. Learn about different length units, how to convert between them, and practical examples of length conversions.">
+    <meta name="twitter:image" content="https://gklearnstudy.in/length-unit-conversion.png">
+    <meta name="twitter:site" content="@gklearnstudy">
+    <meta name="twitter:creator" content="@gklearnstudy">
+    <meta name="twitter:image:alt" content="Length Conversion Tools">
+
+    <!-- Additional Meta Tags -->
+    <meta property="article:section" content="Education">
+    <meta property="article:tag" content="Length Conversion, Measurement, Tools, Online Conversion">
+    <meta name="theme-color" content="#90EE90">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Length Unit Conversion">
+    <meta name="application-name" content="Length Unit Conversion">
+    <meta name="msapplication-TileColor" content="#90EE90">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/length-unit-conversion.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+
+    <!-- Favicon and Stylesheets -->
+    <link rel="stylesheet" href="..\style.css">
+   
+</head>
+
+<body>
+    <main class="container">
+     
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term"autocomplete="off" oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+    
+      
+    
+
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li> <a href="angle-unit-conversion.html">Angle Conversion</a></li>
+        <li> <a href="area-unit-conversion.html">Area Conversion</a></li>
+        <li> <a class="active" href="length-unit-conversion.html">Length Conversion</a></li>
+        <li> <a href="power-unit-conversion.html">Power Conversion</a></li>
+        <li> <a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+        <li> <a href="speed-unit-conversion.html">Speed Conversion</a></li>
+        <li> <a href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+        <li> <a href="time-unit-conversion.html">Time Conversion</a></li>
+        <li> <a href="volume-unit-conversion.html">Volume Conversion</a></li>
+        <li> <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a></li>
+
+
+        <br>
+    </ul>
+    
+    <div class="container">
+        <div class="content" id="">
+            <div class="color-content1">
+                <h2>Length Unit Conversion - Definition, Types, Importance</h2>
+            </div>
+            <div class="custom-container">
+                <div class="custom-row">
+                    <div class="custom-column">
+                        <div class="content" id="Length"></div>
+                        <div class="color-content2">
+                            <h2> Length Conversion</h2>
+                        </div><br>
+                        <table id="myTable">
+                            <h7>
+                                <div>
+                                    <tr>
+                                        <td>Nanometres</td>
+                                        <td><input id="inputnm" placeholder="Nanometres"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Microns</td>
+                                        <td><input id="inputmicrons" placeholder="Microns"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Millimetres</td>
+                                        <td><input id="inputMillimetres" placeholder="Millimetres"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Centimetres</td>
+                                        <td><input id="inputcm" placeholder="cm"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Metres</td>
+                                        <td><input id="inputMetres" placeholder="Metres"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kilometres</td>
+                                        <td><input id="inputKilometres" placeholder="Kilometres"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Inches</td>
+                                        <td><input id="inputInches" placeholder="Inches"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feet</td>
+                                        <td><input id="inputFeet" placeholder="Feet"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Yards</td>
+                                        <td><input id="inputYards" placeholder="Yards"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miles</td>
+                                        <td><input id="inputMiles" placeholder="Miles"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nautical Miles</td>
+                                        <td><input id="inputNauticalMiles" placeholder="Nautical Miles"
+                                                oninput="lengthConverter(this.id,this.value)"
+                                                onchange="lengthConverter(this.id,this.value)"></td>
+                                    </tr>
+                        </table>
+                    </div>
+                    <div class="custom-column">
+                        <div class="color-content2">
+                            <h2>
+                                <h2>Length Unit Conversion</h2>
+                        </div><br>
+                        <table id="myTable">
+                            <tr>
+                                <td>1 Millimetre</td>
+                                <td>=</td>
+                                <td>0.001 or 10<sup>– 3</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Centimetre</td>
+                                <td>=</td>
+                                <td>0.01 or 10<sup>– 2</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Decimetre</td>
+                                <td>=</td>
+                                <td>0.1 or 10<sup>– 1</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Decametre</td>
+                                <td>=</td>
+                                <td>10 metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Hectometre</td>
+                                <td>=</td>
+                                <td>100 or 10<sup>2</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Kilometre</td>
+                                <td>=</td>
+                                <td>1000 or 10<sup>3</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 inch</td>
+                                <td>=</td>
+                                <td>2.54 × 10<sup>–2</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 foot</td>
+                                <td>=</td>
+                                <td>0.3048 metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 angstrom</td>
+                                <td>=</td>
+                                <td>1 × 10<sup>–10</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Fermi</td>
+                                <td>=</td>
+                                <td>1 × 10<sup>–15</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Light year</td>
+                                <td>=</td>
+                                <td>0.946 × 10<sup>16</sup> metres</td>
+                            </tr>
+                            <tr>
+                                <td>1 Mile</td>
+                                <td>=</td>
+                                <td>1.609344 kms</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="color-content1">
+                <h4>Definition - </h4>
+                <p class="color-content2"> Length unit conversion is the process of converting measurements of length
+                    from one unit to another. It's a fundamental concept used in various fields, including science,
+                    engineering, construction, and everyday life. Different units of length are employed in different
+                    contexts, and conversion helps in effective communication and accurate calculations.</p> <br><br>
+            </div>
+            <h2><svg height="200px" width="200px" alt="Length Unit Conversion" version="1.1" id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 203.544 203.544" xml:space="preserve" fill="red" stroke="red" transform="rotate(0)">
+                    <path style="fill:red;"
+                        d="M41.717,0L0.002,41.722l161.821,161.821l41.719-41.719L41.717,0z M41.717,8.049l153.78,153.776 l-33.673,33.673l-4.452-4.459l23.245-23.255c0.92-0.913,0.92-2.391,0-3.303c-0.913-0.913-2.391-0.923-3.303,0l-23.255,23.245 l-7.233-7.226l14.974-14.977c0.916-0.913,0.916-2.394,0-3.307c-0.92-0.923-2.387-0.923-3.307,0l-14.977,14.97l-5.973-5.98 l14.974-14.967c0.905-0.913,0.905-2.405,0-3.314c-0.923-0.913-2.405-0.913-3.321,0l-14.967,14.967l-5.73-5.726l14.97-14.97 c0.916-0.913,0.916-2.391,0-3.303c-0.913-0.923-2.391-0.923-3.31,0l-14.974,14.97l-6.471-6.488l23.252-23.245 c0.913-0.923,0.913-2.405,0-3.314c-0.923-0.913-2.398-0.913-3.314,0l-23.248,23.255l-4.477-4.481l15.729-15.718 c0.913-0.913,0.913-2.391-0.011-3.314c-0.909-0.913-2.387-0.913-3.303,0l-15.725,15.729l-5.977-5.98l15.722-15.729 c0.916-0.913,0.916-2.391,0-3.303c-0.913-0.923-2.391-0.923-3.303,0l-15.729,15.718l-5.726-5.726l15.722-15.718 c0.916-0.923,0.916-2.401,0-3.314c-0.916-0.913-2.398-0.913-3.31,0l-15.725,15.718l-6.546-6.546L106,93.147 c0.913-0.913,0.905-2.391-0.011-3.303c-0.913-0.913-2.394-0.913-3.303-0.011l-23.255,23.259l-7.226-7.229l14.967-14.977 c0.916-0.913,0.916-2.391-0.011-3.303c-0.902-0.923-2.384-0.913-3.296,0l-14.974,14.967l-5.984-5.98l14.977-14.967 c0.905-0.913,0.905-2.401,0-3.303c-0.916-0.923-2.394-0.923-3.307-0.011L59.611,93.265l-5.73-5.737l14.963-14.967 c0.92-0.913,0.913-2.391,0-3.314c-0.905-0.909-2.387-0.909-3.303,0L50.575,84.225l-6.481-6.474l23.255-23.259 c0.905-0.913,0.905-2.401-0.004-3.314c-0.916-0.913-2.398-0.913-3.314,0L40.786,74.433l-4.47-4.477l15.718-15.718 c0.913-0.913,0.913-2.391,0-3.303c-0.916-0.923-2.394-0.923-3.314,0L32.999,66.653l-5.973-5.977l15.718-15.718 c0.916-0.923,0.916-2.401,0-3.314c-0.913-0.913-2.391-0.913-3.31,0L23.722,57.362l-5.737-5.726l15.722-15.729 c0.916-0.902,0.916-2.384,0-3.303c-0.916-0.913-2.394-0.913-3.307,0L14.672,48.332l-6.617-6.628L41.717,8.049z" />
+                </svg></h2>
+            <div class="color-content1">
+                <h2>Types of Length Units</h2>
+            </div><br> <br>
+            <div class="color-content1">
+                <h4>Meter (m):</h4>
+            </div>
+            <p> The meter is the fundamental unit of length in the International System of Units (SI). It is defined as
+                the distance that light travels in a vacuum in 1/299,792,458 seconds. The meter is the base unit for
+                length and is used worldwide for most measurements.</p> <br>
+            <div class="color-content1">
+                <h4> Centimeter (cm):</h4>
+            </div>
+            <p> A centimeter is another metric unit of length, equal to one-hundredth of a meter. It is widely used for
+                everyday measurements and is often used in fields like construction, textiles, and medicine.</p> <br>
+            <div class="color-content1">
+                <h4> Millimeter (mm):</h4>
+            </div>
+            <p>A millimeter is a unit of length in the metric system, and it is equal to one-thousandth of a meter. It
+                is commonly used for precise measurements in various scientific and industrial applications.</p> <br>
+            <div class="color-content1">
+                <h4> Kilometer (km):</h4>
+            </div>
+            <p>A kilometer is a metric unit of length, equivalent to 1,000 meters. It is commonly used to measure longer
+                distances, such as the length of roads, travel distances, and geographical features.</p><br>
+            <div class="color-content1">
+                <h4> Inch (in):</h4>
+            </div>
+            <p>An inch is an imperial and US customary unit of length, approximately equal to 1/36th of a yard or 1/12th
+                of a foot. It is widely used in the United States and some other countries for various purposes,
+                including measuring the length of objects and specifying paper sizes.</p>
+        </div> <br>
+        <div class="color-content1">
+            <h4> Foot :</h4>
+        </div>
+        <p>The foot is another imperial and US customary unit of length, equal to 12 inches or approximately 0.3048
+            meters. It is commonly used for measuring height and dimensions of real estate properties in the United
+            States.</p> <br>
+        <div class="color-content1">
+            <h4> Yard :</h4>
+        </div>
+        <p>A yard is an imperial unit of length, equal to 3 feet or approximately 0.9144 meters. It is often used in the
+            United States and the United Kingdom for measuring longer distances and in sports like American football.
+        </p> <br>
+        <div class="color-content1">
+            <h4> Mile :</h4>
+        </div>
+        <p>The mile is an imperial and US customary unit of length, equal to 5,280 feet or approximately 1.60934
+            kilometers. It is commonly used for measuring longer distances on land and in aviation and road signage in
+            the United States.</p> <br>
+        <div class="color-content1">
+            <h4> Nautical Mile :</h4>
+        </div>
+        <p>A nautical mile is a unit of length primarily used in navigation and aviation. It is defined as one minute of
+            latitude along a meridian and is approximately equal to 1.852 kilometers. Nautical miles are commonly used
+            for measuring distances at sea and in air travel.</p><br>
+        <div class="color-content1">
+            <h4> League :</h4>
+        </div>
+        <p>The league is an older unit of length that varies in value depending on the region. In some contexts, it is
+            considered equivalent to approximately 3 miles. Leagues were historically used to measure the distance a
+            person or animal could travel in an hour.</p> <br>
+        <div class="pink-background">
+            <div style="margin:5px" ;>
+                <div class="color-content1">
+                    <h4>Importance :</h4>
+                </div>
+                <p>Length unit conversion is vital for measurements, construction projects, manufacturing, and
+                    scientific research. Accurate conversion ensures that measurements are consistent and accurate
+                    across different units and systems.</p>
+            </div>
+        </div>
+        <p style="text-align: center;"><span style="font-size: 24px;">&nbsp;</span><strong><span
+                    style="color: rgb(65, 168, 95); font-size: 24px;">Some Basic Question</span></strong></p><br>
+        <div style="margin-left: 20px;">&nbsp;</div>
+        <h4><span class="color-content1"> Question 1 : </span>Convert 5 meters to centimeters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 1 metre = 100 centimeters
+        <p style="margin-left: 80px;"> 5 meters = 5 × 100</p>
+        <p style="margin-left: 80px;">= 500 centimeters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 2 : </span>Convert 3 kilometers to meters.</h4>
+        <p><span class="color-content2">Solution :</strong></span> 3 kilometers = 3 × 1000</p>
+        <p style="margin-left: 80px;">= 3000 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 3 : </span>Convert 500 millimeters to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 500 millimeters = <span class="frac">
+                <span>500</span><span class="symbol">/</span><span class="bottom">1000</span></span>
+        <p style="margin-left: 80px;">= 0.5 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 4 : </span>Convert 2.5 meters to millimeters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 2.5 meters = 2.5 × 1000</p>
+        <p style="margin-left: 80px;">= 2500 millimeters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 5 : </span>Convert 10 centimeters to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 10 centimeters = <span class="frac">
+                <span>10</span><span class="symbol">/</span><span class="bottom"> 100</span></span>
+        <p style="margin-left: 80px;">= 0.1 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 6 : </span>Convert 8 miles to kilometers.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 8 miles = 8 × 1.60934</p>
+        <p style="margin-left: 80px;">= 12.87472 kilometers</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 7 : </span>Convert 200 meters to feet.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 200 meters = 200 × 3.28084</p>
+        <p style="margin-left: 80px;">= 656.16798 feet</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 8 : </span>Convert 50 feet to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 50 feet = <span class="frac">
+                <span>50</span><span class="symbol">/</span><span class="bottom"> 3.28084</span></span>
+        <p style="margin-left: 80px;">= 15.24061 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 9 : </span>Convert 15 centimeters to inches.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 15 centimeters = <span class="frac">
+                <span>15</span><span class="symbol">/</span><span class="bottom"> 2.54</span></span>
+        <p style="margin-left: 80px;">= 5.90551 inches</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 10 : </span>Convert 24 inches to centimeters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 24 inches = 24 × 2.54</p>
+        <p style="margin-left: 80px;">= 60.96 centimeters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 11 : </span>Convert 15 yards to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 15 yards = 15 × 0.9144</p>
+        <p style="margin-left: 80px;">= 13.716 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 12 : </span>Convert 5000 microns to millimeters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 5000 microns = <span class="frac">
+                <span>5000</span><span class="symbol">/</span><span class="bottom"> 1000</span></span>
+        <p style="margin-left: 80px;">= 5 millimeters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 13 : </span>Convert 2.5 kilometers to miles.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 2.5 kilometers = <span class="frac">
+                <span>2.5</span><span class="symbol">/</span><span class="bottom"> 1.60934</span></span>
+        <p style="margin-left: 80px;">= 1.55342 miles</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 14 : </span>Convert 1200 feet to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 1200 feet = 1200 × 0.3048</p>
+        <p style="margin-left: 80px;">= 365.76 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 15 : </span>Convert 3 nautical miles to kilometers.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 3 nautical miles = 3 × 1.852</p>
+        <p style="margin-left: 80px;">= 5.556 kilometers</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 16 : </span>Convert 1 league to miles.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 1 league = 3 miles (varies by region)</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 17 : </span>Convert 500 angstroms to nanometers.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 500 angstroms = 500 × 10</p>
+        <p style="margin-left: 80px;">= 5000 nanometers</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 18 : </span>Convert 2 Fermis to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 2 Fermis = 2 × 1e-15 meters</p>
+        <p style="margin-left: 80px;">= 2e-15 meters</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 19 : </span>Convert 0.5 light years to meters.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 0.5 light years = 0.5 × 0.946e16 meters
+            (approximately)</p>
+        <p>&nbsp;</p>
+        <h4><span class="color-content1"> Question 20 : </span>Convert 5000 millimeters to feet.</h4>
+        <p><span class="color-content2"><strong>Solution :</strong></span> 5000 millimeters = <span class="frac">
+                <span>5000</span><span class="symbol">/</span><span class="bottom"> 304.8 feet</span></span>
+        <p style="margin-left: 80px;"> = 16.404 feet</p>
+        <p>&nbsp;</p>
+        <div class="important_link"><br><br>
+            <p style="font-size:24px;">Important Links</p><br>
+            <div id="links-container">
+                <ul id="links-list"></ul>
+            </div>
+        </div>
+        <hr>
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+        <script src="..\script.js"></script>
+        <script src="..\search.js"></script>
+        <script src="..\menusearch1.js"></script>
+</body>
+
+</html>

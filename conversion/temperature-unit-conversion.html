@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature Unit Conversion</title>
+    <meta name="description"
+        content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples.">
+    <meta name="keywords"
+        content="temperature conversion, unit conversion, Celsius to Fahrenheit, Kelvin conversion, temperature scales, conversion examples, online tools, temperature measurement, practical examples, Celsius to Kelvin, Fahrenheit to Celsius">
+    <meta name="author" content="Mr. Himanshu Tyagi">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="copyright" content="© 2024 GK Learn Study">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+    <!-- Open Graph Meta Tags for Facebook -->
+    <meta property="og:title" content="Temperature Unit Conversion - Learn How to Convert Temperature Scales">
+    <meta property="og:description"
+        content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples.">
+    <meta property="og:image" content="https://gklearnstudy.in/temperature-unit-conversion.png">
+    <meta property="og:url" content="https://gklearnstudy.in/temperature-unit-conversion.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Temperature Unit Conversion - Learn How to Convert Temperature Scales">
+    <meta name="twitter:description"
+        content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples.">
+    <meta name="twitter:image" content="https://gklearnstudy.in/temperature-unit-conversion.png">
+    <meta name="twitter:site" content="@gklearnstudy">
+    <meta name="twitter:creator" content="@gklearnstudy">
+    <meta name="twitter:image:alt" content="Temperature Conversion Tools">
+
+    <!-- Additional Meta Tags -->
+    <meta property="article:author" content="Mr. Himanshu Tyagi">
+     <meta property="article:section" content="Education">
+    <meta property="article:tag" content="Temperature Conversion, Measurement, Tools, Online Conversion">
+    <meta name="theme-color" content="#90EE90">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Temperature Unit Conversion">
+    <meta name="application-name" content="Temperature Unit Conversion">
+    <meta name="msapplication-TileColor" content="#90EE90">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/temperature-unit-conversion.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+
+    <!-- Favicon and Stylesheets -->
+    <link rel="stylesheet" href="..\style.css">
+  
+</head>
+
+<body>
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+            <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                    oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+            <div id="suggestions" class="suggestions-list"></div>
+        </form>
+
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+            <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+    </main>
+
+
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li> <a href="angle-unit-conversion.html">Angle Conversion</a></li>
+        <li> <a href="area-unit-conversion.html">Area Conversion</a></li>
+        <li> <a href="length-unit-conversion.html">Length Conversion</a></li>
+        <li> <a href="power-unit-conversion.html">Power Conversion</a></li>
+        <li> <a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+        <li> <a href="speed-unit-conversion.html">Speed Conversion</a></li>
+        <li> <a class="active" href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+        <li> <a href="time-unit-conversion.html">Time Conversion</a></li>
+        <li> <a href="volume-unit-conversion.html">Volume Conversion</a></li>
+        <li> <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a></li>
+
+
+
+        <br>
+    </ul>
+    <div class="watermark"></div>
+    <div class="container">
+        <div class="content" id="">
+            <div class="color-content1">
+                <h2>Temperature Unit Conversion - Definition, Types, Importance</h2>
+            </div>
+            <div class="custom-container">
+                <div class="custom-row">
+                    <div class="custom-column">
+                        <div class="content" id="Temperature"></div>
+                        <div class="color-content2">
+                            <h2>Temperature Conversion</h2>
+                        </div><br>
+                        <h7>
+                            <table id="myTable">
+                                <tr>
+                                    <td>Fahrenheit</td>
+                                    <td><input id="inputFahrenheit" class="w3-input w3-border" min="-459.66999999999996"
+                                            placeholder="Fahrenheit" oninput="temperatureConverter(this.id,this.value)"
+                                            onchange="temperatureConverter(this.id,this.value)"></td>
+                                </tr>
+                                <tr>
+                                    <td>Celsius</td>
+                                    <td><input id="inputCelsius" class="w3-input w3-border" min="-273.15"
+                                            placeholder="Celsius" oninput="temperatureConverter(this.id,this.value)"
+                                            onchange="temperatureConverter(this.id,this.value)"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Kelvin</td>
+                                    <td><input id="inputKelvin" class="w3-input w3-border" min="0" placeholder="Kelvin"
+                                            oninput="temperatureConverter(this.id,this.value)"
+                                            onchange="temperatureConverter(this.id,this.value)">
+                            </table>
+                    </div>
+                    <div class="custom-column">
+                        <div class="color-content2">
+                            <h2>Temperature Unit Conversion</h2>
+                        </div><br>
+                        <table id="myTable">
+                            <tr>
+                                <td>1 Celsius</td>
+                                <td>=</td>
+                                <td> 33.8 f </td>
+                            </tr>
+                            <tr>
+                                <td>1 Fahrenheit</td>
+                                <td>= </td>
+                                <td> -17.22 c</td>
+                            </tr>
+                            <tr>
+                                <td>1 Kelvin </td>
+                                <td>=</td>
+                                <td> -272.15 c</td>
+                            </tr>
+                        </table> <br>
+                    </div>
+                </div>
+                <div class="color-content1"><b>Definition - </b><span class="color-content2"> Temperature unit
+                        conversion involves converting measurements of temperature from one unit to another. Temperature
+                        is a measure of the average kinetic energy of particles in a substance. It's a fundamental
+                        concept in physics, chemistry, meteorology, and many other fields. Different units of
+                        temperature are used in different parts of the world and for various applications, and
+                        conversion helps ensure accurate communication and calculations.</span> <br><br></div>
+                <h2><svg fill="#ea1010" width="200px" height="200px" alt="Temperature Unit Conversion"
+                        viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#ea1010"
+                        stroke-width="0.00032">
+                        <path
+                            d="M21.25 6.008c0-6.904-10.5-6.904-10.5 0v13.048c-1.238 1.298-2.001 3.061-2.001 5.001 0 4.004 3.246 7.25 7.25 7.25s7.25-3.246 7.25-7.25c0-1.94-0.762-3.702-2.003-5.003l0.003 0.003zM16 28.75c-2.623 0-4.75-2.127-4.75-4.75 0-1.405 0.61-2.667 1.58-3.537l0.004-0.004c0.009-0.008 0.013-0.020 0.022-0.029 0.059-0.063 0.112-0.133 0.157-0.208l0.003-0.006c0.043-0.053 0.084-0.113 0.119-0.175l0.003-0.006c0.020-0.055 0.037-0.122 0.049-0.19l0.001-0.007c0.027-0.081 0.047-0.175 0.056-0.272l0-0.005 0.007-0.033v-13.52c-0.001-0.031-0.002-0.068-0.002-0.105 0-1.52 1.232-2.752 2.752-2.752s2.752 1.232 2.752 2.752c0 0.037-0.001 0.074-0.002 0.11l0-0.005v13.52c0 0.012 0.007 0.023 0.007 0.035 0.009 0.098 0.028 0.188 0.056 0.274l-0.002-0.009c0.013 0.079 0.031 0.149 0.055 0.217l-0.003-0.009c0.038 0.068 0.079 0.127 0.123 0.182l-0.002-0.002c0.048 0.081 0.101 0.151 0.16 0.215l-0.001-0.001c0.009 0.009 0.012 0.021 0.022 0.029 0.974 0.874 1.584 2.136 1.584 3.541 0 2.623-2.127 4.75-4.75 4.75v0zM17.25 21.001v-3.399c0-0.69-0.56-1.25-1.25-1.25s-1.25 0.56-1.25 1.25v0 3.399c-1.184 0.503-2 1.656-2 3 0 1.795 1.455 3.25 3.25 3.25s3.25-1.455 3.25-3.25c0-1.344-0.816-2.497-1.979-2.992l-0.021-0.008zM26.5 1.75c-2.071 0-3.75 1.679-3.75 3.75s1.679 3.75 3.75 3.75c2.071 0 3.75-1.679 3.75-3.75v0c-0.002-2.070-1.68-3.748-3.75-3.75h-0zM26.5 6.75c-0.69 0-1.25-0.56-1.25-1.25s0.56-1.25 1.25-1.25c0.69 0 1.25 0.56 1.25 1.25v0c-0.001 0.69-0.56 1.249-1.25 1.25h-0z" />
+                        </g>
+                    </svg></h2>
+                <div class="color-content1">
+                    <h2>Types of Temperature Units</h2>
+                </div><br> <br>
+                <div class="color-content1"><b>Celsius (°C):</b></div> The metric unit of temperature widely used around
+                the world. The freezing point of water is 0°C and the boiling point is 100°C at standard atmospheric
+                pressure. <div class="color-content1"><b> Fahrenheit (°F):</b></div> Commonly used in the United States.
+                The freezing point of water is 32°F, and the boiling point is 212°F. <div class="color-content1"><b>
+                        Kelvin (K):</b></div> The SI unit of temperature. It starts from absolute zero, which is the
+                lowest possible temperature where all molecular motion ceases.
+            </div><br>
+            <div class="pink-background">
+                <div style="margin:5px" ;>
+                    <div class="color-content1"> <b>Importance :</b></div>
+                    <p>Temperature unit conversion is crucial in various scientific, industrial, and everyday
+                        applications. It allows for accurate communication of temperature values across different
+                        regions and systems.</p>
+                </div>
+            </div>
+            <p style="text-align: center;"><span style="font-size: 24px;">&nbsp;</span><strong><span
+                        style="color: rgb(65, 168, 95); font-size: 24px;">Some Basic Question</span></strong></p><br>
+
+            <p><span class="color-content1"><strong>Question 1:&nbsp;</strong></span>Convert 50 degrees Celsius to
+                Fahrenheit.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Fahrenheit = (Celsius × 9/5) + 32</strong><br>Fahrenheit =
+                (50 × 9/5) + 32<br>Fahrenheit = 90 + 32<br>Fahrenheit = 122&deg;F</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 2:&nbsp;</strong></span>Convert 75 degrees Fahrenheit to
+                Celsius.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Celsius = (Fahrenheit - 32) × 5/9<br></strong>Celsius = (75 -
+                32) × 5/9<br>Celsius = 43 × 5/9<br>Celsius = 23.89&deg;C</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 3:&nbsp;</strong></span>Convert 30 degrees Celsius to
+                Kelvin.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Kelvin = Celsius + 273.15<br></strong>Kelvin = 30 +
+                273.15<br>Kelvin = 303.15 K</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 4:&nbsp;</strong></span>Convert 500 Kelvin to Celsius.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Celsius = Kelvin - 273.15<br></strong>Celsius = 500 -
+                273.15<br>Celsius = 226.85&deg;C</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 5:&nbsp;</strong></span>Convert 20 degrees Fahrenheit to
+                Kelvin.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>First, convert Fahrenheit to Celsius using the formula in Solution
+                    2:<br></strong>Celsius = (20 - 32) × 5/9<br>Celsius = -12 × 5/9<br>Celsius = -6.67&deg;C</p>
+            <p style="margin-left: 60px;"><strong>Then, convert Celsius to Kelvin using the formula in Solution
+                    3:<br></strong>Kelvin = Celsius + 273.15<br>Kelvin = -6.67 + 273.15<br>Kelvin = 266.48 K</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 6:&nbsp;</strong></span>Convert 100 degrees Celsius to
+                Fahrenheit.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Fahrenheit = (Celsius × 9/5) + 32<br></strong>Fahrenheit =
+                (100 × 9/5) + 32<br>Fahrenheit = 180 + 32<br>Fahrenheit = 212&deg;F</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 7:&nbsp;</strong></span>Convert 68 degrees Fahrenheit to
+                Celsius.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Celsius = (Fahrenheit - 32) × 5/9<br></strong>Celsius = (68 -
+                32) × 5/9<br>Celsius = 36 × 5/9<br>Celsius = 20&deg;C</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 8:&nbsp;</strong></span>Convert 200 Kelvin to Celsius.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>Formula: Celsius = Kelvin - 273.15<br></strong>Celsius = 200 -
+                273.15<br>Celsius = -73.15&deg;C</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 9:&nbsp;</strong><span
+                        class="color-content1"></span>Convert 95 degrees Fahrenheit to Kelvin.</p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>First, convert Fahrenheit to Celsius using the formula in Solution
+                    2:<br></strong>Celsius = (95 - 32) × 5/9<br>Celsius = 63 × 5/9<br>Celsius = 35&deg;C</p>
+            <p style="margin-left: 60px;"><strong>Then, convert Celsius to Kelvin using the formula in Solution
+                    3:<br></strong>Kelvin = Celsius + 273.15<br>Kelvin = 35 + 273.15<br>Kelvin = 308.15 K</p>
+            <p style="margin-left: 60px;"><br></p>
+            <p><span class="color-content1"><strong>Question 10:&nbsp;</strong></span>Convert 400 Kelvin to Fahrenheit.
+            </p>
+            <p><span class="color-content2"><strong>Solution :</strong></span></p>
+            <p style="margin-left: 60px;"><strong>First, convert Kelvin to Celsius using the formula in Solution
+                    4:<br></strong>Celsius = 400 - 273.15<br>Celsius = 126.85&deg;C</p>
+            <p style="margin-left: 60px;"><strong>Then, convert Celsius to Fahrenheit using the formula in Solution
+                    1:<br></strong>Fahrenheit = (Celsius × 9/5) + 32<br>Fahrenheit = (126.85 × 9/5) + 32<br>Fahrenheit =
+                228.33&deg;F</p>
+
+
+
+            <div class="important_link"><br><br>
+                <p style="font-size:24px;">Important Links</p><br>
+                <div id="links-container">
+                    <ul id="links-list"></ul>
+                </div>
+            </div>
+            <hr>
+             <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+            <script src="..\script.js"></script>
+            <script src="..\search.js"></script>
+            <script src="..\menusearch1.js"></script>
+            </script>
+</body>
+
+</html>

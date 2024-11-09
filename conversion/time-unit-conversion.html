@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Time Unit Conversion</title>
+    <meta name="description"
+        content="Explore time unit conversion and learn how to convert between various units of time measurement. Understand conversions for seconds, minutes, hours, days, and more with practical examples.">
+    <meta name="keywords"
+        content="time conversion, unit conversion, seconds to minutes, hours to days, time measurement, conversion tools, online time conversion, practical examples, seconds, minutes, hours, days, time scales">
+    <meta name="author" content="Mr. Himanshu Tyagi">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="copyright" content="© 2024 GK Learn Study">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E">
+
+    <!-- Open Graph Meta Tags for Facebook -->
+    <meta property="og:title" content="Time Unit Conversion - Learn How to Convert Time Units">
+    <meta property="og:description"
+        content="Explore time unit conversion and learn how to convert between various units of time measurement. Understand conversions for seconds, minutes, hours, days, and more with practical examples.">
+    <meta property="og:image" content="https://gklearnstudy.in/time-unit-conversion.png">
+    <meta property="og:url" content="https://gklearnstudy.in/time-unit-conversion.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Time Unit Conversion - Learn How to Convert Time Units">
+    <meta name="twitter:description"
+        content="Explore time unit conversion and learn how to convert between various units of time measurement. Understand conversions for seconds, minutes, hours, days, and more with practical examples.">
+    <meta name="twitter:image" content="https://gklearnstudy.in/time-unit-conversion.png">
+    <meta name="twitter:site" content="@gklearnstudy">
+    <meta name="twitter:creator" content="@gklearnstudy">
+    <meta name="twitter:image:alt" content="Time Conversion Tools">
+
+    <!-- Additional Meta Tags -->
+    <meta property="article:author" content="Mr. Himanshu Tyagi">
+     <meta property="article:section" content="Education">
+    <meta property="article:tag" content="Time Conversion, Measurement, Tools, Online Conversion">
+    <meta name="theme-color" content="#90EE90">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Time Unit Conversion">
+    <meta name="application-name" content="Time Unit Conversion">
+    <meta name="msapplication-TileColor" content="#90EE90">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/time-unit-conversion.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+
+    <!-- Favicon and Stylesheets -->
+    <link rel="stylesheet" href="..\style.css">
+   
+</head>
+
+<body>
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+            <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                    oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+            <div id="suggestions" class="suggestions-list"></div>
+        </form>
+
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+            <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+    </main>
+
+
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li> <a href="angle-unit-conversion.html">Angle Conversion</a></li>
+        <li> <a href="area-unit-conversion.html">Area Conversion</a></li>
+        <li> <a href="length-unit-conversion.html">Length Conversion</a></li>
+        <li> <a href="power-unit-conversion.html">Power Conversion</a></li>
+        <li> <a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+        <li> <a href="speed-unit-conversion.html">Speed Conversion</a></li>
+        <li> <a href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+        <li> <a class="active" href="time-unit-conversion.html">Time Conversion</a></li>
+        <li> <a href="volume-unit-conversion.html">Volume Conversion</a></li>
+        <li> <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a></li>
+
+
+        <br>
+    </ul>
+    <div class="watermark"></div>
+    <div class="container">
+        <div class="content" id="">
+            <div class="color-content1">
+                <h2>Time Unit Conversion - Definition, Types, Importance</h2>
+            </div>
+            <div class="custom-container">
+                <div class="custom-row">
+                    <div class="custom-column">
+                        <div class="content" id="Time"></div>
+                        <div class="color-content2">
+                            <h2>Time Conversion</h2>
+                        </div><br>
+                        <h7>
+                            <table id="myTable">
+                                <tr>
+                                    <td>
+                                        <div>Microseconds
+                                    </td>
+                                    <td><input id="inputMicroseconds" placeholder="Microseconds"
+                                            oninput="timeConverter(this.id,this.value)"
+                                            onchange="timeConverter(this.id,this.value)">
+                    </div>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Milliseconds
+                        </td>
+                        <td><input id="inputMilliseconds" placeholder="Milliseconds"
+                                oninput="timeConverter(this.id,this.value)"
+                                onchange="timeConverter(this.id,this.value)">
+                </div>
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Second
+                    </td>
+                    <td><input id="inputSecond" placeholder="Second" oninput="timeConverter(this.id,this.value)"
+                            onchange="timeConverter(this.id,this.value)">
+            </div>
+            </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Minutes
+                </td>
+                <td><input id="inputMinutes" placeholder="Minutes" oninput="timeConverter(this.id,this.value)"
+                        onchange="timeConverter(this.id,this.value)">
+        </div>
+        </td>
+        </tr>
+        <tr>
+            <td>
+                <div>Hours
+            </td>
+            <td><input id="inputHours" placeholder="Hours" oninput="timeConverter(this.id,this.value)"
+                    onchange="timeConverter(this.id,this.value)">
+    </div>
+    </td>
+    </tr>
+    <tr>
+        <td>
+            <div>Days
+        </td>
+        <td><input id="inputDays" placeholder="Days" oninput="timeConverter(this.id,this.value)"
+                onchange="timeConverter(this.id,this.value)"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>Weeks
+        </td>
+        <td><input id="inputWeeks" placeholder="Weeks" oninput="timeConverter(this.id,this.value)"
+                onchange="timeConverter(this.id,this.value)"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>Years
+        </td>
+        <td><input id="inputYears" placeholder="Years" oninput="timeConverter(this.id,this.value)"
+                onchange="timeConverter(this.id,this.value)"></td>
+    </tr>
+    </table>
+    </div>
+    <div class="custom-column">
+        <div class="color-content2">
+            <h2>Time Unit Conversion</h2>
+        </div><br>
+        <table id="myTable">
+            <tr>
+                <td>1 Microseconds</td>
+                <td>=</td>
+                <td> 1 × 10<sup>-6</sup> second </td>
+            </tr>
+            <tr>
+                <td>1 Milliseconds</td>
+                <td>=</td>
+                <td> 1 × 10<sup>-3</sup> second</td>
+            </tr>
+            <tr>
+                <td>1 Minutes</td>
+                <td>= </td>
+                <td> 60 second</td>
+            </tr>
+            <tr>
+                <td>1 Hours </td>
+                <td>=</td>
+                <td> 3,600 second</td>
+            </tr>
+            <tr>
+                <td>1 Days </td>
+                <td>=</td>
+                <td> 86,400 second</td>
+            </tr>
+            <tr>
+                <td>1 Weeks </td>
+                <td>=</td>
+                <td> 6,04,800 second</td>
+            </tr>
+            <tr>
+                <td>1 Years </td>
+                <td>=</td>
+                <td> 3,15,57,600 second </td>
+            </tr>
+        </table> <br>
+    </div>
+    </div>
+    <div class="color-content1"><b>Definition - </b><span class="color-content2">Time unit conversion involves
+            converting measurements of time from one unit to another. Time is a fundamental concept that measures the
+            duration between events or the interval during which something occurs. It's essential in various fields,
+            including physics, engineering, everyday life, and scientific research. Different units of time are used for
+            different contexts, and conversion ensures accurate communication and calculations.</span> <br><br></div>
+    <h2><svg width="200px" alt"time conversion" height="200px" alt="Time Unit Conversion" viewBox="0 0 1024 1024"
+            class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M597.678 480.76L390.797 333.998c-22.209-15.766-53-10.532-68.762 11.687l-2.04 2.871c-15.753 22.214-10.526 53 11.691 68.762l206.876 146.771c22.218 15.757 53 10.527 68.766-11.687l2.035-2.876c15.768-22.218 10.529-53.005-11.685-68.766z"
+                fill="#F39A2B" />
+            <path
+                d="M585.066 423.392l-2.871-2.034c-22.218-15.763-53.004-10.527-68.766 11.687L279.007 763.472c-15.762 22.214-10.527 53.005 11.69 68.763l2.871 2.04c22.218 15.762 53.004 10.53 68.762-11.688l234.423-330.428c15.767-22.22 10.531-53.001-11.687-68.767z"
+                fill="#E5594F" />
+            <path
+                d="M891.662 525.126c-0.363 50.106-8.104 91.767-27.502 142.522-13.232 34.625-44.231 82.177-70.529 111.108-62.993 69.31-152.478 113.292-240.772 121.615-100.773 9.501-189.621-17.478-271.287-78.551 7.65 5.723-7.536-6.408-7.061-6.009-4.562-3.821-8.967-7.82-13.369-11.824-8.803-8.003-17.105-16.535-25.225-25.224-18.148-19.432-26.188-30.526-41.439-54.866-27.11-43.264-40.704-80.283-51.007-132.536-4.015-20.354-5.395-39.803-5.586-66.233-0.531-73.33-114.29-73.381-113.758 0 1.607 222.487 154.098 420.146 370.093 475.715 216.482 55.697 449.039-49.258 553.91-245.54 37.754-70.664 56.715-150.224 57.293-230.179 0.526-73.379-113.231-73.328-113.761 0.002z"
+                fill="#4A5699" />
+            <path
+                d="M137.884 501.467c0.362-50.104 8.103-91.762 27.502-142.52 13.233-34.621 44.233-82.173 70.53-111.108 62.993-69.309 152.472-113.29 240.768-121.615 100.773-9.5 189.626 17.479 271.292 78.554-7.652-5.721 7.532 6.408 7.057 6.01 4.563 3.819 8.968 7.821 13.371 11.823 8.803 8 17.108 16.535 25.228 25.225 18.147 19.43 26.187 30.526 41.438 54.866 27.111 43.264 40.709 80.28 51.009 132.533 4.014 20.352 5.396 39.804 5.586 66.232 0.529 73.33 114.287 73.384 113.76 0-1.608-222.489-154.107-420.144-370.099-475.715-216.482-55.7-449.036 49.26-553.905 245.541-37.753 70.664-56.715 150.219-57.292 230.174-0.534 73.384 113.225 73.33 113.755 0z"
+                fill="#C45FA0" />
+        </svg> </h2>
+    <div class="color-content1">
+        <h2>Types of Time Units</h2>
+    </div><br> <br>
+    <div class="color-content1"><b>Second (s):</b> </div>The SI unit of time, defined as the duration of 9,192,631,770
+    periods of the radiation corresponding to the transition between two hyperfine levels of the ground state of the
+    cesium-133 atom. <div class="color-content1"><b> Minute (min):</div> </b>Equal to 60 seconds. <div
+        class="color-content1"><b> Hour (h):</b></div> Equal to 60 minutes or 3600 seconds. <div class="color-content1">
+        <b> Day (d): </b></div>Equal to 24 hours. <div class="color-content1"><b> Week (wk):</b></div> Equal to 7 days.
+    <div class="color-content1"><b> Month (mo):</b></div> Often considered as 30 or 31 days depending on the month. <div
+        class="color-content1"><b> Year (yr):</b></div> Equal to 365 days or 12 months. </div><br>
+    <div class="pink-background">
+        <div style="margin:5px" ;>
+            <div class="color-content1"> <b>Importance :</b></div>
+            <p>Time unit conversion is essential for scheduling, project management, scientific experiments, and various
+                applications where accurate time measurements are crucial. Proper conversion ensures that time values
+                are correctly interpreted and used in calculations.</p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    <p style="text-align: center;"><span style="font-size: 24px;">&nbsp;</span><strong><span
+                style="color: rgb(65, 168, 95); font-size: 24px;">Some Basic Question</span></strong></p><br>
+
+    <!-- Time Conversion Questions 1 to 20 -->
+
+    <!-- Question 1 -->
+    <h4><span class="color-content1"> Question 1 : </span>Convert 2 hours to minutes.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 2 hours = 2 × 60 minutes</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Minutes = Hours × 60</p>
+    <p><strong>Answer:</strong> 2 hours = 120 minutes</p><br>
+
+    <!-- Question 2 -->
+    <h4><span class="color-content1"> Question 2 : </span>Convert 180 minutes to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 180 minutes = <span class="frac">
+            <span>180</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span>
+        </span>hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Minutes / 60</p>
+    <p><strong>Answer:</strong> 180 minutes = 3 hours</p><br>
+
+    <!-- Question 3 -->
+    <h4><span class="color-content1"> Question 3 : </span>Convert 45 minutes to seconds.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 45 minutes = 45 × 60 seconds</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Seconds = Minutes × 60</p>
+    <p><strong>Answer:</strong> 45 minutes = 2700 seconds</p><br>
+
+    <!-- Question 4 -->
+    <h4><span class="color-content1"> Question 4 : </span>Convert 500 seconds to minutes.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 500 seconds = <span class="frac">
+            <span>500</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span></span>minutes</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Minutes = Seconds / 60</p>
+    <p><strong>Answer:</strong> 500 seconds = 8.33333<span class="frac">
+            <span>1</span>
+            <span class="symbol">/</span>
+            <span class="bottom">3</span>
+        </span> minutes</p><br>
+
+    <!-- Question 5 -->
+    <h4><span class="color-content1"> Question 5 : </span>Convert 3 hours to seconds.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 3 hours = 3 × 60 × 60 seconds</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Seconds = Hours × 60 × 60</p>
+    <p><strong>Answer:</strong> 3 hours = 10800 seconds</p><br>
+
+    <!-- Question 6 -->
+    <h4><span class="color-content1"> Question 6 : </span>Convert 120 seconds to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 120 seconds = <span class="frac">
+            <span>120</span>
+            <span class="symbol">/</span>
+            <span class="bottom">3600</span></span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Seconds / 3600</p>
+    <p><strong>Answer:</strong> 120 seconds = 0.03333 hours</p><br>
+
+    <!-- Question 7 -->
+    <h4><span class="color-content1"> Question 7 : </span>Convert 1 day to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 1 day = 1 × 24 hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Days × 24</p>
+    <p><strong>Answer:</strong> 1 day = 24 hours</p><br>
+
+    <!-- Question 8 -->
+    <h4><span class="color-content1"> Question 8 : </span>Convert 1440 minutes to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 1440 minutes = <span class="frac">
+            <span>1440</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Minutes / 60</p>
+    <p><strong>Answer:</strong> 1440 minutes = 24 hours</p><br>
+
+    <!-- Question 9 -->
+    <h4><span class="color-content1"> Question 9 : </span>Convert 7200 seconds to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 7200 seconds = <span class="frac">
+            <span>7200</span>
+            <span class="symbol">/</span>
+            <span class="bottom">3600</span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Seconds / 3600</p>
+    <p><strong>Answer:</strong> 7200 seconds = 2 hours</p><br>
+
+    <!-- Question 10 -->
+    <h4><span class="color-content1"> Question 10 : </span>Convert 1 week to days.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 1 week = 1 × 7 days</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Days = Weeks × 7</p>
+    <p><strong>Answer:</strong> 1 week = 7 days</p><br>
+
+    <!-- Question 11 -->
+    <h4><span class="color-content1"> Question 11 : </span>Convert 12 hours to seconds.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 12 hours = 12 × 60 × 60 seconds</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Seconds = Hours × 60 × 60</p>
+    <p><strong>Answer:</strong> 12 hours = 43200 seconds</p><br>
+
+    <!-- Question 12 -->
+    <h4><span class="color-content1"> Question 12 : </span>Convert 3600 seconds to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 3600 seconds = <span class="frac">
+            <span>3600</span>
+            <span class="symbol">/</span>
+            <span class="bottom">3600</span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Seconds / 3600</p>
+    <p><strong>Answer:</strong> 3600 seconds = 1 hour</p><br>
+
+    <!-- Question 13 -->
+    <h4><span class="color-content1"> Question 13 : </span>Convert 720 minutes to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 720 minutes = <span class="frac">
+            <span>720</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Minutes / 60</p>
+    <p><strong>Answer:</strong> 720 minutes = 12 hours</p><br>
+
+    <!-- Question 14 -->
+    <h4><span class="color-content1"> Question 14 : </span>Convert 4 days to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 4 days = 4 × 24 hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Days × 24</p>
+    <p><strong>Answer:</strong> 4 days = 96 hours</p><br>
+
+    <!-- Question 15 -->
+    <h4><span class="color-content1"> Question 15 : </span>Convert 14400 seconds to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 14400 seconds = <span class="frac">
+            <span>14400</span>
+            <span class="symbol">/</span>
+            <span class="bottom">3600</span> hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Seconds / 3600</p>
+    <p><strong>Answer:</strong> 14400 seconds = 4 hours</p><br>
+
+    <!-- Question 16 -->
+    <h4><span class="color-content1"> Question 16 : </span>Convert 30 minutes to seconds.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 30 minutes = 30 × 60 seconds</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Seconds = Minutes × 60</p>
+    <p><strong>Answer:</strong> 30 minutes = 1800 seconds</p><br>
+
+    <!-- Question 17 -->
+    <h4><span class="color-content1"> Question 17 : </span>Convert 10 weeks to days.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 10 weeks = 10 × 7 days</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Days = Weeks × 7</p>
+    <p><strong>Answer:</strong> 10 weeks = 70 days</p><br>
+
+    <!-- Question 18 -->
+    <h4><span class="color-content1"> Question 18 : </span>Convert 600 seconds to minutes.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 600 seconds = <span class="frac">
+            <span>600</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span> minutes</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Minutes = Seconds / 60</p>
+    <p><strong>Answer:</strong> 600 seconds = 10 minutes</p><br>
+
+    <!-- Question 19 -->
+    <h4><span class="color-content1"> Question 19 : </span>Convert 5 hours to minutes.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 5 hours = 5 × 60 minutes</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Minutes = Hours × 60</p>
+    <p><strong>Answer:</strong> 5 hours = 300 minutes</p><br>
+
+    <!-- Question 20 -->
+    <h4><span class="color-content1"> Question 20 : </span>Convert 480 minutes to hours.</h4>
+    <p><span class="color-content2"><strong>Solution :</strong></span> 480 minutes = <span class="frac">
+            <span>480</span>
+            <span class="symbol">/</span>
+            <span class="bottom">60</span> 60 hours</p>
+    <p><span class="color-content2"><strong>Formula :</strong></span> Hours = Minutes / 60</p>
+    <p><strong>Answer:</strong> 480 minutes = 8 hours</p><br>
+
+
+
+    <div class="important_link"><br><br>
+        <p style="font-size:24px;">Important Links</p><br>
+        <div id="links-container">
+            <ul id="links-list"></ul>
+        </div>
+    </div>
+    <hr>
+    <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+    <script src="..\script.js"></script>
+    <script src="..\search.js"></script>
+    <script src="..\menusearch1.js"></script>
+    </script>
+</body>
+
+</html>
