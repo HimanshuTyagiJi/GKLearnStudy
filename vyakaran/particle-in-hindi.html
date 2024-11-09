@@ -1,0 +1,364 @@
+<!DOCTYPE html> <html lang="hi" > 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="हिंदी व्याकरण में निपात के विस्तार से अध्ययन। इस विषय में निपात की परिभाषा, प्रकार, उदाहरण और उनका उपयोग समाहित है।">
+        <meta name="keywords" content="निपात, हिंदी व्याकरण, निपात के प्रकार, निपात के उदाहरण, हिंदी व्याकरण निपात">
+        <meta name="author" content="आपका नाम">
+        <meta name="robots" content="index, follow">
+        <meta property="og:title" content="निपात - हिंदी व्याकरण">
+        <meta property="og:description" content="हिंदी व्याकरण में निपात के विस्तार से अध्ययन। इस विषय में निपात की परिभाषा, प्रकार, उदाहरण और उनका उपयोग समाहित है।">
+        <meta property="og:image" content="URL_of_the_image">
+        <meta property="og:url" content="URL_of_the_page">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="निपात - हिंदी व्याकरण">
+        <meta name="twitter:description" content="हिंदी व्याकरण में निपात के विस्तार से अध्ययन। इस विषय में निपात की परिभाषा, प्रकार, उदाहरण और उनका उपयोग समाहित है।">
+        <meta name="twitter:image" content="URL_of_the_image">
+        <link rel="stylesheet" href="..\style.css">
+        <title>निपात - परिभाषा, प्रकार, उदाहरण : हिंदी व्याकरण</title>
+    </head>
+    
+  <body> 
+
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+  
+    <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+    <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+      <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+      <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+      <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+      <li><a href="number-in-hindi.html">वचन</a></li>
+      <li><a href="gender-in-hindi.html">लिंग</a></li>
+      <li><a href="case-in-hindi.html">कारक</a></li>
+      <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+      <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+      <li><a href="verb-in-hindi.html">क्रिया</a></li>
+      <li><a href="tense-in-hindi.html">काल</a></li>
+      <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+      <li><a class="active" href="particle-in-hindi.html">निपात</a></li>
+      <li><a href="voice-in-hindi.html">वाच्य</a></li>
+      <li><a href="person-in-hindi.html">पुरुष</a></li>
+      <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+      <li><a href="prefix-in-hindi.html">उपसर्ग</a></li>
+      <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+      <li><a href="joining.html">संधि</a></li>
+      <li><a href="compound-in-hindi.html">समास</a></li>
+      <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+      <li><a href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+      <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+      <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+      <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+      <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+      <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+      <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+      <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+      <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+      <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+      <li><a href="ras-in-hindi.html">रस</a></li>
+      <li><a href="chhand-in-hindi.html">छन्द</a></li>
+      <li><a href="alankar-in-hindi.html">अलंकार</a></li>
+      <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+      <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+      <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+      <li><a href="essay-in-hindi.html">निबंध</a></li>
+      <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+  
+  
+  <br><br>
+ 
+</ul>
+</div>
+</div>
+        <div class="container">
+            <h2 id="निपात -&nbsp;परिभाषा, प्रकार, उदाहरण"><b class="color-content1">निपात -&nbsp;परिभाषा, प्रकार, उदाहरण</b></h2>
+<div>निपात अव्यय शब्दों का एक ऐसा समूह है जो वाक्य में किसी शब्द या पद के अर्थ में विशेष प्रकार का बल या भाव उत्पन्न करते हैं। ये शब्द स्वतंत्र रूप से वाक्य में अर्थ नहीं देते हैं, अपितु किसी अन्य शब्द या पद के साथ जुड़कर उसका अर्थ स्पष्ट या प्रबल करते हैं।</div>
+<div><br></div>
+<div>
+    <h2 id="निपात के भेद"><b class="color-content2">निपात के भेद</b></h2>
+</div>
+<div><br></div>
+<div>
+    <p id="निपातों को विभिन्न आधारों पर वर्गीकृत किया जा सकता है, जिनमें से कुछ प्रमुख वर्गीकरण इस प्रकार हैं:"><b class="color-content3">निपातों को विभिन्न आधारों पर वर्गीकृत किया जा सकता है, जिनमें से कुछ प्रमुख वर्गीकरण इस प्रकार हैं:</b></p>
+</div>
+<div>
+    <p id="1. अर्थ के आधार पर:"><b class="color-content5">1. अर्थ के आधार पर:</b></p>
+</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">अर्थबोधक निपात:&nbsp;</b>ये निपात वाक्य में किसी विशेष अर्थ को दर्शाते हैं, जैसे कि:</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">हेतुबोधक:</b>&nbsp;'तक', 'लिए', 'वास्ते' (जैसे, मैं तुम्हारे लिए यह काम करूंगा)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">समयबोधक:</b>&nbsp;'तब', 'तक', 'जब', 'पहले' (जैसे, मैं जब भी तुम्हें देखता हूँ, खुश हो जाता हूँ)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">स्थानबोधक:</b>&nbsp;'में', 'पर', 'तक', 'से' (जैसे, मैं घर में हूँ)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">उपायबोधक:</b>&nbsp;'से', 'द्वारा', 'के द्वारा' (जैसे, काम तू ही करेगा)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">सादृश्यबोधक:</b>&nbsp;'जैसे', 'यथा' (जैसे, वह सूरज के समान चमकता है)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">अस्वीकारबोधक:</b>&nbsp;'न', 'नहीं' (जैसे, मैं नहीं जाऊँगा)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">प्रश्नबोधक:</b>&nbsp;'क्या', 'कभी', 'कहीं' (जैसे, क्या तुम आ रहे हो?)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">आश्चर्यबोधक:</b>&nbsp;'कितना', 'कैसे', 'कहाँ' (जैसे, कितना सुंदर दृश्य है!)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">अर्थनिरपेक्ष निपात:&nbsp;</b>ये निपात वाक्य में किसी विशेष अर्थ को नहीं दर्शाते हैं, अपितु वाक्य को जोड़ने या वाक्य के अंगों को क्रम देने का कार्य करते हैं, जैसे कि:</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">योजक निपात:</b>&nbsp;'और', 'लेकिन', 'क्योंकि', 'तथापि' (जैसे, मैं गया और आ गया)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">क्रमबोधक निपात:</b>&nbsp;'पहले', 'फिर', 'बाद में', 'अंत में' (जैसे, पहले मैं खाना खाऊँगा, फिर सोऊँगा)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">उपरोक्त निपात:</b>&nbsp;'ही', 'भी', 'मात्र' (ज वही मेरा दोस्त है)</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">निषेधात्मक निपात:</b>&nbsp;'न', 'नहीं' (जैसे, मैं नहीं गया)</div>
+<div><br>
+    <p id="2. रूप के आधार पर:"><b class="color-content5">2. रूप के आधार पर:</b></p>
+</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">सरल निपात:</b>&nbsp;एक शब्द वाले निपात, जैसे कि 'भी', 'ही', 'तक'</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">सम्मिश्र निपात</b>: दो या दो से अधिक शब्दों से बने निपात, जैसे कि 'इसलिए', 'ज्यों-ज्यों', 'तभी-तब'</div>
+<div><br>
+    <p id="3. प्रयोग के आधार पर:"><b class="color-content5">3. प्रयोग के आधार पर:</b></p>
+</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">वाक्य निपात:</b>&nbsp;जो पूरे वाक्य को जोड़ते हैं, जैसे कि 'लेकिन', 'क्योंकि'</div>
+<div><b class="color-content6" style="background-color: var(--background-color);">पद निपात:</b>&nbsp;जो किसी विशेष शब्द या पद को प्रभावित करते हैं, जैसे कि 'ही', 'भी'</div>
+<div>
+    <h2 id="निपातों का प्रयोग"><b class="color-content2">निपातों का प्रयोग</b></h2>
+</div>
+<div><br></div>
+<div>
+    <p id="निपातों का प्रयोग वाक्यों में विभिन्न प्रकार से किया जाता है, जिनमें से कुछ प्रमुख प्रयोग इस प्रकार हैं:
+"><b class="color-content3">निपातों का प्रयोग वाक्यों में विभिन्न प्रकार से किया जाता है, जिनमें से कुछ प्रमुख प्रयोग इस प्रकार हैं:&nbsp;</b></p>
+</div>
+<div>
+    <p><b class="color-content6">किसी शब्द या पद के अर्थ को स्पष्ट करना:&nbsp;</b><span style="text-align: left; background-color: var(--background-color); color: var(--text-color);">मैं भी जा रहा हूँ। (यहाँ 'भी' निपात वक्ता के जाने की इच्छा को स्पष्ट करता है)</span></p>
+</div>
+<div>
+    <p><b class="color-content6">किसी शब्द या पद के अर्थ को प्रबल करना:&nbsp;</b><span style="text-align: left; background-color: var(--background-color); color: var(--text-color);">वह बहुत सुंदर है। (यहाँ 'बहुत' निपात सुंदरता के भाव को प्रबल करता है)</span></p>
+</div>
+<div>
+    <p><b class="color-content6">वाक्य में किसी विशेष भाव को व्यक्त करना:&nbsp;</b><span style="text-align: left; background-color: var(--background-color); color: var(--text-color);">काश मैं तुम्हारी जगह होता! (यहाँ 'काश' निपात इच्छा का भाव व्यक्त करता है)</span></p>
+</div>
+<div>
+    <h2 id="वाक्य के अंगों को क्रमबद्ध करना&nbsp;"><b class="color-content2">वाक्य के अंगों को क्रमबद्ध करना&nbsp;</b></h2>
+</div>
+<div><br></div>
+<div>निपातों का एक महत्वपूर्ण कार्य वाक्य के विभिन्न पदों या खंडों को एक निश्चित क्रम में रखना होता है। <br><b class="color-content9">उदाहरण के लिए:</b></div>
+<div><b class="color-content6" style="background-color: var(--background-color);">क्रमबोधक निपात:</b>ये निपात वाक्य में घटने वाली क्रियाओं या घटनाओं के क्रम को स्पष्ट करते हैं, जैसे कि 'पहले', 'फिर', 'बाद में' (जैसे, पहले मैंने खाना खाया, फिर सो गया)</div>
+<div>
+    <p id="निपातों के उदाहरण वाक्यों में"><b class="color-content4">निपातों के उदाहरण वाक्यों में</b></p>
+</div>
+<div>
+    <p id="निम्नलिखित उदाहरण वाक्यों में निपातों के प्रयोग को देखें:"><b class="color-content7">निम्नलिखित उदाहरण वाक्यों में निपातों के प्रयोग को देखें:</b></p>
+</div>
+<div><br></div>
+<div>वह तो बहुत मेहनती है। (यहाँ 'तो' निपात बल देता है)</div>
+<div>यदि तुम मेरी बात मानते, तो यह न होता। (यहाँ 'यदि' निपात शर्त को व्यक्त करता है)</div>
+<div>तुम कब आ रहे हो? (यहाँ 'कब' निपात प्रश्नबोधक है)</div>
+<div>मैं नहीं जा सकता। (यहाँ 'नहीं' निपात निषेध को व्यक्त करता है)</div>
+<div>हम लेकिन कोशिश कर सकते हैं। (यहाँ 'लेकिन' निपात विपरीतार्थक बोध कराता है)</div>
+<div>तुम भी आ जाओ। (यहाँ 'भी' निपात समावेश को दर्शाता है)</div>
+<div>निपातों का महत्व</div>
+<div><br></div>
+<div>
+    <div class="pink-background">निपात हिंदी भाषा को लचीला और प्रभावी बनाते हैं। इनके प्रयोग से हम अपनी बात को स्पष्ट, सटीक और भावपूर्ण ढंग से व्यक्त कर सकते हैं। निपातों के सटीक प्रयोग से भाषा में चेतनता आती है और वाक्य अधिक रोचक बनते हैं।&nbsp;</div>
+</div>
+<div>
+    <h2 id="अभ्यास"><b class="color-content1">अभ्यास</b></h2>
+</div>
+<div><br></div>
+<div>
+    <p id="निम्नलिखित वाक्यों में रिक्त स्थानों को उपयुक्त निपातों से भरें:"><b class="color-content3">निम्नलिखित वाक्यों में रिक्त स्थानों को उपयुक्त निपातों से भरें:</b></p>
+</div>
+<div><br></div>
+<div>वह ..... जल्दी सो गया। (तब, कभी)</div>
+<div>तुम ..... मेरी बात मानोगे, तो तुम्हारा भला होगा। (यदि, जब)</div>
+<div>हम ..... घूमने चलें। (चलो, चलते हैं)</div>
+<div>दिए गए वाक्यों में निपातों को पहचानें और उनके भेद बताएं।</div>
+
+<br>    <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+
+<table id="Table" style="border-collapse: collapse; width: 100%;">
+
+  <style>
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td {
+          padding: 10px;
+      }
+      td a:link {
+          color: rgb(55, 0, 255);
+         
+      }
+      td a:visited {
+          color: rgb(55, 0, 255); /* Color for visited links */
+      }
+      td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+           /* Color change on hover */
+      } 
+      
+
+
+
+
+
+  </style>
+
+<tbody>
+<tr>
+    <td>
+        <a href="..\vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+    </td>
+    <td>
+        <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+    </td>
+    <td>
+        <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+    </td>
+    <td>
+        <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+    </td>
+    <td>
+        <a href="number-in-hindi.html"><li>वचन</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="gender-in-hindi.html"><li>लिंग</li></a>
+    </td>
+    <td>
+        <a href="case-in-hindi.html"><li>कारक</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+    </td>
+    <td>
+        <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+    </td>
+    <td>
+        <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="tense-in-hindi.html"><li>काल</li></a>
+    </td>
+    <td>
+        <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+    </td>
+    <td>
+        <a href="particle-in-hindi.html"><li>निपात</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+    </td>
+    <td>
+        <a href="person-in-hindi.html"><li>पुरुष</li></a>
+    </td>
+    <td>
+        <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+    </td>
+    <td>
+        <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+    </td>
+    <td>
+        <a href="joining.html"><li>संधि</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="compound-in-hindi.html"><li>समास</li></a>
+    </td>
+    <td>
+        <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+    </td>
+    <td>
+        <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+    </td>
+    <td>
+        <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+    </td>
+    <td>
+        <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+    </td>
+    <td>
+        <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+    </td>
+    <td>
+        <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+    </td>
+    <td>
+        <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+    </td>
+    <td>
+        <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="ras-in-hindi.html"><li>रस</li></a>
+    </td>
+    <td>
+        <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+    </td>
+    <td>
+        <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+    </td>
+    <td>
+        <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+    </td>
+</tr>
+</tbody>
+</table>
+
+<div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+<script src="..\script.js"></script>
+<script src="..\search.js"></script>
+<script src="..\menusearch1.js"></script>
+</body>
+</html>

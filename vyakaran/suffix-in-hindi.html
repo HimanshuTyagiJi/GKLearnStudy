@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="हिंदी व्याकरण में प्रत्यय के परिभाषा, प्रकार, उदाहरण और उनका उपयोग। प्रत्यय के विभिन्न भेद और उनकी विशेषताएँ।">
+    <meta name="keywords" content="प्रत्यय, हिंदी व्याकरण, प्रत्यय के प्रकार, प्रत्यय के उदाहरण, हिंदी व्याकरण प्रत्यय">
+    <meta name="author" content="आपका नाम">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="प्रत्यय - हिंदी व्याकरण">
+    <meta property="og:description" content="हिंदी व्याकरण में प्रत्यय के परिभाषा, प्रकार, उदाहरण और उनका उपयोग। प्रत्यय के विभिन्न भेद और उनकी विशेषताएँ।">
+    <meta property="og:image" content="URL_of_the_image">
+    <meta property="og:url" content="URL_of_the_page">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="प्रत्यय - हिंदी व्याकरण">
+    <meta name="twitter:description" content="हिंदी व्याकरण में प्रत्यय के परिभाषा, प्रकार, उदाहरण और उनका उपयोग। प्रत्यय के विभिन्न भेद और उनकी विशेषताएँ।">
+    <meta name="twitter:image" content="URL_of_the_image">
+    <link rel="stylesheet" href="..\style.css">
+    <title>प्रत्यय - परिभाषा, प्रकार, उदाहरण : हिंदी व्याकरण</title>
+</head>
+  
+<body>
+   
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+    
+        <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+        <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+        <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+        <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+        <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+        <li><a href="number-in-hindi.html">वचन</a></li>
+        <li><a href="gender-in-hindi.html">लिंग</a></li>
+        <li><a href="case-in-hindi.html">कारक</a></li>
+        <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+        <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+        <li><a href="verb-in-hindi.html">क्रिया</a></li>
+        <li><a href="tense-in-hindi.html">काल</a></li>
+        <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+        <li><a href="particle-in-hindi.html">निपात</a></li>
+        <li><a href="voice-in-hindi.html">वाच्य</a></li>
+        <li><a href="person-in-hindi.html">पुरुष</a></li>
+        <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+        <li><a class="active" href="prefix-in-hindi.html">उपसर्ग</a></li>
+        <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+        <li><a href="joining.html">संधि</a></li>
+        <li><a href="compound-in-hindi.html">समास</a></li>
+        <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+        <li><a href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+        <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+        <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+        <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+        <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+        <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+        <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+        <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+        <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+        <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+        <li><a href="ras-in-hindi.html">रस</a></li>
+        <li><a href="chhand-in-hindi.html">छन्द</a></li>
+        <li><a href="alankar-in-hindi.html">अलंकार</a></li>
+        <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+        <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+        <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+        <li><a href="essay-in-hindi.html">निबंध</a></li>
+        <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+    
+    
+    
+    <br><br>
+   
+  </ul>
+  </div>
+  </div>
+          <div class="container"><h2 id="प्रत्यय (Suffix) का अर्थ और परिभाषा"><b class="color-content1">प्रत्यय (Suffix) का अर्थ और परिभाषा</b></h2>
+            <p><b class="color-content3" style="background-color: var(--background-color);">प्रत्यय&nbsp;:</b>&nbsp;हिंदी व्याकरण में वह शब्दांश है जो किसी शब्द के अंत में जुड़कर उसके अर्थ में परिवर्तन लाता है या उसे विशेष भाव देता है। ये शब्द के अर्थ, भाव, विशेषता, या स्वभाव को स्पष्ट करने में मदद करते हैं।<br><br></p>
+            <h2 id="प्रत्यय के भेद"><b class="color-content2">प्रत्यय के भेद</b></h2>
+            <p id="हिंदी व्याकरण में प्रत्यय के मुख्यतः तीन भेद होते हैं:"><b class="color-content3">हिंदी व्याकरण में प्रत्यय के मुख्यतः तीन भेद होते हैं:</b></p>
+            <ol>
+                <li>
+                    <p><b class="color-content6">कृत् प्रत्यय</b></p>
+                </li>
+                <li>
+                    <p><b class="color-content6">तद्धित प्रत्यय</b></p>
+                </li>
+                <li>
+                    <p><b class="color-content6">विभक्ति प्रत्यय</b></p>
+                </li>
+            </ol>
+            <h4>
+                <p id="1. कृत् प्रत्यय (कृत्य प्रत्यय)"><b class="color-content8">1. कृत् प्रत्यय (कृत्य प्रत्यय)</b></p>
+            </h4>
+            <p>कृत् प्रत्यय वे प्रत्यय होते हैं जो धातु (verb root) के अंत में जुड़कर संज्ञा या विशेषण बनाते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>धातु</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-क</td>
+                            <td>खा</td>
+                            <td>खानेवाला</td>
+                            <td>जो खाता है</td>
+                        </tr>
+                        <tr>
+                            <td>-क</td>
+                            <td>लिख</td>
+                            <td>लिखनेवाला</td>
+                            <td>जो लिखता है</td>
+                        </tr>
+                        <tr>
+                            <td>-त्र</td>
+                            <td>नृत्य</td>
+                            <td>नर्तक</td>
+                            <td>जो नृत्य करता है</td>
+                        </tr>
+                        <tr>
+                            <td>-अक</td>
+                            <td>चल</td>
+                            <td>चलाक</td>
+                            <td>जो चलता है</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="2. तद्धित प्रत्यय"><b class="color-content8">2. तद्धित प्रत्यय</b></p>
+            </h4>
+            <p>तद्धित प्रत्यय वे प्रत्यय होते हैं जो संज्ञा के अंत में जुड़कर उससे नई संज्ञा या विशेषण बनाते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-त्व</td>
+                            <td>मित्र</td>
+                            <td>मित्रत्व</td>
+                            <td>मित्रता</td>
+                        </tr>
+                        <tr>
+                            <td>-ई</td>
+                            <td>बालक</td>
+                            <td>बालिका</td>
+                            <td>लड़की</td>
+                        </tr>
+                        <tr>
+                            <td>-क</td>
+                            <td>राज्य</td>
+                            <td>राजक</td>
+                            <td>राजा का</td>
+                        </tr>
+                        <tr>
+                            <td>-ज</td>
+                            <td>जल</td>
+                            <td>जली</td>
+                            <td>जल से संबंधित</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="3. विभक्ति प्रत्यय"><b class="color-content8">3. विभक्ति प्रत्यय</b></p>
+            </h4>
+            <p>विभक्ति प्रत्यय वे प्रत्यय होते हैं जो संज्ञा या सर्वनाम के अंत में जुड़कर वाक्य में उसके व्याकरणिक संबंध को दर्शाते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>संज्ञा</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-का</td>
+                            <td>राम</td>
+                            <td>रामका</td>
+                            <td>राम का (संबंध)</td>
+                        </tr>
+                        <tr>
+                            <td>-को</td>
+                            <td>सीता</td>
+                            <td>सीताको</td>
+                            <td>सीता को (कर्म)</td>
+                        </tr>
+                        <tr>
+                            <td>-से</td>
+                            <td>गंगा</td>
+                            <td>गंगासे</td>
+                            <td>गंगा से (संबंध)</td>
+                        </tr>
+                        <tr>
+                            <td>-पर</td>
+                            <td>पेड़</td>
+                            <td>पेड़पर</td>
+                            <td>पेड़ पर (स्थिति)<br></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="4. संप्रत्यय (सम्मिलन प्रत्यय)"><b class="color-content8">4. संप्रत्यय (सम्मिलन प्रत्यय)</b></p>
+            </h4>
+            <p>संप्रत्यय वे प्रत्यय होते हैं जो दो शब्दों के संयोग से एक नया शब्द बनाते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>शब्द 1</th>
+                            <th>शब्द 2</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-कार</td>
+                            <td>संगीत</td>
+                            <td>ज्ञानी</td>
+                            <td>संगीतकार</td>
+                            <td>संगीत जानने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-द</td>
+                            <td>जल</td>
+                            <td>दा</td>
+                            <td>जलद</td>
+                            <td>पानी देने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-धर</td>
+                            <td>पुस्तक</td>
+                            <td>धारी</td>
+                            <td>पुस्तकधर</td>
+                            <td>पुस्तक रखने वाला</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="5. अव्यय प्रत्यय"><b class="color-content8">5. अव्यय प्रत्यय</b></p>
+            </h4>
+            <p>अव्यय प्रत्यय वे प्रत्यय होते हैं जो किसी शब्द के अंत में जुड़कर उसे अव्यय (invariable) बना देते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-त</td>
+                            <td>तेज</td>
+                            <td>तेज़त</td>
+                            <td>बहुत तेज</td>
+                        </tr>
+                        <tr>
+                            <td>-छ</td>
+                            <td>अच्छा</td>
+                            <td>अच्छछ</td>
+                            <td>बहुत अच्छा</td>
+                        </tr>
+                        <tr>
+                            <td>-हिं</td>
+                            <td>बहुत</td>
+                            <td>बहुहिं</td>
+                            <td>बहुत</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h2 id="प्रत्यय के उदाहरण"><b class="color-content2">प्रत्यय के उदाहरण</b></h2>
+            <h4>
+                <p id="1. कृत् प्रत्यय"><b class="color-content8">1. कृत् प्रत्यय</b></p>
+            </h4>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>धातु</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-क</td>
+                            <td>पढ़</td>
+                            <td>पाठक</td>
+                            <td>पढ़ने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-य</td>
+                            <td>हस</td>
+                            <td>हास्य</td>
+                            <td>हँसने योग्य</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="2. तद्धित प्रत्यय"><b class="color-content8">2. तद्धित प्रत्यय</b></p>
+            </h4>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-प</td>
+                            <td>विद्युत्</td>
+                            <td>विद्युत्पात</td>
+                            <td>बिजली का गिरना</td>
+                        </tr>
+                        <tr>
+                            <td>-मय</td>
+                            <td>जल</td>
+                            <td>जलमय</td>
+                            <td>पानी से भरा हुआ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="3. विभक्ति प्रत्यय"><b class="color-content8">3. विभक्ति प्रत्यय</b></p>
+            </h4>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>संज्ञा</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-का</td>
+                            <td>घोड़ा</td>
+                            <td>घोड़ेका</td>
+                            <td>घोड़े का (संबंध)</td>
+                        </tr>
+                        <tr>
+                            <td>-ने</td>
+                            <td>राजा</td>
+                            <td>राजाने</td>
+                            <td>राजा ने (कर्त्ता)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="4. संप्रत्यय"><b class="color-content8">4. संप्रत्यय</b></p>
+            </h4>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>शब्द 1</th>
+                            <th>शब्द 2</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-पुत्र</td>
+                            <td>गो</td>
+                            <td>पालक</td>
+                            <td>गोपालक</td>
+                            <td>गाय पालने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-रक्षक</td>
+                            <td>जन</td>
+                            <td>सेवक</td>
+                            <td>जनसेवक</td>
+                            <td>जनता की सेवा करने वाला</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h2 id="प्रत्यय के अन्य भेद और उनके उदाहरण"><b class="color-content2">प्रत्यय के अन्य भेद और उनके उदाहरण</b></h2>
+            <h4>
+                <p id="5. निपातार्थक प्रत्यय"><b class="color-content8">5. निपातार्थक प्रत्यय</b></p>
+            </h4>
+            <p>निपातार्थक प्रत्यय वे प्रत्यय होते हैं जो किसी शब्द में जुड़कर उसके अर्थ में परिवर्तन नहीं करते, बल्कि केवल उसके रूप में परिवर्तन करते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-ही</td>
+                            <td>अभी</td>
+                            <td>अभीही</td>
+                            <td>ठीक अभी</td>
+                        </tr>
+                        <tr>
+                            <td>-सा</td>
+                            <td>जैसा</td>
+                            <td>जैसा-सा</td>
+                            <td>बिल्कुल वैसा</td>
+                        </tr>
+                        <tr>
+                            <td>-भर</td>
+                            <td>आज</td>
+                            <td>आजभर</td>
+                            <td>पूरा आज का दिन</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="6. कृदंत प्रत्यय"><b class="color-content8">6. कृदंत प्रत्यय</b></p>
+            </h4>
+            <p>कृदंत प्रत्यय वे प्रत्यय होते हैं जो क्रिया धातु के अंत में जुड़कर उसे विशेषण या संज्ञा में बदल देते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>धातु</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-ता</td>
+                            <td>जान</td>
+                            <td>जानता</td>
+                            <td>जानने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-ना</td>
+                            <td>पढ़</td>
+                            <td>पढ़ना</td>
+                            <td>पढ़ने की क्रिया</td>
+                        </tr>
+                        <tr>
+                            <td>-व</td>
+                            <td>लिख</td>
+                            <td>लिखव</td>
+                            <td>लिखने की वस्तु</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="7. भाववाचक प्रत्यय"><b class="color-content8">7. भाववाचक प्रत्यय</b></p>
+            </h4>
+            <p>भाववाचक प्रत्यय वे प्रत्यय होते हैं जो किसी संज्ञा या विशेषण के अंत में जुड़कर उसके भाव को व्यक्त करते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-ता</td>
+                            <td>बुद्ध</td>
+                            <td>बुद्धि</td>
+                            <td>बुद्धिमान होने की अवस्था</td>
+                        </tr>
+                        <tr>
+                            <td>-पन</td>
+                            <td>सज्जन</td>
+                            <td>सज्जनता</td>
+                            <td>सज्जन होने की अवस्था</td>
+                        </tr>
+                        <tr>
+                            <td>-ई</td>
+                            <td>सुंदर</td>
+                            <td>सुंदरता</td>
+                            <td>सुंदर होने की अवस्था</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="8. जातिवाचक प्रत्यय"><b class="color-content8">8. जातिवाचक प्रत्यय</b></p>
+            </h4>
+            <p>जातिवाचक प्रत्यय वे प्रत्यय होते हैं जो किसी जाति या वर्ग को व्यक्त करते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-आन</td>
+                            <td>क्षत्र</td>
+                            <td>क्षत्रिय</td>
+                            <td>क्षत्रियों का वर्ग</td>
+                        </tr>
+                        <tr>
+                            <td>-क</td>
+                            <td>विद्या</td>
+                            <td>विद्यार्थी</td>
+                            <td>विद्या प्राप्त करने वाला</td>
+                        </tr>
+                        <tr>
+                            <td>-व</td>
+                            <td>धन</td>
+                            <td>धनवान</td>
+                            <td>धनी व्यक्ति</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="9. संप्रदायवाचक प्रत्यय"><b class="color-content8">9. संप्रदायवाचक प्रत्यय</b></p>
+            </h4>
+            <p>संप्रदायवाचक प्रत्यय वे प्रत्यय होते हैं जो किसी समुदाय या समूह को व्यक्त करते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-कुल</td>
+                            <td>गुरु</td>
+                            <td>गुरुकुल</td>
+                            <td>गुरु का समुदाय</td>
+                        </tr>
+                        <tr>
+                            <td>-गण</td>
+                            <td>देव</td>
+                            <td>देवगण</td>
+                            <td>देवताओं का समूह</td>
+                        </tr>
+                        <tr>
+                            <td>-वर्ग</td>
+                            <td>छात्र</td>
+                            <td>छात्रवर्ग</td>
+                            <td>छात्रों का समूह</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h4>
+                <p id="10. तत्सम प्रत्यय"><b class="color-content8">10. तत्सम प्रत्यय</b></p>
+            </h4>
+            <p>तत्सम प्रत्यय वे प्रत्यय होते हैं जो संस्कृत भाषा से सीधे लिए गए हैं और हिंदी में उसी रूप में उपयोग होते हैं।</p>
+            <p><b class="color-content9">उदाहरण:</b><br></p>
+            <center>
+                <table border="5">
+                    <thead>
+                        <tr>
+                            <th>प्रत्यय</th>
+                            <th>मूल शब्द</th>
+                            <th>शब्द</th>
+                            <th>अर्थ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-मय</td>
+                            <td>रजत</td>
+                            <td>रजतमय</td>
+                            <td>चाँदी से बना हुआ</td>
+                        </tr>
+                        <tr>
+                            <td>-वत्</td>
+                            <td>शांति</td>
+                            <td>शांतिवत्</td>
+                            <td>शांति से युक्त</td>
+                        </tr>
+                        <tr>
+                            <td>-मान</td>
+                            <td>ध्यान</td>
+                            <td>ध्यानमान</td>
+                            <td>ध्यान रखने वाला</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            <h2 id="प्रत्ययों का उपयोग और महत्व"><b class="color-content2">प्रत्ययों का उपयोग और महत्व</b></h2>
+            <p>प्रत्यय का सही और सटीक उपयोग भाषा को अधिक प्रभावशाली और अर्थपूर्ण बनाता है। प्रत्यय न केवल शब्दों को संक्षिप्त करते हैं, बल्कि उनकी व्याकरणिक भूमिका भी महत्वपूर्ण होती है। प्रत्यय जोड़कर नए शब्द बनाए जा सकते हैं, जो भाषा को समृद्ध बनाते हैं और उसके अर्थ को स्पष्ट करते हैं।</p>
+            <p id="प्रत्ययों के प्रयोग से:"><b class="color-content5">प्रत्ययों के प्रयोग से:</b></p>
+            <ol>
+                <li>शब्दों में नए अर्थ जुड़ते हैं।</li>
+                <li>वाक्यों में अधिक स्पष्टता आती है।</li>
+                <li>भाषा का साहित्यिक और सांस्कृतिक विकास होता है।</li>
+            </ol>
+            <h2 id="प्रत्यय और उनका व्याकरणिक महत्व"><b class="color-content2">प्रत्यय और उनका व्याकरणिक महत्व</b></h2>
+            <p id="प्रत्यय का व्याकरणिक महत्व अत्यधिक होता है क्योंकि ये:"><b class="color-content3">प्रत्यय का व्याकरणिक महत्व अत्यधिक होता है क्योंकि ये:</b></p>
+            <ol>
+                <li>शब्दों के अर्थ को स्पष्ट करते हैं।</li>
+                <li>नए शब्द बनाने में सहायक होते हैं।</li>
+                <li>वाक्य में शब्दों के बीच संबंध स्थापित करते हैं।</li>
+                <li>भाषा को समृद्ध और सजीव बनाते हैं।</li>
+            </ol>
+            <h2 id="प्रत्यय के उपयोग और महत्व"><b class="color-content2">प्रत्यय के उपयोग और महत्व</b></h2>
+            <div class="blue1-background">प्रत्यय भाषा में शब्दों को विस्तार और विविधता प्रदान करते हैं। ये शब्दों को नए अर्थ, भाव, और संबंध देते हैं जिससे भाषा समृद्ध और व्यापक बनती है। प्रत्यय के सही उपयोग से वाक्य और शब्दों के अर्थ को स्पष्ट और सटीक बनाया जा सकता है।</div>
+            <p></p>
+            <h2 id="अभ्यास प्रश्न"><b class="color-content1">अभ्यास प्रश्न</b></h2>
+            <p id="प्रत्यय से जुड़े कुछ अभ्यास प्रश्न:"><b class="color-content3">प्रत्यय से जुड़े कुछ अभ्यास प्रश्न:</b></p>
+            <ol>
+                <li>
+                    <p><b class="color-content6">निम्नलिखित शब्दों में से प्रत्यय को पहचानें:</b></p>
+                    <ul>
+                        <li>विद्यार्थिनी</li>
+                        <li>बुद्धिमान</li>
+                        <li>सुंदरता</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><b class="color-content6">प्रत्यय जोड़कर नए शब्द बनाएँ:</b></p>
+                    <ul>
+                        <li>जान + ता</li>
+                        <li>पढ़ + ना</li>
+                        <li>सुंदर + ई</li>
+                    </ul>
+                </li>
+                <li>
+                    <p><b class="color-content6">निम्नलिखित शब्दों के प्रत्यय का अर्थ बताएँ:</b></p>
+                    <ul>
+                        <li>शिक्षक</li>
+                        <li>धनवान</li>
+                        <li>देवगण</li>
+                    </ul>
+                </li>
+            </ol>
+            <p><strong>उत्तर:</strong></p>
+            <ol>
+                <li>
+                    <p id="प्रत्यय पहचान:"><b class="color-content5">प्रत्यय पहचान:</b></p>
+                    <ul>
+                        <li>विद्यार्थिनी (नी)</li>
+                        <li>बुद्धिमान (मान)</li>
+                        <li>सुंदरता (ता)</li>
+                    </ul>
+                </li>
+                <li>
+                    <p id="नए शब्द:"><b class="color-content5">नए शब्द:</b></p>
+                    <ul>
+                        <li>जान + ता = जानता</li>
+                        <li>पढ़ + ना = पढ़ना</li>
+                        <li>सुंदर + ई = सुंदरता</li>
+                    </ul>
+                </li>
+                <li>
+                    <p id="प्रत्यय का अर्थ:"><b class="color-content5">प्रत्यय का अर्थ:</b></p>
+                    <ul>
+                        <li>शिक्षक (शिक्षा देने वाला)</li>
+                        <li>धनवान (धनी व्यक्ति)</li>
+                        <li>देवगण (देवताओं का समूह)</li>
+                    </ul>
+                </li>
+            </ol>
+            <br>    <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+
+            <table id="Table" style="border-collapse: collapse; width: 100%;">
+            
+              <style>
+                  table {
+                      border-collapse: collapse;
+                      width: 100%;
+                  }
+                  td {
+                      padding: 10px;
+                  }
+                  td a:link {
+                      color: rgb(55, 0, 255);
+                     
+                  }
+                  td a:visited {
+                      color: rgb(55, 0, 255); /* Color for visited links */
+                  }
+                  td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+                       /* Color change on hover */
+                  } 
+                  
+            
+            
+            
+            
+            
+              </style>
+            
+            <tbody>
+            <tr>
+                <td>
+                    <a href="language-and-vyakaran.html"><li>भाषा और व्याकरण</li></a>
+                </td>
+                <td>
+                    <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+                </td>
+                <td>
+                    <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+                </td>
+                <td>
+                    <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+                </td>
+                <td>
+                    <a href="number-in-hindi.html"><li>वचन</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="gender-in-hindi.html"><li>लिंग</li></a>
+                </td>
+                <td>
+                    <a href="case-in-hindi.html"><li>कारक</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+                </td>
+                <td>
+                    <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+                </td>
+                <td>
+                    <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="tense-in-hindi.html"><li>काल</li></a>
+                </td>
+                <td>
+                    <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+                </td>
+                <td>
+                    <a href="particle-in-hindi.html"><li>निपात</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+                </td>
+                <td>
+                    <a href="person-in-hindi.html"><li>पुरुष</li></a>
+                </td>
+                <td>
+                    <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+                </td>
+                <td>
+                    <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+                </td>
+                <td>
+                    <a href="joining.html"><li>संधि</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="compound-in-hindi.html"><li>समास</li></a>
+                </td>
+                <td>
+                    <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+                </td>
+                <td>
+                    <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+                </td>
+                <td>
+                    <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+                </td>
+                <td>
+                    <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+                </td>
+                <td>
+                    <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+                </td>
+                <td>
+                    <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+                </td>
+                <td>
+                    <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+                </td>
+                <td>
+                    <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="ras-in-hindi.html"><li>रस</li></a>
+                </td>
+                <td>
+                    <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+                </td>
+                <td>
+                    <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+                </td>
+                <td>
+                    <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+            
+            <div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+            <script src="..\script.js"></script>
+            <script src="..\search.js"></script>
+            <script src="..\menusearch1.js"></script>
+            </body>
+            </html>
+            

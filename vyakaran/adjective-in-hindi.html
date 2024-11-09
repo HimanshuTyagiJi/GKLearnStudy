@@ -1,0 +1,858 @@
+<!DOCTYPE html> <html lang="hi" > 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।">
+        <meta name="keywords" content="विशेषण, Adjective in Hindi, विशेषण के प्रकार, हिंदी व्याकरण, हिंदी भाषा, Adjective Examples, Adjective Types, विशेषण के उदाहरण, विशेषण के उपयोग, विशेषण की परिभाषा">
+        <meta name="author" content="आपका नाम">
+        <meta name="robots" content="index, follow">
+        <meta property="og:title" content="विशेषण - हिंदी व्याकरण">
+        <meta property="og:description" content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।">
+        <meta property="og:image" content="URL_of_the_image">
+        <meta property="og:url" content="URL_of_the_page">
+        <meta property="og:type" content="article">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="विशेषण - हिंदी व्याकरण">
+        <meta name="twitter:description" content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।">
+        <meta name="twitter:image" content="URL_of_the_image">
+        <link rel="stylesheet" href="..\style.css">
+        <title>विशेषण - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
+    </head>
+    
+  <body> 
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+  
+      <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+      <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+      <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+      <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+      <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+      <li><a href="number-in-hindi.html">वचन</a></li>
+      <li><a href="gender-in-hindi.html">लिंग</a></li>
+      <li><a href="case-in-hindi.html">कारक</a></li>
+      <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+      <li><a class="active" href="adjective-in-hindi.html">विशेषण</a></li>
+      <li><a href="verb-in-hindi.html">क्रिया</a></li>
+      <li><a href="tense-in-hindi.html">काल</a></li>
+      <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+      <li><a href="particle-in-hindi.html">निपात</a></li>
+      <li><a href="voice-in-hindi.html">वाच्य</a></li>
+      <li><a href="person-in-hindi.html">पुरुष</a></li>
+      <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+      <li><a href="prefix-in-hindi.html">उपसर्ग</a></li>
+      <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+      <li><a href="joining.html">संधि</a></li>
+      <li><a href="compound-in-hindi.html">समास</a></li>
+      <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+      <li><a href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+      <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+      <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+      <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+      <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+      <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+      <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+      <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+      <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+      <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+      <li><a href="ras-in-hindi.html">रस</a></li>
+      <li><a href="chhand-in-hindi.html">छन्द</a></li>
+      <li><a href="alankar-in-hindi.html">अलंकार</a></li>
+      <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+      <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+      <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+      <li><a href="essay-in-hindi.html">निबंध</a></li>
+      <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+  
+  
+  <br><br>
+ 
+</ul>
+</div>
+</div>
+
+
+
+        <div class="container"><div class="grid-wrapper">
+          <article class="half-left">
+            <h1 id="विशेषण– परिभाषा, भेद और उदाहरण"><b class="color-content2">विशेषण– परिभाषा, भेद और उदाहरण</b></h1> <br>
+              <div class="content" id="विशेषण"></div>
+              <p> <b class="color-content1">विशेषण </b><i> (Adjective)</i> : </p>
+              <div>
+                  <p>संसार <span>में जितने<span> भी प्राणी, <span>वस्तु, स्थान<span> आदि <span>हैं सभी<span> की अपनी <span>कुछ-न-कुछ<span> विशेषताएँ<span> होती हैं। <span>इन्हीं विशेष<span>ताओं को <span>बताने वा<span>ले शब्द <b><span class="color-content1">विशेषण</span></b> कहलाते हैं।</span></span></span></span></span></span></span></span></span></span></span></span></span></p><br> एक बा<span>र जंगल में जा<span>नवरों की<span> सभा हो <span>रही थी। उसमें <span class="color-content1">बड़ा</span> हाथी, <span class="color-content1">लंबी</span> गर्दन वाला जिराफ, <span class="color-content1">नन्हा</span> खरगोश, <span class="color-content1">चालाक</span> लोमड़ी, <span class="color-content1">नटखट</span> बंदर, <span class="color-content1">मोटा</span> सुअर, <span class="color-content1">सफेद</span> गाय, <span class="color-content1">वफादार</span> कुत्ता <span>सभी उपस्थि<span>त हुए। लोमड़ी ने<span> कहा, "हमारा जंग<span>ल कितना <span class="color-content1">हरा-भरा</span> और <span class="color-content1">सुंदर</span> है। हमें आपस<span> में मिल-जुल<span>कर रहना <span>चाहिए।" तभी <span class="color-content1">डरावना</span> शेर दहाड़ता <span>हुआ आया और सभी जानवर<span> भागने लगे।.<p></p>
+                                                                      <p>उपर्युक्त पंक्ति<span>यों में रंगीन श<span>ब्द नाम शब्दों (संज्ञा) की विशेषता बता रहे हैं। <span>इन्हीं शब्दों को<b><span class="color-content1"> विशे<span>षण </span></span></b>कहा जाता है।</span></span></span></p>
+                                                                  </span></span></span></span></span></span></span></span></span></span></span></span></span>
+              </div>
+          </article>
+          <article class="half-right">
+              <h2><b>Contents</b></h2><b><br>
+                  <ul id="myUL">
+                      <li><a href="#विशेषण">1. विशेषण</a>
+                          <p></p>
+                          <p><a href="#विशेष्य">2. विशेष्य</a></p>
+                          <p></p>
+                          <p><a href="#प्रविशेषण">3. प्रविशेषण </a></p>
+                          <p><a href="#गुणवाचक-विशेषण">4. गुणवाचक विशेषण</a></p>
+                          <p></p>
+                          <p><a href="#संख्यावाचक-विशेषण">5. संख्यावाचक विशेषण</a></p>
+                          <p><a href="#परिमाणवाचक-विशेषण">6. परिमाणवाचक विशेषण</a></p>
+                          <p><a href="#सार्वनामिक-विशेषण">7. सार्वनामिक विशेषण</a></p>
+                          <p><a href="#मूलावस्था">8. मूलावस्था</a></p>
+                          <p><a href="#उत्तरावस्था">9. उत्तरावस्था</a></p>
+                          <p><a href="#उत्तमावस्था">10. उत्तमावस्था</a></p>
+                      </li>
+                  </ul>
+              </b>
+          </article>
+      </div>
+      <ol>
+          <p><br></p>
+          <div class="pink-background">
+              <div style="margin:10px;"><b>परिभाषा-</b> संज्ञा अथवा सर्वनाम शब्दों की विशेषता (गुण, दोष, संख्या, परिमाण आदि) बताने वाले शब्द <b class="color-content1">विशेषण </b>कहलाते हैं।&nbsp;<b class="color-content2">जैसे –</b>&nbsp;बड़ा, काला, लंबा, दयालु, भारी, सुन्दर, कायर, टेढ़ा-मेढ़ा, एक, दो आदि।<p></p>
+                  <p><br></p>
+              </div>
+          </div>
+      </ol><br><b class="color-content1">▌महत्वपूर्ण बिन्दु ▌<p></p></b>
+      <ol>
+          <div class="pink-background">
+              <div style="margin:10px;">
+                  <p>वाक्य में संज्ञा अथवा सर्वनाम की विशेषता बताने वाले शब्दों को <b class="color-content1">विशेषण </b> कहते हैं।&nbsp;<b class="color-content2">जैसे –</b>&nbsp;काला कुत्ता। इस वाक्य में ‘काला’ विशेषण है।</p>
+              </div>
+          </div>
+      </ol>
+      <ol><br>
+          <div class="blue1-background">
+              <div style="margin:10px;">
+                  <p>जिस शब्द (संज्ञा अथवा सर्वनाम) की विशेषता बतायी जाती है उसे <b class="color-content1">विशेष्य </b>कहते हैं। उपरोक्त वाक्य में कुत्ता विशेष्य है।</p>
+              </div>
+          </div>
+      </ol>
+      <ol><br>
+          <div class="green-background">
+              <div style="margin:10px;">
+                  <p>जिस विकारी शब्द से संज्ञा की व्याप्ति मर्यादित होती है, उसे भी <b class="color-content1">विशेषण </b> कहते हैं। जैसे- मेहनती विद्यार्थी सफलता पाते हैं। धरमपुर स्वच्छ नगर है। वह पीला है। ऐसा आदमी कहाँ मिलेगा? इन वाक्यों में <span class="color-content1">मेहनती</span>, <span class="color-content1">नीला</span>, <span class="color-content1"> लाल</span>, <span class="color-content1">अच्छा</span>, <span class="color-content1"> स्वच्छ</span>, <span class="color-content1"> पीला </span> और <span class="color-content1">ऐसा </span>शब्द विशेषण हैं। जो क्रमशः , <span class="color-content1">विद्यार्थी</span>, <span class="color-content1"> धरमपुर</span><span class="color-content1"></span>, <span class="color-content1"> वह </span>और <span class="color-content1">आदमी </span>की विशेषता बताते हैं।</p>
+              </div>
+          </div>
+      </ol>
+      <ol><br>
+          <div class="yellow-background">
+              <div style="margin:10px;">
+                  <p>विशेषण शब्द जिसकी विशेषता बताये, उसे <b class="color-content1">विशेष्य </b>कहते हैं, अतः विद्यार्थी, धरमपुर, वह और <span class="color-content1">आदमी </span>शब्द विशेष्य हैं।</p>
+              </div>
+          </div>
+      </ol>
+      <ol>
+          <p>विशेषण सार्थक शब्दों के आठ भेदों में एक भेद है।</p>
+      </ol>
+      <ol>
+          <p>व्याकरण में विशेषण एक विकारी शब्द है।</p>
+      </ol>
+      <div class="grid-wrapper">
+          <article class="half-left">
+              <ol><br>
+                  <div class="content" id="विशेष्य"></div>
+                  <p></p>
+                  <h3 style="text-align: center;"><b>
+                          <h3 class="color-content1">विशेष्य</h3>
+                      </b></h3> <b style="font-size: 15px;"><span style="font-size: 15px;">जिस संज्ञा अथवा सर्वनाम शब्द की विशेषता बताई जाए वह <b><span class="color-content1">विशेष्य</span></b> कहलाता है।&nbsp;</span></b><b class="color-content2">जैसे –</b>
+                  <p>बाग में <span class="color-content1">सुंदर फूल</span> खिले हैं।&nbsp; – इसमें&nbsp;<b class="color-content2">सुन्दर- विशेषण</b>&nbsp;है और&nbsp;<span class="color-content1">फूल<span style="background: 0px 0px; border: 0px; margin: 0px; outline: 0px; padding: 0px; vertical-align: baseline;">&nbsp;</span></span><span class="color-content1">विशेष्य</span><span style="color: #333333;">&nbsp;है।</span><span>विशेषण शब्द विशेष्य से&nbsp;<b class="color-content2">पहले</b>&nbsp;भी आते हैं और उसके&nbsp;<span class="color-content2"><b class="color-content2">बाद</b>&nbsp;</span>भी।&nbsp;</span></p> <br><span class="color-content2"><b class="color-content2">पूर्व में</b>-</span><span style="background-color: initial;">&nbsp;जैसे-</span>
+                  <li><span class="color-content1">मेहनती व्यक्ति </span>सभी को अच्छे लगते हैं।&nbsp;</li>
+                  <li> <span class="color-content1">एक मीटर </span>कपड़ा&nbsp;ले आना।</li><br><span style="background-color: initial;"><b class="color-content2">बाद में-</b>&nbsp;जैसे-</span>
+                  <li>यह&nbsp;<span class="color-content1">रास्ता लंबा</span>&nbsp;है।</li>
+                  <li>
+                      <p>यह <span class="color-content1">आम मीठा</span>&nbsp;है।</p>
+                  </li>
+              </ol>
+          </article>
+          <article class="half-right"><br>
+              <div class="content" id="प्रविशेषण"></div>
+              <ol>
+                  <h3 style="text-align: center;"><b>
+                          <h3 class="color-content1">प्रविशेषण&nbsp;</h3>
+                      </b></h3>
+                  <div><b>जो शब्द विशेषण की विशेषता बताए ,उन्हे <span class="color-content1">प्रविशेषण</span> कहते है;</b><br><br><span style="transition: background 2s ease 0s;">
+                          <div><b><b class="color-content2" style="background-color: var(--background-color);">जैसे-</b>&nbsp;</b>यह केला बहुत खराब है।</div><br>यहाँ '<b class="color-content2">बहुत</b>' शब्द <b>'<b class="color-content2">खराब</b>'</b> विशेषण की विशेषता बता रहा है, अतः यह&nbsp;<b class="color-content2">प्रविशेषण</b>&nbsp;है।&nbsp;
+                      </span></div>
+              </ol><br>
+              <center><img src="image/विशेषण.jpg" style=" width:70%"><br></center>
+          </article>
+      </div> <span class="color-content5"><b>विशेषण के प्रकार-</b></span>
+      <p></p>
+      <p style="font-size: 15px;"><span>विशेषण के चार प्रकार हैं-</span></p>
+      <p style="font-size: 15px; text-align: left;"></p>
+      <ol style="text-align: left;">
+          <li>गुणवाचक विशेषण</li>
+          <li><span>परिमाणवाचक विशेषण</span></li>
+          <li><span>संख्यावाचक विशेषण</span></li>
+          <li><span>सार्वनामिक विशेषण</span></li>
+      </ol>
+      <p></p> <br>
+      <div class="grid-wrapper">
+          <article class="half-left"> <br>
+              <div class="content" id="गुणवाचक-विशेषण"></div>
+              <at><b class="color-content1">1. गुणवाचक विशेषण</b><i> (Adjective of Quality)</i></at>
+              <p> जिस शब्द से संज्ञा या सर्वनाम के गुण अथवा दोष (आकर , समय , रंग , रूप रंग आदि) का बोध होता है, उसे <b><span class="color-content1">गुणवाचक विशेषण</span></b> कहते हैं; <br><b class="color-content2">जैसे–</b><br> <br><b class="color-content2">गुण–</b>&nbsp;ईमानदार, चतुर, परोपकारी, सच्चा आदि। <br><b class="color-content2">दोष–</b>&nbsp;अपवित्र, घिनौना, शैतान, कठोर आदि। <br><b class="color-content2">रंग-रूप–&nbsp;</b>गोरा, कोमल, सुनहरा, गुलाबी आदि । <br><b class="color-content2">अवस्था–</b>&nbsp;बूढ़ा, गरीब, रोगी, बलवान आदि । <br><b class="color-content2">स्वाद–</b>&nbsp;कड़वा, मीठा, तीखा, फीका आदि। <br><b class="color-content2">समय संबंधी–</b>&nbsp;नया, पुराना, ताजा, वर्तमान, भूत, भविष्य, अगला, पिछला आदि। <br><b class="color-content2">स्थान–</b>&nbsp;लंबा, चौड़ा, ऊँचा, नीचा, सीधा, बाहरी, भीतरी आदि। <br><b class="color-content2">आकार–</b>&nbsp;गोल. चौकोर, सुडौल, पोला, सुंदर आदि। <br><b class="color-content2">दशा संबंधी–</b>&nbsp;दुबला, पतला, मोटा, भारी, गाढ़ा, गीला, गरीब, पालतू आदि। <br><b class="color-content2">वर्ण संबंधी–</b>&nbsp;लाल, पीला, नीला, हरा, काला, बैंगनी, सुनहरी आदि। <br><b class="color-content2">संज्ञा–</b>&nbsp;मुंबईया, बनारसी, लखनवी आदि। </p>
+          </article>
+      
+          <br>
+          <article class="half-right"> <br>
+              <div class="content" id="परिमाणवाचक-विशेषण"></div>
+              <at><b class="color-content1">2. परिमाणवाचक विशेषण</b><i>(Adjective of Quantity)</i></at>
+              <p> जिस विशेषण से किसी वस्तु की नाप-तौल का बोध होता है, उसे <b><span class="color-content1">परिमाण-बोधक विशेषण </span></b>कहते हैं।<br><b class="color-content2">जैसे-</b><br> <br> </p>
+             <ul> <li>मेरे पास <span class="color-content1"> दो मीटर </span>कपड़ा है।</li>
+              <li>उसे <span class="color-content1"> एक किलो </span>बेसन चाहिए।</li>
+              <li><span class="color-content1"> एक लीटर </span>पानी चाहिए।</li></ul><br> उपर्युक्त रंगीन शब्दों में दो मीटर, एक किलो और एक लीटर पानी शब्द <b><span class="color-content1">परिमाण-बोधक विशेषण</span></b> हैं। <br><br> परिमाणवाचक विशेषण के दो प्रकार हैं-<br><b class="color-content2">1. निश्चित परिमाणवाचक विशेषण :</b><b>&nbsp;</b>जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध कराते हैं, उन्हें <b><span class="color-content1">निश्चित परिमाणवाचक विशेषण</span></b> कहते हैं; जैसे- पाँच मीटर कपड़ा, एक लीटर दूध आदि।<br> <br><b class="color-content2">2. अनिश्चित परिमाणवाचक विशेषण :</b>&nbsp;जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध नहीं कराते हैं, उन्हें <b><span class="color-content1">अनिश्चित परिमाणवाचक विशेषण </span></b>कहते हैं; जैसे, थोड़ा पानी और अधिक काम, कुछ परिश्रम आदि।<p></p>
+          </article>
+      </div><br>
+      <div class="grid-wrapper">
+          <article class="half-left"> <br>
+              <div class="content" id="संख्यावाचक-विशेषण"></div>
+              <at><b class="color-content1"> 3. संख्यावाचक विशेषण </b><i>(Adjective of number)</i></at>
+              <p>जो विशेषण संज्ञा या सर्वनाम की संख्या का बोध कराता है, उसे <b><span class="color-content1">संख्यावाचक विशेषण </span></b>कहते हैं।&nbsp;<b class="color-content2" style="background-color: var(--background-color);">जैसे-</b></p>
+              <p>कुछ व्यक्ति, 5 रूपये, 3 दिन आदि। </p> <br> <br>
+              <p> संख्यावाचक विशेषण के भी दो प्रकार होते हैं-</p> <ol><span style="color: green;">
+                  <li> निश्चित संख्यावाचक विशेषण</li>
+                  <li> अनिश्चित संख्यावाचक विशेषण</li>
+              </span></ol>
+          </article>
+      </div><br> <b><span class="color-content1"> (क) निश्चित संख्यावाचक विशेषण- </span></b>
+      <p>जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध कराते है, उन्हें <b><span class="color-content1"> निश्चित संख्यावाचक विशेषण </span></b>कहते हैं; </p>
+      <p><b class="color-content2" style="background-color: var(--background-color);">जैसे-</b>एक लीटर, दस मीटर आदि। <br></p><br>
+      <p>निश्चित संख्यावाचक विशेषण के 6 भेद हैं-</p> <b class="color-content2">1. पूर्णांक बोधक विशेषण&nbsp;</b>
+      <div><b class="color-content2">जैसे-</b><br>
+         <ul><li>एक, दस, सौ, हजार, लाख आदि।</li></ul>
+          <p> <br><b class="color-content2">2. अपूर्णांक बोधक विशेषण</b><br><b class="color-content2">जैसे-</b><br></p>
+          <ul><li>पौना, सवा, डेढ, ढाई आदि।</li> </ul><br><b class="color-content2">3. क्रमवाचक विशेषण&nbsp;</b>
+      </div>
+      <div><b class="color-content2">जैसे-</b><br>
+         <ul> <li>दूसरा, चौथा, ग्यारहवाँ, पचासवाँ आदि।</li> </ul><br> <b>
+              <p><b class="color-content2">4. आवृत्तिवाचक विशेषण&nbsp;</b></p>
+              <p><b class="color-content2">&nbsp;जैसे-</b><br></p>
+          </b><ul>
+          <li>दुगुना, तिगुना, दसगुना आदि।</li></ul>
+          <p><br><b class="color-content2">5. समूहवाचक विशेषण&nbsp;</b></p>
+          <p><b class="color-content2">जैसे-</b><b><br></b></p><ul>
+          <li>तीनों, पाँचों, आठों आदि।</li></ul>
+          <p> <br><b class="color-content2">6. प्रत्येक बोधक विशेषण&nbsp;</b></p>
+          <p><b class="color-content2">जैसे-</b><br></p><ul>
+          <li>प्रति, प्रत्येक, हरेक, एक-एक आदि।</li></ul>
+          <p><br> <b><span class="color-content1"> (ख) अनिश्चित संख्यावाचक विशेषण- </span></b></p>
+          <p>जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध नहीं कराते हैं, उन्हें <b><span class="color-content1"> अनिश्चित संख्यावाचक विशेषण </span></b>कहते हैं; </p> <ul><b class="color-content2">जैसे-</b><b>&nbsp;</b>कुछ लड़के,थोड़ा-सा मीठा आदि। <br><br></ul>
+          <article class="half-right"> <br>
+              <div class="content" id="सार्वनामिक-विशेषण"></div>
+              <at><b class="color-content1">4. सार्वनामिक विशेषण</b><i>(Demonstrative of Adjective)</i></at>
+              <p> जो सर्वनाम शब्द संकेत द्वारा किसी संज्ञा की विशेषता बताये, उसे<b><span class="color-content1"> संकेतवाचक </span></b>या <b><span class="color-content1"> सार्वनामिक विशेषण <span></span></span></b>कहते हैं।<b>&nbsp;</b><b class="color-content2" style="background-color: var(--background-color);">जैसे-</b></p>
+             <ul> <li> यह किताब </li>
+              <li> ऐसी कहानी </li></ul><br>
+              <p> <br></p>
+              <p> व्युत्पत्ति की दृष्टि से सार्वनामिक विशेषण के दो प्रकार हैं-</p><br><b class="color-content2">1. मूल सार्वनामिक विशेषण,&nbsp;</b>
+          </article>
+          <article class="half-right"><b class="color-content2">2. यौगिक सार्वनामिक विशेषण</b><br><br> <ul><b><span class="color-content1"> 1. मूल सार्वनामिक विशेषणः</span></b>
+              <p> जो सर्वनाम बिना किसी रूपांतर के विशेषण के रूप में प्रयुक्त होता है उसे <b><span class="color-content1"> मूल सार्वनामिक विशेषण </span></b>कहते हैं।<br><b class="color-content2">जैसे-</b><br></p>
+              <li> वह लड़की विद्यालय जा रही है।</li>
+              <li> कोई लड़का मेरा काम कर दे।</li>
+              <li> कुछ विद्यार्थी अनुपस्थित हैं।</li>
+              <p> उपयुक्त वाक्यों में वह,कोई और कुछ शब्द<b>&nbsp;</b><b class="color-content2" style="background-color: var(--background-color);">मूल सार्वनामिक विशेषण हैं।</b></p> <br><b><span class="color-content1"> 2. यौगिक सार्वनामिक विशेषणः</span></b>
+              <p> जो सर्वनाम मूल सर्वनाम में प्रत्यय आदि जुड़ जाने से विशेषण के रूप में प्रयुक्त होता है उसे <b><span class="color-content1"> यौगिक सार्वनामिक विशेषण </span></b>कहते हैं।</p><b class="color-content2">जैसे-</b><br>
+              <p></p>
+              <li> ऐसा आदमी कहाँ मिलेगा?</li>
+              <li> कितने रूपये तुम्हें चाहिए?</li>
+              <li> मुझसे इतना बोझ उठाया नहीं जाता।</li><br> उपर्युक्त वाक्यों में ऐसा, कितने और इतना शब्द&nbsp;<b class="color-content2">यौगिक सार्वनामिक विशेषण</b><b>&nbsp;</b>हैं।<p></p><br>
+              <p> यौगिक सार्वनामिक विशेषण निम्नलिखित सार्वनामिक विशेषणों से बनते हैं-</p>
+              <li><b class="color-content2">यह से-</b><b>&nbsp;</b>इतना, इतने, इतनी, ऐसा, ऐसी, ऐसे।</li>
+              <li><b class="color-content2">वह से-</b>&nbsp;उतना, उतने, उतनी, वैसा, वैसी, वैसे।</li>
+              <li><b class="color-content2">जो से–</b>&nbsp;जितना, जितनी, जितने, जैसा, जैसी, जैसे।</li>
+              <li><b class="color-content2">कौन से–</b>&nbsp;कितना, कितनी, कितने, कैसा, कैसी, कैसे।</li><br>
+              <p> संकेतवाचक विशेषण जो सर्वनाम संकेत द्वारा संज्ञा या सर्वनाम की विशेषता बतलाते हैं वे <b><span class="color-content1">संकेतवाचक विशेषण </span></b>कहलाते हैं। </p><br><b class="color-content2">विशेष –</b><br>
+              <p>क्योंकि संकेतवाचक विशेषण सर्वनाम शब्दों से बनते हैं, अतः ये <b><span class="color-content1">सार्वनामिक विशेषण</span></b> कहलाते हैं। इन्हें<b><span class="color-content1"> निर्देशक </span></b>भी कहते हैं।</p> <br></ul>
+          </article>
+          <div class="grid-wrapper">
+              <article class="half-left">
+                  <h2><span class="color-content2">परिमाणवाचक और संख्यावाचक विशेषण में अंतर</span></h2>
+                  <p>जिन वस्तुओं की नाप-तोल की जा सके उनके वाचक शब्द परिमाणवाचक विशेषण कहलाते हैं। जैसे-‘कुछ दूध लाओ’। इसमें ‘कुछ’ शब्द तोल के लिए आया है। इसलिए यह परिमाणवाचक विशेषण है।</p>
+                  <p>जिन वस्तुओं की गिनती की जा सके उनके वाचक शब्द संख्यावाचक विशेषण कहलाते हैं। जैसे-कुछ बच्चे इधर आओ। यहाँ पर ‘कुछ’ बच्चों की गिनती के लिए आया है। इसलिए यह संख्यावाचक विशेषण है।</p>
+                  <p>परिमाणवाचक विशेषणों के बाद द्रव्य अथवा पदार्थवाचक संज्ञाएँ आएँगी जबकि संख्यावाचक विशेषणों के बाद जातिवाचक संज्ञाएँ आती हैं।</p>
+              </article> <br>
+              <article class="half-right">
+                  <h2><span class="color-content2">सर्वनाम और सार्वनामिक विशेषण में अंतर</span></h2>
+                  <p>जिस शब्द का प्रयोग संज्ञा शब्द के स्थान पर हो उसे सर्वनाम कहते हैं। जैसे-वह मुंबई गया। इस वाक्य में वह सर्वनाम है। </p>
+                  <p>जिस शब्द का प्रयोग संज्ञा से पूर्व अथवा बाद में विशेषण के रूप में किया गया हो उसे सार्वनामिक विशेषण कहते हैं। जैसे-वह रथ आ रहा है। इसमें वह शब्द रथ का विशेषण है। अतः यह सार्वनामिक विशेषण है।</p>
+              </article>
+          </div>
+          <div class="grid-wrapper">
+              <article class="half-left">
+                  <p><b class="color-content2">विशेषण की अवस्थाएँ</b><br></p>
+                  <p style="font-size: 15px;"><span>विशेषण शब्द किसी संज्ञा या सर्वनाम की विशेषता बतलाते हैं। विशेषता बताई जाने वाली वस्तुओं के गुण-दोष कम-ज़्यादा होते हैं। गुण-दोषों के इस कम-ज़्यादा होने को तुलनात्मक ढंग से ही जाना जा सकता है। तुलना की दृष्टि से विशेषणों की निम्नलिखित तीन अवस्थाएँ होती हैं-</span></p>
+              </article>
+              <article class="half-right">
+                  <ol>
+                      <li>मूलावस्था</li>
+                      <li>उत्तरावस्था</li>
+                      <li>उत्तमावस्था</li>
+                  </ol>
+              </article>
+          </div>
+          <div class="grid-wrapper-equal-thirds">
+              <article class="left-third"> <br>
+                  <div class="content" id="मूलावस्था"></div>
+                  <br>
+                  <div class="green-background"> <b><span class="color-content1">मूलावस्था</span></b><i> (Positive Degree)</i>
+                      <p>मूलावस्था में विशेषण का तुलनात्मक रूप नहीं होता है। वह केवल सामान्य विशेषता ही प्रकट करता है।&nbsp;<b class="color-content2">जैसे-</b></p><ul>
+                      <li>मोनिका एक सुंदर लड़की है।</li>
+                      <li>राम एक मोटा लड़का है।</li></ul>
+                  </div>
+              </article>
+              <article class="middle-third"> <br>
+                  <div class="content" id="उत्तरावस्था"></div>
+      
+                  <br>
+                  <div class="blue1-background">
+                      <div style="margin:5px" ;=""><b><span class="color-content1">उत्तरावस्था</span></b><i> (Comparative Degree)</i>
+                          <p>जब दो व्यक्तियों या वस्तुओं के गुण-दोषों की तुलना की जाती है तब विशेषण उत्तरावस्था में प्रयुक्त होता है।<b>&nbsp;</b><b class="color-content2">जैसे-</b></p><ul>
+                          <li>
+                              मोनिका, नेहा से अधिक सुंदर है।
+                          </li>
+                          <li>राम, रोहन से मोटा है।
+                          </li></ul>
+                      </div>
+                  </div>
+              </article>
+              <br>
+              <div class="pink-background">
+                  <div style="margin:5px" ;="">
+                      <article class="right-third"> <br>
+                          <div class="content" id="उत्तमावस्था"></div>
+                          <b><span class="color-content1">उत्तमावस्था</span></b><i> (Superlative Degree)</i>
+                              <p>उत्तमावस्था में दो से अधिक व्यक्तियों एवं वस्तुओं की तुलना करके किसी एक को सबसे अधिक अथवा सबसे कम बताया गया है।<b>&nbsp;</b></p><b class="color-content2">जैसे-</b>
+                              <ul><li>मोनिका सबसे सुंदर है।</li>
+                              <li>राम सबसे मोटा है। </li>
+                              </ul>
+                      </article>
+                  </div>
+              </div> <br><b><span class="color-content1">विशेष-</span></b>
+              <p>केवल गुणवाचक एवं अनिश्चित संख्यावाचक तथा निश्चित परिमाणवाचक विशेषणों की ही ये तुलनात्मक अवस्थाएँ होती हैं, अन्य विशेषणों की नहीं।</p>
+              <p><b class="color-content2">विशेषण की अवस्थाओं के रूप</b><br></p>
+              <p> अधिक और सबसे अधिक शब्दों का प्रयोग करके उत्तरावस्था और उत्तमावस्था के रूप बनाए जा सकते हैं।</p><b class="color-content2">जैसे-</b><br> <br>
+              <table id="myTable">
+                  <thead>
+                      <tr>
+                          <th>मूलावस्था</th>
+                          <th>उत्तरावस्था</th>
+                          <th>उत्तमावस्था</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>अच्छी</td>
+                          <td>अधिक अच्छी</td>
+                          <td>सबसे अच्छी</td>
+                      </tr>
+                      <tr>
+                          <td>चतुर</td>
+                          <td>अधिक चतुर</td>
+                          <td>सबसे अधिक चतुर</td>
+                      </tr>
+                      <tr>
+                          <td>बुद्धिमान</td>
+                          <td>अधिक बुद्धिमान</td>
+                          <td>सबसे अधिक बुद्धिमान</td>
+                      </tr>
+                      <tr>
+                          <td>बलवान</td>
+                          <td>अधिक बलवान</td>
+                          <td>सबसे अधिक बलवान</td>
+                      </tr>
+                  </tbody>
+              </table><br>
+              <p> इसी प्रकार दूसरे विशेषण शब्दों के रूप भी बनाए जा सकते हैं। तत्सम शब्दों में मूलावस्था में विशेषण का मूल रूप, उत्तरावस्था में ‘तर’ और उत्तमावस्था में ‘तम’ का प्रयोग होता है।<br><b class="color-content2">जैसे-</b><br></p> <br>
+              <table id="myTable">
+                  <thead>
+                      <tr>
+                          <th>मूलावस्था</th>
+                          <th>उत्तरावस्था</th>
+                          <th>उत्तमावस्था</th>
+                      </tr>
+                      <tr>
+                          <td>लघु</td>
+                          <td>लघुतर</td>
+                          <td>लघुतम</td>
+                      </tr>
+                      <tr>
+                          <td>तीव्र</td>
+                          <td>तीव्रतर</td>
+                          <td>तीव्रतम</td>
+                      </tr>
+                      <tr>
+                          <td>उच्च</td>
+                          <td>उच्चतर</td>
+                          <td>उच्चतम</td>
+                      </tr>
+                      <tr>
+                          <td>कठोर</td>
+                          <td>कठोरतर</td>
+                          <td>कठोरतम</td>
+                      </tr>
+                      <tr>
+                          <td>गुरु</td>
+                          <td>गुरुतर</td>
+                          <td>गुरुतम</td>
+                      </tr>
+                      <tr>
+                          <td>महान</td>
+                          <td>महानतर,महत्तर</td>
+                          <td>महानतम,महत्तम</td>
+                      </tr>
+                      <tr>
+                          <td>न्यून</td>
+                          <td>न्यूनतर</td>
+                          <td>न्यनूतम</td>
+                      </tr>
+                      <tr>
+                          <td>विशाल</td>
+                          <td>विशालतर</td>
+                          <td>विशालतम</td>
+                      </tr>
+                      <tr>
+                          <td>सुंदर</td>
+                          <td>सुंदरतर</td>
+                          <td>सुंदरतम</td>
+                      </tr>
+                      <tr>
+                          <td>मधुर</td>
+                          <td>मधुरतर</td>
+                          <td>मधुतरतम</td>
+                      </tr>
+                  </thead>
+              </table><b></b>
+              <p><b> <br></b><b class="color-content2">विशेषणों शब्दों की रचना</b><b><br></b></p>
+              <p> कुछ शब्द मूलरूप से विशेषण होते हैं, उदाहरण - नीचा, काला, मोटा, अच्छा, बुरा आदि। किन्तु कुछ विशेषण शब्दों की रचना संज्ञा, सर्वनाम एवं क्रिया शब्दों से की जाती है-</p>
+              <p><b class="color-content2">संज्ञा शब्दों से :</b><br></p><br><br>
+              <tr<td></tr<td>
+              <table id="myTable">
+                  <thead>
+                      <tr>
+                          <th>प्रत्यय</th>
+                          <th>संज्ञा</th>
+                          <th>विशेषण</th>
+                      </tr>
+                      <tr>
+                          <td>क</td>
+                          <td>अंश</td>
+                          <td>आंशिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>धर्म</td>
+                          <td>धार्मिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>अलंकार</td>
+                          <td>आलंकारिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>नीति</td>
+                          <td>नैतिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>अर्थ</td>
+                          <td>आर्थिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>दिन</td>
+                          <td>दैनिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>इतिहास</td>
+                          <td>ऐतिहासिक</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>देव</td>
+                          <td>दैविक</td>
+                      </tr>
+                      <tr>
+                          <td>इत</td>
+                          <td>अंक</td>
+                          <td>अंकित</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>कुसुम</td>
+                          <td>कुसुमित</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>सुरभि</td>
+                          <td>सुरभित</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>ध्वनि</td>
+                          <td>ध्वनित</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>क्षुधा</td>
+                          <td>क्षुधित</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>तरंग</td>
+                          <td>तरंगित</td>
+                      </tr>
+                      <tr>
+                          <td>इल</td>
+                          <td>जटा</td>
+                          <td>जटिल</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>पंक</td>
+                          <td>पंकिल</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>फेन</td>
+                          <td>फेनिल</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>उर्मि</td>
+                          <td>उर्मिल</td>
+                      </tr>
+                      <tr>
+                          <td>इम</td>
+                          <td>स्वर्ण</td>
+                          <td>स्वर्णिम</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>रक्त</td>
+                          <td>रक्तिम</td>
+                      </tr>
+                      <tr>
+                          <td>ई</td>
+                          <td>रोग</td>
+                          <td>रोगी</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>भोग</td>
+                          <td>भोगी</td>
+                      </tr>
+                      <tr>
+                          <td>ईन</td>
+                          <td>कुल</td>
+                          <td>कुलीन</td>
+                      </tr>
+                      <tr>
+                          <td>ईण</td>
+                          <td>ग्राम</td>
+                          <td>ग्रामीण</td>
+                      </tr>
+                      <tr>
+                          <td>ईय</td>
+                          <td>आत्मा</td>
+                          <td>आत्मीय</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>जाति</td>
+                          <td>जातीय</td>
+                      </tr>
+                      <tr>
+                          <td>आलु</td>
+                          <td>श्रद्धा</td>
+                          <td>श्रद्धालु</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>ईर्ष्या</td>
+                          <td>ईर्ष्यालु</td>
+                      </tr>
+                      <tr>
+                          <td>वी</td>
+                          <td>मनस</td>
+                          <td>मनस्वी</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>तपस</td>
+                          <td>तपस्वी</td>
+                      </tr>
+                      <tr>
+                          <td>मय</td>
+                          <td>सुख</td>
+                          <td>सुखमय</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>दुख</td>
+                          <td>दुखमय</td>
+                      </tr>
+                      <tr>
+                          <td>वान</td>
+                          <td>रूप</td>
+                          <td>रूपवान</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>गुण</td>
+                          <td>गुणवान</td>
+                      </tr>
+                      <tr>
+                          <td>वती(स्त्री)</td>
+                          <td>गुण</td>
+                          <td>गुणवती</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>पुत्र</td>
+                          <td>पुत्रवती</td>
+                      </tr>
+                      <tr>
+                          <td>मान</td>
+                          <td>बुद्धि</td>
+                          <td>बुद्धिमान</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>श्री</td>
+                          <td>श्रीमान</td>
+                      </tr>
+                      <tr>
+                          <td>मती (स्त्री)</td>
+                          <td>श्री</td>
+                          <td>श्रीमती</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>बुद्धि</td>
+                          <td>बुद्धिमती</td>
+                      </tr>
+                      <tr>
+                          <td>रत</td>
+                          <td>धर्म</td>
+                          <td>धर्मरत</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>कर्म</td>
+                          <td>कर्मरत</td>
+                      </tr>
+                      <tr>
+                          <td>स्थ</td>
+                          <td>समीप</td>
+                          <td>समीपस्थ</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>देह</td>
+                          <td>देहस्थ</td>
+                      </tr>
+                      <tr>
+                          <td>निष्ठ</td>
+                          <td>धर्म</td>
+                          <td>धर्मनिष्ठ</td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td>कर्म</td>
+                          <td>कर्मनिष्ठ</td>
+                      </tr>
+                  </thead>
+              </table>
+      
+              <br>
+          </div>
+      </div><br>
+        
+        <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+        <table id="Table" style="border-collapse: collapse; width: 100%;">
+  
+          <style>
+            
+ 
+
+
+  
+  
+  
+          </style>
+  
+    <tbody>
+        <tr>
+            <td>
+                <a href="..\vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+            </td>
+            <td>
+                <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+            </td>
+            <td>
+                <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+            </td>
+            <td>
+                <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+            </td>
+            <td>
+                <a href="number-in-hindi.html"><li>वचन</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="gender-in-hindi.html"><li>लिंग</li></a>
+            </td>
+            <td>
+                <a href="case-in-hindi.html"><li>कारक</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+            </td>
+            <td>
+                <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+            </td>
+            <td>
+                <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="tense-in-hindi.html"><li>काल</li></a>
+            </td>
+            <td>
+                <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+            </td>
+            <td>
+                <a href="particle-in-hindi.html"><li>निपात</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+            </td>
+            <td>
+                <a href="person-in-hindi.html"><li>पुरुष</li></a>
+            </td>
+            <td>
+                <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+            </td>
+            <td>
+                <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+            </td>
+            <td>
+                <a href="joining.html"><li>संधि</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="compound-in-hindi.html"><li>समास</li></a>
+            </td>
+            <td>
+                <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+            </td>
+            <td>
+                <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+            </td>
+            <td>
+                <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+            </td>
+            <td>
+                <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+            </td>
+            <td>
+                <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+            </td>
+            <td>
+                <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+            </td>
+            <td>
+                <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+            </td>
+            <td>
+                <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="ras-in-hindi.html"><li>रस</li></a>
+            </td>
+            <td>
+                <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+            </td>
+            <td>
+                <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+            </td>
+            <td>
+                <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+  
+  <div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+  <script src="..\script.js"></script>
+            <script src="..\search.js"></script>
+            <script src="..\menusearch1.js"></script>
+           
+  </body>
+  </html>

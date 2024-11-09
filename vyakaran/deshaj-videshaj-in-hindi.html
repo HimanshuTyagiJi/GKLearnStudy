@@ -1,0 +1,330 @@
+<!DOCTYPE html> 
+<html lang="hi" >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="देशज-विदेशज (Desi-Videshi) के बारे में विस्तृत जानकारी। हिंदी भाषा में देशज-विदेशज के प्रकार, उदाहरण और उपयोग।">
+    <meta name="keywords" content="देशज-विदेशज, Desi-Videshi in Hindi, देशज-विदेशज के प्रकार, हिंदी व्याकरण, हिंदी भाषा, Desi-Videshi Examples, Desi-Videshi Types, देशज-विदेशज के उदाहरण, देशज-विदेशज के उपयोग, देशज-विदेशज की परिभाषा">
+    <meta name="author" content="आपका नाम">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="देशज-विदेशज - हिंदी व्याकरण">
+    <meta property="og:description" content="देशज-विदेशज (Desi-Videshi) के बारे में विस्तृत जानकारी। हिंदी भाषा में देशज-विदेशज के प्रकार, उदाहरण और उपयोग।">
+    <meta property="og:image" content="URL_of_the_image">
+    <meta property="og:url" content="URL_of_the_page">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="देशज-विदेशज - हिंदी व्याकरण">
+    <meta name="twitter:description" content="देशज-विदेशज (Desi-Videshi) के बारे में विस्तृत जानकारी। हिंदी भाषा में देशज-विदेशज के प्रकार, उदाहरण और उपयोग।">
+    <meta name="twitter:image" content="URL_of_the_image">
+    <link rel="stylesheet" href="..\style.css">
+    <title>देशज-विदेशज - परिभाषा और उदाहरण : हिंदी व्याकरण</title>
+</head> 
+  
+  <body> 
+
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+  
+    <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+    <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+      <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+      <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+      <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+      <li><a href="number-in-hindi.html">वचन</a></li>
+      <li><a href="gender-in-hindi.html">लिंग</a></li>
+      <li><a href="case-in-hindi.html">कारक</a></li>
+      <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+      <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+      <li><a href="verb-in-hindi.html">क्रिया</a></li>
+      <li><a href="tense-in-hindi.html">काल</a></li>
+      <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+      <li><a href="particle-in-hindi.html">निपात</a></li>
+      <li><a href="voice-in-hindi.html">वाच्य</a></li>
+      <li><a href="person-in-hindi.html">पुरुष</a></li>
+      <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+      <li><a href="prefix-in-hindi.html">उपसर्ग</a></li>
+      <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+      <li><a href="joining.html">संधि</a></li>
+      <li><a href="compound-in-hindi.html">समास</a></li>
+      <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+      <li><a class="active" href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+      <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+      <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+      <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+      <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+      <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+      <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+      <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+      <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+      <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+      <li><a href="ras-in-hindi.html">रस</a></li>
+      <li><a href="chhand-in-hindi.html">छन्द</a></li>
+      <li><a href="alankar-in-hindi.html">अलंकार</a></li>
+      <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+      <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+      <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+      <li><a href="essay-in-hindi.html">निबंध</a></li>
+      <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+  
+  
+  <br><br>
+ 
+</ul>
+</div>
+</div>
+        <div class="container">
+          <h2 id="देशज और विदेशज शब्दों का परिचय"><b class="color-content2">देशज और विदेशज शब्दों का परिचय</b></h2>
+      
+      <b class="color-content1">देशज शब्द:</b>
+      <p>देशज शब्द वे शब्द होते हैं जो किसी विशेष भाषा के भीतर स्वाभाविक रूप से उत्पन्न होते हैं और उसी भाषा के क्षेत्रीय और सांस्कृतिक संदर्भों में विकसित होते हैं। ये शब्द किसी अन्य भाषा से उधार नहीं लिए जाते, बल्कि भाषा की अपनी संरचना और ध्वनि से निर्मित होते हैं। देशज शब्द आमतौर पर स्थानीय संस्कृति, परंपराओं और सामाजिक जीवन से जुड़े होते हैं।</p>
+      <b class="color-content3"> उदाहरण:<br>
+          <div style="text-align: left;"><b class="color-content2" style="background-color: var(--background-color);">1. माँ:&nbsp;</b><span style="color: var(--text-color); background-color: var(--background-color);">यह शब्द हिंदी भाषा में मातृसत्ता का प्रतीक है और इसे प्राचीन काल से प्रयोग किया जा रहा है।</span><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">&nbsp;</span></div>
+      </b>
+      <div style="text-align: left;"><b class="color-content2" style="background-color: var(--background-color);">2. पानी:&nbsp;</b><span style="color: var(--text-color); text-align: justify; background-color: var(--background-color);">पानी का अर्थ है जल, जो हिंदी में व्यापक रूप से उपयोग होता है और स्थानीय बोलचाल में भी यही शब्द प्रयुक्त होता है।</span><b class="color-content2" style="background-color: var(--background-color);">3. आँगन:&nbsp;</b><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">घर के सामने या बीच का खुला स्थान, जो पारंपरिक भारतीय घरों की विशेषता है।<br><br></span></div>
+      <b class="color-content1"> विशेषताएँ:<br></b>
+      <b class="color-content2">स्थानीयता: </b>देशज शब्द स्थानीय संस्कृति और परिवेश से जुड़े होते हैं।<p></p>
+      <b class="color-content2">प्राकृतिक विकास:</b> ये शब्द भाषा के भीतर स्वाभाविक रूप से विकसित होते हैं।<p></p>
+      <b class="color-content2">आसान समझ:</b> क्षेत्रीय भाषा बोलने वालों के लिए इन शब्दों को समझना और प्रयोग करना आसान होता है।<p></p>
+      <p><br></p>
+      <b class="color-content1">विदेशज शब्द:&nbsp;</b><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">विदेशज शब्द वे शब्द होते हैं जो किसी अन्य भाषा से उधार लिए जाते हैं और समय के साथ किसी भाषा में अपनाए जाते हैं। इन शब्दों को किसी विशेष भाषा में जरूरत के अनुसार स्वीकार किया जाता है और ये भाषा की शब्दावली को समृद्ध बनाते हैं।</span>
+      <p><b class="color-content3" style="background-color: var(--background-color);">उदाहरण:</b><br></p>
+      <b class="color-content2">1. टीवी:</b><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">टेलीविजन का संक्षिप्त रूप, जो अंग्रेजी भाषा से हिंदी में आया है।</span><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">&nbsp;</span><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);"><br></span>
+      <b class="color-content2">2. स्कूल:&nbsp;</b><span style="text-align: justify; background-color: var(--background-color); color: var(--text-color);">यह शब्द अंग्रेजी भाषा के 'School' से लिया गया है और हिंदी में शैक्षणिक संस्थान के रूप में प्रयोग होता है।</span>
+      <p><b class="color-content2" style="background-color: var(--background-color);">3. रेल:&nbsp;</b><span style="background-color: var(--background-color); color: var(--text-color);">रेलवे या ट्रेन को दर्शाने वाला यह शब्द अंग्रेजी से हिंदी में आया है।</span></p>
+      <b class="color-content1"> विशेषताएँ:</b>
+      <p><b class="color-content2" style="background-color: var(--background-color);">उधार लिए गए:</b><span style="text-align: left; background-color: var(--background-color); color: var(--text-color);"> ये शब्द मूल भाषा से अलग भाषा से आते हैं।</span><br></p>
+      <p></p>
+      <b class="color-content2">भाषाई समृद्धि:</b> विदेशज शब्द भाषा की शब्दावली को विस्तृत और समृद्ध करते हैं।<p></p>
+      <b class="color-content2">सामाजिक और तकनीकी परिवर्तन:</b> अक्सर ये शब्द समाज में नए विचारों, तकनीकों या वस्तुओं के आगमन से जुड़े होते हैं।<p></p>
+      <p><b class="color-content1" style="background-color: var(--background-color);">देशज और विदेशज शब्दों का महत्व</b><br></p>
+      <b class="color-content2"> सांस्कृतिक पहचान:&nbsp;</b><span style="background-color: var(--background-color); color: var(--text-color); text-align: justify;">देशज शब्द किसी भाषा की सांस्कृतिक और पारंपरिक पहचान को दर्शाते हैं। ये शब्द स्थानीय लोककथाओं, रीति-रिवाजों और जनजीवन से जुड़े होते हैं और एक समुदाय की विशिष्टता को बनाए रखने में मदद करते हैं।</span>
+      <p><b class="color-content2" style="background-color: var(--background-color);">भाषा का विकास:&nbsp;</b><span style="background-color: var(--background-color); color: var(--text-color);">विदेशज शब्द भाषा के विकास में महत्वपूर्ण भूमिका निभाते हैं। जब कोई भाषा दूसरी भाषा से शब्द उधार लेती है, तो वह नए विचारों और अवधारणाओं को स्वीकार करती है, जिससे भाषा अधिक समृद्ध और बहुमुखी बनती है। उदाहरण के लिए, आधुनिक तकनीक, विज्ञान, और सामाजिक परिवर्तन के साथ, विभिन्न भाषाओं में अनेक विदेशज शब्द प्रविष्ट हुए हैं, जो इन नई अवधारणाओं को व्यक्त करने में सहायता करते हैं।</span></p>
+      <p><b class="color-content4" style="background-color: var(--background-color);">उदाहरणों के माध्यम से अंतर स्पष्ट करना:</b><br></p>
+      <p><b class="color-content2">देशज:</b> घर (House), जो हिंदी का मूल शब्द है और भारतीय संस्कृति में महत्वपूर्ण स्थान रखता है।</p>
+      <p><b class="color-content2">विदेशज:</b> कंप्यूटर (Computer), जो अंग्रेजी भाषा से आया है और आधुनिक तकनीकी दुनिया का प्रतिनिधित्व करता है।</p>
+      <b class="color-content2"> भाषाई शुद्धता बनाम नवाचार:</b>
+      <p><span style="background-color: var(--background-color); color: var(--text-color);">कुछ भाषाविद और सांस्कृतिक विशेषज्ञ भाषाई शुद्धता को बनाए रखने पर जोर देते हैं और चाहते हैं कि अधिक से अधिक देशज शब्दों का प्रयोग हो। वहीं दूसरी ओर, नवाचार और वैश्वीकरण के समर्थक मानते हैं कि विदेशज शब्द भाषा को अधिक समृद्ध, अद्यतन और समकालीन बनाते हैं।</span><br></p>
+      <p><br></p>
+      <b class="color-content2">व्यावहारिक अनुप्रयोग:</b>
+      <p><br></p>
+      <p>शिक्षा, विज्ञान, चिकित्सा, और तकनीकी क्षेत्रों में विदेशज शब्दों का प्रयोग अत्यधिक होता है क्योंकि ये शब्द अंतर्राष्ट्रीय मानकों के अनुरूप होते हैं और विभिन्न भाषाओं में समान रूप से समझे जा सकते हैं। जबकि दैनिक जीवन, पारिवारिक जीवन और स्थानीय परंपराओं में देशज शब्दों का महत्व बना रहता है।</p>
+      <p><br></p>
+      <div class="blue1-background">
+          <b class="color-content1">अरबी भाषा के उदाहरण : </b><br>
+      
+          अदा, अजब, अजीब, अमीर, अक्ल, असर, अल्ला, आसार, आखिर, आदत, आदमी, इनाम, इज्जत, ईमारत, इस्तीफ़ा, इजाज, ईमान, उम्र, एहसान, औरत, औसत, औलाद, कसार, कसूर, कब्र, कदम, कमल, कर्ज, किस्मत, किला, कसम, कीमत, कसरत, कुर्सी, किताब, कायदा, कातिल, खबर, ख़त्म, खत, ख्याल, ख़राब, खिदमत, गरीब, गैर, जाहिल, जिस्म, जलसा, जनाब, जवाब, जहाज, जालिम, जिक्र, तमाम, तकाजा, तकदीर, तारिख, तकिया, तमाशा, तरफ, तादात, तरक्की, तजुरबा, दिमाग, दवा, दाबा, दावत, दफ्तर, दगा, दुआ, दफा, दुकान, दुनिया, दौलत, दान, दीन, नतीजा, नशा, नकद, नक़ल, नहर, फ़कीर, फायदा, फैसला, बाज, बहस, बाकी, मुहावरा, मदद, मुद्दई, मरजी, माल, मिसाल, मजबूर, मालूम, मामूली, मुक़दमा, मुल्क, मल्लाह, मौसम, मौका, मौलवी, मुसाफिर, मशहूर, मतलब, मानी, यतीम, राय, लिहाज, लफ्ज, लहजा, लिफाफा, लियाकत, लायक, वारिस, वहम, वकील, शराब, हिम्मत, हैजा, हिसाब, हरामी, हद, हक़, हुक्म, हाल, हाकिम, हमला, हवालात, हौसला।
+      </div><br>
+      <div class="green-background">
+          <br><b class="color-content1">अँग्रेजी भाषा के उदाहरण : </b><br>अफसर, इंजन, डॉक्टर, लालटेन, सिलेट, अस्पताल, टिकस, कप्तान, थेटर/ठेठर, तारपीन, बोतल, मील, अपील, आर्डर, इंच, इंटर, इयरिंग, एजेंसी, कंपनी, कमीशन, कमिश्नर, कैम्प, क्लास, क्वार्टर, क्रिकेट, काउन्सिल, गजट, गार्ड, जेल, चेयरमैन, ट्यूशन, डायरी, डिप्टी, ड्राइवर, पेंसिल, पेन, नंबर, नोटिस, नर्स, थर्मामीटर, पार्टी, प्लेट, पार्सल, पेट्रोल, पाउडर, कॉलर।
+      </div>
+      <br>
+      <div class="pink-background">
+          <br><b class="color-content1">फारसी भाषा के उदाहरण : </b><br>
+      
+          अफ़सोस, आबरू, आतिशबाजी, अदा, आराम, आवारा, आमदनी, आवाज, आफत, आईना, उम्मीद, कबूतर, कमीना, कुश्ती, किशमिश, कमरबन्द, किनारा, कूचा, खाल, खुद, खामोश, खरगोश, खुश, खूब, खुराक, गल्ला, गोला, गवाह, गिरफ्तार, गरम, गिरह, गुल, गुलाब, गोश्त, चाबुक, चादर, चिराग, चश्मा,चिराग, चूँकि, चेहरा, चाशनी, जंग, जहर, जोर, जबर, जिन्दगी, जादू, जागीर, जान, जुरमाना, जिगर, जोश, तरकश, तमाशा, तेज, तीर, तबाह, तनख्वाह, ताजा, दीवार, देहात, दस्तूर, दुकान, दरबार, दंगल, दिल, दिलेर, दरबार, दवा, नाव, नामर्द, नापसन्द, पलंग, पैदावार, पलक, पुल, पारा, पेशा, पैमाना, बहरा, बेहूदा, बीमार, बेरहम, मादा, माशा, मलाई, मुर्दा, मजा, मलीदा, मुफ्त, मोर्चा, मीना, मुर्गा, मरहम, याद, यार, रंग, राह, लश्कर, लगाम, लेकिन, वर्ना, वापिस, शादी, शोर, सितारा, सितार, सरासर, सुर्ख, सरदार, सरकार, सूद, सौदागर, हफ्ता, हजार।
+      </div>
+      
+      
+      <br><br> <b> निष्कर्ष:</b>
+      <p><br></p>
+      <p>देशज और विदेशज शब्द किसी भी भाषा की जीवंतता और विकासशीलता को दर्शाते हैं। जहां एक ओर देशज शब्द भाषा की गहरी सांस्कृतिक जड़ों को बनाए रखते हैं, वहीं दूसरी ओर विदेशज शब्द भाषा को नए विचारों और तकनीकों के साथ जोड़ते हैं। दोनों प्रकार के शब्द भाषा की समृद्धि और विविधता को बनाए रखने में महत्वपूर्ण भूमिका निभाते हैं। भाषा के अध्ययन में इन दोनों प्रकार के शब्दों का समान महत्व होता है और यह समझने में मदद करते हैं कि भाषा कैसे विकसित होती है और समय के साथ कैसे बदलती है।</p>
+      <br>    <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+
+      <table id="Table" style="border-collapse: collapse; width: 100%;">
+
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            td {
+                padding: 10px;
+            }
+            td a:link {
+                color: rgb(55, 0, 255);
+               
+            }
+            td a:visited {
+                color: rgb(55, 0, 255); /* Color for visited links */
+            }
+            td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+                 /* Color change on hover */
+            } 
+            
+
+
+
+
+
+        </style>
+
+  <tbody>
+      <tr>
+          <td>
+              <a href="..\vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+          </td>
+          <td>
+              <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+          </td>
+          <td>
+              <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+          </td>
+          <td>
+              <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+          </td>
+          <td>
+              <a href="number-in-hindi.html"><li>वचन</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="gender-in-hindi.html"><li>लिंग</li></a>
+          </td>
+          <td>
+              <a href="case-in-hindi.html"><li>कारक</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+          </td>
+          <td>
+              <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+          </td>
+          <td>
+              <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="tense-in-hindi.html"><li>काल</li></a>
+          </td>
+          <td>
+              <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+          </td>
+          <td>
+              <a href="particle-in-hindi.html"><li>निपात</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+          </td>
+          <td>
+              <a href="person-in-hindi.html"><li>पुरुष</li></a>
+          </td>
+          <td>
+              <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+          </td>
+          <td>
+              <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+          </td>
+          <td>
+              <a href="joining.html"><li>संधि</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="compound-in-hindi.html"><li>समास</li></a>
+          </td>
+          <td>
+              <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+          </td>
+          <td>
+              <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+          </td>
+          <td>
+              <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+          </td>
+          <td>
+              <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+          </td>
+          <td>
+              <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+          </td>
+          <td>
+              <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+          </td>
+          <td>
+              <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+          </td>
+          <td>
+              <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="ras-in-hindi.html"><li>रस</li></a>
+          </td>
+          <td>
+              <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+          </td>
+          <td>
+              <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+          </td>
+          <td>
+              <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+          </td>
+      </tr>
+  </tbody>
+</table>
+
+<div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+<script src="..\script.js"></script>
+<script src="..\search.js"></script>
+<script src="..\menusearch1.js"></script>
+</body>
+</html>
+ 

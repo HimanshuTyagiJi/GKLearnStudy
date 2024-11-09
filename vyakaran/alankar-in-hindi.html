@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="हिंदी में अलंकार (Figures of Speech) के बारे में विस्तृत जानकारी। अलंकार के प्रकार, उदाहरण और उपयोग।">
+    <meta name="keywords" content="अलंकार, हिंदी अलंकार, अलंकार के प्रकार, हिंदी कविता, हिंदी साहित्य, अलंकार के उदाहरण">
+    <meta name="author" content="आपका नाम">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="अलंकार - हिंदी व्याकरण">
+    <meta property="og:description" content="हिंदी में अलंकार (Figures of Speech) के बारे में विस्तृत जानकारी। अलंकार के प्रकार, उदाहरण और उपयोग।">
+    <meta property="og:image" content="URL_of_the_image">
+    <meta property="og:url" content="URL_of_the_page">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="अलंकार - हिंदी व्याकरण">
+    <meta name="twitter:description" content="हिंदी में अलंकार (Figures of Speech) के बारे में विस्तृत जानकारी। अलंकार के प्रकार, उदाहरण और उपयोग।">
+    <meta name="twitter:image" content="URL_of_the_image">
+    <link rel="stylesheet" href="..\style.css">
+    <title>अलंकार - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
+</head>
+<body>
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+  
+    <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+    <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+      <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+      <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+      <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+      <li><a href="number-in-hindi.html">वचन</a></li>
+      <li><a href="gender-in-hindi.html">लिंग</a></li>
+      <li><a href="case-in-hindi.html">कारक</a></li>
+      <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+      <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+      <li><a href="verb-in-hindi.html">क्रिया</a></li>
+      <li><a href="tense-in-hindi.html">काल</a></li>
+      <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+      <li><a href="particle-in-hindi.html">निपात</a></li>
+      <li><a href="voice-in-hindi.html">वाच्य</a></li>
+      <li><a href="person-in-hindi.html">पुरुष</a></li>
+      <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+      <li><a href="prefix-in-hindi.html">उपसर्ग</a></li>
+      <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+      <li><a href="joining.html">संधि</a></li>
+      <li><a href="compound-in-hindi.html">समास</a></li>
+      <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+      <li><a href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+      <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+      <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+      <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+      <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+      <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+      <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+      <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+      <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+      <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+      <li><a href="ras-in-hindi.html">रस</a></li>
+      <li><a href="chhand-in-hindi.html">छन्द</a></li>
+      <li><a class="active" href="alankar-in-hindi.html">अलंकार</a></li>
+      <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+      <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+      <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+      <li><a href="essay-in-hindi.html">निबंध</a></li>
+      <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+  
+  
+  
+  <br><br>
+ 
+</ul>
+</div>
+</div>
+        <div class="container"><h1 class="color-content2">अलंकार - परिभाषा, भेद और उदाहरण</h1>
+          <b class="color-content1">अलंकार-</b> अलंकार वह काव्यात्मक उपकरण या सौंदर्य तत्व है जिसका प्रयोग साहित्य में भावनाओं, विचारों और शब्दों की अभिव्यक्ति को अधिक आकर्षक, मार्मिक और प्रभावशाली बनाने के लिए किया जाता है। अलंकार के माध्यम से शब्दों और वाक्यों को सजाकर प्रस्तुत किया जाता है, जिससे साहित्यिक रचना की शोभा बढ़ती है और पाठक या श्रोता पर गहरा प्रभाव पड़ता है।
+          </p><br><p><b class="color-content1">
+अलंकार की परिभाषा : </b>
+अलंकार (शब्दशः: "आभूषण") का तात्पर्य काव्य या साहित्यिक रचनाओं में शब्दों और वाक्यों के ऐसे सजावटी और अलंकृत प्रयोग से है, जो उनके सौंदर्य और प्रभाव को बढ़ाता है। जैसे आभूषण शरीर को सजाते हैं, वैसे ही अलंकार रचना को सुशोभित करते हैं।</p>
+<br><p><b class="color-content1">
+  दूसरे शब्दों में:- </b>अलंकार का शाब्दिक अर्थ होता है- ‘आभूषण’, जिस प्रकार स्त्री की शोभा आभूषण से उसी प्रकार काव्य की
+शोभा अलंकार से होती है अर्थात जो किसी वस्तु को अलंकृत करे वह अलंकार कहलाता है।</p>
+<h2 class="color-content2">अलंकार के प्रकार</h2>
+<p class="color-content5">अलंकार तीन प्रकार के होते हैं:<br><p class="color-content3">शब्दालंकार <br>अर्थालंकार<br>उभयालंकार</p><br>
+</p>
+<h2 id="शब्दालंकार">
+  <p id="शब्दालंकार"><b class="color-content5">शब्दालंकार</b></p>
+</h2>
+<p>शब्दालंकार भाषा को सजाने और उसमें जान डालने वाले विशेष शब्द होते हैं। जैसे गहने किसी स्त्री की सुंदरता बढ़ाते हैं, वैसे ही शब्दालंकार काव्य या भाषा को आकर्षक बनाते हैं।</p>
+<p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+<p>"नदी में नौका डगमगाए।" - यहां "डगमगाए" शब्द का प्रयोग नौका की गति को दर्शाता है। यदि हम इसे बदलकर "चलती है" कर दें तो वाक्य का प्रभाव कम हो जाएगा।</p>
+<h2 id="शब्दालंकार के प्रकार"><b class="color-content2">शब्दालंकार के प्रकार</b></h2>
+<p><b class="color-content6">1. अनुप्रास अलंकार</b></p>
+</h2>
+<p><b class="color-content4"><b class="color-content4">परिभाषा:</b></b>&nbsp;<span style="text-align: left; background-color: var(--background-color); color: var(--text-color);">अनुप्रास शब्द संस्कृत के "अनु" (बार-बार) और "प्रास" (ध्वनि) से मिलकर बना है। जब किसी कविता या गद्य में एक ही वर्ण या ध्वनि का बार-बार पुनरावृत्ति होती है, जिससे उस रचना में संगीतात्मकता और सौंदर्य बढ़ जाता है, उसे&nbsp;</span><b class="color-content3" style="background-color: var(--background-color);">अनुप्रास अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color); text-align: left;">&nbsp;कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"कनक-कनक का फरक है, एक को देखत हरख।
+      <br>एक तनिक भरि पास जब, कुम्हलायो हिय दहल॥"
+  </p>
+  <p>इस उदाहरण में "कनक" शब्द की पुनरावृत्ति है। यहाँ पर "कनक" का अर्थ सोना और धतूरे का फूल दोनों के लिए किया गया है। इस प्रकार की पुनरावृत्ति अनुप्रास अलंकार को दर्शाती है।</p>
+</div>
+
+<h2>
+  <p id="अनुप्रास अलंकार के उपभेद और उदाहरण"><b class="color-content7">अनुप्रास अलंकार के उपभेद और उदाहरण</b></p>
+</h2>
+<p>अनुप्रास अलंकार के कई उपभेद हैं, जिनमें शब्दों में वर्णों की आवृत्ति के स्थान के आधार पर भेद किया जाता है। यहाँ पाँच मुख्य उपभेदों और उनके उदाहरणों को देखते हैं:</p>
+
+<h2 id="1. चेकानुप्रास अलंकार">
+  <p id="1. चेकानुप्रास अलंकार"></p></h2>
+  <ul>
+      <li>
+          <p id="चेकानुप्रास अलंकार"><b class="color-content8">चेकानुप्रास अलंकार</b></p>
+      </li>
+  </ul>
+  <p></p>
+
+<p><strong><b class="color-content4">परिभाषा:</b></strong> जब किसी पद्य या वाक्य के प्रारंभ में वर्णों की आवृत्ति होती है, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">चेकानुप्रास अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"चमक चमक चमकते सितारे।" (यहाँ "च" वर्ण की आवृत्ति पद्य की शुरुआत में है।)</p>
+  <p>"फल फूलों से लदे पेड़।" (यहाँ "फ" वर्ण की आवृत्ति पद्य की शुरुआत में है।)</p>
+</div>
+
+
+  <p id="2. वृत्यानुप्रास अलंकार"></p>
+  <ul>
+      <li>
+          <p id="वृत्यानुप्रास अलंकार"><b class="color-content8">वृत्यानुप्रास अलंकार</b></p>
+      </li>
+  </ul>
+  <p></p>
+
+<p><strong><b class="color-content4">परिभाषा:</b></strong> जब किसी पद्य या वाक्य के मध्य में वर्णों की आवृत्ति होती है, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">वृत्यानुप्रास अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"कजरारे नैन, डगमग चाल।" (यहाँ "र" वर्ण की आवृत्ति पद्य के मध्य में है।)</p>
+  <p>"चंचल हवा में झूमते पत्ते।" (यहाँ "म" वर्ण की आवृत्ति पद्य के मध्य में है।)</p>
+</div>
+
+
+  <p id="3. लटानुप्रास अलंकार"></p>
+  <ul>
+      <li>
+          <p id="लटानुप्रास अलंकार"><b class="color-content8">लटानुप्रास अलंकार</b></p>
+      </li>
+  </ul>
+  <p></p>
+
+<p><strong><b class="color-content4">परिभाषा:</b></strong> जब किसी पद्य या वाक्य में वर्णों की आवृत्ति लगातार कई शब्दों में होती है, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">लटानुप्रास अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"सर सर सर सरसराहट करती हवा।" (यहाँ "स" वर्ण की आवृत्ति लगातार कई शब्दों में है।)</p>
+  <p>"चमचमाती चाँदनी रात।" (यहाँ "च" वर्ण की आवृत्ति लगातार कई शब्दों में है।)</p>
+</div>
+
+
+  <p id="4. अन्त्यानुप्रास अलंकार"></p>
+  <ul>
+      <li>
+          <p id="अन्त्यानुप्रास अलंकार"><b class="color-content8">अन्त्यानुप्रास अलंकार</b></p>
+      </li>
+  </ul>
+  <p></p>
+
+<p><strong><b class="color-content4">परिभाषा:</b></strong> जब किसी पद्य या वाक्य के अंत में वर्णों की आवृत्ति होती है, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">अन्त्यानुप्रास अलंकार&nbsp;</b><span style="background-color: var(--background-color); color: var(--text-color);">कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"हमें हैं नमन, शहीदों को।" (यहाँ "न" वर्ण की आवृत्ति पद्य के अंत में है।)</p>
+  <p>"बाग़ में खिलीं कली कली।" (यहाँ "ली" वर्ण की आवृत्ति पद्य के अंत में है।)</p>
+</div>
+
+
+  <p id="5. श्रुत्यानुप्रास अलंकार"></p>
+  <ul>
+      <li>
+          <p id="श्रुत्यानुप्रास अलंकार"><b class="color-content8">श्रुत्यानुप्रास अलंकार</b></p>
+      </li>
+  </ul>
+  <p></p>
+
+<p><strong><b class="color-content4">परिभाषा:</b></strong> जब किसी पद्य या वाक्य में किसी वर्ण की ध्वनि बार-बार सुनाई देती है, भले ही वह वर्ण लिखा न हो, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">श्रुत्यानुप्रास अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"हंस हंस कर कहता है राजा।" (यहाँ "ह" वर्ण की ध्वनि बार-बार सुनाई देती है, लेकिन "स" वर्ण का प्रयोग भी है।)</p>
+  <p>"वह वहाँ जाता है।" (यहाँ "व" वर्ण की ध्वनि बार-बार सुनाई देती है।)<br></p>
+  <h4><br></h4>
+</div>
+
+<p><b class="color-content6">2. यमक अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong>&nbsp;<span style="text-align: left; background-color: var(--background-color); color: var(--text-color);">यमक का अर्थ है 'जुड़ा हुआ'। जब किसी कविता या गद्य में एक ही शब्द का एकाधिक बार प्रयोग होता है, लेकिन प्रत्येक बार उसका अर्थ भिन्न होता है, तब वहाँ&nbsp;</span><b class="color-content3" style="background-color: var(--background-color);">यमक अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color); text-align: left;">&nbsp;होता है।</span></p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"राम राम के चरणों में, राम नाम की लाज।<br>राम बिना सब सूना है, राम राम के साथ॥"</p>
+  <p>इस उदाहरण में "राम" शब्द का कई बार प्रयोग हुआ है, लेकिन हर बार उसका अर्थ भिन्न है। पहले "राम" का अर्थ भगवान राम है और दूसरे "राम" का अर्थ नाम है।<br></p>
+  <h4>
+      <p id="यमक अलंकार के प्रकार:"><b class="color-content7">यमक अलंकार के प्रकार:</b></p>
+  </h4>
+  <p>यमक अलंकार के भी कुछ भेद होते हैं:</p>
+  <ol>
+      <li>
+          <p id="सर्व यमक:"><b class="color-content8">सर्व यमक:</b></p>
+          <ul>
+              <li>इसमें एक ही शब्द का पूर्ण रूप से पुनरावृत्ति होती है।</li>
+              <li><b class="color-content9">उदाहरण:&nbsp;</b>"मन ही मन उसे मनाना।"<ul>
+                      <li>यहाँ "मन" शब्द का दो बार प्रयोग हुआ है और प्रत्येक बार उसका अर्थ भिन्न है।</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <p id="अर्ध यमक:"><b class="color-content8">अर्ध यमक:</b></p>
+          <ul>
+              <li>इसमें शब्द का अर्ध भाग पुनरावृत्त होता है।</li>
+              <li><b class="color-content9">उदाहरण:</b>&nbsp;"नयनों में नीर भरे हैं, मन में मीत बसे हैं।"<ul>
+                      <li>यहाँ "नीर" और "नीत" शब्द का अर्ध भाग "नी" पुनरावृत्त होता है।</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+  </ol>
+  <h4><br></h4>
+</div>
+
+<p><b class="color-content6">3. पुनरुक्ति अलंकार</b></p>
+<p>पुनरुक्ति अलंकार वह अलंकार है जिसमें किसी शब्द का दोहराव (या अधिक बार प्रयोग) होता है, जिससे उसकी ध्वनि और प्रभावशीलता में वृद्धि होती है।</p>
+<h4>
+  <p id="पुनरुक्ति अलंकार के उदाहरण:"><b class="color-content4">पुनरुक्ति अलंकार के उदाहरण:</b></p>
+</h4>
+<p><b class="color-content9">उदाहरण 1:</b><br></p>
+<p>"चल चल, धीरे धीरे तुझे देखा है, आँखों में तेरी ज़िन्दगी नज़र आई है।"</p>
+<p>इस उदाहरण में "चल" और "धीरे" शब्द का पुनरुक्ति अलंकार प्रयोग हुआ है। यहाँ "चल" शब्द का दोहराव होने से उसकी महत्ता और ध्वनि का प्रभाव दोहरा हो रहा है।</p>
+<p><b class="color-content9">उदाहरण 2:</b><br></p>
+<p>"आकाश में चाँदनी, आकाश में चमक।"</p>
+<p>इस उदाहरण में "आकाश" शब्द का पुनरुक्ति अलंकार प्रयोग हुआ है। यहाँ "आकाश" शब्द का दोहराव होने से उसकी प्रभावशीलता और भावनात्मकता में वृद्धि हो रही है।</p>
+<p><b class="color-content9">उदाहरण 3:</b><br></p>
+<p>"प्यार में दीवाना, प्यार में पागल।"</p>
+<p>इस उदाहरण में "प्यार" शब्द का पुनरुक्ति अलंकार प्रयोग हुआ है। यहाँ "प्यार" शब्द का दोहराव होने से उसकी भावनात्मकता और प्रभावशीलता में वृद्धि हो रही है।</p>
+<h4><br></h4>
+<div class="example">
+</div>
+
+<p><b class="color-content6">4. विप्सा अलंकार</b></p>
+<p>विप्सा अलंकार में किसी शब्द के विपरीतार्थक (उल्टे) शब्द का प्रयोग किया जाता है, जिससे उसकी महत्ता, व्याप्ति और ध्वनि में विशेष प्रभाव होता है।</p>
+<p id="विप्सा अलंकार के उदाहरण:"><b class="color-content4">विप्सा अलंकार के उदाहरण:</b></p>
+<p><b class="color-content9">उदाहरण 1:</b><br></p>
+<p>"अंधकार में चमक, सुबह की शाम।"</p>
+<p>इस उदाहरण में "अंधकार" और "चमक" शब्द का विप्सा अलंकार प्रयोग हुआ है। "अंधकार" का अर्थ अंधेरा होता है, जबकि "चमक" का अर्थ उजाला होता है। इस प्रयोग से उसकी प्रभावशीलता बढ़ी है और भावनाओं को गहराई मिली है।</p>
+<p><b class="color-content9">उदाहरण 2:</b><br></p>
+<p>"विश्वास नहीं, बेविश्वास है सही।"</p>
+<p>इस उदाहरण में "विश्वास" और "बेविश्वास" शब्द का विप्सा अलंकार प्रयोग हुआ है। "विश्वास" का अर्थ विश्वास होता है, जबकि "बेविश्वास" का अर्थ अविश्वास होता है। इस प्रयोग से विरोधाभास और भावनाओं का प्रकटीकरण हुआ है।</p>
+<p><b class="color-content9">उदाहरण 3:</b><br></p>
+<p>"उम्मीद मर गई, आशा का अवसर।"</p>
+<p>इस उदाहरण में "उम्मीद" और "आशा" शब्द का विप्सा अलंकार प्रयोग हुआ है। "उम्मीद" का अर्थ उम्मीद होता है, जबकि "आशा" का अर्थ आशा होता है। इस प्रयोग से उनकी विभिन्नता और भावनात्मक प्रभाव स्पष्ट होता है।</p>
+<h3><br></h3>
+<div class="example">
+</div>
+
+<p><b class="color-content6">5. वक्रोक्ति अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong>&nbsp;<span style="background-color: var(--background-color); color: var(--text-color);">वक्रोक्ति अलंकार में वाक्य के अर्थ का विशेष रूप से विकृत (वक्र) प्रयोग होता है, जिससे वाक्य की प्रभावशीलता और भावनात्मक गहराई में वृद्धि होती है।</span></p>
+<p id="वक्रोक्ति अलंकार के उदाहरण:"><b class="color-content4">वक्रोक्ति अलंकार के उदाहरण:</b></p>
+<p><b class="color-content9">उदाहरण 1:</b><br></p>
+<p>"दुनिया को खोजते-खोजते, मैं खुद को खो बैठा।"</p>
+<p>इस उदाहरण में "दुनिया को खोजते-खोजते" वाक्य में वक्रोक्ति अलंकार प्रयोग हुआ है। इस प्रयोग से वाक्य का अर्थ विशेष रूप से प्रकट होता है और उसकी प्रभावशीलता में वृद्धि होती है।</p>
+<p><b class="color-content9">उदाहरण 2:</b><br></p>
+<p>"जब अधूरे सपने थे, तो आँखों में उसकी तस्वीर सी रही।"</p>
+<p>इस उदाहरण में "अधूरे सपने" वाक्य में वक्रोक्ति अलंकार प्रयोग हुआ है। इस प्रयोग से वाक्य की भावनात्मकता और अभिव्यक्ति में गहराई आई है।</p>
+<p><b class="color-content9">उदाहरण 3:</b><br></p>
+<p>"सपनों की राह पे चलते चलते, हकीकत खुद भी सवारी में हो बैठी।"</p>
+<p>इस उदाहरण में "सपनों की राह पे चलते चलते" वाक्य में वक्रोक्ति अलंकार प्रयोग हुआ है। इस प्रयोग से वाक्य का अर्थ अधिक रूचिकर बनता है और पाठकों को विचार करने पर मजबूर करता है।</p>
+<h3><br></h3>
+<div class="example">
+</div>
+
+<p><b class="color-content6">6. श्लेष अलंकार</b></p>
+<p>जब किसी शब्द के दो या दो से अधिक अर्थ होते हैं और वाक्य में उन सभी अर्थों का प्रयोग होता है, तो उसे&nbsp;<b class="color-content3" style="background-color: var(--background-color);">श्लेष अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।<br></span></p>
+<p>श्लेष अलंकार में वाक्य में किसी शब्द का अधिक प्रयोग होता है, जिससे उसकी प्रभावशीलता, व्याप्ति और भावनात्मक प्रभाव बढ़ता है। इसके माध्यम से वाक्य को रूचिकर और आकर्षक बनाया जाता है।</p>
+<p id="श्लेष अलंकार के उदाहरण:"><b class="color-content4">श्लेष अलंकार के उदाहरण:</b></p>
+<p><b class="color-content9">उदाहरण 1:</b><br></p>
+<p>"सुख दुःख का अब बस एक ही मतलब है।"</p>
+<p>इस उदाहरण में "सुख" और "दुःख" शब्द का श्लेष अलंकार प्रयोग हुआ है। इस प्रयोग से उनकी व्याप्ति और भावनात्मकता में वृद्धि होती है।</p>
+<p><b class="color-content9">उदाहरण 2:</b><br></p>
+<p>"प्रेम प्रेम, एक ही शब्द बार-बार।"</p>
+<p>इस उदाहरण में "प्रेम" शब्द का श्लेष अलंकार प्रयोग हुआ है। इस प्रयोग से उसकी प्रभावशीलता और भावनात्मक गहराई बढ़ी है।</p>
+<p><b class="color-content9">उदाहरण 3:</b><br></p>
+<p>"खुशी खुशी, बिताओ ये पल।"</p>
+<p>इस उदाहरण में "खुशी" शब्द का श्लेष अलंकार प्रयोग हुआ है। इस प्रयोग से उसकी प्रभावशीलता और व्याप्ति में वृद्धि होती है।</p>
+<h2 id="अर्थालंकार"><b class="color-content2"><br>अर्थालंकार</b></h2>
+<p>अर्थालंकार वे अलंकार होते हैं जो शब्दों के अर्थ पर आधारित होते हैं और काव्य में अर्थ की शोभा बढ़ाते हैं।</p>
+
+
+  <p id="अर्थालंकार: महत्वपूर्ण भेद और उदाहरण"><b class="color-content4">अर्थालंकार: महत्वपूर्ण भेद और उदाहरण</b></p>
+<p id="यहाँ कुछ महत्वपूर्ण अर्थालंकारों का विस्तृत विवरण और उदाहरण दिए गए हैं:"><b class="color-content5">यहाँ कुछ महत्वपूर्ण अर्थालंकारों का विस्तृत विवरण और उदाहरण दिए गए हैं:</b></p>
+
+<p><b class="color-content6">1. उपमा अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> उपमा अलंकार में उपमेय (जिसकी तुलना की जाती है) और उपमान (जिससे तुलना की जाती है) की समानता दर्शाई जाती है।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"तेरी आँखें चंचल मृगनयनी।" <br> (यहाँ उपमेय "आँखें" और उपमान "मृगनयनी" हैं। मृगनयनी का अर्थ है मृग की आँखें, जो चंचल और सुंदर होती हैं।)<br></p>
+  <h2 id="उपमा अलंकार के अंग"><b class="color-content1">उपमा अलंकार के अंग</b></h2>
+  <p><b class="color-content8" style="background-color: var(--background-color);">उपमये:</b>&nbsp;उपमये का अर्थ होता है उपमा देने के योग्य। जब जैसी वस्तु समानता किसी सरल वस्तु से जाए, तो उसे&nbsp;<b class="color-content5" style="background-color: var(--background-color);">उपमये</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।&nbsp;</span><b class="color-content9" style="background-color: var(--background-color);">जैसे:&nbsp;</b><span style="background-color: var(--background-color); color: var(--text-color);">मुख चाँद-सा सुंदर है। इसमें मुख उपमेय है।</span></p>
+  <p><b class="color-content8" style="background-color: var(--background-color);">उपमान:</b>&nbsp;उपमये की उपमा जिससे दी जाती है, उसे उपमान कहते हैं। अर्थात उपमये को जिस के साथ समानता बताई जाती है, उसे&nbsp;<b class="color-content5" style="background-color: var(--background-color);">उपमान</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।&nbsp;</span><b class="color-content9">जैसे:</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;मुख चाँद-सा सुंदर है। इसमें “चाँद” उपमान है।</span></p>
+  <p><b class="color-content8" style="background-color: var(--background-color);">वाचक शब्द:</b>&nbsp;जब उपमये और उपमान में समानता दिखाई जाती है, तब जिस शब्द का योग होता है, उसे&nbsp;<b class="color-content5" style="background-color: var(--background-color);">वाचक शब्द</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं। “सा”&nbsp;</span><b class="color-content9">जैसे</b><span style="background-color: var(--background-color); color: var(--text-color);">: मुख चाँद-सा सुंदर है। इसमें वाचक शब्द है।</span></p>
+  <p></p>
+  <p><b class="color-content8" style="background-color: var(--background-color);">साधारण धर्म:</b>&nbsp;दो वस्तुओं के बीच समानता दिखाने के लिए जब किसी ऐसे गुण या धर्म की मदद ली जाती है जो दोनों में विद्यमान न हो, तो उसे&nbsp;<b class="color-content5" style="background-color: var(--background-color);">साधारण धर्म</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;कहते हैं।&nbsp;</span><b class="color-content9">जैसे:</b><span style="background-color: var(--background-color); color: var(--text-color);">&nbsp;मुख चाँद-सा सुंदर है। इसमें सुंदर शब्द साधारण-धर्म है</span></p>
+</div>
+
+<p><b class="color-content6">2. रूपक अलंकार</b></p>
+<p>रूपक अलंकार में दो वस्तुओं के बीच सामान्य गुण, लक्षण या धर्मों की तुलना करके उन्हें समर्पित किया जाता है। इस प्रकार की तुलना से वाक्य में रस, भावना और विचार को गहराया जाता है।</p>
+<p id="रूपक अलंकार के उदाहरण:"><b class="color-content4">रूपक अलंकार के उदाहरण:</b></p>
+<p><b class="color-content9">उदाहरण 1:</b><br></p>
+<p>"वह शेर है, जिसकी आंखों में दहाड़ होती है।"</p>
+<p>इस वाक्य में "वह शेर" उपमा है और "जिसकी आंखों में दहाड़ होती है" उपमित है। यहाँ पर शेर के आंखों में दहाड़ होना उसकी शक्ति और प्रभावशीलता को संकेतित करता है।</p>
+<p><b class="color-content9">उदाहरण 2:</b><br></p>
+<p>"वह चाँदनी का तुझसे भी चमकना मुश्किल है, ओ मेरे सूरज किरणों सी धड़कने लगा है।"</p>
+<p>इस वाक्य में "चाँदनी" उपमा है और "सूरज किरणों सी धड़कने लगा है" उपमित है। यहाँ पर चाँदनी की चमक और सूरज की किरणों की धड़कन व्यक्ति के भावनात्मक स्थिति को दर्शाती है।</p>
+<p><b class="color-content9">उदाहरण 3:</b><br></p>
+<p>"वह विद्या का सागर है, जिससे हमारी ज्ञान की प्यास बुझती है।"</p>
+<p>इस वाक्य में "विद्या" उपमा है और "हमारी ज्ञान की प्यास बुझना" उपमित है। यहाँ पर विद्या के सागर से हमारी ज्ञान की प्यास को शक्ति और सम्पूर्णता के साथ प्रकट किया गया है।</p>
+<div class="example">
+</div>
+
+<p><b class="color-content6">3. उत्प्रेक्षा अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong>&nbsp;<span style="background-color: var(--background-color); color: var(--text-color);">उत्प्रेक्षा अलंकार में उपमेय में उपमान की संभावना की जाती है। इसमें कुछ शब्दों को छोड़कर वाक्य का अर्थ प्रस्तुत किया जाता है, जिससे पाठक को विचारों की अनुभूति मिलती है।</span></p>
+<p><b class="color-content9">उदाहरण:</b><br></p>
+<p>"सोहत ओढ़ै पीत पट स्याम सलोने गात।<br>मनो नीलमनि सैल पर आतप परयो प्रभात।"</p>
+<p>इस वाक्य में "सोहत", "मनो" और "परयो" शब्दों का उपयोग उत्प्रेक्षा अलंकार का उच्चारण है। यहाँ पर इन शब्दों को छोड़कर वाक्य का अर्थ प्रस्तुत किया गया है, जिससे वाक्य में एक विशेष प्रभाव बनता है और पाठक को रीति और रस का अनुभव होता है।</p>
+<div class="example">
+
+
+ 
+      <p><b class="color-content6">4. व्यंग्य अलंकार</b></p>
+ 
+  <p><strong><b class="color-content4">परिभाषा:</b></strong> व्यंग्य अलंकार में किसी बात को अप्रत्यक्ष रूप से कहा जाता है।</p>
+  <div class="example">
+      <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+      <p>"वाह! कितनी अच्छी बात है!" <br> (यहाँ व्यंग्य से वक्ता की असहमति व्यक्त की गई है। वक्ता सीधे तौर पर कहने की बजाए व्यंग्यात्मक ढंग से कह रहा है।)</p>
+  </div>
+
+  
+      <p><b class="color-content6">5. श्लेष अलंकार</b></p>
+  
+  <p><strong><b class="color-content4">परिभाषा:</b></strong>&nbsp;<span style="background-color: var(--background-color);">जहाँ पर कोई एक शब्द एक ही बार आता है, लेकिन उस शब्द के अर्थ भिन्न-भिन्न निकलते है, तो वहाँ पर ‘</span><b class="color-content5" style="background-color: var(--background-color);">श्लेष अलंकार</b><span style="background-color: var(--background-color); color: var(--text-color);">’ होता है।</span></p>
+  <p>श्लेष अलंकार में दो बातों का ध्यान रखना आवश्यक है। पहली, एक शब्द के एक से अधिक अर्थ हो। दूसरी, एक से अधिक अर्थ प्रकरण में अपेक्षित हो।<br></p>
+  <p><b class="color-content9">उदाहरण:</b><br></p>
+  <p>"बादल गरजे, तो गांव के लोग आशावादी बन जाते हैं।"</p>
+  <p></p>
+  <p>इस वाक्य में "गरजे" शब्द का दो भिन्न अर्थ हैं। एक तो यहाँ गरजने का अर्थ है, और दूसरा यहाँ पर आवाज देने का अर्थ है। इस प्रकार, शब्द "गरजे" का दोनों स्थानों में भिन्न-भिन्न अर्थ प्रकट होते हैं और इसे श्लेष अलंकार का उच्चारण कहा जाता है।</p>
+  <div class="example">
+  </div>
+
+  
+      <p><b class="color-content6">6. विरोधाभास अलंकार</b></p>
+  
+  <p><strong><b class="color-content4">परिभाषा:</b></strong> विरोधाभास अलंकार में परस्पर विरोधी भावों का प्रयोग किया जाता है।</p>
+  <div class="example">
+      <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+      <p>"मैं जीता हूँ मरकर।" <br> (यहाँ जीवन और मृत्यु जैसे परस्पर विरोधी भावों का प्रयोग किया गया है। वक्ता कह रहा है कि वह मरकर भी जी रहा है, जिससे एक विरोधाभास उत्पन्न होता है।)</p>
+  </div>
+
+ 
+      <p><b class="color-content6">7. मानवीकरण अलंकार</b></p>
+  
+  <p><strong><b class="color-content4">परिभाषा:</b></strong> मानवीकरण अलंकार में निर्जीव वस्तुओं को मानवीय गुणों से युक्त दिखाया जाता है।</p>
+  <div class="example">
+      <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+      <p>"पवन हवाएँ गीत गा रही हैं।" <br> (यहाँ हवाओं को मानवों की तरह गीत गाते हुए दिखाया गया है, जिससे उन्हें मानवीय गुण प्रदान किए गए हैं।)</p>
+  </div>
+
+ 
+      <p><b class="color-content6">8. दृष्टांत अलंकार</b></p>
+  
+  <p><strong><b class="color-content4">परिभाषा:</b></strong> दृष्टांत अलंकार में किसी कथन की सत्यता को एक उदाहरण या कहानी के माध्यम से समझाया जाता है।</p>
+  <div class="example">
+      <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+      <p>"जैसे बिन पानी के मछली तड़पती है, वैसे ही मैं तुम्हारे बिना व्याकुल हूँ।" <br> (यहाँ मछली के उदाहरण से विरह की व्यथा को समझाया गया है। मछली का बिना पानी के तड़पना, विरह की व्यथा को प्रकट करने के लिए उपयोग किया गया है।)</p>
+  </div>
+
+ 
+      <p><b class="color-content6">9. संदेह अलंकार</b></p>
+ 
+  <p><strong><b class="color-content4">परिभाषा:</b></strong> संदेह अलंकार में वक्ता किसी वस्तु या भावना के विषय में संदेह व्यक्त करता है।</p>
+  <div class="example">
+      <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+      <p>"चाँद है या कोई दीप जल रहा है?" <br> (यहाँ चाँद और दीप के बीच संदेह व्यक्त किया गया है। वक्ता को यह संदेह है कि जो चमक रहा है वह चाँद है या दीप।)</p>
+  </div>
+
+</div>
+<p><b class="color-content6">10. अतिश्योक्ति अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> अतिश्योक्ति अलंकार में किसी वस्तु या भावना की अतिशयता या अत्यधिकता बताई जाती है।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"मैंने सैकड़ों बार तुम्हें समझाया।" <br> (यहाँ "सैकड़ों बार" शब्द का प्रयोग अतिशयोक्ति के लिए किया गया है। असल में, वक्ता ने शायद कुछ ही बार समझाया होगा, पर इसे सैकड़ों बार कहकर अत्यधिकता दर्शाई गई है।)</p>
+</div>
+
+<p><b class="color-content6">11. विशेषोक्ति अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> विशेषोक्ति अलंकार में किसी वस्तु या भावना के विशेष गुण का वर्णन किया जाता है।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"उसकी मीठी वाणी सबको मोह लेती है।" <br> (यहाँ वाणी की विशेषता "मीठी" बताई गई है, जिससे उसकी वाणी की मोहकता प्रकट होती है।)</p>
+</div>
+
+<p><b class="color-content6">12. समासोक्ति अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> समासोक्ति अलंकार में संक्षेप में किसी वस्तु या भावना का पूरा चित्र खड़ा कर दिया जाता है।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"सिर झुकाकर चलता है, मानो कोई अपराधी हो।" <br> (यहाँ संक्षिप्त वाक्य से व्यक्ति के अपराधी होने का आभास दिया गया है। व्यक्ति के सिर झुकाकर चलने से उसकी अपराधी जैसी स्थिति बताई गई है।)</p>
+</div>
+
+<p><b class="color-content6">13. पर्याय अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> पर्याय अलंकार में किसी वस्तु या भावना के पर्यायवाची शब्दों का प्रयोग किया जाता है।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"वीर जवान, मातृभूमि की रक्षा करते हैं।" <br> (यहाँ "वीर जवान" और "रक्षक" पर्यायवाची शब्द हैं। वीर जवान का मतलब है कि वे मातृभूमि की रक्षा करने वाले रक्षक हैं।)</p>
+</div>
+<h2 id="उभयालंकार"><b class="color-content2">उभयालंकार</b></h2>
+<p>उभयालंकार शब्दालंकार और अर्थालंकार के संयोग से बनने वाला अलंकार है। इसमें शब्दों की ध्वनि और शब्दों के अर्थ दोनों मिलकर काव्य में चमत्कार उत्पन्न करते हैं।</p>
+
+<h2>
+  <p id="उभयालंकार: शब्द और अर्थ का संगम"><b class="color-content4">उभयालंकार: शब्द और अर्थ का संगम</b></p></h2>
+<p id="उभयालंकार को मुख्यतः दो भागों में विभाजित किया जाता है:"><b class="color-content5">उभयालंकार को मुख्यतः दो भागों में विभाजित किया जाता है:</b></p>
+
+<p><b class="color-content6">1. संसृष्टि अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> संसृष्टि अलंकार में शब्दों की अनुप्रास या यमक आदि जैसी विशेषताएँ होती हैं, साथ ही साथ वाक्य में अर्थालंकार का भी प्रयोग होता है। शब्दों की विशेषता और अर्थ दोनों मिलकर चमत्कार पैदा करते हैं।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"आग लगाकर राख किया।" <br> (यहाँ "आग" और "राख" में अनुप्रास है, साथ ही वाक्य विनाश का बोध कराता है (अर्थालंकार)। "आग" और "राख" शब्दों की ध्वनि और उनका अर्थ दोनों मिलकर वाक्य को चमत्कृत करते हैं।)</p>
+</div>
+
+<p><b class="color-content6">2. संकर अलंकार</b></p>
+<p><strong><b class="color-content4">परिभाषा:</b></strong> संकर अलंकार में कई अलंकारों का ऐसा मिश्रण होता है कि उन्हें अलग-अलग पहचानना कठिन होता है। शब्दों की विशेषता (शब्दालंकार) और अर्थ में चमत्कार (अर्थालंकार) एक दूसरे में इस प्रकार घुलमिल जाते हैं कि दोनों अलग से स्पष्ट नहीं होते।</p>
+<div class="example">
+  <p><strong><b class="color-content9">उदाहरण:</b></strong></p>
+  <p>"चंचल हवा में नाचती हैं कलियाँ।" <br> (यहाँ "च" वर्ण की आवृत्ति (अनुप्रास) है, साथ ही वाक्य में गति और सौंदर्य का चित्रण है (अर्थालंकार)। "चंचल हवा" और "नाचती हैं कलियाँ" में ध्वनि और अर्थ दोनों का संगम है। दोनों इतने घुलमिल गए हैं कि अलग से पहचानना मुश्किल है।)<br><br><br></p>
+</div><h2 id="अभ्यास प्रश्न"><b class="color-content1">अभ्यास प्रश्न</b></h2>
+<ol>
+    <li>
+        <p><b class="color-content6">उपमा अलंकार की परिभाषा दीजिए और उदाहरण दीजिए।</b></p>
+    </li>
+    <li>
+        <p><b class="color-content6">रूपक अलंकार की विशेषता और उदाहरण दीजिए।</b></p>
+    </li>
+    <li>
+        <p><b class="color-content6">उपमिति अलंकार की परिभाषा और उदाहरण दीजिए।</b></p>
+    </li>
+    <li>
+        <p><b class="color-content6">अनुप्रास अलंकार का मतलब और उदाहरण दीजिए।</b></p>
+    </li>
+    <li>
+        <p><b class="color-content6">यमक अलंकार की विशेषता और उदाहरण दीजिए।</b></p>
+    </li>
+</ol>
+<h4>उत्तर:</h4>
+<ol>
+    <li>
+        <p id="उपमा अलंकार की परिभाषा और उदाहरण:"><b class="color-content5">उपमा अलंकार की परिभाषा और उदाहरण:</b></p>
+        <ul>
+            <li><strong>परिभाषा</strong>: दो वस्तुओं के बीच तुलना करके उपमा का प्रयोग होता है।</li>
+            <li><strong>उदाहरण</strong>: सूरज नर्मदा का स्वास्त्य है, जैसे शीतल पानी में मधुमक्खी।</li>
+        </ul>
+    </li>
+    <li>
+        <p id="रूपक अलंकार की विशेषता और उदाहरण:"><b class="color-content5">रूपक अलंकार की विशेषता और उदाहरण:</b></p>
+        <ul>
+            <li><strong>विशेषता</strong>: जब किसी विशेष गुण, गुणक या लक्षण की स्थिति का वर्णन किया जाता है।</li>
+            <li><strong>उदाहरण</strong>: उसकी मुस्कान नैनों में मीना भर देती है, जैसे मानों मन्दाकिनी में किमी भर देती है।</li>
+        </ul>
+    </li>
+    <li>
+        <p id="उपमिति अलंकार की परिभाषा और उदाहरण:"><b class="color-content5">उपमिति अलंकार की परिभाषा और उदाहरण:</b></p>
+        <ul>
+            <li><strong>परिभाषा</strong>: दो वस्तुओं के बीच तुलना करने के लिए उपमिति का प्रयोग होता है।</li>
+            <li><strong>उदाहरण</strong>: उसकी सारी बातें चाँदनी में गोली बरसाते हैं, जैसे कोई तारे अब हो।</li>
+        </ul>
+    </li>
+    <li>
+        <p id="अनुप्रास अलंकार का मतलब और उदाहरण:"><b class="color-content5">अनुप्रास अलंकार का मतलब और उदाहरण:</b></p>
+        <ul>
+            <li><strong>मतलब</strong>: जब किसी शब्द या शब्दों के अन्तर्गत स्वरों का ऐसा मिलान होता है, जिससे उसकी मधुरता बढ़े।</li>
+            <li><strong>उदाहरण</strong>: मानों वायु चली, मधुर ध्वनि भेजी।</li>
+        </ul>
+    </li>
+    <li>
+        <p id="यमक अलंकार की विशेषता और उदाहरण:"><b class="color-content5">यमक अलंकार की विशेषता और उदाहरण:</b></p>
+        <ul>
+            <li><strong>विशेषता</strong>: जब एक शब्द का दोहराव किया जाता है, जिससे उसका अर्थ बढ़ा दिया जाता है।</li>
+            <li><strong>उदाहरण</strong>: वह चंद्रमुखी है, वह चांद सी तारी।</li>
+        </ul>
+    </li>
+</ol> <br>    <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+
+<table id="Table" style="border-collapse: collapse; width: 100%;">
+
+  <style>
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td {
+          padding: 10px;
+      }
+      td a:link {
+          color: rgb(55, 0, 255);
+         
+      }
+      td a:visited {
+          color: rgb(55, 0, 255); /* Color for visited links */
+      }
+      td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+           /* Color change on hover */
+      } 
+      
+
+
+
+
+
+  </style>
+
+<tbody>
+<tr>
+    <td>
+        <a href="..\vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+    </td>
+    <td>
+        <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+    </td>
+    <td>
+        <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+    </td>
+    <td>
+        <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+    </td>
+    <td>
+        <a href="number-in-hindi.html"><li>वचन</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="gender-in-hindi.html"><li>लिंग</li></a>
+    </td>
+    <td>
+        <a href="case-in-hindi.html"><li>कारक</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+    </td>
+    <td>
+        <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+    </td>
+    <td>
+        <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="tense-in-hindi.html"><li>काल</li></a>
+    </td>
+    <td>
+        <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+    </td>
+    <td>
+        <a href="particle-in-hindi.html"><li>निपात</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+    </td>
+    <td>
+        <a href="person-in-hindi.html"><li>पुरुष</li></a>
+    </td>
+    <td>
+        <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+    </td>
+    <td>
+        <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+    </td>
+    <td>
+        <a href="joining.html"><li>संधि</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="compound-in-hindi.html"><li>समास</li></a>
+    </td>
+    <td>
+        <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+    </td>
+    <td>
+        <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+    </td>
+    <td>
+        <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+    </td>
+    <td>
+        <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+    </td>
+    <td>
+        <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+    </td>
+    <td>
+        <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+    </td>
+    <td>
+        <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+    </td>
+    <td>
+        <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="ras-in-hindi.html"><li>रस</li></a>
+    </td>
+    <td>
+        <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+    </td>
+    <td>
+        <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+    </td>
+</tr>
+<tr>
+    <td>
+        <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+    </td>
+    <td>
+        <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+    </td>
+</tr>
+</tbody>
+</table>
+
+<div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+<script  src="..\script.js"></script>
+
+<script scr="..\search.js"></script>
+
+<script src="..\menusearch1.js"></script>
+</body>
+</html>

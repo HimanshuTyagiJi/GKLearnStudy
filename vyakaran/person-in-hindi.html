@@ -1,0 +1,345 @@
+<!DOCTYPE html> 
+<html lang="hi" >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="पुरुष (Person) के बारे में विस्तृत जानकारी। हिंदी भाषा में पुरुष के प्रकार, उदाहरण और उपयोग।">
+    <meta name="keywords" content="पुरुष, Person in Hindi, पुरुष के प्रकार, हिंदी व्याकरण, हिंदी भाषा, Person Examples, Person Types, पुरुष के उदाहरण, पुरुष के उपयोग, पुरुष की परिभाषा">
+    <meta name="author" content="आपका नाम">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="पुरुष - हिंदी व्याकरण">
+    <meta property="og:description" content="पुरुष (Person) के बारे में विस्तृत जानकारी। हिंदी भाषा में पुरुष के प्रकार, उदाहरण और उपयोग।">
+    <meta property="og:image" content="URL_of_the_image">
+    <meta property="og:url" content="URL_of_the_page">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="पुरुष - हिंदी व्याकरण">
+    <meta name="twitter:description" content="पुरुष (Person) के बारे में विस्तृत जानकारी। हिंदी भाषा में पुरुष के प्रकार, उदाहरण और उपयोग।">
+    <meta name="twitter:image" content="URL_of_the_image">
+    <link rel="stylesheet" href="..\style.css">
+    <title>पुरुष - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
+</head> 
+  
+  <body> 
+
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+          <div class="search-container">
+            <span class="search-icon" id="searchIcon">
+              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </span>
+            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+              oninput="updateSuggestions(event)">
+            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+          </div>
+          <div id="suggestions" class="suggestions-list"></div>
+        </form>
+    
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+          <div class="modal1-content">
+            <span class="close" onclick="closeModal1(event)">&times;</span>
+            <h2>Search Results</h2>
+            <div id="results"></div>
+          </div>
+        </div>
+      </main>
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+
+    <li><a href="..\vyakaran-language.html">भाषा और व्याकरण</a></li>
+    <li><a href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+                <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+                <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+                <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+                <li><a href="number-in-hindi.html">वचन</a></li>
+                <li><a href="gender-in-hindi.html">लिंग</a></li>
+                <li><a href="case-in-hindi.html">कारक</a></li>
+                <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+                <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+                <li><a href="verb-in-hindi.html">क्रिया</a></li>
+                <li><a href="tense-in-hindi.html">काल</a></li>
+                <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+                <li><a href="particle-in-hindi.html">निपात</a></li>
+                <li><a href="voice-in-hindi.html">वाच्य</a></li>
+                <li><a class="active" href="person-in-hindi.html">पुरुष</a></li>
+                <li><a href="punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+                <li><a href="prefix-in-hindi.html">उपसर्ग</a></li>
+                <li><a href="suffix-in-hindi.html">प्रत्यय</a></li>
+                <li><a href="joining.html">संधि</a></li>
+                <li><a href="compound-in-hindi.html">समास</a></li>
+                <li><a href="tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+                <li><a href="deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+                <li><a href="antonyms-in-hindi.html">विलोम-शब्द</a></li>
+                <li><a href="synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+                <li><a href="idioms-in-hindi.html">मुहावरे</a></li>
+                <li><a href="proverbs-in-hindi.html">लोकोक्तियां</a></li>
+                <li><a href="one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+                <li><a href="words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+                <li><a href="words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+                <li><a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+                <li><a href="yugm-shabd.html">युग्म शब्द</a></li>
+                <li><a href="ras-in-hindi.html">रस</a></li>
+                <li><a href="chhand-in-hindi.html">छन्द</a></li>
+                <li><a href="alankar-in-hindi.html">अलंकार</a></li>
+                <li><a href="paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+                <li><a href="unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+                <li><a href="letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+                <li><a href="essay-in-hindi.html">निबंध</a></li>
+                <li><a href="quiz-for-exam.html">Quiz For Exam</a></li>
+                <br><br>
+ 
+        </ul>
+        </div>
+        </div>
+
+        <div class="container"><h2 id="पुरुष की परिभाषा - भेद और उदाहरण"><b class="color-content2">पुरुष की परिभाषा - भेद और उदाहरण</b></h2>
+          <p><b class="color-content3" style="background-color: var(--background-color);">पुरुष</b>&nbsp;का शाब्दिक अर्थ होता है व्यक्ति या पुरुष, लेकिन हिंदी व्याकरण में इसका अर्थ कुछ और होता है। व्याकरण के संदर्भ में, पुरुष वह अंश है जिससे वाक्य में किसी क्रिया के कर्ता, सम्बोधक या प्रशंसक को व्यक्त किया जाता है। इसके बिना वाक्य में किसी क्रिया का कर्ता या व्यक्ति का भाव नहीं बनता।<br><br>हिंदी व्याकरण में पुरुष वाक्य में संज्ञा या सर्वनाम के उस रूप को कहते हैं जो वक्ता (पहला पुरुष), श्रोता (दूसरा पुरुष) या किसी तीसरे व्यक्ति (तीसरा पुरुष) का बोध कराता है। दूसरे शब्दों में, पुरुष यह बताता है कि वाक्य किसके बारे में बात कर रहा है।<br></p>
+          <h2 id="पुरुष के भेद"><b class="color-content2">पुरुष के भेद</b></h2>
+          <p id="&nbsp;हिंदी व्याकरण में पुरुष के तीन प्रमुख भेद होते हैं:"><b class="color-content3">&nbsp;हिंदी व्याकरण में पुरुष के तीन प्रमुख भेद होते हैं:<br></b></p>
+          <p></p>
+          <ol>
+              <li><b class="color-content6">प्रथम पुरुष</b></li>
+              <li><b class="color-content6">मध्यम पुरुष</b></li>
+              <li><b class="color-content6">उत्तम पुरुष&nbsp;</b></li>
+          </ol>
+          <p></p>
+          <p><b class="color-content6" style="background-color: var(--background-color);">प्रथम पुरुष :</b>&nbsp; हिंदी व्याकरण में एक महत्वपूर्ण अवयव है जो वाक्य में क्रिया के कर्ता या बोलने वाला व्यक्ति को स्थापित करने में मदद करता है। इस पुरुष में व्यक्ति अपनी बात को खुद से संबोधित करता है और अपनी पहचान को प्रकट करता है। यहाँ इस पुरुष के बारे में और विस्तार से जानकारी दी जा रही है:</p>
+          <h2 id="प्रथम पुरुष के विशेषताएँ:"><b class="color-content2">प्रथम पुरुष के विशेषताएँ:</b></h2>
+          <ol>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">संबोधन की भावना:</b>प्रथम पुरुष में व्यक्ति अपनी बात को स्वयं से संबोधित करता है। इसमें व्यक्ति अपनी पहचान को स्पष्ट करता है और अपने विचारों या क्रियाओं को सीधे व्यक्त करता है।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">वाक्य में क्रिया का कर्ता:</b>&nbsp;प्रथम पुरुष वाक्य में क्रिया का कर्ता या बोलने वाला व्यक्त होता है। इसमें व्यक्ति अपने द्वारा किए जाने वाले कार्य को सीधे जताता है।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">व्यक्तिगत अनुभव का प्रकटीकरण:</b>&nbsp;प्रथम पुरुष वाक्य व्यक्तिगत अनुभव को प्रकट करने में मदद करता है। इसमें व्यक्ति अपनी व्यक्तिगत भावनाओं, विचारों या अनुभवों को साझा करता है।</p>
+              </li>
+          </ol>
+          <p><b class="color-content9">उदाहरण:</b></p>
+          <ol>
+              <li>मैं स्कूल जाता हूँ।</li>
+              <li>मैं बहुत खुश हूँ।</li>
+              <li>मैंने किताब पढ़ी।</li>
+          </ol>
+          <p>इन उदाहरणों में "मैं" शब्द प्रथम पुरुष का प्रतीक है जो वाक्य में क्रिया के कर्ता को स्पष्ट करता है। इस प्रकार, प्रथम पुरुष हिंदी व्याकरण में व्यक्ति के बोलने या कार्य करने का भाव स्थापित करने में महत्वपूर्ण भूमिका निभाता है।<br><br></p>
+          <p><b class="color-content6" style="background-color: var(--background-color);">मध्यम पुरुष :</b><strong>&nbsp;</strong>हिंदी व्याकरण में एक अवयव है जो वाक्य में क्रिया का सम्बोधक या सम्बोधन करने वाले व्यक्ति को स्थापित करता है। इस पुरुष में व्यक्ति अपनी बात को दूसरे संबंधित व्यक्ति से संबोधित करता है और उसके सम्बंध में किसी दूसरे की दृष्टि से व्यक्त करता है। यहाँ प्रमुख विशेषताएँ और उदाहरण दिए जा रहे हैं:</p>
+          <h2 id="मध्यम पुरुष की विशेषताएँ"><b class="color-content2">मध्यम पुरुष की विशेषताएँ</b></h2>
+          <ol>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">सम्बोधन की भावना:</b>&nbsp;मध्यम पुरुष में व्यक्ति अपनी बात को दूसरे संबंधित व्यक्ति से संबोधित करता है। इस पुरुष में व्यक्ति अपने सम्बंधों या दूसरे के साथी को बोलते हैं।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">वाक्य में क्रिया का सम्बोधक:</b>&nbsp;मध्यम पुरुष वाक्य में क्रिया का सम्बोधक या सम्बोधन करने वाले व्यक्ति को स्थापित करता है। इसमें व्यक्ति दूसरे को अपने साथी के रूप में समझता है।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">सामान्य अनुभव का प्रकटीकरण:</b>&nbsp;मध्यम पुरुष वाक्य में सामान्य अनुभव को प्रकट करने में मदद करता है। इसमें व्यक्ति अपने सम्बंधों या सामान्य अनुभवों को व्यक्त करता है।</p>
+              </li>
+          </ol>
+          <p><b class="color-content9">उदाहरण:</b><br></p>
+          <ol>
+              <li>तुम स्कूल जाते हो।</li>
+              <li>तुम बहुत खुश हो।</li>
+              <li>तुमने किताब पढ़ी।</li>
+          </ol>
+          <p></p>
+          <p>इन उदाहरणों में "तुम" शब्द मध्यम पुरुष का प्रतीक है जो वाक्य में क्रिया के सम्बोधक या सम्बोधन करने वाले व्यक्ति को स्पष्ट करता है। इस प्रकार, मध्यम पुरुष हिंदी व्याकरण में व्यक्ति के सम्बोधन या सम्बोधन करने का भाव स्थापित करने में महत्वपूर्ण भूमिका निभाता है।<br><br></p>
+          <p><b class="color-content6" style="background-color: var(--background-color);">उत्तम पुरुष :</b><strong>&nbsp;</strong>&nbsp;हिंदी व्याकरण में एक अवयव है जो वाक्य में क्रिया के प्रशंसक या देखा जाने वाले व्यक्ति को स्थापित करता है। इस पुरुष में व्यक्ति अपनी बात को तीसरे व्यक्ति को प्रशंसित करते हुए व्यक्त करता है और उसके द्वारा किए जाने वाले कार्य को स्वीकार करता है। यहाँ प्रमुख विशेषताएँ और उदाहरण दिए जा रहे हैं:</p>
+          <h2 id="उत्तम पुरुष की विशेषताएँ"><b class="color-content2">उत्तम पुरुष की विशेषताएँ</b></h2>
+          <ol>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">प्रशंसा और स्वीकृति की भावना:</b>उत्तम पुरुष में व्यक्ति अपनी बात को तीसरे व्यक्ति को प्रशंसित करते हुए व्यक्त करता है। इसमें व्यक्ति अपने किए गए कार्य को स्वीकार करने की भावना दिखाता है।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">वाक्य में क्रिया का प्रशंसक:</b>&nbsp;उत्तम पुरुष वाक्य में क्रिया का प्रशंसक या देखा जाने वाले व्यक्ति को स्थापित करता है। इसमें व्यक्ति अपने किए गए कार्य को तीसरे व्यक्ति के सम्मान में प्रकट करता है।</p>
+              </li>
+              <li>
+                  <p><b class="color-content3" style="background-color: var(--background-color);">स्वीकृति और प्रतिक्रिया का प्रकटीकरण:</b>उत्तम पुरुष वाक्य में स्वीकृति और प्रतिक्रिया को प्रकट करने में मदद करता है। इसमें व्यक्ति अपनी कार्यवाही को दूसरे के सम्मान में प्रस्तुत करता है।</p>
+              </li>
+          </ol>
+          <p><b class="color-content9">उदाहरण:</b><br></p>
+          <ol>
+              <li>वह बहुत अच्छा खिलाड़ी है।</li>
+              <li>वह बहुत मेहनती है।</li>
+              <li>उसने बड़ी मेहनत से पढ़ा है।</li>
+          </ol>
+          <p></p>
+          <p>इन उदाहरणों में "वह" शब्द उत्तम पुरुष का प्रतीक है जो वाक्य में क्रिया के प्रशंसक या देखा जाने वाले व्यक्ति को स्पष्ट करता है। इस प्रकार, उत्तम पुरुष हिंदी व्याकरण में व्यक्ति के सम्मान या प्रशंसा के भाव को स्थापित करने में महत्वपूर्ण भूमिका निभाता है।<br><br></p>
+          <br>    <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
+
+          <table id="Table" style="border-collapse: collapse; width: 100%;">
+
+            <style>
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                td {
+                    padding: 10px;
+                }
+                td a:link {
+                    color: rgb(55, 0, 255);
+                   
+                }
+                td a:visited {
+                    color: rgb(55, 0, 255); /* Color for visited links */
+                }
+                td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+                     /* Color change on hover */
+                } 
+                
+    
+    
+    
+    
+    
+            </style>
+    
+      <tbody>
+          <tr>
+              <td>
+                  <a href="language-and-vyakaran.html"><li>भाषा और व्याकरण</li></a>
+              </td>
+              <td>
+                  <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+              </td>
+              <td>
+                  <a href="morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+              </td>
+              <td>
+                  <a href="noun-in-hindi.html"><li>संज्ञा</li></a>
+              </td>
+              <td>
+                  <a href="number-in-hindi.html"><li>वचन</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="gender-in-hindi.html"><li>लिंग</li></a>
+              </td>
+              <td>
+                  <a href="case-in-hindi.html"><li>कारक</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+              </td>
+              <td>
+                  <a href="adjective-in-hindi.html"><li>विशेषण</li></a>
+              </td>
+              <td>
+                  <a href="verb-in-hindi.html"><li>क्रिया</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="tense-in-hindi.html"><li>काल</li></a>
+              </td>
+              <td>
+                  <a href="indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+              </td>
+              <td>
+                  <a href="particle-in-hindi.html"><li>निपात</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="voice-in-hindi.html"><li>वाच्य</li></a>
+              </td>
+              <td>
+                  <a href="person-in-hindi.html"><li>पुरुष</li></a>
+              </td>
+              <td>
+                  <a href="punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="prefix-in-hindi.html"><li>उपसर्ग</li></a>
+              </td>
+              <td>
+                  <a href="suffix-in-hindi.html"><li>प्रत्यय</li></a>
+              </td>
+              <td>
+                  <a href="joining.html"><li>संधि</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="compound-in-hindi.html"><li>समास</li></a>
+              </td>
+              <td>
+                  <a href="tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+              </td>
+              <td>
+                  <a href="deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+              </td>
+              <td>
+                  <a href="synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+              </td>
+              <td>
+                  <a href="idioms-in-hindi.html"><li>मुहावरे</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+              </td>
+              <td>
+                  <a href="one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+              </td>
+              <td>
+                  <a href="words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+              </td>
+              <td>
+                  <a href="pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+              </td>
+              <td>
+                  <a href="yugm-shabd.html"><li>युग्म शब्द</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="ras-in-hindi.html"><li>रस</li></a>
+              </td>
+              <td>
+                  <a href="chhand-in-hindi.html"><li>छन्द</li></a>
+              </td>
+              <td>
+                  <a href="alankar-in-hindi.html"><li>अलंकार</li></a>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+              </td>
+              <td>
+                  <a href="unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+    
+    <div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+    <script src="..\script.js"></script>
+    <script src="..\search.js"></script>
+    <script src="..\menusearch1.js"></script>
+    </body>
+    </html>
