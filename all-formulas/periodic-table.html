@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="List of chemical elements in the periodic table">
+    <meta name="keywords" content="Periodic Table, chemical elements, atomic number, symbol">
+    <meta name="author" content="Mr. Himanshu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+
+    <!-- Open Graph Meta Tags for Facebook -->
+    <meta property="og:title" content="Periodic Table">
+    <meta property="og:description" content="List of chemical elements in the periodic table">
+    <meta property="og:image" content="https://gklearnstudy.in/periodic-table.png">
+    <!-- Update with the actual image URL -->
+    <meta property="og:url" content="https://gklearnstudy.in/periodic-table.html"> <!-- Update with the actual page URL -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Periodic Table">
+    <meta name="twitter:description" content="List of chemical elements in the periodic table">
+    <meta name="twitter:image" content="gklearnstudy.in/periodic-table.png"> <!-- Update with the actual image URL -->
+    <meta name="twitter:site" content="@yourtwitterhandle">
+    <meta name="twitter:creator" content="@yourtwitterhandle">
+    <meta name="twitter:image:alt" content="Periodic Table">
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#ffccff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Periodic Table">
+    <meta name="application-name" content="Periodic Table">
+    <meta name="msapplication-TileColor" content="#ffccff">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/periodic-table.png">
+    <!-- Update with the actual image URL -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <title>Periodic Table</title>
+    <link rel="stylesheet" href="..\style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <form id="searchForm" onsubmit="performSearch(event);">
+            <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                    oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+            <div id="suggestions" class="suggestions-list"></div>
+        </form>
+
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+            <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+    </main>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+
+
+        <b>
+            <li><a class="active" href="periodic-table.html">Periodic Table</a></li>
+            <li><a href="element-of-name.html">Elements of name</a></li>
+            <li><a href="all-chemical-formulas.html">Chemical formulas</a></li>
+            <li><a href="reaction-in-chemistry.html">Reaction</a></li>
+            <li><a href="reaction-in-hindi.html">Reaction in Hindi</a></li>
+
+        </b>
+    </ul>
+
+
+
+
+
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+
+        }
+
+
+
+
+        table,
+        th,
+        tr {
+            border: 3px solid #ffffff;
+            border-radius: 9px;
+        }
+
+        [data-theme="dark"] {
+
+            table,
+            th,
+            tr {
+                border: 3px solid #212121;
+            }
+
+            th {
+                color: white !important;
+            }
+
+
+            table,
+            tr th {
+                background-color: var(--background-color)
+            }
+
+
+        }
+
+        th,
+        tr {
+            font-weight: normal;
+            padding: 5px;
+
+
+            cursor: pointer;
+
+        }
+
+
+
+
+        tr,
+        th:hover {
+            background-color: transparent !important;
+            /* Change this color as needed */
+        }
+
+        .dark-mode th:hover {
+            color: rgb(234, 234, 234) !important;
+            ;
+            background-color: var(--background-color)
+                /* Change this color as needed */
+        }
+
+
+
+
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+
+
+
+        .alkali-metals {
+            background-color: rgba(255, 0, 0, 0.2);
+            /* Light green for non-metals */
+        }
+
+        .actinide {
+            background-color: rgba(64, 255, 192, 0.35);
+            /* Light green for non-metals */
+        }
+
+        .transition-metals {
+            background-color: rgba(0, 128, 255, 0.3);
+            /* Light green for non-metals */
+        }
+
+        .alkaline-earth {
+            background-color: rgba(64, 64, 255, 0.25)
+                /* Light green for non-metals */
+        }
+
+        .lanthanide {
+            background-color: rgba(0, 255, 255, 0.35);
+            /* Light green for non-metals */
+        }
+
+        .post-transition {
+            background-color: rgba(0, 255, 0, 0.3)
+                /* Light green for non-metals */
+        }
+
+        .non-metal {
+            background-color: none;
+            /* Light green for non-metals */
+        }
+
+        .metalloids {
+            background-color: rgba(140, 190, 0, 0.3);
+            /* Light green for non-metals */
+        }
+
+        .noble-gases {
+            background-color: rgba(255, 152, 0, 0.3);
+            /* Light green for non-metals */
+        }
+
+        .reactive-nonmetals {
+            background-color: rgba(255, 255, 0, 0.3)
+                /* Light green for non-metals */
+        }
+
+        .rotate-text {
+            writing-mode: vertical-lr;
+            /* Yeh text ko 90 degree clockwise rotate karta hai */
+            transform: rotate(180deg);
+            /* Agar kisi browser mein writing-mode support na ho toh yeh alternative hai */
+        }
+
+        .containers {
+            display: flex;
+
+        }
+
+        .text-box {
+            border: 1px solid #000;
+        }
+
+        .xobo {
+
+            margin: 10px;
+
+
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tick {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 20px;
+            color: green;
+            visibility: hidden;
+        }
+
+        .xobo.selected .tick {
+            visibility: visible;
+        }
+
+        .containers,
+        .contentContainer {
+            width: 100%;
+            overflow: auto;
+        }
+    </style>
+
+    <div class="container">
+        <div class="notranslate">
+
+            <center>
+                <div class="scrollmenu"><a href="..\physics-all-formulas.html">
+                        <h2>Physics</h2>
+                    </a>
+                    <a href="..\mathematics-all-formulas.html">
+                        <h2>Mathematics</h2>
+                    </a>
+                </div>
+            </center>
+
+
+            <div class="color-content2">
+                <h2 style="text-align:center">Periodic Table</h2>
+            </div>
+
+
+            <div class="containers" id="contentContainer">
+
+                <div class="custom-container">
+                    <div class="custom-row">
+
+                        <br><br>
+                        <table>
+                            <tbody>
+                                <tr>
+
+
+                                    <th>
+                                        <div class="xobo all " onclick="toggleSelection(this); showxobes('all')"><b>
+                                                <center>ALL</center>
+                                            </b><span class="tick">✔</span></div>
+
+                                        <span class="xobo solid"
+                                            onclick="toggleSelection(this); showxobes('solid')">Solid<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo liquid"
+                                            onclick="toggleSelection(this); showxobes('liquid')">Liquid<span
+                                                class="tick">✔</span></span><br><br>
+                                        <span class="xobo gas"
+                                            onclick="toggleSelection(this); showxobes('gas')">Gas<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo unKnown"
+                                            onclick="toggleSelection(this); showxobes('unKnown')">UnKnown<span
+                                                class="tick">✔</span></span>
+                                    </th>
+                                    <th>
+                                        <div class="xobo metals" onclick="toggleSelection(this); showxobes('metals')">
+                                            <b>
+                                                <center>Metals</center>
+                                            </b><span class="tick">✔</span></div>
+                                        <span class="xobo alkali-metals"
+                                            onclick="toggleSelection(this); showxobes('alkali-metals')">Alkali
+                                            metals<span class="tick">✔</span></span>
+                                        <span class="xobo actinide"
+                                            onclick="toggleSelection(this); showxobes('actinide')">Actinide<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo transition-metals"
+                                            onclick="toggleSelection(this); showxobes('transition-metals')">Transition
+                                            metals<span class="tick">✔</span></span>
+
+                                        <div class="xobo alkaline-earth"
+                                            onclick="toggleSelection(this); showxobes('alkaline-earth')">Alkaline earth
+                                            metals<span class="tick">✔</span></div>
+                                        <span class="xobo lanthanide"
+                                            onclick="toggleSelection(this); showxobes('lanthanide')">Lanthanide<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo post-transition"
+                                            onclick="toggleSelection(this); showxobes('post-transition')">Post-transition
+                                            metals<span class="tick">✔</span></span>
+
+                                    </th>
+
+                                    <th>
+
+                                        <div class="xobo non-metal"
+                                            onclick="toggleSelection(this); showxobes('non-metal')"><b>
+                                                <center>Non Metals</center>
+                                            </b><span class="tick">✔</span></div>
+                                        <span class="xobo metalloids"
+                                            onclick="toggleSelection(this); showxobes('metalloids')">Metalloids<span
+                                                class="tick">✔</span></span><br><br>
+                                        <span class="xobo noble-gases"
+                                            onclick="toggleSelection(this); showxobes('noble-gases')">Noble gases<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo reactive-nonmetals"
+                                            onclick="toggleSelection(this); showxobes('reactive-nonmetals')">Reactive
+                                            nonmetals<span class="tick">✔</span></span>
+                                    </th>
+
+                                    <th>
+                                        <div class="xobo all" onclick="toggleSelection(this); showxobes('all')"><b>
+                                                <center>blocks</center>
+                                            </b><span class="tick">✔</span></div>
+                                        <span class="xobo s-blocks"
+                                            onclick="toggleSelection(this); showxobes('s-blocks')">s-blocks<span
+                                                class="tick">✔</span></span>
+                                        <span class="xobo p-blocks"
+                                            onclick="toggleSelection(this); showxobes('p-blocks')">p-blocks<span
+                                                class="tick">✔</span></span><br><br>
+                                        <span class="xobo d-blocks"
+                                            onclick="toggleSelection(this); showxobes('d-blocks')">d-blocks<span
+                                                class="tick">✔</span></span>
+
+                                        <span class="xobo f-blocks"
+                                            onclick="toggleSelection(this); showxobes('f-blocks')">f-blocks<span
+                                                class="tick">✔</span></span>
+
+                                    </th>
+
+
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    Group👉🏻
+                    <div class="containers" id="contentContainer">
+
+
+
+                        <div class="containers" id="contentContainer">
+
+                        </div>
+                        <div class="containers" id="contentContainer">
+
+                        </div>
+                        <div class="containers" id="contentContainer">
+                        </div>
+                        <div class="containers" id="contentContainer">
+                        </div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <div class="rotate-text">Period</div>
+                                    </th>
+                                    <th>1</th>
+                                    <th colspan="16"></th>
+                                    <th>18</th>
+                                </tr>
+                                <tr>
+                                    <th>1</th>
+                                    <th class="xob non-metal s-blocks reactive-nonmetals gas" onclick="showPopup('H')"
+                                        style="background-color: rgba(255, 255, 0, 0.3);"><sup>1</sup> H</th>
+
+                                    <th>2</th>
+                                    <th colspan="10" rowspan="2">
+
+
+
+
+                                    </th>
+                                    <th>13</th>
+                                    <th>14</th>
+                                    <th>15</th>
+                                    <th>16</th>
+                                    <th>17</th>
+                                    <th class="xob non-metal s-blocks noble-gases gas" onclick="showPopup('He')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>2</sup>He</th>
+                                </tr>
+
+
+                                <tr>
+                                    <th>2</th>
+                                    <th class="xob metals s-blocks alkali-metals solid" onclick="showPopup('Li')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>3</sup>Li</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Be')"
+                                        style="background-color: rgba(64, 64, 255, 0.25)"><sup>4</sup>Be</th>
+
+                                    <th class="xob metalloids p-blocks solid " onclick="showPopup('B')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>5</sup>B</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks solid" onclick="showPopup('C')"
+                                        style="background-color: rgba(255, 255, 0, 0.3);"><sup>6</sup>C</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks gas" onclick="showPopup('N')"
+                                        style="background-color: rgba(255, 255, 0, 0.3);"><sup>7</sup>N</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks gas " onclick="showPopup('O')"
+                                        style="background-color: rgba(255, 255, 0, 0.3);"><sup>8</sup>O</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks gas" onclick="showPopup('F')"
+                                        style="background-color: rgba(255, 255, 0, 0.3); "><sup>9</sup>F</th>
+                                    <th class="xob non-metal noble-gases p-blocks gas" onclick="showPopup('Ne')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>10</sup>Ne</th>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+
+                                    <th class="xob metals alkali-metals s-blocks solid" onclick="showPopup('Na')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>11</sup>Na</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Mg')"
+                                        style="background-color: rgba(64, 64, 255, 0.25)"><sup>12</sup>Mg</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                    <th>6</th>
+                                    <th>7</th>
+                                    <th>8</th>
+                                    <th>9</th>
+                                    <th>10</th>
+                                    <th>11</th>
+                                    <th>12</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Al')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>13</sup>Al</th>
+                                    <th class="xob  p-blocks metalloids solid" onclick="showPopup('Si')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>14</sup>Si</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks solid" onclick="showPopup('P')"
+                                        style="background-color: rgba(255, 255, 0, 0.3);"><sup>15</sup>P</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks solid" onclick="showPopup('S')"
+                                        style="background-color: rgba(255, 255, 0, 0.3)"><sup>16</sup>S</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks gas" onclick="showPopup('Cl')"
+                                        style="background-color: rgba(255, 255, 0, 0.3); "><sup>17</sup>Cl</th>
+                                    <th class="xob non-metal noble-gases p-blocks gas" onclick="showPopup('Ar')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>18</sup>Ar</th>
+                                </tr>
+
+                                <tr>
+                                    <th>4</th>
+                                    <th class="xob metals alkali-metals s-blocks solid" onclick="showPopup('K')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>19</sup>K</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Ca')"
+                                        style="background-color: rgba(64, 64, 255, 0.25);"><sup>20</sup>Ca</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Sc')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>21</sup>Sc</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Ti')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>22</sup>Ti</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('V')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>23</sup>V</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Cr')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>24</sup>Cr</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Mn')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>25</sup>Mn</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Fe')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>26</sup>Fe</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Co')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>27</sup>Co</th>
+                                    <th class="xob metals transition-metals d-blocks solid " onclick="showPopup('Ni')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>28</sup>Ni</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Cu')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>29</sup>Cu</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Zn')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>30</sup>Zn</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Ga')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>31</sup>Ga</th>
+                                    <th class="xob  p-blocks metalloids solid" onclick="showPopup('Ge')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>32</sup>Ge</th>
+                                    <th class="xob  p-blocks metalloids solid" onclick="showPopup('As')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>33</sup>As</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks solid"
+                                        onclick="showPopup('Se')" style="background-color: rgba(255, 255, 0, 0.3)">
+                                        <sup>34</sup>Se</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks liquid"
+                                        onclick="showPopup('Br')" style="background-color: rgba(255, 255, 0, 0.3); ">
+                                        <sup>35</sup>Br</th>
+                                    <th class="xob non-metal noble-gases p-blocks gas" onclick="showPopup('Kr')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>36</sup>Kr</th>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <th class="xob metals alkali-metals s-blocks solid" onclick="showPopup('Rb')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>37</sup>Rb</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Sr')"
+                                        style="background-color: rgba(64, 64, 255, 0.25)"><sup>38</sup>Sr</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Y')"
+                                        style="background-color:  rgba(0, 128, 255, 0.3); "><sup>39</sup>Y</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Zr')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>40</sup>Zr</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Nb')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>41</sup>Nb</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Mo')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>42</sup>Mo</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Tc')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>43</sup>Tc</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Ru')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>44</sup>Ru</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Rh')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>45</sup>Rh</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Pd')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>46</sup>Pd</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Ag')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>47</sup>Ag</th>
+                                    <th class="xob metals transition-metals  d-blocks solid" onclick="showPopup('Cd')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>48</sup>Cd</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('In')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>49</sup>In</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Sn')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>50</sup>Sn</th>
+                                    <th class="xob  p-blocks metalloids solid" onclick="showPopup('Sb')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>51</sup>Sb</th>
+                                    <th class="xob  p-blocks metalloids solid" onclick="showPopup('Te')"
+                                        style="background-color:  rgba(140, 190, 0, 0.3); "><sup>52</sup>Te</th>
+                                    <th class="xob non-metal reactive-nonmetals p-blocks solid" onclick="showPopup('I')"
+                                        style="background-color:  rgba(255, 255, 0, 0.3); "><sup>53</sup>I</th>
+                                    <th class="xob non-metal noble-gases p-blocks gas" onclick="showPopup('Xe')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>54</sup>Xe</th>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <th class="xob metals alkali-metals s-blocks solid" onclick="showPopup('Cs')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>55</sup>Cs</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Ba')"
+                                        style="background-color: rgba(64, 64, 255, 0.25);"><sup>56</sup>Ba</th>
+                                    <th class="xob metals lanthanide f-blocks solid"
+                                        style="background-color: rgba(0, 255, 255, 0.35); font: 1em sans-serif; ">57-71
+                                    </th>
+
+                                    <th class="xob metals transition-metals  d-blocks solid" onclick="showPopup('Hf')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>72</sup>Hf</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Ta')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>73</sup>Ta</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('W')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>74</sup>W</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Re')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>75</sup>Re</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Os')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>76</sup>Os</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Ir')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>77</sup>Ir</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Pt')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>78</sup>Pt</th>
+                                    <th class="xob metals transition-metals d-blocks solid" onclick="showPopup('Au')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>79</sup>Au</th>
+                                    <th class="xob metals transition-metals d-blocks liquid" onclick="showPopup('Hg')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>80</sup>Hg</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Tl')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>81</sup>Tl</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Pb')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>82</sup>Pb</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Bi')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>83</sup>Bi</th>
+                                    <th class="xob metals post-transition p-blocks solid" onclick="showPopup('Po')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>84</sup>Po</th>
+                                    <th class="xob p-blocks metalloids solid" onclick="showPopup('At')"
+                                        style="background-color: rgba(255, 255, 0, 0.3); "><sup>85</sup>At</th>
+                                    <th class="xob non-metal noble-gases p-blocks gas" onclick="showPopup('Rn')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>86</sup>Rn</th>
+                                </tr>
+
+                                <tr>
+                                    <th>7</th>
+                                    <th class="xob metals alkali-metals s-blocks solid" onclick="showPopup('Fr')"
+                                        style="background-color: rgba(255, 0, 0, 0.2);"><sup>87</sup>Fr</th>
+                                    <th class="xob metals alkaline-earth s-blocks solid" onclick="showPopup('Ra')"
+                                        style="background-color: rgba(64, 64, 255, 0.25);"><sup>88</sup>Ra</th>
+                                    <th class="xob metals actinide f-blocks solid"
+                                        style="background-color: rgba(64, 255, 192, 0.35); font: 1em sans-serif; ;">
+                                        89-103</th>
+
+
+
+                                    <th class="xob metals transition-metals d-blocks unKnown" onclick="showPopup('Rf')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>104</sup>Rf</th>
+                                    <th class="xob metals transition-metals d-blocks unKnown" onclick="showPopup('Db')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>105</sup>Db</th>
+                                    <th class="xob metals transition-metals d-blocks unKnown " onclick="showPopup('Sg')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>106</sup>Sg</th>
+                                    <th class="xob metals transition-metals d-blocks unKnown" onclick="showPopup('Bh')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>107</sup>Bh</th>
+                                    <th class="xob metals transition-metals d-blocks unKnown" onclick="showPopup('Hs')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>108</sup>Hs</th>
+                                    <th class="xob  d-blocks unKnown" onclick="showPopup('Mt')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>109</sup>Mt</th>
+                                    <th class="xob  d-blocks unKnown" onclick="showPopup('Ds')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>110</sup>Ds</th>
+                                    <th class="xob  d-blocks unKnown" onclick="showPopup('Rg')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>111</sup>Rg</th>
+                                    <th class="xob  d-blocks unKnown" onclick="showPopup('Cn')"
+                                        style="background-color: rgba(0, 128, 255, 0.3); "><sup>112</sup>Cn</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Nh')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>113</sup>Nh</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Fl')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>114</sup>Fl</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Mc')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>115</sup>Mc</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Lv')"
+                                        style="background-color: rgba(0, 255, 0, 0.3); "><sup>116</sup>Lv</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Ts')"
+                                        style="background-color: rgba(255, 255, 0, 0.3); "><sup>117</sup>Ts</th>
+                                    <th class="xob  p-blocks unKnown" onclick="showPopup('Og')"
+                                        style="background-color:  rgba(255, 152, 0, 0.3); "><sup>118</sup>Og</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>6</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('La')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>57</sup>La</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Ce')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>58</sup>Ce</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Pr')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>59</sup>Pr</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Nd')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>60</sup>Nd</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Pm')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>61</sup>Pm</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Sm')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>62</sup>Sm</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Eu')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>63</sup>Eu</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Gd')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>64</sup>Gd</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Tb')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>65</sup>Tb</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Dy')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>66</sup>Dy</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Ho')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>67</sup>Ho</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Er')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>68</sup>Er</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Tm')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>69</sup>Tm</th>
+                                    <th class="xob metals lanthanide f-blocks solid" onclick="showPopup('Yb')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>70</sup>Yb</th>
+                                    <th class="xob metals lanthanide d-blocks solid" onclick="showPopup('Lu')"
+                                        style="background-color: rgba(0, 255, 255, 0.35); "><sup>71</sup>Lu</th>
+
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>7</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Ac')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>89</sup>Ac</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Th')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>90</sup>Th</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Pa')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>91</sup>Pa</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('U')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>92</sup>U</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Np')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>93</sup>Np</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Pu')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>94</sup>Pu</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Am')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>95</sup>Am</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Cm')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>96</sup>Cm</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Bk')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>97</sup>Bk</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Cf')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>98</sup>Cf</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Es')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>99</sup>Es</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Fm')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>100</sup>Fm</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('Md')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>101</sup>Md</th>
+                                    <th class="xob metals actinide f-blocks solid" onclick="showPopup('No')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>102</sup>No</th>
+                                    <th class="xob metals actinide d-blocks solid" onclick="showPopup('Lr')"
+                                        style="background-color: rgba(64, 255, 192, 0.35); "><sup>103</sup>Lr</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="popup" class="popup">
+                        <span id="closeBtn" class="close">×</span>
+                        <div id="popupContent"></div>
+                    </div><br><br><br>
+                    <img src="../image/periodic-table.png" alt="periodic-table" style="width: 95%;">
+
+                    <div id="overlay" class="overlay"></div>
+                </div>
+            </div>
+            <script>
+                function showxobes(type) {
+                    var xobes = document.querySelectorAll('.xob');
+                    xobes.forEach(function (xob) {
+                        if (!xob.classList.contains(type) && type !== 'all') {
+                            xob.style.opacity = 0.1;
+                        } else {
+                            xob.style.opacity = 1;
+                        }
+                    });
+                }
+
+
+                function toggleSelection(xobo) {
+                    var selectedxoboes = document.querySelectorAll('.selected');
+                    selectedxoboes.forEach(function (selectedxobo) {
+                        selectedxobo.classList.remove('selected');
+                    });
+                    xobo.classList.add('selected');
+                }
+            </script>
+
+
+            <div class="important_link"><br>
+                <p style="font-size:24px;">Important Links</p><br>
+                <div id="links-container">
+                    <ul id="links-list"></ul>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <div class="custom-row">
+                    <div class="custom-column"> <b>Follow Us</b>
+                        <div id="image-links"></div>
+                    </div>
+                    <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                    <div class="custom-column">
+                        <p id="my-paragraph"></p>
+                    </div>
+                </div>
+            </footer>
+            <script src="..\script.js"></script>
+            <script src="..\search.js"></script>
+            <script src="..\menusearch1.js"></script>
+        </div>
+    </div>
+
+</html>
