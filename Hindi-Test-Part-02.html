@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is an MCQ test webpage where multiple choice questions are provided to assess your knowledge on various topics.">
+    <meta name="keywords" content="MCQ, test, multiple choice questions, online quiz, assessment, knowledge test">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="MCQ Test Page">
+    <meta property="og:description" content="Participate in our MCQ test and evaluate your knowledge with a variety of multiple choice questions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="stylesheet" href="./style.css">
+     <title>Hindi Test Part 02</title>
+</head>
+<body> <div class="container">
+    <form id="quiz-form" style="display: none;"><h3>Hindi Test Part - 02 </h3><div id="questions-container"></div><div id="timer">Time: 0:00</div><button type="submit" class="submit-btn" style="display: none;">Submit</button></form><div id="result"></div><button id="retry-btn" style="display: none;" onclick="retryQuiz()">Try Again</button><div id="startModal" class="modal"><div class="modal-content">
+    <center><h3>Some Rules of this Quiz</h3></center>
+            <p>1. You only get 30 seconds for each question.</p>
+            <p>2. Once you have selected your option, it cannot be undone.</p>
+            <p>3. You can't select any option once time goes off.</p>
+            <p>4. You can not skip the quiz while playing.</p>
+            <p>5. You will get points based on your correct answers.</p>
+    <center><button class="start-btn" onclick="startQuiz()">Start</button></center></div></div><div id="resultModal" class="modal"><div class="modal-content">
+            <h3>Quiz Results</h3>
+            <div id="resultContent"></div>
+            <button class="review-btn" onclick="reviewQuestions()">Review Questions</button>
+            <button class="retry-btn" onclick="retryQuiz()">Try Again</button></div></div>
+
+    <div id="review-questions"></div>
+
+    <script>
+       var totalSeconds = 0;
+var timerInterval;
+var userAnswers = [];
+var questions = [
+    
+
+
+    
+
+    {
+        "question": "किस उपन्यास में 'नास्तिक' नामक गाँधीवादी पात्र हैं?",
+        "options": [
+            { "text": "A. 'गोदान'", "value": "a" },
+            { "text": "B. 'निर्मला'", "value": "b" },
+            { "text": "C. 'गबन'", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "किस उपन्यास में चारित्रिक रूप में 'अनारकली' नामक प्रतापी पात्र है?",
+        "options": [
+            { "text": "A. 'रंगभूमि'", "value": "a" },
+            { "text": "B. 'गबन'", "value": "b" },
+            { "text": "C. 'कर्मभूमि'", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "किस उपन्यास में रेमर्सी नामक पात्र है, जो एक चंगाई रोगी हैं?",
+        "options": [
+            { "text": "A. 'गोदान'", "value": "a" },
+            { "text": "B. 'निर्मला'", "value": "b" },
+            { "text": "C. 'रंगभूमि'", "value": "c" }
+        ],
+        "correctOption": "c"
+    },
+    {
+        "question": "'निर्मला' उपन्यास के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. राजेंद्र", "value": "a" },
+            { "text": "B. आत्माराम", "value": "b" },
+            { "text": "C. प्रेमचंद", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "'कर्मभूमि' के किस पात्र ने स्वदेशी आंदोलन को नया आयाम दिया?",
+        "options": [
+            { "text": "A. हरिश्चंद्र", "value": "a" },
+            { "text": "B. चंपारन राजा", "value": "b" },
+            { "text": "C. नारायण नारायण", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "'गोदान' उपन्यास के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. धनुषधारी", "value": "a" },
+            { "text": "B. होलीसेन", "value": "b" },
+            { "text": "C. धनंजय", "value": "c" }
+        ],
+        "correctOption": "c"
+    },
+    {
+        "question": "'निर्मला' का किसने अनुवाद किया था?",
+        "options": [
+            { "text": "A. मुंशी प्रेमचंद", "value": "a" },
+            { "text": "B. महादेवी वर्मा", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
+        ],
+        "correctOption": "c"
+    },
+    {
+        "question": "'गबन' किस उपन्यास में प्रकाशित हुआ?",
+        "options": [
+            { "text": "A. 1931", "value": "a" },
+            { "text": "B. 1932", "value": "b" },
+            { "text": "C. 1933", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "'रंगभूमि' का किसने अनुवाद किया था?",
+        "options": [
+            { "text": "A. मुंशी प्रेमचंद", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. रामधारी सिंह दिनकर", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'कर्मभूमि' का किसने लेखा था?",
+        "options": [
+            { "text": "A. नारायण नारायण", "value": "a" },
+            { "text": "B. रामधारी सिंह दिनकर", "value": "b" },
+            { "text": "C. चंपारन राजा", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'ठेकेदार' कहानी के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. घीसू", "value": "a" },
+            { "text": "B. माधव", "value": "b" },
+            { "text": "C. राय साहब", "value": "c" }
+        ],
+        "correctOption": "c"
+    },
+    {
+        "question": "'नमक का दरोगा' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. सुभद्रा कुमारी चौहान", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'पूस की रात' कहानी के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. हल्कू", "value": "a" },
+            { "text": "B. भोला", "value": "b" },
+            { "text": "C. माधव", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'इदगाह' कहानी के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. हामिद", "value": "a" },
+            { "text": "B. रहीम", "value": "b" },
+            { "text": "C. मोहम्मद", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'बड़े भाई साहब' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. सुभद्रा कुमारी चौहान", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'कफन' कहानी के मुख्य पात्र कौन हैं?",
+        "options": [
+            { "text": "A. घीसू और माधव", "value": "a" },
+            { "text": "B. घीसू और भोला", "value": "b" },
+            { "text": "C. माधव और भोला", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'सपनों का सौदागर' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. विष्णु प्रभाकर", "value": "a" },
+            { "text": "B. प्रेमचंद", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'दो बैलों की कथा' कहानी के मुख्य पात्र कौन हैं?",
+        "options": [
+            { "text": "A. हीरा और मोती", "value": "a" },
+            { "text": "B. श्याम और सीता", "value": "b" },
+            { "text": "C. राम और लक्ष्मण", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'पंच परमेश्वर' कहानी का मुख्य विषय क्या है?",
+        "options": [
+            { "text": "A. न्याय", "value": "a" },
+            { "text": "B. प्रेम", "value": "b" },
+            { "text": "C. मित्रता", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "'ठाकुर का कुंआ' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. महादेवी वर्मा", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘मालिनी’ किस प्रकार का छंद है?",
+        "options": [
+            { "text": "A. वर्णिक छंद", "value": "a" },
+            { "text": "B. मात्रिक छंद", "value": "b" },
+            { "text": "C. मुक्त छंद", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘रोला’ किस प्रकार का छंद है?",
+        "options": [
+            { "text": "A. मात्रिक छंद", "value": "a" },
+            { "text": "B. वर्णिक छंद", "value": "b" },
+            { "text": "C. मुक्त छंद", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘दोहा’ छंद में कितनी मात्राएँ होती हैं?",
+        "options": [
+            { "text": "A. 20", "value": "a" },
+            { "text": "B. 24", "value": "b" },
+            { "text": "C. 28", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘सोरठा’ छंद में कुल कितनी मात्राएँ होती हैं?",
+        "options": [
+            { "text": "A. 24", "value": "a" },
+            { "text": "B. 28", "value": "b" },
+            { "text": "C. 32", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘कुण्डलिया’ छंद की विशेषता क्या है?",
+        "options": [
+            { "text": "A. इसमें दोहा और रोला मिलते हैं", "value": "a" },
+            { "text": "B. इसमें केवल दोहा होता है", "value": "b" },
+            { "text": "C. इसमें केवल रोला होता है", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘रौला’ किस प्रकार का छंद है?",
+        "options": [
+            { "text": "A. वर्णिक छंद", "value": "a" },
+            { "text": "B. मात्रिक छंद", "value": "b" },
+            { "text": "C. मुक्त छंद", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘चौपाई’ छंद में कितनी मात्राएँ होती हैं?",
+        "options": [
+            { "text": "A. 16", "value": "a" },
+            { "text": "B. 20", "value": "b" },
+            { "text": "C. 24", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘हरिगीतिका’ छंद किससे सम्बंधित है?",
+        "options": [
+            { "text": "A. भक्ति", "value": "a" },
+            { "text": "B. श्रृंगार", "value": "b" },
+            { "text": "C. वीर", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘मालिनी’ छंद में कितनी मात्राएँ होती हैं?",
+        "options": [
+            { "text": "A. 24", "value": "a" },
+            { "text": "B. 28", "value": "b" },
+            { "text": "C. 32", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘सवैया’ किस प्रकार का छंद है?",
+        "options": [
+            { "text": "A. वर्णिक छंद", "value": "a" },
+            { "text": "B. मात्रिक छंद", "value": "b" },
+            { "text": "C. मुक्त छंद", "value": "c" }
+        ],
+        "correctOption": "a"
+    }
+,
+    {
+        "question": "‘उसके चेहरे पर चाँद की झलक थी’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. रूपक", "value": "a" },
+            { "text": "B. उपमा", "value": "b" },
+            { "text": "C. उत्प्रेक्षा", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘नभ में चाँदनी मुस्कुरा रही है’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उत्प्रेक्षा", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. अनुप्रास", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘वह शेर जैसा बलवान है’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उपमा", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. अनुप्रास", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘सूरज के समान तेजस्वी’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. अनुप्रास", "value": "a" },
+            { "text": "B. उपमा", "value": "b" },
+            { "text": "C. उत्प्रेक्षा", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘जैसे जलता हुआ दीपक’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उपमा", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. अनुप्रास", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘रजनीगंधा की सुगंध’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. अनुप्रास", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. उत्प्रेक्षा", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘नील गगन में तारों का मेला’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उत्प्रेक्षा", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. अनुप्रास", "value": "c" }
+        ],
+        "correctOption": "a"
+    },
+    {
+        "question": "‘लाल कमल सा चेहरा’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. रूपक", "value": "a" },
+            { "text": "B. उपमा", "value": "b" },
+            { "text": "C. उत्प्रेक्षा", "value": "c" }
+        ],
+        "correctOption": "b"
+    },
+    {
+        "question": "‘कमल के फूल जैसी मुस्कान’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उत्प्रेक्षा", "value": "a" },
+            { "text": "B. रूपक", "value": "b" },
+            { "text": "C. उपमा", "value": "c" }
+        ],
+        "correctOption": "c"
+    },
+    {
+        "question": "‘जलते हुए दीपक की तरह’ में कौन सा अलंकार है?",
+        "options": [
+            { "text": "A. उत्प्रेक्षा", "value": "a" },
+            { "text": "B. अनुप्रास", "value": "b" },
+            { "text": "C. रूपक", "value": "c" }
+        ],
+        "correctOption": "a"
+    }, {
+        "question": "कालिदास के किस काव्य ग्रंथ को 'संस्कृत का पंचम काव्य' कहा जाता है?",
+        "options": [
+            { "text": "A. मेघदूत", "value": "a" },
+            { "text": "B. ऋतुसंहार", "value": "b" },
+            { "text": "C. शाकुन्तलम्", "value": "c" },
+            { "text": "D. कुमारसम्भव", "value": "d" }
+        ],
+        "correctOption": "b",
+        "explanation": " 'ऋतुसंहार' को 'संस्कृत का पंचम काव्य' कहा जाता है क्योंकि इसमें ऋतुओं का विवरण किया गया है और इसमें पंचम ऋतु, शरद ऋतु का वर्णन है।"
+    },
+    {
+        "question": "वैष्णव जनता तो तेने कहिए जे पीड़ परायी जाणे रे, इस पद का संगीत रचनाकार कौन है?",
+        "options": [
+            { "text": "A. मीराबाई", "value": "a" },
+            { "text": "B. सूरदास", "value": "b" },
+            { "text": "C. तुलसीदास", "value": "c" },
+            { "text": "D. कबीर", "value": "d" }
+        ],
+        "correctOption": "a",
+        "explanation": " 'वैष्णव जनता तो तेने कहिए जे पीड़ परायी जाणे रे' पद का संगीत रचनाकार मीराबाई हैं।"
+    },
+    {
+        "question": "हिंदी के आधुनिक साहित्य के प्रथम समान्य काव्य ग्रंथ 'सत्याग्रह' के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. महात्मा गांधी", "value": "a" },
+            { "text": "B. माखनलाल चतुर्वेदी", "value": "b" },
+            { "text": "C. सूर्यकांत त्रिपाठी 'निराला'", "value": "c" },
+            { "text": "D. जयशंकर प्रसाद", "value": "d" }
+        ],
+        "correctOption": "b",
+        "explanation": " 'सत्याग्रह' के लेखक माखनलाल चतुर्वेदी हैं। यह कविता उनके आधुनिक साहित्य का प्रथम समान्य काव्य ग्रंथ माना जाता है।"
+    },
+    {
+        "question": "संस्कृत में किसे 'महाकाव्य कवि' कहा जाता है?",
+        "options": [
+            { "text": "A. वाल्मीकि", "value": "a" },
+            { "text": "B. भारवि", "value": "b" },
+            { "text": "C. कालिदास", "value": "c" },
+            { "text": "D. शाक्यमुनि", "value": "d"}],
+        "correctOption": "c",
+        "explanation": " संस्कृत में 'महाकाव्य कवि' कहा जाता है, कालिदास को।"
+    },
+    {
+        "question": "भारतीय साहित्य के किस युग में 'रामायण' और 'महाभारत' की रचना हुई?",
+        "options": [
+            { "text": "A. वेद-युग", "value": "a" },
+            { "text": "B. संस्कृति-युग", "value": "b" },
+            { "text": "C. प्राचीन-युग", "value": "c" },
+            { "text": "D. मध्यकालीन-युग", "value": "d" }
+        ],
+        "correctOption": "b",
+        "explanation": " 'रामायण' और 'महाभारत' की रचना भारतीय साहित्य के संस्कृति-युग में हुई।"
+    },
+    {
+        "question": "वृत्त की श्रेणियों में से कौन-सी श्रेणी ब्रह्मजी की रचना 'आदिपुराण' में पाई जाती है?",
+        "options": [
+            { "text": "A. अष्टक", "value": "a" },
+            { "text": "B. श्लोक", "value": "b" },
+            { "text": "C. अनुप्रास", "value": "c" },
+            { "text": "D. श्लेष्मक", "value": "d" }
+        ],
+        "correctOption": "a",
+        "explanation": " ब्रह्मजी की रचना 'आदिपुराण' में 'अष्टक' श्रेणी में पाई जाती है।"
+    },
+    {
+        "question": "'धर्मपुत्र' किस लेखक की कृति है?",
+        "options": [
+            { "text": "A. निराला", "value": "a" },
+            { "text": "B. मैथिलीशरण गुप्त", "value": "b" },
+            { "text": "C. भारतेन्दु हरिश्चंद्र", "value": "c" },
+            { "text": "D. प्रेमचंद", "value": "d" }
+        ],
+        "correctOption": "d",
+        "explanation": " 'धर्मपुत्र' किस लेखक की कृति है, प्रेमचंद की।"
+    },
+    {
+        "question": "भारतीय संस्कृति में ज्योतिष्क काव्य के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. कालिदास", "value": "a" },
+            { "text": "B. भास", "value": "b" },
+            { "text": "C. वाल्मीकि", "value": "c" },
+            { "text": "D. व्यास", "value": "d" }
+        ],
+        "correctOption": "a",
+        "explanation": " भारतीय संस्कृति में ज्योतिष्क काव्य के लेखक कालिदास हैं।"
+    },
+    {
+        "question": "'विशाखा' किस लेखक की कृति है?",
+        "options": [
+            { "text": "A. चाणक्य", "value": "a" },
+            { "text": "B. सूर्यकांत त्रिपाठी 'निराला'", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" },
+            { "text": "D. महादेवी वर्मा", "value": "d" }
+        ],
+        "correctOption": "d",
+        "explanation": " 'विशाखा' किस लेखक की कृति है, महादेवी वर्मा की।"
+    },
+    {
+        "question": "संस्कृत के किस नाटककार ने 'अभिज्ञानशाकुन्तलम्' नाटक लिखा?",
+        "options": [
+            { "text": "A. कालिदास", "value": "a" },
+            { "text": "B. भास", "value": "b" },
+            { "text": "C. भवभूति", "value": "c" },
+            { "text": "D. विष्णुशर्मा", "value": "d" }
+        ],
+        "correctOption": "a",
+        "explanation": " संस्कृत के नाटककार कालिदास ने 'अभिज्ञानशाकुन्तलम्' नाटक लिखा।"
+    }
+
+
+
+
+
+
+
+
+
+];
+
+var startModal = document.getElementById("startModal");
+var resultModal = document.getElementById("resultModal");
+
+window.onload = function () {
+    startModal.style.display = "block";
+}
+
+function startQuiz() {
+    startModal.style.display = "none";
+    document.getElementById('quiz-form').style.display = 'block';
+    shuffleQuestions();
+    generateQuestions();
+    startTimer();
+}
+
+function shuffleQuestions() {
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+}
+
+function startTimer() {
+    totalSeconds = 0;
+    timerInterval = setInterval(function () {
+        totalSeconds++;
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+        document.getElementById('timer').textContent = 'Time: ' + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function generateQuestions() {
+    var questionsContainer = document.getElementById('questions-container');
+    questionsContainer.innerHTML = '';
+
+    questions.forEach(function (question, index) {
+        var questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        if (index !== 0) {
+            questionDiv.style.display = 'none';
+        }
+
+        var questionText = document.createElement('p');
+        questionText.innerHTML = (index + 1) + ". " + question.question; // Modified line
+        questionDiv.appendChild(questionText);
+
+        // Rest of your code remains the same...
+
+
+        var optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        question.options.forEach(function (option) {
+            var optionLabel = document.createElement('label');
+            var optionInput = document.createElement('input');
+            optionInput.type = 'radio';
+            optionInput.name = 'question-' + index;
+            optionInput.value = option.value;
+            optionInput.addEventListener('change', function () {
+                var labels = optionsDiv.getElementsByTagName('label');
+                for (var i = 0; i < labels.length; i++) {
+                    labels[i].classList.remove('selected');
+                }
+                optionLabel.classList.add('selected');
+                userAnswers[index] = option.value;
+                var nextButton = document.getElementById('next-btn-' + index);
+                if (nextButton) {
+                    nextButton.disabled = false;
+                    nextButton.style.opacity = 1;
+                }
+                var submitButton = document.getElementById('submit-btn-' + index);
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = 1;
+                }
+            });
+            optionLabel.textContent = option.text;
+            optionLabel.insertBefore(optionInput, optionLabel.firstChild);
+            optionsDiv.appendChild(optionLabel);
+        });
+        questionDiv.appendChild(optionsDiv);
+
+        var button;
+        if (index < questions.length - 1) {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('next-btn');
+            button.textContent = 'Next';
+            button.id = 'next-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', function () {
+                showNextQuestion(index);
+            });
+        } else {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('submit-btn');
+            button.textContent = 'Submit';
+            button.id = 'submit-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', submitQuiz);
+        }
+        questionDiv.appendChild(button);
+
+        var skipButton = document.createElement('button');
+        skipButton.type = 'button';
+        skipButton.classList.add('skip-btn');
+        skipButton.textContent = 'Skip';
+        skipButton.addEventListener('click', function () {
+            userAnswers[index] = 'skipped';
+            if (index === questions.length - 1) {
+                submitQuiz();
+            } else {
+                showNextQuestion(index);
+            }
+        });
+        questionDiv.appendChild(skipButton);
+
+        questionsContainer.appendChild(questionDiv);
+    });
+}
+
+function showNextQuestion(currentIndex) {
+    var currentQuestion = document.querySelectorAll('.question')[currentIndex];
+    var nextQuestion = document.querySelectorAll('.question')[currentIndex + 1];
+
+    currentQuestion.style.display = 'none';
+    nextQuestion.style.display = 'block';
+}
+
+function submitQuiz() {
+    stopTimer();
+    var score = 0;
+    var totalQuestions = questions.length;
+    var skipped = 0;
+    var correct = 0;
+    var incorrect = 0;
+
+    userAnswers.forEach(function (answer, index) {
+        if (answer === 'skipped') {
+            skipped++;
+        } else if (answer === questions[index].correctOption) {
+            correct++;
+            score++;
+        } else {
+            incorrect++;
+        }
+    });
+
+    var percentage = (correct / totalQuestions) * 100;
+
+    var resultContent = 
+        '<p>Skipped: ' + skipped + '</p>' +
+        '<p>Correct: ' + correct + '</p>' +
+        '<p>Incorrect: ' + incorrect + '</p>' +
+        '<p>Percentage: ' + percentage.toFixed(2) + '%</p>' +
+        '<p>Score: ' + score + '/' + totalQuestions + '</p>' +
+        '<p>Total Time taken: ' + Math.floor(totalSeconds / 60) + ' minutes ' + (totalSeconds % 60) + ' seconds</p>';
+
+    var resultContentDiv = document.getElementById('resultContent');
+    resultContentDiv.innerHTML = resultContent;
+    resultModal.style.display = 'block';
+}
+
+function reviewQuestions() {
+    stopTimer();
+    resultModal.style.display = 'none';
+    document.getElementById('quiz-form').style.display = 'none';
+    var reviewDiv = document.getElementById('review-questions');
+    reviewDiv.innerHTML = '<h2>Review Questions</h2>';
+    questions.forEach(function (question, index) {
+        var userAnswer = userAnswers[index];
+        var correctAnswer = question.correctOption;
+        var explanation = question.explanation;
+        var questionText = (index + 1) + ". " + question.question; // Modified line
+        var resultText = '<p><strong>' + questionText + '</strong></p>';
+
+        var options = question.options;
+        options.forEach(function (option) {
+            var optionLabel = option.text;
+            var optionValue = option.value;
+            var optionClass = 'default-color';
+            var userAnswerText = '';
+
+            if (optionValue === userAnswer && userAnswer === correctAnswer) {
+                optionClass = 'correct-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === userAnswer && userAnswer !== correctAnswer) {
+                optionClass = 'incorrect-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === correctAnswer) {
+                optionClass = 'correct-answer';
+            }
+            resultText += '<p class="' + optionClass + '">' + optionLabel + userAnswerText + '</p>';
+        });
+
+        resultText += '<p><span class="blue-text">Explanation:</span> ' + explanation + '</p>';
+        resultText += '<br><br><hr><br><br>';
+        reviewDiv.innerHTML += resultText;
+    });
+    reviewDiv.innerHTML += '<button class="retry-btn" onclick="retryQuiz()">Try Again</button>';
+    reviewDiv.style.display = 'block';
+}
+
+       
+
+function retryQuiz() {
+    totalSeconds = 0;
+    clearInterval(timerInterval);
+    document.getElementById('timer').textContent = 'Time: 0:00';
+    document.getElementById('quiz-form').reset();
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('review-questions').style.display = 'none';
+    var questionDivs = document.querySelectorAll('.question');
+    questionDivs.forEach(function (div, index) {
+        if (index === 0) {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    });
+    userAnswers = [];
+    resultModal.style.display = 'none';
+    startQuiz();
+}
+
+    </script>
+</body>
+</html>

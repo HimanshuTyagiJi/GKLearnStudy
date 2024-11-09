@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Page Not Found</title>
+    <style>
+        body {
+            display: flex;
+          
+          
+            flex-direction: column;
+          
+            background-color: #f0f0f0;
+            margin-top: 50px;margin-left: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {margin-top: 50px;text-align: left;
+            text-align: left;
+           
+        }
+
+        .container h1 {
+            font-size: 5em;
+            margin: 20px 0 10px;
+            color: #e74c3c;
+        }
+
+        .container h2 {
+            margin: 0 0 20px 0;
+        }
+
+        .container p {
+            font-size: 1.2em;
+        }
+
+        .container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .container a:hover {
+            background-color: #2980b9;
+        }
+
+        .logo-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px; /* Added margin to separate logo from text */
+        }
+
+        .logo-text {
+            position: absolute;
+            top: 5%;
+            width: 100%;
+            color: #fc3535;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            animation: fadeInScale 2s ease-in-out forwards;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .logo-text h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .logo-text p {
+            color: #6e0fb8;
+            font-size: 0.8em;
+            margin: 0;
+        }
+
+        .demo2 {
+            top: 70%;
+            width: 200%;
+            height: 300px;
+            position: relative;
+        }
+
+        .demo2 .parallax > use {
+            animation: waveAnimateB 14s linear infinite;
+        }
+
+        .demo2 .parallax > use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+            fill-opacity: 0.2;
+        }
+
+        .demo2 .parallax > use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 12s;
+            fill-opacity: 1;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes waveAnimateB {
+            0% {
+                transform: translate3d(-90px, 0, 0);
+            }
+            100% {
+                transform: translate3d(85px, 0, 0);
+            }
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="logo-link">
+<div class="logo-container">
+    <div class="demo2">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" class="st0" d="M-160,35.6 c 30,0,58-6.6,88-6.6 s58,6.6,88,6.6s58-6.6,88-6.6s58,6.6,88,6.6V59h-352V35.6z"></path>
+            </defs>
+            <g class="parallax">
+                <use style="fill:#c0a4fb;fill-opacity: 1;" xlink:href="#gentle-wave" x="48" y="0"></use>
+                <use style="fill:#641ef9;fill-opacity: 1;" xlink:href="#gentle-wave" x="48" y="0"></use>
+            </g>
+        </svg>
+    </div>
+    <div class="logo-text">
+        <h1>GK</h1>
+        <p>LearnStudy</p>
+    </div>
+</div></a>
+
+<div class="container">
+
+    <style> .main-boxs {
+       
+        
+        display: flex; /* Flexbox ka upyog */
+        justify-content: space-around; /* Space daalne ke liye */
+        align-items: center; /* Vertical center alignment */
+        padding: 10px;
+    }
+   
+        .circle {
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            animation: draw 4s ease-in-out infinite;
+        }
+
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 440;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dashoffset: 440;
+            }
+        }
+
+        .text {
+            font-family: Arial, sans-serif;
+            font-size: 50px;
+            fill: #ff0000; /* Red color for the text */
+            text-anchor: middle;
+        }
+    </style>
+<div class="main-boxs">
+    <div class="inner-box">
+
+<svg width="200" height="200" viewBox="0 0 200 200">
+    <!-- Animated Circle -->
+    <circle class="circle" cx="100" cy="100" r="70" stroke="#ff0000" stroke-width="4" fill="none" />
+
+    <!-- Error Text -->
+    <text class="text" x="100" y="110">404</text>
+    <text style="font-size:20px" class="text" x="100" y="140">Error Page</text>
+</svg>
+</div>  <div class="inner-box">
+
+
+    <h2>Oops! Page Not Found</h2>
+    <p>Sorry, the page you are looking for doesn't exist. It might have been moved or deleted.</p>
+    <a href="index.html">Go to Homepage</a>
+</div>
+</div></div>
+</body>
+</html>

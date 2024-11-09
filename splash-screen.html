@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .logo-container {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-text {
+            position: absolute;
+            top: 35%;
+            width: 100%;
+            color: #fc3535;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            animation: fadeInScale 2s ease-in-out forwards;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .logo-text h1 {
+            font-size: 6em;
+            margin: 0;
+        }
+
+        .logo-text p {color:#6e0fb8;
+            font-size: 2.2em;
+            margin: 0;
+        }
+
+        .boil {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background-color: green;
+            border-radius: 50% 50% 0 0;
+            overflow: hidden;
+            animation: wave 3s infinite linear;
+        }
+        
+        
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent 45%, green 50%);
+            animation: waveMove 3s infinite linear;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes waveMove {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        
+        
+        
+        
+        html {
+  overflow-x: hidden;
+}
+
+.demo2 {top:70%;
+  width: 200%;
+  height: 300px;
+  position: relative;
+}
+.demo2 .parallax > use {
+  animation: waveAnimateB 14s linear infinite;
+}
+.demo2 .parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+  fill-opacity: 0.2;
+}
+.demo2 .parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 12s;
+  fill-opacity: 1;
+}
+
+@keyframes waveAnimateB {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+       .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
+    
+    
+    <title>Boiling Water Animation</title>
+</head>
+<body>
+<div class="splash-screen" id="splashScreen">
+    
+<div class="logo-container">
+    <div class="demo2">
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" class="st0" d="M-160,35.6 c 30,0,58-6.6,88-6.6 s58,6.6,88,6.6s58-6.6,88-6.6s58,6.6,88,6.6V59h-352V35.6z"></path>
+                </defs>
+                <g class="parallax">
+                    <use style="fill:#c0a4fb;fill-opacity: 1;" xlink:href="#gentle-wave" x="48" y="0"></use>
+                    <use style="fill:#641ef9;fill-opacity: 1;" xlink:href="#gentle-wave" x="48" y="0"></use>
+                </g>
+            </svg>
+</div>
+    </div>
+    <div class="logo-text">
+        <h1>GK</h1>
+        <p>LearnStudy</p>
+    </div>
+</div>
+<script>
+    // Wait for 3 seconds before redirecting to the main page
+    window.onload = function() {
+        setTimeout(function() {
+            // Hide the splash screen and redirect to the current page (or homepage)
+            document.getElementById('splashScreen').style.display = 'none';
+            window.location.href = window.location.origin;  // Current page
+        }, 3000);  // 3000 milliseconds = 3 seconds
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is an MCQ test webpage where multiple choice questions are provided to assess your knowledge on various topics.">
+    <meta name="keywords" content="MCQ, test, multiple choice questions, online quiz, assessment, knowledge test">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="MCQ Test Page">
+    <meta property="og:description" content="Participate in our MCQ test and evaluate your knowledge with a variety of multiple choice questions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="stylesheet" href="./style.css">
+     <title>Hindi Test Part-03</title>
+</head>
+<body> <div class="container">
+    <form id="quiz-form" style="display: none;"><h3>Hindi Test Part - 03</h3><div id="questions-container"></div><div id="timer">Time: 0:00</div><button type="submit" class="submit-btn" style="display: none;">Submit</button></form><div id="result"></div><button id="retry-btn" style="display: none;" onclick="retryQuiz()">Try Again</button><div id="startModal" class="modal"><div class="modal-content">
+    <center><h3>Some Rules of this Test</h3></center>
+        <p>1. The test consists of 50 questions.</p>
+        <p>2. The test will track the total time taken for all questions.</p>
+        <p>3. Once you move to the next question or skip a question, you cannot go back to previous questions.</p>
+        <p>4. You cannot skip the test while playing.</p>
+        <p>5. You will get points based on your correct answers.</p>
+    <center><button class="start-btn" onclick="startQuiz()">Start</button></center></div></div><div id="resultModal" class="modal"><div class="modal-content">
+            <h3>Quiz Results</h3>
+            <div id="resultContent"></div>
+            <button class="review-btn" onclick="reviewQuestions()">Review Questions</button>
+            <button class="retry-btn" onclick="retryQuiz()">Try Again</button></div></div>
+
+    <div id="review-questions"></div>
+
+    <script>
+       var totalSeconds = 0;
+var timerInterval;
+var userAnswers = [];
+var questions = [
+    
+
+
+    
+{
+        "question": "'राधायामुना' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. राधा और यामुना", "value": "a" },
+            { "text": "B. राधा और मुना", "value": "b" },
+            { "text": "C. राधा और आमुना", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'राधा' और 'यामुना' के संधि से 'राधायामुना' शब्द बनेगा।"
+    },
+    {
+        "question": "'अश्वधर' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. अश्व और धर", "value": "a" },
+            { "text": "B. अश्व और धरण", "value": "b" },
+            { "text": "C. अश्व और अधर", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अश्व' और 'धरण' के संधि से 'अश्वधर' शब्द बनेगा।"
+    },
+    {
+        "question": "'वृक्ष' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. वृक्ष और अश्व", "value": "a" },
+            { "text": "B. वृक्ष और धरण", "value": "b" },
+            { "text": "C. वृक्ष और इक्ष", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'वृक्ष' और 'इक्ष' के संधि से 'वृक्ष' शब्द बनेगा।"
+    },
+    {
+        "question": "'विद्यार्थी' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. विद्या और अर्थी", "value": "a" },
+            { "text": "B. विद्या और सार्थी", "value": "b" },
+            { "text": "C. विद्या और अर्थ", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'विद्या' और 'अर्थी' के संधि से 'विद्यार्थी' शब्द बनेगा।"
+    },
+    {
+        "question": "'उदार' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. उदा और आर", "value": "a" },
+            { "text": "B. उदा और आर्ध", "value": "b" },
+            { "text": "C. उदा और अर्ध", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'उदा' और 'अर्ध' के संधि से 'उदार' शब्द बनेगा।"
+    },
+    {
+        "question": "'कृतज्ञ' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. कृत और ज्ञान", "value": "a" },
+            { "text": "B. कृत और जन", "value": "b" },
+            { "text": "C. कृत और ज्ञ", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'कृत' और 'ज्ञान' के संधि से 'कृतज्ञ' शब्द बनेगा।"
+    },
+    {
+        "question": "'संयोजन' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. संया और अोजन", "value": "a" },
+            { "text": "B. संया और योजन", "value": "b" },
+            { "text": "C. संयो और जन", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'संया' और 'योजन' के संधि से 'संयोजन' शब्द बनेगा।"
+    },
+    {
+        "question": "'अनुकूल' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. अनु कूल", "value": "a" },
+            { "text": "B. अनु कूलन", "value": "b" },
+            { "text": "C. अनु कूला", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अनु' और 'कूलन' के संधि से 'अनुकूल' शब्द बनेगा।"
+    },
+    {
+        "question": "'प्रत्यक्ष' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. प्रति और अक्ष", "value": "a" },
+            { "text": "B. प्रति और अक्षण", "value": "b" },
+            { "text": "C. प्रति और अक्षी", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'प्रति' और 'अक्षण' के संधि से 'प्रत्यक्ष' शब्द बनेगा।"
+    },
+    {
+        "question": "'उच्च' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. उच् और च्च", "value": "a" },
+            { "text": "B. उच् और अच्च", "value": "b" },
+            { "text": "C. उच् और अच्छ", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'उच्' और 'अच्च' के संधि से 'उच्च' शब्द बनेगा।"
+    },
+    {
+        "question": "'उपवन' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. उप और वन", "value": "a" },
+            { "text": "B. उप और अवन", "value": "b" },
+            { "text": "C. उप और वान", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'उप' और 'वन' के संधि से 'उपवन' शब्द बनेगा।"
+    },{
+        "question": "'अच्छा' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. अचानक", "value": "a" },
+            { "text": "B. खराब", "value": "b" },
+            { "text": "C. अग्र", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अच्छा' का विलोम शब्द 'खराब' है।"
+    },
+    {
+        "question": "'सच' का प्रयायवाची शब्द क्या है?",
+        "options": [
+            { "text": "A. भ्रम", "value": "a" },
+            { "text": "B. झूठ", "value": "b" },
+            { "text": "C. विश्वास", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'सच' का प्रयायवाची शब्द 'विश्वास' है।"
+    },
+    {
+        "question": "'गंदा' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. साफ", "value": "a" },
+            { "text": "B. अच्छा", "value": "b" },
+            { "text": "C. बदला", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'गंदा' का विलोम शब्द 'साफ' है।"
+    },
+    {
+        "question": "'स्वतंत्र' का प्रयायवाची शब्द क्या है?",
+        "options": [
+            { "text": "A. बंधन", "value": "a" },
+            { "text": "B. अपना", "value": "b" },
+            { "text": "C. अनुसार", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'स्वतंत्र' का प्रयायवाची शब्द 'अपना' है।"
+    },
+    {
+        "question": "'समझदार' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. भूलभुलैया", "value": "a" },
+            { "text": "B. अनजान", "value": "b" },
+            { "text": "C. मूर्ख", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'समझदार' का विलोम शब्द 'मूर्ख' है।"
+    },
+    {
+        "question": "'विश्वासी' का प्रयायवाची शब्द क्या है?",
+        "options": [
+            { "text": "A. अदम्य", "value": "a" },
+            { "text": "B. विचारी", "value": "b" },
+            { "text": "C. विश्वासपूर्ण", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'विश्वासी' का प्रयायवाची शब्द 'विश्वासपूर्ण' है।"
+    },
+    {
+        "question": "'असफल' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. विजयी", "value": "a" },
+            { "text": "B. सफल", "value": "b" },
+            { "text": "C. अच्छा", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'असफल' का विलोम शब्द 'सफल' है।"
+    },
+    {
+        "question": "'संतुष्ट' का प्रयायवाची शब्द क्या है?",
+        "options": [
+            { "text": "A. असंतुष्ट", "value": "a" },
+            { "text": "B. संतुष्टा", "value": "b" },
+            { "text": "C. प्रसन्न", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'संतुष्ट' का प्रयायवाची शब्द 'प्रसन्न' है।"
+    },
+    {
+        "question": "'अनिष्ट' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. अनुभव", "value": "a" },
+            { "text": "B. इष्ट", "value": "b" },
+            { "text": "C. अनिष्टता", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अनिष्ट' का विलोम शब्द 'इष्ट' है।"
+    },
+    {
+        "question": "'दुखी' का प्रयायवाची शब्द क्या है?",
+        "options": [
+            { "text": "A. आनंदी", "value": "a" },
+            { "text": "B. दुःखित", "value": "b" },
+            { "text": "C. खुश", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'दुखी' का प्रयायवाची शब्द 'दुःखित' है।"
+    },
+    {
+        "question": "'अनजान' का विलोम शब्द क्या है?",
+        "options": [
+            { "text": "A. अज्ञात", "value": "a" },
+            { "text": "B. अच्छा", "value": "b" },
+            { "text": "C. जाना", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अनजान' का विलोम शब्द 'अज्ञात' है।"
+    },{
+        "question": "मुहावरा 'हाथ पाँव बिगड़ना' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. खुशियाँ मिलना", "value": "a" },
+            { "text": "B. मुश्किलें आना", "value": "b" },
+            { "text": "C. स्वार्थी होना", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'हाथ पाँव बिगड़ना' का अर्थ है मुश्किलें आना।"
+    },
+    {
+        "question": "मुहावरा 'अपनी राख करना' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. अपना ध्यान रखना", "value": "a" },
+            { "text": "B. कोई भावना न रखना", "value": "b" },
+            { "text": "C. अपने सम्मान की रक्षा करना", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अपनी राख करना' का अर्थ है कोई भावना न रखना।"
+    },
+    {
+        "question": "मुहावरा 'आगे पीछे के साथ' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. साथ-साथ", "value": "a" },
+            { "text": "B. दोनों हाथों से", "value": "b" },
+            { "text": "C. पूर्णतः आराम से", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'आगे पीछे के साथ' का अर्थ है साथ-साथ।"
+    },
+    {
+        "question": "मुहावरा 'मुहँगा पड़ना' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. उत्तम साबित होना", "value": "a" },
+            { "text": "B. कठिनाई आना", "value": "b" },
+            { "text": "C. सस्ता होना", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'मुहँगा पड़ना' का अर्थ है उत्तम साबित होना।"
+    },
+    {
+        "question": "मुहावरा 'नाखुश' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. खुशी का अभाव", "value": "a" },
+            { "text": "B. गुस्सा", "value": "b" },
+            { "text": "C. बुद्धिमान", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'नाखुश' का अर्थ है खुशी का अभाव।"
+    },
+    {
+        "question": "मुहावरा 'अँधेरे में अँधेरा' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. ज्ञान की कमी", "value": "a" },
+            { "text": "B. बहुत अधिक अंधेरा", "value": "b" },
+            { "text": "C. बहुत ही अधिक गंभीरता", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अँधेरे में अँधेरा' का अर्थ है ज्ञान की कमी।"
+    },
+    {
+        "question": "मुहावरा 'हाथ जलना' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. किसी की कौमी भावना का परिचय होना", "value": "a" },
+            { "text":"B. उत्साही होना", "value": "b" },
+            { "text": "C. किसी के प्रति अविश्वास होना", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'हाथ जलना' का अर्थ है किसी के प्रति अविश्वास होना।"
+    },
+    {
+        "question": "मुहावरा 'अंधा कौआ चला हज़ारों चिराग़ खाने' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. अधिक धूम्रपान करना", "value": "a" },
+            { "text": "B. अपनी समर्थता का परिचय करना", "value": "b" },
+            { "text": "C. अपनी अन्यायपूर्ण भूमिका निभाना", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'अंधा कौआ चला हज़ारों चिराग़ खाने' का अर्थ है अपनी अन्यायपूर्ण भूमिका निभाना।"
+    },
+    {
+        "question": "मुहावरा 'हाथी के दांत खाने के और दिखाने के और' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. किसी का भला करना", "value": "a" },
+            { "text": "B. दिखावा करना", "value": "b" },
+            { "text": "C. विचार करना", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'हाथी के दांत खाने के और दिखाने के और' का अर्थ है दिखावा करना।"
+    },
+    {
+        "question": "मुहावरा 'पानी में रह कर मगर से बैर' का अर्थ क्या है?",
+        "options": [
+            { "text": "A. असमर्थ होना", "value": "a" },
+            { "text": "B. नित्य अपनी ही चाल चलना", "value": "b" },
+            { "text": "C. अत्यंत असंतुष्टि", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'पानी में रह कर मगर से बैर' का अर्थ है नित्य अपनी ही चाल चलना।"
+    },{
+        "question": "कहानी 'पंचतंत्र' की रचना किसने की थी?",
+        "options": [
+            { "text": "A. विष्णु शर्मा", "value": "a" },
+            { "text": "B. अब्दुल कलाम", "value": "b" },
+            { "text": "C. विश्वकवि रवीन्द्रनाथ टैगोर", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'पंचतंत्र' की रचना विष्णु शर्मा ने की थी।"
+    },
+    {
+        "question": "'अली बाबा और चालीस चोर' किस श्रेणी की कहानी है?",
+        "options": [
+            { "text": "A. अरबी नामक", "value": "a" },
+            { "text": "B. अकबर-बीरबल", "value": "b" },
+            { "text": "C. आलीशान नामक", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अली बाबा और चालीस चोर' अरबी नामक कहानी है।"
+    },
+    {
+        "question": "कहानी 'पीपल और लोमड़ी' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. विष्णु शर्मा", "value": "a" },
+            { "text": "B. रूसी लेखक लेव तोल्स्टोय", "value": "b" },
+            { "text": "C. आदिकवि वाल्मीकि", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'पीपल और लोमड़ी' के रचयिता रूसी लेखक लेव तोल्स्टोय हैं।"
+    },
+    {
+        "question": "कहानी 'सोने की चिड़िया' के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. राजा हरिश्चंद्र", "value": "a" },
+            { "text": "B. चंद्रकांता", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'सोने की चिड़िया' के मुख्य पात्र का नाम राजा हरिश्चंद्र है।"
+    },
+    {
+        "question": "कहानी 'आलसी गधा' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. रूसी लेखक लेव तोल्स्टोय", "value": "a" },
+            { "text": "B. चंद्रकांता", "value": "b" },
+            { "text": "C. आदिकवि वाल्मीकि", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'आलसी गधा' के रचयिता आदिकवि वाल्मीकि हैं।"
+    },
+    {
+        "question": "कहानी 'सत्यान्वेषी आर्य' के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. सत्या", "value": "a" },
+            { "text": "B. आर्यन", "value": "b" },
+            { "text": "C. सत्यव्रत", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'सत्यान्वेषी आर्य' के मुख्य पात्र का नाम आर्यन है।"
+    },
+    {
+        "question": "कहानी 'जादुई समय की चोटी' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. विष्णु शर्मा", "value": "a" },
+            { "text": "B. अब्दुल कलाम", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'जादुई समय की चोटी' के रचयिता सुमित्रानंदन पंत हैं।"
+    },
+    {
+        "question": "कहानी 'अलादीन का चिराग' किस श्रेणी की कहानी है?",
+        "options": [
+            { "text": "A. अरबी नामक", "value": "a" },
+            { "text": "B. अकबर-बीरबल", "value": "b" },
+            { "text": "C. आलीशान नामक", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अलादीन का चिराग' अरबी नामक कहानी है।"
+    },
+    {
+        "question": "कहानी 'भगवान का मैल' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. विष्णु शर्मा", "value": "a" },
+            { "text": "B. अब्दुल कलाम", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'भगवान का मैल' के रचयिता सुमित्रानंदन पंत हैं।"
+    },
+    {
+        "question": "कहानी 'सिंदबाद और उसके हाथी' का कौन सा हिस्सा है?",
+        "options": [
+            { "text": "A. सिंदबाद", "value": "a" },
+            { "text": "B. उसके हाथी", "value": "b" },
+            { "text": "C. दोनों", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'सिंदबाद और उसके हाथी' का हिस्सा 'उसके हाथी' है।"
+    },
+    {
+        "question": "कहानी 'सोनेचिड़िया' के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. राजकुमार", "value": "a" },
+            { "text": "B. सुनेचिड़िया", "value": "b" },
+            { "text": "C. धनराज", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'सोनेचिड़िया' के मुख्य पात्र का नाम सुनेचिड़िया है।"
+    },
+    {
+        "question": "कहानी 'पंचपरमेश्वर' की रचना किसने की थी?",
+        "options": [
+            { "text": "A. विष्णु शर्मा", "value": "a" },
+            { "text": "B. मुंशी प्रेमचंद", "value": "b" },
+            { "text": "C. आदिकवि वाल्मीकि", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'पंचपरमेश्वर' की रचना मुंशी प्रेमचंद ने की थी।"
+    }
+, {
+        "question": "कहानी 'चार सीटियाँ' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. मुंशी प्रेमचंद", "value": "a" },
+            { "text": "B. विष्णु शर्मा", "value": "b" },
+            { "text": "C. साहित्यकार विजयदान डेथा", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'चार सीटियाँ' के रचयिता साहित्यकार विजयदान डेथा हैं।"
+    },
+    {
+        "question": "कहानी 'बादल राजा' के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. राजा", "value": "a" },
+            { "text": "B. बादल", "value": "b" },
+            { "text": "C. राजकुमार", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'बादल राजा' के मुख्य पात्र का नाम बादल है।"
+    },
+    {
+        "question": "कहानी 'बेताल पच्चीसवी' का कौन सा हिस्सा है?",
+        "options": [
+            { "text": "A. बेताल", "value": "a" },
+            { "text": "B. राजकुमार", "value": "b" },
+            { "text": "C. दोनों", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'बेताल पच्चीसवी' का हिस्सा 'बेताल' है।"
+    },
+    {
+        "question": "कहानी 'एक माँ का अपमान' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. अज्ञात", "value": "a" },
+            { "text": "B. मुंशी प्रेमचंद", "value": "b" },
+            { "text": "C. साहित्यकार विजयदान डेथा", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'एक माँ का अपमान' के रचयिता मुंशी प्रेमचंद हैं।"
+    },
+    {
+        "question": "कहानी 'जंगल के बेटे' के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. रामु", "value": "a" },
+            { "text": "B. श्यामु", "value": "b" },
+            { "text": "C. मोहन", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'जंगल के बेटे' के मुख्य पात्र का नाम रामु है।"
+    },
+    {
+        "question": "कहानी 'लालची राजकुमार' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. अज्ञात", "value": "a" },
+            { "text": "B. मुंशी प्रेमचंद", "value": "b" },
+            { "text": "C. साहित्यकार विजयदान डेथा", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'लालची राजकुमार' के रचयिता साहित्यकार विजयदान डेथा हैं।"
+    }
+
+
+
+
+
+
+
+];
+
+var startModal = document.getElementById("startModal");
+var resultModal = document.getElementById("resultModal");
+
+window.onload = function () {
+    startModal.style.display = "block";
+}
+
+function startQuiz() {
+    startModal.style.display = "none";
+    document.getElementById('quiz-form').style.display = 'block';
+    shuffleQuestions();
+    generateQuestions();
+    startTimer();
+}
+
+function shuffleQuestions() {
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+}
+
+function startTimer() {
+    totalSeconds = 0;
+    timerInterval = setInterval(function () {
+        totalSeconds++;
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+        document.getElementById('timer').textContent = 'Time: ' + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function generateQuestions() {
+    var questionsContainer = document.getElementById('questions-container');
+    questionsContainer.innerHTML = '';
+
+    questions.forEach(function (question, index) {
+        var questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        if (index !== 0) {
+            questionDiv.style.display = 'none';
+        }
+
+        var questionText = document.createElement('p');
+        questionText.innerHTML = (index + 1) + ". " + question.question; // Modified line
+        questionDiv.appendChild(questionText);
+
+        // Rest of your code remains the same...
+
+
+        var optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        question.options.forEach(function (option) {
+            var optionLabel = document.createElement('label');
+            var optionInput = document.createElement('input');
+            optionInput.type = 'radio';
+            optionInput.name = 'question-' + index;
+            optionInput.value = option.value;
+            optionInput.addEventListener('change', function () {
+                var labels = optionsDiv.getElementsByTagName('label');
+                for (var i = 0; i < labels.length; i++) {
+                    labels[i].classList.remove('selected');
+                }
+                optionLabel.classList.add('selected');
+                userAnswers[index] = option.value;
+                var nextButton = document.getElementById('next-btn-' + index);
+                if (nextButton) {
+                    nextButton.disabled = false;
+                    nextButton.style.opacity = 1;
+                }
+                var submitButton = document.getElementById('submit-btn-' + index);
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = 1;
+                }
+            });
+            optionLabel.textContent = option.text;
+            optionLabel.insertBefore(optionInput, optionLabel.firstChild);
+            optionsDiv.appendChild(optionLabel);
+        });
+        questionDiv.appendChild(optionsDiv);
+
+        var button;
+        if (index < questions.length - 1) {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('next-btn');
+            button.textContent = 'Next';
+            button.id = 'next-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', function () {
+                showNextQuestion(index);
+            });
+        } else {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('submit-btn');
+            button.textContent = 'Submit';
+            button.id = 'submit-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', submitQuiz);
+        }
+        questionDiv.appendChild(button);
+
+        var skipButton = document.createElement('button');
+        skipButton.type = 'button';
+        skipButton.classList.add('skip-btn');
+        skipButton.textContent = 'Skip';
+        skipButton.addEventListener('click', function () {
+            userAnswers[index] = 'skipped';
+            if (index === questions.length - 1) {
+                submitQuiz();
+            } else {
+                showNextQuestion(index);
+            }
+        });
+        questionDiv.appendChild(skipButton);
+
+        questionsContainer.appendChild(questionDiv);
+    });
+}
+
+function showNextQuestion(currentIndex) {
+    var currentQuestion = document.querySelectorAll('.question')[currentIndex];
+    var nextQuestion = document.querySelectorAll('.question')[currentIndex + 1];
+
+    currentQuestion.style.display = 'none';
+    nextQuestion.style.display = 'block';
+}
+
+function submitQuiz() {
+    stopTimer();
+    var score = 0;
+    var totalQuestions = questions.length;
+    var skipped = 0;
+    var correct = 0;
+    var incorrect = 0;
+
+    userAnswers.forEach(function (answer, index) {
+        if (answer === 'skipped') {
+            skipped++;
+        } else if (answer === questions[index].correctOption) {
+            correct++;
+            score++;
+        } else {
+            incorrect++;
+        }
+    });
+
+    var percentage = (correct / totalQuestions) * 100;
+
+    var resultContent = 
+        '<p>Skipped: ' + skipped + '</p>' +
+        '<p>Correct: ' + correct + '</p>' +
+        '<p>Incorrect: ' + incorrect + '</p>' +
+        '<p>Percentage: ' + percentage.toFixed(2) + '%</p>' +
+        '<p>Score: ' + score + '/' + totalQuestions + '</p>' +
+        '<p>Total Time taken: ' + Math.floor(totalSeconds / 60) + ' minutes ' + (totalSeconds % 60) + ' seconds</p>';
+
+    var resultContentDiv = document.getElementById('resultContent');
+    resultContentDiv.innerHTML = resultContent;
+    resultModal.style.display = 'block';
+}
+
+function reviewQuestions() {
+    stopTimer();
+    resultModal.style.display = 'none';
+    document.getElementById('quiz-form').style.display = 'none';
+    var reviewDiv = document.getElementById('review-questions');
+    reviewDiv.innerHTML = '<h2>Review Questions</h2>';
+    questions.forEach(function (question, index) {
+        var userAnswer = userAnswers[index];
+        var correctAnswer = question.correctOption;
+        var explanation = question.explanation;
+        var questionText = (index + 1) + ". " + question.question; // Modified line
+        var resultText = '<p><strong>' + questionText + '</strong></p>';
+
+        var options = question.options;
+        options.forEach(function (option) {
+            var optionLabel = option.text;
+            var optionValue = option.value;
+            var optionClass = 'default-color';
+            var userAnswerText = '';
+
+            if (optionValue === userAnswer && userAnswer === correctAnswer) {
+                optionClass = 'correct-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === userAnswer && userAnswer !== correctAnswer) {
+                optionClass = 'incorrect-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === correctAnswer) {
+                optionClass = 'correct-answer';
+            }
+            resultText += '<p class="' + optionClass + '">' + optionLabel + userAnswerText + '</p>';
+        });
+
+        resultText += '<p><span class="blue-text">Explanation:</span> ' + explanation + '</p>';
+        resultText += '<br><br><hr><br><br>';
+        reviewDiv.innerHTML += resultText;
+    });
+    reviewDiv.innerHTML += '<button class="retry-btn" onclick="retryQuiz()">Try Again</button>';
+    reviewDiv.style.display = 'block';
+}
+
+       
+
+function retryQuiz() {
+    totalSeconds = 0;
+    clearInterval(timerInterval);
+    document.getElementById('timer').textContent = 'Time: 0:00';
+    document.getElementById('quiz-form').reset();
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('review-questions').style.display = 'none';
+    var questionDivs = document.querySelectorAll('.question');
+    questionDivs.forEach(function (div, index) {
+        if (index === 0) {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    });
+    userAnswers = [];
+    resultModal.style.display = 'none';
+    startQuiz();
+}
+
+    </script>
+</body>
+</html>

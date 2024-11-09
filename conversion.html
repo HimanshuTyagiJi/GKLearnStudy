@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversion</title>
+  <meta name="description" content="Conversion refers to the process of changing one quantity, value, measurement, or unit into another while preserving the underlying value or equivalence. Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="keywords" content="conversion, unit conversion, length conversion, area conversion, volume conversion, measurement conversion, conversion tools, online conversion, measurement tools, metric conversion, imperial conversion, temperature conversion, weight conversion, speed conversion, currency conversion, energy conversion, time conversion, area measurement, distance conversion, volume measurement, length measurement, conversion calculator, conversion chart, conversion guide, conversion software, conversion app, accurate conversion, quick conversion, easy conversion, reliable conversion, free conversion tools, advanced conversion tools, conversion resources, conversion solutions">
+  <meta name="author" content="Mr. Himanshu Tyagi">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="copyright" content="© 2024 GK Learn Study">
+  <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+  <!-- Open Graph Meta Tags for Facebook -->
+  <meta property="og:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta property="og:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta property="og:image" content="https://gklearnstudy.in/image/conversion.png">
+  <meta property="og:url" content="https://gklearnstudy.in/conversion.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GK Learn Study">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta name="twitter:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="twitter:image" content="https://gklearnstudy.in/conversion.png">
+  <meta name="twitter:site" content="@gklearnstudy">
+  <meta name="twitter:creator" content="@gklearnstudy">
+  <meta name="twitter:image:alt" content="Conversion Tools">
+
+  <!-- Additional Meta Tags -->
+  <meta property="article:section" content="Education">
+  <meta property="article:tag" content="Conversion, Measurement, Tools, Online Conversion">
+  <meta name="theme-color" content="#90EE90">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Conversion">
+  <meta name="application-name" content="Conversion">
+  <meta name="msapplication-TileColor" content="#90EE90">
+  <meta name="msapplication-TileImage" content="https://gklearnstudy.in/conversion.png">
+  <meta name="msapplication-config" content="browserconfig.xml">
+
+  <!-- Social Media Meta Tags -->
+  <meta property="youtube:channel" content="">
+  <meta property="instagram:profile" content="">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="container">
+    <form id="searchForm" onsubmit="performSearch(event);">
+      <div class="search-container">
+        <span class="search-icon" id="searchIcon">
+          <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+        </span>
+        <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+          oninput="updateSuggestions(event)">
+        <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+      </div>
+      <div id="suggestions" class="suggestions-list"></div>
+    </form>
+
+    <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+      <div class="modal1-content">
+        <span class="close" onclick="closeModal1(event)">&times;</span>
+        <h2>Search Results</h2>
+        <div id="results"></div>
+      </div>
+    </div>
+  </main>
+  <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+  <ul class="menu-list" id="menuList">
+    <li><a href="conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+    <li><a href="conversion/area-unit-conversion.html">Area Conversion</a></li>
+    <li><a href="conversion/length-unit-conversion.html">Length Conversion</a></li>
+    <li><a href="conversion/power-unit-conversion.html">Power Conversion</a></li>
+    <li><a href="conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+    <li><a href="conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+    <li><a href="conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+    <li><a href="conversion/time-unit-conversion.html">Time Conversion</a></li>
+    <li><a href="conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+    <li><a href="conversion/weight&mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+    <br>
+  </ul>
+  <div class="container">
+    <div class="color-content1">
+      <h1>Conversion</h1>
+    </div>
+
+    <div class="custom-container">
+      <div class="custom-row">
+        <div class="custom-column">
+          <p>"Conversion" refers to the process of changing one quantity, value, measurement, or unit into another while
+            preserving the underlying value or equivalence. The objective of conversion is to express measurements or
+            values in different contexts, systems, or units, making them understandable or applicable in those different
+            scenarios.</p>
+          <br>
+          <p>Conversions are common in various fields, including mathematics, science, engineering, economics, and
+            everyday activities. They involve using conversion factors, constants, or specific formulas to ensure that
+            the original value remains consistent while being expressed in a different unit, scale, or representation.
+          </p>
+          <br>
+          <b>For example:</b>
+          <div class="color-content1">
+            <h4>Length Conversion</h4>
+          </div>
+          <p>Changing measurements from one unit of length (e.g., inches, centimeters) to another (e.g., feet, meters).
+            This is crucial when building structures, designing products, or navigating distances.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Temperature Conversion:</h4>
+          </div>
+          <p>Converting temperatures from one scale (e.g., Celsius) to another (e.g., Fahrenheit) is essential for
+            weather forecasting, scientific research, and everyday comfort.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Currency Conversion:</h4>
+          </div>
+          <p>Exchanging one currency (e.g., US Dollars) into another currency (e.g., Euros) based on current exchange
+            rates.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Time Conversion:</h4>
+          </div>
+          <p>Transforming time values from one unit (e.g., hours) to another (e.g., minutes, seconds) is fundamental for
+            scheduling, project management, and everyday timekeeping.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Volume Conversion:</h4>
+          </div>
+          <p>Converting volumes from one unit (e.g., liters) to another (e.g., cubic feet) is crucial in industries such
+            as manufacturing, chemistry, and cooking.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Mass Conversion:</h4>
+          </div>
+          <p>Changing weights or masses from one unit (e.g., kilograms) to another (e.g., pounds) is essential in
+            logistics, commerce, and health sciences.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Energy Conversion:</h4>
+          </div>
+          <p>Converting energy measurements from one unit (e.g., joules) to another (e.g., calories) is vital for energy
+            production, consumption, and efficiency calculations.</p>
+          <br>
+          <div class="color-content1">
+            <h4>Pressure Conversion:</h4>
+          </div>
+          <p>Transforming pressure values from one unit (e.g., pascals) to another (e.g., atmospheres) is crucial in
+            fields like meteorology, aviation, and material science.</p>
+        </div>
+        <div class="custom-column">
+          <h2>Contents</h2>
+
+
+          <ul style="list-style:none" id="myUL">
+            <li><a href="#Angle">1. Angle Converter</a></li>
+            <li><a href="#Area">2. Area Converter</a></li>
+            <li><a href="#Length">3. Length Converter</a></li>
+            <li><a href="#Power">4. Power Converter</a></li>
+            <li><a href="#Pressure">5. Pressure Converter</a></li>
+            <li><a href="#Speed">6. Speed Converter</a></li>
+            <li><a href="#Temperature">7. Temperature Converter</a></li>
+            <li><a href="#Volume">8. Volume Converter</a></li>
+            <li><a href="#Weight&Mass">9. Weight & Mass Converter</a></li>
+          </ul>
+          <br><br>
+          <h2>
+            <svg fill="#d73737" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-3.2 -3.2 38.40 38.40" xml:space="preserve"
+              width="200px" height="200px" alt="Conversion">
+              <path id="01_1_"
+                d="M7,17.36c1.853,0,3.36-1.508,3.36-3.36S8.853,10.64,7,10.64S3.64,12.147,3.64,14S5.147,17.36,7,17.36z M7,11.36c1.456,0,2.64,1.185,2.64,2.64S8.456,16.64,7,16.64S4.36,15.456,4.36,14S5.544,11.36,7,11.36z M23,16.86h5c0.199,0,0.36-0.161,0.36-0.36v-5c0-0.199-0.161-0.36-0.36-0.36h-5c-0.199,0-0.36,0.161-0.36,0.36v5C22.64,16.699,22.801,16.86,23,16.86z M23.36,11.86h4.279v4.28H23.36V11.86z M19.36,28.251c0,0.888-0.723,1.61-1.61,1.61h-1.39V31h-0.72v-1.139H13V29.14h4.75c0.491,0,0.89-0.398,0.89-0.89s-0.398-0.89-0.89-0.89h-3.5c-0.888,0-1.609-0.723-1.609-1.61s0.722-1.61,1.609-1.61h1.391V23h0.72v1.141H19v0.721h-4.75c-0.491,0-0.89,0.398-0.89,0.89s0.399,0.89,0.89,0.89h3.5C18.638,26.641,19.36,27.363,19.36,28.251z M3.147,28.214h7.52v0.721h-7.52c-0.905,0-1.716-0.468-2.168-1.252s-0.453-1.72,0-2.504l2.83-4.898l-2.108,0.565l-0.187-0.695l3.295-0.882l0.883,3.295L4.997,22.75l-0.565-2.109l-2.83,4.899c-0.322,0.559-0.322,1.226,0,1.784C1.925,27.881,2.502,28.214,3.147,28.214z M31.021,27.615c-0.452,0.784-1.264,1.253-2.169,1.253h-5.693l1.543,1.542l-0.51,0.51l-2.411-2.412l2.411-2.413l0.51,0.51l-1.543,1.543h5.693c0.646,0,1.223-0.333,1.546-0.893c0.322-0.559,0.322-1.225,0-1.783l-4.189-7.292l0.625-0.359l4.188,7.292C31.475,25.896,31.475,26.831,31.021,27.615z M22.348,5.8l-0.883,3.295L18.17,8.212l0.186-0.695l2.103,0.563l-2.818-4.826c-0.323-0.56-0.901-0.894-1.546-0.894s-1.223,0.333-1.545,0.892l-4.24,6.936L9.695,9.812l4.235-6.928c0.448-0.776,1.272-1.252,2.168-1.252c0.905,0,1.717,0.467,2.17,1.253l2.818,4.827l-2.104-0.563l-0.186,0.694l3.294,0.884l-0.884-3.294L23.21,7.23L22.348,5.8z">
+              </path>
+            </svg>
+          </h2>
+        </div>
+      </div>
+      <div class="custom-container">
+        <h2>Unit Conversion Table</h2>
+        <div class="color-content2">
+          <p>Below is the list of different units and their conversions. To know volume, length, time, energy, area,
+            power, force, mass, viscosity, and density unit conversion refer to the unit conversion table given below.
+          </p>
+        </div>
+
+        <div class="content" id="Angle">
+          <br><br>
+          <div class="color-content1">
+            <h2>Angle Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>Degrees×(π/180)</td>
+              <td>=</td>
+              <td>Radians</td>
+            </tr>
+            <tr>
+              <td>Radians(180/π)</td>
+              <td>=</td>
+              <td>Degrees</td>
+            </tr>
+            <tr>
+              <td>180 Degrees</td>
+              <td>=</td>
+              <td>π Radians</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Area">
+          <br><br>
+          <div class="color-content1">
+            <h2>Area Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Square millimetre</td>
+              <td>=</td>
+              <td>1×10<sup>-6</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Square centimetre</td>
+              <td>=</td>
+              <td>1×10<sup>-4</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Hectare</td>
+              <td>=</td>
+              <td>1×10<sup>4</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Square kilometre</td>
+              <td>=</td>
+              <td>1×10<sup>6</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Sq. inch</td>
+              <td>=</td>
+              <td>6.4516×10<sup>-4</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Square feet</td>
+              <td>=</td>
+              <td>9.2903×10<sup>-2</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Square yard</td>
+              <td>=</td>
+              <td>8.36127×10<sup>-1</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Acre</td>
+              <td>=</td>
+              <td>4.0468×10<sup>3</sup> sq. metre</td>
+            </tr>
+            <tr>
+              <td>1 Sq. mile</td>
+              <td>=</td>
+              <td>2.5888×10<sup>6</sup> sq. metre</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Length">
+          <br><br>
+          <div class="color-content1">
+            <h2>Length Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Millimetre</td>
+              <td>=</td>
+              <td>0.001 or 10<sup>– 3</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Centimetre</td>
+              <td>=</td>
+              <td>0.01 or 10<sup>– 2</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Decimetre</td>
+              <td>=</td>
+              <td>0.1 or 10<sup>– 1</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Decametre</td>
+              <td>=</td>
+              <td>10 metres</td>
+            </tr>
+            <tr>
+              <td>1 Hectometre</td>
+              <td>=</td>
+              <td>100 or 10<sup>2</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Kilometre</td>
+              <td>=</td>
+              <td>1000 or 10<sup>3</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 inch</td>
+              <td>=</td>
+              <td>2.54 × 10<sup>–2</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 foot</td>
+              <td>=</td>
+              <td>0.3048 metres</td>
+            </tr>
+            <tr>
+              <td>1 angstrom</td>
+              <td>=</td>
+              <td>1 × 10<sup>–10</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Fermi</td>
+              <td>=</td>
+              <td>1 × 10<sup>–15</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Light year</td>
+              <td>=</td>
+              <td>0.946 × 10<sup>16</sup> metres</td>
+            </tr>
+            <tr>
+              <td>1 Mile</td>
+              <td>=</td>
+              <td>1.609344 kms</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Power">
+          <br><br>
+          <div class="color-content1">
+            <h2>Power Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 kilowatt</td>
+              <td>=</td>
+              <td>1 × 10<sup>3</sup> watts</td>
+            </tr>
+            <tr>
+              <td>1 horsepower</td>
+              <td>=</td>
+              <td>745.699 watts</td>
+            </tr>
+            <tr>
+              <td>1 watt</td>
+              <td>=</td>
+              <td>0.001 kilowatt</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Pressure">
+          <br><br>
+          <div class="color-content1">
+            <h2>Pressure Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Atmosphere</td>
+              <td>=</td>
+              <td>101325 pascals</td>
+            </tr>
+            <tr>
+              <td>1 Kilopascal</td>
+              <td>=</td>
+              <td>1000 pascals</td>
+            </tr>
+            <tr>
+              <td>1 Bar</td>
+              <td>=</td>
+              <td>1×10<sup>5</sup> pascals</td>
+            </tr>
+            <tr>
+              <td>1 Millimetre of mercury</td>
+              <td>=</td>
+              <td>133.32 pascals</td>
+            </tr>
+            <tr>
+              <td>1 Pound per square inch</td>
+              <td>=</td>
+              <td>6894.757 pascals</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Speed">
+          <br><br>
+          <div class="color-content1">
+            <h2>Speed Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>cm/s</td>
+              <td>=</td>
+              <td>0.01 m/s</td>
+            </tr>
+            <tr>
+              <td>km/s</td>
+              <td>=</td>
+              <td>0.278 m/s</td>
+            </tr>
+            <tr>
+              <td>Ft/s</td>
+              <td>=</td>
+              <td>0.3048 m/s</td>
+            </tr>
+            <tr>
+              <td>Mi/hr</td>
+              <td>=</td>
+              <td>0.447 m/s</td>
+            </tr>
+            <tr>
+              <td>Knots</td>
+              <td>=</td>
+              <td>0.5144 m/s</td>
+            </tr>
+            <tr>
+              <td>Mach</td>
+              <td>=</td>
+              <td>340.3 m/s</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Temperature">
+          <br><br>
+          <div class="color-content1">
+            <h2>Temperature Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>°C = (°F - 32)</td>
+              <td>×</td>
+              <td>5/9</td>
+            </tr>
+            <tr>
+              <td>°F = (°C × 9/5)</td>
+              <td>+</td>
+              <td>32</td>
+            </tr>
+            <tr>
+              <td>0° C</td>
+              <td>=</td>
+              <td>273.15 K</td>
+            </tr>
+            <tr>
+              <td>0 K</td>
+              <td>=</td>
+              <td>-273.15 °C</td>
+            </tr>
+            <tr>
+              <td>0° C</td>
+              <td>=</td>
+              <td>32 °F</td>
+            </tr>
+            <tr>
+              <td>0° F</td>
+              <td>=</td>
+              <td>-17.78 °C</td>
+            </tr>
+            <tr>
+              <td>0° F</td>
+              <td>=</td>
+              <td>255.22 K</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Time">
+          <br><br>
+          <div class="color-content1">
+            <h2>Time Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Year</td>
+              <td>=</td>
+              <td>365.25 days</td>
+            </tr>
+            <tr>
+              <td>1 Year</td>
+              <td>=</td>
+              <td>3.1557×10<sup>7</sup> seconds</td>
+            </tr>
+            <tr>
+              <td>1 Day</td>
+              <td>=</td>
+              <td>24 hours</td>
+            </tr>
+            <tr>
+              <td>1 Hour</td>
+              <td>=</td>
+              <td>60 minutes</td>
+            </tr>
+            <tr>
+              <td>1 Minute</td>
+              <td>=</td>
+              <td>60 seconds</td>
+            </tr>
+            <tr>
+              <td>1 Second</td>
+              <td>=</td>
+              <td>1/60 minutes</td>
+            </tr>
+            <tr>
+              <td>1 Second</td>
+              <td>=</td>
+              <td>1/3600 hours</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="content" id="Volume"></div>
+          <br><br>
+          <div class="color-content1">
+            <h2>Volume Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Cubic millimetre</td>
+              <td>=</td>
+              <td>1×10<sup>-9</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic centimetre</td>
+              <td>=</td>
+              <td>1×10<sup>-6</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic decimetre</td>
+              <td>=</td>
+              <td>1×10<sup>-3</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Litre</td>
+              <td>=</td>
+              <td>1×10<sup>-3</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic decametre</td>
+              <td>=</td>
+              <td>1×10<sup>3</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic hectometre</td>
+              <td>=</td>
+              <td>1×10<sup>6</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic kilometre</td>
+              <td>=</td>
+              <td>1×10<sup>9</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic inch</td>
+              <td>=</td>
+              <td>1.639×10<sup>-5</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic foot</td>
+              <td>=</td>
+              <td>2.832×10<sup>-2</sup> cubic metre</td>
+            </tr>
+            <tr>
+              <td>1 Cubic yard</td>
+              <td>=</td>
+              <td>7.645×10<sup>-1</sup> cubic metre</td>
+            </tr>
+          </table>
+        </div>
+        <div class="content" id="Volume"></div>
+          <br><br>
+          <div class="color-content1">
+            <h2>Volume Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Cubic meter (m³)</td>
+              <td>=</td>
+              <td>1000 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Cubic centimeter (cm³)</td>
+              <td>=</td>
+              <td>0.001 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Milliliter (mL)</td>
+              <td>=</td>
+              <td>0.001 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Centiliter (cL)</td>
+              <td>=</td>
+              <td>0.01 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Deciliter (dL)</td>
+              <td>=</td>
+              <td>0.1 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Decaliter (daL)</td>
+              <td>=</td>
+              <td>10 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Hectoliter (hL)</td>
+              <td>=</td>
+              <td>100 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Kiloliter (kL)</td>
+              <td>=</td>
+              <td>1000 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Cubic inch (in³)</td>
+              <td>=</td>
+              <td>0.01639 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Cubic foot (ft³)</td>
+              <td>=</td>
+              <td>28.3168 liters (L)</td>
+            </tr>
+            <tr>
+              <td>1 Cubic yard (yd³)</td>
+              <td>=</td>
+              <td>764.555 liters (L)</td>
+            </tr>
+          </table>
+        </div>
+        <div class="content" id="Weight&Mass"></div>
+          <br><br>
+          <div class="color-content1">
+            <h2>Weight & Mass Unit Conversion</h2>
+          </div>
+          <table id="myTable">
+            <tr>
+              <td>1 Milligram</td>
+              <td>=</td>
+              <td>1 × 10<sup>-3</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Centigram</td>
+              <td>=</td>
+              <td>1 × 10<sup>-2</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Decigram</td>
+              <td>=</td>
+              <td>1 × 10<sup>-1</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Decagram</td>
+              <td>=</td>
+              <td>1 × 10<sup>1</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Hectogram</td>
+              <td>=</td>
+              <td>1 × 10<sup>2</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Kilogram</td>
+              <td>=</td>
+              <td>1 × 10<sup>3</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Metric Tonne</td>
+              <td>=</td>
+              <td>1 × 10<sup>6</sup> grams</td>
+            </tr>
+            <tr>
+              <td>1 Ounce</td>
+              <td>=</td>
+              <td>28.3495 grams</td>
+            </tr>
+            <tr>
+              <td>1 Pound</td>
+              <td>=</td>
+              <td>453.592 grams</td>
+            </tr>
+            <tr>
+              <td>1 Stone</td>
+              <td>=</td>
+              <td>6350.29 grams</td>
+            </tr>
+          </table><hr>
+        <div class="important_link">
+          <br>
+          <p style="font-size:24px;">Important Links</p>
+
+          <div id="links-container">
+            <ul id="links-list"></ul>
+          </div>
+        </div>
+      
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+        <script src="./menusearch.js"></script>
+        <script src="./script.js"></script>
+        <script src="./search.js"></script>
+</body>
+</html>

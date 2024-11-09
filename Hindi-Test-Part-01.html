@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is an MCQ test webpage where multiple choice questions are provided to assess your knowledge on various topics.">
+    <meta name="keywords" content="MCQ, test, multiple choice questions, online quiz, assessment, knowledge test">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="MCQ Test Page">
+    <meta property="og:description" content="Participate in our MCQ test and evaluate your knowledge with a variety of multiple choice questions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="stylesheet" href="./style.css">
+     <title>Hindi Test Part - 1</title>
+</head>
+<body> <div class="container">
+   <form id="quiz-form" style="display: none;"> <h3>Hindi Test Part - 01 </h3><div id="questions-container"></div><div id="timer">Time: 0:00</div><button type="submit" class="submit-btn" style="display: none;">Submit</button></form><div id="result"></div><button id="retry-btn" style="display: none;" onclick="retryQuiz()">Try Again</button><div id="startModal" class="modal"><div class="modal-content">
+    <center><h3>Some Rules of this Test</h3></center>
+        <p>1. The test consists of 50 questions.</p>
+        <p>2. The test will track the total time taken for all questions.</p>
+        <p>3. Once you move to the next question or skip a question, you cannot go back to previous questions.</p>
+        <p>4. You cannot skip the test while playing.</p>
+        <p>5. You will get points based on your correct answers.</p>
+    <center><button class="start-btn" onclick="startQuiz()">Start</button></center></div></div><div id="resultModal" class="modal"><div class="modal-content">
+            <h3>Quiz Results</h3>
+            <div id="resultContent"></div>
+            <button class="review-btn" onclick="reviewQuestions()">Review Questions</button>
+            <button class="retry-btn" onclick="retryQuiz()">Try Again</button></div></div>
+
+    <div id="review-questions"></div>
+
+    <script>
+       var totalSeconds = 0;
+var timerInterval;
+var userAnswers = [];
+var questions = [
+    
+
+
+    
+
+    {
+        "question": "प्रेमचंद के किस उपन्यास को 'हिंदी का पहला समाजवादी उपन्यास' कहा जाता है?",
+        "options": [
+            { "text": "A. गोदान", "value": "a" },
+            { "text": "B. रंगभूमि", "value": "b" },
+            { "text": "C. कर्मभूमि", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'कर्मभूमि' को 'हिंदी का पहला समाजवादी उपन्यास' कहा जाता है।"
+    },
+    {
+        "question": "'गोदान' उपन्यास का नायक कौन है?",
+        "options": [
+            { "text": "A. गोपाल", "value": "a" },
+            { "text": "B. होरी", "value": "b" },
+            { "text": "C. माधव", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'गोदान' उपन्यास का नायक होरी है।"
+    },
+    {
+        "question": "'सूरज का सातवाँ घोड़ा' किस लेखक द्वारा लिखा गया है?",
+        "options": [
+            { "text": "A. मोहन राकेश", "value": "a" },
+            { "text": "B. धर्मवीर भारती", "value": "b" },
+            { "text": "C. फणीश्वरनाथ रेणु", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'सूरज का सातवाँ घोड़ा' धर्मवीर भारती द्वारा लिखा गया है।"
+    },
+    {
+        "question": "'मैला आँचल' उपन्यास का लेखक कौन है?",
+        "options": [
+            { "text": "A. फणीश्वरनाथ रेणु", "value": "a" },
+            { "text": "B. यशपाल", "value": "b" },
+            { "text": "C. अमृतलाल नागर", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'मैला आँचल' उपन्यास के लेखक फणीश्वरनाथ रेणु हैं।"
+    },
+    {
+        "question": "'राग दरबारी' किसके द्वारा लिखा गया है?",
+        "options": [
+            { "text": "A. श्रीलाल शुक्ल", "value": "a" },
+            { "text": "B. धर्मवीर भारती", "value": "b" },
+            { "text": "C. मोहन राकेश", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'राग दरबारी' श्रीलाल शुक्ल द्वारा लिखा गया है।"
+    },
+    {
+        "question": "'अलगोझा' उपन्यास के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. फणीश्वरनाथ रेणु", "value": "a" },
+            { "text": "B. नागार्जुन", "value": "b" },
+            { "text": "C. निर्मल वर्मा", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'अलगोझा' उपन्यास के लेखक नागार्जुन हैं।"
+    },
+    {
+        "question": "'गबन' उपन्यास का मुख्य पात्र कौन है?",
+        "options": [
+            { "text": "A. झुनिया", "value": "a" },
+            { "text": "B. रतन", "value": "b" },
+            { "text": "C. रमा", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'गबन' उपन्यास का मुख्य पात्र रमा है।"
+    },
+    {
+        "question": "'नरक के पंक्षी' किसके द्वारा लिखा गया है?",
+        "options": [
+            { "text": "A. यशपाल", "value": "a" },
+            { "text": "B. भगवतीचरण वर्मा", "value": "b" },
+            { "text": "C. मोहन राकेश", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'नरक के पंक्षी' यशपाल द्वारा लिखा गया है।"
+    },
+    {
+        "question": "'वोल्गा से गंगा' के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. राहुल सांकृत्यायन", "value": "a" },
+            { "text": "B. हजारीप्रसाद द्विवेदी", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'वोल्गा से गंगा' के लेखक राहुल सांकृत्यायन हैं।"
+    },
+    {
+        "question": "'तितली' उपन्यास के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. शरत चंद्र चट्टोपाध्याय", "value": "a" },
+            { "text": "B. फणीश्वरनाथ रेणु", "value": "b" },
+            { "text": "C. नागार्जुन", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'तितली' उपन्यास के लेखक फणीश्वरनाथ रेणु हैं।"
+    },
+    {
+        "question": "'कामायनी' किसके द्वारा लिखी गई है?",
+        "options": [
+            { "text": "A. जयशंकर प्रसाद", "value": "a" },
+            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
+            { "text": "C. महादेवी वर्मा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'कामायनी' के लेखक जयशंकर प्रसाद हैं।"
+    },
+    {
+        "question": "'साकेत' महाकाव्य के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. मैथिलीशरण गुप्त", "value": "a" },
+            { "text": "B. निराला", "value": "b" },
+            { "text": "C. हरिवंश राय बच्चन", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'साकेत' महाकाव्य के रचयिता मैथिलीशरण गुप्त हैं।"
+    },
+    {
+        "question": "'राम की शक्तिपूजा' कविता किसने लिखी?",
+        "options": [
+            { "text": "A. सुमित्रानंदन पंत", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. निराला", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'राम की शक्तिपूजा' कविता के लेखक निराला हैं।"
+    },
+    {
+        "question": "'अंधा युग' किसके द्वारा लिखी गई है?",
+        "options": [
+            { "text": "A. धर्मवीर भारती", "value": "a" },
+            { "text": "B. हजारीप्रसाद द्विवेदी", "value": "b" },
+            { "text": "C. महादेवी वर्मा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अंधा युग' के लेखक धर्मवीर भारती हैं।"
+    },
+    {
+        "question": "'गोदान' उपन्यास का नायक कौन है?",
+        "options": [
+            { "text": "A. गोपाल", "value": "a" },
+            { "text": "B. होरी", "value": "b" },
+            { "text": "C. माधव", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'गोदान' उपन्यास का नायक होरी है।"
+    },
+    {
+        "question": "'मधुशाला' के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. हरिवंश राय बच्चन", "value": "a" },
+            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
+            { "text": "C. महादेवी वर्मा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'मधुशाला' के लेखक हरिवंश राय बच्चन हैं।"
+    },
+    {
+        "question": "'गीतांजलि' का रचयिता कौन है?",
+        "options": [
+            { "text": "A. जयशंकर प्रसाद", "value": "a" },
+            { "text": "B. रवींद्रनाथ ठाकुर", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'गीतांजलि' के रचयिता रवींद्रनाथ ठाकुर हैं।"
+    },
+    {
+        "question": "'पंचवटी' कविता के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. महादेवी वर्मा", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'पंचवटी' कविता के रचयिता महादेवी वर्मा हैं।"
+    },
+    {
+        "question": "'अज्ञेय' का वास्तविक नाम क्या था?",
+        "options": [
+            { "text": "A. सच्चिदानंद हीरानंद वात्स्यायन", "value": "a" },
+            { "text": "B. रामधारी सिंह दिनकर", "value": "b" },
+            { "text": "C. मैथिलीशरण गुप्त", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'अज्ञेय' का वास्तविक नाम सच्चिदानंद हीरानंद वात्स्यायन था।"
+    },
+    {
+        "question": "'परिमल' किस प्रकार की रचना है?",
+        "options": [
+            { "text": "A. उपन्यास", "value": "a" },
+            { "text": "B. कविता संग्रह", "value": "b" },
+            { "text": "C. निबंध संग्रह", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'परिमल' कविता संग्रह है।"
+    },
+    {
+        "question": "वह शब्द जो दो शब्दों को जोड़ता है, उसे क्या कहते हैं?",
+        "options": [
+            { "text": "A. समास", "value": "a" },
+            { "text": "B. संधि", "value": "b" },
+            { "text": "C. उपसर्ग", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "वह शब्द जो दो शब्दों को जोड़ता है, उसे संधि कहते हैं।"
+    },
+    {
+        "question": "द्वन्द्व संधि का एक उदाहरण क्या है?",
+        "options": [
+            { "text": "A. देवेंद्र", "value": "a" },
+            { "text": "B. देवेश", "value": "b" },
+            { "text": "C. देवराज", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "द्वन्द्व संधि का उदाहरण 'देवेंद्र' है।"
+    },
+    {
+        "question": "'हरि' और 'ईश्वर' के संधि करने से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. हरिश्वर", "value": "a" },
+            { "text": "B. हरिश", "value": "b" },
+            { "text": "C. हरिश्वराय", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'हरि' और 'ईश्वर' के संधि करने से 'हरिश्वर' शब्द बनता है।"
+    },
+    {
+        "question": "'विद्या' और 'आनंद' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. विद्यायानंद", "value": "a" },
+            { "text": "B. विद्यालंद", "value": "b" },
+            { "text": "C. विद्यानंद", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'विद्या' और 'आनंद' के संधि से 'विद्यानंद' शब्द बनता है।"
+    },
+    {
+        "question": "'स्वामी' और 'अधिकार' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. स्वामिधिकार", "value": "a" },
+            { "text": "B. स्वाम्यधिकार", "value": "b" },
+            { "text": "C. स्वाम्यधि", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'स्वामी' और 'अधिकार' के संधि से 'स्वाम्यधिकार' शब्द बनता है।"
+    },
+    {
+        "question": "'लक्ष्मी' और 'ईश्वर' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. लक्ष्मीश्वर", "value": "a" },
+            { "text": "B. लक्ष्मेश्वर", "value": "b" },
+            { "text": "C. लक्ष्मीश्वराय", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'लक्ष्मी' और 'ईश्वर' के संधि से 'लक्ष्मीश्वर' शब्द बनता है।"
+    },
+    {
+        "question": "'जन' और 'उद्धार' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. जनुद्धार", "value": "a" },
+            { "text": "B. जनोद्धार", "value": "b" },
+            { "text": "C. जनउद्धार", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'जन' और 'उद्धार' के संधि से 'जनोद्धार' शब्द बनता है।"
+    },
+    {
+        "question": "'गौ' और 'ऋण' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. गौरिण", "value": "a" },
+            { "text": "B. गौर्ण", "value": "b" },
+            { "text": "C. गौरिण्य", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'गौ' और 'ऋण' के संधि से 'गौरिण' शब्द बनता है।"
+    },
+    {
+        "question": "'राज' और 'ऋषि' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. राजर्षि", "value": "a" },
+            { "text": "B. राजृषि", "value": "b" },
+            { "text": "C. राजृष", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'राज' और 'ऋषि' के संधि से 'राजर्षि' शब्द बनता है।"
+    },
+    {
+        "question": "'धर्म' और 'अध्यात्म' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. धर्मध्यात्म", "value": "a" },
+            { "text": "B. धर्माद्यात्म", "value": "b" },
+            { "text": "C. धर्माध्यात्म", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'धर्म' और 'अध्यात्म' के संधि से 'धर्माध्यात्म' शब्द बनता है।"
+    },
+    {
+        "question": "'सत्य' और 'युग' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. सत्ययुग", "value": "a" },
+            { "text": "B. सत्युग", "value": "b" },
+            { "text": "C. सत्ययुगम", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'सत्य' और 'युग' के संधि से 'सत्ययुग' शब्द बनता है।"
+    },
+    {
+        "question": "'भू' और 'ईश' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. भूईश", "value": "a" },
+            { "text": "B. भूष", "value": "b" },
+            { "text": "C. भूईश्वर", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'भू' और 'ईश' के संधि से 'भूईश' शब्द बनता है।"
+    },
+    {
+        "question": "'द्वन्द्व' और 'योग' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. द्वन्द्वयोग", "value": "a" },
+            { "text": "B. द्वन्द्योग", "value": "b" },
+            { "text": "C. द्वन्द्वयोगम", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'द्वन्द्व' और 'योग' के संधि से 'द्वन्द्वयोग' शब्द बनता है।"
+    },
+    {
+        "question": "'बूढ़ी काकी' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. सुभद्रा कुमारी चौहान", "value": "b" },
+            { "text": "C. महादेवी वर्मा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'बूढ़ी काकी' कहानी के लेखक प्रेमचंद हैं।"
+    }, {
+        "question": "'विद्या' और 'आनंद' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. विद्यायानंद", "value": "a" },
+            { "text": "B. विद्यालंद", "value": "b" },
+            { "text": "C. विद्यानंद", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'विद्या' और 'आनंद' के संधि से 'विद्यानंद' शब्द बनता है।"
+    },
+    {
+        "question": "'स्वामी' और 'अधिकार' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. स्वामिधिकार", "value": "a" },
+            { "text": "B. स्वाम्यधिकार", "value": "b" },
+            { "text": "C. स्वाम्यधि", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'स्वामी' और 'अधिकार' के संधि से 'स्वाम्यधिकार' शब्द बनता है।"
+    },
+    {
+        "question": "'लक्ष्मी' और 'ईश्वर' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. लक्ष्मीश्वर", "value": "a" },
+            { "text": "B. लक्ष्मेश्वर", "value": "b" },
+            { "text": "C. लक्ष्मीश्वराय", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'लक्ष्मी' और 'ईश्वर' के संधि से 'लक्ष्मीश्वर' शब्द बनता है।"
+    },
+    {
+        "question": "'जन' और 'उद्धार' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. जनुद्धार", "value": "a" },
+            { "text": "B. जनोद्धार", "value": "b" },
+            { "text": "C. जनउद्धार", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'जन' और 'उद्धार' के संधि से 'जनोद्धार' शब्द बनता है।"
+    },
+    {
+        "question": "'गौ' और 'ऋण' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. गौरिण", "value": "a" },
+            { "text": "B. गौर्ण", "value": "b" },
+            { "text": "C. गौरिण्य", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'गौ' और 'ऋण' के संधि से 'गौरिण' शब्द बनता है।"
+    },
+    {
+        "question": "'राज' और 'ऋषि' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. राजर्षि", "value": "a" },
+            { "text": "B. राजृषि", "value": "b" },
+            { "text": "C. राजृष", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'राज' और 'ऋषि' के संधि से 'राजर्षि' शब्द बनता है।"
+    },
+    {
+        "question": "'धर्म' और 'अध्यात्म' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. धर्मध्यात्म", "value": "a" },
+            { "text": "B. धर्माद्यात्म", "value": "b" },
+            { "text": "C. धर्माध्यात्म", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'धर्म' और 'अध्यात्म' के संधि से 'धर्माध्यात्म' शब्द बनता है।"
+    },
+    { "question": "'सत्य' और 'युग' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. सत्ययुग", "value": "a" },
+            { "text": "B. सत्युग", "value": "b" },
+            { "text": "C. सत्ययुगम", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'सत्य' और 'युग' के संधि से 'सत्ययुग' शब्द बनता है।"
+    },
+    {
+        "question": "'भू' और 'ईश' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. भूईश", "value": "a" },
+            { "text": "B. भूष", "value": "b" },
+            { "text": "C. भूईश्वर", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'भू' और 'ईश' के संधि से 'भूईश' शब्द बनता है।"
+    },
+    {
+        "question": "'द्वन्द्व' और 'योग' के संधि से कौन-सा शब्द बनेगा?",
+        "options": [
+            { "text": "A. द्वन्द्वयोग", "value": "a" },
+            { "text": "B. द्वन्द्योग", "value": "b" },
+            { "text": "C. द्वन्द्वयोगम", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'द्वन्द्व' और 'योग' के संधि से 'द्वन्द्वयोग' शब्द बनता है।"
+    },
+    {
+        "question": "'बूढ़ी काकी' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. सुभद्रा कुमारी चौहान", "value": "b" },
+            { "text": "C. महादेवी वर्मा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'बूढ़ी काकी' कहानी के लेखक प्रेमचंद हैं।"
+    },
+    {
+        "question": "'ठेकेदार' कहानी के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. घीसू", "value": "a" },
+            { "text": "B. माधव", "value": "b" },
+            { "text": "C. मंगू", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'ठेकेदार' कहानी के मुख्य पात्र का नाम मंगू है।"
+    },
+    {
+        "question": "'नमक का दरोगा' कहानी का मुख्य पात्र कौन है?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. बंशीधर", "value": "b" },
+            { "text": "C. मुंशी", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'नमक का दरोगा' कहानी का मुख्य पात्र बंशीधर है।"
+    },
+    {
+        "question": "'पूस की रात' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. सुभद्रा कुमारी चौहान", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. प्रेमचंद", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'पूस की रात' कहानी के लेखक प्रेमचंद हैं।"
+    },
+    {
+        "question": "'सपनों का सौदागर' कहानी के मुख्य पात्र कौन है?",
+        "options": [
+            { "text": "A. सुरेश", "value": "a" },
+            { "text": "B. मन्नू", "value": "b" },
+            { "text": "C. मुंशी", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'सपनों का सौदागर' कहानी के मुख्य पात्र सुरेश हैं।"
+    },
+    {
+        "question": "'इदगाह' कहानी के लेखक कौन हैं?",
+        "options": [
+            { "text": "A. प्रेमचंद", "value": "a" },
+            { "text": "B. हरिवंश राय बच्चन", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'इदगाह' कहानी के लेखक प्रेमचंद हैं।"
+    }
+    
+
+    
+];
+
+var startModal = document.getElementById("startModal");
+var resultModal = document.getElementById("resultModal");
+
+window.onload = function () {
+    startModal.style.display = "block";
+}
+
+function startQuiz() {
+    startModal.style.display = "none";
+    document.getElementById('quiz-form').style.display = 'block';
+    shuffleQuestions();
+    generateQuestions();
+    startTimer();
+}
+
+function shuffleQuestions() {
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+}
+
+function startTimer() {
+    totalSeconds = 0;
+    timerInterval = setInterval(function () {
+        totalSeconds++;
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+        document.getElementById('timer').textContent = 'Time: ' + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function generateQuestions() {
+    var questionsContainer = document.getElementById('questions-container');
+    questionsContainer.innerHTML = '';
+
+    questions.forEach(function (question, index) {
+        var questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        if (index !== 0) {
+            questionDiv.style.display = 'none';
+        }
+
+        var questionText = document.createElement('p');
+        questionText.innerHTML = (index + 1) + ". " + question.question; // Modified line
+        questionDiv.appendChild(questionText);
+
+        // Rest of your code remains the same...
+
+
+        var optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        question.options.forEach(function (option) {
+            var optionLabel = document.createElement('label');
+            var optionInput = document.createElement('input');
+            optionInput.type = 'radio';
+            optionInput.name = 'question-' + index;
+            optionInput.value = option.value;
+            optionInput.addEventListener('change', function () {
+                var labels = optionsDiv.getElementsByTagName('label');
+                for (var i = 0; i < labels.length; i++) {
+                    labels[i].classList.remove('selected');
+                }
+                optionLabel.classList.add('selected');
+                userAnswers[index] = option.value;
+                var nextButton = document.getElementById('next-btn-' + index);
+                if (nextButton) {
+                    nextButton.disabled = false;
+                    nextButton.style.opacity = 1;
+                }
+                var submitButton = document.getElementById('submit-btn-' + index);
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = 1;
+                }
+            });
+            optionLabel.textContent = option.text;
+            optionLabel.insertBefore(optionInput, optionLabel.firstChild);
+            optionsDiv.appendChild(optionLabel);
+        });
+        questionDiv.appendChild(optionsDiv);
+
+        var button;
+        if (index < questions.length - 1) {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('next-btn');
+            button.textContent = 'Next';
+            button.id = 'next-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', function () {
+                showNextQuestion(index);
+            });
+        } else {
+            button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('submit-btn');
+            button.textContent = 'Submit';
+            button.id = 'submit-btn-' + index;
+            button.disabled = true;
+            button.style.opacity = 0.5;
+            button.addEventListener('click', submitQuiz);
+        }
+        questionDiv.appendChild(button);
+
+        var skipButton = document.createElement('button');
+        skipButton.type = 'button';
+        skipButton.classList.add('skip-btn');
+        skipButton.textContent = 'Skip';
+        skipButton.addEventListener('click', function () {
+            userAnswers[index] = 'skipped';
+            if (index === questions.length - 1) {
+                submitQuiz();
+            } else {
+                showNextQuestion(index);
+            }
+        });
+        questionDiv.appendChild(skipButton);
+
+        questionsContainer.appendChild(questionDiv);
+    });
+}
+
+function showNextQuestion(currentIndex) {
+    var currentQuestion = document.querySelectorAll('.question')[currentIndex];
+    var nextQuestion = document.querySelectorAll('.question')[currentIndex + 1];
+
+    currentQuestion.style.display = 'none';
+    nextQuestion.style.display = 'block';
+}
+
+function submitQuiz() {
+    stopTimer();
+    var score = 0;
+    var totalQuestions = questions.length;
+    var skipped = 0;
+    var correct = 0;
+    var incorrect = 0;
+
+    userAnswers.forEach(function (answer, index) {
+        if (answer === 'skipped') {
+            skipped++;
+        } else if (answer === questions[index].correctOption) {
+            correct++;
+            score++;
+        } else {
+            incorrect++;
+        }
+    });
+
+    var percentage = (correct / totalQuestions) * 100;
+
+    var resultContent = 
+        '<p>Skipped: ' + skipped + '</p>' +
+        '<p>Correct: ' + correct + '</p>' +
+        '<p>Incorrect: ' + incorrect + '</p>' +
+        '<p>Percentage: ' + percentage.toFixed(2) + '%</p>' +
+        '<p>Score: ' + score + '/' + totalQuestions + '</p>' +
+        '<p>Total Time taken: ' + Math.floor(totalSeconds / 60) + ' minutes ' + (totalSeconds % 60) + ' seconds</p>';
+
+    var resultContentDiv = document.getElementById('resultContent');
+    resultContentDiv.innerHTML = resultContent;
+    resultModal.style.display = 'block';
+}
+
+function reviewQuestions() {
+    stopTimer();
+    resultModal.style.display = 'none';
+    document.getElementById('quiz-form').style.display = 'none';
+    var reviewDiv = document.getElementById('review-questions');
+    reviewDiv.innerHTML = '<h2>Review Questions</h2>';
+    questions.forEach(function (question, index) {
+        var userAnswer = userAnswers[index];
+        var correctAnswer = question.correctOption;
+        var explanation = question.explanation;
+        var questionText = (index + 1) + ". " + question.question; // Modified line
+        var resultText = '<p><strong>' + questionText + '</strong></p>';
+
+        var options = question.options;
+        options.forEach(function (option) {
+            var optionLabel = option.text;
+            var optionValue = option.value;
+            var optionClass = 'default-color';
+            var userAnswerText = '';
+
+            if (optionValue === userAnswer && userAnswer === correctAnswer) {
+                optionClass = 'correct-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === userAnswer && userAnswer !== correctAnswer) {
+                optionClass = 'incorrect-answer';
+                userAnswerText = ' (Your Answer)';
+            } else if (optionValue === correctAnswer) {
+                optionClass = 'correct-answer';
+            }
+            resultText += '<p class="' + optionClass + '">' + optionLabel + userAnswerText + '</p>';
+        });
+
+        resultText += '<p><span class="blue-text">Explanation:</span> ' + explanation + '</p>';
+        resultText += '<br><br><hr><br><br>';
+        reviewDiv.innerHTML += resultText;
+    });
+    reviewDiv.innerHTML += '<button class="retry-btn" onclick="retryQuiz()">Try Again</button>';
+    reviewDiv.style.display = 'block';
+}
+
+       
+
+function retryQuiz() {
+    totalSeconds = 0;
+    clearInterval(timerInterval);
+    document.getElementById('timer').textContent = 'Time: 0:00';
+    document.getElementById('quiz-form').reset();
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('review-questions').style.display = 'none';
+    var questionDivs = document.querySelectorAll('.question');
+    questionDivs.forEach(function (div, index) {
+        if (index === 0) {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    });
+    userAnswers = [];
+    resultModal.style.display = 'none';
+    startQuiz();
+}
+
+    </script>
+</body>
+</html>

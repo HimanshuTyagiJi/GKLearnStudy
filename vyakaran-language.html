@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="हिंदी भाषा और व्याकरण के बारे में विस्तृत जानकारी। हिंदी व्याकरण के मुख्य तत्व, उदाहरण और उपयोग।">
+    <meta name="keywords" content="हिंदी भाषा, हिंदी व्याकरण, व्याकरण के तत्व, हिंदी के उदाहरण, हिंदी भाषा के उपयोग, हिंदी व्याकरण के नियम">
+    <meta name="author" content="Himanshu">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="हिंदी भाषा और व्याकरण">
+    <meta property="og:description" content="हिंदी भाषा और व्याकरण के बारे में विस्तृत जानकारी। हिंदी व्याकरण के मुख्य तत्व, उदाहरण और उपयोग।">
+    <meta property="og:image" content="URL_of_the_image">
+    <meta property="og:url" content="URL_of_the_page">
+    <meta property="og:type" content="article">
+    <link rel="stylesheet" href="style.css">
+    <title>भाषा और व्याकरण</title>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+       <li><a class="active" href="vyakaran-language.html">भाषा और व्याकरण</a></li>
+        <li><a href="vyakaran/phonology-in-hindi.html">वर्ण-विचार</a></li>
+        <li><a href="vyakaran/morphology-in-hindi.html">शब्द-विचार</a></li>
+        <li><a href="vyakaran/syntax-in-hindi.html">वाक्य-विचार</a></li>
+        <li><a href="vyakaran/noun-in-hindi.html">संज्ञा</a></li>
+        <li><a href="vyakaran/number-in-hindi.html">वचन</a></li>
+        <li><a href="vyakaran/gender-in-hindi.html">लिंग</a></li>
+        <li><a href="vyakaran/case-in-hindi.html">कारक</a></li>
+        <li><a href="vyakaran/pronoun-in-hindi.html">सर्वनाम</a></li>
+        <li><a href="vyakaran/adjective-in-hindi.html">विशेषण</a></li>
+        <li><a href="vyakaran/verb-in-hindi.html">क्रिया</a></li>
+        <li><a href="vyakaran/tense-in-hindi.html">काल</a></li>
+        <li><a href="vyakaran/indeclinable-words-in-hindi.html">अव्यय</a></li>
+        <li><a href="vyakaran/particle-in-hindi.html">निपात</a></li>
+        <li><a href="vyakaran/voice-in-hindi.html">वाच्य</a></li>
+        <li><a href="vyakaran/person-in-hindi.html">पुरुष</a></li>
+        <li><a href="vyakaran/punctuation-in-hindi.html">विराम-चिन्ह</a></li>
+        <li><a href="vyakaran/prefix-in-hindi.html">उपसर्ग</a></li>
+        <li><a href="vyakaran/suffix-in-hindi.html">प्रत्यय</a></li>
+        <li><a href="vyakaran/joining.html">संधि</a></li>
+        <li><a href="vyakaran/compound-in-hindi.html">समास</a></li>
+        <li><a href="vyakaran/tatsam-tadbhav-in-hindi.html">तत्सम-तट्भव</a></li>
+        <li><a href="vyakaran/deshaj-videshaj-in-hindi.html">देशज-विदेशज</a></li>
+        <li><a href="vyakaran/antonyms-in-hindi.html">विलोम-शब्द</a></li>
+        <li><a href="vyakaran/synonyms-in-hindi.html">पर्यावाची-शब्द</a></li>
+        <li><a href="vyakaran/idioms-in-hindi.html">मुहावरे</a></li>
+        <li><a href="vyakaran/proverbs-in-hindi.html">लोकोक्तियां</a></li>
+        <li><a href="vyakaran/one-word-substitution-in-hindi.html">अनेक शब्दों के लिए एक शब्द</a></li>
+        <li><a href="vyakaran/words-of-many-meanings-in-hindi.html">एकार्थक शब्द</a></li>
+        <li><a href="vyakaran/words-apparently-similar-in-meanings-in-hindi.html">एकार्थक प्रतीत होने वाले शब्द</a></li>
+        <li><a href="vyakaran/pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a></li>
+        <li><a href="vyakaran/yugm-shabd.html">युग्म शब्द</a></li>
+        <li><a href="vyakaran/ras-in-hindi.html">रस</a></li>
+        <li><a href="vyakaran/chhand-in-hindi.html">छन्द</a></li>
+        <li><a href="vyakaran/alankar-in-hindi.html">अलंकार</a></li>
+        <li><a href="vyakaran/paragraph-writing-in-hindi.html">अनुच्छेद-लेखन</a></li>
+        <li><a href="vyakaran/unseen-passage-in-hindi.html">अपठित-गद्यांश</a></li>
+        <li><a href="vyakaran/letter-writing-in-hindi.html">पत्र-लेखन</a></li>
+        <li><a href="vyakaran/essay-in-hindi.html">निबंध</a></li>
+        <li><a href="vyakaran/quiz-for-exam.html">Quiz For Exam</a></li>
+        <br><br>
+    </ul>
+    
+      <div class="container">
+        <main class="container">
+
+            <form id="searchForm" onsubmit="performSearch(event);">
+              <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                  <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                  oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+              </div>
+              <div id="suggestions" class="suggestions-list"></div>
+            </form>
+        
+            <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+              <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+              </div>
+            </div>
+          </main>
+        <div class="content" id="भाषा-और-व्याकरण"></div>
+        <h2 class="color-content1">भाषा और व्याकरण</h2>
+    <div class="custom-container">
+        <div class="custom-row">
+            <div class="custom-column">
+
+                <div class="content" id="भाषा"></div>
+
+                <h2 style="text-align: center" ;="" class="color-content2">भाषा </h2>
+                <p>भाषा मुख से उच्चारित होने वाले शब्दों और वाक्यों का वह समूह है जिसके द्वारा मनुष्य अपने विचार और भावनाओं को व्यक्त करता है। किसी भाषा की सभी ध्वनियों के संयोजन से एक व्यवस्थित भाषा का निर्माण होता है।</p><br>
+            </div>
+            <div class="custom-column">
+
+                <div class="content" id="भाषा क्या है?"></div>
+                <h2 style="text-align: center" ;="" class="color-content2">भाषा क्या है?</h2>
+                <p>भाषा वह साधन है जिसके माध्यम से हम सोचते हैं और अपने विचारों को व्यक्त करते हैं। मनुष्य अपने विचारों, भावनाओं और अनुभूतियों को भाषा के माध्यम से ही व्यक्त करता है।</p>
+                <br>
+            </div>
+        </div>
+        <div class="pink-background">
+            <div class="content" id="भाषा की परिभाषा"></div>
+            <h2 style="text-align: center" ;="" class="color-content5">भाषा की परिभाषा</h2><br>
+            <p><img src="./image/भाषा.png" alt="भाषा" width="100px" height="120px" style="float: left; margin:10px">
+                "<strong>भाषा एक ऐसा साधन है जिसके द्वारा हम अपने विचारों को व्यक्त कर सकते हैं और इसके लिए हम आवश्यक ध्वनियों का प्रयोग करते हैं।</strong>"</p>
+
+        </div>
+    </div><br><br>
+    <div class="green-background">
+        <div class="content" id="भाषा का अर्थ"></div>
+        <h2 style="text-align: center" ;="" class="color-content2">भाषा का अर्थ</h2>
+        <p>भाषा का अर्थ है - ध्वनियों और शब्दों का समूह जिसके माध्यम से मनुष्य अपने विचारों, भावनाओं, और अभिव्यक्तियों को अद्यतन करता है और दूसरों के साथ संवाद करता है। यह एक सामाजिक, सांस्कृतिक, और मानवीय उपकरण है जो व्यक्ति को समाज में समानता का अनुभव करने में मदद करता है।</p>
+    </div>
+    <div class="content" id="भाषा में शैली"></div><br><br>
+    <div class="blue1-background">
+        <h2 style="text-align: center" ;="" class="color-content2">भाषा में शैली</h2>
+        <p>
+            <img src="./image/भाषा में शैली.png" alt="भाषा" width="110px" height="120px" style="float: left; margin:10px">भाषा में शैली एक व्यक्ति या समूह के व्यक्तित्व, सोच, और अभिव्यक्ति के तरीके का प्रतिबिम्ब होता है। यह उन सांस्कृतिक, सामाजिक, और भाषाई नियमों का परिणाम होता है जो व्यक्ति के विचारों और अभिव्यक्तियों को प्रभावित करते हैं।
+        </p><br>
+        <p>भाषा की शैलियों में कई प्रकार होते हैं, जैसे कि साहित्यिक, वैज्ञानिक, सामाजिक, राजनीतिक, वाणिज्यिक, तकनीकी, आदि। हर शैली अपने विशेष संकेत, शब्दावली, और वाक्य प्रणाली के साथ आती है, जो उसके उद्देश्य और प्रयोजनों को प्रकट करने में मदद करते हैं।
+
+        </p><br>
+        <p>शैली व्यक्ति के लेखनी, वाणी, और साहित्य के विकास में महत्वपूर्ण भूमिका निभाती है, और उसकी व्यक्तित्विकता को प्रकट करती है। इसलिए, शैली भाषा के अद्वितीय पहचानकर्ता होती है जो एक व्यक्ति के या समूह के विचारों और अभिव्यक्तियों को निर्दिष्ट करती है।
+        </p>
+    </div><br> <br>
+    <div class="content" id="भाषा के प्रकार (भेद)"></div>
+    <h2 style="text-align: center" ;="" class="color-content2">भाषा के प्रकार (भेद)</h2><p id="भाषा के तीन प्रकार के रूप होते हैं-"><b class="color-content5">भाषा के तीन प्रकार के रूप होते हैं-</b></p><p></p>
+    <ol>
+        <li><p><b class="color-content6">मौखिक भाषा</b></p></li>
+        <li><p><b class="color-content6">लिखित भाषा</b></p></li>
+        <li><p><b class="color-content6">सांकेतिक भाषा</b></p></li>
+    </ol><br>
+    <div class="custom-row">
+        <div class="custom-column">
+            <div class="yellow-background">
+                <h2 id="मौखिक भाषा"><b class="color-content1">मौखिक भाषा</b></h2>
+                <p>भाषा के जिस रूप से हम अपने विचार एवं भाव बोलकर प्रकट करते हैं अथवा दूसरों के विचार अथवा भाव सुनकर ग्रहण करते हैं, उसे&nbsp;<b class="color-content6">मौखिक भाषा</b><span style="color: var(--text-color);">&nbsp;कहते हैं। उदाहरण के लिए- जब हम किसी से फोन पर बात करते हैं तो भाषा के मौखिक रूप का प्रयोग करते हैं।</span></p><br>
+                <p>भाषा का मौखिक रूप सीखने के लिए विशेष प्रयत्न नहीं करना पड़ता है,&nbsp;<b class="color-content9">उदाहरण</b>&nbsp;के लिए हम अपनी-अपनी मातृभाषा को परिवार और समाज से अनुकरण द्वारा स्वयं सीख जाते हैं।</p>
+            </div>
+        </div>
+        <div class="custom-column">
+            <div class="orange-background">
+                <h2 id="लिखित भाषा"><b class="color-content1">लिखित भाषा</b></h2>
+                <p>जब हम मन के भावों तथा विचारों को लिखकर प्रकट करते हैं, तो वह भाषा का&nbsp;<b class="color-content6">लिखित रूप</b><span style="color: var(--text-color);">&nbsp;कहलाता है। लिखित भाषा के उदाहरण निम्न है- पत्र, लेख, समाचार पत्र, कहानी, जीवनी संस्मरण, तार इत्यादि।</span></p><br>
+                <p>भाषा का लिखित रूप सीखने के लिए विशेष अध्ययन की आवश्यकता होती है। किसी भी भाषा को लिखने के लिए उसके वर्णों, शब्दों, वाक्यों अर्थात व्याकरण का सम्पूर्ण ज्ञान होना जरूरी है।</p>
+            </div>
+        </div>
+    </div>
+    <div class="green-background">
+        <h2 id="सांकेतिक भाषा"><b class="color-content1">सांकेतिक भाषा</b></h2>
+        <p>संकेत भाषा या सांकेतिक भाषा एक ऐसी भाषा है, जिसको हम विभिन्न प्रकार के दृश्य संकेतों (जैसे हस्तचालित संकेत, अंग-संकेत) के माध्यम से व्यक्त करतें हैं। इसमें बोलनें वाले के विचारों को धाराप्रवाह रूप से व्यक्त करने के लिए, हाथ के आकार, विन्यास और संचालन, बांहों या शरीर तथा चेहरे के हाव-भावों का एक साथ उपयोग किया जाता है।</p><br><p><b class="color-content9">उदाहरण</b>&nbsp;के लिए- छोटे बच्चे और उसकी माँ के बीच की भाषा सांकेतिक भाषा है। छोटा बच्चा अपनी समस्याओं और इच्छाओं को विभिन्न संकेतों के माध्यम से बताता है, जैसे- अधिकतर बच्चों को जब भूख लगती है तो वह रोने लगते हैं।</p>
+        <p>सांकेतिक भाषा का प्रयोग अधिकतर ऐसे व्यक्तियों के लिए होता जो शारीरिक रूप से दिव्यांग होते है, जैसे- कान और मुख से अपंग।</p>
+    </div><br><br>
+    <div class="content" id="भाषा के अंग"></div>
+    <h2 style="text-align: center" ;="" class="color-content2">भाषा के अंग</h2>
+    <p>भाषा के मुख्य पाँच अंग होते हैं, जो कि इस प्रकार हैं- <strong>ध्वनि</strong>, <strong>वर्ण</strong>, <strong>शब्द</strong>, <strong>वाक्य</strong> और <strong>लिपि</strong>। सभी भाषा के अंगों का विवरण निम्नलिखित है-</p><br>
+    <ol>
+        <li><b class="color-content8">ध्वनि–</b>हमारे मुख से निकलने प्रत्येक स्वतंत्र आवाज ध्वनि होती है। और ये ध्वनियाँ हमेशा मौखिक भाषा में प्रयोग होतीं हैं।</li><br>
+        <li><b class="color-content8">वर्ण–</b>&nbsp;वह मूल ध्वनि जिसके और टुकड़े ना किये जा सके, वह&nbsp;<b class="color-content9">वर्ण</b>&nbsp;कहलाते हैं।&nbsp;<b class="color-content9">जैसे-</b>&nbsp;अ, क्, भ्, म्, त् आदि।</li><br>
+        <li><b class="color-content8">शब्द–</b>&nbsp;वर्णों का वह समूह जिसका कोई अर्थ निकलता है, उसे&nbsp;<b class="color-content9">शब्द</b>&nbsp;कहते हैं। जैसे- क् + अ + म् + अ +ल् + अ = कमल, भ् + आ + ष् + आ = भाषा।</li><br>
+        <li><b class="color-content8">वाक्य–</b>&nbsp;सार्थक शब्दों का वह समूह जिसका कोई अर्थ निकलता है, उसे&nbsp;<b class="color-content9">वाक्य</b>&nbsp;कहते हैं। जैसे- कमल हिन्दी भाषा पढ़ रहा है। यदि हम इस वाक्य को “हिन्दी है रहा कमल पढ़ भाषा” लिख दे दो इसका कोई अर्थ नहीं निकलता, तो हम इसे वाक्य नहीं कह सकते।</li><br>
+        <li><b class="color-content8">लिपि–</b>&nbsp;मौखिक भाषा को लिखित रूप में व्यक्त करने के लिए जिन चिन्हों का प्रयोग किया जाता है, उन्हें&nbsp;<b class="color-content9">लिपि</b>&nbsp;कहते हैं। जैसे- हिन्दी भाषा की देवनागरी लिपि है।</li>
+    </ol><br>
+    <div class="content" id="भाषा की प्रक्रिया"></div>
+    <h2 style="text-align: center" ;="" class="color-content2">भाषा की प्रक्रिया</h2><br>
+    <p> भाषा की प्रक्रिया एक जटिल और बहुआयामी प्रक्रिया है जिसमें विचारों को ध्वनियों, शब्दों, और वाक्यों के माध्यम से व्यक्त किया जाता है। यह प्रक्रिया मुख्यतः चार चरणों में विभाजित की जा सकती है:
+    <br><br><b class="color-content5">1. अवधारणात्मक चरण <i>(Conceptual Stage)</i></b>: इस चरण में व्यक्ति अपने मस्तिष्क में किसी विचार, भावना या जानकारी को उत्पन्न करता है। यह आंतरिक मानसिक प्रक्रिया है जिसमें व्यक्ति यह निर्णय लेता है कि उसे क्या कहना है।
+    <br><br><b class="color-content5">2. भाषिक योजना चरण <i>(Linguistic Planning Stage)</i></b>:इस चरण में मस्तिष्क विचारों को भाषा में बदलता है। इसमें व्याकरण, शब्दावली, और वाक्य संरचना का चयन शामिल है। मस्तिष्क यह तय करता है कि कौन से शब्दों और वाक्यों का प्रयोग किया जाएगा।
+    <br><br><b class="color-content5">3. ध्वनि योजना चरण(Phonetic Planning Stage):&nbsp;</b>इस चरण में मस्तिष्क भाषिक योजनाओं को ध्वनियों में बदलने के लिए योजना बनाता है। इसमें प्रत्येक शब्द और वाक्य के ध्वन्यात्मक गुणधर्म और उच्चारण की योजना बनाई जाती है।
+    <br><br><b class="color-content5">4. उत्पादन चरण (Production Stage):</b>&nbsp;इस अंतिम चरण में योजना बनाई गई ध्वनियों को वाणी के माध्यम से उच्चारित किया जाता है। इसमें श्वास प्रणाली, स्वर तंत्र, और मुख के अंगों का समन्वय शामिल होता है, जिससे ध्वनियाँ उत्पन्न होती हैं और भाषा का उच्चारण होता है।
+    <br><br><b class="color-content5">5. श्रवण और समझ (Hearing and Comprehension):&nbsp;</b>जब कोई व्यक्ति भाषा का उच्चारण करता है, तो श्रोता इसे सुनते हैं और अपने मस्तिष्क में प्राप्त ध्वनियों को प्रक्रिया करते हैं। इस प्रक्रिया में श्रोता ध्वनियों को पहचानते हैं, उन्हें शब्दों और वाक्यों में विभाजित करते हैं, और फिर उन विचारों और भावनाओं को समझते हैं जिन्हें वक्ता व्यक्त कर रहा है।
+    <br><br><b class="color-content5">6. प्रतिक्रिया (Feedback):</b>&nbsp;भाषा की प्रक्रिया में प्रतिक्रिया भी शामिल होती है। जब श्रोता वक्ता की बात को समझ लेते हैं, तो वे उसकी प्रतिक्रिया देते हैं। यह प्रतिक्रिया वाणी, इशारों, या किसी अन्य संचार माध्यम से हो सकती है।
+    <br><br>
+    <div class="pink-background">
+        <span class="color-content3">
+
+            भाषा की प्रक्रिया एक गतिशील और इंटरएक्टिव प्रक्रिया है जिसमें मस्तिष्क की उच्च स्तरीय कार्यक्षमताओं का समन्वय होता है। यह प्रक्रिया संचार के हर पहलू को शामिल करती है, चाहे वह मौखिक हो या लिखित, और मानव संचार का मूल आधार है।
+        </span>
+    </div><br>
+    <div class="content" id="बोली, विभाषा और भाषा"></div>
+    <h2 class="color-content5">बोली, विभाषा और भाषा</h2>
+
+
+    भाषा, बोली, और विभाषा (उपभाषा) के बीच महत्वपूर्ण भिन्नताएँ हैं, जो इनकी परिभाषाओं और उपयोग में स्पष्ट होती हैं। ये तीनों संचार के साधन हैं, लेकिन उनकी प्रकृति, क्षेत्र और उपयोग के आधार पर वे अलग-अलग रूप में परिभाषित होते हैं।
+
+    <br><br><b class="color-content8">भाषा (Language):&nbsp;</b>भाषा एक व्यापक और समृद्ध प्रणाली है, जिसमें ध्वनियों, शब्दों, वाक्यों, और व्याकरणिक संरचनाओं का समावेश होता है। यह एक पूरी संचार प्रणाली है जो एक बड़े समुदाय द्वारा साझा की जाती है और जिसमें साहित्य, शिक्षा, प्रशासन आदि शामिल होते हैं।&nbsp;<b class="color-content9">उदाहरण:</b>&nbsp;हिंदी, अंग्रेजी, संस्कृत, फ्रेंच
+
+    <br><br><b class="color-content8">बोली (Dialect):</b>&nbsp;बोली एक विशिष्ट क्षेत्र या समुदाय द्वारा बोली जाने वाली भाषा का एक रूप है। यह मुख्य भाषा की विभिन्न ध्वन्यात्मक, शब्दावली और व्याकरणिक विविधताओं के साथ एक रूप होती है। बोली में क्षेत्रीय, सामाजिक, या सांस्कृतिक विविधता हो सकती है।&nbsp;<b class="color-content9">उदाहरण:</b>&nbsp;हिंदी की बोलियाँ: ब्रजभाषा, अवधी, मैथिली
+    अंग्रेजी की बोलियाँ: ब्रिटिश अंग्रेजी, अमेरिकी अंग्रेजी, ऑस्ट्रेलियाई अंग्रेजी
+
+    <br><br><b class="color-content8">विभाषा या उपभाषा (Subdialect):</b>&nbsp;विभाषा, जिसे उपभाषा भी कहा जाता है, बोली का एक और भी संकीर्ण और विशेष रूप है। यह एक छोटे क्षेत्र या समुदाय द्वारा उपयोग की जाने वाली बोली की अधिक सूक्ष्म विविधता है। विभाषा में अधिक सूक्ष्म ध्वन्यात्मक और व्याकरणिक अंतर होते हैं।&nbsp;<b class="color-content9">उदाहरण:</b>&nbsp;ब्रजभाषा की विभाषा: पश्चिमी ब्रजभाषा, पूर्वी ब्रजभाषा
+
+
+    <br><br>
+    <div class="pink-background"><span class="color-content2">
+            भाषा, बोली, और विभाषा के बीच अंतर समझना महत्वपूर्ण है, क्योंकि ये संचार और सांस्कृतिक पहचान के महत्वपूर्ण अंग हैं। भाषा व्यापक और मानकीकृत होती है, जबकि बोली और विभाषा स्थानीय और विविधतापूर्ण रूप होते हैं। इन सभी का अध्ययन भाषा विज्ञान और सामाजिक सांस्कृतिक अध्ययन के लिए महत्वपूर्ण है।
+        </span></div>
+    <br>
+    <div class="content" id="भाषा और लिपि"></div>
+    <h2 id="भाषा और लिपि"><b class="color-content2">भाषा और लिपि</b></h2>
+    <p>मौखिक भाषा या उच्चारित भाषा को स्थायी रूप देने के लिए भाषा के लिखित रूप का विकास हुआ। प्रत्येक ध्वनि के लिए लिखित चिह्न या वर्ण बनाए गए। वर्णों की इसी व्यवस्था को ‘<strong>लिपि</strong>‘ कहा जाता है। वास्तव में लिपि ध्वनियों को लिखकर प्रस्तुत करने का एक ढंग है।</p><br>
+    <p>सभ्यता के विकास के साथ-साथ मनुष्य के लिए अपने-अपने भावों और विचारों को स्थायित्व देना, दूर-दूर स्थित लोगों से सम्पर्क बनाए रखना तथा संदेशों और समाचारों के आदान-प्रदान के लिए मौखिक भाषा से काम चला पाना असम्भव हो गया। अनुभव की गई यह आवश्यकता ही लिपि के विकास का कारण बनी।</p><br>
+    <blockquote>
+        <p>मौखिक ध्वनियों को लिखित रूप में प्रकट करने के लिए निश्चित किए गए चिह्नों को लिपि कहते हैं।</p>
+    </blockquote><br>
+    <p>संसार की विभिन्न भाषाओं को लिखने के लिए अनेक लिपियाँ प्रचलित हैं। हिन्दी, मराठी, नेपाली और संस्कृत भाषाएँ देवनागरी लिपि में लिखी जाती हैं। देवनागरी का विकास ब्राह्मी लिपि से हुआ है। ब्राह्मी वह प्राचीन लिपि है जिससे हिन्दी, बंगला, गुजराती, आदि भाषाओं की लिपियों का विकास हुआ।</p><br>
+    <p>देवनागरी बाईं ओर से दाईं ओर को लिखी जाती है। यह बहुत ही वैज्ञानिक लिपि है। भारत की अधिकांश भाषाओं की लिपियाँ बाईं ओर से दाईं ओर को ही लिखी जाती हैं। केवल ‘फारसी’ लिपि जिसमें उर्दू भाषा लिखी जाती है, दाईं ओर से बाईं ओर को लिखी जाती है।</p>
+    <br><br>
+    <div class="content" id="भाषा और लिपि में अंतर"></div>
+    <center><img src="./image/भाषा और लिपि में अंतर.png" alt="भाषा और लिपि में अंतर" width="50%" height="200px"></center>
+
+    <h2 class="color-content6">भाषा और लिपि में अंतर</h2><br>
+    <span class="color-content3">
+        <table class="fc">
+            <tbody>
+                <tr>
+
+                    <th width="45%">भाषा (Language)</th>
+                    <th width="45%">लिपि (Script)</th>
+                </tr>
+                <tr>
+
+                    <td>प्रत्येक भाषा की अपनी ध्वनियाँ होती है।</td>
+                    <td>सामान्यतः एक लिपि किसी भी भाषा में लिखी जा सकती है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा सूक्ष्म होती है।</td>
+                    <td>लिपि स्थूल होती है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा में अपेक्षाकृत अस्थायित्व होता है, <br>क्योंकि भाषा उच्चरित होते ही गायब हो जाती है।</td>
+                    <td>लिपि में अपेक्षाकृत स्थायित्व होता है, <br>क्योंकि किसी भी लिपि को लिखकर ही व्यक्त किया जा सकता है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा ध्वन्यात्मक होती है।</td>
+                    <td>लिपि दृश्यात्मक होती है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा तुरंत प्रभावकारी होती है।</td>
+                    <td>लिपि थोड़ी विलंब से प्रभावकारी होती है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा ध्वनि संकेतों की व्यवस्था है।</td>
+                    <td>लिपि वर्ण संकेतों की व्यवस्था है।</td>
+                </tr>
+                <tr>
+
+                    <td>भाषा ही संगीत का माध्यम है।</td>
+                    <td>परंतु लिपि नहीं।</td>
+                </tr>
+            </tbody>
+        </table><br>
+        <table id="Table" style="border-collapse: collapse; width: 100%;">
+
+          <style>
+              table {
+                  border-collapse: collapse;
+                  width: 100%;
+              }
+              td {
+                  padding: 10px;
+              }
+              td a:link {
+                  color: rgb(55, 0, 255);
+                 
+              }
+              td a:visited {
+                  color: rgb(55, 0, 255); /* Color for visited links */
+              }
+              td a:link:hover , td a:visited:hover{ display: block; color:white;background-color: rgb(89, 0, 255);border-radius: 15px;
+                   /* Color change on hover */
+              } 
+              
+  
+  
+  
+  
+  
+          </style>
+  
+    <tbody>
+        <tr>
+            <td>
+                <a href="vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/morphology-in-hindi.html"><li>शब्द-विचार</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/syntax-in-hindi.html"><li>वाक्य-विचार</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/noun-in-hindi.html"><li>संज्ञा</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/number-in-hindi.html"><li>वचन</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/gender-in-hindi.html"><li>लिंग</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/case-in-hindi.html"><li>कारक</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/pronoun-in-hindi.html"><li>सर्वनाम</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/adjective-in-hindi.html"><li>विशेषण</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/verb-in-hindi.html"><li>क्रिया</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/tense-in-hindi.html"><li>काल</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/indeclinable-words-in-hindi.html"><li>अव्यय</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/particle-in-hindi.html"><li>निपात</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/voice-in-hindi.html"><li>वाच्य</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/person-in-hindi.html"><li>पुरुष</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/punctuation-in-hindi.html"><li>विराम-चिन्ह</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/prefix-in-hindi.html"><li>उपसर्ग</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/suffix-in-hindi.html"><li>प्रत्यय</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/joining.html"><li>संधि</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/compound-in-hindi.html"><li>समास</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/tatsam-tadbhav-in-hindi.html"><li>तत्सम-तट्भव</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/deshaj-videshaj-in-hindi.html"><li>देशज-विदेशज</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/antonyms-in-hindi.html"><li>विलोम-शब्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/synonyms-in-hindi.html"><li>पर्यावाची-शब्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/idioms-in-hindi.html"><li>मुहावरे</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/proverbs-in-hindi.html"><li>लोकोक्तियां</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/one-word-substitution-in-hindi.html"><li>अनेक शब्दों के लिए एक शब्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/words-of-many-meanings-in-hindi.html"><li>एकार्थक शब्द</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/words-apparently-similar-in-meanings-in-hindi.html"><li>एकार्थक प्रतीत होने वाले शब्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/pairs-of-similar-words.html"><li>त्रुटिसम भिन्नार्थक शब्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/yugm-shabd.html"><li>युग्म शब्द</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/ras-in-hindi.html"><li>रस</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/chhand-in-hindi.html"><li>छन्द</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/alankar-in-hindi.html"><li>अलंकार</li></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="vyakaran/paragraph-writing-in-hindi.html"><li>अनुच्छेद-लेखन</li></a>
+            </td>
+            <td>
+                <a href="vyakaran/unseen-passage-in-hindi.html"><li>अपठित-गद्यांश</li></a>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+  
+  <div class="important_link"><br><br><p style="font-size: 24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
+  <script  src="script.js"></script><script  src="search.js"></script>
+  <script src="menusearch.js"></script>
+  </body>
+  </html>
