@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +12,6 @@
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
     <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
-
-    <!-- Open Graph Meta Tags for Facebook -->
     <meta property="og:title" content="GK Learn Study">
     <meta property="og:description" content="GK Learn Study - Your source for general knowledge and study materials.">
     <meta property="og:image" content="https://gklearnstudy.in/GK-Learn-Study.png">
@@ -27,9 +24,6 @@
     <meta property="og:image:height" content="630">
     <meta property="fb:app_id" content="">
     <meta property="fb:pages" content="">
-
-
-    <!-- Additional Meta Tags -->
     <meta property="article:author" content="">
     <meta property="article:section" content="Education">
     <meta property="article:tag" content="Education, Technology, Online Learning">
@@ -41,38 +35,19 @@
     <meta name="msapplication-TileColor" content="#4CAF50">
     <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png">
     <meta name="msapplication-config" content="browserconfig.xml">
-
-    <!-- Title -->
     <title>GK Learn Study</title>
-
-    <!-- Stylesheets and Icons -->
-
-
-
     <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" sizes="32x32">
     <link rel="shortcut icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://gklearnstudy.in/GK-Learn-Study.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://gklearnstudy.in/GK-Learn-Study.png">
-
     <meta property="youtube:channel" content="">
     <meta property="instagram:profile" content="">
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
-
-
-
-
-
-
-
 <body>
     <main class="container">
-
-        <form id="searchForm" onsubmit="performSearch(event);">
+      <form id="searchForm" onsubmit="performSearch(event);">
             <div class="search-container">
                 <span class="search-icon" id="searchIcon">
                     <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
@@ -108,54 +83,16 @@
         <br>
     </ul>
     <style>
-        [data-theme="dark"] {
-            .row:hover {
-                background: black;
-            }
-        }
-
-        .row {
-            display: flex;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px;
-        }
-
-        }
-
-        [data-theme="dark"] {
-            h4 {
-                color: white;
-            }
-
-            p {
-                color: gray;
-            }
-        }
-
+        [data-theme="dark"] {.row:hover {background: black;}}
+       .row {display: flex;border: 1px solid #ccc; border-radius: 10px;overflow: hidden;margin: 10px;}
+       h4 {color: white;}
+        p {color: gray;} }
 
         @media screen and (max-width: 900px) {
-
-            .image {
-                width: 130px;
-            }
-
-            .row {
-
-                border-radius: 5px;
-            }
-
-            .rightside {
-                line-height: 1.2;
-                font-size: 14px;
-                padding: 5px
-            }
-
-            h4 {
-                font-size: 13px;
-            }
-        }
+            .image {width: 130px; }
+            .row { border-radius: 5px;}
+            .rightside {line-height: 1.2;font-size: 14px;padding: 5px}
+             h4 {font-size: 13px;}}
     </style>
 
     <div class="container">
@@ -172,17 +109,7 @@
                 </div>
             
               
-<form name="contact" netlify>
-  <p>
-    <label>Name <input type="text" name="name" /></label>
-  </p>
-  <p>
-    <label>Email <input type="email" name="email" /></label>
-  </p>
-  <p>
-    <button type="submit">Send</button>
-  </p>
-</form>
+
         <hr>
         <div class="important_link">
             <br>
@@ -198,9 +125,9 @@
                 <div class="custom-column"><b>Follow Us</b>
                     <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
                 </div>
-                <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
-                <div class="custom-column">
-                    <p id="my-paragraph"></p>
+                 <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                  <div class="custom-column">
+                  <p id="my-paragraph"></p>
                 </div>
             </div>
         </footer>
@@ -209,5 +136,4 @@
         <script src="./script.js"></script>
         <script src="./search.js"></script>
 </body>
-
 </html>
