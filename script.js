@@ -2468,7 +2468,7 @@ listItem.style.textAlign = 'left';  // Ensure text-align is not justified
 
 
   function goToUrl() {
-    window.location.href = "mailto:himanshutyagi9710@gmail.com";
+    window.location.href = "mailto:contact@gklearnstudy.in";
   }
       document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
     // Define an array of objects containing image information
