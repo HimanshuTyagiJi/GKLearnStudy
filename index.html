@@ -109,6 +109,17 @@
              h4 {line-height:2;font-size: 15px;margin:0px;margin-left:15px}
             p {color: gray;font-size: 15px;margin:0px;margin-left:15px}
     }
+.rightside p {
+    overflow: hidden; /* अतिरिक्त टेक्स्ट छुपाने के लिए */
+    display: -webkit-box; /* फ्लेक्सिबल बॉक्स लेआउट */
+    -webkit-line-clamp: 2; /* केवल 2 लाइनों तक सीमित करें */
+    -webkit-box-orient: vertical; /* लाइन ओरिएंटेशन सेट करें */
+    text-overflow: ellipsis; /* अतिरिक्त टेक्स्ट के लिए ... दिखाएं */
+    white-space: normal; /* टेक्स्ट को टूटने दें */
+    margin: 0;
+    font-size: 15px;
+    color: gray;
+}
 
     </style>
 
