@@ -84,7 +84,15 @@
     </ul>
     <style>
         [data-theme="dark"] {.row:hover {background: black;}}
-       .row {display: flex;border: 1px solid #ccc; border-radius: 10px;overflow: hidden;margin: 10px;}
+        .row {
+    border: none; /* Remove all borders first */
+    border-bottom: 1px solid #ccc; /* Add a border on the bottom */
+    border-right: 1px solid #ccc; /* Add a border on the right */
+    border-radius: 0 0px 10px 0; /* Apply rounded corners only to bottom-right and top-right */
+    overflow: hidden;
+    margin: 10px 0;
+    transition: background 0.3s ease;
+}
        h4 {line-height:2;font-size: 15px;margin:0px;margin-left:15px}}
 
         p {color: gray;font-size: 15px;margin:0px;margin-left:15px}
@@ -92,8 +100,9 @@
 
        @media screen and (max-width: 900px) {
             .image {width: 120px;height:80px }
-            .row { border-radius: 5px;}
-            .rightside {font-size: 14px;padding: 5px}
+           
+
+            .rightside {font-size: 14px;}
              h4 {line-height:2;font-size: 15px;margin:0px;margin-left:15px}
             p {color: gray;font-size: 15px;margin:0px;margin-left:15px}
     }
