@@ -1,136 +1,48 @@
-// ==========================
-// PWA Setup with Dynamic Manifest and Install Button
-// ==========================
+// installApp.js
+(function() {
+  const checkAppInstalled = () => {
+    return window.localStorage.getItem('appInstalled') === 'true';
+  };
 
-// Step 1: Dynamically Create and Inject Manifest JSON
-const manifestData = {
-    "short_name": "GK Learn",
-    "name": "GK Learn Study",
-    "icons": [
-        {
-            "src": "/assets/icons/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/assets/icons/icon-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#000000"
-};
+  const installApp = () => {
+    // Ye code wo kaam karega jo app install karne ke liye chahiye
+    console.log('App is being installed...');
+    
+    // Example: Set an item in localStorage after installing
+    window.localStorage.setItem('appInstalled', 'true');
+    alert('App Installed Successfully!');
+  };
 
-// Create and append the manifest link
-const createManifest = () => {
-    const blob = new Blob([JSON.stringify(manifestData)], { type: "application/json" });
-    const manifestURL = URL.createObjectURL(blob);
-    const manifestLink = document.createElement("link");
-    manifestLink.rel = "manifest";
-    manifestLink.href = manifestURL;
-    document.head.appendChild(manifestLink);
-};
-createManifest();
+  const promptInstallApp = () => {
+    // Ye check karega agar app already install ho chuka hai ya nahi
+    if (!checkAppInstalled()) {
+      const installButton = document.createElement('button');
+      installButton.innerHTML = 'Install App';
+      installButton.style.position = 'fixed';
+      installButton.style.bottom = '20px';
+      installButton.style.right = '20px';
+      installButton.style.padding = '10px 20px';
+      installButton.style.backgroundColor = '#ff5733';
+      installButton.style.color = 'white';
+      installButton.style.border = 'none';
+      installButton.style.borderRadius = '5px';
+      installButton.style.cursor = 'pointer';
 
-// Step 2: Service Worker Registration and Dynamic Caching
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js").then(() => {
-        console.log("Service Worker Registered");
-    }).catch((error) => {
-        console.error("Service Worker Registration Failed:", error);
-    });
-}
+      // Button ko page par append karna
+      document.body.appendChild(installButton);
 
-// Step 3: Install Button Handling
-let deferredPrompt;
-const installButton = document.createElement("button");
-installButton.innerText = "Install App";
-installButton.style.display = "none";
-installButton.style.position = "fixed";
-installButton.style.bottom = "20px";
-installButton.style.right = "20px";
-installButton.style.padding = "10px 20px";
-installButton.style.backgroundColor = "#000";
-installButton.style.color = "#fff";
-installButton.style.border = "none";
-installButton.style.borderRadius = "5px";
-installButton.style.cursor = "pointer";
-document.body.appendChild(installButton);
-
-// Capture the install prompt event
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    installButton.style.display = "block";
-});
-
-// Handle the install button click
-installButton.addEventListener("click", () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === "accepted") {
-                console.log("User accepted the install prompt");
-            } else {
-                console.log("User dismissed the install prompt");
-            }
-            deferredPrompt = null;
-            installButton.style.display = "none";
-        });
+      installButton.addEventListener('click', () => {
+        installApp();
+        installButton.remove(); // Install hone ke baad button ko hata do
+      });
     }
-});
+  };
 
-// Step 4: Offline Fallback and Dynamic Caching in Service Worker
-const CACHE_NAME = 'gklearn-study-v1';
-const STATIC_ASSETS = [
-    '/', // Fallback to the homepage
-    '/css/styles.css',
-    '/js/script.js',
-    '/assets/icons/icon-192x192.png',
-    '/assets/icons/icon-512x512.png'
-];
-
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(STATIC_ASSETS);
-        })
-    );
-    console.log("Service Worker Installed");
-});
-
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            return cachedResponse || fetch(event.request).then((response) => {
-                return caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, response.clone());
-                    return response;
-                });
-            });
-        }).catch(() => {
-            return caches.match('/');
-        })
-    );
-});
-
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cache) => {
-                    if (cache !== CACHE_NAME) {
-                        return caches.delete(cache);
-                    }
-                })
-            );
-        })
-    );
-    console.log("Service Worker Activated");
-});
+  // Page load hone ke baad app install prompt dikhaye
+  window.onload = () => {
+    promptInstallApp();
+  };
+})();
 
 
 
