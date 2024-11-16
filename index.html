@@ -150,15 +150,58 @@
                 </div>
             </div>
         </footer>
-    </div><script>
-  if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log('Service Worker Registered'));
-  }
-</script>
+    </div>
 
         <script src="./menusearch.js"></script>
         <script src="./script.js"></script>
         <script src="./search.js"></script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA Example</title>
+  <!-- Link Manifest File -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Add meta theme-color -->
+  <meta name="theme-color" content="#4CAF50">
+</head>
+<body>
+  <h1>Welcome to PWA App</h1>
+  <!-- Install Button -->
+  <button id="install-btn" style="display: none;" onclick="installApp()">Install</button>
+
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(error => console.error('Service Worker Registration Failed:', error));
+    }
+
+    // Install Prompt Logic
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      document.getElementById('install-btn').style.display = 'block';
+    });
+
+    function installApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }
+  </script>
+</body>
 </html>
+
