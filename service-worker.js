@@ -14,56 +14,40 @@ if ('serviceWorker' in navigator) {
 
 
 
-const staticCacheName = "pwa-v1"; // Cache versioning for easy updates
+let deferredPrompt; // Save the event for triggering later
 
-// Install event: Cache static resources
-self.addEventListener("install", function (event) {
-  event.waitUntil(
-    caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll([
-        "/", // Root URL
-        "/index.html", // Main HTML
-        "/styles.css", // CSS file
-        "/app.js", // JavaScript file
-        "/favicon.ico", // Favicon
-        "/manifest.json", // Web App Manifest
-        "/images/icon-192x192.png", // App icon
-        "/images/icon-512x512.png", // Larger icon for PWA
-      ]);
-    })
-  );
-  console.log("Service Worker Installed");
+// Listen for the 'beforeinstallprompt' event
+window.addEventListener("beforeinstallprompt", (e) => {
+  // Prevent the default browser prompt
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Show the custom install button
+  const installButton = document.getElementById("install-btn");
+  installButton.style.display = "block";
+
+  installButton.addEventListener("click", () => {
+    // Trigger the install prompt
+    deferredPrompt.prompt();
+
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
+      } else {
+        console.log("User dismissed the install prompt");
+      }
+      deferredPrompt = null; // Clear the deferredPrompt variable
+    });
+  });
 });
 
-// Activate event: Clean up old caches
-self.addEventListener("activate", function (event) {
-  event.waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cache) {
-          if (cache !== staticCacheName) {
-            console.log("Clearing old cache:", cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  console.log("Service Worker Activated");
+// Hide the install button if already installed
+window.addEventListener("appinstalled", () => {
+  console.log("PWA installed");
+  const installButton = document.getElementById("install-btn");
+  installButton.style.display = "none";
 });
 
-// Fetch event: Serve cached resources, fallback to network
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return (
-        response ||
-        fetch(event.request).catch(() => {
-          if (event.request.mode === "navigate") {
-            return caches.match("/offline.html"); // Offline fallback
-          }
-        })
-      );
     })
   );
   console.log("Fetching:", event.request.url);
