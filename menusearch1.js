@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let visitCount = parseInt(localStorage.getItem('visitCount') || 0); 
 
   // If already installed or clicked install, don't show popup
-  if (isInstallClicked || visitCount >= 20) {
+  if (isInstallClicked || visitCount >= 100) {
     popup.style.display = 'none';
   } else {
     // Increment visit count on first visit
