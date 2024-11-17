@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('visitCount', visitCount);
 
     // Show popup for first two visits
-    if (visitCount <= 3) {
+    if (visitCount <= 300) {
       popup.style.display = 'block';
     }
   }
