@@ -7,7 +7,7 @@ if ('serviceWorker' in navigator) {
         console.error('Service Worker registration failed:', error);
     });
 }
-const CACHE_NAME = "pwa-cache-v1"; // वर्ज़न को अद्यतन करते रहें
+const CACHE_NAME = "cache-v1"; // वर्ज़न को अद्यतन करते रहें
 const STATIC_ASSETS = [
   "/", // मुख्य पेज
   "index.html",
