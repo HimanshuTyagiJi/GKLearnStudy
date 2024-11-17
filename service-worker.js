@@ -7,22 +7,64 @@ if ('serviceWorker' in navigator) {
         console.error('Service Worker registration failed:', error);
     });
 }
-var staticCacheName = "pwa";
- 
-self.addEventListener("install", function (e) {
-  e.waitUntil(
+
+
+
+
+
+
+
+const staticCacheName = "pwa-v1"; // Cache versioning for easy updates
+
+// Install event: Cache static resources
+self.addEventListener("install", function (event) {
+  event.waitUntil(
     caches.open(staticCacheName).then(function (cache) {
-      return cache.addAll(["/"]);
+      return cache.addAll([
+        "/", // Root URL
+        "/index.html", // Main HTML
+        "/styles.css", // CSS file
+        "/app.js", // JavaScript file
+        "/favicon.ico", // Favicon
+        "/manifest.json", // Web App Manifest
+        "/images/icon-192x192.png", // App icon
+        "/images/icon-512x512.png", // Larger icon for PWA
+      ]);
     })
   );
+  console.log("Service Worker Installed");
 });
- 
+
+// Activate event: Clean up old caches
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cache) {
+          if (cache !== staticCacheName) {
+            console.log("Clearing old cache:", cache);
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+  console.log("Service Worker Activated");
+});
+
+// Fetch event: Serve cached resources, fallback to network
 self.addEventListener("fetch", function (event) {
-  console.log(event.request.url);
- 
   event.respondWith(
     caches.match(event.request).then(function (response) {
-      return response || fetch(event.request);
+      return (
+        response ||
+        fetch(event.request).catch(() => {
+          if (event.request.mode === "navigate") {
+            return caches.match("/offline.html"); // Offline fallback
+          }
+        })
+      );
     })
   );
+  console.log("Fetching:", event.request.url);
 });
