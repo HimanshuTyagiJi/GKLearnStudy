@@ -1,5 +1,3 @@
-// common.js
-// common.js
 
 document.addEventListener('DOMContentLoaded', () => {
   let installPopup = document.createElement('div');
@@ -26,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('visitCount', visitCount);
 
     // Show popup for first two visits
-    if (visitCount <= 300) {
+    if (visitCount <= 100) {
       popup.style.display = 'block';
     }
   }
@@ -60,6 +58,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+
+
+
+// common.js
+(function() {
+  // Automatically add manifest link
+  const manifestLink = document.createElement('link');
+  manifestLink.rel = 'manifest';
+  manifestLink.href = '/manifest.json';
+  document.head.appendChild(manifestLink);
+
+  // Automatically register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
+      .then(() => console.log("Service Worker Registered"))
+      .catch((err) => console.log("Service Worker Registration Failed", err));
+  }
+})();
+
 
 
 
