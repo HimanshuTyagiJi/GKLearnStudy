@@ -7,6 +7,14 @@ if ('serviceWorker' in navigator) {
         console.error('Service Worker registration failed:', error);
     });
 }
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/serviceworker.js', { scope: '/' }) // रूट से सभी पेज कवर
+    .then(() => console.log("Service Worker Registered"))
+    .catch((err) => console.log("Service Worker Registration Failed", err));
+}
+
 const CACHE_NAME = "cache-v1.001"; 
 const STATIC_ASSETS = [
   "/", 
