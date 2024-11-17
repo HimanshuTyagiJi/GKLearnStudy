@@ -1,54 +1,56 @@
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js') // सही पथ दें
-    .then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-    })
-    .catch(error => {
-        console.error('Service Worker registration failed:', error);
-    });
-}
+// serviceworker.js
 
+const CACHE_NAME = "cache-v1.002";
+const STATIC_ASSETS = [
+  "/",
+  "index.html",
+  "manifest.json",
+  "https://gklearnstudy.in/GK-Learn-Study.png", // Your PWA icon
+];
 
-
-
-
-
-
-let deferredPrompt; // Save the event for triggering later
-
-// Listen for the 'beforeinstallprompt' event
-window.addEventListener("beforeinstallprompt", (e) => {
-  // Prevent the default browser prompt
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // Show the custom install button
-  const installButton = document.getElementById("install-btn");
-  installButton.style.display = "block";
-
-  installButton.addEventListener("click", () => {
-    // Trigger the install prompt
-    deferredPrompt.prompt();
-
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the install prompt");
-      } else {
-        console.log("User dismissed the install prompt");
-      }
-      deferredPrompt = null; // Clear the deferredPrompt variable
-    });
-  });
-});
-
-// Hide the install button if already installed
-window.addEventListener("appinstalled", () => {
-  console.log("PWA installed");
-  const installButton = document.getElementById("install-btn");
-  installButton.style.display = "none";
-});
-
+// Install event
+self.addEventListener('install', (event) => {
+  console.log('Service Worker Installing...');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Caching Static Assets');
+      return cache.addAll(STATIC_ASSETS);
     })
   );
-  console.log("Fetching:", event.request.url);
+});
+
+// Activate event (to manage old caches)
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker Activating...');
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log('Clearing Old Cache');
+            return caches.delete(cache);
+          }
+        })
+      )
+    )
+  );
+});
+
+// Fetch event (handling dynamic cache)
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse; // Return cached response if available
+      }
+      return fetch(event.request).then((response) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          if (event.request.url.startsWith('http')) {
+            cache.put(event.request, response.clone()); // Cache the new response
+          }
+          return response;
+        });
+      });
+    })
+  );
 });
