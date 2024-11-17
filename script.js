@@ -1,107 +1,78 @@
-// installApp.js
-(function() {
-  const checkAppInstalled = () => {
-    return window.localStorage.getItem('appInstalled') === 'true';
-  };
 
-  const installApp = () => {
-    // Ye code wo kaam karega jo app install karne ke liye chahiye
-    console.log('App is being installed...');
-    
-    // Example: Set an item in localStorage after installing
-    window.localStorage.setItem('appInstalled', 'true');
-    alert('App Installed Successfully!');
-  };
-
-  const promptInstallApp = () => {
-    // Ye check karega agar app already install ho chuka hai ya nahi
-    if (!checkAppInstalled()) {
-      const installButton = document.createElement('button');
-      installButton.innerHTML = 'Install App';
-      installButton.style.position = 'fixed';
-      installButton.style.bottom = '20px';
-      installButton.style.right = '20px';
-      installButton.style.padding = '10px 20px';
-      installButton.style.backgroundColor = '#ff5733';
-      installButton.style.color = 'white';
-      installButton.style.border = 'none';
-      installButton.style.borderRadius = '5px';
-      installButton.style.cursor = 'pointer';
-
-      // Button ko page par append karna
-      document.body.appendChild(installButton);
-
-      installButton.addEventListener('click', () => {
-        installApp();
-        installButton.remove(); // Install hone ke baad button ko hata do
-      });
-    }
-  };
-
-  // Page load hone ke baad app install prompt dikhaye
-  window.onload = () => {
-    promptInstallApp();
-  };
-})();
-
-
-
-
-
-// Create and insert the manifest link element
-function addManifest() {
-    var manifest = {
-        "name": "GK Learn Study",
-        "short_name": "GK Learn Study",
-        "start_url": "https://gklearnstudy.in",
-        "display": "standalone",
-        "background_color": "#ffffff",
-        "theme_color": "#000000",
-        "icons": [
-            {
-                "src": "https://gklearnstudy.in/gklearnstudy.png",
-                "sizes": "192x192",
-                "type": "image/png"
-            },
-            {
-                "src": "https://gklearnstudy.in/gklearnstudy.png",
-                "sizes": "512x512",
-                "type": "image/png"
-            }
-        ]
-    };
-
-    var manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-    var manifestURL = URL.createObjectURL(manifestBlob);
-
-    var manifestLink = document.createElement('link');
-    manifestLink.rel = 'manifest';
-    manifestLink.href = manifestURL;
-    document.head.appendChild(manifestLink);
-}
-
-// Register the service worker
-function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-                console.log('ServiceWorker registration failed: ', err);
-            });
+        window.addEventListener('load', () => {
+          registerSW();
         });
-    }
-}
+     
+        // Register the Service Worker
+        async function registerSW() {
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator
+                    .serviceWorker
+                    .register('serviceworker.js');
+              console.log("Service Worker Registered!");
+            }
+            catch (e) {
+              console.log('SW registration failed:', e);
+            }
+          }
+        }
 
-// Initialize PWA features
-function initializePWA() {
-    addManifest();
-    registerServiceWorker();
-}
+const CACHE_NAME = "cache-v1"; // वर्ज़न को अद्यतन करते रहें
+const STATIC_ASSETS = [
+  "/", // मुख्य पेज
+  "index.html",
+  "manifest.json",
+  "https://gklearnstudy.in/GK-Learn-Study.png", // आइकन लिंक
+  // यहां अन्य स्थिर फाइलों के URLs डालें
+];
 
-// Ensure the script runs after DOM is loaded
-document.addEventListener('DOMContentLoaded', initializePWA);
+// Install Event
+self.addEventListener("install", (event) => {
+  console.log("Service Worker Installing...");
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log("Caching Static Assets");
+      return cache.addAll(STATIC_ASSETS);
+    })
+  );
+});
 
+// Activate Event
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker Activating...");
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log("Clearing Old Cache");
+            return caches.delete(cache);
+          }
+        })
+      )
+    )
+  );
+});
+
+// Fetch Event (Dynamic Caching for New Pages)
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse; // अगर कैश में है, तो वही रिटर्न करें
+      }
+      return fetch(event.request).then((response) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          if (event.request.url.startsWith("http")) {
+            cache.put(event.request, response.clone()); // नई फाइल को कैश करें
+          }
+          return response;
+        });
+      });
+    })
+  );
+});
 
 
 (function() {
