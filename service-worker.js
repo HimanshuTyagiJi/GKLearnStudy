@@ -7,13 +7,12 @@ if ('serviceWorker' in navigator) {
         console.error('Service Worker registration failed:', error);
     });
 }
-const CACHE_NAME = "cache-v1"; // वर्ज़न को अद्यतन करते रहें
+const CACHE_NAME = "cache-v1.001"; 
 const STATIC_ASSETS = [
-  "/", // मुख्य पेज
+  "/", 
   "index.html",
   "manifest.json",
-  "https://gklearnstudy.in/GK-Learn-Study.png", // आइकन लिंक
-  // यहां अन्य स्थिर फाइलों के URLs डालें
+  "https://gklearnstudy.in/GK-Learn-Study.png", 
 ];
 
 // Install Event
