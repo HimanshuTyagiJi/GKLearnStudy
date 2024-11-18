@@ -1,49 +1,4 @@
-[
-  {
-    "title": "",
-    "options": [
-      "",
-      "",
-      "",
-      ""
-    ],
-    "correctOption": "0",
-    "content": "<p><span class=\"color-content4\">Explanation: </span></p>"
-  }
-]
-[
-  {
-    "title": "goluuuuuuuuuuuuuuuuuuuuuuu",
-    "options": [
-      "",
-      "",
-      "jb",
-      ""
-    ],
-    "correctOption": "0",
-    "content": "<p><span class=\"color-content4\">Explanation: </span></p>"
-  }
-]
-{
-    "title": "hhhhhhhhhhhhhhhhhhhhhhhh",
-    "options": [
-        "",
-        "",
-        "",
-        ""
-    ],
-    "correctOption": "0",
-    "content": "<p><span class=\"color-content4\">Explanation: </span></p>"
-}
 
-
-            {
-                "title": "",
-                "options": ["","","",""],
-                "correctOption": "0",
-                "content": "<p><span class='color-content4'>Explanation: </span></p>"
-            },
-        
 
 var accordionContainer = document.getElementById("accordion-container");
 var filterInput = document.getElementById("filterInput");
