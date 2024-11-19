@@ -6,18 +6,14 @@ var paginationContainer = document.getElementById("pagination");
 
 var sections = [
     
-   , {
-    title: 'New Post',
+  
 {
         title: 'ho gaya done',
         options: ["","","",""],
         correctOption: '0',
         content: '<p><span class="color-content4">Explanation: </span></p>'
     },
-    options: ['A', 'B', 'C', 'D'],
-    correctOption: 'A',
-    content: '<p><span class="color-content4">Explanation: </span>Some content</p>'
-}
+   
     // Add more sections as needed
 ];
 
