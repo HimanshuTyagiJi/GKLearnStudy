@@ -5,7 +5,13 @@ var filterInput = document.getElementById("filterInput");
 var paginationContainer = document.getElementById("pagination");
 
 var sections = [
-   
+     {
+            title: 'golu',
+            options: ["","","",""],
+            correctOption: '0',
+            content: '<p><span class="color-content4">Explanation: </span></p>'
+        }
+    
     // Add more sections as needed
 ];
 
@@ -92,28 +98,6 @@ function updatePagination() {
         if (currentPage > 1) {
             currentPage--;
 
-        {
-            title: '',
-{
-        title: 'hoja',
-        options: ["","","",""],
-        correctOption: '0',
-        content: '<p><span class="color-content4">Explanation: </span></p>'
-    },
-
-            options: ["","","",""],
-
-        {
-            title: 'golu',
-            options: ["","","",""],
-            correctOption: '0',
-            content: '<p><span class="color-content4">Explanation: </span></p>'
-        }
-    
-            correctOption: '0',
-            content: '<p><span class="color-content4">Explanation: </span></p>'
-        }
-    
             showSections((currentPage - 1) * itemsPerPage);
             updatePagination();
         }
