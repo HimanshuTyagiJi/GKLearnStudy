@@ -94,6 +94,12 @@ function updatePagination() {
 
         {
             title: '',
+{
+        title: 'hoja',
+        options: ["","","",""],
+        correctOption: '0',
+        content: '<p><span class="color-content4">Explanation: </span></p>'
+    },
 
             options: ["","","",""],
 
