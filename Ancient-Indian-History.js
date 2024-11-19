@@ -49,19 +49,19 @@ function showSections(startIndex) {
                 optionElement.className = "option";
                 optionElement.innerHTML = option;
 
-                optionElement.addEventListener("click", function() {
-                   if (!optionsBox.classList.contains('answered')) {
-                            if (optionIndex === section.correctOption) {
-                                optionElement.classList.add("correct");
-                            } else {
-                                optionElement.classList.add("incorrect");
-                                optionsBox.children[section.correctOption].classList.add("correct");
-                            }
-                            optionsBox.classList.add('answered'); // Prevent further clicks
-                            panel.style.display = "block";
-                            
-                        }
-                    });
+               optionElement.addEventListener("click", function() {
+    if (!optionsBox.classList.contains('answered')) {
+        // Check if the clicked option is the correct one
+        if (optionIndex === section.correctOption) {
+            optionElement.classList.add("correct");  // Add correct class (green color)
+        } else {
+            optionElement.classList.add("incorrect");  // Add incorrect class (red color)
+            optionsBox.children[section.correctOption].classList.add("correct");  // Add green color to the correct option
+        }
+        optionsBox.classList.add('answered'); // Prevent further clicks
+        panel.style.display = "block"; // Show the explanation panel
+    }
+});
 
                     optionsBox.appendChild(optionElement);
                 });
