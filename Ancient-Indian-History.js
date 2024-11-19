@@ -27,6 +27,11 @@ var sections = [
 
 
 
+{ title: '4',
+        options: ["","","",""],
+        correctOption: '0',
+        content: '<p><span class="color-content4">Explanation: </span></p>'
+    },
 { title: '3',
         options: ["","","",""],
         correctOption: '0',
