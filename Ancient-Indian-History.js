@@ -7,6 +7,11 @@ var sections = [
 
 
 
+{ title: 'hello',
+        options: ["1","2","3","4"],
+        correctOption: '2',
+        content: '<p><span class="color-content4">Explanation: </span>hi</p>'
+    },
         { title: '',
         options: ["","hi","g",""],
         correctOption: 2,
