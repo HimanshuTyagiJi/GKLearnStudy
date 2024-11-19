@@ -95,6 +95,14 @@ function updatePagination() {
         {
             title: '',
             options: ["","","",""],
+
+        {
+            title: 'golu',
+            options: ["","","",""],
+            correctOption: '0',
+            content: '<p><span class="color-content4">Explanation: </span></p>'
+        }
+    
             correctOption: '0',
             content: '<p><span class="color-content4">Explanation: </span></p>'
         }
