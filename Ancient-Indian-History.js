@@ -91,6 +91,14 @@ function updatePagination() {
         e.preventDefault();
         if (currentPage > 1) {
             currentPage--;
+
+        {
+            title: '',
+            options: ["","","",""],
+            correctOption: '0',
+            content: '<p><span class="color-content4">Explanation: </span></p>'
+        }
+    
             showSections((currentPage - 1) * itemsPerPage);
             updatePagination();
         }
