@@ -11,12 +11,7 @@ var sections = [
 
 
 
-{
-        title: '3',
-        options: ["","","",""],
-        correctOption: '0',
-        content: '<p><span class="color-content4">Explanation: </span></p>'
-    },
+
 { title: 'ho gaya done',
  options: ["","","",""],
  correctOption: '0',
