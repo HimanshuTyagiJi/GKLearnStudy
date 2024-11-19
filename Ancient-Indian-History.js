@@ -1,22 +1,15 @@
-
-
-
 var accordionContainer = document.getElementById("accordion-container");
 var filterInput = document.getElementById("filterInput");
 var paginationContainer = document.getElementById("pagination");
 
 var sections = [
-{ title: '1',
-        options: ["2","3","4","5"],
-        correctOption: '1',
-        content: '<p><span class="color-content4">Explanation: </span>22222222222222</p>'
+    
+        { title: '',
+        options: ["","hi","g",""],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span></p>'
     },
-{ title: 'ho gaya done',
- options: ["","","",""],
- correctOption: '0',
-  content: '<p><span class="color-content4">Explanation: </span></p>'
-    },
-   
+
     // Add more sections as needed
 ];
 
@@ -49,19 +42,19 @@ function showSections(startIndex) {
                 optionElement.className = "option";
                 optionElement.innerHTML = option;
 
-               optionElement.addEventListener("click", function() {
-    if (!optionsBox.classList.contains('answered')) {
-        // Check if the clicked option is the correct one
-        if (optionIndex === section.correctOption) {
-            optionElement.classList.add("correct");  // Add correct class (green color)
-        } else {
-            optionElement.classList.add("incorrect");  // Add incorrect class (red color)
-            optionsBox.children[section.correctOption].classList.add("correct");  // Add green color to the correct option
-        }
-        optionsBox.classList.add('answered'); // Prevent further clicks
-        panel.style.display = "block"; // Show the explanation panel
-    }
-});
+                optionElement.addEventListener("click", function() {
+                   if (!optionsBox.classList.contains('answered')) {
+                            if (optionIndex === section.correctOption) {
+                                optionElement.classList.add("correct");
+                            } else {
+                                optionElement.classList.add("incorrect");
+                                optionsBox.children[section.correctOption].classList.add("correct");
+                            }
+                            optionsBox.classList.add('answered'); // Prevent further clicks
+                            panel.style.display = "block";
+                            
+                        }
+                    });
 
                     optionsBox.appendChild(optionElement);
                 });
@@ -102,7 +95,6 @@ function updatePagination() {
         e.preventDefault();
         if (currentPage > 1) {
             currentPage--;
-
             showSections((currentPage - 1) * itemsPerPage);
             updatePagination();
         }
