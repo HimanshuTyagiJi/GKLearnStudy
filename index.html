@@ -1,1 +1,185 @@
-{"title":"himanshu","content":"golu","subject":"tyagi","createdAt":"2024-11-19T13:27:57.074Z"}
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="GK Learn Study is your go-to resource for educational technology insights, tips, and tutorials. Explore our web pages for comprehensive guides and expert advice.">
+    <meta name="keywords"
+        content="gktoday, gklearn, gkstudy, gk learn, study learn, gk education technology, edtech, online learning, tutorials, guides, tech tips, educational resources, e-learning, general knowledge, competitive exams, study materials, online courses, educational blog, exam preparation, current affairs, quiz, practice tests, learning platform, digital education, education blog, study guide, academic resources, knowledge hub, online tutorials, education tips, study hacks, academic success, school resources, college resources, education news, learning tips, academic blog, education insights, tech in education, virtual learning, education support, online education tools, student resources, learning strategies, study techniques, exam tips, educational trends, education updates">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+    <meta property="og:title" content="GK Learn Study">
+    <meta property="og:description" content="GK Learn Study - Your source for general knowledge and study materials.">
+    <meta property="og:image" content="https://gklearnstudy.in/GK-Learn-Study.png">
+    <meta property="og:url" content="https://gklearnstudy.in">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GK Learn Study">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="fb:app_id" content="">
+    <meta property="fb:pages" content="">
+    <meta property="article:author" content="">
+    <meta property="article:section" content="Education">
+    <meta property="article:tag" content="Education, Technology, Online Learning">
+    <meta name="theme-color" content="#90EE90">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GK Learn Study">
+    <meta name="application-name" content="GK Learn Study">
+    <meta name="msapplication-TileColor" content="#4CAF50">
+    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <title>GK Learn Study</title>
+    <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" sizes="32x32">
+    <link rel="shortcut icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://gklearnstudy.in/GK-Learn-Study.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://gklearnstudy.in/GK-Learn-Study.png">
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+      <form id="searchForm" onsubmit="performSearch(event);">
+            <div class="search-container">
+                <span class="search-icon" id="searchIcon">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </span>
+                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+                    oninput="updateSuggestions(event)">
+                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+            </div>
+            <div id="suggestions" class="suggestions-list"></div>
+        </form>
+
+        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+            <div class="modal1-content">
+                <span class="close" onclick="closeModal1(event)">&times;</span>
+                <h2>Search Results</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+    </main>
+
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li><a href="conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+        <li><a href="conversion/area-unit-conversion.html">Area Conversion</a></li>
+        <li><a href="conversion/length-unit-conversion.html">Length Conversion</a></li>
+        <li><a href="conversion/power-unit-conversion.html">Power Conversion</a></li>
+        <li><a href="conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+        <li><a href="conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+        <li><a href="conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+        <li><a href="conversion/time-unit-conversion.html">Time Conversion</a></li>
+        <li><a href="conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+        <li><a href="conversion/weight&mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+        <br>
+    </ul>
+    <style>
+        [data-theme="dark"] {.row:hover {background: black;}
+                            
+                            h4{color:white}} 
+     
+        .row {display: flex;overflow: hidden;
+    border: none; /* Remove all borders first */
+    border-bottom: 1px solid #ccc; /* Add a border on the bottom */
+    border-right: 1px solid #ccc; /* Add a border on the right */
+    border-radius: 0 0px 10px 0; /* Apply rounded corners only to bottom-right and top-right */
+    overflow: hidden;
+    margin: 10px 0;
+    transition: background 0.3s ease;
+}
+       h4 {line-height:2;font-size: 15px;margin:0px}
+
+       
+  .image {width: 140px;height:100px;                border-radius: 10px; }
+
+       @media screen and (max-width: 900px) {
+            .image {width: 120px;height:80px;                border-radius: 10px; }
+           
+
+            .rightside {font-size: 14px;margin:0px; margin-left:8px;padding-right: 5px;  }
+             h4 {line-height:2;font-size: 15px;margin:0px;}
+           
+    }  .rightside {margin:0px;margin-left:8px;padding-right: 8px;  }
+        
+.rightside p {line-height:1.5;
+    overflow: hidden; /* अतिरिक्त टेक्स्ट छुपाने के लिए */
+    display: -webkit-box; /* फ्लेक्सिबल बॉक्स लेआउट */
+    -webkit-line-clamp: 2; /* केवल 2 लाइनों तक सीमित करें */
+    -webkit-box-orient: vertical; /* लाइन ओरिएंटेशन सेट करें */
+    text-overflow: ellipsis; /* अतिरिक्त टेक्स्ट के लिए ... दिखाएं */
+    white-space: normal; /* टेक्स्ट को टूटने दें */
+    margin: 0;
+    font-size: 15px;
+    color: gray;
+}
+
+    </style>
+
+    <div class="container">
+                        
+              
+
+        <hr>
+        <div class="important_link">
+            <br>
+            <p style="font-size:24px;">Important Links</p>
+
+            <div id="links-container">
+                <ul id="links-list"></ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="custom-row">
+                <div class="custom-column"><b>Follow Us</b>
+                    <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+                </div>
+                 <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                  <div class="custom-column">
+                  <p id="my-paragraph"></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body> <script>
+        window.addEventListener('load', () => {
+          registerSW();
+        });
+     
+        // Register the Service Worker
+        async function registerSW() {
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator
+                    .serviceWorker
+                    .register('serviceworker.js');
+              console.log("Service Worker Registered!");
+            }
+            catch (e) {
+              console.log('SW registration failed:', e);
+            }
+          }
+        }
+     </script>
+        <script src="./menusearch.js"></script>
+        <script src="./script.js"></script>
+        <script src="./search.js"></script>
+
+</html>
