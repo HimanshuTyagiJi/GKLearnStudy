@@ -6,7 +6,12 @@ var paginationContainer = document.getElementById("pagination");
 
 var sections = [
     
-    
+    {
+    title: 'New Post',
+    options: ['A', 'B', 'C', 'D'],
+    correctOption: 'A',
+    content: '<p><span class="color-content4">Explanation: </span>Some content</p>'
+}
     // Add more sections as needed
 ];
 
