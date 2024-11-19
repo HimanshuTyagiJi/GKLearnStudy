@@ -12,11 +12,7 @@ var sections = [
 
 
 
-{ title: '6',
-        options: ["","","",""],
-        correctOption: '0',
-        content: '<p><span class="color-content4">Explanation: </span></p>'
-    },
+
 
 { title: '4',
         options: ["","","",""],
