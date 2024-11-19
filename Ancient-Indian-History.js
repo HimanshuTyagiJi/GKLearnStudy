@@ -6,32 +6,6 @@ var filterInput = document.getElementById("filterInput");
 var paginationContainer = document.getElementById("pagination");
 
 var sections = [
-    
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 { title: 'ho gaya done',
  options: ["","","",""],
  correctOption: '0',
