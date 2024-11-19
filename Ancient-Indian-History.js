@@ -1,3 +1,9 @@
+{
+        title: '1',
+        options: ["","","",""],
+        correctOption: '0',
+        content: '<p><span class="color-content4">Explanation: </span></p>'
+    },
 
 
 var accordionContainer = document.getElementById("accordion-container");
