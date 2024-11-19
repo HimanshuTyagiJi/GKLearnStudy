@@ -8,6 +8,12 @@ var sections = [
      {
             title: 'golu',
 {
+        title: 'galat',
+        options: ["","","",""],
+        correctOption: '0',
+        content: '<p><span class="color-content4">Explanation: </span></p>'
+    },
+{
         title: 'hogaya',
         options: ["","","",""],
         correctOption: '0',
