@@ -4,6 +4,11 @@ var paginationContainer = document.getElementById("pagination");
 
 var sections = [
     
+{ title: 'hg',
+        options: ["","","",""],
+        correctOption: '0',
+        content: '<p><span class="color-content4">Explanation: </span></p>'
+    },
 { title: 'hello',
         options: ["","","",""],
         correctOption: '0',
