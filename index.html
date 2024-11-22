@@ -1,184 +1,3 @@
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Learn Study</title>
-
-    <!-- Default App Icon and PWA Icons -->
-    <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-
-    <!-- Manifest Setup for PWA -->
-    <link id="manifest" rel="manifest" href="manifest.json" />
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .user-circle {
-            width: 35px;
-            height: 35px;
-            background-color: #f0f0f0;
-            color: #007bff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .login-container, .main-content {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        .login-container {
-            display: block;
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            width: 300px;
-        }
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-
-<body>
-  
-    <!-- JavaScript for Dynamic PWA Icon -->
-    <script>
-        const defaultFaviconUrl = 'https://gklearnstudy.in/GK-Learn-Study.png';
-        
-        function setFavicon(url) {
-            let favicon = document.querySelector("link[rel~='icon']");
-            if (!favicon) {
-                favicon = document.createElement("link");
-                favicon.rel = "icon";
-                document.head.appendChild(favicon);
-            }
-            favicon.href = url;
-        }
-
-        function resetFavicon() {
-            setFavicon(defaultFaviconUrl);
-            updateManifestIcon(defaultFaviconUrl);
-        }
-
-        function updateManifestIcon(iconUrl) {
-            const manifestContent = {
-                "short_name": "GK",
-                "name": "GK Learn Study",
-                "icons": [
-                    {
-                        "src": iconUrl,
-                        "sizes": "192x192",
-                        "type": "image/png"
-                    },
-                    {
-                        "src": iconUrl,
-                        "sizes": "512x512",
-                        "type": "image/png"
-                    }
-                ],
-                "start_url": "/",
-                "display": "standalone",
-                "background_color": "#ffffff",
-                "theme_color": "#ffffff"
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-
-            const manifestLink = document.getElementById('manifest');
-            manifestLink.href = manifestUrl;
-        }
-
-        function updateUserIcon(initial) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 192;
-            canvas.height = 192;
-            const ctx = canvas.getContext('2d');
-            
-            // Draw circular background and clip it
-            ctx.beginPath();
-            ctx.arc(96, 96, 96, 0, Math.PI * 2, true); // Full circle
-            ctx.closePath();
-            ctx.clip();
-            ctx.fillStyle = '#007bff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw text in the center
-            ctx.font = '100px Arial';
-            ctx.fillStyle = '#fff';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(initial, canvas.width / 2, canvas.height / 2);
-
-            const newFaviconUrl = canvas.toDataURL('image/png');
-            setFavicon(newFaviconUrl);
-            updateManifestIcon(newFaviconUrl);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const userCircle = document.getElementById('userCircle');
-            const loginContainer = document.getElementById('loginContainer');
-            const mainContent = document.getElementById('mainContent');
-            const logoutButton = document.getElementById('logoutButton');
-
-            const savedUser = localStorage.getItem('userLoggedIn');
-            if (savedUser) {
-                const initial = savedUser.charAt(0).toUpperCase();
-                updateUserIcon(initial);
-                userCircle.textContent = initial;
-                loginContainer.style.display = 'none';
-                mainContent.style.display = 'block';
-            } else {
-                resetFavicon();
-            }
-
-            document.getElementById('loginForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                if (email && password) {
-                    const initial = email.charAt(0).toUpperCase();
-                    localStorage.setItem('userLoggedIn', email);
-                    updateUserIcon(initial);
-                    userCircle.textContent = initial;
-                    loginContainer.style.display = 'none';
-                    mainContent.style.display = 'block';
-                }
-            });
-
-            logoutButton.addEventListener('click', () => {
-                localStorage.removeItem('userLoggedIn');
-                resetFavicon();
-                loginContainer.style.display = 'block';
-                mainContent.style.display = 'none';
-                userCircle.textContent = 'A';
-            });
-        });
-    </script>
-</body>
-</html>
 
 
 
@@ -362,4 +181,185 @@
         <script src="./script.js"></script>
         <script src="./search.js"></script>
 
+</html>
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Learn Study</title>
+
+    <!-- Default App Icon and PWA Icons -->
+    <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
+
+    <!-- Manifest Setup for PWA -->
+    <link id="manifest" rel="manifest" href="manifest.json" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .user-circle {
+            width: 35px;
+            height: 35px;
+            background-color: #f0f0f0;
+            color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .login-container, .main-content {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .login-container {
+            display: block;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <!-- JavaScript for Dynamic PWA Icon -->
+    <script>
+        const defaultFaviconUrl = 'https://gklearnstudy.in/GK-Learn-Study.png';
+        
+        function setFavicon(url) {
+            let favicon = document.querySelector("link[rel~='icon']");
+            if (!favicon) {
+                favicon = document.createElement("link");
+                favicon.rel = "icon";
+                document.head.appendChild(favicon);
+            }
+            favicon.href = url;
+        }
+
+        function resetFavicon() {
+            setFavicon(defaultFaviconUrl);
+            updateManifestIcon(defaultFaviconUrl);
+        }
+
+        function updateManifestIcon(iconUrl) {
+            const manifestContent = {
+                "short_name": "GK",
+                "name": "GK Learn Study",
+                "icons": [
+                    {
+                        "src": iconUrl,
+                        "sizes": "192x192",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": iconUrl,
+                        "sizes": "512x512",
+                        "type": "image/png"
+                    }
+                ],
+                "start_url": "/",
+                "display": "standalone",
+                "background_color": "#ffffff",
+                "theme_color": "#ffffff"
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
+            const manifestUrl = URL.createObjectURL(manifestBlob);
+
+            const manifestLink = document.getElementById('manifest');
+            manifestLink.href = manifestUrl;
+        }
+
+        function updateUserIcon(initial) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 192;
+            canvas.height = 192;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw circular background and clip it
+            ctx.beginPath();
+            ctx.arc(96, 96, 96, 0, Math.PI * 2, true); // Full circle
+            ctx.closePath();
+            ctx.clip();
+            ctx.fillStyle = '#007bff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw text in the center
+            ctx.font = '100px Arial';
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(initial, canvas.width / 2, canvas.height / 2);
+
+            const newFaviconUrl = canvas.toDataURL('image/png');
+            setFavicon(newFaviconUrl);
+            updateManifestIcon(newFaviconUrl);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userCircle = document.getElementById('userCircle');
+            const loginContainer = document.getElementById('loginContainer');
+            const mainContent = document.getElementById('mainContent');
+            const logoutButton = document.getElementById('logoutButton');
+
+            const savedUser = localStorage.getItem('userLoggedIn');
+            if (savedUser) {
+                const initial = savedUser.charAt(0).toUpperCase();
+                updateUserIcon(initial);
+                userCircle.textContent = initial;
+                loginContainer.style.display = 'none';
+                mainContent.style.display = 'block';
+            } else {
+                resetFavicon();
+            }
+
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if (email && password) {
+                    const initial = email.charAt(0).toUpperCase();
+                    localStorage.setItem('userLoggedIn', email);
+                    updateUserIcon(initial);
+                    userCircle.textContent = initial;
+                    loginContainer.style.display = 'none';
+                    mainContent.style.display = 'block';
+                }
+            });
+
+            logoutButton.addEventListener('click', () => {
+                localStorage.removeItem('userLoggedIn');
+                resetFavicon();
+                loginContainer.style.display = 'block';
+                mainContent.style.display = 'none';
+                userCircle.textContent = 'A';
+            });
+        });
+    </script>
+</body>
 </html>
