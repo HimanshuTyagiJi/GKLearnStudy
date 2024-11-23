@@ -171,16 +171,298 @@ var paginationContainer = document.getElementById("pagination");
 var sections = [
     
 
-  { title: 'What is the capital of Germany?',
-        options: ['Vienna', 'Berlin', 'Amsterdam', 'Brussels'],
+  {
+        title: 'Who was the founder of the Maurya Empire?',
+        options: ['Ashoka', 'Chandragupta Maurya', 'Bindusara', 'Kanishka'],
         correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Berlin is the capital and largest city of Germany.</p>'
+        content: '<p><span class="color-content4">Explanation: </span> Chandragupta Maurya established the Maurya Empire with the help of Chanakya around 321 BCE.</p>'
     },
-  { title: 'What is the capital of Italy?',
-        options: ['Rome', 'Athens', 'Paris', 'Madrid'],
+    {
+        title: 'Which Indian king is referred to as “Devanampriya” in his inscriptions?',
+        options: ['Harsha', 'Ashoka', 'Chandragupta II', 'Samudragupta'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Emperor Ashoka referred to himself as “Devanampriya” meaning “Beloved of the Gods” in his inscriptions.</p>'
+    },
+    {
+        title: 'The Rigveda primarily contains hymns dedicated to which purpose?',
+        options: ['Historical events', 'Religious rituals', 'Agricultural techniques', 'Medical knowledge'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Rigveda contains hymns dedicated to deities and rituals for spiritual and religious purposes.</p>'
+    },
+    {
+        title: 'The term "Dhamma" in Ashokan inscriptions refers to:',
+        options: ['Military conquests', 'Moral and ethical code', 'Economic policies', 'Religious festivals'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Ashoka’s “Dhamma” refers to his ethical principles promoting peace, tolerance, and non-violence.</p>'
+    },
+    {
+        title: 'The Indus Valley Civilization is known for which of the following features?',
+        options: ['Temple architecture', 'Urban planning', 'Script on palm leaves', 'Bronze weapons'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization is famous for its advanced urban planning, including drainage systems and grid-patterned streets.</p>'
+    },
+    {
+        title: 'The Upanishads are primarily focused on:',
+        options: ['Political governance', 'Spiritual and philosophical discussions', 'Economic systems', 'Astronomy'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Upanishads explore spiritual and philosophical concepts such as the self (Atman) and ultimate reality (Brahman).</p>'
+    },
+    {
+        title: 'Who is the author of "Arthashastra"?',
+        options: ['Kalidasa', 'Chanakya', 'Banabhatta', 'Vatsyayana'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> "Arthashastra" was written by Chanakya, also known as Kautilya, as a treatise on governance and economics.</p>'
+    },
+    {
+        title: 'Which is the main occupation mentioned in the Rigvedic period?',
+        options: ['Agriculture', 'Trade', 'Hunting', 'Cattle rearing'],
+        correctOption: 3,
+        content: '<p><span class="color-content4">Explanation: </span> Cattle rearing was the primary occupation during the Rigvedic period, as cattle were a symbol of wealth and livelihood.</p>'
+    },
+    {
+        title: 'What was the chief feature of the Gupta Empire?',
+        options: ['Military conquests', 'Golden age of culture and learning', 'Maritime trade', 'Feudal system'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Gupta Empire is known as the "Golden Age" of India due to significant advancements in science, art, literature, and culture.</p>'
+    },
+    {
+        title: 'Who introduced the “Saptanga Theory” of state?',
+        options: ['Ashoka', 'Kautilya', 'Kalidasa', 'Samudragupta'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Kautilya introduced the "Saptanga Theory," which outlines the seven essential elements of a state.</p>'
+    },{
+        title: 'Which site of the Indus Valley Civilization is known for its dockyard?',
+        options: ['Mohenjo-Daro', 'Lothal', 'Harappa', 'Kalibangan'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Lothal, located in present-day Gujarat, is famous for its dockyard and maritime trade.</p>'
+    },
+    {
+        title: 'The Great Bath was found at which site of the Indus Valley Civilization?',
+        options: ['Mohenjo-Daro', 'Harappa', 'Dholavira', 'Rakhigarhi'],
         correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Rome is the capital and largest city of Italy.</p>'
+        content: '<p><span class="color-content4">Explanation: </span> The Great Bath, a remarkable architectural structure, was discovered at Mohenjo-Daro.</p>'
     },
+    {
+        title: 'What was the main material used in Harappan seals?',
+        options: ['Clay', 'Stone', 'Copper', 'Bronze'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Most Harappan seals were made from stone, especially steatite, and were used for trade and identification purposes.</p>'
+    },
+    {
+        title: 'Who composed the epic “Mahabharata”?',
+        options: ['Valmiki', 'Vyasa', 'Kalidasa', 'Banabhatta'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Sage Vyasa is traditionally credited with composing the epic “Mahabharata.”</p>'
+    },
+    {
+        title: 'Which Veda is considered the oldest?',
+        options: ['Rigveda', 'Samaveda', 'Yajurveda', 'Atharvaveda'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> Rigveda is the oldest among the four Vedas and contains hymns dedicated to various deities.</p>'
+    },
+    {
+        title: 'Which dynasty is known for its rock-cut caves at Ajanta?',
+        options: ['Maurya', 'Gupta', 'Satavahana', 'Chola'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> The Satavahana dynasty patronized the rock-cut caves at Ajanta, famous for their paintings and sculptures.</p>'
+    },
+    {
+        title: 'The Sangam literature belongs to which region of India?',
+        options: ['North India', 'Eastern India', 'Southern India', 'Western India'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> The Sangam literature is a collection of Tamil poems and is associated with ancient Southern India.</p>'
+    },
+    {
+        title: 'The concept of “Trimurti” in Hinduism refers to:',
+        options: ['Three Vedas', 'Three Holy Rivers', 'Three Deities', 'Three Scriptures'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> The Trimurti represents the three primary deities: Brahma (Creator), Vishnu (Preserver), and Shiva (Destroyer).</p>'
+    },
+    {
+        title: 'Who was the last ruler of the Nanda dynasty?',
+        options: ['Mahapadma Nanda', 'Dhanananda', 'Chandragupta Maurya', 'Ashoka'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Dhanananda was the last ruler of the Nanda dynasty, overthrown by Chandragupta Maurya with the help of Chanakya.</p>'
+    },
+    {
+        title: 'Which Gupta ruler assumed the title “Vikramaditya”?',
+        options: ['Chandragupta I', 'Samudragupta', 'Chandragupta II', 'Skandagupta'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> Chandragupta II assumed the title “Vikramaditya” and is known for his administrative efficiency and patronage of art.</p>'
+    },
+    {
+        title: 'Who was the main deity worshipped in the Vedic period?',
+        options: ['Brahma', 'Shiva', 'Indra', 'Vishnu'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> Indra, the god of rain and thunder, was the most revered deity during the Vedic period.</p>'
+    },
+    {
+        title: 'Ashoka’s inscriptions were primarily written in which script?',
+        options: ['Brahmi', 'Kharosthi', 'Devanagari', 'Tamil'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> Most of Ashoka’s inscriptions were written in the Brahmi script, though some in the northwest used Kharosthi.</p>'
+    },
+    {
+        title: 'The Buddhist teachings are compiled in which collection?',
+        options: ['Vedas', 'Tripitaka', 'Upanishads', 'Mahabharata'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Tripitaka, meaning "Three Baskets," is the sacred text of Buddhism containing its teachings.</p>'
+    },
+    {
+        title: 'The Harappan civilization flourished during which age?',
+        options: ['Stone Age', 'Iron Age', 'Bronze Age', 'Copper Age'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> The Harappan civilization is also known as the Bronze Age Civilization due to the use of bronze tools and artifacts.</p>'
+    },
+    {
+        title: 'Who was the chief architect of the ancient Nalanda University?',
+        options: ['Harsha', 'Kumaragupta', 'Ashoka', 'Chandragupta Maurya'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Kumaragupta I of the Gupta dynasty established the famous Nalanda University, a center for learning and scholarship.</p>'
+    },
+    {
+        title: 'What is the literal meaning of “Ashrama” in the Vedic system?',
+        options: ['Stage of life', 'Sacred text', 'Place of worship', 'Meditation'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> “Ashrama” refers to the four stages of life in the Vedic system: Brahmacharya, Grihastha, Vanaprastha, and Sannyasa.</p>'
+    },
+    {
+        title: 'Who is considered the founder of Jainism?',
+        options: ['Mahavira', 'Rishabhanatha', 'Parshvanatha', 'Buddha'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Rishabhanatha is considered the first Tirthankara and founder of Jainism.</p>'
+    },
+    {
+        title: 'Which ruler is known for the Kalinga War?',
+        options: ['Samudragupta', 'Chandragupta Maurya', 'Ashoka', 'Bindusara'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> Ashoka fought the Kalinga War, which led to his transformation and adoption of Buddhism.</p>'
+    },
+    {
+        title: 'Which dynasty built the famous Sanchi Stupa?',
+        options: ['Maurya', 'Gupta', 'Kushan', 'Satavahana'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> The Sanchi Stupa was originally commissioned by Emperor Ashoka of the Maurya dynasty.</p>'
+    }, {
+        title: 'The Indus Valley Civilization is also known as:',
+        options: ['Harappan Civilization', 'Vedic Civilization', 'Aryan Civilization', 'Gupta Civilization'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization is also referred to as the Harappan Civilization, named after the site of Harappa where it was first discovered.</p>'
+    },
+    {
+        title: 'Which language were the Vedas originally composed in?',
+        options: ['Pali', 'Sanskrit', 'Prakrit', 'Tamil'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Vedas were composed in Sanskrit, which is considered one of the oldest languages in the world.</p>'
+    },
+    {
+        title: 'What was the primary occupation of the people during the Rigvedic period?',
+        options: ['Agriculture', 'Hunting', 'Trade', 'Cattle rearing'],
+        correctOption: 3,
+        content: '<p><span class="color-content4">Explanation: </span> During the Rigvedic period, cattle rearing was the primary occupation of the people and a measure of wealth.</p>'
+    },
+    {
+        title: 'Who was the founder of the Maurya Empire?',
+        options: ['Bindusara', 'Chandragupta Maurya', 'Ashoka', 'Chanakya'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Chandragupta Maurya, guided by Chanakya, founded the Maurya Empire in 321 BCE.</p>'
+    },
+    {
+        title: 'The term “Upanishad” literally means:',
+        options: ['Knowledge', 'Meditation', 'Sitting near', 'Scripture'],
+        correctOption: 2,
+        content: '<p><span class="color-content4">Explanation: </span> The term “Upanishad” means "sitting near" and refers to the transmission of spiritual knowledge from teacher to disciple.</p>'
+    },
+    {
+        title: 'Who wrote the Arthashastra?',
+        options: ['Chanakya', 'Kalidasa', 'Vyasa', 'Patanjali'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> Chanakya, also known as Kautilya, wrote the Arthashastra, a treatise on statecraft, economics, and military strategy.</p>'
+    },
+    {
+        title: 'Which dynasty is associated with the iron pillar at Mehrauli in Delhi?',
+        options: ['Maurya', 'Gupta', 'Kushan', 'Chola'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The iron pillar at Mehrauli in Delhi is attributed to Chandragupta II of the Gupta dynasty.</p>'
+    },
+    {
+        title: 'The Buddhist Council at Rajagriha was held under the patronage of:',
+        options: ['Ashoka', 'Ajatashatru', 'Bimbisara', 'Kanishka'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The First Buddhist Council was held at Rajagriha under the patronage of King Ajatashatru.</p>'
+    },
+    {
+        title: 'Which ancient text is known as the “Fifth Veda”?',
+        options: ['Mahabharata', 'Ramayana', 'Bhagavad Gita', 'Puranas'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> The Mahabharata is often referred to as the “Fifth Veda” due to its philosophical depth and cultural significance.</p>'
+    },
+    {
+        title: 'The worship of the mother goddess was a prominent feature of which civilization?',
+        options: ['Indus Valley Civilization', 'Vedic Civilization', 'Gupta Empire', 'Mauryan Empire'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization had a strong tradition of worshipping the mother goddess, symbolizing fertility.</p>'
+    },
+    {
+        title: 'Which Mauryan ruler is known as “Amitraghata” (Slayer of Enemies)?',
+        options: ['Ashoka', 'Bindusara', 'Chandragupta Maurya', 'Samudragupta'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Bindusara, the son of Chandragupta Maurya, was known as “Amitraghata” due to his military conquests.</p>'
+    },
+    {
+        title: 'The ancient city of Taxila was an important center for:',
+        options: ['Art', 'Education', 'Trade', 'Administration'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Taxila was a renowned center of education and learning in ancient India, attracting scholars from across the world.</p>'
+    },
+    {
+        title: 'Who among the following was a Jain Tirthankara?',
+        options: ['Buddha', 'Mahavira', 'Chanakya', 'Shankaracharya'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Mahavira was the 24th and last Tirthankara of Jainism, responsible for propagating its principles.</p>'
+    },
+    {
+        title: 'What is the Harappan script classified as?',
+        options: ['Alphabetic', 'Pictographic', 'Cuneiform', 'Hieroglyphic'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Harappan script is classified as pictographic, consisting of symbols and images.</p>'
+    },
+    {
+        title: 'What was the primary export item of the Indus Valley Civilization?',
+        options: ['Cotton textiles', 'Bronze artifacts', 'Iron tools', 'Spices'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> Cotton textiles were a primary export item of the Indus Valley Civilization, indicating advanced textile skills.</p>'
+    },
+    {
+        title: 'Who was the ruler of Magadha during Alexander’s invasion of India?',
+        options: ['Chandragupta Maurya', 'Dhanananda', 'Bimbisara', 'Ajatashatru'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Dhanananda was the ruler of Magadha when Alexander invaded India.</p>'
+    },
+    {
+        title: 'The Rigvedic society was primarily:',
+        options: ['Urban', 'Nomadic', 'Agricultural', 'Industrial'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Rigvedic society was primarily nomadic, though it later transitioned to settled agricultural practices.</p>'
+    },
+    {
+        title: 'Which Buddhist king convened the Third Buddhist Council?',
+        options: ['Ashoka', 'Kanishka', 'Harsha', 'Ajatashatru'],
+        correctOption: 0,
+        content: '<p><span class="color-content4">Explanation: </span> Ashoka convened the Third Buddhist Council to purify Buddhism and spread its teachings.</p>'
+    },
+    {
+        title: 'The earliest evidence of agriculture in the Indian subcontinent was found at:',
+        options: ['Harappa', 'Mehrgarh', 'Mohenjo-Daro', 'Dholavira'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Mehrgarh in present-day Pakistan provides the earliest evidence of agriculture in the Indian subcontinent.</p>'
+    },
+    {
+        title: 'Which river is associated with the Sarasvati civilization?',
+        options: ['Indus', 'Sarasvati', 'Ganga', 'Yamuna'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> The Sarasvati River is believed to have supported the Sarasvati civilization, a contemporary of the Indus Valley Civilization.</p>'
+    }
       
 
     // Add more sections as needed
