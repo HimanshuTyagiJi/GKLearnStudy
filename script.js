@@ -1,3 +1,57 @@
+// cache-clear.js
+
+// Function to dynamically insert meta tags for disabling cache
+function insertMetaTags() {
+    const metaTags = [
+        { name: "Cache-Control", content: "no-cache, no-store, must-revalidate" },
+        { name: "Pragma", content: "no-cache" },
+        { name: "Expires", content: "0" }
+    ];
+
+    metaTags.forEach(tag => {
+        const meta = document.createElement("meta");
+        meta.setAttribute("http-equiv", tag.name);
+        meta.setAttribute("content", tag.content);
+        document.head.appendChild(meta);
+    });
+
+    console.log("Meta tags for cache control added.");
+}
+
+// Function to clear browser cache and refresh resources
+function clearCache() {
+    // Clear Cache Storage (modern browsers supporting Cache API)
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            for (let name of names) {
+                caches.delete(name);
+            }
+        });
+    }
+
+    // Prevent back-forward cache in browsers
+    window.onunload = function () {};
+
+    // Add a cache-busting query string to all CSS and JS files
+    const elements = document.querySelectorAll('link[rel="stylesheet"], script[src]');
+    elements.forEach(element => {
+        const url = new URL(element.href || element.src);
+        url.searchParams.set('v', Date.now()); // Add a timestamp
+        if (element.tagName === 'LINK') {
+            element.href = url.toString();
+        } else if (element.tagName === 'SCRIPT') {
+            element.src = url.toString();
+        }
+    });
+
+    console.log("Cache cleared and resources refreshed.");
+}
+
+// Execute functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    insertMetaTags();
+    clearCache();
+});
 
 
 (function() {
