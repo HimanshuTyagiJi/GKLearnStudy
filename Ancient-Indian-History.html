@@ -186,6 +186,9 @@ var paginationContainer = document.getElementById("pagination");
 var sections = [
     
 
+  
+    
+
   {
         title: 'Who was the founder of the Maurya Empire?',
         options: ['Ashoka', 'Chandragupta Maurya', 'Bindusara', 'Kanishka'],
@@ -480,11 +483,9 @@ var sections = [
     }
       
 
-    // Add more sections as needed
-];
-
+ ];
 var filteredSections = sections.slice(); // Copy of sections
-var itemsPerPage = 10;
+var itemsPerPage = 2;
 var currentPage = 1;
 
 function showSections(startIndex) {
@@ -526,6 +527,7 @@ function showSections(startIndex) {
                         }
                     });
 
+    <!-- JavaScript -->
                     optionsBox.appendChild(optionElement);
                 });
 
@@ -658,7 +660,12 @@ filterInput.addEventListener("input", searchContent);
 
 showSections(0);
 updatePagination();</script>
-<script>
+    
+    
+    
+    
+    
+    <script>
     var accordionContainer = document.getElementById("accordion-container");
     var translateButton = document.getElementById("translate-button");
     var isHindi = false; // Track current language
