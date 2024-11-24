@@ -666,7 +666,7 @@ updatePagination();</script>
     
     
     
-    <script>
+     <script>
     var accordionContainer = document.getElementById("accordion-container");
     var translateButton = document.getElementById("translate-button");
     var isHindi = false; // Track current language
@@ -744,6 +744,107 @@ async function toggleTranslation() {
     displaySectionsOnCurrentPage(); // Reload current page after translation
 }
 
+// Function to translate text in bulk for each section
+async function translateTextBatch(texts, toHindi) {
+    const sourceLang = toHindi ? "en" : "hi";
+    const targetLang = toHindi ? "hi" : "en";
+    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(texts.join('|'))}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const translatedTexts = data[0].map(sentence => sentence[0]);
+
+        // Split back the translated texts
+        return translatedTexts[0].split('|');
+    } catch (error) {
+        console.error("Translation failed:", error);
+        return texts; // Return original texts if translation fails
+    }
+}
+
+// Add a loading message and progress bar
+var loadingMessage = document.createElement("div");
+loadingMessage.id = "loading-message";
+loadingMessage.textContent = "Processing... Please Wait";
+loadingMessage.style.position = "fixed";
+loadingMessage.style.top = "50%";
+loadingMessage.style.left = "50%";
+loadingMessage.style.transform = "translate(-50%, -50%)";
+loadingMessage.style.padding = "20px";
+loadingMessage.style.backgroundColor = "#f9f9f9";
+loadingMessage.style.border = "2px solid #ddd";
+loadingMessage.style.borderRadius = "10px";
+loadingMessage.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+loadingMessage.style.display = "none"; // Hidden initially
+document.body.appendChild(loadingMessage);
+
+// Create progress bar element
+var progressBar = document.createElement("div");
+progressBar.id = "progress-bar";
+progressBar.style.height = "20px";
+progressBar.style.backgroundColor = "#f3f3f3";
+progressBar.style.borderRadius = "10px";
+progressBar.style.marginTop = "20px";
+loadingMessage.appendChild(progressBar);
+
+var progress = document.createElement("div");
+progress.style.height = "100%";
+progress.style.backgroundColor = "#4caf50";
+progress.style.width = "0%";
+progressBar.appendChild(progress);
+
+// Create count element
+var countDisplay = document.createElement("div");
+countDisplay.id = "count-display";
+countDisplay.style.marginTop = "10px";
+countDisplay.style.fontSize = "18px";
+countDisplay.style.fontWeight = "bold";
+loadingMessage.appendChild(countDisplay);
+
+// Function to toggle translation
+async function toggleTranslation() {
+    isHindi = !isHindi;
+
+    // Show loading message
+    loadingMessage.style.display = "block";
+
+    // Translate titles, options, and content
+    let totalItems = sections.length * 3; // Title, options, and content
+    let translatedItems = 0;
+
+    // Helper function to update progress bar and count
+    function updateProgress() {
+        let percentage = (translatedItems / totalItems) * 100;
+        progress.style.width = `${percentage}%`;
+        countDisplay.textContent = `Translating... ${translatedItems} of ${totalItems} items translated (${Math.round(percentage)}%)`;
+    }
+
+    // Translate each section and update progress
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].title = await translateText(sections[i].title, isHindi);
+        translatedItems++;
+        updateProgress();
+
+        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
+        translatedItems++;
+        updateProgress();
+
+        sections[i].content = await translateText(sections[i].content, isHindi);
+        translatedItems++;
+        updateProgress();
+    }
+
+    // Update button text
+    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
+
+    // Hide loading message after translation
+    loadingMessage.style.display = "none";
+
+    // Reload current page after translation
+    displaySectionsOnCurrentPage();
+}
+
 // Function to translate text
 async function translateText(text, toHindi) {
     const sourceLang = toHindi ? "en" : "hi";
@@ -767,7 +868,7 @@ translateButton.addEventListener("click", toggleTranslation);
 displaySections(0);
 updatePagination();
 
-</script>
 
+</script>
 </body>
 </html>
