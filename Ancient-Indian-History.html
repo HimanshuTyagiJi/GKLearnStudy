@@ -135,11 +135,23 @@
   .disabled {
       pointer-events: none;
       color: #ccc;
-  }
+  }  .translate-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .translate-btn:hover {
+            background-color: #0056b3;
+        }
 </style>
 </head>
 <body>
 <input type="text" id="filterInput" placeholder="Filter sections...">
+  <button id="translate-button" class="translate-btn">Translate to Hindi</button>
 <div id="accordion-container"></div>
 <ul id="pagination" class="pagination"></ul>
 
@@ -646,6 +658,108 @@ filterInput.addEventListener("input", searchContent);
 
 showSections(0);
 updatePagination();</script>
+<script>
+    var accordionContainer = document.getElementById("accordion-container");
+    var translateButton = document.getElementById("translate-button");
+    var isHindi = false; // Track current language
+
+
+
+    // Function to display only two sections
+    function displaySections() {
+        accordionContainer.innerHTML = ""; // Clear container
+
+        // Display only the first two sections
+        sections.slice(0, 2).forEach((section, index) => {
+            var accordionItem = document.createElement("div");
+            accordionItem.className = "accordion-item";
+
+            var title = document.createElement("div");
+            title.className = "accordion";
+            title.textContent = `Q-${index + 1}: ${section.title}`;
+
+            var optionsBox = document.createElement("div");
+            optionsBox.className = "options";
+
+            var panel = document.createElement("div");
+            panel.className = "panel";
+            panel.innerHTML = section.content;
+
+            section.options.forEach((option, optionIndex) => {
+                var optionElement = document.createElement("div");
+                optionElement.className = "option";
+                optionElement.textContent = option;
+
+                optionElement.addEventListener("click", function () {
+                    if (!optionsBox.classList.contains('answered')) {
+                        if (optionIndex === section.correctOption) {
+                            optionElement.classList.add("correct");
+                        } else {
+                            optionElement.classList.add("incorrect");
+                            optionsBox.children[section.correctOption].classList.add("correct");
+                        }
+                        optionsBox.classList.add('answered'); // Mark answered
+                        panel.style.display = "block";
+                    }
+                });
+
+                optionsBox.appendChild(optionElement);
+            });
+
+            accordionItem.appendChild(title);
+            accordionItem.appendChild(optionsBox);
+            accordionItem.appendChild(panel);
+
+            accordionContainer.appendChild(accordionItem);
+        });
+    }
+
+   // Function to display sections based on current page
+function displaySectionsOnCurrentPage() {
+    var startIndex = (currentPage - 1) * itemsPerPage;
+    showSections(startIndex);
+    updatePagination();
+}
+
+// Function to toggle translation
+async function toggleTranslation() {
+    isHindi = !isHindi;
+
+    // Translate titles, options, and content
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].title = await translateText(sections[i].title, isHindi);
+        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
+        sections[i].content = await translateText(sections[i].content, isHindi);
+    }
+
+    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
+    displaySectionsOnCurrentPage(); // Reload current page after translation
+}
+
+// Function to translate text
+async function translateText(text, toHindi) {
+    const sourceLang = toHindi ? "en" : "hi";
+    const targetLang = toHindi ? "hi" : "en";
+
+    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data[0].map(sentence => sentence[0]).join("");
+    } catch (error) {
+        console.error("Translation failed:", error);
+        return text; // Fallback to original text
+    }
+}
+
+// Event Listeners
+translateButton.addEventListener("click", toggleTranslation);
+
+// Initialize
+displaySections(0);
+updatePagination();
+
+</script>
 
 </body>
 </html>
