@@ -486,7 +486,7 @@ var sections = [
 
  ];
 var filteredSections = sections.slice(); // Copy of sections
-var itemsPerPage = 2;
+var itemsPerPage = 20;
 var currentPage = 1;
 
 function showSections(startIndex) {
@@ -678,7 +678,7 @@ updatePagination();</script>
         accordionContainer.innerHTML = ""; // Clear container
 
         // Display only the first two sections
-        sections.slice(0, 2).forEach((section, index) => {
+        sections.slice(0, 20).forEach((section, index) => {
             var accordionItem = document.createElement("div");
             accordionItem.className = "accordion-item";
 
