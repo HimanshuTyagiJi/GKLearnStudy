@@ -2372,23 +2372,11 @@ function getSynonyms() {
 
 
 const linkData = [
-  {name: "Mathematics All formulas", url: "https://www.example.com/link1", color: "red"},
-  {name: "Physics formulas", url: "https://www.example.com/link2", color: "#03736f"},
-  {name: "Chemical formulas", url: "https://www.example.com/link3", color: "#11f705"},
-  {name: "Periodic table", url: "https://www.example.com/link4", color: "orange"},
-  {name: "Conversion", url: "https://www.example.com/link5", color: "purple"},
-  {name: "Mathematics All formulas", url: "https://www.example.com/link1", color: "red"},
-  {name: "Physics formulas", url: "https://www.example.com/link2", color: "#03736f"},
-  {name: "Chemical formulas", url: "https://www.example.com/link3", color: "#11f705"},
-  {name: "Periodic table", url: "https://www.example.com/link4", color: "orange"},
-  {name: "Conversion", url: "https://www.example.com/link5", color: "purple"},
-  {name: "Mathematics All formulas", url: "https://www.example.com/link1", color: "red"},
-  {name: "Physics formulas", url: "https://www.example.com/link2", color: "#03736f"},
-  {name: "Chemical formulas", url: "https://www.example.com/link3", color: "#11f705"},
-  {name: "Periodic table", url: "https://www.example.com/link4", color: "orange"},
-  {name: "Conversion", url: "https://www.example.com/link5", color: "purple"},
- 
-];
+  {name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas", color: "red"},
+  {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas", color: "#03736f"},
+  {name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas", color: "#11f705"},
+  {name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table", color: "orange"},
+    
 
 // Getting a reference to the list element where the links will be added:
 const linksList = document.getElementById("links-list");
