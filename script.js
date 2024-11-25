@@ -2376,7 +2376,7 @@ const linkData = [
   {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas", color: "#03736f"},
   {name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas", color: "#11f705"},
   {name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table", color: "orange"},
-    
+    ];
 
 // Getting a reference to the list element where the links will be added:
 const linksList = document.getElementById("links-list");
