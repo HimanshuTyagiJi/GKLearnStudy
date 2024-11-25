@@ -293,7 +293,7 @@ menu.appendChild(rightArrow);
 
 // Define menu items
 const menuItems = [
-  { text: "Home", href: "../index.html" },
+  { text: "Home", href: "../" },
   { text: "Conversion", href: "../conversion.html" },
   { text: "Education", href: "../education.html" },
   { text: "All Formula", href: "../all-formulas.html" },
