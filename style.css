@@ -417,7 +417,9 @@ a:visited,a:link{color:rgb(0, 0, 0);}
 
 .start-btn, .next-btn, .skip-btn, .submit-btn {border-radius: 15px;border: none;background-color: #098bcb;color: white;cursor: pointer;padding: 15px;width: 200px;}
 .start-btn {background-color:blue;}
-.skip-btn,#timer {float: right;}
+.next-btn,#timer {float: right;}
+
+
 .review-btn, .retry-btn {border-radius: 15px;border: none;background-color: #098bcb;color: white;cursor: pointer;padding: 15px;}
 .retry-btn{float:right;}
 .question {border-radius: 15px;margin:0px;border: 2px solid #ccc;margin-bottom: 100px;font-weight: bold;font-size: 18px;padding: 15px;position: absolute;left: 50%;transform: translateX(-50%);width: 75%;}
@@ -888,7 +890,7 @@ ol,ul,li{margin:0px;}
 
 .start-btn, .next-btn, .skip-btn, .submit-btn {border-radius: 15px;border: none;background-color: #098bcb;color: white;cursor: pointer;padding: 15px;width: 80px;}
 .start-btn {background-color:blue;}
-.skip-btn,#timer {float: right;margin-right: 30px;}
+.next-btn,#timer {float: right;margin-right: 30px;}
 .review-btn, .retry-btn {border-radius: 15px;border: none;background-color: #098bcb;color: white;cursor: pointer;padding: 15px;}
 .question {border-radius: 15px;border: 1px solid #ccc;margin-bottom: 100px;font-weight: bold;font-size: 18px;position: absolute;left: 50%;transform: translateX(-50%);width: 90%;}
 
