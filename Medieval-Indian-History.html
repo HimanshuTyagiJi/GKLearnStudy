@@ -1,1 +1,585 @@
 
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medieval Indian History</title>
+  <meta name="description" content="Test your knowledge with our comprehensive General Knowledge quiz. Explore a wide range of questions, answers, explanations, examples, images, and videos.">
+  <meta property="youtube:channel" content="">
+  <meta property="instagram:profile" content="">
+  <meta name="copyright" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css"> 
+</head>
+              
+<body><sidebar>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+
+ 
+    <li><a href="Ancient-Indian-History.html">Ancient Indian History</a></li>
+    <li><a class="active" href="Medieval-Indian-History.html">Medieval Indian History</a></li>
+    <li><a href="Modern-Indian-History.html">Modern Indian History</a></li>
+    <li><a href="World-History.html">World History</a></li>
+    <li><a href="Indian-Polity-and-Constitution.html">Indian Polity & Constitution</a></li>
+    <li><a href="Indian-Economy.html">Indian Economy</a></li>
+    <li><a href="Environment-and-Biodiversity.html">Environment & Biodiversity</a></li>
+    <li><a href="Indian-Art-and-Culture.html">Indian Art & Culture</a></li>
+    <li><a href="General-Science-Physics.html">Physics</a></li>
+    <li><a href="General-Science-Chemistry.html">Chemistry</a></li>
+    <li><a href="General-Science-Biology.html">Biology</a></li>
+    <li><a href="Computer.html">Computer</a></li>
+    <li><a href="Sanskrit.html">Sanskrit</a></li>
+    <li><a href="Books-and-Authors.html">Books & Authors</a></li>
+    <li><a href="Sports-GK.html">Sports GK</a></li>
+    <li><a href="Famous-Personalities.html">Famous Personalities</a></li>
+    <li><a href="Technology-and-Inventions.html">Technology and Inventions</a></li>
+    <li><a href="Space-and-Universe.html">Space and Universe</a></li>
+    <li><a href="Indian-Geography.html">Indian Geography</a></li>
+    <li><a href="World-Geography.html">World Geography</a></li>
+    <li><a href="Indian-Festivals-and-Traditions.html">Indian Festivals & Traditions</a></li>
+    <li><a href="World-Organizations.html">World Organizations</a></li>
+    <li><a href="International-Relations.html">International Relations</a></li>
+    <li><a href="Awards-and-Honours.html">Awards & Honours</a></li>
+    <li><a href="Current-Affairs.html">Current Affairs</a></li>
+    <li><a href="Indian-Defense.html">Indian Defense</a></li>
+    <li><a href="Important-Dates-and-Events.html">Important Dates & Events</a></li>
+    <li><a href="Transport-and-Communication.html">Transport & Communication</a></li>
+    <li><a href="Famous-Monuments.html">Famous Monuments</a></li>
+    <li><a href="Wildlife-and-National-Parks.html">Wildlife & National Parks</a></li>
+    <li><a href="Rivers-and-Lakes.html">Rivers & Lakes</a></li>
+    <li><a href="Disasters-and-Calamities.html">Disasters & Calamities</a></li>
+    <li><a href="Science-and-Technology.html">Science & Technology</a></li>
+    <li><a href="Mathematical-GK.html">Mathematical GK</a></li><li></li>
+</ul>
+
+ 
+
+
+    
+ 
+  
+
+<div class="container"><style>
+[data-theme="dark"]  {
+        a:visited, a:link {color:black
+                /* color: pink; */
+        
+}
+    .accordion-item {border: 1px solid #273b28;}.accordion { background:rgb(56, 52, 64); border: none;} 
+  .option {border-radius: 15px;padding:5px;width:300px;border: 1px solid #5d5d5d}
+  .option:hover {background-color: rgb(47, 47, 98);
+  }
+    .correct, .correct:hover {
+    color: aliceblue;
+    background-color: green;
+}
+
+.incorrect, .incorrect:hover {
+    color: aliceblue;background-color: red;}}
+
+  
+  .accordion {  border: none;background-color: inherit;cursor: auto;} 
+  
+  .accordion-item {
+    border-radius: none;
+    display: flex;
+    flex-direction: column;
+   
+
+      margin-top: 30px;
+      border: 1px solid #15d71c;
+      padding: 10px;
+  }
+  
+  .panel {
+      display: none;
+      margin-top: 10px;
+  }
+  
+  .option {border-radius: 15px;padding:5px;width:300px;border: 1px solid #ccc;
+      display: block;
+      margin-top: 5px;
+      cursor: pointer;
+  }
+  .option:hover {border-radius: 15px;padding:5px;background-color: blue;color:white;
+      display: block;
+      margin-top: 5px;
+      cursor: pointer;
+  }
+  
+  .correct, .correct:hover {
+    color: aliceblue;
+    background-color: green;
+}
+
+.incorrect, .incorrect:hover {
+    color: aliceblue;
+    background-color: red;
+}
+  .pagination {
+      display: flex;
+      list-style: none;
+      padding: 0;
+  }
+  .pagination li {
+      margin: 0 5px;
+  }
+  .pagination a {
+      text-decoration: none;
+      cursor: pointer;
+  }
+  .active {
+      font-weight: bold;
+  }
+  .disabled {
+      pointer-events: none;
+      color: #ccc;
+  }  .translate-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .translate-btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+</head>
+<body>
+  <div id="content">
+<input type="text" id="filterInput" placeholder="Filter sections...">
+  <button id="translate-button" class="translate-btn">Translate to Hindi</button>
+<div id="accordion-container"></div>
+<ul id="pagination" class="pagination"></ul>
+
+<hr>
+ <div class="important_link">
+          <br>
+          <p style="font-size:24px;">Important Links</p>
+
+          <div id="links-container">
+            <ul id="links-list"></ul>
+          </div>
+        </div>
+      
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+        <script src="./menusearch.js"></script>
+        <script src="./script.js"></script>
+        <script src="./search.js"></script>
+<script>var accordionContainer = document.getElementById("accordion-container");
+var filterInput = document.getElementById("filterInput");
+var paginationContainer = document.getElementById("pagination");
+
+var sections = [
+    
+
+{ title: 'Who was the founder of the Maurya Empire?',
+        options: ['Ashoka', 'Chandragupta Maurya', 'Bindusara', 'Kanishka'],
+        correctOption: 1,
+        content: '<p><span class="color-content4">Explanation: </span> Chandragupta Maurya established the Maurya Empire with the help of Chanakya around 321 BCE.</p>'
+    },
+  
+
+ ];
+var filteredSections = sections.slice(); // Copy of sections
+var itemsPerPage = 20;
+var currentPage = 1;
+
+function showSections(startIndex) {
+    accordionContainer.innerHTML = "";
+    for (var i = startIndex; i < Math.min(startIndex + itemsPerPage, filteredSections.length); i++) {
+        (function(i) {
+            var section = filteredSections[i];
+            var accordionItem = document.createElement("div");
+            accordionItem.className = "accordion-item";
+
+            var titleBox = document.createElement("div");
+            titleBox.className = "accordion";
+            titleBox.innerHTML = "Q-" + (i + 1) + ": " + section.title;
+
+           
+
+            var optionsBox = document.createElement("div");
+            optionsBox.className = "options";
+
+            var panel = document.createElement("div");
+            panel.className = "panel";
+            panel.innerHTML = section.content;
+            section.options.forEach((option, optionIndex) => {
+                var optionElement = document.createElement("div");
+                optionElement.className = "option";
+                optionElement.innerHTML = option;
+
+                optionElement.addEventListener("click", function() {
+                   if (!optionsBox.classList.contains('answered')) {
+                            if (optionIndex === section.correctOption) {
+                                optionElement.classList.add("correct");
+                            } else {
+                                optionElement.classList.add("incorrect");
+                                optionsBox.children[section.correctOption].classList.add("correct");
+                            }
+                            optionsBox.classList.add('answered'); // Prevent further clicks
+                            panel.style.display = "block";
+                            
+                        }
+                    });
+
+    <!-- JavaScript -->
+                    optionsBox.appendChild(optionElement);
+                });
+
+
+           
+            
+            accordionItem.appendChild(titleBox);
+            accordionItem.appendChild(optionsBox);
+            accordionItem.appendChild(panel);
+
+            accordionContainer.appendChild(accordionItem);
+        })(i);
+    }
+}
+function updatePagination() {
+    paginationContainer.innerHTML = "";
+    var totalPages = Math.ceil(filteredSections.length / itemsPerPage);
+
+    var firstPageButton = document.createElement("li");
+    var firstPageLink = document.createElement("a");
+    firstPageLink.href = "#";
+    firstPageLink.textContent = "First Page";
+    firstPageButton.appendChild(firstPageLink);
+    firstPageButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        currentPage = 1;
+        showSections(0);
+        updatePagination();
+    });
+
+    var prevButton = document.createElement("li");
+    var prevLink = document.createElement("a");
+    prevLink.href = "#";
+    prevLink.textContent = "Previous";
+    prevButton.appendChild(prevLink);
+    prevButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showSections((currentPage - 1) * itemsPerPage);
+            updatePagination();
+        }
+    });
+
+    paginationContainer.appendChild(firstPageButton);
+    paginationContainer.appendChild(prevButton);
+
+    for (var i = 1; i <= totalPages; i++) {
+        var listItem = document.createElement("li");
+        var link = document.createElement("a");
+        link.href = "#";
+        link.textContent = i;
+        if (i === currentPage) {
+            link.classList.add("active");
+        }
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            currentPage = parseInt(this.textContent);
+            showSections((currentPage - 1) * itemsPerPage);
+            updatePagination();
+        });
+        listItem.appendChild(link);
+        paginationContainer.appendChild(listItem);
+    }
+
+    var nextButton = document.createElement("li");
+    var nextLink = document.createElement("a");
+    nextLink.href = "#";
+    nextLink.textContent = "Next";
+    nextButton.appendChild(nextLink);
+    nextButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+            currentPage++;
+            showSections((currentPage - 1) * itemsPerPage);
+            updatePagination();
+        }
+    });
+
+    var lastPageButton = document.createElement("li");
+    var lastPageLink = document.createElement("a");
+    lastPageLink.href = "#";
+    lastPageLink.textContent = "Last Page";
+    lastPageButton.appendChild(lastPageLink);
+    lastPageButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        currentPage = totalPages;
+        showSections((totalPages - 1) * itemsPerPage);
+        updatePagination();
+    });
+
+    paginationContainer.appendChild(nextButton);
+    paginationContainer.appendChild(lastPageButton);
+
+    if (currentPage === 1) {
+        firstPageButton.style.display = "none";
+        prevButton.style.display = "none";
+    } else {
+        firstPageButton.style.display = "inline-block";
+        prevButton.style.display = "inline-block";
+    }
+    
+    if (currentPage === totalPages) {
+        nextButton.style.display = "none";
+        lastPageButton.style.display = "none";
+    } else {
+        nextButton.style.display = "inline-block";
+        lastPageButton.style.display = "inline-block";
+    }
+    
+}
+
+function searchContent() {
+    var query = filterInput.value.toLowerCase().trim();
+    if (query === "") {
+        filteredSections = sections.slice();
+    } else {
+        filteredSections = sections.filter(function(section) {
+            return section.title.toLowerCase().includes(query) || 
+                   section.options.some(option => option.toLowerCase().includes(query)) || 
+                   section.content.toLowerCase().includes(query);
+        });
+    }
+    currentPage = 1;
+    showSections(0);
+    updatePagination();
+}
+
+filterInput.addEventListener("input", searchContent);
+
+showSections(0);
+updatePagination();</script>
+    
+    
+    
+    
+    
+     <script>
+    var accordionContainer = document.getElementById("accordion-container");
+    var translateButton = document.getElementById("translate-button");
+    var isHindi = false; // Track current language
+
+
+
+    // Function to display only two sections
+    function displaySections() {
+        accordionContainer.innerHTML = ""; // Clear container
+
+        // Display only the first two sections
+        sections.slice(0, 20).forEach((section, index) => {
+            var accordionItem = document.createElement("div");
+            accordionItem.className = "accordion-item";
+
+            var title = document.createElement("div");
+            title.className = "accordion";
+            title.textContent = `Q-${index + 1}: ${section.title}`;
+
+            var optionsBox = document.createElement("div");
+            optionsBox.className = "options";
+
+            var panel = document.createElement("div");
+            panel.className = "panel";
+            panel.innerHTML = section.content;
+
+            section.options.forEach((option, optionIndex) => {
+                var optionElement = document.createElement("div");
+                optionElement.className = "option";
+                optionElement.textContent = option;
+
+                optionElement.addEventListener("click", function () {
+                    if (!optionsBox.classList.contains('answered')) {
+                        if (optionIndex === section.correctOption) {
+                            optionElement.classList.add("correct");
+                        } else {
+                            optionElement.classList.add("incorrect");
+                            optionsBox.children[section.correctOption].classList.add("correct");
+                        }
+                        optionsBox.classList.add('answered'); // Mark answered
+                        panel.style.display = "block";
+                    }
+                });
+
+                optionsBox.appendChild(optionElement);
+            });
+
+            accordionItem.appendChild(title);
+            accordionItem.appendChild(optionsBox);
+            accordionItem.appendChild(panel);
+
+            accordionContainer.appendChild(accordionItem);
+        });
+    }
+
+   // Function to display sections based on current page
+function displaySectionsOnCurrentPage() {
+    var startIndex = (currentPage - 1) * itemsPerPage;
+    showSections(startIndex);
+    updatePagination();
+}
+
+// Function to toggle translation
+async function toggleTranslation() {
+    isHindi = !isHindi;
+
+    // Translate titles, options, and content
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].title = await translateText(sections[i].title, isHindi);
+        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
+        sections[i].content = await translateText(sections[i].content, isHindi);
+    }
+
+    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
+    displaySectionsOnCurrentPage(); // Reload current page after translation
+}
+
+// Function to translate text in bulk for each section
+async function translateTextBatch(texts, toHindi) {
+    const sourceLang = toHindi ? "en" : "hi";
+    const targetLang = toHindi ? "hi" : "en";
+    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(texts.join('|'))}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const translatedTexts = data[0].map(sentence => sentence[0]);
+
+        // Split back the translated texts
+        return translatedTexts[0].split('|');
+    } catch (error) {
+        console.error("Translation failed:", error);
+        return texts; // Return original texts if translation fails
+    }
+}
+
+// Add a loading message and progress bar
+var loadingMessage = document.createElement("div");
+loadingMessage.id = "loading-message";
+loadingMessage.textContent = "Processing... Please Wait";
+loadingMessage.style.position = "fixed";
+loadingMessage.style.top = "50%";
+loadingMessage.style.left = "50%";
+loadingMessage.style.transform = "translate(-50%, -50%)";
+loadingMessage.style.padding = "20px";
+loadingMessage.style.backgroundColor = "#f9f9f9";
+loadingMessage.style.border = "2px solid #ddd";
+loadingMessage.style.borderRadius = "10px";
+loadingMessage.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+loadingMessage.style.display = "none"; // Hidden initially
+document.body.appendChild(loadingMessage);
+
+// Create progress bar element
+var progressBar = document.createElement("div");
+progressBar.id = "progress-bar";
+progressBar.style.height = "20px";
+progressBar.style.backgroundColor = "#f3f3f3";
+progressBar.style.borderRadius = "10px";
+progressBar.style.marginTop = "20px";
+loadingMessage.appendChild(progressBar);
+
+var progress = document.createElement("div");
+progress.style.height = "100%";
+progress.style.backgroundColor = "#4caf50";
+progress.style.width = "0%";
+progressBar.appendChild(progress);
+
+// Create count element
+var countDisplay = document.createElement("div");
+countDisplay.id = "count-display";
+countDisplay.style.marginTop = "10px";
+countDisplay.style.fontSize = "18px";
+countDisplay.style.fontWeight = "bold";
+loadingMessage.appendChild(countDisplay);
+
+// Function to toggle translation
+async function toggleTranslation() {
+    isHindi = !isHindi;
+
+    // Show loading message
+    loadingMessage.style.display = "block";
+
+    // Translate titles, options, and content
+    let totalItems = sections.length * 3; // Title, options, and content
+    let translatedItems = 0;
+
+    // Helper function to update progress bar and count
+    function updateProgress() {
+        let percentage = (translatedItems / totalItems) * 100;
+        progress.style.width = `${percentage}%`;
+        countDisplay.textContent = `Translating... ${translatedItems} of ${totalItems} items translated (${Math.round(percentage)}%)`;
+    }
+
+    // Translate each section and update progress
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].title = await translateText(sections[i].title, isHindi);
+        translatedItems++;
+        updateProgress();
+
+        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
+        translatedItems++;
+        updateProgress();
+
+        sections[i].content = await translateText(sections[i].content, isHindi);
+        translatedItems++;
+        updateProgress();
+    }
+
+    // Update button text
+    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
+
+    // Hide loading message after translation
+    loadingMessage.style.display = "none";
+
+    // Reload current page after translation
+    displaySectionsOnCurrentPage();
+}
+
+// Function to translate text
+async function translateText(text, toHindi) {
+    const sourceLang = toHindi ? "en" : "hi";
+    const targetLang = toHindi ? "hi" : "en";
+
+    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data[0].map(sentence => sentence[0]).join("");
+    } catch (error) {
+        console.error("Translation failed:", error);
+        return text; // Fallback to original text
+    }
+}
+
+// Event Listeners
+translateButton.addEventListener("click", toggleTranslation);
+
+// Initialize
+displaySections(0);
+updatePagination();
+
+
+</script>
+</body>
+</html>
