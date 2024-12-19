@@ -1,25 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .options li.correct {
+            background-color: green;
+            color: white;
+        }
+        .options li.wrong {
+            background-color: red;
+            color: white;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            border-left: 5px solid green; /* Left green line */
+            padding-left: 10px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
 
+<div class="question">
+    <h3>What is the capital of India?</h3>
+    <ul class="options">
+        <li data-correct="false">Mumbai</li>
+        <li data-correct="false">Chennai</li>
+        <li data-correct="true">New Delhi</li>
+        <li data-correct="false">Kolkata</li>
+    </ul>
+    <div class="explanation">New Delhi is the capital of India and serves as the center of the Government of India.</div>
+</div>
 
-                <div class="question">
-                    <h3>heloo</h3>
-                    <ul class="options">
-                        <li data-correct="true">h</li>
-                        <li data-correct="false">hb</li>
-                        <li data-correct="false">jh</li>
-                        <li data-correct="false">h</li>
-                    </ul>
-                    <div class="explanation">jb</div>
-                </div>
-            
+<div class="question">
+    <h3>Who is known as the 'Father of the Nation' in India?</h3>
+    <ul class="options">
+        <li data-correct="false">Jawaharlal Nehru</li>
+        <li data-correct="true">Mahatma Gandhi</li>
+        <li data-correct="false">Subhas Chandra Bose</li>
+        <li data-correct="false">Dr. B.R. Ambedkar</li>
+    </ul>
+    <div class="explanation">Mahatma Gandhi is called the 'Father of the Nation' due to his pivotal role in India's freedom struggle.</div>
+</div>
 
-                <div class="question">
-                    <h3>heloo</h3>
-                    <ul class="options">
-                        <li data-correct="true">h</li>
-                        <li data-correct="false">hb</li>
-                        <li data-correct="false">jh</li>
-                        <li data-correct="false">h</li>
-                    </ul>
-                    <div class="explanation">jb</div>
-                </div>
-            
+<script>
+    const questions = document.querySelectorAll('.question');
+
+    questions.forEach(question => {
+        const options = question.querySelectorAll('.options li');
+        const explanation = question.querySelector('.explanation');
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // Disable all options after the first click
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none'; // Prevent further clicks
+                });
+
+                // Check if the clicked option is correct
+                if (option.getAttribute('data-correct') === 'true') {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('wrong');
+                    // Highlight the correct answer
+                    options.forEach(opt => {
+                        if (opt.getAttribute('data-correct') === 'true') {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+                explanation.style.display = 'block'; // Show explanation
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
