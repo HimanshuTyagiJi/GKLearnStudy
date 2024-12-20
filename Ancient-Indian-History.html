@@ -66,7 +66,7 @@
         }
 }
       .container{margin-top:100px;}
-        .question { 
+        .questions { 
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 15px;
@@ -75,11 +75,7 @@
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 15px;
-    padding: 15px;
-    position: inherit;
-    left: none;
-    transform: none;
-    width: 92%;
+   
         }
     
         .options {font-weight:100;
@@ -113,7 +109,7 @@
 </head>
 <body><div class="container">
 
-            <div class="question">
+            <div class="questions">
                 <h3>hello</h3>
                 <ul class="options">
                     <li data-correct="true">hi</li>
@@ -126,7 +122,7 @@
         
 
            
-<div class="question">
+<div class="questions">
     <h3>What is the capital of India?</h3>
     <ul class="options">
         <li data-correct="false">Mumbai</li>
@@ -137,7 +133,7 @@
     <div class="explanation">New Delhi is the capital of India and serves as the center of the Government of India.</div>
 </div>
 
-<div class="question">
+<div class="questions">
     <h3>Who is known as the 'Father of the Nation' in India?</h3>
     <ul class="options">
         <li data-correct="false">Jawaharlal Nehru</li>
@@ -174,11 +170,11 @@
         <script src="./script.js"></script>
         <script src="./search.js"></script>
 <script>
-    const questions = document.querySelectorAll('.question');
+    const questions = document.querySelectorAll('.questions');
 
-    questions.forEach(question => {
-        const options = question.querySelectorAll('.options li');
-        const explanation = question.querySelector('.explanation');
+    questions.forEach(questions => {
+        const options = questions.querySelectorAll('.options li');
+        const explanation = questions.querySelector('.explanation');
 
         options.forEach(option => {
             option.addEventListener('click', () => {
