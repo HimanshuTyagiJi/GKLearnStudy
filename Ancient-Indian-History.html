@@ -10,7 +10,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./style.css"> 
 </head>
-              
+       <style>
+        body {
+           
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+           
+           
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .options li.correct {
+            background-color: green;
+            color: white;
+        }
+        .options li.wrong {
+            background-color: red;
+            color: white;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            border-left: 5px solid green; /* Left green line */
+            padding-left: 10px;
+            color: black;
+        } h3{font-size:15px;}
+    </style>        
 <body><sidebar>
     <button class="menu-toggle" onclick="toggleMenu()">➤</button>
     <ul class="menu-list" id="menuList">
@@ -51,46 +87,32 @@
     <li><a href="Science-and-Technology-in-Hindi.html">Science & Technology</a></li>
     <li><a href="Mathematical-GK.html">Mathematical GK</a></li><br><br><li></li>
 </ul>
+</sidebar> <main class="container">
 
-    <style>
-        body {
-           
-            padding: 20px;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 10px;
-           
-           
-        }
-        .options {
-            list-style-type: none;
-            padding: 0;
-        }
-        .options li {
-            padding: 10px;
-            margin: 5px 0;
-            cursor: pointer;
-            border: 1px solid #ccc;
-        }
-        .options li.correct {
-            background-color: green;
-            color: white;
-        }
-        .options li.wrong {
-            background-color: red;
-            color: white;
-        }
-        .explanation {
-            display: none;
-            margin-top: 10px;
-            border-left: 5px solid green; /* Left green line */
-            padding-left: 10px;
-            color: black;
-        } h3{font-size:15px;}
-    </style>
-</head>
-<body><div class="container">
+    <form id="searchForm" onsubmit="performSearch(event);">
+      <div class="search-container">
+        <span class="search-icon" id="searchIcon">
+          <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+        </span>
+        <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
+          oninput="updateSuggestions(event)">
+        <button type="button" id="searchButton" onclick="performSearch()">Search</button>
+      </div>
+      <div id="suggestions" class="suggestions-list"></div>
+    </form>
+
+    <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
+      <div class="modal1-content">
+        <span class="close" onclick="closeModal1(event)">&times;</span>
+        <h2>Search Results</h2>
+        <div id="results"></div>
+      </div>
+    </div>
+  </main>
+     
+ <div class="container">
+   
+
 
            
 <div class="question">
