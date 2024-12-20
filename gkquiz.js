@@ -1,5 +1,19 @@
 // gkquiz.js
 
+// This will hold the total number of questions across all pages
+let totalQuestions = 0;
+
+// Function to auto-number questions
+function autoNumberQuestions() {
+    const questions = document.querySelectorAll('.questions');
+    questions.forEach((question, index) => {
+        const questionNumber = totalQuestions + index + 1; // Total questions + index + 1 for current question
+        const questionHeader = question.querySelector('h3');
+        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
+    });
+    totalQuestions += questions.length; // Update the total question count
+}
+
 // Function to set up pagination
 function setupQuizPage(currentPage, totalPages) {
     const paginationContainer = document.querySelector('.pagination');
@@ -42,21 +56,12 @@ function setupQuizPage(currentPage, totalPages) {
     paginationContainer.appendChild(paginationList);
 }
 
-// Function to auto-number questions
-function autoNumberQuestions() {
-    const questions = document.querySelectorAll('.questions');
-    questions.forEach((question, index) => {
-        const questionHeader = question.querySelector('h3');
-        questionHeader.innerHTML = `Q-${index + 1}: ${questionHeader.innerHTML}`;
-    });
-}
-
 // Initialize the quiz page
 document.addEventListener('DOMContentLoaded', () => {
     // Extract current page number from the URL
     const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
-    const totalPages = 50; // Set total number of pages dynamically based on your content
+    const totalPages = document.querySelectorAll('.questions').length; // Total pages based on the number of questions found
 
-    setupQuizPage(currentPage, totalPages);
     autoNumberQuestions();
+    setupQuizPage(currentPage, totalPages);
 });
