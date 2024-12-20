@@ -1,9 +1,8 @@
 // gkquiz.js
 
-// Function to set up pagination and numbering
+// Function to set up pagination
 function setupQuizPage(currentPage, totalPages) {
-    // Set up pagination
-    const paginationContainer = document.querySelector('.paginations');
+    const paginationContainer = document.querySelector('.pagination');
     const paginationList = document.createElement('div');
     paginationList.classList.add('pagination-list');
 
@@ -30,7 +29,7 @@ function setupQuizPage(currentPage, totalPages) {
     paginationList.appendChild(createPageLink(currentPage, true));
 
     // Next Pages
-    for (let i = currentPage + 1; i <= Math.min(totalPages - 1, currentPage + 2); i++) {
+    for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
         paginationList.appendChild(createPageLink(i));
     }
 
@@ -42,7 +41,7 @@ function setupQuizPage(currentPage, totalPages) {
     paginationContainer.innerHTML = ''; // Clear existing pagination
     paginationContainer.appendChild(paginationList);
 
-    // Adjust the style for pagination
+    // Adjust styles for pagination
     const buttons = paginationList.querySelectorAll('.page-link');
     buttons.forEach(button => {
         button.style.margin = '0 5px';
@@ -67,14 +66,15 @@ function setupQuizPage(currentPage, totalPages) {
 function autoNumberQuestions() {
     const questions = document.querySelectorAll('.questions h3');
     questions.forEach((question, index) => {
-        question.innerHTML = `Q-${index + 1}: ${question.innerHTML.replace(/^Q-\d+: /, '')}`;
+        question.innerHTML = `Q-${index + 1}: ${question.innerHTML}`;
     });
 }
 
 // Initialize the quiz page
 document.addEventListener('DOMContentLoaded', () => {
+    // Extract current page number from the URL
     const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)[1], 10);
-    const totalPages = 50; // Set the total number of pages
+    const totalPages = 50; // Set total number of pages
 
     setupQuizPage(currentPage, totalPages);
     autoNumberQuestions();
