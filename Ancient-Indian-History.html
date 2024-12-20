@@ -52,108 +52,103 @@
     <li><a href="Mathematical-GK.html">Mathematical GK</a></li><br><br><li></li>
 </ul>
 
- 
-
-
-    
- 
-  
-
-<div class="container"><style>
-[data-theme="dark"]  {
-        a:visited, a:link {color:black
-                /* color: pink; */
-        
-}
-    .accordion-item {border: 1px solid #273b28;}.accordion { background:rgb(56, 52, 64); border: none;} 
-  .option {border-radius: 15px;padding:5px;width:300px;border: 1px solid #5d5d5d}
-  .option:hover {background-color: rgb(47, 47, 98);
-  }
-    .correct, .correct:hover {
-    color: aliceblue;
-    background-color: green;
-}
-
-.incorrect, .incorrect:hover {
-    color: aliceblue;background-color: red;}}
-
-  
-  .accordion {  border: none;background-color: inherit;cursor: auto;} 
-  
-  .accordion-item {
-    border-radius: none;
-    display: flex;
-    flex-direction: column;
-   
-
-      margin-top: 30px;
-      border: 1px solid #15d71c;
-      padding: 10px;
-  }
-  
-  .panel {
-      display: none;
-      margin-top: 10px;
-  }
-  
-  .option {border-radius: 15px;padding:5px;width:300px;border: 1px solid #ccc;
-      display: block;
-      margin-top: 5px;
-      cursor: pointer;
-  }
-  .option:hover {border-radius: 15px;padding:5px;background-color: blue;color:white;
-      display: block;
-      margin-top: 5px;
-      cursor: pointer;
-  }
-  
-  .correct, .correct:hover {
-    color: aliceblue;
-    background-color: green;
-}
-
-.incorrect, .incorrect:hover {
-    color: aliceblue;
-    background-color: red;
-}
-  .pagination {
-      display: flex;
-      list-style: none;
-      padding: 0;
-  }
-  .pagination li {
-      margin: 0 5px;
-  }
-  .pagination a {
-      text-decoration: none;
-      cursor: pointer;
-  }
-  .active {
-      font-weight: bold;
-  }
-  .disabled {
-      pointer-events: none;
-      color: #ccc;
-  }  .translate-btn {
-            margin: 10px 0;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            padding: 10px;
+            margin: 5px 0;
             cursor: pointer;
+            border: 1px solid #ccc;
         }
-        .translate-btn:hover {
-            background-color: #0056b3;
+        .options li.correct {
+            background-color: green;
+            color: white;
         }
-</style>
+        .options li.wrong {
+            background-color: red;
+            color: white;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            border-left: 5px solid green; /* Left green line */
+            padding-left: 10px;
+            color: black;
+        }
+    </style>
 </head>
-<body>
-  <div id="content">
-<input type="text" id="filterInput" placeholder="Filter sections...">
-  <button id="translate-button" class="translate-btn">Translate to Hindi</button>
-<div id="accordion-container"></div>
-<ul id="pagination" class="pagination"></ul>
+<body><div class="container">
+
+           
+<div class="question">
+    <h3>What is the capital of India?</h3>
+    <ul class="options">
+        <li data-correct="false">Mumbai</li>
+        <li data-correct="false">Chennai</li>
+        <li data-correct="true">New Delhi</li>
+        <li data-correct="false">Kolkata</li>
+    </ul>
+    <div class="explanation">New Delhi is the capital of India and serves as the center of the Government of India.</div>
+</div>
+
+<div class="question">
+    <h3>Who is known as the 'Father of the Nation' in India?</h3>
+    <ul class="options">
+        <li data-correct="false">Jawaharlal Nehru</li>
+        <li data-correct="true">Mahatma Gandhi</li>
+        <li data-correct="false">Subhas Chandra Bose</li>
+        <li data-correct="false">Dr. B.R. Ambedkar</li>
+    </ul>
+    <div class="explanation">Mahatma Gandhi is called the 'Father of the Nation' due to his pivotal role in India's freedom struggle.</div>
+</div>
+</div>
+<script>
+    const questions = document.querySelectorAll('.question');
+
+    questions.forEach(question => {
+        const options = question.querySelectorAll('.options li');
+        const explanation = question.querySelector('.explanation');
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // Disable all options after the first click
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none'; // Prevent further clicks
+                });
+
+                // Check if the clicked option is correct
+                if (option.getAttribute('data-correct') === 'true') {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('wrong');
+                    // Highlight the correct answer
+                    options.forEach(opt => {
+                        if (opt.getAttribute('data-correct') === 'true') {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+                explanation.style.display = 'block'; // Show explanation
+            });
+        });
+    });
+</script>
+
+
 
 <hr>
  <div class="important_link">
@@ -179,702 +174,6 @@
         <script src="./menusearch.js"></script>
         <script src="./script.js"></script>
         <script src="./search.js"></script>
-<script>var accordionContainer = document.getElementById("accordion-container");
-var filterInput = document.getElementById("filterInput");
-var paginationContainer = document.getElementById("pagination");
 
-var sections = [
-    
-
-  
-    
-
-
-
-
-
-
-
-
-
-  { title: 'Who was the founder of the Maurya Empire?',
-        options: ['Ashoka', 'Chandragupta Maurya', 'Bindusara', 'Kanishka'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Chandragupta Maurya established the Maurya Empire with the help of Chanakya around 321 BCE.</p>'
-    },
-    {
-        title: 'Which Indian king is referred to as “Devanampriya” in his inscriptions?',
-        options: ['Harsha', 'Ashoka', 'Chandragupta II', 'Samudragupta'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Emperor Ashoka referred to himself as “Devanampriya” meaning “Beloved of the Gods” in his inscriptions.</p>'
-    },
-    {
-        title: 'The Rigveda primarily contains hymns dedicated to which purpose?',
-        options: ['Historical events', 'Religious rituals', 'Agricultural techniques', 'Medical knowledge'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Rigveda contains hymns dedicated to deities and rituals for spiritual and religious purposes.</p>'
-    },
-    {
-        title: 'The term "Dhamma" in Ashokan inscriptions refers to:',
-        options: ['Military conquests', 'Moral and ethical code', 'Economic policies', 'Religious festivals'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Ashoka’s “Dhamma” refers to his ethical principles promoting peace, tolerance, and non-violence.</p>'
-    },
-    {
-        title: 'The Indus Valley Civilization is known for which of the following features?',
-        options: ['Temple architecture', 'Urban planning', 'Script on palm leaves', 'Bronze weapons'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization is famous for its advanced urban planning, including drainage systems and grid-patterned streets.</p>'
-    },
-    {
-        title: 'The Upanishads are primarily focused on:',
-        options: ['Political governance', 'Spiritual and philosophical discussions', 'Economic systems', 'Astronomy'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Upanishads explore spiritual and philosophical concepts such as the self (Atman) and ultimate reality (Brahman).</p>'
-    },
-    {
-        title: 'Who is the author of "Arthashastra"?',
-        options: ['Kalidasa', 'Chanakya', 'Banabhatta', 'Vatsyayana'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> "Arthashastra" was written by Chanakya, also known as Kautilya, as a treatise on governance and economics.</p>'
-    },
-    {
-        title: 'Which is the main occupation mentioned in the Rigvedic period?',
-        options: ['Agriculture', 'Trade', 'Hunting', 'Cattle rearing'],
-        correctOption: 3,
-        content: '<p><span class="color-content4">Explanation: </span> Cattle rearing was the primary occupation during the Rigvedic period, as cattle were a symbol of wealth and livelihood.</p>'
-    },
-    {
-        title: 'What was the chief feature of the Gupta Empire?',
-        options: ['Military conquests', 'Golden age of culture and learning', 'Maritime trade', 'Feudal system'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Gupta Empire is known as the "Golden Age" of India due to significant advancements in science, art, literature, and culture.</p>'
-    },
-    {
-        title: 'Who introduced the “Saptanga Theory” of state?',
-        options: ['Ashoka', 'Kautilya', 'Kalidasa', 'Samudragupta'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Kautilya introduced the "Saptanga Theory," which outlines the seven essential elements of a state.</p>'
-    },{
-        title: 'Which site of the Indus Valley Civilization is known for its dockyard?',
-        options: ['Mohenjo-Daro', 'Lothal', 'Harappa', 'Kalibangan'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Lothal, located in present-day Gujarat, is famous for its dockyard and maritime trade.</p>'
-    },
-    {
-        title: 'The Great Bath was found at which site of the Indus Valley Civilization?',
-        options: ['Mohenjo-Daro', 'Harappa', 'Dholavira', 'Rakhigarhi'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> The Great Bath, a remarkable architectural structure, was discovered at Mohenjo-Daro.</p>'
-    },
-    {
-        title: 'What was the main material used in Harappan seals?',
-        options: ['Clay', 'Stone', 'Copper', 'Bronze'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Most Harappan seals were made from stone, especially steatite, and were used for trade and identification purposes.</p>'
-    },
-    {
-        title: 'Who composed the epic “Mahabharata”?',
-        options: ['Valmiki', 'Vyasa', 'Kalidasa', 'Banabhatta'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Sage Vyasa is traditionally credited with composing the epic “Mahabharata.”</p>'
-    },
-    {
-        title: 'Which Veda is considered the oldest?',
-        options: ['Rigveda', 'Samaveda', 'Yajurveda', 'Atharvaveda'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Rigveda is the oldest among the four Vedas and contains hymns dedicated to various deities.</p>'
-    },
-    {
-        title: 'Which dynasty is known for its rock-cut caves at Ajanta?',
-        options: ['Maurya', 'Gupta', 'Satavahana', 'Chola'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> The Satavahana dynasty patronized the rock-cut caves at Ajanta, famous for their paintings and sculptures.</p>'
-    },
-    {
-        title: 'The Sangam literature belongs to which region of India?',
-        options: ['North India', 'Eastern India', 'Southern India', 'Western India'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> The Sangam literature is a collection of Tamil poems and is associated with ancient Southern India.</p>'
-    },
-    {
-        title: 'The concept of “Trimurti” in Hinduism refers to:',
-        options: ['Three Vedas', 'Three Holy Rivers', 'Three Deities', 'Three Scriptures'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> The Trimurti represents the three primary deities: Brahma (Creator), Vishnu (Preserver), and Shiva (Destroyer).</p>'
-    },
-    {
-        title: 'Who was the last ruler of the Nanda dynasty?',
-        options: ['Mahapadma Nanda', 'Dhanananda', 'Chandragupta Maurya', 'Ashoka'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Dhanananda was the last ruler of the Nanda dynasty, overthrown by Chandragupta Maurya with the help of Chanakya.</p>'
-    },
-    {
-        title: 'Which Gupta ruler assumed the title “Vikramaditya”?',
-        options: ['Chandragupta I', 'Samudragupta', 'Chandragupta II', 'Skandagupta'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> Chandragupta II assumed the title “Vikramaditya” and is known for his administrative efficiency and patronage of art.</p>'
-    },
-    {
-        title: 'Who was the main deity worshipped in the Vedic period?',
-        options: ['Brahma', 'Shiva', 'Indra', 'Vishnu'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> Indra, the god of rain and thunder, was the most revered deity during the Vedic period.</p>'
-    },
-    {
-        title: 'Ashoka’s inscriptions were primarily written in which script?',
-        options: ['Brahmi', 'Kharosthi', 'Devanagari', 'Tamil'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Most of Ashoka’s inscriptions were written in the Brahmi script, though some in the northwest used Kharosthi.</p>'
-    },
-    {
-        title: 'The Buddhist teachings are compiled in which collection?',
-        options: ['Vedas', 'Tripitaka', 'Upanishads', 'Mahabharata'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Tripitaka, meaning "Three Baskets," is the sacred text of Buddhism containing its teachings.</p>'
-    },
-    {
-        title: 'The Harappan civilization flourished during which age?',
-        options: ['Stone Age', 'Iron Age', 'Bronze Age', 'Copper Age'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> The Harappan civilization is also known as the Bronze Age Civilization due to the use of bronze tools and artifacts.</p>'
-    },
-    {
-        title: 'Who was the chief architect of the ancient Nalanda University?',
-        options: ['Harsha', 'Kumaragupta', 'Ashoka', 'Chandragupta Maurya'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Kumaragupta I of the Gupta dynasty established the famous Nalanda University, a center for learning and scholarship.</p>'
-    },
-    {
-        title: 'What is the literal meaning of “Ashrama” in the Vedic system?',
-        options: ['Stage of life', 'Sacred text', 'Place of worship', 'Meditation'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> “Ashrama” refers to the four stages of life in the Vedic system: Brahmacharya, Grihastha, Vanaprastha, and Sannyasa.</p>'
-    },
-    {
-        title: 'Who is considered the founder of Jainism?',
-        options: ['Mahavira', 'Rishabhanatha', 'Parshvanatha', 'Buddha'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Rishabhanatha is considered the first Tirthankara and founder of Jainism.</p>'
-    },
-    {
-        title: 'Which ruler is known for the Kalinga War?',
-        options: ['Samudragupta', 'Chandragupta Maurya', 'Ashoka', 'Bindusara'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> Ashoka fought the Kalinga War, which led to his transformation and adoption of Buddhism.</p>'
-    },
-    {
-        title: 'Which dynasty built the famous Sanchi Stupa?',
-        options: ['Maurya', 'Gupta', 'Kushan', 'Satavahana'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> The Sanchi Stupa was originally commissioned by Emperor Ashoka of the Maurya dynasty.</p>'
-    }, {
-        title: 'The Indus Valley Civilization is also known as:',
-        options: ['Harappan Civilization', 'Vedic Civilization', 'Aryan Civilization', 'Gupta Civilization'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization is also referred to as the Harappan Civilization, named after the site of Harappa where it was first discovered.</p>'
-    },
-    {
-        title: 'Which language were the Vedas originally composed in?',
-        options: ['Pali', 'Sanskrit', 'Prakrit', 'Tamil'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Vedas were composed in Sanskrit, which is considered one of the oldest languages in the world.</p>'
-    },
-    {
-        title: 'What was the primary occupation of the people during the Rigvedic period?',
-        options: ['Agriculture', 'Hunting', 'Trade', 'Cattle rearing'],
-        correctOption: 3,
-        content: '<p><span class="color-content4">Explanation: </span> During the Rigvedic period, cattle rearing was the primary occupation of the people and a measure of wealth.</p>'
-    },
-    {
-        title: 'Who was the founder of the Maurya Empire?',
-        options: ['Bindusara', 'Chandragupta Maurya', 'Ashoka', 'Chanakya'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Chandragupta Maurya, guided by Chanakya, founded the Maurya Empire in 321 BCE.</p>'
-    },
-    {
-        title: 'The term “Upanishad” literally means:',
-        options: ['Knowledge', 'Meditation', 'Sitting near', 'Scripture'],
-        correctOption: 2,
-        content: '<p><span class="color-content4">Explanation: </span> The term “Upanishad” means "sitting near" and refers to the transmission of spiritual knowledge from teacher to disciple.</p>'
-    },
-    {
-        title: 'Who wrote the Arthashastra?',
-        options: ['Chanakya', 'Kalidasa', 'Vyasa', 'Patanjali'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Chanakya, also known as Kautilya, wrote the Arthashastra, a treatise on statecraft, economics, and military strategy.</p>'
-    },
-    {
-        title: 'Which dynasty is associated with the iron pillar at Mehrauli in Delhi?',
-        options: ['Maurya', 'Gupta', 'Kushan', 'Chola'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The iron pillar at Mehrauli in Delhi is attributed to Chandragupta II of the Gupta dynasty.</p>'
-    },
-    {
-        title: 'The Buddhist Council at Rajagriha was held under the patronage of:',
-        options: ['Ashoka', 'Ajatashatru', 'Bimbisara', 'Kanishka'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The First Buddhist Council was held at Rajagriha under the patronage of King Ajatashatru.</p>'
-    },
-    {
-        title: 'Which ancient text is known as the “Fifth Veda”?',
-        options: ['Mahabharata', 'Ramayana', 'Bhagavad Gita', 'Puranas'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> The Mahabharata is often referred to as the “Fifth Veda” due to its philosophical depth and cultural significance.</p>'
-    },
-    {
-        title: 'The worship of the mother goddess was a prominent feature of which civilization?',
-        options: ['Indus Valley Civilization', 'Vedic Civilization', 'Gupta Empire', 'Mauryan Empire'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> The Indus Valley Civilization had a strong tradition of worshipping the mother goddess, symbolizing fertility.</p>'
-    },
-    {
-        title: 'Which Mauryan ruler is known as “Amitraghata” (Slayer of Enemies)?',
-        options: ['Ashoka', 'Bindusara', 'Chandragupta Maurya', 'Samudragupta'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Bindusara, the son of Chandragupta Maurya, was known as “Amitraghata” due to his military conquests.</p>'
-    },
-    {
-        title: 'The ancient city of Taxila was an important center for:',
-        options: ['Art', 'Education', 'Trade', 'Administration'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Taxila was a renowned center of education and learning in ancient India, attracting scholars from across the world.</p>'
-    },
-    {
-        title: 'Who among the following was a Jain Tirthankara?',
-        options: ['Buddha', 'Mahavira', 'Chanakya', 'Shankaracharya'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Mahavira was the 24th and last Tirthankara of Jainism, responsible for propagating its principles.</p>'
-    },
-    {
-        title: 'What is the Harappan script classified as?',
-        options: ['Alphabetic', 'Pictographic', 'Cuneiform', 'Hieroglyphic'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Harappan script is classified as pictographic, consisting of symbols and images.</p>'
-    },
-    {
-        title: 'What was the primary export item of the Indus Valley Civilization?',
-        options: ['Cotton textiles', 'Bronze artifacts', 'Iron tools', 'Spices'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Cotton textiles were a primary export item of the Indus Valley Civilization, indicating advanced textile skills.</p>'
-    },
-    {
-        title: 'Who was the ruler of Magadha during Alexander’s invasion of India?',
-        options: ['Chandragupta Maurya', 'Dhanananda', 'Bimbisara', 'Ajatashatru'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Dhanananda was the ruler of Magadha when Alexander invaded India.</p>'
-    },
-    {
-        title: 'The Rigvedic society was primarily:',
-        options: ['Urban', 'Nomadic', 'Agricultural', 'Industrial'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Rigvedic society was primarily nomadic, though it later transitioned to settled agricultural practices.</p>'
-    },
-    {
-        title: 'Which Buddhist king convened the Third Buddhist Council?',
-        options: ['Ashoka', 'Kanishka', 'Harsha', 'Ajatashatru'],
-        correctOption: 0,
-        content: '<p><span class="color-content4">Explanation: </span> Ashoka convened the Third Buddhist Council to purify Buddhism and spread its teachings.</p>'
-    },
-    {
-        title: 'The earliest evidence of agriculture in the Indian subcontinent was found at:',
-        options: ['Harappa', 'Mehrgarh', 'Mohenjo-Daro', 'Dholavira'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> Mehrgarh in present-day Pakistan provides the earliest evidence of agriculture in the Indian subcontinent.</p>'
-    },
-    {
-        title: 'Which river is associated with the Sarasvati civilization?',
-        options: ['Indus', 'Sarasvati', 'Ganga', 'Yamuna'],
-        correctOption: 1,
-        content: '<p><span class="color-content4">Explanation: </span> The Sarasvati River is believed to have supported the Sarasvati civilization, a contemporary of the Indus Valley Civilization.</p>'
-    }
-      
-
- ];
-var filteredSections = sections.slice(); // Copy of sections
-var itemsPerPage = 20;
-var currentPage = 1;
-
-function showSections(startIndex) {
-    accordionContainer.innerHTML = "";
-    for (var i = startIndex; i < Math.min(startIndex + itemsPerPage, filteredSections.length); i++) {
-        (function(i) {
-            var section = filteredSections[i];
-            var accordionItem = document.createElement("div");
-            accordionItem.className = "accordion-item";
-
-            var titleBox = document.createElement("div");
-            titleBox.className = "accordion";
-            titleBox.innerHTML = "Q-" + (i + 1) + ": " + section.title;
-
-           
-
-            var optionsBox = document.createElement("div");
-            optionsBox.className = "options";
-
-            var panel = document.createElement("div");
-            panel.className = "panel";
-            panel.innerHTML = section.content;
-            section.options.forEach((option, optionIndex) => {
-                var optionElement = document.createElement("div");
-                optionElement.className = "option";
-                optionElement.innerHTML = option;
-
-                optionElement.addEventListener("click", function() {
-                   if (!optionsBox.classList.contains('answered')) {
-                            if (optionIndex === section.correctOption) {
-                                optionElement.classList.add("correct");
-                            } else {
-                                optionElement.classList.add("incorrect");
-                                optionsBox.children[section.correctOption].classList.add("correct");
-                            }
-                            optionsBox.classList.add('answered'); // Prevent further clicks
-                            panel.style.display = "block";
-                            
-                        }
-                    });
-
-    <!-- JavaScript -->
-                    optionsBox.appendChild(optionElement);
-                });
-
-
-           
-            
-            accordionItem.appendChild(titleBox);
-            accordionItem.appendChild(optionsBox);
-            accordionItem.appendChild(panel);
-
-            accordionContainer.appendChild(accordionItem);
-        })(i);
-    }
-}
-function updatePagination() {
-    paginationContainer.innerHTML = "";
-    var totalPages = Math.ceil(filteredSections.length / itemsPerPage);
-
-    var firstPageButton = document.createElement("li");
-    var firstPageLink = document.createElement("a");
-    firstPageLink.href = "#";
-    firstPageLink.textContent = "First Page";
-    firstPageButton.appendChild(firstPageLink);
-    firstPageButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        currentPage = 1;
-        showSections(0);
-        updatePagination();
-    });
-
-    var prevButton = document.createElement("li");
-    var prevLink = document.createElement("a");
-    prevLink.href = "#";
-    prevLink.textContent = "Previous";
-    prevButton.appendChild(prevLink);
-    prevButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        if (currentPage > 1) {
-            currentPage--;
-            showSections((currentPage - 1) * itemsPerPage);
-            updatePagination();
-        }
-    });
-
-    paginationContainer.appendChild(firstPageButton);
-    paginationContainer.appendChild(prevButton);
-
-    for (var i = 1; i <= totalPages; i++) {
-        var listItem = document.createElement("li");
-        var link = document.createElement("a");
-        link.href = "#";
-        link.textContent = i;
-        if (i === currentPage) {
-            link.classList.add("active");
-        }
-        link.addEventListener("click", function(e) {
-            e.preventDefault();
-            currentPage = parseInt(this.textContent);
-            showSections((currentPage - 1) * itemsPerPage);
-            updatePagination();
-        });
-        listItem.appendChild(link);
-        paginationContainer.appendChild(listItem);
-    }
-
-    var nextButton = document.createElement("li");
-    var nextLink = document.createElement("a");
-    nextLink.href = "#";
-    nextLink.textContent = "Next";
-    nextButton.appendChild(nextLink);
-    nextButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        if (currentPage < totalPages) {
-            currentPage++;
-            showSections((currentPage - 1) * itemsPerPage);
-            updatePagination();
-        }
-    });
-
-    var lastPageButton = document.createElement("li");
-    var lastPageLink = document.createElement("a");
-    lastPageLink.href = "#";
-    lastPageLink.textContent = "Last Page";
-    lastPageButton.appendChild(lastPageLink);
-    lastPageButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        currentPage = totalPages;
-        showSections((totalPages - 1) * itemsPerPage);
-        updatePagination();
-    });
-
-    paginationContainer.appendChild(nextButton);
-    paginationContainer.appendChild(lastPageButton);
-
-    if (currentPage === 1) {
-        firstPageButton.style.display = "none";
-        prevButton.style.display = "none";
-    } else {
-        firstPageButton.style.display = "inline-block";
-        prevButton.style.display = "inline-block";
-    }
-    
-    if (currentPage === totalPages) {
-        nextButton.style.display = "none";
-        lastPageButton.style.display = "none";
-    } else {
-        nextButton.style.display = "inline-block";
-        lastPageButton.style.display = "inline-block";
-    }
-    
-}
-
-function searchContent() {
-    var query = filterInput.value.toLowerCase().trim();
-    if (query === "") {
-        filteredSections = sections.slice();
-    } else {
-        filteredSections = sections.filter(function(section) {
-            return section.title.toLowerCase().includes(query) || 
-                   section.options.some(option => option.toLowerCase().includes(query)) || 
-                   section.content.toLowerCase().includes(query);
-        });
-    }
-    currentPage = 1;
-    showSections(0);
-    updatePagination();
-}
-
-filterInput.addEventListener("input", searchContent);
-
-showSections(0);
-updatePagination();</script>
-    
-    
-    
-    
-    
-     <script>
-    var accordionContainer = document.getElementById("accordion-container");
-    var translateButton = document.getElementById("translate-button");
-    var isHindi = false; // Track current language
-
-
-
-    // Function to display only two sections
-    function displaySections() {
-        accordionContainer.innerHTML = ""; // Clear container
-
-        // Display only the first two sections
-        sections.slice(0, 20).forEach((section, index) => {
-            var accordionItem = document.createElement("div");
-            accordionItem.className = "accordion-item";
-
-            var title = document.createElement("div");
-            title.className = "accordion";
-            title.textContent = `Q-${index + 1}: ${section.title}`;
-
-            var optionsBox = document.createElement("div");
-            optionsBox.className = "options";
-
-            var panel = document.createElement("div");
-            panel.className = "panel";
-            panel.innerHTML = section.content;
-
-            section.options.forEach((option, optionIndex) => {
-                var optionElement = document.createElement("div");
-                optionElement.className = "option";
-                optionElement.textContent = option;
-
-                optionElement.addEventListener("click", function () {
-                    if (!optionsBox.classList.contains('answered')) {
-                        if (optionIndex === section.correctOption) {
-                            optionElement.classList.add("correct");
-                        } else {
-                            optionElement.classList.add("incorrect");
-                            optionsBox.children[section.correctOption].classList.add("correct");
-                        }
-                        optionsBox.classList.add('answered'); // Mark answered
-                        panel.style.display = "block";
-                    }
-                });
-
-                optionsBox.appendChild(optionElement);
-            });
-
-            accordionItem.appendChild(title);
-            accordionItem.appendChild(optionsBox);
-            accordionItem.appendChild(panel);
-
-            accordionContainer.appendChild(accordionItem);
-        });
-    }
-
-   // Function to display sections based on current page
-function displaySectionsOnCurrentPage() {
-    var startIndex = (currentPage - 1) * itemsPerPage;
-    showSections(startIndex);
-    updatePagination();
-}
-
-// Function to toggle translation
-async function toggleTranslation() {
-    isHindi = !isHindi;
-
-    // Translate titles, options, and content
-    for (var i = 0; i < sections.length; i++) {
-        sections[i].title = await translateText(sections[i].title, isHindi);
-        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
-        sections[i].content = await translateText(sections[i].content, isHindi);
-    }
-
-    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
-    displaySectionsOnCurrentPage(); // Reload current page after translation
-}
-
-// Function to translate text in bulk for each section
-async function translateTextBatch(texts, toHindi) {
-    const sourceLang = toHindi ? "en" : "hi";
-    const targetLang = toHindi ? "hi" : "en";
-    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(texts.join('|'))}`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const translatedTexts = data[0].map(sentence => sentence[0]);
-
-        // Split back the translated texts
-        return translatedTexts[0].split('|');
-    } catch (error) {
-        console.error("Translation failed:", error);
-        return texts; // Return original texts if translation fails
-    }
-}
-
-// Add a loading message and progress bar
-var loadingMessage = document.createElement("div");
-loadingMessage.id = "loading-message";
-loadingMessage.textContent = "Processing... Please Wait";
-loadingMessage.style.position = "fixed";
-loadingMessage.style.top = "50%";
-loadingMessage.style.left = "50%";
-loadingMessage.style.transform = "translate(-50%, -50%)";
-loadingMessage.style.padding = "20px";
-loadingMessage.style.backgroundColor = "#f9f9f9";
-loadingMessage.style.border = "2px solid #ddd";
-loadingMessage.style.borderRadius = "10px";
-loadingMessage.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
-loadingMessage.style.display = "none"; // Hidden initially
-document.body.appendChild(loadingMessage);
-
-// Create progress bar element
-var progressBar = document.createElement("div");
-progressBar.id = "progress-bar";
-progressBar.style.height = "20px";
-progressBar.style.backgroundColor = "#f3f3f3";
-progressBar.style.borderRadius = "10px";
-progressBar.style.marginTop = "20px";
-loadingMessage.appendChild(progressBar);
-
-var progress = document.createElement("div");
-progress.style.height = "100%";
-progress.style.backgroundColor = "#4caf50";
-progress.style.width = "0%";
-progressBar.appendChild(progress);
-
-// Create count element
-var countDisplay = document.createElement("div");
-countDisplay.id = "count-display";
-countDisplay.style.marginTop = "10px";
-countDisplay.style.fontSize = "18px";
-countDisplay.style.fontWeight = "bold";
-loadingMessage.appendChild(countDisplay);
-
-// Function to toggle translation
-async function toggleTranslation() {
-    isHindi = !isHindi;
-
-    // Show loading message
-    loadingMessage.style.display = "block";
-
-    // Translate titles, options, and content
-    let totalItems = sections.length * 3; // Title, options, and content
-    let translatedItems = 0;
-
-    // Helper function to update progress bar and count
-    function updateProgress() {
-        let percentage = (translatedItems / totalItems) * 100;
-        progress.style.width = `${percentage}%`;
-        countDisplay.textContent = `Translating... ${translatedItems} of ${totalItems} items translated (${Math.round(percentage)}%)`;
-    }
-
-    // Translate each section and update progress
-    for (var i = 0; i < sections.length; i++) {
-        sections[i].title = await translateText(sections[i].title, isHindi);
-        translatedItems++;
-        updateProgress();
-
-        sections[i].options = await Promise.all(sections[i].options.map(option => translateText(option, isHindi)));
-        translatedItems++;
-        updateProgress();
-
-        sections[i].content = await translateText(sections[i].content, isHindi);
-        translatedItems++;
-        updateProgress();
-    }
-
-    // Update button text
-    translateButton.textContent = isHindi ? "Translate to English" : "Translate to Hindi";
-
-    // Hide loading message after translation
-    loadingMessage.style.display = "none";
-
-    // Reload current page after translation
-    displaySectionsOnCurrentPage();
-}
-
-// Function to translate text
-async function translateText(text, toHindi) {
-    const sourceLang = toHindi ? "en" : "hi";
-    const targetLang = toHindi ? "hi" : "en";
-
-    const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        return data[0].map(sentence => sentence[0]).join("");
-    } catch (error) {
-        console.error("Translation failed:", error);
-        return text; // Fallback to original text
-    }
-}
-
-// Event Listeners
-translateButton.addEventListener("click", toggleTranslation);
-
-// Initialize
-displaySections(0);
-updatePagination();
-
-
-</script>
 </body>
 </html>
