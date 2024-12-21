@@ -1,17 +1,14 @@
-// gkquiz.js
-
-// Initialize an empty array to store all questions
-let questionsArray = [];
+// Global variable to track the total number of questions
+let globalQuestionCount = 0;
 
 // Function to auto-number questions
 function autoNumberQuestions() {
     const questions = document.querySelectorAll('.questions');
-    questions.forEach((question, index) => {
-        const questionNumber = questionsArray.length + index + 1; // Total questions so far + index + 1 for current question
+    questions.forEach((question) => {
         const questionHeader = question.querySelector('h3');
-        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
+        globalQuestionCount += 1; // Increment the global question count
+        questionHeader.innerHTML = `Q-${globalQuestionCount}: ${questionHeader.innerHTML}`;
     });
-    questionsArray = questionsArray.concat(Array.from(questions)); // Append the current page's questions to the global array
 }
 
 // Function to set up pagination
@@ -56,14 +53,29 @@ function setupQuizPage(currentPage, totalPages) {
     paginationContainer.appendChild(paginationList);
 }
 
+// Function to load global question count from localStorage
+function loadGlobalQuestionCount() {
+    const storedCount = localStorage.getItem('globalQuestionCount');
+    return storedCount ? parseInt(storedCount, 10) : 0;
+}
+
+// Function to save global question count to localStorage
+function saveGlobalQuestionCount() {
+    localStorage.setItem('globalQuestionCount', globalQuestionCount);
+}
+
 // Initialize the quiz page
 document.addEventListener('DOMContentLoaded', () => {
+    // Load the global question count
+    globalQuestionCount = loadGlobalQuestionCount();
+
     // Extract current page number from the URL
-    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
-    
-    // Count the total number of pages
-    const totalPages = document.querySelectorAll('.questions').length > 0 ? document.querySelectorAll('.questions').length : 1;
+    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10) || 1;
+
+    // Total pages (you might want to dynamically determine this)
+    const totalPages = 5; // Adjust this value based on your pagination structure
 
     autoNumberQuestions();
+    saveGlobalQuestionCount(); // Save the updated question count to localStorage
     setupQuizPage(currentPage, totalPages);
 });
