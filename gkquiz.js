@@ -50,8 +50,9 @@ autoNumberQuestions(startingNumber);
                 text-align: center;
                 margin: 20px 0;
             }
-            .paginations a:link {
-                color: white;
+            .paginations a:link, 
+            .paginations a:visited {
+                color: white; /* Make visited links white */
             }
             .button {
                 display: inline-block;
@@ -69,7 +70,7 @@ autoNumberQuestions(startingNumber);
                 transform: scale(1.05);
             }
             .button:active {
-                background-color: #003f7f;
+                background-color: green;
             }
         `;
         
