@@ -1,69 +1,72 @@
-// gkquiz.js
+// Helper function: पिछले सभी पेजों के सवाल गिनें
+function countQuestionsOnPreviousPages() {
+    const pageMatch = location.pathname.match(/page(\d+)\.html/);
+    if (!pageMatch) return 0;
 
-// Initialize an empty array to store all questions
-let questionsArray = [];
+    const currentPageNumber = parseInt(pageMatch[1], 10);
+    let totalQuestions = 0;
 
-// Function to auto-number questions
-function autoNumberQuestions() {
-    const questions = document.querySelectorAll('.questions');
-    questions.forEach((question, index) => {
-        const questionNumber = questionsArray.length + index + 1; // Total questions so far + index + 1 for current question
-        const questionHeader = question.querySelector('h3');
-        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
-    });
-    questionsArray = questionsArray.concat(Array.from(questions)); // Append the current page's questions to the global array
-}
+    for (let i = 1; i < currentPageNumber; i++) {
+        // हर पेज का URL बनाएं
+        const pageUrl = `page${i}.html`;
 
-// Function to set up pagination
-function setupQuizPage(currentPage, totalPages) {
-    const paginationContainer = document.querySelector('.pagination');
-    const paginationList = document.createElement('div');
-    paginationList.classList.add('pagination-list');
+        // Synchronous request (क्योंकि सवाल गिनने हैं)
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", pageUrl, false); // `false` -> synchronous request
+        xhr.send();
 
-    const createPageLink = (pageNumber, isActive = false) => {
-        const link = document.createElement('a');
-        link.href = `page${pageNumber}.html`; // Adjust this according to your page structure
-        link.textContent = pageNumber;
-        link.classList.add('page-link');
-        if (isActive) {
-            link.classList.add('active');
+        if (xhr.status === 200) {
+            // जवाब से सवाल गिनें
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = xhr.responseText;
+
+            const questions = tempDiv.querySelectorAll(".questions");
+            totalQuestions += questions.length;
         }
-        return link;
-    };
-
-    // Always show the first page
-    paginationList.appendChild(createPageLink(1));
-
-    // Previous pages (up to 2 before current)
-    for (let i = Math.max(2, currentPage - 2); i < currentPage; i++) {
-        paginationList.appendChild(createPageLink(i));
     }
 
-    // Current page
-    paginationList.appendChild(createPageLink(currentPage, true));
-
-    // Next pages (up to 2 after current)
-    for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
-        paginationList.appendChild(createPageLink(i));
-    }
-
-    // Last page if it's greater than the first
-    if (totalPages > 1) {
-        paginationList.appendChild(createPageLink(totalPages));
-    }
-
-    paginationContainer.innerHTML = ''; // Clear existing pagination
-    paginationContainer.appendChild(paginationList);
+    return totalQuestions;
 }
 
-// Initialize the quiz page
-document.addEventListener('DOMContentLoaded', () => {
-    // Extract current page number from the URL
-    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
-    
-    // Count the total number of pages
-    const totalPages = document.querySelectorAll('.questions').length > 0 ? document.querySelectorAll('.questions').length : 1;
+// Helper function: सवालों की नंबरिंग सेट करें
+function setQuestionNumbers(startFrom) {
+    const questions = document.querySelectorAll(".questions h3");
+    questions.forEach((question, index) => {
+        question.textContent = `Q-${startFrom + index + 1}: ${question.textContent}`;
+    });
+}
 
-    autoNumberQuestions();
-    setupQuizPage(currentPage, totalPages);
-});
+// Helper function: Pagination सेट करें
+function setupPagination() {
+    const paginationDiv = document.getElementById("pagination");
+
+    // पहले और बाद के पेज के लिए लिंक बनाएं
+    const pageMatch = location.pathname.match(/page(\d+)\.html/);
+    const currentPageNumber = pageMatch ? parseInt(pageMatch[1], 10) : 1;
+
+    // Previous Page Link
+    if (currentPageNumber > 1) {
+        const prevLink = document.createElement("a");
+        prevLink.href = `page${currentPageNumber - 1}.html`;
+        prevLink.textContent = "Previous";
+        paginationDiv.appendChild(prevLink);
+    }
+
+    // Current Page
+    const currentPage = document.createElement("span");
+    currentPage.textContent = ` Page ${currentPageNumber} `;
+    paginationDiv.appendChild(currentPage);
+
+    // Next Page Link
+    const nextLink = document.createElement("a");
+    nextLink.href = `page${currentPageNumber + 1}.html`;
+    nextLink.textContent = "Next";
+    paginationDiv.appendChild(nextLink);
+}
+
+// Main Function
+(function main() {
+    const previousQuestionsCount = countQuestionsOnPreviousPages();
+    setQuestionNumbers(previousQuestionsCount);
+    setupPagination();
+})();
