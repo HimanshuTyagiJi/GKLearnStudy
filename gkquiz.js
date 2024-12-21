@@ -74,7 +74,7 @@ const styles = `
         background-color: green;
     }
     .active {
-        background-color: red !important; /* Active page color */
+      
         pointer-events: none; /* Disable click on active page */
     }
 `;
