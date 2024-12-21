@@ -1,8 +1,11 @@
 // URL से पृष्ठ संख्या प्राप्त करने के लिए फ़ंक्शन
 function getPageNumber() {
-    // URL से पृष्ठ संख्या प्राप्त करें (उदाहरण के लिए, "?page=1" या "?page=2" के साथ)
-    const urlParams = new URLSearchParams(window.location.search);
-    return parseInt(urlParams.get('page')) || 1; // यदि कोई पृष्ठ संख्या नहीं है, तो डिफ़ॉल्ट 1
+    // वर्तमान URL से पृष्ठ संख्या प्राप्त करें
+    const url = window.location.href; // वर्तमान पृष्ठ का URL
+    const pageMatch = url.match(/page(\d+)/); // URL में 'page' के बाद की संख्या निकालें
+
+    // यदि पृष्ठ संख्या मिली तो उसे लौटाएं, अन्यथा डिफ़ॉल्ट 1 लौटाएं
+    return pageMatch ? parseInt(pageMatch[1]) : 1;
 }
 
 // प्रारंभिक संख्या से क्रमांकित प्रश्नों के लिए फ़ंक्शन
