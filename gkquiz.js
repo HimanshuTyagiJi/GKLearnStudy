@@ -82,7 +82,7 @@ autoNumberQuestions(startingNumber);
         document.head.appendChild(styleSheet);
 
         // Total number of pages
-        const totalPages = Last;
+        const totalPages = 20;
         
         // Get the current page from the URL
         const url = window.location.href;
@@ -134,7 +134,7 @@ autoNumberQuestions(startingNumber);
                 // Create Last Page link
                 const lastPageLink = document.createElement('a');
                 lastPageLink.href = `page${totalPages}`;
-                lastPageLink.innerText = totalPages;
+                lastPageLink.innerText = 20;
                 lastPageLink.className = 'button';
                 paginationContainer.appendChild(lastPageLink);
             }
