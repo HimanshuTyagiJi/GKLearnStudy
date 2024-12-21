@@ -43,9 +43,11 @@ autoNumberQuestions(startingNumber);
 
 
 
-
- const totalPages = 20; // Total number of pages
-        let currentPage = 1; // Change this to the current page
+ const totalPages = 20;
+        
+        // Get the current page from the URL
+        const url = window.location.href;
+        const currentPage = parseInt(url.match(/page(\d+)/)[1]) || 1;
 
         function renderPagination(currentPage, totalPages) {
             const paginationContainer = document.querySelector('.pagination');
@@ -53,7 +55,7 @@ autoNumberQuestions(startingNumber);
 
             // Create First Page link
             const firstPageLink = document.createElement('a');
-            firstPageLink.href = `?page=1`;
+            firstPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page1`;
             firstPageLink.innerText = 'First';
             paginationContainer.appendChild(firstPageLink);
 
@@ -74,7 +76,7 @@ autoNumberQuestions(startingNumber);
             // Create page links
             for (let i = startPage; i <= endPage; i++) {
                 const pageLink = document.createElement('a');
-                pageLink.href = `?page=${i}`;
+                pageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${i}`;
                 pageLink.innerText = i;
                 if (i === currentPage) {
                     pageLink.classList.add('active'); // Highlight current page
@@ -84,7 +86,7 @@ autoNumberQuestions(startingNumber);
 
             // Create Last Page link
             const lastPageLink = document.createElement('a');
-            lastPageLink.href = `?page=${totalPages}`;
+            lastPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${totalPages}`;
             lastPageLink.innerText = 'Last';
             paginationContainer.appendChild(lastPageLink);
         }
