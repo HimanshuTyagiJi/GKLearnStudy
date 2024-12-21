@@ -38,3 +38,56 @@ if (pageNumber === 1) {
 
 // प्रश्नों को प्रदर्शित करें
 autoNumberQuestions(startingNumber);
+
+
+
+
+
+
+ const totalPages = 20; // Total number of pages
+        let currentPage = 1; // Change this to the current page
+
+        function renderPagination(currentPage, totalPages) {
+            const paginationContainer = document.querySelector('.pagination');
+            paginationContainer.innerHTML = ''; // Clear previous pagination
+
+            // Create First Page link
+            const firstPageLink = document.createElement('a');
+            firstPageLink.href = `?page=1`;
+            firstPageLink.innerText = 'First';
+            paginationContainer.appendChild(firstPageLink);
+
+            // Calculate the range of pages to show
+            const range = 2; // Number of pages to show around the current page
+            let startPage = Math.max(1, currentPage - range);
+            let endPage = Math.min(totalPages, currentPage + range);
+
+            // Ensure the range is always 5 pages
+            if (endPage - startPage < 4) {
+                if (startPage === 1) {
+                    endPage = Math.min(totalPages, startPage + 4);
+                } else if (endPage === totalPages) {
+                    startPage = Math.max(1, endPage - 4);
+                }
+            }
+
+            // Create page links
+            for (let i = startPage; i <= endPage; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = `?page=${i}`;
+                pageLink.innerText = i;
+                if (i === currentPage) {
+                    pageLink.classList.add('active'); // Highlight current page
+                }
+                paginationContainer.appendChild(pageLink);
+            }
+
+            // Create Last Page link
+            const lastPageLink = document.createElement('a');
+            lastPageLink.href = `?page=${totalPages}`;
+            lastPageLink.innerText = 'Last';
+            paginationContainer.appendChild(lastPageLink);
+        }
+
+        // Render the pagination on page load
+        renderPagination(currentPage, totalPages);
