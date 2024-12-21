@@ -1,89 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question Search</title>
+    <title>Search Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
         }
-        #results {
-            margin-top: 20px;
+        .search-box {
+            margin: 50px auto;
+            max-width: 500px;
+            text-align: center;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .search-box input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
         }
-        li {
-            margin: 5px 0;
+        .search-box input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 </head>
 <body>
-
-    <h1>Question Search</h1>
-    <input type="text" id="searchBox" placeholder="Search questions...">
-    <button onclick="searchQuestions()">Search</button>
-
-    <div id="results">
-        <ul id="resultsList"></ul>
+    <div class="search-box">
+        <h1>Search Ancient Indian History</h1>
+        <form onsubmit="searchTitles(event)">
+            <input type="text" id="search-input" placeholder="Enter title..." required>
+            <input type="submit" value="Search">
+        </form>
     </div>
 
+    <div id="results"></div>
+
     <script>
-       let questions = []; // सभी प्रश्नों को स्टोर करने के लिए एक खाली ऐरे
+        let titles = [];
 
-// XML साइटमैप से प्रश्न लोड करने वाला फ़ंक्शन
-async function loadQuestions() {
-    try {
-        const response = await fetch('https://gklearnstudy.in/sitemap.xml');
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        const questionElements = xmlDoc.getElementsByTagName('url'); // सभी URL तत्व
+        // Function to load and parse sitemap.xml from the given URL
+        async function loadSitemap() {
+            try {
+                const response = await fetch('https://gklearnstudy.in/sitemap.xml');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const text = await response.text();
+                console.log('Sitemap fetched successfully');  // Debugging log
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "application/xml");
+                const urlElements = xmlDoc.getElementsByTagName('url');
 
-        // प्रत्येक प्रश्न से जानकारी प्राप्त करना
-        for (let i = 0; i < questionElements.length; i++) {
-            const url = questionElements[i].getElementsByTagName('loc')[0].textContent;
-            const titleElements = questionElements[i].getElementsByTagName('title');
-            const title = titleElements.length > 0 ? titleElements[0].textContent : ''; // शीर्षक प्राप्त करें
+                for (let urlElement of urlElements) {
+                    const titleElement = urlElement.getElementsByTagName('title')[0];
+                    const locElement = urlElement.getElementsByTagName('loc')[0];
 
-            if (title) { // सुनिश्चित करें कि शीर्षक मौजूद है
-                questions.push({ url, title }); // प्रश्नों को ऐरे में जोड़ना
+                    if (titleElement && locElement) {
+                        titles.push({
+                            title: titleElement.textContent,
+                            url: locElement.textContent
+                        });
+                    }
+                }
+
+                console.log('Titles array:', titles);  // Debugging log
+
+                // Initialize Fuse.js after loading the sitemap
+                fuse = new Fuse(titles, options);
+            } catch (error) {
+                console.error('Error loading sitemap:', error);
             }
         }
 
-        console.log(questions); // प्रश्नों की सूची को कंसोल में प्रिंट करें
+        const options = {
+            includeScore: true,
+            threshold: 0.4,
+            keys: ['title']
+        };
 
-    } catch (error) {
-        console.error('Error loading questions:', error);
-    }
-}
+        let fuse;
 
-// सर्च फ़ंक्शन
-function searchQuestions() {
-    const input = document.getElementById("searchBox").value.toLowerCase(); // यूजर का इनपुट
-    const results = questions.filter(q => q.title.toLowerCase().includes(input)); // सर्च से मेल खाते सवाल छांटें
+        loadSitemap();
 
-    const resultsList = document.getElementById("resultsList");
-    resultsList.innerHTML = ''; // पहले से मौजूद परिणामों को साफ़ करें
+        function searchTitles(event) {
+            event.preventDefault();
+            const query = document.getElementById('search-input').value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
 
-    // परिणाम दिखाएं
-    if (results.length > 0) {
-        results.forEach(q => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `<a href="${q.url}" target="_blank">${q.title}</a>`;
-            resultsList.appendChild(listItem);
-        });
-    } else {
-        resultsList.innerHTML = "<li>No results found</li>";
-    }
-}
-
-// पृष्ठ लोड होने पर प्रश्न लोड करें
-window.onload = loadQuestions;
-
+            if (fuse) {
+                const result = fuse.search(query);
+                if (result.length > 0) {
+                    result.forEach(({ item }) => {
+                        const link = document.createElement('a');
+                        link.href = item.url;
+                        link.textContent = item.title;
+                        resultsDiv.appendChild(link);
+                        resultsDiv.appendChild(document.createElement('br'));
+                    });
+                } else {
+                    resultsDiv.textContent = 'No results found.';
+                }
+            } else {
+                resultsDiv.textContent = 'Sitemap not loaded yet.';
+            }
+        }
     </script>
 </body>
 </html>
