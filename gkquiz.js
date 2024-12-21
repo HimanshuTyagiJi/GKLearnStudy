@@ -1,57 +1,74 @@
-// Number of questions per page
-const QUESTIONS_PER_PAGE = 25;
+// gkquiz.js
 
-// Function to get the current page number from the URL
-function getCurrentPage() {
-    const match = location.pathname.match(/page(\d+)\.html/);
-    return match ? parseInt(match[1], 10) : 1; // Default to 1 if no match
-}
+// Store the number of questions on each page
+const questionsPerPage = [5, 20, 10, 15, 30]; // Example: Number of questions on each page
+let totalQuestions = questionsPerPage.reduce((a, b) => a + b, 0); // Total questions across all pages
 
-// Function to calculate total number of pages dynamically
-function calculateTotalPages(totalQuestions) {
-    return Math.ceil(totalQuestions / QUESTIONS_PER_PAGE); // Total pages calculation
-}
-
-// Function to auto-number questions based on the current page
-function autoNumberQuestions() {
-    const currentPage = getCurrentPage(); // Get current page number
-    const questions = document.querySelectorAll('.questions'); // Select all question elements
-    const startingQuestionNumber = (currentPage - 1) * QUESTIONS_PER_PAGE + 1; // Calculate starting number based on page
-
-    questions.forEach((question, index) => {
-        const questionHeader = question.querySelector('h3'); // Assuming question header is in <h3>
-        const questionNumber = startingQuestionNumber + index; // Sequential number based on current page
-        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`; // Update the header with question number
-    });
-}
-
-// Function to set up pagination dynamically
-function setupQuizPagination(totalQuestions) {
-    const paginationContainer = document.querySelector('.pagination'); // Select pagination container
-    const totalPages = calculateTotalPages(totalQuestions); // Get total pages
-    const currentPage = getCurrentPage(); // Get current page number
-
+// Function to set up pagination
+function setupQuizPage(currentPage, totalPages) {
+    const paginationContainer = document.querySelector('.pagination');
     const paginationList = document.createElement('div');
     paginationList.classList.add('pagination-list');
 
-    for (let page = 1; page <= totalPages; page++) {
+    const createPageLink = (pageNumber, isActive = false) => {
         const link = document.createElement('a');
-        link.href = `page${page}.html`; // Link to the respective page
-        link.textContent = `Page ${page}`; // Display page number
+        link.href = `page${pageNumber}.html`; // Update this to your actual page URL structure
+        link.textContent = pageNumber;
         link.classList.add('page-link');
-        if (page === currentPage) {
-            link.classList.add('active'); // Highlight the current page
+        if (isActive) {
+            link.classList.add('active');
         }
-        paginationList.appendChild(link); // Append link to pagination
+        return link;
+    };
+
+    // First Page
+    paginationList.appendChild(createPageLink(1));
+
+    // Previous Pages
+    for (let i = Math.max(2, currentPage - 2); i < currentPage; i++) {
+        paginationList.appendChild(createPageLink(i));
+    }
+
+    // Current Page
+    paginationList.appendChild(createPageLink(currentPage, true));
+
+    // Next Pages
+    for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
+        paginationList.appendChild(createPageLink(i));
+    }
+
+    // Last Page
+    if (totalPages > 1) {
+        paginationList.appendChild(createPageLink(totalPages));
     }
 
     paginationContainer.innerHTML = ''; // Clear existing pagination
-    paginationContainer.appendChild(paginationList); // Add new pagination
+    paginationContainer.appendChild(paginationList);
+}
+
+// Function to auto-number questions
+function autoNumberQuestions(currentPage) {
+    const questions = document.querySelectorAll('.questions');
+    let questionCounter = 0;
+
+    // Calculate the starting number based on the current page
+    for (let i = 0; i < currentPage - 1; i++) {
+        questionCounter += questionsPerPage[i]; // Increment counter by the number of questions in previous pages
+    }
+
+    questions.forEach((question, index) => {
+        const questionNumber = questionCounter + index + 1;
+        const questionHeader = question.querySelector('h3');
+        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
+    });
 }
 
 // Initialize the quiz page
 document.addEventListener('DOMContentLoaded', () => {
-    const totalQuestions = document.querySelectorAll('.questions').length; // Count total questions
-    autoNumberQuestions(); // Call function to number questions
-    setupQuizPagination(totalQuestions); // Setup pagination
+    // Extract current page number from the URL
+    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
+    const totalPages = questionsPerPage.length; // Total pages based on the questionsPerPage array
+
+    setupQuizPage(currentPage, totalPages);
+    autoNumberQuestions(currentPage);
 });
