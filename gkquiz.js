@@ -31,9 +31,9 @@ let startingNumber = 1; // Default starting number
 if (pageNumber === 1) {
     startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
 } else if (pageNumber === 2) {
-    startingNumber = 5; // page2 के लिए 5 से प्रारंभ करें
+    startingNumber = 25; // page2 के लिए 5 से प्रारंभ करें
 } else {
-    startingNumber = (pageNumber - 1) * 5 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
+    startingNumber = (pageNumber - 1) * 25 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
 }
 
 // प्रश्नों को प्रदर्शित करें
@@ -83,7 +83,7 @@ autoNumberQuestions(startingNumber);
         document.head.appendChild(styleSheet);
 
         // Total number of pages
-        const totalPages = 21;
+        const totalPages = 20;
         
         // Get the current page from the URL
         const url = window.location.href;
