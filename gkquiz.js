@@ -42,13 +42,14 @@ autoNumberQuestions(startingNumber);
 
 
 
-
-     // Add CSS styles
+ // Add CSS styles 
         const styles = `
             .paginations {
                 justify-content: center;
                 text-align: center;
                 margin: 20px 0;
+                display: flex; /* Make the container flex */
+                flex-wrap: wrap; /* Allow wrapping */
             }
             .paginations a:link, 
             .paginations a:visited {
@@ -56,8 +57,8 @@ autoNumberQuestions(startingNumber);
             }
             .button {
                 display: inline-block;
-                margin: 0 10px;
-                padding: 2px 10px;
+                margin: 0 5px; /* Reduced margin for smaller screens */
+                padding: 5px 10px;
                 font-size: 16px;
                 color: white;
                 background-color: #007BFF;
@@ -71,6 +72,12 @@ autoNumberQuestions(startingNumber);
             }
             .button:active {
                 background-color: green;
+            }
+            @media (max-width: 480px) {
+                .button {
+                    flex: 1 0 100%; /* Make buttons full width on mobile */
+                    margin: 5px 0; /* Add vertical margin for better spacing */
+                }
             }
         `;
         
@@ -91,12 +98,15 @@ autoNumberQuestions(startingNumber);
             const paginationContainer = document.querySelector('.paginations');
             paginationContainer.innerHTML = ''; // Clear previous pagination
 
-            // Create First Page link
-            const firstPageLink = document.createElement('a');
-            firstPageLink.href = `page1`;
-            firstPageLink.innerText = 'First';
-            firstPageLink.className = 'button';
-            paginationContainer.appendChild(firstPageLink);
+            // Check if on the first page
+            if (currentPage > 1) {
+                // Create First Page link
+                const firstPageLink = document.createElement('a');
+                firstPageLink.href = `page1`;
+                firstPageLink.innerText = 'First';
+                firstPageLink.className = 'button';
+                paginationContainer.appendChild(firstPageLink);
+            }
 
             // Calculate the range of pages to show
             const range = 2; // Number of pages to show around the current page
@@ -125,12 +135,15 @@ autoNumberQuestions(startingNumber);
                 paginationContainer.appendChild(pageLink);
             }
 
-            // Create Last Page link
-            const lastPageLink = document.createElement('a');
-            lastPageLink.href = `page${totalPages}`;
-            lastPageLink.innerText = 'Last';
-            lastPageLink.className = 'button';
-            paginationContainer.appendChild(lastPageLink);
+            // Check if on the last page
+            if (currentPage < totalPages) {
+                // Create Last Page link
+                const lastPageLink = document.createElement('a');
+                lastPageLink.href = `page${totalPages}`;
+                lastPageLink.innerText = 'Last';
+                lastPageLink.className = 'button';
+                paginationContainer.appendChild(lastPageLink);
+            }
         }
 
         // Render the pagination on page load
