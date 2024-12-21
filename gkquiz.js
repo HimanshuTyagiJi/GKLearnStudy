@@ -134,7 +134,7 @@ autoNumberQuestions(startingNumber);
                 // Create Last Page link
                 const lastPageLink = document.createElement('a');
                 lastPageLink.href = `page${totalPages}`;
-                lastPageLink.innerText = 20;
+                lastPageLink.innerText = 'Last';
                 lastPageLink.className = 'button';
                 paginationContainer.appendChild(lastPageLink);
             }
