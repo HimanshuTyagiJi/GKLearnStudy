@@ -1,74 +1,35 @@
-// gkquiz.js
-
-// Store the number of questions on each page
-const questionsPerPage = [5, 20, 10, 15, 30]; // Example: Number of questions on each page
-let totalQuestions = questionsPerPage.reduce((a, b) => a + b, 0); // Total questions across all pages
-
-// Function to set up pagination
-function setupQuizPage(currentPage, totalPages) {
-    const paginationContainer = document.querySelector('.pagination');
-    const paginationList = document.createElement('div');
-    paginationList.classList.add('pagination-list');
-
-    const createPageLink = (pageNumber, isActive = false) => {
-        const link = document.createElement('a');
-        link.href = `page${pageNumber}.html`; // Update this to your actual page URL structure
-        link.textContent = pageNumber;
-        link.classList.add('page-link');
-        if (isActive) {
-            link.classList.add('active');
-        }
-        return link;
-    };
-
-    // First Page
-    paginationList.appendChild(createPageLink(1));
-
-    // Previous Pages
-    for (let i = Math.max(2, currentPage - 2); i < currentPage; i++) {
-        paginationList.appendChild(createPageLink(i));
-    }
-
-    // Current Page
-    paginationList.appendChild(createPageLink(currentPage, true));
-
-    // Next Pages
-    for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
-        paginationList.appendChild(createPageLink(i));
-    }
-
-    // Last Page
-    if (totalPages > 1) {
-        paginationList.appendChild(createPageLink(totalPages));
-    }
-
-    paginationContainer.innerHTML = ''; // Clear existing pagination
-    paginationContainer.appendChild(paginationList);
+// URL से पृष्ठ संख्या प्राप्त करने के लिए फ़ंक्शन
+function getPageNumber() {
+    // URL से पृष्ठ संख्या प्राप्त करें (उदाहरण के लिए, "?page=1" या "?page=2" के साथ)
+    const urlParams = new URLSearchParams(window.location.search);
+    return parseInt(urlParams.get('page')) || 1; // यदि कोई पृष्ठ संख्या नहीं है, तो डिफ़ॉल्ट 1
 }
 
-// Function to auto-number questions
-function autoNumberQuestions(currentPage) {
+// प्रारंभिक संख्या से क्रमांकित प्रश्नों के लिए फ़ंक्शन
+function autoNumberQuestions(startNumber) {
+    // सभी प्रश्नों को प्राप्त करें
     const questions = document.querySelectorAll('.questions');
-    let questionCounter = 0;
 
-    // Calculate the starting number based on the current page
-    for (let i = 0; i < currentPage - 1; i++) {
-        questionCounter += questionsPerPage[i]; // Increment counter by the number of questions in previous pages
-    }
+    // प्रारंभिक संख्या सेट करें
+    let questionNumber = startNumber;
 
-    questions.forEach((question, index) => {
-        const questionNumber = questionCounter + index + 1;
-        const questionHeader = question.querySelector('h3');
-        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
+    // प्रत्येक प्रश्न के लिए क्रमांक सेट करें
+    questions.forEach((question) => {
+        question.querySelector('h3').textContent = `Q-${questionNumber}: ${question.querySelector('h3').textContent}`;
+        questionNumber++;
     });
 }
 
-// Initialize the quiz page
-document.addEventListener('DOMContentLoaded', () => {
-    // Extract current page number from the URL
-    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
-    const totalPages = questionsPerPage.length; // Total pages based on the questionsPerPage array
+// मुख्य कोड
+const pageNumber = getPageNumber();
+let startingNumber = 1; // Default starting number
 
-    setupQuizPage(currentPage, totalPages);
-    autoNumberQuestions(currentPage);
-});
+// पृष्ठ संख्या के आधार पर प्रारंभिक संख्या सेट करें
+if (pageNumber === 1) {
+    startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
+} else if (pageNumber === 2) {
+    startingNumber = 5; // page2 के लिए 5 से प्रारंभ करें
+}
+
+// प्रश्नों को प्रदर्शित करें
+autoNumberQuestions(startingNumber);
