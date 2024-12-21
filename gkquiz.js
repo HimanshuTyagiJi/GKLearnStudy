@@ -1,48 +1,69 @@
-// सभी सवालों की संख्या ट्रैक करने के लिए
-const allPagesQuestionsCount = {
-    "page1": 0, // Page 1 में 2 सवाल हैं
-    "page2": 2, // Page 2 में 2 सवाल हैं
-    // अन्य पृष्ठ जोड़ें, जैसे:
-    // "page3": 3,
-};
+// gkquiz.js
 
-// वर्तमान पृष्ठ का नाम निकालें
-const currentPage = location.pathname.match(/page(\d+)\.html/);
-const currentPageKey = currentPage ? `page${currentPage[1]}` : "page1";
+// Initialize an empty array to store all questions
+let questionsArray = [];
 
-// पिछले पेज के सभी सवालों की संख्या
-let totalQuestionsBeforeCurrentPage = 0;
-Object.keys(allPagesQuestionsCount).forEach((pageKey) => {
-    if (pageKey === currentPageKey) return; // वर्तमान पृष्ठ पर रुकें
-    totalQuestionsBeforeCurrentPage += allPagesQuestionsCount[pageKey];
-});
-
-// प्रश्नों की सही संख्या सेट करें
-function setQuestionNumbers() {
-    const questions = document.querySelectorAll('.questions h3');
+// Function to auto-number questions
+function autoNumberQuestions() {
+    const questions = document.querySelectorAll('.questions');
     questions.forEach((question, index) => {
-        const questionNumber = totalQuestionsBeforeCurrentPage + index + 1;
-        question.textContent = `Q-${questionNumber}: ${question.textContent}`;
+        const questionNumber = questionsArray.length + index + 1; // Total questions so far + index + 1 for current question
+        const questionHeader = question.querySelector('h3');
+        questionHeader.innerHTML = `Q-${questionNumber}: ${questionHeader.innerHTML}`;
     });
+    questionsArray = questionsArray.concat(Array.from(questions)); // Append the current page's questions to the global array
 }
 
-// पृष्ठ संख्या प्रदर्शित करें
-function setupPagination() {
-    const paginationDiv = document.getElementById('pagination');
-    const totalPages = Object.keys(allPagesQuestionsCount).length;
+// Function to set up pagination
+function setupQuizPage(currentPage, totalPages) {
+    const paginationContainer = document.querySelector('.pagination');
+    const paginationList = document.createElement('div');
+    paginationList.classList.add('pagination-list');
 
-    for (let i = 1; i <= totalPages; i++) {
+    const createPageLink = (pageNumber, isActive = false) => {
         const link = document.createElement('a');
-        link.href = `page${i}.html`;
-        link.textContent = `Page ${i}`;
-        if (`page${i}` === currentPageKey) {
-            link.style.fontWeight = 'bold'; // वर्तमान पृष्ठ हाइलाइट करें
+        link.href = `page${pageNumber}.html`; // Adjust this according to your page structure
+        link.textContent = pageNumber;
+        link.classList.add('page-link');
+        if (isActive) {
+            link.classList.add('active');
         }
-        paginationDiv.appendChild(link);
-        paginationDiv.appendChild(document.createTextNode(" | "));
+        return link;
+    };
+
+    // Always show the first page
+    paginationList.appendChild(createPageLink(1));
+
+    // Previous pages (up to 2 before current)
+    for (let i = Math.max(2, currentPage - 2); i < currentPage; i++) {
+        paginationList.appendChild(createPageLink(i));
     }
+
+    // Current page
+    paginationList.appendChild(createPageLink(currentPage, true));
+
+    // Next pages (up to 2 after current)
+    for (let i = currentPage + 1; i <= Math.min(totalPages, currentPage + 2); i++) {
+        paginationList.appendChild(createPageLink(i));
+    }
+
+    // Last page if it's greater than the first
+    if (totalPages > 1) {
+        paginationList.appendChild(createPageLink(totalPages));
+    }
+
+    paginationContainer.innerHTML = ''; // Clear existing pagination
+    paginationContainer.appendChild(paginationList);
 }
 
-// सभी कार्य करें
-setQuestionNumbers();
-setupPagination();
+// Initialize the quiz page
+document.addEventListener('DOMContentLoaded', () => {
+    // Extract current page number from the URL
+    const currentPage = parseInt(location.pathname.match(/page(\d+)\.html/)?.[1], 10);
+    
+    // Count the total number of pages
+    const totalPages = document.querySelectorAll('.questions').length > 0 ? document.querySelectorAll('.questions').length : 1;
+
+    autoNumberQuestions();
+    setupQuizPage(currentPage, totalPages);
+});
