@@ -31,7 +31,7 @@ let startingNumber = 1; // Default starting number
 if (pageNumber === 1) {
     startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
 } else if (pageNumber === 2) {
-    startingNumber = 25; // page2 के लिए 5 से प्रारंभ करें
+    startingNumber = 26; // page2 के लिए 5 से प्रारंभ करें
 } else {
     startingNumber = (pageNumber - 1) * 26 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
 }
