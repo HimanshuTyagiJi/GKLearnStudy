@@ -73,12 +73,7 @@ autoNumberQuestions(startingNumber);
             .button:active {
                 background-color: green;
             }
-            @media (max-width: 480px) {
-                .button {
-                    flex: 1 0 100%; /* Make buttons full width on mobile */
-                    margin: 5px 0; /* Add vertical margin for better spacing */
-                }
-            }
+           
         `;
         
         // Create a style element
@@ -88,7 +83,7 @@ autoNumberQuestions(startingNumber);
         document.head.appendChild(styleSheet);
 
         // Total number of pages
-        const totalPages = 20;
+        const totalPages = 21;
         
         // Get the current page from the URL
         const url = window.location.href;
@@ -103,7 +98,7 @@ autoNumberQuestions(startingNumber);
                 // Create First Page link
                 const firstPageLink = document.createElement('a');
                 firstPageLink.href = `page1`;
-                firstPageLink.innerText = 'First';
+                firstPageLink.innerText = '1';
                 firstPageLink.className = 'button';
                 paginationContainer.appendChild(firstPageLink);
             }
