@@ -16,7 +16,7 @@ function calculateTotalPages(totalQuestions) {
 function autoNumberQuestions() {
     const currentPage = getCurrentPage(); // Get current page number
     const questions = document.querySelectorAll('.questions'); // Select all question elements
-    const startingQuestionNumber = (currentPage - 1) * QUESTIONS_PER_PAGE + 1; // Calculate starting number
+    const startingQuestionNumber = (currentPage - 1) * QUESTIONS_PER_PAGE + 1; // Calculate starting number based on page
 
     questions.forEach((question, index) => {
         const questionHeader = question.querySelector('h3'); // Assuming question header is in <h3>
@@ -32,7 +32,7 @@ function setupQuizPagination(totalQuestions) {
     const currentPage = getCurrentPage(); // Get current page number
 
     const paginationList = document.createElement('div');
-    paginationList.classList.add('pagination-list'); 
+    paginationList.classList.add('pagination-list');
 
     for (let page = 1; page <= totalPages; page++) {
         const link = document.createElement('a');
