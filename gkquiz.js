@@ -70,7 +70,7 @@ const styles = `
         background-color: #0056b3;
         transform: scale(1.05);
     }
-    .button:active {
+    .button.active {
         background-color: green;
     }
     .active {
