@@ -3,56 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Questions</title>
+    <title>Question Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        #searchContainer {
-            margin-bottom: 20px;
-        }
         #results {
-            list-style: none;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
             padding: 0;
         }
-        #results li {
+        li {
             margin: 5px 0;
         }
     </style>
 </head>
 <body>
-    <div id="searchContainer">
-        <input type="text" id="searchBox" placeholder="Search questions..." />
-        <button onclick="searchQuestions()">Search</button>
+
+    <h1>Question Search</h1>
+    <input type="text" id="searchBox" placeholder="Search questions...">
+    <button onclick="searchQuestions()">Search</button>
+
+    <div id="results">
+        <ul id="resultsList"></ul>
     </div>
-    <ul id="results"></ul>
 
     <script>
         let questions = []; // सभी प्रश्नों को स्टोर करने के लिए एक खाली ऐरे
 
         // XML साइटमैप से प्रश्न लोड करने वाला फ़ंक्शन
         async function loadQuestions() {
-            const response = await fetch('https://gklearnstudy.in/sitemap.xml');
-            const xmlText = await response.text();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-            const questionElements = xmlDoc.getElementsByTagName('question');
+            try {
+                const response = await fetch('https://gklearnstudy.in/sitemap.xml');
+                const xmlText = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                const questionElements = xmlDoc.getElementsByTagName('url'); // सभी URL तत्व
 
-            // प्रत्येक प्रश्न से जानकारी प्राप्त करना
-            for (let i = 0; i < questionElements.length; i++) {
-                const url = questionElements[i].getElementsByTagName('loc')[0].textContent;
-                const title = questionElements[i].getElementsByTagName('title')[0].textContent;
-                questions.push({ url, title }); // प्रश्नों को ऐरे में जोड़ना
+                // प्रत्येक प्रश्न से जानकारी प्राप्त करना
+                for (let i = 0; i < questionElements.length; i++) {
+                    const url = questionElements[i].getElementsByTagName('loc')[0].textContent;
+                    const title = questionElements[i].getElementsByTagName('title')[0].textContent;
+
+                    if (title) { // सुनिश्चित करें कि शीर्षक मौजूद है
+                        questions.push({ url, title }); // प्रश्नों को ऐरे में जोड़ना
+                    }
+                }
+
+                console.log(questions); // प्रश्नों की सूची को कंसोल में प्रिंट करें
+
+            } catch (error) {
+                console.error('Error loading questions:', error);
             }
         }
 
-        // प्रश्नों की खोज करने वाला फ़ंक्शन
+        // सर्च फ़ंक्शन
         function searchQuestions() {
             const input = document.getElementById("searchBox").value.toLowerCase(); // यूजर का इनपुट
             const results = questions.filter(q => q.title.toLowerCase().includes(input)); // सर्च से मेल खाते सवाल छांटें
 
-            const resultsList = document.getElementById("results");
+            const resultsList = document.getElementById("resultsList");
             resultsList.innerHTML = ''; // पहले से मौजूद परिणामों को साफ़ करें
 
             // परिणाम दिखाएं
@@ -69,6 +82,7 @@
 
         // पृष्ठ लोड होने पर प्रश्न लोड करें
         window.onload = loadQuestions;
+
     </script>
 </body>
 </html>
