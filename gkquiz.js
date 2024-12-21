@@ -93,7 +93,7 @@ autoNumberQuestions(startingNumber);
 
             // Create First Page link
             const firstPageLink = document.createElement('a');
-            firstPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page1`;
+            firstPageLink.href = `page1`;
             firstPageLink.innerText = 'First';
             firstPageLink.className = 'button';
             paginationContainer.appendChild(firstPageLink);
@@ -115,11 +115,11 @@ autoNumberQuestions(startingNumber);
             // Create page links
             for (let i = startPage; i <= endPage; i++) {
                 const pageLink = document.createElement('a');
-                pageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${i}`;
+                pageLink.href = `page${i}`;
                 pageLink.innerText = i;
                 pageLink.className = 'button';
                 if (i === currentPage) {
-                    pageLink.style.backgroundColor = '#0056b3'; // Active color
+                    pageLink.style.backgroundColor = 'red'; // Active color
                     pageLink.style.pointerEvents = 'none'; // Disable click on the current page
                 }
                 paginationContainer.appendChild(pageLink);
@@ -127,7 +127,7 @@ autoNumberQuestions(startingNumber);
 
             // Create Last Page link
             const lastPageLink = document.createElement('a');
-            lastPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${totalPages}`;
+            lastPageLink.href = `page${totalPages}`;
             lastPageLink.innerText = 'Last';
             lastPageLink.className = 'button';
             paginationContainer.appendChild(lastPageLink);
