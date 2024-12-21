@@ -43,38 +43,7 @@ autoNumberQuestions(startingNumber);
 
 
 
-
-        // Add CSS styles
-        const styles = `
-            .pagination {
-                display: flex;
-                list-style-type: none;
-                padding: 0;
-                margin: 20px 0;
-            }
-            .pagination li {
-                margin: 0 5px;
-            }
-            .pagination a {
-                text-decoration: none;
-                padding: 8px 12px;
-                border: 1px solid #ccc;
-                color: #000;
-            }
-            .pagination a.active {
-                background-color: #007bff;
-                color: white;
-                border-color: #007bff;
-            }
-        `;
-        
-        // Create a style element
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = styles;
-        document.head.appendChild(styleSheet);
-
-        // Total number of pages
+    // Total number of pages
         const totalPages = 20;
         
         // Get the current page from the URL
