@@ -43,7 +43,43 @@ autoNumberQuestions(startingNumber);
 
 
 
-    // Total number of pages
+     // Add CSS styles
+        const styles = `
+            .paginations {
+                justify-content: center;
+                text-align: center;
+                margin: 20px 0;
+            }
+            .paginations a:link {
+                color: white;
+            }
+            .button {
+                display: inline-block;
+                margin: 0 10px;
+                padding: 2px 10px;
+                font-size: 16px;
+                color: white;
+                background-color: #007BFF;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+            .button:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+            }
+            .button:active {
+                background-color: #003f7f;
+            }
+        `;
+        
+        // Create a style element
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = styles;
+        document.head.appendChild(styleSheet);
+
+        // Total number of pages
         const totalPages = 20;
         
         // Get the current page from the URL
@@ -51,13 +87,14 @@ autoNumberQuestions(startingNumber);
         const currentPage = parseInt(url.match(/page(\d+)/)[1]) || 1;
 
         function renderPagination(currentPage, totalPages) {
-            const paginationContainer = document.querySelector('.pagination');
+            const paginationContainer = document.querySelector('.paginations');
             paginationContainer.innerHTML = ''; // Clear previous pagination
 
             // Create First Page link
             const firstPageLink = document.createElement('a');
-            firstPageLink.href = `page1`;
+            firstPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page1`;
             firstPageLink.innerText = 'First';
+            firstPageLink.className = 'button';
             paginationContainer.appendChild(firstPageLink);
 
             // Calculate the range of pages to show
@@ -77,18 +114,21 @@ autoNumberQuestions(startingNumber);
             // Create page links
             for (let i = startPage; i <= endPage; i++) {
                 const pageLink = document.createElement('a');
-                pageLink.href = `page${i}`;
+                pageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${i}`;
                 pageLink.innerText = i;
+                pageLink.className = 'button';
                 if (i === currentPage) {
-                    pageLink.classList.add('active'); // Highlight current page
+                    pageLink.style.backgroundColor = '#0056b3'; // Active color
+                    pageLink.style.pointerEvents = 'none'; // Disable click on the current page
                 }
                 paginationContainer.appendChild(pageLink);
             }
 
             // Create Last Page link
             const lastPageLink = document.createElement('a');
-            lastPageLink.href = `page${totalPages}`;
+            lastPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${totalPages}`;
             lastPageLink.innerText = 'Last';
+            lastPageLink.className = 'button';
             paginationContainer.appendChild(lastPageLink);
         }
 
