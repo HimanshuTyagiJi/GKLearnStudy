@@ -32,6 +32,8 @@ if (pageNumber === 1) {
     startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
 } else if (pageNumber === 2) {
     startingNumber = 5; // page2 के लिए 5 से प्रारंभ करें
+} else {
+    startingNumber = (pageNumber - 1) * 5 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
 }
 
 // प्रश्नों को प्रदर्शित करें
