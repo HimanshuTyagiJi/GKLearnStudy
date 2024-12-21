@@ -9,8 +9,9 @@ function getCurrentPage() {
 
 // Function to calculate total number of pages dynamically
 function calculateTotalPages() {
-    const questions = document.querySelectorAll('.questions');
-    return Math.ceil(questions.length / QUESTIONS_PER_PAGE);
+    // Replace this with the total number of questions in your quiz
+    const totalQuestions = document.querySelectorAll('.questions').length;
+    return Math.ceil(totalQuestions / QUESTIONS_PER_PAGE);
 }
 
 // Function to auto-number questions based on the current page
@@ -37,7 +38,7 @@ function setupQuizPagination() {
 
     for (let page = 1; page <= totalPages; page++) {
         const link = document.createElement('a');
-        link.href = `page${page}.html`; // Link to the respective page
+        link.href = `/page${page}.html`; // Link to the respective page
         link.textContent = `Page ${page}`;
         link.classList.add('page-link');
         if (page === currentPage) {
