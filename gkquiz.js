@@ -43,102 +43,105 @@ autoNumberQuestions(startingNumber);
 
 
  // Add CSS styles
-        const styles = `
-            .paginations {
-                justify-content: center;
-                text-align: center;
-                margin: 20px 0;
-                display: flex; /* Make the container flex */
-                flex-wrap: wrap; /* Allow wrapping */
-            }
-            .paginations a:link, 
-            .paginations a:visited {
-                color: white; /* Make visited links white */
-            }
-            .button {
-                display: inline-block;
-                margin: 0 5px; /* Reduced margin for smaller screens */
-                padding: 5px 10px;
-                font-size: 16px;
-                color: white;
-                background-color: #007BFF;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-            }
-            .button:hover {
-                background-color: #0056b3;
-                transform: scale(1.05);
-            }
-            .button:active {
-                background-color: green;
-            }
-        `;
-        
-        // Create a style element
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = styles;
-        document.head.appendChild(styleSheet);
+const styles = `
+    .paginations {
+        justify-content: center;
+        text-align: center;
+        margin: 20px 0;
+        display: flex; /* Make the container flex */
+        flex-wrap: wrap; /* Allow wrapping */
+    }
+    .paginations a:link, 
+    .paginations a:visited {
+        color: white; /* Make visited links white */
+    }
+    .button {
+        display: inline-block;
+        margin: 0 5px; /* Reduced margin for smaller screens */
+        padding: 5px 10px;
+        font-size: 16px;
+        color: white;
+        background-color: #007BFF;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+    .button:active {
+        background-color: green;
+    }
+    .active {
+        background-color: red !important; /* Active page color */
+        pointer-events: none; /* Disable click on active page */
+    }
+`;
 
-        // Total number of pages
-        const totalPages = 20;
-        
-        // Get the current page from the URL
-        const url = window.location.href;
-        const currentPage = parseInt(url.match(/page(\d+)/)[1]) || 1;
+// Create a style element
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
 
-        function renderPagination(currentPage, totalPages) {
-            const paginationContainer = document.querySelector('.paginations');
-            paginationContainer.innerHTML = ''; // Clear previous pagination
+// Total number of pages
+const totalPages = 20;
 
-            // Check if not on the first page
-            if (currentPage > 1) {
-                // Create First Page link
-                const firstPageLink = document.createElement('a');
-                firstPageLink.href = `page1`;
-                firstPageLink.innerText = 'First';
-                firstPageLink.className = 'button';
-                paginationContainer.appendChild(firstPageLink);
-            }
+// Get the current page from the URL
+const url = window.location.href;
+const currentPage = parseInt(url.match(/page(\d+)/)?.[1]) || 1;
 
-            // Calculate the range of pages to show
-            const range = 2; // Number of pages to show around the current page
-            let startPage = Math.max(2, currentPage - range); // Start from 2 if not on the first page
-            let endPage = Math.min(totalPages - 1, currentPage + range); // End before last page if not on it
+function renderPagination(currentPage, totalPages) {
+    const paginationContainer = document.querySelector('.paginations');
+    paginationContainer.innerHTML = ''; // Clear previous pagination
 
-            // Ensure the range is always 5 pages
-            if (endPage - startPage < 4) {
-                if (startPage === 2) {
-                    endPage = Math.min(totalPages - 1, startPage + 4);
-                } else if (endPage === totalPages - 1) {
-                    startPage = Math.max(2, endPage - 4);
-                }
-            }
+    // Check if on the first page
+    const firstPageLink = document.createElement('a');
+    firstPageLink.href = `page1`;
+    firstPageLink.innerText = 'First';
+    firstPageLink.className = 'button';
+    if (currentPage === 1) {
+        firstPageLink.classList.add('active');
+    }
+    paginationContainer.appendChild(firstPageLink);
 
-            // Create page links
-            for (let i = startPage; i <= endPage; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = `page${i}`;
-                pageLink.innerText = i;
-                pageLink.className = 'button';
-                if (i === currentPage) {
-                    pageLink.style.backgroundColor = 'red'; // Active color
-                    pageLink.style.pointerEvents = 'none'; // Disable click on the current page
-                }
-                paginationContainer.appendChild(pageLink);
-            }
+    // Calculate the range of pages to show
+    const range = 2; // Number of pages to show around the current page
+    let startPage = Math.max(2, currentPage - range); // Start from 2 if not on the first page
+    let endPage = Math.min(totalPages - 1, currentPage + range); // End before last page if not on it
 
-            // Check if not on the last page
-            if (currentPage < totalPages) {
-                // Create Last Page link
-                const lastPageLink = document.createElement('a');
-                lastPageLink.href = `page${totalPages}`;
-                lastPageLink.innerText = 'Last';
-                lastPageLink.className = 'button';
-                paginationContainer.appendChild(lastPageLink);
-            }
+    // Ensure the range is always 5 pages
+    if (endPage - startPage < 4) {
+        if (startPage === 2) {
+            endPage = Math.min(totalPages - 1, startPage + 4);
+        } else if (endPage === totalPages - 1) {
+            startPage = Math.max(2, endPage - 4);
         }
+    }
 
-        // Render the pagination on page load
-        renderPagination(currentPage, totalPages);
+    // Create page links
+    for (let i = startPage; i <= endPage; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = `page${i}`;
+        pageLink.innerText = i;
+        pageLink.className = 'button';
+        if (i === currentPage) {
+            pageLink.classList.add('active'); // Mark as active
+        }
+        paginationContainer.appendChild(pageLink);
+    }
+
+    // Check if on the last page
+    const lastPageLink = document.createElement('a');
+    lastPageLink.href = `page${totalPages}`;
+    lastPageLink.innerText = 'Last';
+    lastPageLink.className = 'button';
+    if (currentPage === totalPages) {
+        lastPageLink.classList.add('active');
+    }
+    paginationContainer.appendChild(lastPageLink);
+}
+
+// Render the pagination on page load
+renderPagination(currentPage, totalPages);
