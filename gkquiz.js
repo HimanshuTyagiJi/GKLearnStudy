@@ -33,7 +33,7 @@ if (pageNumber === 1) {
 } else if (pageNumber === 2) {
     startingNumber = 25; // page2 के लिए 5 से प्रारंभ करें
 } else {
-    startingNumber = (pageNumber - 1) * 25 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
+    startingNumber = (pageNumber - 1) * 26 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
 }
 
 // प्रश्नों को प्रदर्शित करें
@@ -42,7 +42,7 @@ autoNumberQuestions(startingNumber);
 
 
 
- // Add CSS styles 
+ // Add CSS styles
         const styles = `
             .paginations {
                 justify-content: center;
@@ -73,7 +73,6 @@ autoNumberQuestions(startingNumber);
             .button:active {
                 background-color: green;
             }
-           
         `;
         
         // Create a style element
@@ -93,11 +92,11 @@ autoNumberQuestions(startingNumber);
             const paginationContainer = document.querySelector('.paginations');
             paginationContainer.innerHTML = ''; // Clear previous pagination
 
-            // Check if on the first page
+            // Check if not on the first page
             if (currentPage > 1) {
                 // Create First Page link
                 const firstPageLink = document.createElement('a');
-                firstPageLink.href = `page1`;
+                firstPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page1`;
                 firstPageLink.innerText = '1';
                 firstPageLink.className = 'button';
                 paginationContainer.appendChild(firstPageLink);
@@ -105,22 +104,22 @@ autoNumberQuestions(startingNumber);
 
             // Calculate the range of pages to show
             const range = 2; // Number of pages to show around the current page
-            let startPage = Math.max(1, currentPage - range);
-            let endPage = Math.min(totalPages, currentPage + range);
+            let startPage = Math.max(2, currentPage - range); // Start from 2 if not on the first page
+            let endPage = Math.min(totalPages - 1, currentPage + range); // End before last page if not on it
 
             // Ensure the range is always 5 pages
             if (endPage - startPage < 4) {
-                if (startPage === 1) {
-                    endPage = Math.min(totalPages, startPage + 4);
-                } else if (endPage === totalPages) {
-                    startPage = Math.max(1, endPage - 4);
+                if (startPage === 2) {
+                    endPage = Math.min(totalPages - 1, startPage + 4);
+                } else if (endPage === totalPages - 1) {
+                    startPage = Math.max(2, endPage - 4);
                 }
             }
 
             // Create page links
             for (let i = startPage; i <= endPage; i++) {
                 const pageLink = document.createElement('a');
-                pageLink.href = `page${i}`;
+                pageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${i}`;
                 pageLink.innerText = i;
                 pageLink.className = 'button';
                 if (i === currentPage) {
@@ -130,12 +129,12 @@ autoNumberQuestions(startingNumber);
                 paginationContainer.appendChild(pageLink);
             }
 
-            // Check if on the last page
+            // Check if not on the last page
             if (currentPage < totalPages) {
                 // Create Last Page link
                 const lastPageLink = document.createElement('a');
-                lastPageLink.href = `page${totalPages}`;
-                lastPageLink.innerText = 'Last';
+                lastPageLink.href = `https://gklearnstudy.in/ancient-indian-history/page${totalPages}`;
+                lastPageLink.innerText = totalPages;
                 lastPageLink.className = 'button';
                 paginationContainer.appendChild(lastPageLink);
             }
