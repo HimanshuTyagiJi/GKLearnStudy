@@ -32,7 +32,7 @@ function setupQuizPagination(totalQuestions) {
     const currentPage = getCurrentPage(); // Get current page number
 
     const paginationList = document.createElement('div');
-    paginationList.classList.add('pagination-list');
+    paginationList.classList.add('pagination-list'); 
 
     for (let page = 1; page <= totalPages; page++) {
         const link = document.createElement('a');
