@@ -21,6 +21,21 @@
             font-size: 16px;
             cursor: pointer;
         }
+        .suggestions {
+            border: 1px solid #ccc;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 0;
+            list-style: none;
+        }
+        .suggestions li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestions li:hover {
+            background-color: #f0f0f0;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 </head>
@@ -28,48 +43,49 @@
     <div class="search-box">
         <h1>Search Ancient Indian History</h1>
         <form onsubmit="searchTitles(event)">
-            <input type="text" id="search-input" placeholder="Enter title..." required>
+            <input type="text" id="search-input" placeholder="Enter title..." required oninput="showSuggestions(event)">
             <input type="submit" value="Search">
         </form>
     </div>
 
+    <ul id="suggestions" class="suggestions"></ul>
     <div id="results"></div>
 
     <script>
         let titles = [];
 
-        // Function to load and parse sitemap.xml from the given URL
-        async function loadSitemap() {
-            try {
-                const response = await fetch('https://gklearnstudy.in/sitemap.xml');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const text = await response.text();
-                console.log('Sitemap fetched successfully');  // Debugging log
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(text, "application/xml");
-                const urlElements = xmlDoc.getElementsByTagName('url');
+        // Function to load and parse sitemap.xml using XMLHttpRequest
+        function loadSitemap() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log('Sitemap fetched successfully');  // Debugging log
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+                    const urlElements = xmlDoc.getElementsByTagName('url');
 
-                for (let urlElement of urlElements) {
-                    const titleElement = urlElement.getElementsByTagName('title')[0];
-                    const locElement = urlElement.getElementsByTagName('loc')[0];
+                    for (let urlElement of urlElements) {
+                        const titleElement = urlElement.getElementsByTagName('title')[0];
+                        const locElement = urlElement.getElementsByTagName('loc')[0];
 
-                    if (titleElement && locElement) {
-                        titles.push({
-                            title: titleElement.textContent,
-                            url: locElement.textContent
-                        });
+                        if (titleElement && locElement) {
+                            titles.push({
+                                title: titleElement.textContent,
+                                url: locElement.textContent
+                            });
+                        }
                     }
+
+                    console.log('Titles array:', titles);  // Debugging log
+
+                    // Initialize Fuse.js after loading the sitemap
+                    fuse = new Fuse(titles, options);
+                } else if (xhr.readyState === 4) {
+                    console.error('Error loading sitemap:', xhr.status, xhr.statusText);
                 }
-
-                console.log('Titles array:', titles);  // Debugging log
-
-                // Initialize Fuse.js after loading the sitemap
-                fuse = new Fuse(titles, options);
-            } catch (error) {
-                console.error('Error loading sitemap:', error);
-            }
+            };
+            xhr.send();
         }
 
         const options = {
@@ -103,6 +119,28 @@
                 }
             } else {
                 resultsDiv.textContent = 'Sitemap not loaded yet.';
+            }
+        }
+
+        function showSuggestions(event) {
+            const query = event.target.value.trim();
+            const suggestionsDiv = document.getElementById('suggestions');
+            suggestionsDiv.innerHTML = '';
+
+            if (fuse) {
+                const result = fuse.search(query);
+                if (result.length > 0) {
+                    result.forEach(({ item }) => {
+                        const suggestionItem = document.createElement('li');
+                        suggestionItem.textContent = item.title;
+                        suggestionItem.onclick = () => {
+                            document.getElementById('search-input').value = item.title;
+                            suggestionsDiv.innerHTML = '';
+                            searchTitles(new Event('submit')); // Auto search on suggestion click
+                        };
+                        suggestionsDiv.appendChild(suggestionItem);
+                    });
+                }
             }
         }
     </script>
