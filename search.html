@@ -33,7 +33,7 @@
 
         // XML साइटमैप से प्रश्न लोड करने वाला फ़ंक्शन
         async function loadQuestions() {
-            const response = await fetch('https://gklearnstudy.in/path/to/your/sitemap.xml');
+            const response = await fetch('https://gklearnstudy.in/sitemap.xml');
             const xmlText = await response.text();
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
