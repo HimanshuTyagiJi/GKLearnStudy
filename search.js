@@ -51,25 +51,6 @@ document.getElementById("searchBtn").addEventListener("click", () => {
 
 document.getElementById("backBtn").addEventListener("click", closeSearch);
 
-document.addEventListener("click", (event) => {
-    const searchContainer = document.querySelector(".search-container");
-    const suggestionsDiv = document.getElementById('suggestions');
-    const searchInput = document.getElementById('searchInput');
-
-    const isClickInsideInput = searchInput.contains(event.target);
-    const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
-    const isClickCloseToInput = (
-        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
-            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
-        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
-            event.clientX <= searchInput.getBoundingClientRect().right + 20)
-    );
-
-    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
-        closeSearch();
-    }
-});
-
 function closeSearch() {
     const searchInput = document.getElementById("searchInput");
     searchInput.classList.add("closing");
@@ -84,6 +65,14 @@ function closeSearch() {
     }, 300);
 }
 
+document.addEventListener("click", (event) => {
+    const searchContainer = document.querySelector(".search-container");
+    // Prevent closing search when clicking anywhere other than the back button
+    if (event.target !== document.getElementById("backBtn") && searchContainer.contains(event.target)) {
+        return; // Do nothing if the click is inside the search container
+    }
+});
+
 function searchTitles(event) {
     event.preventDefault();
     const query = document.getElementById('searchInput').value.trim();
@@ -96,35 +85,11 @@ function searchTitles(event) {
     if (query.length > 0) {
         const result = fuse.search(query);
 
-        if (result.length > 0) {
-            result.slice(0, 10).forEach(({ item }) => {
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
-                    <div class="result-content">
-                        <div class="result-title">${item.title}</div>
-                        <div class="result-paragraph">${item.paragraph}</div>
-                    </div>
-                `;
-                resultItem.onclick = () => {
-                    window.location.href = item.url; // Navigate to the link on click
-                };
-                resultsDiv.appendChild(resultItem);
-            });
+        // Remove duplicate results
+        const uniqueResults = [...new Set(result.map(item => item.item.title))];
 
-            const paginationDiv = document.createElement('div');
-            paginationDiv.classList.add('pagination');
-            const totalPages = Math.ceil(result.length / 10);
-            for (let i = 1; i <= totalPages; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.innerText = i;
-                pageLink.href = '#';
-                pageLink.addEventListener('click', () => loadPage(i));
-                paginationDiv.appendChild(pageLink);
-            }
-            resultsDiv.appendChild(paginationDiv);
-
+        if (uniqueResults.length > 0) {
+            loadPage(1, uniqueResults); // Load first page of results
             resultsDiv.style.display = 'block'; // Show results
         } else {
             resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
@@ -133,39 +98,41 @@ function searchTitles(event) {
     }
 }
 
-function loadPage(page) {
-    const query = document.getElementById('searchInput').value.trim();
+function loadPage(page, uniqueResults) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Clear previous results
 
-    const result = fuse.search(query);
     const start = (page - 1) * 10;
     const end = start + 10;
 
-    result.slice(start, end).forEach(({ item }) => {
+    uniqueResults.slice(start, end).forEach(title => {
+        const item = titles.find(t => t.title === title);
         const resultItem = document.createElement('div');
         resultItem.classList.add('result-item');
         resultItem.innerHTML = `
-            <img src="${item.image}" alt="${item.title}">
-            <div class="result-content">
-                <div class="result-title">${item.title}</div>
-                <div class="result-paragraph">${item.paragraph}</div>
-            </div>
+            <a href="${item.url}" target="_blank">
+                <img src="${item.image}" alt="${item.title}">
+                <div class="result-content">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-paragraph">${item.paragraph}</div>
+                </div>
+            </a>
         `;
-        resultItem.onclick = () => {
-            window.location.href = item.url; // Navigate to the link on click
-        };
         resultsDiv.appendChild(resultItem);
     });
 
     const paginationDiv = document.createElement('div');
     paginationDiv.classList.add('pagination');
-    const totalPages = Math.ceil(result.length / 10);
+    const totalPages = Math.ceil(uniqueResults.length / 10);
+
     for (let i = 1; i <= totalPages; i++) {
         const pageLink = document.createElement('a');
         pageLink.innerText = i;
         pageLink.href = '#';
-        pageLink.addEventListener('click', () => loadPage(i));
+        pageLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            loadPage(i, uniqueResults); // Load the selected page
+        });
         paginationDiv.appendChild(pageLink);
     }
     resultsDiv.appendChild(paginationDiv);
@@ -178,19 +145,24 @@ function showSuggestions(event) {
 
     if (query.length > 0) {
         const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
-        suggestions.forEach(({ item }) => {
+
+        // Remove duplicates from suggestions
+        const uniqueSuggestions = [...new Set(suggestions.map(item => item.item.title))];
+
+        uniqueSuggestions.forEach(title => {
+            const item = suggestions.find(s => s.item.title === title).item;
             const suggestionItem = document.createElement('li');
-            suggestionItem.innerHTML = item.title; // No highlighting for suggestions
+            suggestionItem.innerHTML = item.title; // No highlight
             suggestionItem.onclick = () => {
                 document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                document.getElementById('searchInput').focus(); // Keep input active
                 suggestionsDiv.innerHTML = ''; // Clear suggestions
                 suggestionsDiv.style.display = 'none'; // Hide suggestions
+                document.getElementById('searchInput').focus(); // Keep input active
             };
             suggestionsDiv.appendChild(suggestionItem);
         });
 
-        if (suggestions.length > 0) {
+        if (uniqueSuggestions.length > 0) {
             suggestionsDiv.style.display = 'block'; // Show suggestions
         } else {
             suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
@@ -209,15 +181,6 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
     }
 });
 
-// Prevent default form submission
-document.getElementById("searchInput").addEventListener("submit", function (event) {
-    event.preventDefault();
-});
-
-// Initialize search on page load
-document.addEventListener("DOMContentLoaded", () => {
-    loadSitemap();
-});
 
 
 
