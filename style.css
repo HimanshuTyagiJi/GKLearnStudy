@@ -22,7 +22,7 @@ body {background-color: var(--background-color);color: var(--text-color);}
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
 
     .header {box-shadow:  0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);}
-    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon ,  .search-icon  .search-container1.open{background-color: #343238;color:white}
+    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon , .search-container1.open{background-color: #343238;color:white}
     .header, .menu a:link, .menu a:visited {color: rgb(245, 155, 235);} 
     .header, .menu a.active {color: rgb(60, 216, 187);}
 
@@ -134,6 +134,11 @@ table tr:hover{background-color:transparent;}
 iframe {width:100%;height:600px;border: none;background-color: #000000;color:#c9c6c6}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.suggestion-item {
+  cursor: pointer;
+  /* Ensure pointer events are enabled */
+  pointer-events: auto;
+}.suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #232222; }
 a:link {text-decoration: none;}
 a:visited,a:link{color:pink;}
 a.active {color: rgb(192, 255, 200);}
@@ -145,7 +150,7 @@ textarea {width:100%;height:600px;background-color: #39393a;border: none;color: 
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
 
-.header, .menu-inner,.menu-brand,#themeToggle,.search-input,.navbar ,  .search-icon  .back-icon,.search-container1.open {background-color: rgb(255, 239, 249);}
+.header, .menu-inner,.menu-brand,#themeToggle,.search-input,.navbar ,  .back-icon,.search-container1.open {background-color: rgb(255, 239, 249);}
 .menu-brand a:link, .menu-arrow.left,.menu-arrow.right{color: rgb(0, 0, 0);}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -501,7 +506,60 @@ hr{height: 5%;}
 
 @media screen and (min-width: 769.01px)  {
 
+  .search-icon {
+    position: fixed;
+    top: -12px;
+    cursor: pointer;
+    right: 60px; /* Adjusted to be 10px from the right */
+    font-size: 40px;
+    z-index: 100;
+  }
+  
+  .back-icon {
+    position: fixed;
+    display: none; /* Hidden initially */
+    cursor: pointer;
+    font-size: 30px; /* Adjust icon size */
+    
+    color: #007bff; /* Color for visibility */
+    top: 0px; /* Adjusted top position */
+   right:30%;
+   left:15%;
+    /* Adjusted to be 10px from the left */
+    z-index: 1000;
+  }
+  
+  #searchInput {
+    position: fixed;
+    display: none;
+    padding: 10px;
+    top: 8px;
+    width: calc(100% - 100px); /* Adjusted to take full width minus the space for icons */
+    max-width: calc(100% - 100px); /* Keeps it within limits when zooming */
+    border: 0; /* Remove border */
+    outline: none; /* Remove outline */
+    border-radius: 10px; /* Rounded corners */
+    right: 50px; /* Positioned 50px from right to align with search button */
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    z-index: 1000;
+}
 
+  #searchButton {
+    position: fixed;
+    display: none; /* Hidden initially */
+    padding: 10px;
+    top: 0px;
+    right: 5px; /* Adjusted to be 10px from the right */
+    color: #ffffff; /* Text color */
+    background-color: #007bff; /* Button color */
+    border: 0px solid #ccc; /* Border */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    z-index: 1000;
+  }
+  .suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;  display: none; width: 50%; left: 50%; transform: translateX(-50%); margin-top: 2px; z-index: 1000; height: auto; max-height: 60vh; }
+  .suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
 
 
   
@@ -528,7 +586,11 @@ hr{height: 5%;}
 
   
  /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+ .search-icon {position: fixed;top:-12px;cursor: pointer;right:80px;font-size: 40px; z-index: 1000;}
+ .back-icon {position:fixed;display: none; /* Hidden initially */cursor: pointer;font-size: 30px; /* Adjust icon size */margin-right: 10px; /* Margin to separate from input */color: #007bff; /* Color for visibility */top:0px;right: 80%;z-index: 1000;}
+ #searchInput { position: fixed;display: none; padding: 10px;top:12.5px;width: 70%; border: 0px solid #ccc; /* Border styling */ border-radius: 10px; /* Rounded corners */right: 150px; /* Space between input and button */-webkit-transition: width 0.4s ease-in-out;transition: width 0.4s ease-in-out;z-index: 1000;}
+ #searchButton { position: fixed;display: none; /* Hidden initially */padding: 10px;top:12.5px;right:70px;color: #ffffff; /* Text color */background-color: #007bff; /* Button color */border: 0px solid #ccc; /* Border */border-radius: 10px; /* Rounded corners */cursor: pointer; /* Pointer cursor */z-index: 1000;}
+ 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
   .important_link{position:fixed;left:83%;height:100%;width:17%;padding:1em;margin-bottom:20px;top:0%;}
@@ -541,6 +603,40 @@ hr{height: 5%;}
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
+@media screen and (min-width: 768.01px) and (max-width: 900px) {
+ 
+.back-icon {position:fixed;display: none; /* Hidden initially */cursor: pointer;font-size: 30px; /* Adjust icon size */margin-right: 10px; /* Margin to separate from input */color: #007bff; /* Color for visibility */top:0px;right: 80%;z-index: 1000;}
+
+.back-icon {
+  position: fixed;
+  display: none; /* Hidden initially */
+  cursor: pointer;
+  font-size: 30px; /* Adjust icon size */
+  
+  color: #007bff; /* Color for visibility */
+  top: 0px; /* Adjusted top position */
+ right:30%;
+ left:50px;
+  /* Adjusted to be 10px from the left */
+  z-index: 1000;
+}}
+@media screen and (min-width: 900.01px) and (max-width: 1200px) {
+ 
+.back-icon {position:fixed;display: none; /* Hidden initially */cursor: pointer;font-size: 30px; /* Adjust icon size */margin-right: 10px; /* Margin to separate from input */color: #007bff; /* Color for visibility */top:0px;right: 80%;z-index: 1000;}
+
+.back-icon {
+  position: fixed;
+  display: none; /* Hidden initially */
+  cursor: pointer;
+  font-size: 30px; /* Adjust icon size */
+  
+  color: #007bff; /* Color for visibility */
+  top: 0px; /* Adjusted top position */
+ right:30%;
+ left:90px;
+  /* Adjusted to be 10px from the left */
+  z-index: 1000;
+}}
 
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
  
@@ -557,8 +653,125 @@ hr{height: 5%;}
     
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.search-icon {
+  position: fixed;
+  top: -12px;
+  cursor: pointer;
+  right: 60px; /* Adjusted to be 10px from the right */
+  font-size: 40px;
+  z-index: 100;
+}
+
+.back-icon {
+  position: fixed;
+  display: none; /* Hidden initially */
+  cursor: pointer;
+  font-size: 30px; /* Adjust icon size */
+  margin-left: 10px; /* Margin to separate from the left */
+  color: #007bff; /* Color for visibility */
+  top: -6px; /* Adjusted top position */
+  left: 0px; /* Adjusted to be 10px from the left */
+  z-index: 1000;
+}
+
+#searchInput {
+  position: fixed;
+  display: none;
+  padding: 10px;
+  top: 9.5px;
+  width: calc(100% - 100px); /* Adjusted to take full width minus the space for icons */
+  max-width: calc(100% - 112px); /* Keeps it within limits when zooming */
+  border: 0px solid #ccc; /* Border styling */
+  outline: none; /* Remove outline */
+  border-radius: 10px; /* Rounded corners */
+  left: 40px; /* Positioned 50px from left to align with back icon */
+   /* Positioned 50px from right to align with search button */
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+#searchButton {width:60px;
+  position: fixed;
+  display: none; /* Hidden initially */
+  padding: 10px;
+  top: 9.5px;
+  right: 5px; /* Adjusted to be 10px from the right */
+  color: #ffffff; /* Text color */
+  background-color: #007bff; /* Button color */
+  border: 0px solid #ccc; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  z-index: 1000;
+}.suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 80%; left: 50%; transform: translateX(-50%); margin-top: -4%; z-index: 1000; height: auto; max-height: 60vh; }
+.suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
 
 }
+@media screen and (max-width: 630px) {
+
+  .suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 80%; left: 50%; transform: translateX(-50%); margin-top: -4%; z-index: 1000; height: auto; max-height: 60vh; }
+  .suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
+
+}
+@media screen and (max-width: 570px) {
+
+  .suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 80%; left: 50%; transform: translateX(-50%); margin-top: -2%; z-index: 1000; height: auto; max-height: 60vh; }
+  .suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
+
+}
+
+@media screen and (max-width: 470px) {
+
+  .suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 80%; left: 50%; transform: translateX(-50%); margin-top: 2%; z-index: 1000; height: auto; max-height: 60vh; }
+  .suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
+
+}
+@media screen and (max-width: 370px) {
+
+#searchInput {
+  position: fixed;
+  display: none;
+  padding: 10px;
+  top: 10.2px;
+  width: calc(100% - 100px); /* Adjusted to take full width minus the space for icons */
+  max-width: calc(100% - 112px); /* Keeps it within limits when zooming */
+  border: 0px solid #ccc; /* Border styling */
+  outline: none; /* Remove outline */
+  border-radius: 10px; /* Rounded corners */
+  left: 40px; /* Positioned 50px from left to align with back icon */
+   /* Positioned 50px from right to align with search button */
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+#searchButton {width:60px;
+  position: fixed;
+  display: none; /* Hidden initially */
+  padding: 10px;
+  top: 10.2px;
+  right: 5px; /* Adjusted to be 10px from the right */
+  color: #ffffff; /* Text color */
+  background-color: #007bff; /* Button color */
+  border: 0px solid #ccc; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  z-index: 1000;
+}
+  .suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 80%; left: 50%; transform: translateX(-50%); margin-top: 4%; z-index: 1000; height: auto; max-height: 60vh; }
+  .suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
+
+}
+/*============================================================================================================================================================================================================================================================================================================*/
+/*=========================================================================================================================================================================================*/
+/*=========================================================================================================================================================================================*/
+/*=========================================================================================================================================================================================*/
+  
  
 @media screen and (max-width: 320px) {
   
@@ -584,7 +797,61 @@ hr{height: 5%;}
  .menu-arrow.left {display: none;}
  .menu-arrow.right {display: none;}
 
+ .search-icon {
+  position: fixed;
+  top: -16px;
+  cursor: pointer;
+  right: 60px; /* Adjusted to be 10px from the right */
+  font-size: 30px;
+  z-index: 100;
+}
 
+.back-icon {height: 45px;
+  position: fixed;
+  display: none; /* Hidden initially */
+  cursor: pointer;
+  font-size: 27px; /* Adjust icon size */
+  margin-left: 10px; /* Margin to separate from the left */
+  color: #007bff; /* Color for visibility */
+  top: -15px; /* Adjusted top position */
+  left: 0px; /* Adjusted to be 10px from the left */
+  z-index: 1000;
+}
+
+#searchInput {height: 10px;
+  position: fixed;
+  display: none;
+ 
+  top: 3px;
+  width: calc(100% - 80px); /* Adjusted to take full width minus the space for icons */
+  max-width: calc(100% - 80px); /* Keeps it within limits when zooming */
+  border: 0px solid #ccc; /* Border styling */
+  outline: none; /* Remove outline */
+  border-radius: 10px; /* Rounded corners */
+  left: 40px; /* Positioned 50px from left to align with back icon */
+   /* Positioned 50px from right to align with search button */
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  z-index: 1000;font-size: 10px !important;
+}
+
+#searchButton {width:13%;
+  position: fixed;
+  display: none; /* Hidden initially */
+  padding: 3px;
+  top: 4px;
+  right: 5px; /* Adjusted to be 10px from the right */
+  color: #ffffff; /* Text color */
+  background-color: #007bff; /* Button color */
+  border: 0px solid #ccc; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  z-index: 1000;
+}.suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 70%; left: 50%; transform: translateX(-50%); margin-top: -7px; z-index: 1000; height: auto; max-height: 60vh; }
+.suggestions-list::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
+
+
+}@media screen and (max-width: 238px) {.suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #fff; border-radius: 15px; overflow-y: auto;display: none; width: 70%; left: 50%; transform: translateX(-50%); margin-top: 5px; z-index: 1000; height: auto; max-height: 60vh; }
 
 }
 /*======== Brand Animation ====================================================================================================================================================================================================================================================================================================*/
@@ -671,6 +938,36 @@ ol,ul,li{margin:0px;}
 
 
 
+#searchButton:hover {background-color: #0056b3;}
+.suggestion-item {padding: 10px; cursor: pointer;}
+.suggestion-item:hover {background-color: #5100ff; color: #ffffff;}
+.modal1 {display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);overflow: hidden; }
+.modal1-content { border-radius: 10px;background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 800px; height: auto; max-height: 80vh; overflow-y: auto; }
+.close {color: #aaa;float: right;font-size: 28px; font-weight: bold; }
+.close:hover,
+.close:focus {color: black; text-decoration: none;cursor: pointer; }
+.highlight {background-color: yellow; font-weight: bold; }
+.search-container.expanded #searchInput,
+.search-container.expanded #searchButton,
+.search-container.expanded .back-icon {display: inline-block;}
+.result-card {border: 1px solid #ddd;padding: 15px;margin: 10px 0;border-radius: 10px;background-color: #fff;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);display: flex;align-items: flex-start;}
+.result-image { flex-shrink: 0;margin-right: 15px;}
+.result-image img { border-radius: 10px;width: 100px;height: auto;}
+.result-content {flex: 1;}
+.result-title { font-size: 18px; font-weight: bold; margin: 0 0 10px 0;}
+.result-link {color: #007bff !important;text-decoration: none;}
+.result-card:hover {background-color: rgb(225, 225, 225);}
+.result-snippet {font-size: 14px;color: #555;}
+.suggestion-item {
+  cursor: pointer;
+  /* Ensure pointer events are enabled */
+  pointer-events: auto;
+}
+.search-container.expanded #searchInput{padding-left: 35px;}
+
+input[type=text] {background-image: url('image/search-icon.png');padding-left: 20px;
+  background-size: 20px;float:right;width: 100%;right:0%;box-sizing: border-box;border: 2px solid #ccc;border-radius: 8px;background-color: white;background-position: 10px 10px; background-repeat: no-repeat;padding: 12px 20px 12px 40px;-webkit-transition: width 0.4s ease-in-out;transition: width 0.4s ease-in-out;}
+
 #install-popup {
             position: fixed;
             bottom: 20px;
@@ -698,11 +995,12 @@ ol,ul,li{margin:0px;}
             right: 20px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease-in-out;z-index:9999;
+            transition: all 0.3s ease-in-out;
+   z-index:99999;
         }
 
         .search-icon {
-            font-size: 36px;
+            font-size: 30px;
             cursor: pointer;
             padding: 10px;
             border: none;
