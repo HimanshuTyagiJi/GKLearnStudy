@@ -656,7 +656,7 @@ hr{height: 5%;}
   .brand {font-family: inherit;font-size: 1.6rem;font-weight: 600;text-transform: uppercase;margin-left: 15px;margin:6px}
   .menu {text-align: center !important;margin-top: -10px;font-size: 22px;height: auto;box-shadow: none;align-items: center;align-items: center;width: auto; /* Set the maximum width */max-width: 70%;position: absolute;left: 50%;top: 30%;transform: translate(-50%, -50%);}
   .menu a {display: block; /* Make links block-level elements */margin: 0 auto 0px; /* Add 20px gap below each link */margin-left: 10px;text-decoration: none; /* Remove underline from links */width: fit-content;}
-  .menu-inner {display: flex;flex-direction: row;margin-right: 3rem;margin-left: 3rem; margin-top:12.5px !important}
+  .menu-inner {display: flex;flex-direction: row;margin-right: 3rem;margin-left: 3rem; margin-top:18px !important}
   .menu-inner::-webkit-scrollbar {display: none; /* Hide the default scrollbar */}
   .menu-toggle {display: none;}
   #themeToggle {z-index: 11;position: fixed;top: 13px;right: 15px;padding: 0px 0px;border: none;}
@@ -686,9 +686,12 @@ hr{height: 5%;}
         width: calc(81% - 70px);
         opacity: 1;
 }
+  .search-icon {
+      
+        margin-top: -14px;}
   .search-container {
         position: fixed;
-        top: 10px;
+        top: 11.5px;
 }}
 /*===============================================================================================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
