@@ -559,7 +559,7 @@ hr{height: 5%;}
   .search-container { top: 6px;}
   .search-container.active {
        
-        right: 5px;
+        right: 5px !important;
 }.back-icon {
     
         margin-right: 0px;
@@ -766,7 +766,7 @@ ol,ul,li{margin:0px;}
 
         .search-container.active {
             width: 100%;
-            right: 0;
+            right: 5px;
         }
 
         .search-container.active .search-input {
@@ -774,7 +774,7 @@ ol,ul,li{margin:0px;}
             opacity: 1;
         }
 
-        .suggestions, #results {
+        .suggestions, #results {position:fixed;
             border: 1px solid #ccc;
             max-width: 500px;
             margin: 80px auto 0;
