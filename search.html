@@ -151,6 +151,16 @@
         #results .result-paragraph {
             font-size: 14px;
             margin-top: 5px;
+            overflow: hidden; /* Hide overflow */
+            display: -webkit-box; /* For WebKit-based browsers */
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Show only 2 lines */
+            max-height: 3em; /* Adjust height to fit 2 lines */
+        }
+
+        #results .result-paragraph span {
+            display: inline-block;
+            max-width: 100%;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
@@ -206,7 +216,7 @@
     const options = {
         includeScore: true,
         threshold: 0.4,
-        keys: ['title', 'paragraph']
+        keys: ['title', 'paragraph'] // Search in title and paragraph
     };
 
     let fuse;
@@ -265,11 +275,10 @@
             const result = fuse.search(query);
             if (result.length > 0) {
                 result.forEach(({ item }) => {
-                    const resultItem = document.createElement('a');
-                    resultItem.href = item.url;
-                    resultItem.className = 'result-item';
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item');
                     resultItem.innerHTML = `
-                        <img src="${item.image}" alt="Image">
+                        <img src="${item.image}" alt="${item.title}">
                         <div class="result-content">
                             <div class="result-title">${highlightMatch(item.title, query)}</div>
                             <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
