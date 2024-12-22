@@ -66,11 +66,8 @@ function closeSearch() {
 }
 
 document.addEventListener("click", (event) => {
-    const searchContainer = document.querySelector(".search-container");
-    // Prevent closing search when clicking anywhere other than the back button
-    if (event.target !== document.getElementById("backBtn") && searchContainer.contains(event.target)) {
-        return; // Do nothing if the click is inside the search container
-    }
+    // Prevent closing the search input when clicking anywhere else
+    // Only close when the back button is clicked
 });
 
 function searchTitles(event) {
@@ -89,7 +86,7 @@ function searchTitles(event) {
         const uniqueResults = [...new Set(result.map(item => item.item.title))];
 
         if (uniqueResults.length > 0) {
-            loadPage(1, uniqueResults); // Load first page of results
+            displayResults(uniqueResults, result, 1); // Load first page of results
             resultsDiv.style.display = 'block'; // Show results
         } else {
             resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
@@ -98,21 +95,22 @@ function searchTitles(event) {
     }
 }
 
-function loadPage(page, uniqueResults) {
+function displayResults(uniqueResults, result, page) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Clear previous results
 
     const start = (page - 1) * 10;
     const end = start + 10;
-
     uniqueResults.slice(start, end).forEach(title => {
-        const item = titles.find(t => t.title === title);
+        const item = result.find(r => r.item.title === title).item;
         const resultItem = document.createElement('div');
         resultItem.classList.add('result-item');
+        resultItem.style.display = 'flex'; // Display as flex for inline layout
+        resultItem.style.alignItems = 'center'; // Center align items
         resultItem.innerHTML = `
-            <a href="${item.url}" target="_blank">
-                <img src="${item.image}" alt="${item.title}">
-                <div class="result-content">
+            <a href="${item.url}" target="_blank" style="display: flex; align-items: center; width: 100%;">
+                <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; margin-right: 10px;">
+                <div class="result-content" style="flex-grow: 1;">
                     <div class="result-title">${item.title}</div>
                     <div class="result-paragraph">${item.paragraph}</div>
                 </div>
@@ -121,17 +119,17 @@ function loadPage(page, uniqueResults) {
         resultsDiv.appendChild(resultItem);
     });
 
+    // Create pagination
     const paginationDiv = document.createElement('div');
     paginationDiv.classList.add('pagination');
     const totalPages = Math.ceil(uniqueResults.length / 10);
-
     for (let i = 1; i <= totalPages; i++) {
         const pageLink = document.createElement('a');
         pageLink.innerText = i;
         pageLink.href = '#';
-        pageLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default anchor behavior
-            loadPage(i, uniqueResults); // Load the selected page
+        pageLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            displayResults(uniqueResults, result, i); // Load the selected page
         });
         paginationDiv.appendChild(pageLink);
     }
@@ -180,6 +178,7 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
         showSuggestions(event);
     }
 });
+
 
 
 
