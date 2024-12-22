@@ -142,7 +142,7 @@ function showSuggestions(event) {
     suggestionsDiv.innerHTML = ''; // Clear previous suggestions
 
     if (query.length > 0) {
-        const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
+        const suggestions = fuse.search(query); // Get all suggestions
 
         // Remove duplicates from suggestions
         const uniqueSuggestions = [...new Set(suggestions.map(item => item.item.title))];
@@ -178,7 +178,6 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
         showSuggestions(event);
     }
 });
-
 
 
 
