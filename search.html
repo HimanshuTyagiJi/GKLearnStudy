@@ -272,7 +272,7 @@
                         <img src="${item.image}" alt="Image">
                         <div class="result-content">
                             <div class="result-title">${highlightMatch(item.title, query)}</div>
-                            <div class="result-paragraph">${item.paragraph}</div>
+                            <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
                         </div>
                     `;
                     resultsDiv.appendChild(resultItem);
@@ -296,6 +296,7 @@
                 suggestionItem.textContent = suggestion.title;
                 suggestionItem.onclick = () => {
                     document.getElementById('searchInput').value = suggestion.title; // Fill input with suggestion
+                    document.getElementById('searchInput').focus(); // Keep input active
                     suggestionsDiv.innerHTML = ''; // Clear suggestions
                     suggestionsDiv.style.display = 'none'; // Hide suggestions
                 };
