@@ -22,7 +22,7 @@ body {background-color: var(--background-color);color: var(--text-color);}
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
 
     .header {box-shadow:  0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);}
-    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon , .search-container1.open{background-color: #343238;color:white}
+    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon ,  .search-icon  .search-container1.open{background-color: #343238;color:white}
     .header, .menu a:link, .menu a:visited {color: rgb(245, 155, 235);} 
     .header, .menu a.active {color: rgb(60, 216, 187);}
 
@@ -145,7 +145,7 @@ textarea {width:100%;height:600px;background-color: #39393a;border: none;color: 
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
 
-.header, .menu-inner,.menu-brand,#themeToggle,.search-input,.navbar ,  .back-icon,.search-container1.open {background-color: rgb(255, 239, 249);}
+.header, .menu-inner,.menu-brand,#themeToggle,.search-input,.navbar ,  .search-icon  .back-icon,.search-container1.open {background-color: rgb(255, 239, 249);}
 .menu-brand a:link, .menu-arrow.left,.menu-arrow.right{color: rgb(0, 0, 0);}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -694,7 +694,7 @@ ol,ul,li{margin:0px;}
         }
  .search-container {
             position: fixed;
-            top: 30px;
+            top: 22px;
             right: 20px;
             display: flex;
             align-items: center;
@@ -702,7 +702,7 @@ ol,ul,li{margin:0px;}
         }
 
         .search-icon {
-            font-size: 20px;
+            font-size: 28px;
             cursor: pointer;
             padding: 10px;
             border: none;
