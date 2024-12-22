@@ -1,12 +1,12 @@
 
    
-    let titles = []; // Store parsed titles
-    const seenUrls = new Set(); // Track unique URLs for deduplication
+
+    let titles = [];
 
     function loadSitemap() {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
@@ -20,18 +20,15 @@
                     const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
 
                     if (titleElement && locElement) {
-                        const url = locElement.textContent.trim();
-                        if (!seenUrls.has(url)) { // Check for duplicate URLs
-                            seenUrls.add(url);
-                            titles.push({
-                                title: titleElement.textContent.trim(),
-                                url: url,
-                                paragraph: paragraphElement ? paragraphElement.textContent.trim() : '',
-                                image: imageURL
-                            });
-                        }
+                        titles.push({
+                            title: titleElement.textContent,
+                            url: locElement.textContent,
+                            paragraph: paragraphElement ? paragraphElement.textContent : '',
+                            image: imageURL
+                        });
                     }
                 }
+
                 fuse = new Fuse(titles, options);
             } else if (xhr.readyState === 4) {
                 console.error('Error loading sitemap:', xhr.status, xhr.statusText);
@@ -42,8 +39,8 @@
 
     const options = {
         includeScore: true,
-        threshold: 0.4, // Adjust for better matching
-        keys: ['title', 'paragraph']
+        threshold: 0.4, // Higher threshold for better matching
+        keys: ['title', 'paragraph'] // Search in title and paragraph
     };
 
     let fuse;
@@ -57,13 +54,37 @@
 
     document.getElementById("backBtn").addEventListener("click", closeSearch);
 
+    document.addEventListener("click", (event) => {
+        const searchContainer = document.querySelector(".search-container");
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchInput = document.getElementById('searchInput');
+
+        const isClickInsideInput = searchInput.contains(event.target);
+        const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+        const isClickCloseToInput = (
+            (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
+            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+            (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
+            event.clientX <= searchInput.getBoundingClientRect().right + 20)
+        );
+
+        if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+            closeSearch();
+        }
+    });
+
     function closeSearch() {
-        document.querySelector(".search-container").classList.remove("active");
-        document.getElementById("searchInput").value = "";
-        document.getElementById('results').innerHTML = '';
-        document.getElementById('suggestions').innerHTML = '';
-        document.getElementById('suggestions').style.display = 'none';
-        document.getElementById('results').style.display = 'none';
+        const searchInput = document.getElementById("searchInput");
+        searchInput.classList.add("closing");
+        setTimeout(() => {
+            document.querySelector(".search-container").classList.remove("active");
+            searchInput.classList.remove("closing");
+            searchInput.value = "";
+            document.getElementById('results').innerHTML = ''; // Clear results
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
+            document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
+            document.getElementById('results').style.display = 'none'; // Hide results
+        }, 300);
     }
 
     function searchTitles(event) {
@@ -78,132 +99,128 @@
         if (query.length > 0) {
             const result = fuse.search(query);
 
-            const seenTitles = new Set(); // Track unique titles within results
-
             if (result.length > 0) {
-                const filteredResults = result.filter(({ item }) => {
-                    if (!seenTitles.has(item.title)) {
-                        seenTitles.add(item.title);
-                        return true;
-                    }
-                    return false;
+                result.slice(0, 10).forEach(({ item }) => {
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item');
+                    resultItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="result-content">
+                            <div class="result-title">${highlightMatch(item.title, query)}</div>
+                            <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
+                        </div>
+                    `;
+                    resultsDiv.appendChild(resultItem);
                 });
 
-                const totalPages = Math.ceil(filteredResults.length / 10); // 10 results per page
-                loadPage(1, filteredResults, totalPages);
+                const paginationDiv = document.createElement('div');
+                paginationDiv.classList.add('pagination');
+                const totalPages = Math.ceil(result.length / 10);
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageLink = document.createElement('a');
+                    pageLink.innerText = i;
+                    pageLink.href = '#';
+                    pageLink.addEventListener('click', () => loadPage(i));
+                    paginationDiv.appendChild(pageLink);
+                }
+                resultsDiv.appendChild(paginationDiv);
+
+                resultsDiv.style.display = 'block'; // Show results
             } else {
                 resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
-                resultsDiv.style.display = 'block';
+                resultsDiv.style.display = 'block'; // Show no result message
             }
         }
     }
 
-    function loadPage(page, result, totalPages) {
+    function loadPage(page) {
+        const query = document.getElementById('searchInput').value.trim();
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = ''; // Clear previous results
 
+        const result = fuse.search(query);
         const start = (page - 1) * 10;
         const end = start + 10;
-        const currentResults = result.slice(start, end);
 
-        currentResults.forEach(({ item }) => {
+        result.slice(start, end).forEach(({ item }) => {
             const resultItem = document.createElement('div');
             resultItem.classList.add('result-item');
             resultItem.innerHTML = `
                 <img src="${item.image}" alt="${item.title}">
                 <div class="result-content">
-                    <div class="result-title">${highlightMatch(item.title)}</div>
-                    <div class="result-paragraph">${highlightMatch(item.paragraph)}</div>
+                    <div class="result-title">${highlightMatch(item.title, query)}</div>
+                    <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
                 </div>
             `;
             resultsDiv.appendChild(resultItem);
         });
 
-        if (totalPages > 1) {
-            const paginationDiv = document.createElement('div');
-            paginationDiv.classList.add('pagination');
-
-            for (let i = 1; i <= totalPages; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.innerText = i;
-                pageLink.href = '#';
-                pageLink.className = i === page ? 'active' : '';
-                pageLink.style.padding = '5px 10px';
-                pageLink.style.border = '1px solid black';
-                pageLink.style.margin = '0 5px';
-                pageLink.style.cursor = 'pointer';
-
-                pageLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    loadPage(i, result, totalPages);
-                    updateActivePagination(i, paginationDiv);
-                });
-                paginationDiv.appendChild(pageLink);
-            }
-            resultsDiv.appendChild(paginationDiv);
+        const paginationDiv = document.createElement('div');
+        paginationDiv.classList.add('pagination');
+        const totalPages = Math.ceil(result.length / 10);
+        for (let i = 1; i <= totalPages; i++) {
+            const pageLink = document.createElement('a');
+            pageLink.innerText = i;
+            pageLink.href = '#';
+            pageLink.addEventListener('click', () => loadPage(i));
+            paginationDiv.appendChild(pageLink);
         }
-        resultsDiv.style.display = 'block';
+        resultsDiv.appendChild(paginationDiv);
     }
 
-    function updateActivePagination(activePage, paginationDiv) {
-        const links = paginationDiv.getElementsByTagName('a');
-        for (let link of links) {
-            link.classList.remove('active');
-        }
-        links[activePage - 1].classList.add('active');
-    }
-
-    function showSuggestions() {
+    function showSuggestions(event) {
         const query = document.getElementById('searchInput').value.trim();
         const suggestionsDiv = document.getElementById('suggestions');
         suggestionsDiv.innerHTML = ''; // Clear previous suggestions
 
         if (query.length > 0) {
-            const suggestions = fuse.search(query).slice(0, 5); // Top 5 suggestions
-            const seenSuggestions = new Set(); // Track unique suggestions
-
+            const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
             suggestions.forEach(({ item }) => {
-                if (!seenSuggestions.has(item.title)) {
-                    seenSuggestions.add(item.title);
-                    const suggestionItem = document.createElement('li');
-                    suggestionItem.innerHTML = highlightMatch(item.title);
-                    suggestionItem.onclick = () => {
-                        document.getElementById('searchInput').value = item.title;
-                        suggestionsDiv.innerHTML = '';
-                        suggestionsDiv.style.display = 'none';
-                    };
-                    suggestionsDiv.appendChild(suggestionItem);
-                }
+                const suggestionItem = document.createElement('li');
+                suggestionItem.innerHTML = highlightMatch(item.title, query); // Highlight matching title
+                suggestionItem.onclick = () => {
+                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
+                    document.getElementById('searchInput').focus(); // Keep input active
+                    suggestionsDiv.innerHTML = ''; // Clear suggestions
+                    suggestionsDiv.style.display = 'none'; // Hide suggestions
+                };
+                suggestionsDiv.appendChild(suggestionItem);
             });
 
             if (suggestions.length > 0) {
-                suggestionsDiv.style.display = 'block';
+                suggestionsDiv.style.display = 'block'; // Show suggestions
             } else {
-                suggestionsDiv.innerHTML = '<li>No result found</li>';
-                suggestionsDiv.style.display = 'block';
+                suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
+                suggestionsDiv.style.display = 'block'; // Show no result message
             }
         } else {
-            suggestionsDiv.style.display = 'none';
+            suggestionsDiv.style.display = 'none'; // Hide suggestions
         }
     }
 
-    function highlightMatch(text) {
-        const query = document.getElementById('searchInput').value.trim();
+    function highlightMatch(text, query) {
         const regex = new RegExp(`(${query})`, 'gi');
         return text.replace(regex, '<span class="highlight">$1</span>');
     }
 
-    document.getElementById("searchInput").addEventListener("input", showSuggestions);
-
     document.getElementById("searchInput").addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             searchTitles(event);
+        } else {
+            showSuggestions(event);
         }
     });
 
+    // Prevent default form submission
+    document.getElementById("searchInput").addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
+
+    // Initialize search on page load
     document.addEventListener("DOMContentLoaded", () => {
         loadSitemap();
     });
+
 
 
 
