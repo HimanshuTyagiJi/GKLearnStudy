@@ -178,19 +178,30 @@ function showSuggestions(event) {
 
     if (query.length > 0) {
         const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
-        suggestions.forEach(({ item }) => {
-            const suggestionItem = document.createElement('li');
-            suggestionItem.innerHTML = item.title; // No highlighting for suggestions
-            suggestionItem.onclick = () => {
-                document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                document.getElementById('searchInput').focus(); // Keep input active
-                suggestionsDiv.innerHTML = ''; // Clear suggestions
-                suggestionsDiv.style.display = 'none'; // Hide suggestions
-            };
-            suggestionsDiv.appendChild(suggestionItem);
+        const existingResults = new Set(); // Track existing result titles to avoid duplicates
+
+        // Collect titles of current results to avoid duplicates in suggestions
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.querySelectorAll('.result-title').forEach(titleElement => {
+            existingResults.add(titleElement.innerText);
         });
 
-        if (suggestions.length > 0) {
+        suggestions.forEach(({ item }) => {
+            // Only add suggestion if it doesn't already exist in results
+            if (!existingResults.has(item.title)) {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.innerHTML = item.title; // No highlighting for suggestions
+                suggestionItem.onclick = () => {
+                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
+                    document.getElementById('searchInput').focus(); // Keep input active
+                    suggestionsDiv.innerHTML = ''; // Clear suggestions
+                    suggestionsDiv.style.display = 'none'; // Hide suggestions
+                };
+                suggestionsDiv.appendChild(suggestionItem);
+            }
+        });
+
+        if (suggestionsDiv.children.length > 0) {
             suggestionsDiv.style.display = 'block'; // Show suggestions
         } else {
             suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
@@ -218,6 +229,7 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
+
 
 
 
