@@ -63,13 +63,14 @@ document.addEventListener("click", (event) => {
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
     const isClickCloseToInput = (
-        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
-        event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
-        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
-        event.clientX <= searchInput.getBoundingClientRect().right + 20)
+        (event.clientY >= searchInput.getBoundingClientRect().top - 19 &&
+        event.clientY <= searchInput.getBoundingClientRect().bottom + 19) &&
+        (event.clientX >= searchInput.getBoundingClientRect().left - 19 &&
+        event.clientX <= searchInput.getBoundingClientRect().right + 19)
     );
 
-    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+    // Only close the input if the click is outside the search container and outside the defined close range
+    if (!searchContainer.contains(event.target) && !isClickInsideInput && !isClickInsideSuggestions && !isClickCloseToInput) {
         closeSearch();
     }
 });
@@ -204,6 +205,7 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
+
 
 
 
