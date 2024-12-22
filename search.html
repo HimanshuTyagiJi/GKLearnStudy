@@ -183,7 +183,7 @@
                 const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
                 const urlElements = xmlDoc.getElementsByTagName('url');
 
-                const seenTitles = new Set(); // To track unique titles
+                const seenUrls = new Set(); // To track unique URLs
 
                 for (let urlElement of urlElements) {
                     const titleElement = urlElement.getElementsByTagName('title')[0];
@@ -193,12 +193,12 @@
                     const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
 
                     if (titleElement && locElement) {
-                        const titleText = titleElement.textContent.trim();
-                        if (!seenTitles.has(titleText)) {
-                            seenTitles.add(titleText);
+                        const url = locElement.textContent.trim();
+                        if (!seenUrls.has(url)) {
+                            seenUrls.add(url);
                             titles.push({
-                                title: titleText,
-                                url: locElement.textContent,
+                                title: titleElement.textContent.trim(),
+                                url: url,
                                 paragraph: paragraphElement ? paragraphElement.textContent.trim() : '',
                                 image: imageURL
                             });
@@ -285,17 +285,35 @@
         if (totalPages > 1) {
             const paginationDiv = document.createElement('div');
             paginationDiv.classList.add('pagination');
+
             for (let i = 1; i <= totalPages; i++) {
                 const pageLink = document.createElement('a');
                 pageLink.innerText = i;
                 pageLink.href = '#';
                 pageLink.className = i === page ? 'active' : '';
-                pageLink.addEventListener('click', () => loadPage(i, result, totalPages));
+                pageLink.style.padding = '5px 10px';
+                pageLink.style.border = '1px solid black';
+                pageLink.style.margin = '0 5px';
+                pageLink.style.cursor = 'pointer';
+
+                pageLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadPage(i, result, totalPages);
+                    updateActivePagination(i, paginationDiv);
+                });
                 paginationDiv.appendChild(pageLink);
             }
             resultsDiv.appendChild(paginationDiv);
         }
         resultsDiv.style.display = 'block';
+    }
+
+    function updateActivePagination(activePage, paginationDiv) {
+        const links = paginationDiv.getElementsByTagName('a');
+        for (let link of links) {
+            link.classList.remove('active');
+        }
+        links[activePage - 1].classList.add('active');
     }
 
     function showSuggestions() {
@@ -350,6 +368,7 @@
         loadSitemap();
     });
 </script>
+
 
 </body>
 </html>
