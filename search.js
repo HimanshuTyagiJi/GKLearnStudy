@@ -3,7 +3,7 @@ let titles = [];
 function loadSitemap() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
@@ -96,29 +96,26 @@ function searchTitles(event) {
     if (query.length > 0) {
         const result = fuse.search(query);
 
-        // Filter out duplicates based on title
-        const uniqueResults = Array.from(new Set(result.map(item => item.item.title)))
-            .map(title => result.find(item => item.item.title === title));
-
-        if (uniqueResults.length > 0) {
-            uniqueResults.slice(0, 10).forEach(({ item }) => {
+        if (result.length > 0) {
+            result.slice(0, 10).forEach(({ item }) => {
                 const resultItem = document.createElement('div');
                 resultItem.classList.add('result-item');
                 resultItem.innerHTML = `
-                    <a href="${item.url}" target="_blank">
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="result-content">
-                            <div class="result-title">${item.title}</div>
-                            <div class="result-paragraph">${item.paragraph}</div>
-                        </div>
-                    </a>
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="result-content">
+                        <div class="result-title">${item.title}</div>
+                        <div class="result-paragraph">${item.paragraph}</div>
+                    </div>
                 `;
+                resultItem.onclick = () => {
+                    window.location.href = item.url; // Navigate to the link on click
+                };
                 resultsDiv.appendChild(resultItem);
             });
 
             const paginationDiv = document.createElement('div');
             paginationDiv.classList.add('pagination');
-            const totalPages = Math.ceil(uniqueResults.length / 10);
+            const totalPages = Math.ceil(result.length / 10);
             for (let i = 1; i <= totalPages; i++) {
                 const pageLink = document.createElement('a');
                 pageLink.innerText = i;
@@ -142,32 +139,28 @@ function loadPage(page) {
     resultsDiv.innerHTML = ''; // Clear previous results
 
     const result = fuse.search(query);
-    
-    // Filter out duplicates based on title
-    const uniqueResults = Array.from(new Set(result.map(item => item.item.title)))
-        .map(title => result.find(item => item.item.title === title));
-    
     const start = (page - 1) * 10;
     const end = start + 10;
 
-    uniqueResults.slice(start, end).forEach(({ item }) => {
+    result.slice(start, end).forEach(({ item }) => {
         const resultItem = document.createElement('div');
         resultItem.classList.add('result-item');
         resultItem.innerHTML = `
-            <a href="${item.url}" target="_blank">
-                <img src="${item.image}" alt="${item.title}">
-                <div class="result-content">
-                    <div class="result-title">${item.title}</div>
-                    <div class="result-paragraph">${item.paragraph}</div>
-                </div>
-            </a>
+            <img src="${item.image}" alt="${item.title}">
+            <div class="result-content">
+                <div class="result-title">${item.title}</div>
+                <div class="result-paragraph">${item.paragraph}</div>
+            </div>
         `;
+        resultItem.onclick = () => {
+            window.location.href = item.url; // Navigate to the link on click
+        };
         resultsDiv.appendChild(resultItem);
     });
 
     const paginationDiv = document.createElement('div');
     paginationDiv.classList.add('pagination');
-    const totalPages = Math.ceil(uniqueResults.length / 10);
+    const totalPages = Math.ceil(result.length / 10);
     for (let i = 1; i <= totalPages; i++) {
         const pageLink = document.createElement('a');
         pageLink.innerText = i;
@@ -185,26 +178,19 @@ function showSuggestions(event) {
 
     if (query.length > 0) {
         const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
-
-        // Filter out duplicates in suggestions
-        const uniqueSuggestions = Array.from(new Set(suggestions.map(item => item.item.title)))
-            .map(title => suggestions.find(item => item.item.title === title));
-
-        uniqueSuggestions.forEach(({ item }) => {
+        suggestions.forEach(({ item }) => {
             const suggestionItem = document.createElement('li');
-            suggestionItem.innerHTML = item.title; // Show suggestion title
+            suggestionItem.innerHTML = item.title; // No highlighting for suggestions
             suggestionItem.onclick = () => {
                 document.getElementById('searchInput').value = item.title; // Fill input with suggestion
                 document.getElementById('searchInput').focus(); // Keep input active
                 suggestionsDiv.innerHTML = ''; // Clear suggestions
                 suggestionsDiv.style.display = 'none'; // Hide suggestions
-                // Optionally call searchTitles to show results immediately
-                searchTitles(new Event('search'));
             };
             suggestionsDiv.appendChild(suggestionItem);
         });
 
-        if (uniqueSuggestions.length > 0) {
+        if (suggestions.length > 0) {
             suggestionsDiv.style.display = 'block'; // Show suggestions
         } else {
             suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
@@ -215,12 +201,24 @@ function showSuggestions(event) {
     }
 }
 
-document.getElementById("searchInput").addEventListener("input", showSuggestions);
-document.getElementById("searchInput").addEventListener("keydown", function(event) {
+document.getElementById("searchInput").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         searchTitles(event);
+    } else {
+        showSuggestions(event);
     }
 });
+
+// Prevent default form submission
+document.getElementById("searchInput").addEventListener("submit", function (event) {
+    event.preventDefault();
+});
+
+// Initialize search on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadSitemap();
+});
+
 
 
 
