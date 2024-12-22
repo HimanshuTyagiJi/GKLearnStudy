@@ -157,11 +157,6 @@
             -webkit-line-clamp: 2; /* Show only 2 lines */
             max-height: 3em; /* Adjust height to fit 2 lines */
         }
-
-        #results .result-paragraph span {
-            display: inline-block;
-            max-width: 100%;
-        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 </head>
@@ -215,7 +210,7 @@
 
     const options = {
         includeScore: true,
-        threshold: 0.4,
+        threshold: 0.4, // Higher threshold for better matching
         keys: ['title', 'paragraph'] // Search in title and paragraph
     };
 
@@ -268,11 +263,11 @@
         const query = document.getElementById('searchInput').value.trim();
         const resultsDiv = document.getElementById('results');
         const suggestionsDiv = document.getElementById('suggestions');
-        resultsDiv.innerHTML = '';
-        suggestionsDiv.innerHTML = '';
 
-        if (fuse) {
+        if (query.length > 0) {
             const result = fuse.search(query);
+            resultsDiv.innerHTML = ''; // Clear previous results
+
             if (result.length > 0) {
                 result.forEach(({ item }) => {
                     const resultItem = document.createElement('div');
@@ -299,12 +294,12 @@
         suggestionsDiv.innerHTML = '';
 
         if (query.length > 0) {
-            const suggestions = titles.filter(title => title.title.toLowerCase().includes(query.toLowerCase()));
-            suggestions.forEach(suggestion => {
+            const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
+            suggestions.forEach(({ item }) => {
                 const suggestionItem = document.createElement('li');
-                suggestionItem.textContent = suggestion.title;
+                suggestionItem.innerHTML = highlightMatch(item.title, query); // Highlight matching text
                 suggestionItem.onclick = () => {
-                    document.getElementById('searchInput').value = suggestion.title; // Fill input with suggestion
+                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
                     document.getElementById('searchInput').focus(); // Keep input active
                     suggestionsDiv.innerHTML = ''; // Clear suggestions
                     suggestionsDiv.style.display = 'none'; // Hide suggestions
