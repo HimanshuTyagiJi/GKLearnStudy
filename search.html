@@ -85,10 +85,10 @@
             padding: 0;
         }
 
-        .suggestions {
+        .suggestions, #results {
             border: 1px solid #ccc;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 10px auto 0;
             text-align: left;
             padding: 0;
             list-style: none;
@@ -99,14 +99,15 @@
             z-index: 1000;
             left: 50%;
             transform: translateX(-50%);
+            display: none; /* Initially hidden */
         }
 
-        .suggestions li {
+        .suggestions li, #results .result-item {
             padding: 10px;
             cursor: pointer;
         }
 
-        .suggestions li:hover {
+        .suggestions li:hover, #results .result-item:hover {
             background-color: #007bff;
             color: white;
         }
@@ -174,7 +175,6 @@
 <script>
     let titles = [];
 
-    // Function to load and parse sitemap.xml using XMLHttpRequest
     function loadSitemap() {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
@@ -201,7 +201,6 @@
                     }
                 }
 
-                // Initialize Fuse.js after loading the sitemap
                 fuse = new Fuse(titles, options);
             } else if (xhr.readyState === 4) {
                 console.error('Error loading sitemap:', xhr.status, xhr.statusText);
@@ -240,6 +239,10 @@
             document.querySelector(".search-container").classList.remove("active");
             searchInput.classList.remove("closing");
             searchInput.value = "";
+            document.getElementById('results').innerHTML = ''; // Clear results
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
+            document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
+            document.getElementById('results').style.display = 'none'; // Hide results
         }, 300);
     }
 
@@ -267,11 +270,14 @@
                     `;
                     resultsDiv.appendChild(resultItem);
                 });
+                resultsDiv.style.display = 'block'; // Show results
             } else {
                 resultsDiv.textContent = 'No results found.';
+                resultsDiv.style.display = 'block'; // Show message
             }
         } else {
             resultsDiv.textContent = 'Sitemap not loaded yet.';
+            resultsDiv.style.display = 'block'; // Show message
         }
     }
 
@@ -280,19 +286,26 @@
         const suggestionsDiv = document.getElementById('suggestions');
         suggestionsDiv.innerHTML = '';
 
-        if (fuse) {
-            const result = fuse.search(query);
-            if (result.length > 0) {
-                result.forEach(({ item }) => {
-                    const suggestionItem = document.createElement('li');
-                    suggestionItem.innerHTML = highlightMatch(item.title, query);
-                    suggestionItem.onclick = () => {
-                        document.getElementById('searchInput').value = item.title;
-                        suggestionsDiv.innerHTML = '';
-                    };
-                    suggestionsDiv.appendChild(suggestionItem);
-                });
+        if (query.length > 0) {
+            const suggestions = titles.filter(title => title.title.toLowerCase().includes(query.toLowerCase()));
+            suggestions.forEach(suggestion => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = suggestion.title;
+                suggestionItem.onclick = () => {
+                    document.getElementById('searchInput').value = suggestion.title; // Fill input with suggestion
+                    suggestionsDiv.innerHTML = ''; // Clear suggestions
+                    suggestionsDiv.style.display = 'none'; // Hide suggestions
+                };
+                suggestionsDiv.appendChild(suggestionItem);
+            });
+
+            if (suggestions.length > 0) {
+                suggestionsDiv.style.display = 'block'; // Show suggestions
+            } else {
+                suggestionsDiv.style.display = 'none'; // Hide suggestions
             }
+        } else {
+            suggestionsDiv.style.display = 'none'; // Hide suggestions
         }
     }
 
@@ -304,6 +317,7 @@
     document.getElementById("searchInput").addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             searchTitles(event);
+            showSuggestions(event); // Ensure suggestions are updated on Enter
         }
     });
 
