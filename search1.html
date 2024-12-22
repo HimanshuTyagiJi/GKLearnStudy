@@ -210,7 +210,7 @@
 
     const options = {
         includeScore: true,
-        threshold: 0.4,
+        threshold: 0.4, // Higher threshold for better matching
         keys: ['title', 'paragraph'] // Search in title and paragraph
     };
 
@@ -263,11 +263,11 @@
         const query = document.getElementById('searchInput').value.trim();
         const resultsDiv = document.getElementById('results');
         const suggestionsDiv = document.getElementById('suggestions');
-        resultsDiv.innerHTML = '';
-        suggestionsDiv.innerHTML = '';
 
-        if (fuse) {
+        if (query.length > 0) {
             const result = fuse.search(query);
+            resultsDiv.innerHTML = ''; // Clear previous results
+
             if (result.length > 0) {
                 result.forEach(({ item }) => {
                     const resultItem = document.createElement('div');
@@ -294,12 +294,12 @@
         suggestionsDiv.innerHTML = '';
 
         if (query.length > 0) {
-            const suggestions = titles.filter(title => title.title.toLowerCase().includes(query.toLowerCase()) || title.paragraph.toLowerCase().includes(query.toLowerCase())); // Include paragraph in suggestions
-            suggestions.forEach(suggestion => {
+            const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
+            suggestions.forEach(({ item }) => {
                 const suggestionItem = document.createElement('li');
-                suggestionItem.textContent = suggestion.title;
+                suggestionItem.innerHTML = highlightMatch(item.title, query); // Highlight matching title
                 suggestionItem.onclick = () => {
-                    document.getElementById('searchInput').value = suggestion.title; // Fill input with suggestion
+                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
                     document.getElementById('searchInput').focus(); // Keep input active
                     suggestionsDiv.innerHTML = ''; // Clear suggestions
                     suggestionsDiv.style.display = 'none'; // Hide suggestions
