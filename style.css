@@ -694,11 +694,11 @@ ol,ul,li{margin:0px;}
         }
  .search-container {
             position: fixed;
-            top: 20px;
+            top: 30px;
             right: 20px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;z-index:9999;
         }
 
         .search-icon {
