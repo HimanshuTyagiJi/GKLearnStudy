@@ -271,7 +271,7 @@
             const result = fuse.search(query);
 
             if (result.length > 0) {
-                result.slice(0, 10).forEach(({ item }) => {
+                result.slice(0, 2).forEach(({ item }) => {
                     const resultItem = document.createElement('div');
                     resultItem.classList.add('result-item');
                     resultItem.innerHTML = `
@@ -392,6 +392,5 @@
         loadSitemap();
     });
 </script>
-
 </body>
 </html>
