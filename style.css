@@ -717,8 +717,8 @@ hr{height: 5%;}
   .menu-toggle{top: 25px;font-size: 18px;}
   .brand {top: 2.5px;font-family: inherit;font-size: 18px;font-weight: 600;text-transform: uppercase;position: absolute;left: 50%;transform: translateX(-50%);}
   .navbar {font-size: 15px;position: relative;display: flex;flex-direction: row;align-items: center;justify-content: space-between;width: 100%;height: auto;margin: 0 auto;}
-  .search-icon {margin-top:-25px;}
-  .search-container { top: -1px;}
+  .search-icon {margin-top:-25px; }
+  .search-container { top: -1px !important}
  
  /*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/ 
  
