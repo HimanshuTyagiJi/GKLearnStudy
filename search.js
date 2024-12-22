@@ -77,19 +77,6 @@ document.addEventListener("click", (event) => {
     }
 });
 
-function closeSearch() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.classList.add("closing");
-    setTimeout(() => {
-        document.querySelector(".search-container").classList.remove("active");
-        searchInput.classList.remove("closing");
-        searchInput.value = "";
-        document.getElementById('results').innerHTML = '';
-        document.getElementById('suggestions').innerHTML = '';
-        document.getElementById('suggestions').style.display = 'none';
-        document.getElementById('results').style.display = 'none';
-    }, 300);
-}
 
 function searchTitles(event) {
     event.preventDefault();
