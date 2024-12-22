@@ -1,194 +1,226 @@
  let titles = [];
 
-    function loadSitemap() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
-                const urlElements = xmlDoc.getElementsByTagName('url');
+function loadSitemap() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+            const urlElements = xmlDoc.getElementsByTagName('url');
 
-                for (let urlElement of urlElements) {
-                    const titleElement = urlElement.getElementsByTagName('title')[0];
-                    const locElement = urlElement.getElementsByTagName('loc')[0];
-                    const paragraphElement = urlElement.getElementsByTagName('p')[0];
-                    const imageElement = urlElement.getElementsByTagName('image')[0];
-                    const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
+            for (let urlElement of urlElements) {
+                const titleElement = urlElement.getElementsByTagName('title')[0];
+                const locElement = urlElement.getElementsByTagName('loc')[0];
+                const paragraphElement = urlElement.getElementsByTagName('p')[0];
+                const imageElement = urlElement.getElementsByTagName('image')[0];
+                const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
 
-                    if (titleElement && locElement) {
-                        titles.push({
-                            title: titleElement.textContent,
-                            url: locElement.textContent,
-                            paragraph: paragraphElement ? paragraphElement.textContent : '',
-                            image: imageURL
-                        });
-                    }
+                if (titleElement && locElement) {
+                    titles.push({
+                        title: titleElement.textContent,
+                        url: locElement.textContent,
+                        paragraph: paragraphElement ? paragraphElement.textContent : '',
+                        image: imageURL
+                    });
                 }
-
-                // Remove duplicates based on title
-                titles = Array.from(new Set(titles.map(item => item.title)))
-                              .map(title => titles.find(item => item.title === title));
-
-                fuse = new Fuse(titles, options);
-            } else if (xhr.readyState === 4) {
-                console.error('Error loading sitemap:', xhr.status, xhr.statusText);
             }
-        };
-        xhr.send();
-    }
 
-    const options = {
-        includeScore: true,
-        threshold: 0.4,
-        keys: ['title', 'paragraph']
+            fuse = new Fuse(titles, options);
+        } else if (xhr.readyState === 4) {
+            console.error('Error loading sitemap:', xhr.status, xhr.statusText);
+        }
     };
+    xhr.send();
+}
 
-    let fuse;
-    loadSitemap();
+const options = {
+    includeScore: true,
+    threshold: 0.4, // Higher threshold for better matching
+    keys: ['title', 'paragraph'] // Search in title and paragraph
+};
 
-    document.getElementById("searchBtn").addEventListener("click", () => {
-        document.querySelector(".search-container").classList.add("active");
-        document.getElementById("searchInput").focus();
-    });
+let fuse;
 
-    document.getElementById("backBtn").addEventListener("click", closeSearch);
+loadSitemap();
 
-    function closeSearch() {
-        const searchInput = document.getElementById("searchInput");
-        searchInput.classList.add("closing");
-        setTimeout(() => {
-            document.querySelector(".search-container").classList.remove("active");
-            searchInput.classList.remove("closing");
-            searchInput.value = "";
-            document.getElementById('results').innerHTML = '';
-            document.getElementById('suggestions').innerHTML = '';
-            document.getElementById('suggestions').style.display = 'none';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('pagination').innerHTML = ''; // Clear pagination
-        }, 300);
+document.getElementById("searchBtn").addEventListener("click", () => {
+    document.querySelector(".search-container").classList.add("active");
+    document.getElementById("searchInput").focus();
+});
+
+document.getElementById("backBtn").addEventListener("click", closeSearch);
+
+document.addEventListener("click", (event) => {
+    const searchContainer = document.querySelector(".search-container");
+    const suggestionsDiv = document.getElementById('suggestions');
+    const searchInput = document.getElementById('searchInput');
+
+    const isClickInsideInput = searchInput.contains(event.target);
+    const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+    const isClickCloseToInput = (
+        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
+            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
+            event.clientX <= searchInput.getBoundingClientRect().right + 20)
+    );
+
+    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+        closeSearch();
     }
+});
 
-    document.getElementById("searchInput").addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            searchTitles(event);
-        } else {
-            showSuggestions(event);
-        }
-    });
+function closeSearch() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.classList.add("closing");
+    setTimeout(() => {
+        document.querySelector(".search-container").classList.remove("active");
+        searchInput.classList.remove("closing");
+        searchInput.value = ""; // Clear input field when closing
+        document.getElementById('results').innerHTML = ''; // Clear results
+        document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
+        document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
+        document.getElementById('results').style.display = 'none'; // Hide results
+    }, 300);
+}
 
-    function searchTitles(event) {
-        event.preventDefault();
-        const query = document.getElementById('searchInput').value.trim();
-        const resultsDiv = document.getElementById('results');
-        const suggestionsDiv = document.getElementById('suggestions');
-        resultsDiv.innerHTML = '';
-        suggestionsDiv.innerHTML = '';
+function searchTitles(event) {
+    event.preventDefault();
+    const query = document.getElementById('searchInput').value.trim();
+    const resultsDiv = document.getElementById('results');
+    const suggestionsDiv = document.getElementById('suggestions');
 
-        if (query.length > 0) {
-            const result = fuse.search(query);
-            if (result.length > 0) {
-                displayResults(result);
-            } else {
-                resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
-                resultsDiv.style.display = 'block';
-            }
-        }
-    }
+    resultsDiv.innerHTML = ''; // Clear previous results
+    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
 
-    function displayResults(result) {
-        const resultsDiv = document.getElementById('results');
-        const paginationDiv = document.getElementById('pagination');
-        const rowsPerPage = 10;
-        const totalPages = Math.ceil(result.length / rowsPerPage);
+    if (query.length > 0) {
+        const result = fuse.search(query);
 
-        resultsDiv.innerHTML = ''; // Clear previous results
-        paginationDiv.innerHTML = ''; // Clear previous pagination
+        // Filter out duplicates based on title
+        const uniqueResults = Array.from(new Set(result.map(item => item.item.title)))
+            .map(title => result.find(item => item.item.title === title));
 
-        // Show the first page of results
-        loadPage(1, result);
-
-        // Create pagination buttons
-        for (let i = 1; i <= totalPages; i++) {
-            const button = document.createElement('button');
-            button.innerText = i;
-            button.addEventListener('click', () => loadPage(i, result));
-            paginationDiv.appendChild(button);
-        }
-
-        resultsDiv.style.display = 'block'; // Show results
-    }
-
-    function loadPage(page, result) {
-        const resultsDiv = document.getElementById('results');
-        const rowsPerPage = 10;
-        const start = (page - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-
-        // Clear the results for the current page
-        resultsDiv.innerHTML = '';
-
-        // Display the results for the current page
-        result.slice(start, end).forEach(({ item }) => {
-            const resultItem = document.createElement('div');
-            resultItem.classList.add('result-item');
-            resultItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title}">
-                <div class="result-content">
-                    <div class="result-title">${highlightMatch(item.title, query)}</div>
-                    <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
-                </div>
-            `;
-            resultItem.onclick = () => window.location.href = item.url; // Follow link
-            resultsDiv.appendChild(resultItem);
-        });
-    }
-
-    function showSuggestions(event) {
-        const query = document.getElementById('searchInput').value.trim();
-        const suggestionsDiv = document.getElementById('suggestions');
-        suggestionsDiv.innerHTML = '';
-
-        if (query.length > 0) {
-            const suggestions = fuse.search(query).slice(0, 5);
-            const suggestionTitles = new Set(); // To avoid duplicates
-
-            suggestions.forEach(({ item }) => {
-                if (!suggestionTitles.has(item.title)) {
-                    suggestionTitles.add(item.title);
-                    const suggestionItem = document.createElement('li');
-                    suggestionItem.innerHTML = highlightMatch(item.title, query);
-                    suggestionItem.onclick = () => {
-                        document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                        suggestionsDiv.innerHTML = ''; // Clear suggestions
-                        suggestionsDiv.style.display = 'none'; // Hide suggestions
-                        document.getElementById("searchInput").focus(); // Keep input active
-                    };
-                    suggestionsDiv.appendChild(suggestionItem);
-                }
+        if (uniqueResults.length > 0) {
+            uniqueResults.slice(0, 10).forEach(({ item }) => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <a href="${item.url}" target="_blank">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="result-content">
+                            <div class="result-title">${item.title}</div>
+                            <div class="result-paragraph">${item.paragraph}</div>
+                        </div>
+                    </a>
+                `;
+                resultsDiv.appendChild(resultItem);
             });
 
-            if (suggestionsDiv.innerHTML) {
-                suggestionsDiv.style.display = 'block'; // Show suggestions
-            } else {
-                suggestionsDiv.innerHTML = '<li>No result found</li>';
-                suggestionsDiv.style.display = 'block';
+            const paginationDiv = document.createElement('div');
+            paginationDiv.classList.add('pagination');
+            const totalPages = Math.ceil(uniqueResults.length / 10);
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.innerText = i;
+                pageLink.href = '#';
+                pageLink.addEventListener('click', () => loadPage(i));
+                paginationDiv.appendChild(pageLink);
             }
+            resultsDiv.appendChild(paginationDiv);
+
+            resultsDiv.style.display = 'block'; // Show results
         } else {
-            suggestionsDiv.style.display = 'none'; // Hide suggestions
+            resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
+            resultsDiv.style.display = 'block'; // Show no result message
         }
     }
+}
 
-    function highlightMatch(text, query) {
-        const regex = new RegExp(`(${query})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
-    }
+function loadPage(page) {
+    const query = document.getElementById('searchInput').value.trim();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
 
-    // Initialize search on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        loadSitemap();
+    const result = fuse.search(query);
+    
+    // Filter out duplicates based on title
+    const uniqueResults = Array.from(new Set(result.map(item => item.item.title)))
+        .map(title => result.find(item => item.item.title === title));
+    
+    const start = (page - 1) * 10;
+    const end = start + 10;
+
+    uniqueResults.slice(start, end).forEach(({ item }) => {
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
+        resultItem.innerHTML = `
+            <a href="${item.url}" target="_blank">
+                <img src="${item.image}" alt="${item.title}">
+                <div class="result-content">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-paragraph">${item.paragraph}</div>
+                </div>
+            </a>
+        `;
+        resultsDiv.appendChild(resultItem);
     });
 
+    const paginationDiv = document.createElement('div');
+    paginationDiv.classList.add('pagination');
+    const totalPages = Math.ceil(uniqueResults.length / 10);
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.innerText = i;
+        pageLink.href = '#';
+        pageLink.addEventListener('click', () => loadPage(i));
+        paginationDiv.appendChild(pageLink);
+    }
+    resultsDiv.appendChild(paginationDiv);
+}
+
+function showSuggestions(event) {
+    const query = document.getElementById('searchInput').value.trim();
+    const suggestionsDiv = document.getElementById('suggestions');
+    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
+
+    if (query.length > 0) {
+        const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
+
+        // Filter out duplicates in suggestions
+        const uniqueSuggestions = Array.from(new Set(suggestions.map(item => item.item.title)))
+            .map(title => suggestions.find(item => item.item.title === title));
+
+        uniqueSuggestions.forEach(({ item }) => {
+            const suggestionItem = document.createElement('li');
+            suggestionItem.innerHTML = item.title; // Show suggestion title
+            suggestionItem.onclick = () => {
+                document.getElementById('searchInput').value = item.title; // Fill input with suggestion
+                document.getElementById('searchInput').focus(); // Keep input active
+                suggestionsDiv.innerHTML = ''; // Clear suggestions
+                suggestionsDiv.style.display = 'none'; // Hide suggestions
+                // Optionally call searchTitles to show results immediately
+                searchTitles(new Event('search'));
+            };
+            suggestionsDiv.appendChild(suggestionItem);
+        });
+
+        if (uniqueSuggestions.length > 0) {
+            suggestionsDiv.style.display = 'block'; // Show suggestions
+        } else {
+            suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
+            suggestionsDiv.style.display = 'block'; // Show no result message
+        }
+    } else {
+        suggestionsDiv.style.display = 'none'; // Hide suggestions
+    }
+}
+
+document.getElementById("searchInput").addEventListener("input", showSuggestions);
+document.getElementById("searchInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        searchTitles(event);
+    }
+});
 
 
 
