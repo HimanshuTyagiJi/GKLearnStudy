@@ -58,13 +58,12 @@ document.getElementById("backBtn").addEventListener("click", closeSearch);
 document.addEventListener("click", (event) => {
     const searchContainer = document.querySelector(".search-container");
     const suggestionsDiv = document.getElementById('suggestions');
-    const resultsDiv = document.getElementById('results');
     const searchInput = document.getElementById('searchInput');
 
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
-    const isClickInsideResults = resultsDiv.contains(event.target);
 
+    // Check if click is outside the search container and outside the close area
     const isClickCloseToInput = (
         (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
         event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
@@ -72,8 +71,8 @@ document.addEventListener("click", (event) => {
         event.clientX <= searchInput.getBoundingClientRect().right + 20)
     );
 
-    // Allow input to remain active if clicking inside suggestions or results
-    if (!searchContainer.contains(event.target) && !isClickCloseToInput && !isClickInsideSuggestions && !isClickInsideResults) {
+    // Close search if clicking outside the search container and not in the close area
+    if (!searchContainer.contains(event.target) && !isClickInsideInput && !isClickCloseToInput) {
         closeSearch();
     }
 });
@@ -208,6 +207,7 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
+
 
 
 
