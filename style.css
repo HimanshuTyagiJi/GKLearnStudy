@@ -13,19 +13,19 @@ body {background-color: var(--background-color);color: var(--text-color);}
  
 
   [data-theme="dark"] {
-    --searchIcon:white;
+    
     --background-color: #212121;
     --text-color: #bababa; 
     --toggle-color: lineaDr-gradient(45deg, black 50%, white 90%); 
     --toggle-border-color: white;
   
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
-
+   
     .header {box-shadow:  0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);}
     .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon ,  .search-icon  .search-container1.open{background-color: #343238;color:white}
     .header, .menu a:link, .menu a:visited {color: rgb(245, 155, 235);} 
     .header, .menu a.active {color: rgb(60, 216, 187);}
-
+ .search-icon {background:unset;color:white;}
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     .menu-brand a:link, .menu-brand a:visited{color: #ff0000;}
@@ -701,7 +701,7 @@ ol,ul,li{margin:0px;}
             transition: all 0.3s ease-in-out;z-index:9999;
         }
 
-        .search-icon {
+        .search-icon {background:unset;color:black;
             font-size: 36px;
             cursor: pointer;
             padding: 10px;
