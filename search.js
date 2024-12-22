@@ -62,8 +62,6 @@ document.addEventListener("click", (event) => {
 
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
-
-    // Check if click is outside the search container and outside the close area
     const isClickCloseToInput = (
         (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
         event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
@@ -71,8 +69,7 @@ document.addEventListener("click", (event) => {
         event.clientX <= searchInput.getBoundingClientRect().right + 20)
     );
 
-    // Close search if clicking outside the search container and not in the close area
-    if (!searchContainer.contains(event.target) && !isClickInsideInput && !isClickCloseToInput) {
+    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
         closeSearch();
     }
 });
@@ -207,6 +204,7 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
+
 
 
 
