@@ -1,226 +1,211 @@
 
    
+let titles = [];
 
-    let titles = [];
+function loadSitemap() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+            const urlElements = xmlDoc.getElementsByTagName('url');
 
-    function loadSitemap() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
-                const urlElements = xmlDoc.getElementsByTagName('url');
+            for (let urlElement of urlElements) {
+                const titleElement = urlElement.getElementsByTagName('title')[0];
+                const locElement = urlElement.getElementsByTagName('loc')[0];
+                const paragraphElement = urlElement.getElementsByTagName('p')[0];
+                const imageElement = urlElement.getElementsByTagName('image')[0];
+                const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
 
-                for (let urlElement of urlElements) {
-                    const titleElement = urlElement.getElementsByTagName('title')[0];
-                    const locElement = urlElement.getElementsByTagName('loc')[0];
-                    const paragraphElement = urlElement.getElementsByTagName('p')[0];
-                    const imageElement = urlElement.getElementsByTagName('image')[0];
-                    const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
-
-                    if (titleElement && locElement) {
-                        titles.push({
-                            title: titleElement.textContent,
-                            url: locElement.textContent,
-                            paragraph: paragraphElement ? paragraphElement.textContent : '',
-                            image: imageURL
-                        });
-                    }
+                if (titleElement && locElement) {
+                    titles.push({
+                        title: titleElement.textContent,
+                        url: locElement.textContent,
+                        paragraph: paragraphElement ? paragraphElement.textContent : '',
+                        image: imageURL
+                    });
                 }
-
-                fuse = new Fuse(titles, options);
-            } else if (xhr.readyState === 4) {
-                console.error('Error loading sitemap:', xhr.status, xhr.statusText);
             }
-        };
-        xhr.send();
-    }
 
-    const options = {
-        includeScore: true,
-        threshold: 0.4, // Higher threshold for better matching
-        keys: ['title', 'paragraph'] // Search in title and paragraph
+            // Remove duplicates based on title
+            titles = Array.from(new Set(titles.map(item => item.title)))
+                          .map(title => titles.find(item => item.title === title));
+
+            fuse = new Fuse(titles, options);
+        } else if (xhr.readyState === 4) {
+            console.error('Error loading sitemap:', xhr.status, xhr.statusText);
+        }
     };
+    xhr.send();
+}
 
-    let fuse;
+const options = {
+    includeScore: true,
+    threshold: 0.4,
+    keys: ['title', 'paragraph']
+};
 
-    loadSitemap();
+let fuse;
 
-    document.getElementById("searchBtn").addEventListener("click", () => {
-        document.querySelector(".search-container").classList.add("active");
-        document.getElementById("searchInput").focus();
-    });
+loadSitemap();
 
-    document.getElementById("backBtn").addEventListener("click", closeSearch);
+document.getElementById("searchBtn").addEventListener("click", () => {
+    document.querySelector(".search-container").classList.add("active");
+    document.getElementById("searchInput").focus();
+});
 
-    document.addEventListener("click", (event) => {
-        const searchContainer = document.querySelector(".search-container");
-        const suggestionsDiv = document.getElementById('suggestions');
-        const searchInput = document.getElementById('searchInput');
+document.getElementById("backBtn").addEventListener("click", closeSearch);
 
-        const isClickInsideInput = searchInput.contains(event.target);
-        const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
-        const isClickCloseToInput = (
-            (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
-            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
-            (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
-            event.clientX <= searchInput.getBoundingClientRect().right + 20)
-        );
+document.addEventListener("click", (event) => {
+    const searchContainer = document.querySelector(".search-container");
+    const suggestionsDiv = document.getElementById('suggestions');
+    const searchInput = document.getElementById('searchInput');
 
-        if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
-            closeSearch();
-        }
-    });
+    const isClickInsideInput = searchInput.contains(event.target);
+    const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+    const isClickCloseToInput = (
+        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
+        event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
+        event.clientX <= searchInput.getBoundingClientRect().right + 20)
+    );
 
-    function closeSearch() {
-        const searchInput = document.getElementById("searchInput");
-        searchInput.classList.add("closing");
-        setTimeout(() => {
-            document.querySelector(".search-container").classList.remove("active");
-            searchInput.classList.remove("closing");
-            searchInput.value = "";
-            document.getElementById('results').innerHTML = ''; // Clear results
-            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
-            document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
-            document.getElementById('results').style.display = 'none'; // Hide results
-        }, 300);
+    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+        closeSearch();
     }
+});
 
-    function searchTitles(event) {
-        event.preventDefault();
-        const query = document.getElementById('searchInput').value.trim();
-        const resultsDiv = document.getElementById('results');
-        const suggestionsDiv = document.getElementById('suggestions');
+function closeSearch() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.classList.add("closing");
+    setTimeout(() => {
+        document.querySelector(".search-container").classList.remove("active");
+        searchInput.classList.remove("closing");
+        searchInput.value = "";
+        document.getElementById('results').innerHTML = '';
+        document.getElementById('suggestions').innerHTML = '';
+        document.getElementById('suggestions').style.display = 'none';
+        document.getElementById('results').style.display = 'none';
+    }, 300);
+}
 
-        resultsDiv.innerHTML = ''; // Clear previous results
-        suggestionsDiv.innerHTML = ''; // Clear previous suggestions
+function searchTitles(event) {
+    event.preventDefault();
+    const query = document.getElementById('searchInput').value.trim();
+    const resultsDiv = document.getElementById('results');
+    const suggestionsDiv = document.getElementById('suggestions');
 
-        if (query.length > 0) {
-            const result = fuse.search(query);
+    resultsDiv.innerHTML = '';
+    suggestionsDiv.innerHTML = '';
 
-            if (result.length > 0) {
-                result.slice(0, 10).forEach(({ item }) => {
-                    const resultItem = document.createElement('div');
-                    resultItem.classList.add('result-item');
-                    resultItem.innerHTML = `
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="result-content">
-                            <div class="result-title">${highlightMatch(item.title, query)}</div>
-                            <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
-                        </div>
-                    `;
-                    resultsDiv.appendChild(resultItem);
-                });
-
-                const paginationDiv = document.createElement('div');
-                paginationDiv.classList.add('pagination');
-                const totalPages = Math.ceil(result.length / 10);
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageLink = document.createElement('a');
-                    pageLink.innerText = i;
-                    pageLink.href = '#';
-                    pageLink.addEventListener('click', () => loadPage(i));
-                    paginationDiv.appendChild(pageLink);
-                }
-                resultsDiv.appendChild(paginationDiv);
-
-                resultsDiv.style.display = 'block'; // Show results
-            } else {
-                resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
-                resultsDiv.style.display = 'block'; // Show no result message
-            }
-        }
-    }
-
-    function loadPage(page) {
-        const query = document.getElementById('searchInput').value.trim();
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = ''; // Clear previous results
-
+    if (query.length > 0) {
         const result = fuse.search(query);
-        const start = (page - 1) * 10;
-        const end = start + 10;
 
-        result.slice(start, end).forEach(({ item }) => {
-            const resultItem = document.createElement('div');
-            resultItem.classList.add('result-item');
-            resultItem.innerHTML = `
-                <img src="${item.image}" alt="${item.title}">
-                <div class="result-content">
-                    <div class="result-title">${highlightMatch(item.title, query)}</div>
-                    <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
-                </div>
-            `;
-            resultsDiv.appendChild(resultItem);
-        });
-
-        const paginationDiv = document.createElement('div');
-        paginationDiv.classList.add('pagination');
-        const totalPages = Math.ceil(result.length / 10);
-        for (let i = 1; i <= totalPages; i++) {
-            const pageLink = document.createElement('a');
-            pageLink.innerText = i;
-            pageLink.href = '#';
-            pageLink.addEventListener('click', () => loadPage(i));
-            paginationDiv.appendChild(pageLink);
-        }
-        resultsDiv.appendChild(paginationDiv);
-    }
-
-    function showSuggestions(event) {
-        const query = document.getElementById('searchInput').value.trim();
-        const suggestionsDiv = document.getElementById('suggestions');
-        suggestionsDiv.innerHTML = ''; // Clear previous suggestions
-
-        if (query.length > 0) {
-            const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
-            suggestions.forEach(({ item }) => {
-                const suggestionItem = document.createElement('li');
-                suggestionItem.innerHTML = highlightMatch(item.title, query); // Highlight matching title
-                suggestionItem.onclick = () => {
-                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                    document.getElementById('searchInput').focus(); // Keep input active
-                    suggestionsDiv.innerHTML = ''; // Clear suggestions
-                    suggestionsDiv.style.display = 'none'; // Hide suggestions
-                };
-                suggestionsDiv.appendChild(suggestionItem);
+        if (result.length > 0) {
+            result.slice(0, 10).forEach(({ item }) => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="result-content">
+                        <div class="result-title">${highlightMatch(item.title, query)}</div>
+                        <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
+                    </div>
+                `;
+                resultItem.onclick = () => window.location.href = item.url; // Follow link
+                resultsDiv.appendChild(resultItem);
             });
 
-            if (suggestions.length > 0) {
-                suggestionsDiv.style.display = 'block'; // Show suggestions
-            } else {
-                suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
-                suggestionsDiv.style.display = 'block'; // Show no result message
+            resultsDiv.style.display = 'block'; // Show results
+        } else {
+            resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
+            resultsDiv.style.display = 'block';
+        }
+    }
+}
+
+function loadPage(page) {
+    const query = document.getElementById('searchInput').value.trim();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+
+    const result = fuse.search(query);
+    const start = (page - 1) * 10;
+    const end = start + 10;
+
+    result.slice(start, end).forEach(({ item }) => {
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
+        resultItem.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <div class="result-content">
+                <div class="result-title">${highlightMatch(item.title, query)}</div>
+                <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
+            </div>
+        `;
+        resultItem.onclick = () => window.location.href = item.url; // Follow link
+        resultsDiv.appendChild(resultItem);
+    });
+}
+
+function showSuggestions(event) {
+    const query = document.getElementById('searchInput').value.trim();
+    const suggestionsDiv = document.getElementById('suggestions');
+    suggestionsDiv.innerHTML = '';
+
+    if (query.length > 0) {
+        const suggestions = fuse.search(query).slice(0, 5);
+        const suggestionTitles = new Set(); // To avoid duplicates
+
+        suggestions.forEach(({ item }) => {
+            if (!suggestionTitles.has(item.title)) {
+                suggestionTitles.add(item.title);
+                const suggestionItem = document.createElement('li');
+                suggestionItem.innerHTML = highlightMatch(item.title, query);
+                suggestionItem.onclick = () => {
+                    document.getElementById('searchInput').value = item.title; // Fill input with suggestion
+                    suggestionsDiv.innerHTML = ''; // Clear suggestions
+                    suggestionsDiv.style.display = 'none'; // Hide suggestions
+                    document.getElementById("searchInput").focus(); // Keep input active
+                };
+                suggestionsDiv.appendChild(suggestionItem);
             }
+        });
+
+        if (suggestionsDiv.innerHTML) {
+            suggestionsDiv.style.display = 'block'; // Show suggestions
         } else {
-            suggestionsDiv.style.display = 'none'; // Hide suggestions
+            suggestionsDiv.innerHTML = '<li>No result found</li>';
+            suggestionsDiv.style.display = 'block';
         }
+    } else {
+        suggestionsDiv.style.display = 'none'; // Hide suggestions
     }
+}
 
-    function highlightMatch(text, query) {
-        const regex = new RegExp(`(${query})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
+function highlightMatch(text, query) {
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+document.getElementById("searchInput").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        searchTitles(event);
+    } else {
+        showSuggestions(event);
     }
+});
 
-    document.getElementById("searchInput").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            searchTitles(event);
-        } else {
-            showSuggestions(event);
-        }
-    });
+// Prevent default form submission
+document.getElementById("searchInput").addEventListener("submit", function (event) {
+    event.preventDefault();
+});
 
-    // Prevent default form submission
-    document.getElementById("searchInput").addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
-
-    // Initialize search on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        loadSitemap();
-    });
-
+// Initialize search on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadSitemap();
+});
 
 
 
