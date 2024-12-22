@@ -62,6 +62,8 @@ document.addEventListener("click", (event) => {
 
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+    
+    // Updated to use 19px for the close threshold
     const isClickCloseToInput = (
         (event.clientY >= searchInput.getBoundingClientRect().top - 19 &&
         event.clientY <= searchInput.getBoundingClientRect().bottom + 19) &&
@@ -69,8 +71,8 @@ document.addEventListener("click", (event) => {
         event.clientX <= searchInput.getBoundingClientRect().right + 19)
     );
 
-    // Only close the input if the click is outside the search container and outside the defined close range
-    if (!searchContainer.contains(event.target) && !isClickInsideInput && !isClickInsideSuggestions && !isClickCloseToInput) {
+    // Close search if not clicking inside and outside the 19px margin
+    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
         closeSearch();
     }
 });
