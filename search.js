@@ -177,18 +177,12 @@ function showSuggestions(event) {
     suggestionsDiv.innerHTML = ''; // Clear previous suggestions
 
     if (query.length > 0) {
-        const suggestions = fuse.search(query).slice(0, 5); // Get top 5 suggestions
-        const existingResults = new Set(); // Track existing result titles to avoid duplicates
+        const suggestionResults = fuse.search(query).slice(0, 5); // Get top 5 suggestions
+        const seenTitles = new Set(); // To track seen titles
 
-        // Collect titles of current results to avoid duplicates in suggestions
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.querySelectorAll('.result-title').forEach(titleElement => {
-            existingResults.add(titleElement.innerText);
-        });
-
-        suggestions.forEach(({ item }) => {
-            // Only add suggestion if it doesn't already exist in results
-            if (!existingResults.has(item.title)) {
+        suggestionResults.forEach(({ item }) => {
+            if (!seenTitles.has(item.title)) {
+                seenTitles.add(item.title); // Mark this title as seen
                 const suggestionItem = document.createElement('li');
                 suggestionItem.innerHTML = item.title; // No highlighting for suggestions
                 suggestionItem.onclick = () => {
@@ -201,7 +195,7 @@ function showSuggestions(event) {
             }
         });
 
-        if (suggestionsDiv.children.length > 0) {
+        if (suggestionResults.length > 0) {
             suggestionsDiv.style.display = 'block'; // Show suggestions
         } else {
             suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
