@@ -172,7 +172,8 @@
 <div id="results"></div>
 
 <script>
-    let titles = [];
+    let titles = []; // Store parsed titles
+    const seenUrls = new Set(); // Track unique URLs for deduplication
 
     function loadSitemap() {
         const xhr = new XMLHttpRequest();
@@ -183,8 +184,6 @@
                 const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
                 const urlElements = xmlDoc.getElementsByTagName('url');
 
-                const seenUrls = new Set(); // To track unique URLs
-
                 for (let urlElement of urlElements) {
                     const titleElement = urlElement.getElementsByTagName('title')[0];
                     const locElement = urlElement.getElementsByTagName('loc')[0];
@@ -194,7 +193,7 @@
 
                     if (titleElement && locElement) {
                         const url = locElement.textContent.trim();
-                        if (!seenUrls.has(url)) {
+                        if (!seenUrls.has(url)) { // Check for duplicate URLs
                             seenUrls.add(url);
                             titles.push({
                                 title: titleElement.textContent.trim(),
@@ -251,9 +250,19 @@
         if (query.length > 0) {
             const result = fuse.search(query);
 
+            const seenTitles = new Set(); // Track unique titles within results
+
             if (result.length > 0) {
-                const totalPages = Math.ceil(result.length / 2); // 2 results per page
-                loadPage(1, result, totalPages);
+                const filteredResults = result.filter(({ item }) => {
+                    if (!seenTitles.has(item.title)) {
+                        seenTitles.add(item.title);
+                        return true;
+                    }
+                    return false;
+                });
+
+                const totalPages = Math.ceil(filteredResults.length / 2); // 2 results per page
+                loadPage(1, filteredResults, totalPages);
             } else {
                 resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
                 resultsDiv.style.display = 'block';
@@ -323,7 +332,7 @@
 
         if (query.length > 0) {
             const suggestions = fuse.search(query).slice(0, 5); // Top 5 suggestions
-            const seenSuggestions = new Set();
+            const seenSuggestions = new Set(); // Track unique suggestions
 
             suggestions.forEach(({ item }) => {
                 if (!seenSuggestions.has(item.title)) {
@@ -368,6 +377,7 @@
         loadSitemap();
     });
 </script>
+
 
 
 </body>
