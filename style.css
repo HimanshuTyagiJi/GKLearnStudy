@@ -694,7 +694,7 @@ ol,ul,li{margin:0px;}
         }
  .search-container {
             position: fixed;
-            top: 22px;
+            top: 0px;
             right: 20px;
             display: flex;
             align-items: center;
@@ -702,7 +702,7 @@ ol,ul,li{margin:0px;}
         }
 
         .search-icon {
-            font-size: 28px;
+            font-size: 36px;
             cursor: pointer;
             padding: 10px;
             border: none;
