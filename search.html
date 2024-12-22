@@ -79,12 +79,6 @@
             opacity: 1;
         }
 
-        .search-container .search-input.closing {
-            width: 0;
-            opacity: 0;
-            padding: 0;
-        }
-
         .suggestions, #results {
             border: 1px solid #ccc;
             max-width: 500px;
@@ -227,7 +221,20 @@
     document.getElementById("backBtn").addEventListener("click", closeSearch);
 
     document.addEventListener("click", (event) => {
-        if (!document.querySelector(".search-container").contains(event.target)) {
+        const searchContainer = document.querySelector(".search-container");
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchInput = document.getElementById('searchInput');
+        
+        const isClickInsideInput = searchInput.contains(event.target);
+        const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+        const isClickCloseToInput = (
+            (event.clientY >= searchInput.getBoundingClientRect().top - 20 && 
+            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+            (event.clientX >= searchInput.getBoundingClientRect().left - 20 && 
+            event.clientX <= searchInput.getBoundingClientRect().right + 20)
+        );
+
+        if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
             closeSearch();
         }
     });
@@ -272,12 +279,8 @@
                 });
                 resultsDiv.style.display = 'block'; // Show results
             } else {
-                resultsDiv.textContent = 'No results found.';
-                resultsDiv.style.display = 'block'; // Show message
+                resultsDiv.style.display = 'none'; // Hide results if no matches
             }
-        } else {
-            resultsDiv.textContent = 'Sitemap not loaded yet.';
-            resultsDiv.style.display = 'block'; // Show message
         }
     }
 
