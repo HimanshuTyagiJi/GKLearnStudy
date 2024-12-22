@@ -22,7 +22,7 @@ body {background-color: var(--background-color);color: var(--text-color);}
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/  
 
     .header {box-shadow:  0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);}
-    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle,  .navbar, .menu-list{background-color: #343238;color:white}
+    .header, .menu-inner, .menu.is-active .menu-brand, #themeToggle, .search-input, .navbar, .menu-list, .back-icon ,  .search-icon  .search-container1.open{background-color: #343238;color:white}
     .header, .menu a:link, .menu a:visited {color: rgb(245, 155, 235);} 
     .header, .menu a.active {color: rgb(60, 216, 187);}
 
@@ -134,11 +134,6 @@ table tr:hover{background-color:transparent;}
 iframe {width:100%;height:600px;border: none;background-color: #000000;color:#c9c6c6}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-.suggestion-item {
-  cursor: pointer;
-  /* Ensure pointer events are enabled */
-  pointer-events: auto;
-}.suggestions-list {position: fixed;border: 1px solid #6c6c6c; background-color: #232222; }
 a:link {text-decoration: none;}
 a:visited,a:link{color:pink;}
 a.active {color: rgb(192, 255, 200);}
@@ -150,7 +145,7 @@ textarea {width:100%;height:600px;background-color: #39393a;border: none;color: 
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
 
-.header, .menu-inner,.menu-brand,#themeToggle,.navbar  {background-color: rgb(255, 239, 249);}
+.header, .menu-inner,.menu-brand,#themeToggle,.search-input,.navbar ,  .search-icon  .back-icon,.search-container1.open {background-color: rgb(255, 239, 249);}
 .menu-brand a:link, .menu-arrow.left,.menu-arrow.right{color: rgb(0, 0, 0);}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -451,7 +446,9 @@ button {margin: 0px;padding:10px;border:none;cursor: pointer;}
 .title-content {display: inline;text-align: center;align-items: center;}
 a[href="current_page.html"] {border-radius: 15px; border: 2px solid rgb(5, 129, 11); /* Add a red border */ padding: 1px; /* Add some padding for better visibility */ text-decoration: none; /* Remove underlines from the link */}
 .frame {width: 90%;margin: 40px auto;text-align: center;}
-
+#search {
+  background-size: 20px; /* Set the width of the image */
+  padding: 12px 20px 12px 40px;border: 1px solid #ddd;margin-bottom: 12px;} 
   
 
 /*==================================================================================================================================================================================*/
@@ -504,7 +501,9 @@ hr{height: 5%;}
 
 @media screen and (min-width: 769.01px)  {
 
- 
+
+
+
   
   .navbar {font-size: 15px;position: relative;display: flex;flex-direction: row;align-items: center;justify-content: space-between;width: 100%;height: 60px !important;margin: 0 auto;}
   .menu-brand a:hover:not(.active), .menu a:hover:not(.active) { color: rgb(69, 1, 255);background-color: transparent;}
@@ -543,7 +542,6 @@ hr{height: 5%;}
 /*=========================================================================================================================================================================================*/
 /*=========================================================================================================================================================================================*/
 
-
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
  
   .menu { position: fixed;margin-top: 55px;font-size: 18px;left: -100%;width: 255px;z-index: 10;overflow: auto;box-shadow: var(--shadow-medium); transition: all 0.5s ease-in-out;}
@@ -560,6 +558,7 @@ hr{height: 5%;}
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+}
  
 @media screen and (max-width: 320px) {
   
@@ -585,6 +584,9 @@ hr{height: 5%;}
  .menu-arrow.left {display: none;}
  .menu-arrow.right {display: none;}
 
+
+
+}
 /*======== Brand Animation ====================================================================================================================================================================================================================================================================================================*/
  
 @keyframes fadeInScale {0% {opacity: 0;transform: scale(0.8);}50% {opacity: 0.5;transform: scale(1.1);}100% { opacity: 1; transform: scale(1);}}
@@ -696,12 +698,11 @@ ol,ul,li{margin:0px;}
             right: 20px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease-in-out;
-   z-index:99999;
+            transition: all 0.3s ease-in-out;z-index:9999;
         }
 
         .search-icon {
-            font-size: 30px;
+            font-size: 36px;
             cursor: pointer;
             padding: 10px;
             border: none;
@@ -757,7 +758,7 @@ ol,ul,li{margin:0px;}
             opacity: 1;
         }
 
-        .suggestions, #results {position:fixed;
+        .suggestions, #results {
             border: 1px solid #ccc;
             max-width: 500px;
             margin: 80px auto 0;
