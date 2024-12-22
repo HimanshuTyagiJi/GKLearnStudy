@@ -154,8 +154,8 @@
             overflow: hidden; /* Hide overflow */
             display: -webkit-box; /* For WebKit-based browsers */
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2; /* Show only 2 lines */
-            max-height: 3em; /* Adjust height to fit 2 lines */
+            -webkit-line-clamp: 3; /* Show only 3 lines */
+            max-height: 4.5em; /* Adjust height to fit 3 lines */
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
@@ -262,7 +262,6 @@
         event.preventDefault();
         const query = document.getElementById('searchInput').value.trim();
         const resultsDiv = document.getElementById('results');
-        const suggestionsDiv = document.getElementById('suggestions');
 
         if (query.length > 0) {
             const result = fuse.search(query);
