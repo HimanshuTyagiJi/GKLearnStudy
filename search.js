@@ -1,4 +1,5 @@
 let titles = [];
+let fuse;
 
 function loadSitemap() {
     const xhr = new XMLHttpRequest();
@@ -44,10 +45,6 @@ const options = {
     keys: ['title', 'paragraph']
 };
 
-let fuse;
-
-loadSitemap();
-
 document.getElementById("searchBtn").addEventListener("click", () => {
     document.querySelector(".search-container").classList.add("active");
     document.getElementById("searchInput").focus();
@@ -63,13 +60,13 @@ document.addEventListener("click", (event) => {
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
     const isClickCloseToInput = (
-        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
-        event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
-        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
-        event.clientX <= searchInput.getBoundingClientRect().right + 20)
+        (event.clientY >= searchInput.getBoundingClientRect().top - 30 &&
+        event.clientY <= searchInput.getBoundingClientRect().bottom + 30) &&
+        (event.clientX >= searchInput.getBoundingClientRect().left - 30 &&
+        event.clientX <= searchInput.getBoundingClientRect().right + 30)
     );
 
-    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+    if (!searchContainer.contains(event.target) && !isClickInsideSuggestions && !isClickInsideInput && !isClickCloseToInput) {
         closeSearch();
     }
 });
@@ -101,21 +98,7 @@ function searchTitles(event) {
         const result = fuse.search(query);
 
         if (result.length > 0) {
-            result.slice(0, 10).forEach(({ item }) => {
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
-                    <div class="result-content">
-                        <div class="result-title">${highlightMatch(item.title, query)}</div>
-                        <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
-                    </div>
-                `;
-                resultItem.onclick = () => window.location.href = item.url; // Follow link
-                resultsDiv.appendChild(resultItem);
-            });
-
-            resultsDiv.style.display = 'block'; // Show results
+            loadPage(1); // Load the first page of results
         } else {
             resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
             resultsDiv.style.display = 'block';
@@ -129,6 +112,7 @@ function loadPage(page) {
     resultsDiv.innerHTML = '';
 
     const result = fuse.search(query);
+    const totalPages = Math.ceil(result.length / 10);
     const start = (page - 1) * 10;
     const end = start + 10;
 
@@ -145,6 +129,19 @@ function loadPage(page) {
         resultItem.onclick = () => window.location.href = item.url; // Follow link
         resultsDiv.appendChild(resultItem);
     });
+
+    // Add pagination
+    const paginationDiv = document.createElement('div');
+    paginationDiv.classList.add('pagination');
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('span');
+        pageLink.innerText = i;
+        pageLink.onclick = () => loadPage(i);
+        paginationDiv.appendChild(pageLink);
+    }
+
+    resultsDiv.appendChild(paginationDiv);
 }
 
 function showSuggestions(event) {
