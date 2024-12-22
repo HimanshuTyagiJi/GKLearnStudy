@@ -58,21 +58,22 @@ document.getElementById("backBtn").addEventListener("click", closeSearch);
 document.addEventListener("click", (event) => {
     const searchContainer = document.querySelector(".search-container");
     const suggestionsDiv = document.getElementById('suggestions');
+    const resultsDiv = document.getElementById('results');
     const searchInput = document.getElementById('searchInput');
 
     const isClickInsideInput = searchInput.contains(event.target);
     const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
-    
-    // Updated to use 19px for the close threshold
+    const isClickInsideResults = resultsDiv.contains(event.target);
+
     const isClickCloseToInput = (
-        (event.clientY >= searchInput.getBoundingClientRect().top - 19 &&
-        event.clientY <= searchInput.getBoundingClientRect().bottom + 19) &&
-        (event.clientX >= searchInput.getBoundingClientRect().left - 19 &&
-        event.clientX <= searchInput.getBoundingClientRect().right + 19)
+        (event.clientY >= searchInput.getBoundingClientRect().top - 20 &&
+        event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+        (event.clientX >= searchInput.getBoundingClientRect().left - 20 &&
+        event.clientX <= searchInput.getBoundingClientRect().right + 20)
     );
 
-    // Close search if not clicking inside and outside the 19px margin
-    if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+    // Allow input to remain active if clicking inside suggestions or results
+    if (!searchContainer.contains(event.target) && !isClickCloseToInput && !isClickInsideSuggestions && !isClickInsideResults) {
         closeSearch();
     }
 });
@@ -207,7 +208,6 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
-
 
 
 
