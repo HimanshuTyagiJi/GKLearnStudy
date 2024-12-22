@@ -282,7 +282,7 @@
     }
 
     function showSuggestions(event) {
-        const query = event.target.value.trim();
+        const query = document.getElementById('searchInput').value.trim();
         const suggestionsDiv = document.getElementById('suggestions');
         suggestionsDiv.innerHTML = '';
 
@@ -308,7 +308,7 @@
             suggestionsDiv.style.display = 'none'; // Hide suggestions
         }
     }
- 
+
     function highlightMatch(text, query) {
         const regex = new RegExp(`(${query})`, 'gi');
         return text.replace(regex, '<span class="highlight">$1</span>');
