@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Ancient Indian History</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            position: relative;
+        }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .search-icon {
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .back-icon {
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            outline: none;
+            display: none;
+            margin-right: 10px;
+        }
+
+        .search-input {
+            width: 0;
+            height: 40px;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+            transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .search-container.active {
+            justify-content: flex-end;
+        }
+
+        .search-container.active .back-icon {
+            display: flex;
+        }
+
+        .search-container.active .search-icon {
+            display: none;
+        }
+
+        .search-container.active {
+            width: 100%;
+            right: 0;
+        }
+
+        .search-container.active .search-input {
+            width: calc(100% - 70px);
+            opacity: 1;
+        }
+
+        .suggestions, #results {
+            border: 1px solid #ccc;
+            max-width: 500px;
+            margin: 10px auto 0;
+            text-align: left;
+            padding: 0;
+            list-style: none;
+            position: absolute;
+            background-color: #fff;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+        }
+
+        .suggestions li, #results .result-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestions li:hover, #results .result-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        #results {
+            text-align: center;
+        }
+
+        #results .result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px auto;
+            background-color: #f9f9f9;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+            width: 80%;
+            max-width: 500px;
+            transition: background-color 0.3s;
+        }
+
+        #results .result-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #results .result-item img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-right: 10px;
+        }
+
+        #results .result-content {
+            text-align: left;
+        }
+
+        #results .result-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #results .result-paragraph {
+            font-size: 14px;
+            margin-top: 5px;
+            overflow: hidden; /* Hide overflow */
+            display: -webkit-box; /* For WebKit-based browsers */
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Show only 2 lines */
+            max-height: 3em; /* Adjust height to fit 2 lines */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+</head>
+<body>
+
+<div class="search-container">
+    <button class="search-icon" id="searchBtn">⌕</button>
+    <button class="back-icon" id="backBtn">←</button>
+    <input type="text" class="search-input" id="searchInput" placeholder="Search Ancient Indian History..." required oninput="showSuggestions(event)">
+</div>
+
+<ul id="suggestions" class="suggestions"></ul>
+<div id="results"></div>
+
+<script>
+    let titles = [];
+
+    function loadSitemap() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+                const urlElements = xmlDoc.getElementsByTagName('url');
+
+                for (let urlElement of urlElements) {
+                    const titleElement = urlElement.getElementsByTagName('title')[0];
+                    const locElement = urlElement.getElementsByTagName('loc')[0];
+                    const paragraphElement = urlElement.getElementsByTagName('p')[0];
+                    const imageElement = urlElement.getElementsByTagName('image')[0];
+                    const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
+
+                    if (titleElement && locElement) {
+                        titles.push({
+                            title: titleElement.textContent,
+                            url: locElement.textContent,
+                            paragraph: paragraphElement ? paragraphElement.textContent : '',
+                            image: imageURL
+                        });
+                    }
+                }
+
+                fuse = new Fuse(titles, options);
+            } else if (xhr.readyState === 4) {
+                console.error('Error loading sitemap:', xhr.status, xhr.statusText);
+            }
+        };
+        xhr.send();
+    }
+
+    const options = {
+        includeScore: true,
+        threshold: 0.4,
+        keys: ['title', 'paragraph'] // Search in title and paragraph
+    };
+
+    let fuse;
+
+    loadSitemap();
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+        document.querySelector(".search-container").classList.add("active");
+        document.getElementById("searchInput").focus();
+    });
+
+    document.getElementById("backBtn").addEventListener("click", closeSearch);
+
+    document.addEventListener("click", (event) => {
+        const searchContainer = document.querySelector(".search-container");
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchInput = document.getElementById('searchInput');
+        
+        const isClickInsideInput = searchInput.contains(event.target);
+        const isClickInsideSuggestions = suggestionsDiv.contains(event.target);
+        const isClickCloseToInput = (
+            (event.clientY >= searchInput.getBoundingClientRect().top - 20 && 
+            event.clientY <= searchInput.getBoundingClientRect().bottom + 20) &&
+            (event.clientX >= searchInput.getBoundingClientRect().left - 20 && 
+            event.clientX <= searchInput.getBoundingClientRect().right + 20)
+        );
+
+        if (!searchContainer.contains(event.target) && !isClickCloseToInput) {
+            closeSearch();
+        }
+    });
+
+    function closeSearch() {
+        const searchInput = document.getElementById("searchInput");
+        searchInput.classList.add("closing");
+        setTimeout(() => {
+            document.querySelector(".search-container").classList.remove("active");
+            searchInput.classList.remove("closing");
+            searchInput.value = "";
+            document.getElementById('results').innerHTML = ''; // Clear results
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
+            document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
+            document.getElementById('results').style.display = 'none'; // Hide results
+        }, 300);
+    }
+
+    function searchTitles(event) {
+        event.preventDefault();
+        const query = document.getElementById('searchInput').value.trim();
+        const resultsDiv = document.getElementById('results');
+        const suggestionsDiv = document.getElementById('suggestions');
+        resultsDiv.innerHTML = '';
+        suggestionsDiv.innerHTML = '';
+
+        if (fuse) {
+            const result = fuse.search(query);
+            if (result.length > 0) {
+                result.forEach(({ item }) => {
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item');
+                    resultItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="result-content">
+                            <div class="result-title">${highlightMatch(item.title, query)}</div>
+                            <div class="result-paragraph">${highlightMatch(item.paragraph, query)}</div>
+                        </div>
+                    `;
+                    resultsDiv.appendChild(resultItem);
+                });
+                resultsDiv.style.display = 'block'; // Show results
+            } else {
+                resultsDiv.style.display = 'none'; // Hide results if no matches
+            }
+        }
+    }
+
+    function showSuggestions(event) {
+        const query = document.getElementById('searchInput').value.trim();
+        const suggestionsDiv = document.getElementById('suggestions');
+        suggestionsDiv.innerHTML = '';
+
+        if (query.length > 0) {
+            const suggestions = titles.filter(title => title.title.toLowerCase().includes(query.toLowerCase()) || title.paragraph.toLowerCase().includes(query.toLowerCase())); // Include paragraph in suggestions
+            suggestions.forEach(suggestion => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = suggestion.title;
+                suggestionItem.onclick = () => {
+                    document.getElementById('searchInput').value = suggestion.title; // Fill input with suggestion
+                    document.getElementById('searchInput').focus(); // Keep input active
+                    suggestionsDiv.innerHTML = ''; // Clear suggestions
+                    suggestionsDiv.style.display = 'none'; // Hide suggestions
+                };
+                suggestionsDiv.appendChild(suggestionItem);
+            });
+
+            if (suggestions.length > 0) {
+                suggestionsDiv.style.display = 'block'; // Show suggestions
+            } else {
+                suggestionsDiv.style.display = 'none'; // Hide suggestions
+            }
+        } else {
+            suggestionsDiv.style.display = 'none'; // Hide suggestions
+        }
+    }
+
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    document.getElementById("searchInput").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            searchTitles(event);
+            showSuggestions(event); // Ensure suggestions are updated on Enter
+        }
+    });
+
+    // Prevent default form submission
+    document.getElementById("searchInput").addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
+</script>
+</body>
+</html>
