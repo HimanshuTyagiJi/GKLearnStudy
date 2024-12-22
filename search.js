@@ -182,6 +182,10 @@ function showSuggestions(event) {
     }
 }
 
+function highlightMatch(text, query) {
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+}
 
 document.getElementById("searchInput").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
@@ -200,6 +204,7 @@ document.getElementById("searchInput").addEventListener("submit", function (even
 document.addEventListener("DOMContentLoaded", () => {
     loadSitemap();
 });
+
 
 
 
