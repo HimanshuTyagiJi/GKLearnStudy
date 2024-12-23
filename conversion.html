@@ -719,19 +719,23 @@ document.addEventListener("click", (event) => {
     const suggestions = document.getElementById("suggestions");
 
     // Check if the clicked target is outside searchInput, results, or suggestions
-    const clickedInsideElements = [searchInput, results, suggestions].some((el) =>
-        el.contains(event.target)
+    const isOutside = ![searchInput, results, suggestions].some((element) =>
+        element.contains(event.target)
     );
 
-    if (!clickedInsideElements) {
+    if (isOutside) {
         closeSearch(); // Close input only if clicked outside these elements
     }
 });
 
+// Function to close the search input
 function closeSearch() {
     console.log("Search input closed");
-    // Logic to close the search input
+    const searchInput = document.getElementById("searchInput");
+    searchInput.value = ""; // Clear the input value (optional)
+    searchInput.blur(); // Remove focus from the input
 }
+
 
 
 </script>
