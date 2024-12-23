@@ -181,22 +181,6 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
 
 
 
-const resultItems = document.querySelectorAll(".result-item");
-
-// Hover Effect: Add Event Listeners
-resultItems.forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-        item.style.backgroundColor = "blue";
-        item.style.color = "white";
-    });
-
-    item.addEventListener("mouseleave", () => {
-        item.style.backgroundColor = "transparent";
-        item.style.color = "black";
-    });
-});
-
-
 
 
 
