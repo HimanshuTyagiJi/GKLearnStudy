@@ -208,10 +208,10 @@ document.addEventListener("click", (event) => {
         const isWithinDistance = (element) => {
             const rect = element.getBoundingClientRect();
             return (
-                event.clientX > rect.left - 20 && // Within 20px left
-                event.clientX < rect.right + 20 && // Within 20px right
-                event.clientY > rect.top - 20 && // Within 20px top
-                event.clientY < rect.bottom + 20 // Within 20px bottom
+                event.clientX > rect.left - 30 && // Within 20px left
+                event.clientX < rect.right + 30 && // Within 20px right
+                event.clientY > rect.top - 30 && // Within 20px top
+                event.clientY < rect.bottom + 30 // Within 20px bottom
             );
         };
 
@@ -222,7 +222,7 @@ document.addEventListener("click", (event) => {
             !isWithinDistance(suggestions)
         ) {
             closeSearch(); // Close the search input
-            document.body.style.backgroundColor = ""; // Reset background color
+            document.body.style.backgroundColor = "yellow"; // Reset background color
         }
     }
 });
