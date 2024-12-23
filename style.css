@@ -416,7 +416,7 @@ a:visited,a:link{color:rgb(0, 0, 0);}
 .options input[type="radio"] {display: none; /* Hide radio buttons */}
 .options input[type="radio"]:checked + label {background-color: blue;color: white;}
 .submit-btn, .next-btn, .skip-btn {margin-top: 10px;}
-#result {width: 80%;margin-top: 20px;font-weight: bold;}
+# {width: 80%;margin-top: 20px;font-weight: bold;}
 #review-questions {width: 80%;border: 1px solid #ccc;display: none;border-radius: 10px;padding: 15px;margin-top: 20px;position: absolute;left: 50%;transform: translateX(-50%);}
 
 .modal {display: none;position: fixed;z-index: 1;width: 80%;position: absolute;left: 50%;transform: translateX(-50%);top:10%;overflow: auto;text-align: center;}
@@ -582,7 +582,19 @@ hr{height: 5%;}
             background-color: blue;
             color: white ;
         }
-
+#results:hover, #results .result-item:hover #results, .result-item a:link:hover,#results .result-item a.link:hover{
+            background-color: blue;
+            color: white ;
+        }{
+            background-color: blue;
+            color: white ;
+        }{
+            background-color: blue;
+            color: white ;
+        }{
+            background-color: blue;
+            color: white ;
+        }
         .highlight {
             background-color: yellow;
         }
