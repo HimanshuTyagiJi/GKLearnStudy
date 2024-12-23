@@ -210,8 +210,8 @@ document.addEventListener("click", (event) => {
             return (
                 event.clientX > rect.left - 30 && // Within 20px left
                 event.clientX < rect.right + 30 && // Within 20px right
-                event.clientY > rect.top - 30 && // Within 20px top
-                event.clientY < rect.bottom + 30 // Within 20px bottom
+               
+                event.clientY < rect.bottom + 300 // Within 20px bottom
             );
         };
 
