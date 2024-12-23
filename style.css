@@ -273,7 +273,7 @@ font-weight: bold;
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------*/
 
-.pagination   {display: flex;list-style-type: none;padding: 0;overflow: auto; /* Scrollbar hoga agar buttons ek line me nahi aa rahe hain */}
+.pagination , .pagination a.link  {display: flex;list-style-type: none;padding: 0;overflow: auto; /* Scrollbar hoga agar buttons ek line me nahi aa rahe hain */}
 .pagination li {margin: 5px;padding:5px;white-space: nowrap; /* Pagination buttons ek line me fit honge */}
 .pagination li.disabled a {color:black;background-color: #ddd;pointer-events: none;cursor: default;}
 .pagination a {color:rgb(255, 255, 255);background-color: #ffffff;text-decoration: none;padding: 5px 10px;border: 1px solid #ddd;border-radius: 5px;}
