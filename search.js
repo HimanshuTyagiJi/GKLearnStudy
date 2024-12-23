@@ -200,8 +200,8 @@ document.addEventListener("click", (event) => {
         const isWithinDistance = (element) => {
             const rect = element.getBoundingClientRect();
             return (
-                event.clientX > rect.left - 10 &&
-                event.clientX < rect.right + 10 
+                event.clientX > rect.left - 30 &&
+                event.clientX < rect.right + 30 
             );
         };
 
