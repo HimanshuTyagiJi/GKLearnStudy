@@ -563,7 +563,7 @@ hr{height: 5%;}
         .suggestions, #results {position:fixed !important;
             border: 1px solid #ccc;
             max-width: 540px;
-            max-height:80%;
+            max-height:55%;
             margin: 0px auto 0;
             text-align: left;
             padding: 0;
@@ -627,12 +627,12 @@ hr{height: 5%;}
             text-align: left;
         }
 
-        #results .result-title {
+        #results .result-title {color:blue;
             font-size: 18px;
             font-weight: bold;
         }
 
-        #results .result-paragraph {
+        #results .result-paragraph {color:black;
             font-size: 14px;
             margin-top: 5px;
             overflow: hidden; /* Hide overflow */
@@ -761,7 +761,7 @@ hr{height: 5%;}
  
 @media screen and (max-width: 768px) {
 
-                                      
+       .suggestions, #results {width:85%;}                                
   .accordion-item .title-content {flex: 1;}
   .accordion .title-content {display: inline;text-align: center;align-items: center;}
   .accordion-item img {width: 350px;height: 220px;}
