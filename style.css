@@ -602,10 +602,7 @@ hr{height: 5%;}
             transition: background-color 0.3s;
         }
 
-        #results .result-item:hover,#results .result-item a.link:hover,#results .result-item a:link:hover, #results .result-title:hover , #results .result-paragraph:hover , #results a.link:hover,#results a:link:hover{
-            background-color: #007bff;
-            color: white;
-        }
+      
 
         #results .result-item img {
             max-width: 50px;
@@ -631,7 +628,12 @@ hr{height: 5%;}
             -webkit-line-clamp: 3; /* Show only 3 lines */
             max-height: 4.5em; /* Adjust height to fit 3 lines */
         }
-
+.suggestions li:hover , #results .result-item:hover{
+            background-color: blue;
+            color: white ;
+        } #results .result-item:hover{
+            background-color: unset;
+}
 
 
        
@@ -858,8 +860,4 @@ ol,ul,li{margin:0px;}
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-        }
-.suggestions li:hover , #results .result-item:hover{
-            background-color: blue;
-            color: white !important ;
         }
