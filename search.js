@@ -185,15 +185,29 @@ document.addEventListener("click", (event) => {
     const searchInput = document.getElementById("searchInput");
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
+    const searchContainer = document.querySelector(".search-container");
 
-    const isClickInsideResults = results.contains(event.target);
-    const isClickInsideSuggestions = suggestions.contains(event.target);
-    const isClickInsideInput = searchInput.contains(event.target);
+    const isInsideResults = isClickInsideBox(results, event.clientX, event.clientY);
+    const isInsideSuggestions = isClickInsideBox(suggestions, event.clientX, event.clientY);
+    const isInsideInput = isClickInsideBox(searchInput, event.clientX, event.clientY);
 
-    if (!isClickInsideResults && !isClickInsideSuggestions && !isClickInsideInput) {
-        closeSearch(); // Close input only if the click is outside these elements
+    // Close only if click is outside 50px distance from these boxes
+    if (!isInsideResults && !isInsideSuggestions && !isInsideInput) {
+        closeSearch();
     }
 });
+
+// Helper function to calculate if click is inside 50px of the element
+function isClickInsideBox(element, x, y) {
+    if (!element) return false; // If element doesn't exist, return false
+    const rect = element.getBoundingClientRect();
+    return (
+        x >= rect.left - 50 && // 50px left
+        x <= rect.right + 50 && // 50px right
+        y >= rect.top - 50 && // 50px top
+        y <= rect.bottom + 50 // 50px bottom
+    );
+}
 
 
 
