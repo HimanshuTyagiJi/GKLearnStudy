@@ -186,31 +186,12 @@ document.addEventListener("click", (event) => {
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
 
-    const elements = [searchInput, results, suggestions];
-    const isOutside = !elements.some((el) => el.contains(event.target));
+    const isClickInsideResults = results.contains(event.target);
+    const isClickInsideSuggestions = suggestions.contains(event.target);
+    const isClickInsideInput = searchInput.contains(event.target);
 
-    if (isOutside) {
-        const rectInput = searchInput.getBoundingClientRect();
-        const rectResults = results.getBoundingClientRect();
-        const rectSuggestions = suggestions.getBoundingClientRect();
-
-        const isWithinDistance = (element) => {
-            const rect = element.getBoundingClientRect();
-            return (
-                event.clientX > rect.left - 50 &&
-                event.clientX < rect.right + 50 &&
-                event.clientY > rect.top - 50 &&
-                event.clientY < rect.bottom + 50
-            );
-        };
-
-        if (
-            !isWithinDistance(searchInput) &&
-            !isWithinDistance(results) &&
-            !isWithinDistance(suggestions)
-        ) {
-            closeSearch(); // Close the search input if clicked outside and beyond 50px
-        }
+    if (!isClickInsideResults && !isClickInsideSuggestions && !isClickInsideInput) {
+        closeSearch(); // Close input only if the click is outside these elements
     }
 });
 
