@@ -578,11 +578,11 @@ hr{height: 5%;}
             cursor: pointer;
         }
 
-        .suggestions li:hover {
-            background-color: #007bff;
+        .suggestions li:hover , #results .result-item:hover{
+            background-color: #ccc;
             color: white ;
         }
-#results .result-item:hover{background-color:red;}
+
         .highlight {
             background-color: yellow;
         }
