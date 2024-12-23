@@ -717,21 +717,32 @@ document.addEventListener("click", (event) => {
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
 
-    // चेक करें कि क्लिक सुझाव या परिणाम क्षेत्र में है या नहीं
-    const isClickInsideSuggestions = suggestions.contains(event.target);
-    const isClickInsideResults = results.contains(event.target);
-    const isClickInsideSearchInput = searchInput.contains(event.target);
+    // Check if the click was outside the input, results, and suggestions
+    const elements = [searchInput, results, suggestions];
+    const isOutside = !elements.some((el) => el.contains(event.target));
 
-    if (!isClickInsideSuggestions && !isClickInsideResults && !isClickInsideSearchInput) {
-        closeSearch(); // इनपुट को बंद करें
+    if (isOutside) {
+        closeSearch(); // Close the search input
+    } else {
+        // If clicked inside results or suggestions, do not close the input
+        if (results.style.display === "none" && suggestions.style.display === "none") {
+            openSearch(); // Open the search input if suggestions or results are not visible
+        }
     }
 });
 
-// सर्च बंद करने के लिए एक फंक्शन
 function closeSearch() {
     const searchInput = document.getElementById("searchInput");
-    searchInput.value = ""; // इनपुट क्लियर करें
-    console.log("Search input closed!");
+    searchInput.value = ""; // Clear input
+    document.getElementById("results").style.display = "none"; // Hide results
+    document.getElementById("suggestions").style.display = "none"; // Hide suggestions
+}
+
+function openSearch() {
+    const searchInput = document.getElementById("searchInput");
+    // Show results or suggestions based on input value (not implemented here)
+    document.getElementById("results").style.display = "block"; // Show results
+    document.getElementById("suggestions").style.display = "block"; // Show suggestions
 }
 
 
