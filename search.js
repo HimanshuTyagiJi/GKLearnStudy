@@ -94,7 +94,6 @@ function searchTitles(event) {
         }
     }
 }
-
 function displayResults(uniqueResults, result, page) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = ''; // Clear previous results
@@ -108,7 +107,7 @@ function displayResults(uniqueResults, result, page) {
         resultItem.style.display = 'flex'; // Display as flex for inline layout
         resultItem.style.alignItems = 'center'; // Center align items
         resultItem.innerHTML = `
-            <a href="${item.url}" target="_blank" style="display: flex; align-items: center; width: 100%;">
+            <a href="${item.url}" style="display: flex; align-items: center; width: 100%;">
                 <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; margin-right: 10px;">
                 <div class="result-content" style="flex-grow: 1;">
                     <div class="result-title">${item.title}</div>
@@ -135,6 +134,7 @@ function displayResults(uniqueResults, result, page) {
     }
     resultsDiv.appendChild(paginationDiv);
 }
+
 
 function showSuggestions(event) {
     const query = document.getElementById('searchInput').value.trim();
