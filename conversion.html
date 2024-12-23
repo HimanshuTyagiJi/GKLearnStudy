@@ -711,33 +711,6 @@
         <script src="./menusearch.js"></script>
         <script src="./script.js"></script>
         <script src="./search.js"></script>
-    <script>
-// JavaScript to handle clicks
-document.addEventListener("click", (event) => {
-    const searchInput = document.getElementById("searchInput");
-    const results = document.getElementById("results");
-    const suggestions = document.getElementById("suggestions");
-
-    // Check if the clicked target is outside searchInput, results, or suggestions
-    const isOutside = ![searchInput, results, suggestions].some((element) =>
-        element.contains(event.target)
-    );
-
-    if (isOutside) {
-        closeSearch(); // Close input only if clicked outside these elements
-    }
-});
-
-// Function to close the search input
-function closeSearch() {
-    console.log("Search input closed");
-    const searchInput = document.getElementById("searchInput");
-    searchInput.value = ""; // Clear the input value (optional)
-    searchInput.blur(); // Remove focus from the input
-}
-
-
-
-</script>
+  
 </body>
 </html>
