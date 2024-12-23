@@ -273,13 +273,13 @@ font-weight: bold;
 
 /*----------------------------------------------------------------------------------------------------------------------------------------------*/
 
-.pagination {display: flex;list-style-type: none;padding: 0;overflow: auto; /* Scrollbar hoga agar buttons ek line me nahi aa rahe hain */}
+.pagination   {display: flex;list-style-type: none;padding: 0;overflow: auto; /* Scrollbar hoga agar buttons ek line me nahi aa rahe hain */}
 .pagination li {margin: 5px;padding:5px;white-space: nowrap; /* Pagination buttons ek line me fit honge */}
 .pagination li.disabled a {color:black;background-color: #ddd;pointer-events: none;cursor: default;}
 .pagination a {color:rgb(255, 255, 255);background-color: #ffffff;text-decoration: none;padding: 5px 10px;border: 1px solid #ddd;border-radius: 5px;}
 .pagination a.active {border-radius:12px;background-color: dodgerblue;color: white;}
 .pagination a:hover:not(.active) {background-color:#ddd;}
-
+.pagination a:link{color:black}
 /*------------------------------------------------------------------------------------------------------------------------------------------*/
 
 .page-button{margin:5px;background-color:#f2f2f2;border:1px solid#ddd;padding:5px10px;cursor:pointer;}.page-button.active-page{background-color:dodgerblue;color:white;border-radius:7px;}
