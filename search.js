@@ -181,32 +181,45 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
 
 
 
+const resultItems = document.querySelectorAll(".result-item");
+
+// Hover Effect: Add Event Listeners
+resultItems.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+        item.style.backgroundColor = "blue";
+        item.style.color = "white";
+    });
+
+    item.addEventListener("mouseleave", () => {
+        item.style.backgroundColor = "transparent";
+        item.style.color = "black";
+    });
+});
 document.addEventListener("click", (event) => {
     const searchInput = document.getElementById("searchInput");
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
-    const searchContainer = document.querySelector(".search-container");
 
-    const isInsideResults = isClickInsideBox(results, event.clientX, event.clientY);
-    const isInsideSuggestions = isClickInsideBox(suggestions, event.clientX, event.clientY);
-    const isInsideInput = isClickInsideBox(searchInput, event.clientX, event.clientY);
+    // Get screen dimensions
+    const screenHeight = window.innerHeight;
+    const screenWidth = window.innerWidth;
 
-    // Close only if click is outside 50px distance from these boxes
-    if (!isInsideResults && !isInsideSuggestions && !isInsideInput) {
-        closeSearch();
+    // Check click position
+    const clickX = event.clientX;
+    const clickY = event.clientY;
+
+    const isInsideVerticalBounds = clickY > (screenHeight - 200); // Below 200px from the bottom
+    const isInsideHorizontalBounds = clickX > 50 && clickX < (screenWidth - 50); // Left & Right 50px bounds
+
+    if (isInsideVerticalBounds || isInsideHorizontalBounds) {
+        closeSearch(); // Function to close input
     }
 });
 
-// Helper function to calculate if click is inside 50px of the element
-function isClickInsideBox(element, x, y) {
-    if (!element) return false; // If element doesn't exist, return false
-    const rect = element.getBoundingClientRect();
-    return (
-        x >= rect.left - 50 && // 50px left
-        x <= rect.right + 50 && // 50px right
-        y >= rect.top - 50 && // 50px top
-        y <= rect.bottom + 50 // 50px bottom
-    );
+function closeSearch() {
+    const searchContainer = document.querySelector(".search-container");
+    searchContainer.classList.remove("active");
+    document.getElementById("searchInput").blur();
 }
 
 
