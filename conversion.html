@@ -712,37 +712,25 @@
         <script src="./script.js"></script>
         <script src="./search.js"></script>
     <script>
+// JavaScript to handle clicks
 document.addEventListener("click", (event) => {
     const searchInput = document.getElementById("searchInput");
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
 
-    // Check if the click was outside the input, results, and suggestions
-    const elements = [searchInput, results, suggestions];
-    const isOutside = !elements.some((el) => el.contains(event.target));
+    // Check if the clicked target is outside searchInput, results, or suggestions
+    const clickedInsideElements = [searchInput, results, suggestions].some((el) =>
+        el.contains(event.target)
+    );
 
-    if (isOutside) {
-        closeSearch(); // Close the search input
-    } else {
-        // If clicked inside results or suggestions, do not close the input
-        if (results.style.display === "none" && suggestions.style.display === "none") {
-            openSearch(); // Open the search input if suggestions or results are not visible
-        }
+    if (!clickedInsideElements) {
+        closeSearch(); // Close input only if clicked outside these elements
     }
 });
 
 function closeSearch() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.value = ""; // Clear input
-    document.getElementById("results").style.display = "none"; // Hide results
-    document.getElementById("suggestions").style.display = "none"; // Hide suggestions
-}
-
-function openSearch() {
-    const searchInput = document.getElementById("searchInput");
-    // Show results or suggestions based on input value (not implemented here)
-    document.getElementById("results").style.display = "block"; // Show results
-    document.getElementById("suggestions").style.display = "block"; // Show suggestions
+    console.log("Search input closed");
+    // Logic to close the search input
 }
 
 
