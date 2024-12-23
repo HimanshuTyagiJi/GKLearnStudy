@@ -181,7 +181,10 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
 
 
 
+
+
 document.addEventListener("click", (event) => {
+    // Select elements
     const searchInput = document.getElementById("searchInput");
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
@@ -189,22 +192,30 @@ document.addEventListener("click", (event) => {
     // Highlight the clickable area for debugging
     document.body.style.backgroundColor = "red";
 
+    // All elements that should be considered
     const elements = [searchInput, results, suggestions];
+
+    // Check if click is outside all the elements
     const isOutside = !elements.some((el) => el.contains(event.target));
 
     if (isOutside) {
+        // Get bounding rectangles for elements
         const rectInput = searchInput.getBoundingClientRect();
         const rectResults = results.getBoundingClientRect();
         const rectSuggestions = suggestions.getBoundingClientRect();
 
+        // Function to check if event is within 20px distance from any element
         const isWithinDistance = (element) => {
             const rect = element.getBoundingClientRect();
             return (
-                event.clientX > rect.left - 20 &&
-                event.clientX < rect.right + 20 
+                event.clientX > rect.left - 20 && // Within 20px left
+                event.clientX < rect.right + 20 && // Within 20px right
+                event.clientY > rect.top - 20 && // Within 20px top
+                event.clientY < rect.bottom + 20 // Within 20px bottom
             );
         };
 
+        // Check if event is not within 20px range of any specified element
         if (
             !isWithinDistance(searchInput) &&
             !isWithinDistance(results) &&
