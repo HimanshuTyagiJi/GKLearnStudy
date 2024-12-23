@@ -186,37 +186,22 @@ document.addEventListener("click", (event) => {
     const results = document.getElementById("results");
     const suggestions = document.getElementById("suggestions");
 
-    // Highlight the clickable area for debugging
-    document.body.style.backgroundColor = "red";
+    const clickedOutside = !(
+        searchInput.contains(event.target) ||
+        results.contains(event.target) ||
+        suggestions.contains(event.target)
+    );
 
-    const elements = [searchInput, results, suggestions];
-    const isOutside = !elements.some((el) => el.contains(event.target));
+    if (clickedOutside) {
+        document.body.style.backgroundColor = "red"; // Highlight the clickable back layer
+        setTimeout(() => {
+            document.body.style.backgroundColor = ""; // Reset background after a short time
+        }, 300);
 
-    if (isOutside) {
-        const rectInput = searchInput.getBoundingClientRect();
-        const rectResults = results.getBoundingClientRect();
-        const rectSuggestions = suggestions.getBoundingClientRect();
-
-        const isWithinDistance = (element) => {
-            const rect = element.getBoundingClientRect();
-            return (
-                event.clientX > rect.left - 50 &&
-                event.clientX < rect.right + 50 &&
-                event.clientY > rect.top - 50 &&
-                event.clientY < rect.bottom + 50
-            );
-        };
-
-        if (
-            !isWithinDistance(searchInput) &&
-            !isWithinDistance(results) &&
-            !isWithinDistance(suggestions)
-        ) {
-            closeSearch(); // Close the search input
-            document.body.style.backgroundColor = ""; // Reset background color
-        }
+        closeSearch();
     }
 });
+
 
 
 
