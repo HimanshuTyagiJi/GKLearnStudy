@@ -635,12 +635,11 @@ hr{height: 5%;}
             max-height: 4.5em; /* Adjust height to fit 3 lines */
         }
 
- #results .result-title:hover {color:white;
+ #results:hover {color:white;
             
         }
 
-        #results .result-paragraph:hover {color:white;
-                                         }
+       
 .pagination a:link {
        
         padding: 4px;
