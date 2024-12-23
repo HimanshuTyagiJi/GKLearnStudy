@@ -582,10 +582,7 @@ hr{height: 5%;}
             background-color: blue;
             color: white ;
         }
-#results:hover, #results .result-item:hover #results, .result-item a:link:hover,#results .result-item a.link:hover{
-            background-color: pink;
-            color: white ;
-        }
+
         .highlight {
             background-color: yellow;
         }
@@ -608,7 +605,7 @@ hr{height: 5%;}
             transition: background-color 0.3s;
         }
 
-        #results .result-item:hover {
+        #results .result-item:hover,#results .result-item a.link:hover,#results .result-item a:link:hover, #results .result-title:hover , #results .result-paragraph:hover , #results a.link:hover,#results a:link:hover{
             background-color: #007bff;
             color: white;
         }
