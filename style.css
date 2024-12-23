@@ -578,10 +578,7 @@ hr{height: 5%;}
             cursor: pointer;
         }
 
-        .suggestions li:hover , #results .result-item:hover{
-            background-color: blue;
-            color: white ;
-        }
+        
 
         .highlight {
             background-color: yellow;
@@ -861,4 +858,8 @@ ol,ul,li{margin:0px;}
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
+        }
+.suggestions li:hover , #results .result-item:hover{
+            background-color: blue;
+            color: white !important ;
         }
