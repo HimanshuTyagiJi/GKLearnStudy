@@ -711,5 +711,51 @@
         <script src="./menusearch.js"></script>
         <script src="./script.js"></script>
         <script src="./search.js"></script>
+    <script>
+document.addEventListener("click", (event) => {
+    // Select elements
+    const searchInput = document.getElementById("searchInput");
+    const results = document.getElementById("results");
+    const suggestions = document.getElementById("suggestions");
+
+    // Highlight the clickable area for debugging
+    document.body.style.backgroundColor = "red";
+
+    // All elements that should be considered
+    const elements = [searchInput, results, suggestions];
+
+    // Check if click is outside all the elements
+    const isOutside = !elements.some((el) => el.contains(event.target));
+
+    if (isOutside) {
+        // Get bounding rectangles for elements
+        const rectInput = searchInput.getBoundingClientRect();
+        const rectResults = results.getBoundingClientRect();
+        const rectSuggestions = suggestions.getBoundingClientRect();
+
+        // Function to check if event is within 20px distance from any element
+        const isWithinDistance = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                event.clientX > rect.left - 100 && // Within 20px left
+                event.clientX < rect.right + 30 && // Within 20px right
+               
+                event.clientY < rect.bottom + 400 // Within 20px bottom
+            );
+        };
+
+        // Check if event is not within 20px range of any specified element
+        if (
+            !isWithinDistance(searchInput) &&
+            !isWithinDistance(results) &&
+            !isWithinDistance(suggestions)
+        ) {
+            closeSearch(); // Close the search input
+            document.body.style.backgroundColor = "yellow"; // Reset background color
+        }
+    }
+});
+
+</script>
 </body>
 </html>
