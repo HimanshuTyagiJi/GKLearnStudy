@@ -195,32 +195,8 @@ resultItems.forEach((item) => {
         item.style.color = "black";
     });
 });
-document.addEventListener("click", (event) => {
-    const searchInput = document.getElementById("searchInput");
-    const results = document.getElementById("results");
-    const suggestions = document.getElementById("suggestions");
 
-    // Get screen dimensions
-    const screenHeight = window.innerHeight;
-    const screenWidth = window.innerWidth;
 
-    // Check click position
-    const clickX = event.clientX;
-    const clickY = event.clientY;
-
-    const isInsideVerticalBounds = clickY > (screenHeight - 200); // Below 200px from the bottom
-    const isInsideHorizontalBounds = clickX > 50 && clickX < (screenWidth - 50); // Left & Right 50px bounds
-
-    if (isInsideVerticalBounds || isInsideHorizontalBounds) {
-        closeSearch(); // Function to close input
-    }
-});
-
-function closeSearch() {
-    const searchContainer = document.querySelector(".search-container");
-    searchContainer.classList.remove("active");
-    document.getElementById("searchInput").blur();
-}
 
 
 
