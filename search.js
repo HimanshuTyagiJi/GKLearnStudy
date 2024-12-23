@@ -181,6 +181,40 @@ document.getElementById("searchInput").addEventListener("keydown", function (eve
 
 
 
+document.addEventListener("click", (event) => {
+    const searchInput = document.getElementById("searchInput");
+    const results = document.getElementById("results");
+    const suggestions = document.getElementById("suggestions");
+
+    // Highlight the clickable area for debugging
+    document.body.style.backgroundColor = "red";
+
+    const elements = [searchInput, results, suggestions];
+    const isOutside = !elements.some((el) => el.contains(event.target));
+
+    if (isOutside) {
+        const rectInput = searchInput.getBoundingClientRect();
+        const rectResults = results.getBoundingClientRect();
+        const rectSuggestions = suggestions.getBoundingClientRect();
+
+        const isWithinDistance = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                event.clientX > rect.left - 50 &&
+                event.clientX < rect.right + 50 
+            );
+        };
+
+        if (
+            !isWithinDistance(searchInput) &&
+            !isWithinDistance(results) &&
+            !isWithinDistance(suggestions)
+        ) {
+            closeSearch(); // Close the search input
+            document.body.style.backgroundColor = ""; // Reset background color
+        }
+    }
+});
 
 
 
