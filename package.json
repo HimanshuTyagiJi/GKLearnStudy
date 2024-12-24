@@ -1,0 +1,12 @@
+{
+    "name": "cors-proxy",
+    "version": "1.0.0",
+    "description": "CORS Proxy Server",
+    "main": "youtube.js",
+    "scripts": {
+        "start": "node youtube.js"
+    },
+    "dependencies": {
+        "cors-anywhere": "^0.4.4"
+    }
+}
