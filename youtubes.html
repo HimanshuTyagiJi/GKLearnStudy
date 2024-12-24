@@ -3,124 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube वीडियो अपडेटर</title>
+    <title>XML से JSON अपडेट</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #status {
+        #progress {
+            display: none;
             margin-top: 20px;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>YouTube वीडियो अपडेटर</h1>
-    <button id="updateVideos">वीडियो अपडेट करें</button>
-    <div id="status"></div>
+    <h1>YouTube वीडियो अपडेट करें</h1>
+    <button id="updateButton">वीडियो अपडेट करें</button>
+    <div id="progress">
+        <p>डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...<span id="percentage">0%</span></p>
+        <progress value="0" max="100"></progress>
+    </div>
 
     <script>
-const githubToken = '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'; // GitHub टोकन
-const apiUrl = 'https://api.github.com/repos/HimanshuTyagiJi/GKLearnStudy/contents/youtube.json'; // JSON फ़ाइल का URL
-const xmlFeedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=YOUR_CHANNEL_ID'; // XML फ़ीड का URL
+        const githubToken = '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'; // आपका GitHub टोकन
+        const apiUrl = 'https://api.github.com/repos/HimanshuTyagiJi/GKLearnStudy/contents/youtube.json'; // JSON फ़ाइल का URL
+        const channelIds = [
+            'UCFo8q8WIrDifqtFHAvmr0NQ',
+            'UC5fXdqPu6-ewYPVV7JlHjkQ'
+        ];
 
-async function fetchXMLData() {
-    try {
-        const response = await fetch(xmlFeedUrl);
-        const data = await response.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data, "text/xml");
-        const entries = xml.getElementsByTagName("entry");
+        document.getElementById('updateButton').addEventListener('click', loadAndUpdateJSON);
 
-        let videos = [];
-        for (let entry of entries) {
-            const title = entry.getElementsByTagName("title")[0].textContent;
-            const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
-            const published = new Date(entry.getElementsByTagName("published")[0].textContent);
-            videos.push({ title, videoId, published });
+        function loadAndUpdateJSON() {
+            // प्रगति इंडिकेटर दिखाएं
+            document.getElementById('progress').style.display = 'block';
+
+            const xmlPromises = channelIds.map(channelId => {
+                const xmlFeedUrl = `https://video.gklearnstudy.in/https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+                return fetch(xmlFeedUrl)
+                    .then(response => response.text())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const xml = parser.parseFromString(data, "text/xml");
+                        const entries = xml.getElementsByTagName("entry");
+
+                        const videos = Array.from(entries).map(entry => {
+                            const title = entry.getElementsByTagName("title")[0].textContent;
+                            const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                            const published = new Date(entry.getElementsByTagName("published")[0].textContent);
+                            return { title, videoId, published };
+                        });
+
+                        return videos;
+                    });
+            });
+
+            Promise.all(xmlPromises).then(videos => {
+                // JSON फ़ाइल को अपडेट करें
+                updateJSONFile(videos.flat());
+            }).catch(error => {
+                console.error('XML फ़ीड पढ़ने में त्रुटि:', error);
+                document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
+            });
         }
 
-        await updateJsonFile(videos);
-    } catch (error) {
-        console.error('XML से डेटा लाने में त्रुटि:', error);
-    }
-}
+        function updateJSONFile(videos) {
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `token ${githubToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const content = atob(data.content); // बेस64 से डिकोड करें
+                const existingVideos = JSON.parse(content) || [];
+                const updatedVideos = [...existingVideos, ...videos];
 
-async function getJsonFileSha() {
-    const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-            'Authorization': `token ${githubToken}`,
-            'Accept': 'application/vnd.github.v3.raw'
+                // JSON फ़ाइल को GitHub पर अपडेट करें
+                const jsonContent = btoa(JSON.stringify(updatedVideos, null, 2));
+                return fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${githubToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Updated video list',
+                        content: jsonContent,
+                        sha: data.sha // फ़ाइल की मौजूदा स्थिति
+                    })
+                });
+            })
+            .then(() => {
+                console.log('JSON फ़ाइल सफलतापूर्वक अपडेट की गई!');
+                alert('JSON फ़ाइल सफलतापूर्वक अपडेट की गई!'); // उपयोगकर्ता को सूचित करें
+            })
+            .catch(error => {
+                console.error('JSON फ़ाइल अपडेट करने में त्रुटि:', error);
+            })
+            .finally(() => {
+                document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
+            });
         }
-    });
-
-    if (response.ok) {
-        const fileData = await response.json();
-        const sha = fileData.sha; // SHA प्राप्त करें
-        return sha;
-    } else {
-        console.error('JSON फ़ाइल को पढ़ने में त्रुटि:', await response.text());
-        return null;
-    }
-}
-
-async function updateJsonFile(videos) {
-    const sha = await getJsonFileSha(); // SHA प्राप्त करें
-    if (!sha) {
-        console.error('SHA प्राप्त नहीं किया गया। JSON फ़ाइल को अपडेट नहीं किया जा सकेगा।');
-        return;
-    }
-
-    // पहले JSON फ़ाइल को पढ़ें
-    const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-            'Authorization': `token ${githubToken}`,
-            'Accept': 'application/vnd.github.v3.raw'
-        }
-    });
-    
-    let existingData = await response.json();
-    existingData = existingData || []; // अगर कोई डेटा नहीं है, तो खाली एरे
-
-    // नए वीडियो जोड़ें
-    videos.forEach(video => {
-        if (!existingData.some(existingVideo => existingVideo.videoId === video.videoId)) {
-            existingData.push(video);
-        }
-    });
-
-    // JSON फ़ाइल को अपडेट करें
-    const updateResponse = await fetch(apiUrl, {
-        method: 'PUT',
-        headers: {
-            'Authorization': `token ${githubToken}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message: "Update video data",
-            content: btoa(JSON.stringify(existingData)), // Base64 में एन्कोड करना
-            sha: sha // SHA डालें
-        })
-    });
-
-    if (updateResponse.ok) {
-        console.log('JSON फ़ाइल को सफलतापूर्वक अपडेट किया गया।');
-    } else {
-        console.error('JSON फ़ाइल को अपडेट करने में त्रुटि:', await updateResponse.text());
-    }
-}
-
-// XML डेटा लाने के लिए फ़ंक्शन कॉल करें
-fetchXMLData();
-
     </script>
 </body>
 </html>
