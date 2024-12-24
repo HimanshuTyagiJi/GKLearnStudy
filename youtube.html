@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Feed</title>
+    <style>
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .video {
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+        }
+        .thumbnail {
+            width: 100%;
+            height: auto;
+        }
+        .title {
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>YouTube Video Feed</h1>
+<div class="video-container" id="videoContainer">Loading videos...</div>
+
+<script>
+    // XML feed URL
+    const xmlFeedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC5fXdqPu6-ewYPVV7JlHjkQ';
+
+    // Function to load and parse XML feed
+    function loadVideos() {
+        fetch(xmlFeedUrl)
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data, "text/xml");
+                const entries = xml.getElementsByTagName("entry");
+                const videoContainer = document.getElementById('videoContainer');
+
+                // Clear loading message
+                videoContainer.innerHTML = '';
+
+                // Iterate through each entry to get video data
+                Array.from(entries).forEach(entry => {
+                    const title = entry.getElementsByTagName("title")[0].textContent;
+                    const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                    const videoLink = entry.getElementsByTagName("link")[0].getAttribute("href"); // Fetching the complete link
+                    const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+                    const videoDiv = document.createElement('div');
+                    videoDiv.className = 'video';
+                    videoDiv.innerHTML = `
+                        <a href="${videoLink}" target="_blank">
+                            <img class="thumbnail" src="${thumbnailUrl}" alt="${title}">
+                        </a>
+                        <div class="title">${title}</div>
+                    `;
+                    videoContainer.appendChild(videoDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the XML feed:', error);
+                document.getElementById('videoContainer').innerHTML = 'Failed to load videos.';
+            });
+    }
+
+    // Load videos on page load
+    loadVideos();
+</script>
+
+</body>
+</html>
