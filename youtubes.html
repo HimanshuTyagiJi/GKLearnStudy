@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Auto Commit</title>
+   
+</head>
+<body>
+    <h1>YouTube Video Auto Commit</h1>
+    <button id="updateVideos">वीडियो अपडेट करें</button>
+    <div id="status"></div>
+</body>
+</html>
+<script>
+const githubToken = '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'; // आपका GitHub टोकन
+const apiUrl = 'https://api.github.com/repos/HimanshuTyagiJi/GKLearnStudy/contents/youtube.json'; // टार्गेट रिपॉजिटरी का URL
+const channelIds = [
+    'UCFo8q8WIrDifqtFHAvmr0NQ',
+    'UC5fXdqPu6-ewYPVV7JlHjkQ'
+];
+
+document.getElementById('updateVideos').addEventListener('click', loadVideosAndUpdateJSON);
+
+function loadVideosAndUpdateJSON() {
+    const existingVideos = []; // मौजूदा JSON डेटा के लिए
+
+    // मौजूदा JSON डेटा पढ़ें
+    fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Authorization': `token ${githubToken}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const content = atob(data.content); // Base64 को Decode करें
+        existingVideos.push(...JSON.parse(content)); // मौजूदा वीडियो को जोड़ें
+        return fetchXMLData();
+    })
+    .then(newVideos => {
+        const allVideos = mergeVideos(existingVideos, newVideos); // मौजूदा और नए वीडियो को मिलाएं
+        return updateJSONFile(allVideos); // JSON फ़ाइल को अपडेट करें
+    })
+    .then(() => {
+        document.getElementById('status').innerText = 'वीडियो सफलतापूर्वक अपडेट हो गए।';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('status').innerText = 'वीडियो अपडेट में त्रुटि हुई।';
+    });
+}
+
+function fetchXMLData() {
+    const xmlPromises = channelIds.map(channelId => {
+        const xmlFeedUrl = `https://video.gklearnstudy.in/https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+        return fetch(xmlFeedUrl)
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data, "text/xml");
+                const entries = xml.getElementsByTagName("entry");
+
+                return Array.from(entries).map(entry => {
+                    const title = entry.getElementsByTagName("title")[0].textContent;
+                    const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                    const published = new Date(entry.getElementsByTagName("published")[0].textContent);
+                    return { title, videoId, published };
+                });
+            });
+    });
+
+    return Promise.all(xmlPromises).then(videos => videos.flat());
+}
+
+function mergeVideos(existingVideos, newVideos) {
+    const videoIds = existingVideos.map(video => video.videoId);
+    const uniqueNewVideos = newVideos.filter(video => !videoIds.includes(video.videoId)); // केवल नए वीडियो शामिल करें
+    return [...existingVideos, ...uniqueNewVideos]; // सभी वीडियो लौटाएं
+}
+
+function updateJSONFile(videos) {
+    return fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${githubToken}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+            message: "Update video data",
+            content: btoa(JSON.stringify(videos)), // वीडियो डेटा को base64 में एन्कोड करें
+            sha: '' // पहले की फ़ाइल का SHA यहाँ डालें
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update JSON file.');
+        }
+    });
+}
+</script>
