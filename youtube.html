@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Video Feed</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
         .video-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            padding: 0 20px;
         }
         .video {
             margin: 20px;
@@ -16,11 +31,7 @@
             border-radius: 8px;
             overflow: hidden;
             width: 300px;
-        }
-        .thumbnail {
-            width: 100%;
-            height: auto;
-            cursor: pointer; /* Change cursor to pointer for thumbnails */
+            background-color: #fff;
         }
         .title {
             text-align: center;
@@ -38,57 +49,156 @@
             width: 100%;
             height: 100%;
         }
+        .short {
+            padding-top: 177.77%; /* 9:16 Aspect Ratio for Shorts */
+        }
+        .search-bar {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        .filter-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #6c757d;
+            color: white;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .filter-button:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
 
 <h1>YouTube Video Feed</h1>
+
+<div class="button-container">
+    <input type="text" class="search-bar" id="searchInput" placeholder="Search videos...">
+    <button class="search-button" onclick="searchVideos()">Search</button>
+    <button class="filter-button" onclick="loadVideos('all')">All</button>
+    <button class="filter-button" onclick="loadVideos('shorts')">Shorts</button>
+    <button class="filter-button" onclick="loadVideos('community')">Community</button>
+    <button class="filter-button" onclick="loadVideos('playlists')">Playlists</button>
+</div>
+
 <div class="video-container" id="videoContainer">Loading videos...</div>
 
 <script>
-    // XML feed URL
+    const channelIds = [
+        'UCFo8q8WIrDifqtFHAvmr0NQ',
+        'UC5fXdqPu6-ewYPVV7JlHjkQ'
+    ];
     
-  const xmlFeedUrl = 'https://video.gklearnstudy.in/https://www.youtube.com/feeds/videos.xml?channel_id=UCFo8q8WIrDifqtFHAvmr0NQ';
+    let allVideos = []; // Store all videos
 
-    // Function to load and parse XML feed
-    function loadVideos() {
-        fetch(xmlFeedUrl)
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, "text/xml");
-                const entries = xml.getElementsByTagName("entry");
-                const videoContainer = document.getElementById('videoContainer');
+    function loadVideos(filter) {
+        const xmlPromises = channelIds.map(channelId => {
+            const xmlFeedUrl = `https://video.gklearnstudy.in/https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+            return fetch(xmlFeedUrl)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const entries = xml.getElementsByTagName("entry");
 
-                // Clear loading message
-                videoContainer.innerHTML = '';
-
-                // Iterate through each entry to get video data
-                Array.from(entries).forEach(entry => {
-                    const title = entry.getElementsByTagName("title")[0].textContent;
-                    const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
-
-                    const videoDiv = document.createElement('div');
-                    videoDiv.className = 'video';
-                    videoDiv.innerHTML = `
-                        <div class="iframe-container">
-                            <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="title">${title}</div>
-                    `;
-                    videoContainer.appendChild(videoDiv);
+                    const videos = Array.from(entries).map(entry => {
+                        const title = entry.getElementsByTagName("title")[0].textContent;
+                        const videoId = entry.getElementsByTagName("yt:videoId")[0].textContent;
+                        const published = new Date(entry.getElementsByTagName("published")[0].textContent);
+                        return { title, videoId, published };
+                    });
+                    
+                    return videos;
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching the XML feed:', error);
-                document.getElementById('videoContainer').innerHTML = 'Failed to load videos.';
-            });
+        });
+
+        Promise.all(xmlPromises).then(videos => {
+            allVideos = videos.flat(); // Combine videos from all channels
+            allVideos.sort((a, b) => b.published - a.published); // Sort by published date
+            displayVideos(filter);
+        }).catch(error => {
+            console.error('Error fetching the XML feed:', error);
+            document.getElementById('videoContainer').innerHTML = 'Failed to load videos.';
+        });
+    }
+
+    function displayVideos(filter) {
+        const videoContainer = document.getElementById('videoContainer');
+        videoContainer.innerHTML = ''; // Clear current videos
+
+        const filteredVideos = allVideos.filter(video => {
+            if (filter === 'shorts') {
+                return video.title.toLowerCase().includes('short');
+            }
+            return true; // Return all videos for 'all'
+        });
+
+        filteredVideos.forEach(video => {
+            const videoDiv = document.createElement('div');
+            videoDiv.className = 'video';
+            if (filter === 'shorts') {
+                videoDiv.classList.add('short'); // Apply short class for styling
+            }
+            videoDiv.innerHTML = `
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="title">${video.title}</div>
+            `;
+            videoContainer.appendChild(videoDiv);
+        });
+
+        if (filteredVideos.length === 0) {
+            videoContainer.innerHTML = 'No videos found.';
+        }
+    }
+
+    function searchVideos() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const filteredVideos = allVideos.filter(video => video.title.toLowerCase().includes(searchInput));
+        displaySearchResults(filteredVideos);
+    }
+
+    function displaySearchResults(videos) {
+        const videoContainer = document.getElementById('videoContainer');
+        videoContainer.innerHTML = ''; // Clear current videos
+
+        videos.forEach(video => {
+            const videoDiv = document.createElement('div');
+            videoDiv.className = 'video';
+            videoDiv.innerHTML = `
+                <div class="iframe-container">
+                    <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="title">${video.title}</div>
+            `;
+            videoContainer.appendChild(videoDiv);
+        });
+
+        if (videos.length === 0) {
+            videoContainer.innerHTML = 'No videos found.';
+        }
     }
 
     // Load videos on page load
-    loadVideos();
+    loadVideos('all');
 </script>
 
 </body>
 </html>
- 
