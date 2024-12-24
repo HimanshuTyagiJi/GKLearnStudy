@@ -7,8 +7,8 @@ const app = express();
 const PORT = 3000;
 
 const channelIds = [
-    'UCFo8q8WIrDifqtFHAvmr0NQ',
-    'UC5fXdqPu6-ewYPVV7JlHjkQ'
+    'UCFo8q8WIrDifqtFHAvmr0NQ', // Example Channel ID 1
+    'UC5fXdqPu6-ewYPVV7JlHjkQ'  // Example Channel ID 2
 ];
 
 // Function to fetch XML and save new data
