@@ -13,7 +13,7 @@
 </head>
 <body>
     <h1>YouTube वीडियो अपडेट करें</h1>
-    <button id="updateButton">वीडियो अपडेट करें......</button>
+    <button id="updateButton">वीडियो अपडेट करें</button>
     <div id="progress">
         <p>डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...<span id="percentage">0%</span></p>
         <progress value="0" max="100"></progress>
@@ -30,7 +30,6 @@
         document.getElementById('updateButton').addEventListener('click', loadAndUpdateJSON);
 
         function loadAndUpdateJSON() {
-            // प्रगति इंडिकेटर दिखाएं
             document.getElementById('progress').style.display = 'block';
 
             const xmlPromises = channelIds.map(channelId => {
@@ -54,12 +53,11 @@
             });
 
             Promise.all(xmlPromises).then(videos => {
-                // JSON फ़ाइल को अपडेट करें
                 updateJSONFile(videos.flat());
             }).catch(error => {
                 console.error('XML फ़ीड पढ़ने में त्रुटि:', error);
-                alert('XML फ़ीड पढ़ने में त्रुटि आई है।'); // उपयोगकर्ता को सूचित करें
-                document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
+                alert('XML फ़ीड पढ़ने में त्रुटि आई है।');
+                document.getElementById('progress').style.display = 'none';
             });
         }
 
@@ -70,13 +68,17 @@
                     'Authorization': `token ${githubToken}`
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('JSON फ़ाइल प्राप्त करने में त्रुटि: ' + response.statusText);
+                }
+                return response.json();
+            })
             .then(data => {
-                const content = atob(data.content); // बेस64 से डिकोड करें
+                const content = atob(data.content);
                 const existingVideos = JSON.parse(content) || [];
                 const updatedVideos = [...existingVideos, ...videos];
 
-                // JSON फ़ाइल को GitHub पर अपडेट करें
                 const jsonContent = btoa(JSON.stringify(updatedVideos, null, 2));
                 return fetch(apiUrl, {
                     method: 'PUT',
@@ -87,20 +89,20 @@
                     body: JSON.stringify({
                         message: 'Updated video list',
                         content: jsonContent,
-                        sha: data.sha // फ़ाइल की मौजूदा स्थिति
+                        sha: data.sha
                     })
                 });
             })
             .then(() => {
                 console.log('JSON फ़ाइल सफलतापूर्वक अपडेट की गई!');
-                alert('JSON फ़ाइल सफलतापूर्वक अपडेट की गई!'); // उपयोगकर्ता को सूचित करें
+                alert('JSON फ़ाइल सफलतापूर्वक अपडेट की गई!');
             })
             .catch(error => {
                 console.error('JSON फ़ाइल अपडेट करने में त्रुटि:', error);
-                alert('JSON फ़ाइल अपडेट करने में त्रुटि आई है।'); // उपयोगकर्ता को सूचित करें
+                alert('JSON फ़ाइल अपडेट करने में त्रुटि आई है: ' + error.message);
             })
             .finally(() => {
-                document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
+                document.getElementById('progress').style.display = 'none';
             });
         }
     </script>
