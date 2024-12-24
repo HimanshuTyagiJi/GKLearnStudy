@@ -22,7 +22,7 @@
 </head>
 <body>
     <h1>YouTube वीडियो अपडेटर</h1>
-    <button id="updateVideos">वीडियो अपडेट करें....</button>
+    <button id="updateVideos">वीडियो अपडेट करें</button>
     <div id="status"></div>
 
     <script>
@@ -33,40 +33,37 @@
             'UC5fXdqPu6-ewYPVV7JlHjkQ'
         ];
 
-        document.getElementById('updateVideos').addEventListener('click', loadVideosAndUpdateJSON);
+        document.getElementById('updateVideos').addEventListener('click', fetchAndUpdateJSON);
 
-        function loadVideosAndUpdateJSON() {
-            const existingVideos = []; // मौजूदा JSON डेटा के लिए
-
-            // मौजूदा JSON डेटा पढ़ें
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `token ${githubToken}`
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('JSON फ़ाइल को पढ़ने में त्रुटि।');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const content = atob(data.content); // Base64 को Decode करें
-                existingVideos.push(...JSON.parse(content)); // मौजूदा वीडियो को जोड़ें
-                return fetchXMLData();
-            })
-            .then(newVideos => {
-                const allVideos = mergeVideos(existingVideos, newVideos); // मौजूदा और नए वीडियो को मिलाएं
-                return updateJSONFile(allVideos, data.sha); // JSON फ़ाइल को अपडेट करें
-            })
-            .then(() => {
-                document.getElementById('status').innerText = 'वीडियो सफलतापूर्वक अपडेट हो गए।';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('status').innerText = 'वीडियो अपडेट में त्रुटि हुई: ' + error.message;
-            });
+        function fetchAndUpdateJSON() {
+            // XML से डेटा पढ़ें
+            fetchXMLData()
+                .then(newVideos => {
+                    return fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `token ${githubToken}`
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('JSON फ़ाइल को पढ़ने में त्रुटि।');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const existingVideos = JSON.parse(atob(data.content)); // मौजूदा JSON डेटा
+                        const allVideos = mergeVideos(existingVideos, newVideos); // सभी वीडियो को मिलाएं
+                        return updateJSONFile(allVideos, data.sha); // JSON फ़ाइल को अपडेट करें
+                    });
+                })
+                .then(() => {
+                    document.getElementById('status').innerText = 'वीडियो सफलतापूर्वक अपडेट हो गए।';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('status').innerText = 'वीडियो अपडेट में त्रुटि हुई: ' + error.message;
+                });
         }
 
         function fetchXMLData() {
