@@ -13,7 +13,7 @@
 </head>
 <body>
     <h1>YouTube वीडियो अपडेट करें</h1>
-    <button id="updateButton">वीडियो अपडेट करें</button>
+    <button id="updateButton">वीडियो अपडेट करें......</button>
     <div id="progress">
         <p>डेटा लोड हो रहा है, कृपया प्रतीक्षा करें...<span id="percentage">0%</span></p>
         <progress value="0" max="100"></progress>
@@ -58,6 +58,7 @@
                 updateJSONFile(videos.flat());
             }).catch(error => {
                 console.error('XML फ़ीड पढ़ने में त्रुटि:', error);
+                alert('XML फ़ीड पढ़ने में त्रुटि आई है।'); // उपयोगकर्ता को सूचित करें
                 document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
             });
         }
@@ -96,6 +97,7 @@
             })
             .catch(error => {
                 console.error('JSON फ़ाइल अपडेट करने में त्रुटि:', error);
+                alert('JSON फ़ाइल अपडेट करने में त्रुटि आई है।'); // उपयोगकर्ता को सूचित करें
             })
             .finally(() => {
                 document.getElementById('progress').style.display = 'none'; // प्रगति छिपाएँ
