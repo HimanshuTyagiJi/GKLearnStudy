@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Videos</title>
+    <title>YouTube Video Feed from JSON</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,15 +19,19 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            padding: 20px;
+            padding: 0 20px;
         }
         .video {
             margin: 20px;
-            width: 300px;
-            background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 8px;
             overflow: hidden;
+            width: 300px;
+            background-color: #fff;
+        }
+        .title {
+            text-align: center;
+            padding: 10px;
         }
         .iframe-container {
             position: relative;
@@ -41,23 +45,31 @@
             width: 100%;
             height: 100%;
         }
-        .title {
-            text-align: center;
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
 
-<h1>YouTube Videos</h1>
+<h1>YouTube Video Feed from JSON</h1>
 <div class="video-container" id="videoContainer">Loading videos...</div>
 
 <script>
-    async function loadVideos() {
-        const response = await fetch('/videos');
-        const videos = await response.json();
+    const jsonUrl = 'https://raw.githubusercontent.com/HimanshuTyagiJi/GKLearnStudy/main/youtube.json'; // JSON फ़ाइल का URL
+
+    function loadVideosFromJson() {
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                displayVideos(data);
+            })
+            .catch(error => {
+                console.error('Error fetching JSON data:', error);
+                document.getElementById('videoContainer').innerHTML = 'Failed to load videos.';
+            });
+    }
+
+    function displayVideos(videos) {
         const videoContainer = document.getElementById('videoContainer');
-        videoContainer.innerHTML = ''; // Clear current content
+        videoContainer.innerHTML = ''; // वर्तमान वीडियो को साफ करें
 
         videos.forEach(video => {
             const videoDiv = document.createElement('div');
@@ -76,8 +88,8 @@
         }
     }
 
-    // Load videos on page load
-    loadVideos();
+    // JSON से वीडियो लोड करें
+    loadVideosFromJson();
 </script>
 
 </body>
