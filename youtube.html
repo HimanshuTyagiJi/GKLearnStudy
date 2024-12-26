@@ -9,6 +9,9 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
+        .grid-container, .player-container {
+            display: none;
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -37,9 +40,8 @@
         }
         .player-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             height: 100vh;
-            position: relative;
         }
         .video-player {
             position: relative;
@@ -54,9 +56,9 @@
         .video-list {
             flex: 1;
             overflow-y: auto;
+            border-left: 1px solid #ddd;
             padding: 10px;
             background-color: #f9f9f9;
-            border-top: 1px solid #ddd;
         }
         .video-list-item {
             display: flex;
@@ -83,7 +85,7 @@
             color: #333;
         }
         .back-button {
-            position: absolute;
+            position: fixed;
             top: 10px;
             left: 10px;
             background-color: #fff;
@@ -92,7 +94,7 @@
             cursor: pointer;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 10;
+            z-index: 1000;
         }
         .pip-video {
             position: fixed;
@@ -105,6 +107,29 @@
             z-index: 1000;
             display: none;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .player-container {
+                flex-direction: column;
+            }
+            .video-player iframe {
+                position: fixed; /* Fixed position for mobile */
+                width: 480px;
+                height: 360px;
+            }
+            .video-list {
+                flex: none;
+                height: auto;
+                overflow-y: visible;
+            }
+        }
+        @media (min-width: 769px) {
+            .video-player iframe {
+                width: 957px;
+                height: 527px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -112,7 +137,7 @@
     <div class="grid-container" id="grid-view"></div>
 
     <!-- Player View -->
-    <div class="player-container" id="player-view" style="display: none;">
+    <div class="player-container" id="player-view">
         <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
             <button class="back-button" id="back-btn">Back</button>
@@ -183,8 +208,8 @@
         }
 
         function playVideo(videoId) {
-            // Stop current video if there is one
-            if (currentVideoId && currentVideoId !== videoId) {
+            // Pause the currently playing video if there is one
+            if (currentVideoId) {
                 mainVideo.src = ""; // Stop current video
             }
 
@@ -215,9 +240,12 @@
         window.onpopstate = () => navigateToHome();
 
         function navigateToHome() {
-            // Stop the main video
-            mainVideo.src = ""; // Stop current video
-            pipVideo.style.display = "none"; // Hide the pip video
+            if (currentVideoId) {
+                mainVideo.src = ""; // Stop the current video
+                pipVideo.style.display = "block"; // Show the pop-up video
+                pipIframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&enablejsapi=1`;
+                pipIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[' + currentVideoTime + ', true]}', '*');
+            }
             renderGridView();
         }
 
@@ -230,8 +258,11 @@
 
             function onPlayerStateChange(event) {
                 if (event.data === YT.PlayerState.PLAYING) {
+                    // Store the current time and update on back action
                     const interval = setInterval(() => {
-                        currentVideoTime = player.getCurrentTime();
+                        player.getCurrentTime().then(time => {
+                            currentVideoTime = time; // Update the current video time
+                        });
                     }, 1000);
                     player.addEventListener('onStateChange', (e) => {
                         if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
