@@ -10,37 +10,35 @@
             font-family: Arial, sans-serif;
         }
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: row;
             gap: 10px;
             padding: 20px;
         }
         .main-video {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            flex: 2;
+            max-width: 955px;
+            max-height: 537px;
         }
         .main-video iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+        .video-list {
+            flex: 1;
+            max-height: 537px;
+            overflow-y: auto;
+        }
         .video-item {
             display: flex;
             align-items: center;
+            margin-bottom: 10px;
             cursor: pointer;
             border: 1px solid #ddd;
             border-radius: 4px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background: #f9f9f9;
         }
         .video-item img {
             width: 120px;
@@ -57,58 +55,40 @@
             color: #333;
         }
 
-        /* Full Height for Desktop */
-        .video-list {
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-
-        /* Back Button */
-        .back-button {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 2000;
-            background: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
         /* For Mobile Devices */
         @media (max-width: 768px) {
             .container {
-                grid-template-columns: 1fr;
+                flex-direction: column;
             }
             .main-video {
-                width: 100%;
-                height: 320px;
-                top: 0;
-                left: 0;
-                transform: none;
-                border-radius: 0;
+                max-width: 480px;
+                max-height: 320px;
+            }
+            .video-list {
+                max-height: none;
+            }
+            .video-item img {
+                width: 100px;
+                height: 60px;
             }
         }
     </style>
 </head>
 <body>
-    <button class="back-button" id="back-button">Back</button>
-
     <!-- Video Container -->
-    <div class="container" id="video-container"></div>
+    <div class="container">
+        <!-- Main Video -->
+        <div class="main-video">
+            <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+        </div>
 
-    <!-- Main Video -->
-    <div class="main-video" id="main-video">
-        <iframe id="main-video-frame" src="" allow="autoplay" allowfullscreen></iframe>
+        <!-- Video List -->
+        <div class="video-list" id="video-list"></div>
     </div>
 
     <script>
-        const videoContainer = document.getElementById("video-container");
+        const videoList = document.getElementById("video-list");
         const mainVideo = document.getElementById("main-video");
-        const mainVideoFrame = document.getElementById("main-video-frame");
-        const backButton = document.getElementById("back-button");
         let videos = [];
 
         // Load videos from XML
@@ -123,60 +103,49 @@
                     const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
                     const videoEntries = xmlDoc.getElementsByTagName('entry');
 
+                    // Extract video details from XML
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
                         videos.push({ title: title, id: getVideoId(link) });
                     }
 
-                    renderVideos();
+                    renderVideoList(); // Render video list
+                    playVideo(videos[0].id); // Auto-play the first video
                 } else {
-                    console.error('Failed to load XML file.');
+                    console.error('Failed to load XML file: Status ' + xhr.status);
                 }
             };
             xhr.onerror = function() {
-                console.error('Error fetching XML.');
+                console.error('An error occurred while fetching the XML file.');
             };
             xhr.send();
         }
 
-        // Extract video ID from URL
+        // Get video ID from URL
         function getVideoId(url) {
             const urlParts = new URL(url);
-            return urlParts.searchParams.get('v');
+            return urlParts.searchParams.get('v'); // Extracts video ID from URL
         }
 
-        // Render videos in grid
-        function renderVideos(excludeId = null) {
-            videoContainer.innerHTML = videos
-                .filter(video => video.id !== excludeId)
-                .map(video => `
-                    <div class="video-item" onclick="playVideo('${video.id}')">
-                        <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                        <div>
-                            <h3>${video.title}</h3>
-                        </div>
+        // Render Video List
+        function renderVideoList() {
+            videoList.innerHTML = videos.map(video => `
+                <div class="video-item" onclick="playVideo('${video.id}')">
+                    <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
+                    <div>
+                        <h3>${video.title}</h3>
                     </div>
-                `).join('');
+                </div>
+            `).join('');
         }
 
-        // Play video
+        // Play Video
         function playVideo(videoId) {
-            mainVideoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            mainVideo.style.display = "block";
-            backButton.style.display = "block";
-            renderVideos(videoId); // Exclude playing video from the list
+            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
         }
 
-        // Back to grid
-        backButton.addEventListener("click", function() {
-            mainVideo.style.display = "none";
-            mainVideoFrame.src = "";
-            backButton.style.display = "none";
-            renderVideos(); // Show all videos
-        });
-
-        // Load videos on page load
+        // Load videos when the page loads
         window.onload = loadVideosFromXML;
     </script>
 </body>
