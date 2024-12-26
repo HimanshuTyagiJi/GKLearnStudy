@@ -9,50 +9,36 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            display: none; /* Hidden until videos are loaded */
-        }
-        .video-item {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .video-item:hover {
-            transform: scale(1.05);
-        }
-        .video-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-        .video-item h3 {
-            margin: 10px;
-            font-size: 16px;
-        }
-        .player-container {
+        .container {
             display: flex;
-            flex-direction: column;
-            height: 100vh;
+            flex-direction: row;
+            height: 100vh; /* Full height */
         }
         .video-player {
-            flex: 0 0 auto; /* Take only necessary space */
+            flex: 2; /* Left side for main video */
             background-color: #000;
             position: relative;
         }
         .video-player iframe {
             width: 100%;
-            height: 400px; /* Adjust as needed */
+            height: 100%; /* Full height */
             border: none;
         }
+        .video-player .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 10;
+        }
         .video-list {
-            flex: 1;
+            flex: 1; /* Right side for video list */
             overflow-y: auto;
             padding: 10px;
             background-color: #f9f9f9;
@@ -81,17 +67,6 @@
             font-size: 14px;
             color: #333;
         }
-        .back-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
         .pip-video {
             position: fixed;
             bottom: 20px;
@@ -103,17 +78,32 @@
             z-index: 1000;
             display: none;
         }
+        .pip-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack for mobile */
+            }
+            .video-player {
+                height: 50%; /* Upper video */
+            }
+            .video-list {
+                height: 50%; /* Lower video list */
+                overflow-y: auto; /* Enable scrolling if needed */
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Grid View -->
-    <div class="grid-container" id="grid-view"></div>
-
-    <!-- Player View -->
-    <div class="player-container" id="player-view" style="display:none;">
-        <div class="video-player">
+    <div class="container" id="container">
+        <div class="video-player" id="video-player">
+            <button class="back-button" id="back-button">Back</button>
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
-            <button class="back-button" id="back-btn">Back</button>
         </div>
         <div class="video-list" id="video-list"></div>
     </div>
@@ -122,101 +112,82 @@
     <div class="pip-video" id="pip-video">
         <iframe id="pip-iframe" src="" allow="autoplay" allowfullscreen></iframe>
     </div>
-
-    <script>
-        const gridView = document.getElementById("grid-view");
-        const playerView = document.getElementById("player-view");
-        const mainVideo = document.getElementById("main-video");
-        const videoList = document.getElementById("video-list");
-        const backBtn = document.getElementById("back-btn");
-        const pipVideo = document.getElementById("pip-video");
-        const pipIframe = document.getElementById("pip-iframe");
-        let videos = [];
-        let currentVideoId = null;
-
-        // Load videos from XML
-        function loadVideosFromXML() {
-            const xhr = new XMLHttpRequest();
-            const url = 'youtube.xml'; // Your XML file URL
-
-            xhr.open('GET', url, true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
-                    const videoEntries = xmlDoc.getElementsByTagName('entry');
-
-                    // Extract video details from XML
-                    for (let i = 0; i < videoEntries.length; i++) {
-                        const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
-                        const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
-                        videos.push({ title: title, id: getVideoId(link) });
-                    }
-
-                    renderGridView(); // Render grid view with loaded videos
-                } else {
-                    console.error('Failed to load XML file: Status ' + xhr.status);
-                }
-            };
-            xhr.onerror = function() {
-                console.error('An error occurred while fetching the XML file.');
-            };
-            xhr.send();
-        }
-
-        // Get video ID from URL
-        function getVideoId(url) {
-            const urlParts = new URL(url);
-            return urlParts.searchParams.get('v'); // Extracts video ID from URL
-        }
-
-        // Render Grid View
-        function renderGridView() {
-            gridView.innerHTML = videos.map(video => `
-                <div class="video-item" onclick="playVideo('${video.id}')">
-                    <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                    <h3>${video.title}</h3>
-                </div>
-            `).join('');
-            gridView.style.display = "grid";
-            playerView.style.display = "none";
-            pipVideo.style.display = "none";
-        }
-
-        // Play Video
-        function playVideo(videoId) {
-            currentVideoId = videoId;
-            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            playerView.style.display = "flex";
-            gridView.style.display = "none";
-            pipVideo.style.display = "none";
-            renderVideoList(videoId);
-        }
-
-        // Render Video List (Excluding Current Video)
-        function renderVideoList(activeVideoId) {
-            videoList.innerHTML = videos
-                .filter(video => video.id !== activeVideoId)
-                .map(video => `
-                    <div class="video-list-item" onclick="playVideo('${video.id}')">
-                        <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                        <div>
-                            <h3>${video.title}</h3>
-                        </div>
-                    </div>
-                `).join('');
-        }
-
-        // Back to Grid View with PiP
-        backBtn.addEventListener("click", () => {
-            pipIframe.src = mainVideo.src;
-            pipVideo.style.display = "block";
-            playerView.style.display = "none"; // Hide the player view
-            renderGridView();
-        });
-
-        // Load videos when the page loads
-        window.onload = loadVideosFromXML;
-    </script>
 </body>
-</html>
+<script>const mainVideo = document.getElementById("main-video");
+const videoList = document.getElementById("video-list");
+const pipVideo = document.getElementById("pip-video");
+const pipIframe = document.getElementById("pip-iframe");
+const backButton = document.getElementById("back-button");
+
+let videos = [];
+let currentVideoId = null;
+let currentTime = 0; // To track the playback time
+
+// Load videos from XML
+function loadVideosFromXML() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'youtube.xml', true);
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
+            const videoEntries = xmlDoc.getElementsByTagName('entry');
+
+            for (let i = 0; i < videoEntries.length; i++) {
+                const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
+                const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
+                videos.push({ title: title, id: getVideoId(link) });
+            }
+            renderGridView();
+        }
+    };
+    xhr.send();
+}
+
+// Extract video ID from URL
+function getVideoId(url) {
+    const urlParts = new URL(url);
+    return urlParts.searchParams.get('v');
+}
+
+// Render video list
+function renderGridView() {
+    videoList.innerHTML = videos.map(video => `
+        <div class="video-list-item" onclick="playVideo('${video.id}')">
+            <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
+            <div>
+                <h3>${video.title}</h3>
+            </div>
+        </div>
+    `).join('');
+    if (videos.length > 0) playVideo(videos[0].id);
+}
+
+// Play a video
+function playVideo(videoId) {
+    currentVideoId = videoId;
+    mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+}
+
+// Handle back button click
+backButton.addEventListener("click", () => {
+    currentTime = mainVideo.contentWindow?.document.querySelector("video")?.currentTime || 0;
+
+    // Move to PiP mode
+    pipIframe.src = `https://www.youtube.com/embed/${currentVideoId}?start=${Math.floor(currentTime)}&autoplay=1`;
+    pipVideo.style.display = "block";
+
+    // Show video list
+    videoList.style.display = "block";
+});
+
+// Hide PiP video when clicked
+pipVideo.addEventListener("click", () => {
+    pipVideo.style.display = "none";
+    mainVideo.src = pipIframe.src; // Resume video in main player
+});
+
+// Load videos on page load
+window.onload = loadVideosFromXML;
+</script>
