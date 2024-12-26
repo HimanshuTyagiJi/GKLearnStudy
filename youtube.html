@@ -8,25 +8,51 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevent scrollbars */
         }
-        .container {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            display: none; /* Hidden until videos are loaded */
+        }
+        .video-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+        .video-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .video-item h3 {
+            margin: 10px;
+            font-size: 16px;
+        }
+        .player-container {
             display: flex;
-            flex-direction: row; /* Default layout for desktop */
-            height: 100vh; /* Full height */
+            flex-direction: column;
+            height: 100vh;
         }
         .video-player {
-            flex: 2; /* Left side for main video */
+            flex: 0 0 auto; /* Take only necessary space */
             background-color: #000;
             position: relative;
         }
         .video-player iframe {
             width: 100%;
-            height: 100%; /* Full height */
+            height: 400px; /* Adjust as needed */
             border: none;
         }
         .video-list {
-            flex: 1; /* Right side for video list */
+            flex: 1;
             overflow-y: auto;
             padding: 10px;
             background-color: #f9f9f9;
@@ -55,6 +81,17 @@
             font-size: 14px;
             color: #333;
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
         .pip-video {
             position: fixed;
             bottom: 20px;
@@ -66,31 +103,17 @@
             z-index: 1000;
             display: none;
         }
-        .pip-video iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column; /* Stack for mobile */
-            }
-            .video-player {
-                height: 50%; /* Upper video */
-            }
-            .video-list {
-                height: 50%; /* Lower video list */
-                overflow-y: auto; /* Enable scrolling if needed */
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <div class="video-player" id="video-player">
+    <!-- Grid View -->
+    <div class="grid-container" id="grid-view"></div>
+
+    <!-- Player View -->
+    <div class="player-container" id="player-view" style="display:none;">
+        <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+            <button class="back-button" id="back-btn">Back</button>
         </div>
         <div class="video-list" id="video-list"></div>
     </div>
@@ -101,9 +124,11 @@
     </div>
 
     <script>
-        const container = document.getElementById("container");
+        const gridView = document.getElementById("grid-view");
+        const playerView = document.getElementById("player-view");
         const mainVideo = document.getElementById("main-video");
         const videoList = document.getElementById("video-list");
+        const backBtn = document.getElementById("back-btn");
         const pipVideo = document.getElementById("pip-video");
         const pipIframe = document.getElementById("pip-iframe");
         let videos = [];
@@ -147,23 +172,24 @@
 
         // Render Grid View
         function renderGridView() {
-            videoList.innerHTML = videos.map(video => `
-                <div class="video-list-item" onclick="playVideo('${video.id}')">
+            gridView.innerHTML = videos.map(video => `
+                <div class="video-item" onclick="playVideo('${video.id}')">
                     <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                    <div>
-                        <h3>${video.title}</h3>
-                    </div>
+                    <h3>${video.title}</h3>
                 </div>
             `).join('');
-            if (videos.length > 0) {
-                playVideo(videos[0].id); // Auto-play the first video in the list
-            }
+            gridView.style.display = "grid";
+            playerView.style.display = "none";
+            pipVideo.style.display = "none";
         }
 
         // Play Video
         function playVideo(videoId) {
             currentVideoId = videoId;
             mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            playerView.style.display = "flex";
+            gridView.style.display = "none";
+            pipVideo.style.display = "none";
             renderVideoList(videoId);
         }
 
@@ -181,13 +207,12 @@
                 `).join('');
         }
 
-        // Listen for video end event
-        mainVideo.addEventListener("load", () => {
-            const videoSrc = mainVideo.src;
-            mainVideo.contentWindow.document.addEventListener("ended", () => {
-                pipIframe.src = videoSrc; // Copy main video to PiP
-                pipVideo.style.display = "block"; // Show PiP
-            });
+        // Back to Grid View with PiP
+        backBtn.addEventListener("click", () => {
+            pipIframe.src = mainVideo.src;
+            pipVideo.style.display = "block";
+            playerView.style.display = "none"; // Hide the player view
+            renderGridView();
         });
 
         // Load videos when the page loads
