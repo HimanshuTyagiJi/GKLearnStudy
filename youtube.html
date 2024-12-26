@@ -8,7 +8,6 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            overflow-x: hidden;
         }
         .grid-container, .player-container {
             display: none;
@@ -107,12 +106,14 @@
             z-index: 1000;
             display: none;
         }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .player-container {
                 flex-direction: column;
             }
             .video-player iframe {
+                position: fixed; /* Fixed position for mobile */
                 width: 480px;
                 height: 360px;
             }
@@ -131,6 +132,7 @@
     </style>
 </head>
 <body>
+    <!-- Grid View -->
     <div class="grid-container" id="grid-view"></div>
 
     <!-- Player View -->
@@ -161,8 +163,9 @@
         // Load videos from XML
         function loadVideosFromXML() {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'youtube.xml', true);
+            const url = 'youtube.xml'; // Your XML file URL
 
+            xhr.open('GET', url, true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     const parser = new DOMParser();
@@ -172,10 +175,15 @@
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
-                        videos.push({ title, id: getVideoId(link) });
+                        videos.push({ title: title, id: getVideoId(link) });
                     }
                     renderGridView();
+                } else {
+                    console.error('Failed to load XML file: Status ' + xhr.status);
                 }
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred while fetching the XML file.');
             };
             xhr.send();
         }
@@ -198,18 +206,16 @@
         }
 
         function playVideo(videoId) {
-            if (currentVideoId) stopVideo(); // Stop previous video
+            // Pause the currently playing video if there is one
+            if (currentVideoId && currentVideoId !== videoId) {
+                mainVideo.src = ""; // Stop current video
+            }
             currentVideoId = videoId;
             mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             playerView.style.display = "flex";
             gridView.style.display = "none";
             pipVideo.style.display = "none";
             renderVideoList(videoId);
-        }
-
-        function stopVideo() {
-            mainVideo.src = "";
-            pipIframe.src = "";
         }
 
         function renderVideoList(activeVideoId) {
