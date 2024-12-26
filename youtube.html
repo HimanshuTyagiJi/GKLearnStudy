@@ -159,6 +159,7 @@
         const pipIframe = document.getElementById("pip-iframe");
         let videos = [];
         let currentVideoId = null;
+        let currentVideoTime = 0;
 
         // Load videos from XML
         function loadVideosFromXML() {
@@ -210,12 +211,15 @@
             if (currentVideoId && currentVideoId !== videoId) {
                 mainVideo.src = ""; // Stop current video
             }
+
             currentVideoId = videoId;
-            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
             playerView.style.display = "flex";
             gridView.style.display = "none";
             pipVideo.style.display = "none";
             renderVideoList(videoId);
+            currentVideoTime = 0; // Reset current time when playing a new video
+            monitorVideoPlayback(videoId);
         }
 
         function renderVideoList(activeVideoId) {
@@ -237,10 +241,33 @@
         function navigateToHome() {
             pipIframe.src = mainVideo.src;
             pipVideo.style.display = "block";
+            pipIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[' + currentVideoTime + ', true]}', '*');
             renderGridView();
         }
 
-        window.onload = loadVideosFromXML;
+        function monitorVideoPlayback(videoId) {
+            const player = new YT.Player('main-video', {
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                    const interval = setInterval(() => {
+                        currentVideoTime = player.getCurrentTime();
+                    }, 1000);
+                    player.addEventListener('onStateChange', (e) => {
+                        if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+                            clearInterval(interval);
+                        }
+                    });
+                }
+            }
+        }
+
+        loadVideosFromXML();
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
