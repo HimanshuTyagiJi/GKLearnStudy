@@ -9,28 +9,58 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .container {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
+        .grid-container, .player-container {
+            display: none;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
             padding: 20px;
         }
-        .main-video {
-            flex: 2;
-            max-width: 955px;
-            max-height: 537px;
+        .video-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
-        .main-video iframe {
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+        .video-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .video-item h3 {
+            margin: 10px;
+            font-size: 16px;
+        }
+        .player-container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+        .video-player {
+            position: relative;
+            flex: 2;
+            background-color: #000;
+        }
+        .video-player iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
         .video-list {
             flex: 1;
-            max-height: 537px;
             overflow-y: auto;
+            border-left: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
         }
-        .video-item {
+        .video-list-item {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
@@ -40,56 +70,94 @@
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .video-item img {
-            width: 120px;
-            height: 80px;
+        .video-list-item img {
+            width: 100px;
+            height: 70px;
             object-fit: cover;
         }
-        .video-item div {
+        .video-list-item div {
             flex: 1;
             padding: 10px;
         }
-        .video-item h3 {
+        .video-list-item h3 {
             margin: 0;
             font-size: 14px;
             color: #333;
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .pip-video {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            height: 180px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+        }
 
-        /* For Mobile Devices */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .player-container {
                 flex-direction: column;
             }
-            .main-video {
-                max-width: 480px;
-                max-height: 320px;
+            .video-player iframe {
+                width: 480px;
+                height: 360px;
             }
             .video-list {
-                max-height: none;
+                flex: none;
+                height: auto;
+                overflow-y: visible;
             }
-            .video-item img {
-                width: 100px;
-                height: 60px;
+        }
+        @media (min-width: 769px) {
+            .video-player iframe {
+                width: 957px;
+                height: 527px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Video Container -->
-    <div class="container">
-        <!-- Main Video -->
-        <div class="main-video">
-            <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
-        </div>
+    <!-- Grid View -->
+    <div class="grid-container" id="grid-view"></div>
 
-        <!-- Video List -->
+    <!-- Player View -->
+    <div class="player-container" id="player-view">
+        <div class="video-player">
+            <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+            <button class="back-button" id="back-btn">Back</button>
+        </div>
         <div class="video-list" id="video-list"></div>
     </div>
 
+    <!-- Picture-in-Picture Video -->
+    <div class="pip-video" id="pip-video">
+        <iframe id="pip-iframe" src="" allow="autoplay" allowfullscreen></iframe>
+    </div>
+
     <script>
-        const videoList = document.getElementById("video-list");
+        const gridView = document.getElementById("grid-view");
+        const playerView = document.getElementById("player-view");
         const mainVideo = document.getElementById("main-video");
+        const videoList = document.getElementById("video-list");
+        const backBtn = document.getElementById("back-btn");
+        const pipVideo = document.getElementById("pip-video");
+        const pipIframe = document.getElementById("pip-iframe");
         let videos = [];
+        let currentVideoId = null;
 
         // Load videos from XML
         function loadVideosFromXML() {
@@ -103,15 +171,12 @@
                     const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
                     const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-                    // Extract video details from XML
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
                         videos.push({ title: title, id: getVideoId(link) });
                     }
-
-                    renderVideoList(); // Render video list
-                    playVideo(videos[0].id); // Auto-play the first video
+                    renderGridView();
                 } else {
                     console.error('Failed to load XML file: Status ' + xhr.status);
                 }
@@ -122,30 +187,51 @@
             xhr.send();
         }
 
-        // Get video ID from URL
         function getVideoId(url) {
             const urlParts = new URL(url);
-            return urlParts.searchParams.get('v'); // Extracts video ID from URL
+            return urlParts.searchParams.get('v');
         }
 
-        // Render Video List
-        function renderVideoList() {
-            videoList.innerHTML = videos.map(video => `
+        function renderGridView() {
+            gridView.innerHTML = videos.map(video => `
                 <div class="video-item" onclick="playVideo('${video.id}')">
                     <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                    <div>
-                        <h3>${video.title}</h3>
-                    </div>
+                    <h3>${video.title}</h3>
                 </div>
             `).join('');
+            gridView.style.display = "grid";
+            playerView.style.display = "none";
+            pipVideo.style.display = "none";
         }
 
-        // Play Video
         function playVideo(videoId) {
+            currentVideoId = videoId;
             mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            playerView.style.display = "flex";
+            gridView.style.display = "none";
+            pipVideo.style.display = "none";
+            renderVideoList(videoId);
         }
 
-        // Load videos when the page loads
+        function renderVideoList(activeVideoId) {
+            videoList.innerHTML = videos
+                .filter(video => video.id !== activeVideoId)
+                .map(video => `
+                    <div class="video-list-item" onclick="playVideo('${video.id}')">
+                        <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
+                        <div>
+                            <h3>${video.title}</h3>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        backBtn.addEventListener("click", () => {
+            pipIframe.src = mainVideo.src;
+            pipVideo.style.display = "block";
+            renderGridView();
+        });
+
         window.onload = loadVideosFromXML;
     </script>
 </body>
