@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Videos</title>
+    <title>YouTube Video Player</title>
     <style>
         .video-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
             justify-content: center;
+            margin-top: 20px;
         }
         .video {
             position: relative;
-            width: 320px;
+            width: 640px; /* Adjusted width for better viewing */
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
@@ -21,7 +20,7 @@
         }
         .video iframe {
             width: 100%;
-            height: 180px;
+            height: 360px; /* Adjusted height for better viewing */
             display: none; /* Hide iframe initially */
         }
         .play-icon {
@@ -32,23 +31,34 @@
             font-size: 48px;
             color: white;
             cursor: pointer;
-            z-index: 1; /* Ensure the icon is above the iframe */
+            display: none; /* Hide play icon initially */
         }
         .video-info {
             padding: 10px;
+            text-align: center; /* Centered title */
         }
         .video-info h3 {
             margin: 0;
-            font-size: 16px;
+            font-size: 20px;
             color: #333;
         }
     </style>
 </head>
 <body>
-    <h1>YouTube Channel Videos</h1>
-    <div id="video-list" class="video-container"></div>
+    <h1>YouTube Video Player</h1>
+    <div id="video-player" class="video-container">
+        <div class="video">
+            <iframe id="video-frame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="play-icon" id="play-icon" onclick="playVideo()">▶</div>
+            <div class="video-info">
+                <h3 id="video-title"></h3>
+            </div>
+        </div>
+    </div>
 
     <script>
+        const videos = []; // Array to hold video data
+
         function loadVideosFromXML() {
             const xhr = new XMLHttpRequest();
             const url = 'youtube.xml'; // Your XML file URL
@@ -62,34 +72,28 @@
 
                     // Check if video entries are found
                     if (videoEntries.length === 0) {
-                        document.getElementById('video-list').innerHTML = '<p>No videos found.</p>';
+                        document.getElementById('video-player').innerHTML = '<p>No videos found.</p>';
                         return;
                     }
 
+                    // Load video details into the videos array
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
-
-                        // Create a video element
-                        const videoElement = document.createElement('div');
-                        videoElement.className = 'video';
                         const videoId = getVideoId(link);
-                        videoElement.innerHTML = `
-                            <iframe id="video-${i}" src="https://www.youtube.com/embed/${videoId}?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
-                            <div class="play-icon" onclick="playVideo(${i})">▶</div>
-                            <div class="video-info">
-                                <h3>${title}</h3>
-                            </div>`;
-                        document.getElementById('video-list').appendChild(videoElement);
+                        videos.push({ title, videoId });
                     }
+
+                    // Load the first video by default
+                    loadVideo(0);
                 } else {
                     console.error('Failed to load XML file: Status ' + xhr.status);
-                    document.getElementById('video-list').innerHTML = '<p>Failed to load videos. Please try again later.</p>';
+                    document.getElementById('video-player').innerHTML = '<p>Failed to load videos. Please try again later.</p>';
                 }
             };
             xhr.onerror = function() {
                 console.error('An error occurred while fetching the XML file.');
-                document.getElementById('video-list').innerHTML = '<p>An error occurred. Please check your network connection.</p>';
+                document.getElementById('video-player').innerHTML = '<p>An error occurred. Please check your network connection.</p>';
             };
             xhr.send();
         }
@@ -99,30 +103,35 @@
             return urlParts.searchParams.get('v'); // Extracts video ID from URL
         }
 
-        function playVideo(index) {
-            const iframe = document.getElementById(`video-${index}`);
-            const playIcon = iframe.previousElementSibling; // Get the play icon
+        function loadVideo(index) {
+            const video = videos[index];
+            document.getElementById('video-title').textContent = video.title;
+            document.getElementById('video-frame').src = `https://www.youtube.com/embed/${video.videoId}?enablejsapi=1`;
+            document.getElementById('play-icon').style.display = 'block'; // Show play icon
+            document.getElementById('video-frame').style.display = 'none'; // Hide iframe
+        }
+
+        function playVideo() {
+            const iframe = document.getElementById('video-frame');
+            const playIcon = document.getElementById('play-icon');
             iframe.style.display = 'block'; // Show the video iframe
             playIcon.style.display = 'none'; // Hide the play icon
 
+            // Create a new YouTube player
             const player = new YT.Player(iframe, {
                 events: {
                     'onReady': function(event) {
-                        event.target.playVideo(); // Play the video
+                        event.target.playVideo();
                     },
                     'onStateChange': function(event) {
                         if (event.data === YT.PlayerState.ENDED) {
-                            // Video has ended, hide iframe and show the play icon again
+                            // Video has ended, do not show suggestions
                             iframe.style.display = 'none'; // Hide the video iframe
                             playIcon.style.display = 'block'; // Show the play icon again
                         }
                     }
                 }
             });
-
-            // Pause functionality to show the icon again
-            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-            playIcon.style.display = 'block'; // Show the play icon when paused
         }
 
         // Load YouTube Iframe API
