@@ -8,13 +8,15 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent scrollbars */
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 2fr 1fr; /* Left video, Right video list */
             gap: 15px;
             padding: 20px;
-            display: none; /* Hidden until videos are loaded */
+            height: 100vh; /* Full height */
+            box-sizing: border-box;
         }
         .video-item {
             border: 1px solid #ddd;
@@ -36,26 +38,21 @@
             margin: 10px;
             font-size: 16px;
         }
-        .player-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
         .video-player {
-            flex: 0 0 auto; /* Take only necessary space */
            
             position: relative;
+            height: 50%; /* Full height */
         }
         .video-player iframe {
             width: 100%;
-            height: 400px; /* Adjust as needed */
+            height: 100%; /* Full height */
             border: none;
         }
         .video-list {
-            flex: 1;
             overflow-y: auto;
             padding: 10px;
             background-color: #f9f9f9;
+            height: 100%; /* Full height */
         }
         .video-list-item {
             display: flex;
@@ -81,17 +78,6 @@
             font-size: 14px;
             color: #333;
         }
-        .back-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
         .pip-video {
             position: fixed;
             bottom: 20px;
@@ -106,14 +92,10 @@
     </style>
 </head>
 <body>
-    <!-- Grid View -->
-    <div class="grid-container" id="grid-view"></div>
-
-    <!-- Player View -->
-    <div class="player-container" id="player-view" style="display:none;">
-        <div class="video-player">
+    <!-- Main Layout -->
+    <div class="grid-container" id="grid-view">
+        <div class="video-player" id="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
-            <button class="back-button" id="back-btn">Back</button>
         </div>
         <div class="video-list" id="video-list"></div>
     </div>
@@ -125,10 +107,8 @@
 
     <script>
         const gridView = document.getElementById("grid-view");
-        const playerView = document.getElementById("player-view");
         const mainVideo = document.getElementById("main-video");
         const videoList = document.getElementById("video-list");
-        const backBtn = document.getElementById("back-btn");
         const pipVideo = document.getElementById("pip-video");
         const pipIframe = document.getElementById("pip-iframe");
         let videos = [];
@@ -172,24 +152,23 @@
 
         // Render Grid View
         function renderGridView() {
-            gridView.innerHTML = videos.map(video => `
-                <div class="video-item" onclick="playVideo('${video.id}')">
+            videoList.innerHTML = videos.map(video => `
+                <div class="video-list-item" onclick="playVideo('${video.id}')">
                     <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-                    <h3>${video.title}</h3>
+                    <div>
+                        <h3>${video.title}</h3>
+                    </div>
                 </div>
             `).join('');
-            gridView.style.display = "grid";
-            playerView.style.display = "none";
-            pipVideo.style.display = "none";
+            if (videos.length > 0) {
+                playVideo(videos[0].id); // Auto-play the first video in the list
+            }
         }
 
         // Play Video
         function playVideo(videoId) {
             currentVideoId = videoId;
             mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            playerView.style.display = "flex";
-            gridView.style.display = "none";
-            pipVideo.style.display = "none";
             renderVideoList(videoId);
         }
 
@@ -207,12 +186,13 @@
                 `).join('');
         }
 
-        // Back to Grid View with PiP
-        backBtn.addEventListener("click", () => {
-            pipIframe.src = mainVideo.src;
-            pipVideo.style.display = "block";
-            playerView.style.display = "none"; // Hide the player view
-            renderGridView();
+        // Listen for video end event
+        mainVideo.addEventListener("load", () => {
+            const videoSrc = mainVideo.src;
+            mainVideo.contentWindow.document.addEventListener("ended", () => {
+                pipIframe.src = videoSrc; // Copy main video to PiP
+                pipVideo.style.display = "block"; // Show PiP
+            });
         });
 
         // Load videos when the page loads
