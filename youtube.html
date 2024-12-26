@@ -32,6 +32,7 @@
             font-size: 48px;
             color: white;
             cursor: pointer;
+            z-index: 1; /* Ensure the icon is above the iframe */
         }
         .video-info {
             padding: 10px;
@@ -103,18 +104,25 @@
             const playIcon = iframe.previousElementSibling; // Get the play icon
             iframe.style.display = 'block'; // Show the video iframe
             playIcon.style.display = 'none'; // Hide the play icon
-            
+
             const player = new YT.Player(iframe, {
                 events: {
+                    'onReady': function(event) {
+                        event.target.playVideo(); // Play the video
+                    },
                     'onStateChange': function(event) {
                         if (event.data === YT.PlayerState.ENDED) {
-                            // Video has ended, handle suggestions visibility here
+                            // Video has ended, hide iframe and show the play icon again
                             iframe.style.display = 'none'; // Hide the video iframe
                             playIcon.style.display = 'block'; // Show the play icon again
                         }
                     }
                 }
             });
+
+            // Pause functionality to show the icon again
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            playIcon.style.display = 'block'; // Show the play icon when paused
         }
 
         // Load YouTube Iframe API
