@@ -9,9 +9,6 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .grid-container, .player-container {
-            display: none;
-        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -40,8 +37,9 @@
         }
         .player-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             height: 100vh;
+            position: relative;
         }
         .video-player {
             position: relative;
@@ -56,9 +54,9 @@
         .video-list {
             flex: 1;
             overflow-y: auto;
-            border-left: 1px solid #ddd;
             padding: 10px;
             background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
         }
         .video-list-item {
             display: flex;
@@ -94,6 +92,7 @@
             cursor: pointer;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
         }
         .pip-video {
             position: fixed;
@@ -106,29 +105,6 @@
             z-index: 1000;
             display: none;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .player-container {
-                flex-direction: column;
-            }
-            .video-player iframe {
-                position: fixed; /* Fixed position for mobile */
-                width: 480px;
-                height: 360px;
-            }
-            .video-list {
-                flex: none;
-                height: auto;
-                overflow-y: visible;
-            }
-        }
-        @media (min-width: 769px) {
-            .video-player iframe {
-                width: 957px;
-                height: 527px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -136,7 +112,7 @@
     <div class="grid-container" id="grid-view"></div>
 
     <!-- Player View -->
-    <div class="player-container" id="player-view">
+    <div class="player-container" id="player-view" style="display: none;">
         <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
             <button class="back-button" id="back-btn">Back</button>
@@ -207,7 +183,7 @@
         }
 
         function playVideo(videoId) {
-            // Pause the currently playing video if there is one
+            // Stop current video if there is one
             if (currentVideoId && currentVideoId !== videoId) {
                 mainVideo.src = ""; // Stop current video
             }
@@ -239,9 +215,9 @@
         window.onpopstate = () => navigateToHome();
 
         function navigateToHome() {
-            pipIframe.src = mainVideo.src;
-            pipVideo.style.display = "block";
-            pipIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[' + currentVideoTime + ', true]}', '*');
+            // Stop the main video
+            mainVideo.src = ""; // Stop current video
+            pipVideo.style.display = "none"; // Hide the pip video
             renderGridView();
         }
 
@@ -253,7 +229,7 @@
             });
 
             function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.PLAYING) {
+                if (event.data === YT.PlayerState.PLAYING) {
                     const interval = setInterval(() => {
                         currentVideoTime = player.getCurrentTime();
                     }, 1000);
