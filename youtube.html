@@ -3,43 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Videos</title>
+    <title>YouTube Videos Layout</title>
     <style>
-        .video-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
-        .video {
-            width: 320px;
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+        .video-player {
+            flex: 2;
+            position: relative;
+            background-color: #000;
+        }
+        .video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-list {
+            flex: 1;
+            overflow-y: auto;
+            border-left: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .video-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .video iframe {
-            width: 100%;
-            height: 180px;
+        .video-item img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
         }
-        .video-info {
+        .video-item div {
+            flex: 1;
             padding: 10px;
         }
-        .video-info h3 {
+        .video-item h3 {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: #333;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .video-player {
+                flex: 1;
+            }
+            .video-list {
+                flex: 1;
+                border-left: none;
+                border-top: 1px solid #ddd;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>YouTube Channel Videos</h1>
-    <div id="video-list" class="video-container"></div>
+    <div class="container">
+        <!-- Video Player -->
+        <div class="video-player" id="video-player">
+            <iframe id="main-video" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Video List -->
+        <div class="video-list" id="video-list"></div>
+    </div>
 
     <script>
         function loadVideosFromXML() {
             const xhr = new XMLHttpRequest();
-            const url = 'youtube.xml'; // Your XML file URL
+            const url = 'youtube.xml'; // Path to your XML file
 
             xhr.open('GET', url, true);
             xhr.onload = function() {
@@ -48,25 +93,37 @@
                     const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
                     const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-                    // Check if video entries are found
+                    // Ensure video entries are present
                     if (videoEntries.length === 0) {
                         document.getElementById('video-list').innerHTML = '<p>No videos found.</p>';
                         return;
                     }
 
+                    const videoList = document.getElementById("video-list");
+                    const mainVideo = document.getElementById("main-video");
+
+                    // Load the first video in the player
+                    const firstVideoLink = videoEntries[0].getElementsByTagName('link')[0].getAttribute('href');
+                    mainVideo.src = `https://www.youtube.com/embed/${getVideoId(firstVideoLink)}`;
+
+                    // Loop through video entries to populate the list
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
+                        const videoId = getVideoId(link);
 
-                        // Create a video element
-                        const videoElement = document.createElement('div');
-                        videoElement.className = 'video';
-                        videoElement.innerHTML = `
-                            <iframe src="https://www.youtube.com/embed/${getVideoId(link)}" frameborder="0" allowfullscreen></iframe>
-                            <div class="video-info">
+                        // Create a video item
+                        const videoItem = document.createElement('div');
+                        videoItem.className = 'video-item';
+                        videoItem.innerHTML = `
+                            <img src="https://img.youtube.com/vi/${videoId}/0.jpg" alt="${title}">
+                            <div>
                                 <h3>${title}</h3>
                             </div>`;
-                        document.getElementById('video-list').appendChild(videoElement);
+                        videoItem.onclick = () => {
+                            mainVideo.src = `https://www.youtube.com/embed/${videoId}`;
+                        };
+                        videoList.appendChild(videoItem);
                     }
                 } else {
                     console.error('Failed to load XML file: Status ' + xhr.status);
@@ -82,10 +139,10 @@
 
         function getVideoId(url) {
             const urlParts = new URL(url);
-            return urlParts.searchParams.get('v'); // Extracts video ID from URL
+            return urlParts.searchParams.get('v'); // Extracts video ID from YouTube URL
         }
 
-        // Load videos when the page loads
+        // Load videos on page load
         window.onload = loadVideosFromXML;
     </script>
 </body>
