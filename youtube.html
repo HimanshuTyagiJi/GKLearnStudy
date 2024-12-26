@@ -117,11 +117,10 @@
 const videoList = document.getElementById("video-list");
 const pipVideo = document.getElementById("pip-video");
 const pipIframe = document.getElementById("pip-iframe");
-const backButton = document.getElementById("back-button");
 
 let videos = [];
 let currentVideoId = null;
-let currentTime = 0; // To track the playback time
+let currentTime = 0; // Track playback time
 
 // Load videos from XML
 function loadVideosFromXML() {
@@ -168,10 +167,13 @@ function renderGridView() {
 function playVideo(videoId) {
     currentVideoId = videoId;
     mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    mainVideo.style.display = "block";
+    pipVideo.style.display = "none"; // Hide PiP if visible
+    window.history.pushState({ videoId }, null, `?video=${videoId}`);
 }
 
-// Handle back button click
-backButton.addEventListener("click", () => {
+// Handle back action for PiP mode
+function handleBackAction() {
     currentTime = mainVideo.contentWindow?.document.querySelector("video")?.currentTime || 0;
 
     // Move to PiP mode
@@ -180,14 +182,31 @@ backButton.addEventListener("click", () => {
 
     // Show video list
     videoList.style.display = "block";
-});
+    mainVideo.style.display = "none"; // Hide main video
+}
+
+// Listen for Back button or browser navigation events
+window.onpopstate = function (event) {
+    if (event.state?.videoId) {
+        handleBackAction();
+    }
+};
 
 // Hide PiP video when clicked
 pipVideo.addEventListener("click", () => {
     pipVideo.style.display = "none";
     mainVideo.src = pipIframe.src; // Resume video in main player
+    mainVideo.style.display = "block"; // Show main player
 });
 
 // Load videos on page load
-window.onload = loadVideosFromXML;
+window.onload = function () {
+    loadVideosFromXML();
+
+    // If a video is already in the URL (e.g., shared link or reload), play it
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoId = urlParams.get("video");
+    if (videoId) playVideo(videoId);
+};
+
 </script>
