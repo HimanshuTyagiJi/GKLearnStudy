@@ -3,118 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Video Layout</title>
+    <title>Responsive Video Player</title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
-
-        /* Main container for desktop layout */
-        .main-container {
+        .container {
             display: flex;
             flex-direction: row;
-            height: 100vh;
+            gap: 10px;
+            padding: 20px;
         }
-
-        /* For video player */
-        .video-player-container {
-            flex: 1;
-            background-color: #000;
-            position: relative;
+        .main-video {
+            flex: 2;
+            max-width: 955px;
+            max-height: 537px;
         }
-
-        .video-player-container iframe {
+        .main-video iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-
-        /* For video list */
-        .video-list-container {
-            width: 300px;
+        .video-list {
+            flex: 1;
+            max-height: 537px;
             overflow-y: auto;
-            background-color: #f9f9f9;
-            border-left: 1px solid #ddd;
         }
-
         .video-item {
             display: flex;
             align-items: center;
+            margin-bottom: 10px;
             cursor: pointer;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
         .video-item img {
-            width: 80px;
-            height: 60px;
-            margin-right: 10px;
+            width: 120px;
+            height: 80px;
             object-fit: cover;
         }
-
+        .video-item div {
+            flex: 1;
+            padding: 10px;
+        }
         .video-item h3 {
             margin: 0;
             font-size: 14px;
             color: #333;
         }
 
-        /* Popup video (PiP mode) */
-        .pip-video {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 320px;
-            height: 180px;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            display: none;
-            background-color: #000;
-        }
-
-        .pip-video iframe {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Responsive design for mobile */
+        /* For Mobile Devices */
         @media (max-width: 768px) {
-            .main-container {
+            .container {
                 flex-direction: column;
             }
-
-            .video-list-container {
-                width: 100%;
-                height: auto;
-                border-left: none;
-                border-top: 1px solid #ddd;
+            .main-video {
+                max-width: 480px;
+                max-height: 320px;
+            }
+            .video-list {
+                max-height: none;
+            }
+            .video-item img {
+                width: 100px;
+                height: 60px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- Video Player Section -->
-        <div class="video-player-container">
+    <!-- Video Container -->
+    <div class="container">
+        <!-- Main Video -->
+        <div class="main-video">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
         </div>
 
-        <!-- Video List Section -->
-        <div class="video-list-container" id="video-list"></div>
-    </div>
-
-    <!-- Picture-in-Picture Video -->
-    <div class="pip-video" id="pip-video">
-        <iframe id="pip-iframe" src="" allow="autoplay" allowfullscreen></iframe>
+        <!-- Video List -->
+        <div class="video-list" id="video-list"></div>
     </div>
 
     <script>
-        const mainVideo = document.getElementById("main-video");
         const videoList = document.getElementById("video-list");
-        const pipVideo = document.getElementById("pip-video");
-        const pipIframe = document.getElementById("pip-iframe");
-        let currentVideoId = null;
+        const mainVideo = document.getElementById("main-video");
+        let videos = [];
 
         // Load videos from XML
         function loadVideosFromXML() {
@@ -122,30 +97,27 @@
             const url = 'youtube.xml'; // Your XML file URL
 
             xhr.open('GET', url, true);
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     const parser = new DOMParser();
                     const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
                     const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-                    // Populate video list
+                    // Extract video details from XML
                     for (let i = 0; i < videoEntries.length; i++) {
                         const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
                         const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
-                        const videoId = getVideoId(link);
-
-                        const videoItem = document.createElement("div");
-                        videoItem.className = "video-item";
-                        videoItem.innerHTML = `
-                            <img src="https://img.youtube.com/vi/${videoId}/0.jpg" alt="${title}">
-                            <h3>${title}</h3>
-                        `;
-                        videoItem.addEventListener("click", () => playVideo(videoId));
-                        videoList.appendChild(videoItem);
+                        videos.push({ title: title, id: getVideoId(link) });
                     }
+
+                    renderVideoList(); // Render video list
+                    playVideo(videos[0].id); // Auto-play the first video
                 } else {
-                    console.error("Failed to load XML file: Status " + xhr.status);
+                    console.error('Failed to load XML file: Status ' + xhr.status);
                 }
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred while fetching the XML file.');
             };
             xhr.send();
         }
@@ -156,22 +128,24 @@
             return urlParts.searchParams.get('v'); // Extracts video ID from URL
         }
 
-        // Play Video
-        function playVideo(videoId) {
-            currentVideoId = videoId;
-            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            pipVideo.style.display = "none"; // Hide PiP if it's active
+        // Render Video List
+        function renderVideoList() {
+            videoList.innerHTML = videos.map(video => `
+                <div class="video-item" onclick="playVideo('${video.id}')">
+                    <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
+                    <div>
+                        <h3>${video.title}</h3>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Back to PiP Mode
-        mainVideo.addEventListener("mouseleave", () => {
-            if (currentVideoId) {
-                pipIframe.src = mainVideo.src;
-                pipVideo.style.display = "block"; // Show PiP mode
-            }
-        });
+        // Play Video
+        function playVideo(videoId) {
+            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        }
 
-        // Load videos on page load
+        // Load videos when the page loads
         window.onload = loadVideosFromXML;
     </script>
 </body>
