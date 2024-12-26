@@ -5,32 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Videos</title>
     <style>
-        .tabs {
-            display: flex;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        .tab {
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px 4px 0 0;
-            background-color: #f1f1f1;
-            margin-right: 2px;
-        }
-        .tab.active {
-            background-color: #fff;
-            border-bottom: none;
-        }
-        .tab-content {
-            display: none;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 0 4px 4px 4px;
-            background-color: #fff;
-        }
-        .tab-content.active {
-            display: block;
-        }
         .video-container {
             display: flex;
             flex-wrap: wrap;
@@ -56,168 +30,63 @@
             font-size: 16px;
             color: #333;
         }
-        #load-more {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-        #load-more:hover {
-            background-color: #155ab6;
-        }
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .search-bar input {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 4px 0 0 4px;
-        }
-        .search-bar button {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-left: none;
-            background-color: #1a73e8;
-            color: white;
-            cursor: pointer;
-            border-radius: 0 4px 4px 0;
-        }
-        .search-bar button:hover {
-            background-color: #155ab6;
-        }
     </style>
 </head>
 <body>
     <h1>YouTube Channel Videos</h1>
-    <div class="search-bar">
-        <input type="text" id="search-query" placeholder="Search...">
-        <button onclick="searchVideos()">Search</button>
-    </div>
-    <div class="tabs">
-        <div class="tab active" data-tab="all">All</div>
-        <div class="tab" data-tab="shorts">Shorts</div>
-        <div class="tab" data-tab="long">Long Videos</div>
-        <div class="tab" data-tab="playlists">Playlists</div>
-    </div>
-    <div id="all" class="tab-content active">
-        <div id="all-list" class="video-container"></div>
-        <button id="load-more-all" style="display: none;">Load More All</button>
-    </div>
-    <div id="shorts" class="tab-content">
-        <div id="shorts-list" class="video-container"></div>
-        <button id="load-more-shorts" style="display: none;">Load More Shorts</button>
-    </div>
-    <div id="long" class="tab-content">
-        <div id="long-list" class="video-container"></div>
-        <button id="load-more-long" style="display: none;">Load More Long Videos</button>
-    </div>
-    <div id="playlists" class="tab-content">
-        <div id="playlists-list" class="video-container"></div>
-        <button id="load-more-playlists" style="display: none;">Load More Playlists</button>
-    </div>
+    <div id="video-list" class="video-container"></div>
 
     <script>
-        const apiUrl = 'YOUR_API_ENDPOINT_HERE'; // Replace with your API endpoint
-        let videos = []; // Array to hold videos
-
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById(this.dataset.tab).classList.add('active');
-                displayVideos(this.dataset.tab); // Display videos for the selected tab
-            });
-        });
-
-        function displayVideos(tab) {
-            const container = document.getElementById(tab + '-list');
-            container.innerHTML = ''; // Clear previous content
-
-            const filteredVideos = videos.filter(video => {
-                if (tab === 'shorts') return video.isShort;
-                if (tab === 'long') return !video.isShort;
-                return true; // For 'all' and 'playlists'
-            });
-
-            filteredVideos.forEach(video => {
-                const videoElement = document.createElement('div');
-                videoElement.className = 'video';
-                videoElement.innerHTML = `
-                    <iframe src="${video.embedUrl}" frameborder="0" allowfullscreen></iframe>
-                    <div class="video-info">
-                        <h3>${video.title}</h3>
-                    </div>`;
-                container.appendChild(videoElement);
-            });
-        }
-
-        function searchVideos() {
-            const query = document.getElementById('search-query').value.toLowerCase();
-            const filteredVideos = videos.filter(video => video.title.toLowerCase().includes(query));
-            const container = document.getElementById('all-list');
-            container.innerHTML = '';
-            filteredVideos.forEach(video => {
-                const videoElement = document.createElement('div');
-                videoElement.className = 'video';
-                videoElement.innerHTML = `
-                    <iframe src="${video.embedUrl}" frameborder="0" allowfullscreen></iframe>
-                    <div class="video-info">
-                        <h3>${video.title}</h3>
-                    </div>`;
-                container.appendChild(videoElement);
-            });
-        }
-
-        async function fetchVideos() {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('API call failed');
-                videos = await response.json();
-                displayVideos('all'); // Initial display for 'all' tab
-            } catch (error) {
-                console.error(error);
-                loadVideosFromXML(); // Fallback to XML
-            }
-        }
-
         function loadVideosFromXML() {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'youtube.xml', true);
+            const url = 'youtube.xml'; // Your XML file URL
+
+            xhr.open('GET', url, true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     const parser = new DOMParser();
                     const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
-                    const videoItems = xmlDoc.getElementsByTagName('video');
+                    const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-                    for (let i = 0; i < videoItems.length; i++) {
-                        const title = videoItems[i].getElementsByTagName('title')[0].textContent;
-                        const embedUrl = videoItems[i].getElementsByTagName('embedUrl')[0].textContent;
-                        const isShort = videoItems[i].getElementsByTagName('isShort')[0].textContent === 'true';
-
-                        videos.push({ title, embedUrl, isShort });
+                    // Check if video entries are found
+                    if (videoEntries.length === 0) {
+                        document.getElementById('video-list').innerHTML = '<p>No videos found.</p>';
+                        return;
                     }
-                    displayVideos('all'); // Display videos from XML
+
+                    for (let i = 0; i < videoEntries.length; i++) {
+                        const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
+                        const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
+
+                        // Create a video element
+                        const videoElement = document.createElement('div');
+                        videoElement.className = 'video';
+                        videoElement.innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${getVideoId(link)}" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h3>${title}</h3>
+                            </div>`;
+                        document.getElementById('video-list').appendChild(videoElement);
+                    }
                 } else {
-                    console.error('Failed to load XML file');
+                    console.error('Failed to load XML file: Status ' + xhr.status);
+                    document.getElementById('video-list').innerHTML = '<p>Failed to load videos. Please try again later.</p>';
                 }
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred while fetching the XML file.');
+                document.getElementById('video-list').innerHTML = '<p>An error occurred. Please check your network connection.</p>';
             };
             xhr.send();
         }
 
-        // Fetch videos when the page loads
-        window.onload = fetchVideos;
+        function getVideoId(url) {
+            const urlParts = new URL(url);
+            return urlParts.searchParams.get('v'); // Extracts video ID from URL
+        }
 
+        // Load videos when the page loads
+        window.onload = loadVideosFromXML;
     </script>
 </body>
 </html>
