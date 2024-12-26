@@ -226,11 +226,14 @@
                 `).join('');
         }
 
-        backBtn.addEventListener("click", () => {
+        backBtn.addEventListener("click", () => navigateToHome());
+        window.onpopstate = () => navigateToHome();
+
+        function navigateToHome() {
             pipIframe.src = mainVideo.src;
             pipVideo.style.display = "block";
             renderGridView();
-        });
+        }
 
         window.onload = loadVideosFromXML;
     </script>
