@@ -3,114 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Player with Thumbnails</title>
+    <title>YouTube Videos</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
         .video-container {
-            margin: 20px auto;
-            width: 80%;
-            max-width: 720px;
-        }
-        iframe {
-            width: 100%;
-            border: none;
-        }
-        iframe.regular {
-            height: 400px; /* 16:9 ratio */
-        }
-        iframe.shorts {
-            height: 720px; /* 9:16 ratio */
-        }
-        .thumbnail-container {
             display: flex;
             flex-wrap: wrap;
+            gap: 10px;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
         }
-        .thumbnail {
-            display: inline-block;
-            text-align: center;
-            cursor: pointer;
+        .video {
+            width: 320px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .thumbnail img {
-            width: 200px;
-            height: 113px; /* Aspect ratio 16:9 */
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-            transition: transform 0.2s, border-color 0.2s;
+        .video iframe {
+            width: 100%;
+            height: 180px;
         }
-        .thumbnail img:hover {
-            transform: scale(1.05);
-            border-color: #007BFF;
+        .video-info {
+            padding: 10px;
         }
-        .thumbnail span {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
+        .video-info h3 {
+            margin: 0;
+            font-size: 16px;
             color: #333;
         }
     </style>
 </head>
 <body>
-    <h1>YouTube Video Player</h1>
-    <div class="video-container">
-        <iframe id="video-frame" class="regular" src="" allow="autoplay"></iframe>
-    </div>
-    <div class="thumbnail-container" id="thumbnail-container"></div>
+    <h1>YouTube Channel Videos</h1>
+    <div id="video-list" class="video-container"></div>
 
     <script>
-        let currentVideo = null;
+        function loadVideosFromXML() {
+            const xhr = new XMLHttpRequest();
+            const url = 'youtube.xml'; // Your XML file URL
 
-        fetch('videos.xml')
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, 'text/xml');
+            xhr.open('GET', url, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
+                    const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-                const videos = xml.getElementsByTagName('video');
-                const thumbnailContainer = document.getElementById('thumbnail-container');
-                const videoFrame = document.getElementById('video-frame');
+                    // Check if video entries are found
+                    if (videoEntries.length === 0) {
+                        document.getElementById('video-list').innerHTML = '<p>No videos found.</p>';
+                        return;
+                    }
 
-                for (let i = 0; i < videos.length; i++) {
-                    const title = videos[i].getElementsByTagName('title')[0].textContent;
-                    const url = videos[i].getElementsByTagName('url')[0].textContent;
-                    const type = videos[i].getElementsByTagName('type')[0].textContent;
+                    for (let i = 0; i < videoEntries.length; i++) {
+                        const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
+                        const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
 
-                    // Extract YouTube Video ID from URL
-                    const videoID = url.split('/embed/')[1];
-
-                    // Create a thumbnail element
-                    const thumbnail = document.createElement('div');
-                    thumbnail.className = 'thumbnail';
-
-                    // Set thumbnail content
-                    thumbnail.innerHTML = `
-                        <img src="https://img.youtube.com/vi/${videoID}/mqdefault.jpg" alt="${title}">
-                        <span>${title}</span>
-                    `;
-
-                    // Add click event to play video
-                    thumbnail.addEventListener('click', () => {
-                        if (currentVideo !== url) {
-                            videoFrame.src = `${url}?autoplay=1`;
-                            videoFrame.className = type === 'shorts' ? 'shorts' : 'regular';
-                            currentVideo = url;
-                        } else {
-                            videoFrame.src = '';
-                            currentVideo = null;
-                        }
-                    });
-
-                    // Append thumbnail to container
-                    thumbnailContainer.appendChild(thumbnail);
+                        // Create a video element
+                        const videoElement = document.createElement('div');
+                        videoElement.className = 'video';
+                        videoElement.innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${getVideoId(link)}" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h3>${title}</h3>
+                            </div>`;
+                        document.getElementById('video-list').appendChild(videoElement);
+                    }
+                } else {
+                    console.error('Failed to load XML file: Status ' + xhr.status);
+                    document.getElementById('video-list').innerHTML = '<p>Failed to load videos. Please try again later.</p>';
                 }
-            })
-            .catch(error => console.error('Error fetching XML:', error));
+            };
+            xhr.onerror = function() {
+                console.error('An error occurred while fetching the XML file.');
+                document.getElementById('video-list').innerHTML = '<p>An error occurred. Please check your network connection.</p>';
+            };
+            xhr.send();
+        }
+
+        function getVideoId(url) {
+            const urlParts = new URL(url);
+            return urlParts.searchParams.get('v'); // Extracts video ID from URL
+        }
+
+        // Load videos when the page loads
+        window.onload = loadVideosFromXML;
     </script>
 </body>
 </html>
