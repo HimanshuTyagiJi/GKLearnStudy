@@ -11,33 +11,26 @@
         }
         .container {
             display: flex;
-            flex-direction: row;
             height: 100vh;
+            overflow: hidden; /* Prevent overflow of the container */
         }
         .video-player {
             flex: 2;
             background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
         }
         .video-player iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: none; /* Initially hide the iframe */
         }
         .video-list {
             flex: 1;
-            overflow-y: auto;
-            border-left: 1px solid #ddd;
-            padding: 10px;
+            overflow-y: auto; /* Allow scrolling for the video list */
             background-color: #f9f9f9;
-            display: flex;
-            flex-direction: column;
+            padding: 10px;
         }
-        .video-list-item {height:1000px;
+        .video-list-item {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
@@ -110,27 +103,34 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
-                flex-direction: column;
+                flex-direction: column; /* Stack the boxes vertically on mobile */
             }
             .video-player {
-                height: 360px; /* Height for mobile */
+                height: 360px; /* Set a fixed height for mobile */
             }
             .video-list {
-                flex: none;
-                height: auto;
-                overflow-y: visible;
+                height: calc(100vh - 360px); /* Adjust the height of the video list */
             }
         }
     </style>
 </head>
 <body>
-    <button class="back-button" id="back-btn">Back</button>
     <div class="container" id="player-view" style="display: none;">
         <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+            <button class="back-button" id="back-btn">Back</button>
+            <div class="subscribe-card channel1" id="subscribe-card1">
+                <h2>Adhik video dekhne ke liye pehle channel ko subscribe karein!</h2>
+                <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ" target="_blank">Subscribe</a>
+            </div>
+            <div class="subscribe-card channel2" id="subscribe-card2">
+                <h2>Adhik video dekhne ke liye dusre channel ko subscribe karein!</h2>
+                <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ" target="_blank">Subscribe</a>
+            </div>
         </div>
         <div class="video-list" id="video-list"></div>
     </div>
+
     <div class="grid-container" id="grid-view"></div>
 
     <script>
@@ -209,7 +209,6 @@
             currentVideoId = videoId;
             currentVideoChannelId = channelId; // Store the current video's channel ID
             mainVideo.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1`;
-            mainVideo.style.display = "block"; // Show the iframe when a video is playing
             gridView.style.display = "none";
             playerView.style.display = "flex";
             renderVideoList(); // Render video list in player view
@@ -235,7 +234,6 @@
             currentVideoId = null;
             currentVideoChannelId = null; // Reset channel ID
             mainVideo.src = ""; // Clear video source
-            mainVideo.style.display = "none"; // Hide the iframe
             subscribeCard1.style.display = "none"; // Hide the first subscribe card
             subscribeCard2.style.display = "none"; // Hide the second subscribe card
         }
