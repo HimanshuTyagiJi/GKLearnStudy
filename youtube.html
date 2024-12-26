@@ -3,70 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Video Player</title>
+    <title>Responsive Video Layout</title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .container {
+
+        /* Main container for desktop layout */
+        .main-container {
             display: flex;
             flex-direction: row;
-            height: 100vh; /* Full height */
+            height: 100vh;
         }
-        .video-player {
-            flex: 2; /* Left side for main video */
+
+        /* For video player */
+        .video-player-container {
+            flex: 1;
             background-color: #000;
             position: relative;
         }
-        .video-player iframe {
+
+        .video-player-container iframe {
             width: 100%;
-            height: 100%; /* Full height */
+            height: 100%;
             border: none;
         }
-        .video-player .back-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            z-index: 10;
-        }
-        .video-list {
-            flex: 1; /* Right side for video list */
+
+        /* For video list */
+        .video-list-container {
+            width: 300px;
             overflow-y: auto;
-            padding: 10px;
             background-color: #f9f9f9;
+            border-left: 1px solid #ddd;
         }
-        .video-list-item {
+
+        .video-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
             cursor: pointer;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
         }
-        .video-list-item img {
-            width: 100px;
-            height: 70px;
+
+        .video-item img {
+            width: 80px;
+            height: 60px;
+            margin-right: 10px;
             object-fit: cover;
         }
-        .video-list-item div {
-            flex: 1;
-            padding: 10px;
-        }
-        .video-list-item h3 {
+
+        .video-item h3 {
             margin: 0;
             font-size: 14px;
             color: #333;
         }
+
+        /* Popup video (PiP mode) */
         .pip-video {
             position: fixed;
             bottom: 20px;
@@ -77,136 +70,109 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             display: none;
+            background-color: #000;
         }
+
         .pip-video iframe {
             width: 100%;
             height: 100%;
-            border: none;
         }
 
-        /* Responsive Styles */
+        /* Responsive design for mobile */
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column; /* Stack for mobile */
+            .main-container {
+                flex-direction: column;
             }
-            .video-player {
-                height: 50%; /* Upper video */
-            }
-            .video-list {
-                height: 50%; /* Lower video list */
-                overflow-y: auto; /* Enable scrolling if needed */
+
+            .video-list-container {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <div class="video-player" id="video-player">
-            <button class="back-button" id="back-button">Back</button>
+    <div class="main-container">
+        <!-- Video Player Section -->
+        <div class="video-player-container">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
         </div>
-        <div class="video-list" id="video-list"></div>
+
+        <!-- Video List Section -->
+        <div class="video-list-container" id="video-list"></div>
     </div>
 
     <!-- Picture-in-Picture Video -->
     <div class="pip-video" id="pip-video">
         <iframe id="pip-iframe" src="" allow="autoplay" allowfullscreen></iframe>
     </div>
-</body>
-<script>const mainVideo = document.getElementById("main-video");
-const videoList = document.getElementById("video-list");
-const pipVideo = document.getElementById("pip-video");
-const pipIframe = document.getElementById("pip-iframe");
 
-let videos = [];
-let currentVideoId = null;
-let currentTime = 0; // Track playback time
+    <script>
+        const mainVideo = document.getElementById("main-video");
+        const videoList = document.getElementById("video-list");
+        const pipVideo = document.getElementById("pip-video");
+        const pipIframe = document.getElementById("pip-iframe");
+        let currentVideoId = null;
 
-// Load videos from XML
-function loadVideosFromXML() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'youtube.xml', true);
+        // Load videos from XML
+        function loadVideosFromXML() {
+            const xhr = new XMLHttpRequest();
+            const url = 'youtube.xml'; // Your XML file URL
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
-            const videoEntries = xmlDoc.getElementsByTagName('entry');
+            xhr.open('GET', url, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
+                    const videoEntries = xmlDoc.getElementsByTagName('entry');
 
-            for (let i = 0; i < videoEntries.length; i++) {
-                const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
-                const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
-                videos.push({ title: title, id: getVideoId(link) });
-            }
-            renderGridView();
+                    // Populate video list
+                    for (let i = 0; i < videoEntries.length; i++) {
+                        const title = videoEntries[i].getElementsByTagName('title')[0].textContent;
+                        const link = videoEntries[i].getElementsByTagName('link')[0].getAttribute('href');
+                        const videoId = getVideoId(link);
+
+                        const videoItem = document.createElement("div");
+                        videoItem.className = "video-item";
+                        videoItem.innerHTML = `
+                            <img src="https://img.youtube.com/vi/${videoId}/0.jpg" alt="${title}">
+                            <h3>${title}</h3>
+                        `;
+                        videoItem.addEventListener("click", () => playVideo(videoId));
+                        videoList.appendChild(videoItem);
+                    }
+                } else {
+                    console.error("Failed to load XML file: Status " + xhr.status);
+                }
+            };
+            xhr.send();
         }
-    };
-    xhr.send();
-}
 
-// Extract video ID from URL
-function getVideoId(url) {
-    const urlParts = new URL(url);
-    return urlParts.searchParams.get('v');
-}
+        // Get video ID from URL
+        function getVideoId(url) {
+            const urlParts = new URL(url);
+            return urlParts.searchParams.get('v'); // Extracts video ID from URL
+        }
 
-// Render video list
-function renderGridView() {
-    videoList.innerHTML = videos.map(video => `
-        <div class="video-list-item" onclick="playVideo('${video.id}')">
-            <img src="https://img.youtube.com/vi/${video.id}/0.jpg" alt="${video.title}">
-            <div>
-                <h3>${video.title}</h3>
-            </div>
-        </div>
-    `).join('');
-    if (videos.length > 0) playVideo(videos[0].id);
-}
+        // Play Video
+        function playVideo(videoId) {
+            currentVideoId = videoId;
+            mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            pipVideo.style.display = "none"; // Hide PiP if it's active
+        }
 
-// Play a video
-function playVideo(videoId) {
-    currentVideoId = videoId;
-    mainVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    mainVideo.style.display = "block";
-    pipVideo.style.display = "none"; // Hide PiP if visible
-    window.history.pushState({ videoId }, null, `?video=${videoId}`);
-}
+        // Back to PiP Mode
+        mainVideo.addEventListener("mouseleave", () => {
+            if (currentVideoId) {
+                pipIframe.src = mainVideo.src;
+                pipVideo.style.display = "block"; // Show PiP mode
+            }
+        });
 
-// Handle back action for PiP mode
-function handleBackAction() {
-    currentTime = mainVideo.contentWindow?.document.querySelector("video")?.currentTime || 0;
-
-    // Move to PiP mode
-    pipIframe.src = `https://www.youtube.com/embed/${currentVideoId}?start=${Math.floor(currentTime)}&autoplay=1`;
-    pipVideo.style.display = "block";
-
-    // Show video list
-    videoList.style.display = "block";
-    mainVideo.style.display = "none"; // Hide main video
-}
-
-// Listen for Back button or browser navigation events
-window.onpopstate = function (event) {
-    if (event.state?.videoId) {
-        handleBackAction();
-    }
-};
-
-// Hide PiP video when clicked
-pipVideo.addEventListener("click", () => {
-    pipVideo.style.display = "none";
-    mainVideo.src = pipIframe.src; // Resume video in main player
-    mainVideo.style.display = "block"; // Show main player
-});
-
-// Load videos on page load
-window.onload = function () {
-    loadVideosFromXML();
-
-    // If a video is already in the URL (e.g., shared link or reload), play it
-    const urlParams = new URLSearchParams(window.location.search);
-    const videoId = urlParams.get("video");
-    if (videoId) playVideo(videoId);
-};
-
-</script>
+        // Load videos on page load
+        window.onload = loadVideosFromXML;
+    </script>
+</body>
+</html>
