@@ -9,14 +9,12 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .grid-container, .player-container {
-            display: none;
-        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
             padding: 20px;
+            display: none; /* Hidden until videos are loaded */
         }
         .video-item {
             border: 1px solid #ddd;
@@ -40,22 +38,22 @@
         }
         .player-container {
             display: flex;
+            flex-direction: column;
             height: 100vh;
         }
         .video-player {
-            flex: 2;
-            background-color: #000;
+            flex: 0 0 auto; /* Take only necessary space */
+           
             position: relative;
         }
         .video-player iframe {
             width: 100%;
-            height: 100%;
+            height: 400px; /* Adjust as needed */
             border: none;
         }
         .video-list {
             flex: 1;
             overflow-y: auto;
-            border-left: 1px solid #ddd;
             padding: 10px;
             background-color: #f9f9f9;
         }
@@ -112,7 +110,7 @@
     <div class="grid-container" id="grid-view"></div>
 
     <!-- Player View -->
-    <div class="player-container" id="player-view">
+    <div class="player-container" id="player-view" style="display:none;">
         <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
             <button class="back-button" id="back-btn">Back</button>
@@ -213,6 +211,7 @@
         backBtn.addEventListener("click", () => {
             pipIframe.src = mainVideo.src;
             pipVideo.style.display = "block";
+            playerView.style.display = "none"; // Hide the player view
             renderGridView();
         });
 
