@@ -124,180 +124,100 @@
     <div id="playlists" class="tab-content">
         <div id="playlists-list" class="video-container"></div>
         <button id="load-more-playlists" style="display: none;">Load More Playlists</button>
-    </div><script>
-    
-    const apiKey1 = '';
-    const apiKey2 = '';
-    const channelIds = ['UC5fXdqPu6-ewYPVV7JlHjkQ', 'UCFo8q8WIrDifqtFHAvmr0NQ'];
-    let nextPageToken = { all: '', shorts: '', long: '', playlists: '' };
-    let lastApiUsed = 1; // Track which API was last used
-    let lastResetTime = Date.now(); // Track last reset time
-    let queriesFull = false; // Track if both APIs are exhausted
+    </div>
 
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById(this.dataset.tab).classList.add('active');
-        });
-    });
+    <script>
+        const apiUrl = 'YOUR_API_ENDPOINT_HERE'; // Replace with your API endpoint
+        let videos = []; // Array to hold videos
 
-    function fetchVideos(category, pageToken = '') {
-        const requests = channelIds.map(channelId => {
-            let url = '';
-            if (category === 'shorts') {
-                url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey1}&channelId=${channelId}&part=snippet,id&order=date&type=video&videoDuration=short&maxResults=50&pageToken=${pageToken}`;
-            } else if (category === 'long') {
-                url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey1}&channelId=${channelId}&part=snippet,id&order=date&type=video&videoDuration=long&maxResults=50&pageToken=${pageToken}`;
-            } else if (category === 'playlists') {
-                url = `https://www.googleapis.com/youtube/v3/playlists?key=${apiKey1}&channelId=${channelId}&part=snippet&maxResults=50&pageToken=${pageToken}`;
-            } else if (category === 'all') {
-                url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey1}&channelId=${channelId}&part=snippet,id&order=date&type=video&maxResults=50&pageToken=${pageToken}`;
-            }
-            return fetch(url).then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error fetching data from API: ${response.statusText}`);
-                }
-                return response.json();
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+                displayVideos(this.dataset.tab); // Display videos for the selected tab
             });
         });
 
-        Promise.all(requests).then(responses => {
-            const videoList = document.getElementById(category + '-list');
-            const videos = [];
+        function displayVideos(tab) {
+            const container = document.getElementById(tab + '-list');
+            container.innerHTML = ''; // Clear previous content
 
-            responses.forEach(data => {
-                if (data.items.length === 0) {
-                    queriesFull = true; // Mark as full if no videos are returned
-                }
-                data.items.forEach(video => {
-                    const videoId = video.id.videoId;
-                    const title = video.snippet.title;
-                    const thumbnail = video.snippet.thumbnails.high.url;
-                    const uploadDate = new Date(video.snippet.publishedAt).getTime();
-                    videos.push({ videoId, title, thumbnail, uploadDate });
-                });
+            const filteredVideos = videos.filter(video => {
+                if (tab === 'shorts') return video.isShort;
+                if (tab === 'long') return !video.isShort;
+                return true; // For 'all' and 'playlists'
             });
 
-            // Sort videos by upload date
-            videos.sort((a, b) => b.uploadDate - a.uploadDate);
-
-            // Clear previous video list
-            videoList.innerHTML = '';
-
-            // Append sorted videos to the list
-            videos.forEach(video => {
+            filteredVideos.forEach(video => {
                 const videoElement = document.createElement('div');
-                videoElement.classList.add('video');
+                videoElement.className = 'video';
                 videoElement.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="${video.embedUrl}" frameborder="0" allowfullscreen></iframe>
                     <div class="video-info">
                         <h3>${video.title}</h3>
-                    </div>
-                `;
-                videoList.appendChild(videoElement);
+                    </div>`;
+                container.appendChild(videoElement);
             });
+        }
 
-            const nextPageTokenVar = category + 'NextPageToken';
-            window[nextPageTokenVar] = responses[0].nextPageToken || '';
-            const loadMoreButton = document.getElementById('load-more-' + category);
-            loadMoreButton.style.display = window[nextPageTokenVar] ? 'block' : 'none';
-
-            // Check if the videos are loading correctly
-            if (videos.length === 0 && queriesFull) {
-                // If both APIs are exhausted or disabled, fetch from XML links
-                fetchFromXML(category);
-            } else {
-                queriesFull = false; // Reset if videos are found
-            }
-        }).catch(error => {
-            console.error('Error fetching videos:', error);
-            // Attempt to fetch from XML if API call fails
-            fetchFromXML(category);
-        });
-    }
-
-    function fetchFromXML(category) {
-        const xmlUrls = ['youtube.xml', 'youtube1.xml'];
-        const requests = xmlUrls.map(url => fetch(url).then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching XML from ${url}: ${response.statusText}`);
-            }
-            return response.text();
-        }));
-
-        Promise.all(requests).then(xmlResponses => {
-            const videoList = document.getElementById(category + '-list');
-            const videos = [];
-
-            xmlResponses.forEach(xml => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(xml, 'text/xml');
-                const videoElements = doc.getElementsByTagName('video');
-
-                for (let i = 0; i < videoElements.length; i++) {
-                    const videoId = videoElements[i].getElementsByTagName('id')[0].textContent;
-                    const title = videoElements[i].getElementsByTagName('title')[0].textContent;
-                    const thumbnail = videoElements[i].getElementsByTagName('thumbnail')[0].textContent;
-                    videos.push({ videoId, title, thumbnail });
-                }
-            });
-
-            // Clear previous video list
-            videoList.innerHTML = '';
-
-            // Append videos from XML to the list
-            videos.forEach(video => {
+        function searchVideos() {
+            const query = document.getElementById('search-query').value.toLowerCase();
+            const filteredVideos = videos.filter(video => video.title.toLowerCase().includes(query));
+            const container = document.getElementById('all-list');
+            container.innerHTML = '';
+            filteredVideos.forEach(video => {
                 const videoElement = document.createElement('div');
-                videoElement.classList.add('video');
+                videoElement.className = 'video';
                 videoElement.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="${video.embedUrl}" frameborder="0" allowfullscreen></iframe>
                     <div class="video-info">
                         <h3>${video.title}</h3>
-                    </div>
-                `;
-                videoList.appendChild(videoElement);
+                    </div>`;
+                container.appendChild(videoElement);
             });
-        }).catch(error => console.error('Error fetching videos from XML:', error));
-    }
+        }
 
-    document.getElementById('load-more-shorts').addEventListener('click', () => {
-        fetchVideos('shorts', nextPageToken.shorts);
-    });
+        async function fetchVideos() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('API call failed');
+                videos = await response.json();
+                displayVideos('all'); // Initial display for 'all' tab
+            } catch (error) {
+                console.error(error);
+                loadVideosFromXML(); // Fallback to XML
+            }
+        }
 
-    document.getElementById('load-more-long').addEventListener('click', () => {
-        fetchVideos('long', nextPageToken.long);
-    });
+        function loadVideosFromXML() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'youtube.xml', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
+                    const videoItems = xmlDoc.getElementsByTagName('video');
 
-    document.getElementById('load-more-playlists').addEventListener('click', () => {
-        fetchVideos('playlists', nextPageToken.playlists);
-    });
+                    for (let i = 0; i < videoItems.length; i++) {
+                        const title = videoItems[i].getElementsByTagName('title')[0].textContent;
+                        const embedUrl = videoItems[i].getElementsByTagName('embedUrl')[0].textContent;
+                        const isShort = videoItems[i].getElementsByTagName('isShort')[0].textContent === 'true';
 
-    document.getElementById('load-more-all').addEventListener('click', () => {
-        fetchVideos('all', nextPageToken.all);
-    });
+                        videos.push({ title, embedUrl, isShort });
+                    }
+                    displayVideos('all'); // Display videos from XML
+                } else {
+                    console.error('Failed to load XML file');
+                }
+            };
+            xhr.send();
+        }
 
-    function searchVideos() {
-        const query = document.getElementById('search-query').value.toLowerCase();
-        const allVideos = [...document.querySelectorAll('.video')];
-        allVideos.forEach(video => {
-            const title = video.querySelector('.video-info h3').innerText.toLowerCase();
-            video.style.display = title.includes(query) ? 'block' : 'none';
-        });
-    }
+        // Fetch videos when the page loads
+        window.onload = fetchVideos;
 
-    // Fetch initial videos for all categories
-    fetchVideos('all');
-    fetchVideos('shorts');
-    fetchVideos('long');
-    fetchVideos('playlists');
-
-    // Reset API daily
-    setInterval(() => {
-        lastResetTime = Date.now();
-        queriesFull = false; // Reset queries status every 24 hours
-    }, 24 * 60 * 60 * 1000); // Reset every 24 hours
-
-</script>
-
+    </script>
+</body>
+</html>
