@@ -240,7 +240,8 @@
        function playVideo(videoId, channelId) {
     currentVideoId = videoId;
     currentVideoChannelId = channelId; // Store the current video's channel ID
-    mainVideo.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1`;
+   mainVideo.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0`;
+
     gridView.style.display = "none";
     playerView.style.display = "flex";
     renderVideoList(); // Render video list in player view
