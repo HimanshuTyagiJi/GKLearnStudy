@@ -1,24 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Video Player</title>
+  <meta charset="UTF-8">
+  <title>Conversion</title>
+  <meta name="description" content="Conversion refers to the process of changing one quantity, value, measurement, or unit into another while preserving the underlying value or equivalence. Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="keywords" content="conversion, unit conversion, length conversion, area conversion, volume conversion, measurement conversion, conversion tools, online conversion, measurement tools, metric conversion, imperial conversion, temperature conversion, weight conversion, speed conversion, currency conversion, energy conversion, time conversion, area measurement, distance conversion, volume measurement, length measurement, conversion calculator, conversion chart, conversion guide, conversion software, conversion app, accurate conversion, quick conversion, easy conversion, reliable conversion, free conversion tools, advanced conversion tools, conversion resources, conversion solutions">
+  <meta name="author" content="Mr. Himanshu Tyagi">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="copyright" content="© 2024 GK Learn Study">
+  <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+  <!-- Open Graph Meta Tags for Facebook -->
+  <meta property="og:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta property="og:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta property="og:image" content="https://gklearnstudy.in/image/conversion.png">
+  <meta property="og:url" content="https://gklearnstudy.in/conversion.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GK Learn Study">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta name="twitter:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="twitter:image" content="https://gklearnstudy.in/conversion.png">
+  <meta name="twitter:site" content="@gklearnstudy">
+  <meta name="twitter:creator" content="@gklearnstudy">
+  <meta name="twitter:image:alt" content="Conversion Tools">
+
+  <!-- Additional Meta Tags -->
+  <meta property="article:section" content="Education">
+  <meta property="article:tag" content="Conversion, Measurement, Tools, Online Conversion">
+  <meta name="theme-color" content="#90EE90">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Conversion">
+  <meta name="application-name" content="Conversion">
+  <meta name="msapplication-TileColor" content="#90EE90">
+  <meta name="msapplication-TileImage" content="https://gklearnstudy.in/conversion.png">
+  <meta name="msapplication-config" content="browserconfig.xml">
+
+  <!-- Social Media Meta Tags -->
+  <meta property="youtube:channel" content="">
+  <meta property="instagram:profile" content="">
+  <link rel="stylesheet" href="./style.css">
+ 
+
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .container {
+        .cont {
             display: flex;
             height: 100vh;
             overflow: hidden;
             
         }
-        .grid-container, .player-container {
+        .grid-cont, .player-cont {
             display: none;
         }
-        .grid-container {
+        .grid-cont {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
@@ -128,7 +177,7 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .cont {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
             } 
             .video-player iframe {
@@ -152,9 +201,9 @@
         text-decoration: none;
         border-radius: 4px;
 }
-        } .overflow{overflow-y:auto;}
+        } 
        
-    </style> <style>
+   
        
         .moving-text {
             font-size: 2em;
@@ -179,11 +228,28 @@
         }
     </style>
 </head>
-<body> <div class="overflow">
-    <div class="container" id="player-view" style="display: none;">
+    <body>
+<div class="search-container">
+    <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+    <button class="back-icon" id="backBtn">←</button>
+    <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+</div>
+
+<ul id="suggestions" class="suggestions"></ul>
+<div id="results"></div>
+
+    <div class="container">
+     <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
+    <div class="moving-text"> <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ">Subscribe to the channel! GK Learn Study </a></div>
+   
+  
+    <div class="cont" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+
+           
             <button class="back-button" id="back-btn">Home</button>
+           
             <div class="subscribe-card channel1" id="subscribe-card1">
                
                 <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ" target="_blank">Subscribe</a>
@@ -193,12 +259,10 @@
                 <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ" target="_blank">Subscribe</a>
             </div>
         </div></center>
-         <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
-    <div class="moving-text"> <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ">Subscribe to the channel! GK Learn Study </a></div>
-   
+      
         <div class="video-list" id="video-list"></div>
-    </div>
-    <div class="grid-container" id="grid-view"></div>
+   
+    <div class="grid-cont" id="grid-view"></div>
 </div>
     <script>
         const gridView = document.getElementById("grid-view");
@@ -391,5 +455,29 @@ mainVideo.addEventListener('ended', onVideoEnd);
         loadVideosFromXML();
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
+        <hr>
+        <div class="important_link">
+          <br>
+          <p style="font-size:24px;">Important Links</p>
+
+          <div id="links-container">
+            <ul id="links-list"></ul>
+          </div>
+        </div>
+      
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+        <script src="./menusearch.js"></script>
+        <script src="./script.js"></script>
+        <script src="./search.js"></script>
 </body>
 </html>
