@@ -278,20 +278,34 @@ function renderVideoList() {
         }
 
         // Monitor video playback
-        function monitorVideoPlayback(videoId) {
-            const player = new YT.Player('main-video', {
-                events: {
-                    'onReady': (event) => {
-                        event.target.playVideo();
-                    },
-                    'onStateChange': (event) => {
-                        if (event.data === YT.PlayerState.ENDED) {
-                            showSubscribeCards(); // Show appropriate subscribe card when video ends
-                        }
+       function monitorVideoPlayback(videoId) {
+    const player = new YT.Player('main-video', {
+        videoId: videoId,
+        events: {
+            'onReady': (event) => {
+                event.target.playVideo();
+            },
+            'onStateChange': (event) => {
+                if (event.data === YT.PlayerState.ENDED) {
+                    // Hide subscribe cards based on the channel ID
+                    if (currentVideoChannelId === 'UC5fXdqPu6-ewYPVV7JlHjkQ') {
+                        subscribeCard1.style.display = "block";
+                        subscribeCard2.style.display = "none";
+                    } else if (currentVideoChannelId === 'UCFo8q8WIrDifqtFHAvmr0NQ') {
+                        subscribeCard2.style.display = "block";
+                        subscribeCard1.style.display = "none";
                     }
                 }
-            });
+            }
+        },
+        playerVars: {
+            rel: 0, // Disable related videos
+            autoplay: 1, // Autoplay video
+            showinfo: 0, // Hide video info
+            modestbranding: 1 // Disable YouTube branding
         }
+    });
+}
 
         // Function to show the subscribe cards based on the current video
 function showSubscribeCards() {
