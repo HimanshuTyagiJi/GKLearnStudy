@@ -136,10 +136,13 @@
         @media (max-width: 768px) {
             .container {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
-            }
-            .video-player {
-                height: 320px; /* Set a fixed height for mobile */
-            }
+            } 
+            .video-player iframe {
+            width: 480px;
+            height: 360px;
+            border: none;
+        }
+           
             .video-list {
                 height: calc(100vh - 360px); /* Adjust the height of the video list */
             }
