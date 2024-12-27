@@ -51,23 +51,21 @@
   <meta property="youtube:channel" content="">
   <meta property="instagram:profile" content="">
   <link rel="stylesheet" href="./style.css">
- 
-
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        .cont {
+        .container {
             display: flex;
             height: 100vh;
             overflow: hidden;
             
         }
-        .grid-cont, .player-cont {
+        .grid-container, .player-container {
             display: none;
         }
-        .grid-cont {
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
@@ -177,7 +175,7 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .cont {
+            .container {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
             } 
             .video-player iframe {
@@ -202,34 +200,8 @@
         border-radius: 4px;
 }
         } 
-       
-   
-       
-        .moving-text {
-            font-size: 2em;
-            font-weight: bold;
-            white-space: nowrap;
-            animation: move 10s linear infinite, colorChange 3s infinite;
-        }
-        @keyframes move {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        @keyframes colorChange {
-            0% { color: red; }
-            25% { color: orange; }
-            50% { color: yellow; }
-            75% { color: lime; }
-            100% { color: cyan; }
-        }
-    </style>
 </head>
-    <body>
-<div class="search-container">
+<body><div class="search-container">
     <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
     <button class="back-icon" id="backBtn">←</button>
     <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
@@ -237,19 +209,10 @@
 
 <ul id="suggestions" class="suggestions"></ul>
 <div id="results"></div>
-
-    <div class="container">
-     <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
-    <div class="moving-text"> <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ">Subscribe to the channel! GK Learn Study </a></div>
-   
-  
-    <div class="cont" id="player-view" style="display: none;">
+    <div class="container" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
-
-           
             <button class="back-button" id="back-btn">Home</button>
-           
             <div class="subscribe-card channel1" id="subscribe-card1">
                
                 <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ" target="_blank">Subscribe</a>
@@ -259,10 +222,10 @@
                 <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ" target="_blank">Subscribe</a>
             </div>
         </div></center>
-      
+    
         <div class="video-list" id="video-list"></div>
-   
-    <div class="grid-cont" id="grid-view"></div>
+  
+    <div class="grid-container" id="grid-view"></div>
 </div>
     <script>
         const gridView = document.getElementById("grid-view");
@@ -455,7 +418,7 @@ mainVideo.addEventListener('ended', onVideoEnd);
         loadVideosFromXML();
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
-        <hr>
+      <hr>
         <div class="important_link">
           <br>
           <p style="font-size:24px;">Important Links</p>
@@ -478,6 +441,5 @@ mainVideo.addEventListener('ended', onVideoEnd);
         </footer>
         <script src="./menusearch.js"></script>
         <script src="./script.js"></script>
-        <script src="./search.js"></script>
 </body>
 </html>
