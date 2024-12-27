@@ -58,16 +58,16 @@
           margin-top:65px;
             font-family: Arial, sans-serif;
         }
-        .container {
+        .videocontainer {
             display: flex;
             height: 100vh;
             overflow: hidden;
             
         }
-        .grid-container, .player-container {
+        .grid-videocontainer, .player-videocontainer {
             display: none;
         }
-        .grid-container {
+        .grid-videocontainer {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
@@ -177,7 +177,7 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .videocontainer {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
             } 
             .video-player iframe {
@@ -218,7 +218,7 @@
 <div id="results"></div>
    
 <div class="container">
-    <div class="container" id="player-view" style="display: none;">
+    <div class="videocontainer" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
             <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
@@ -238,7 +238,7 @@
    
         <div class="video-list" id="video-list"></div>
     </div>
-    <div class="grid-container" id="grid-view"></div>
+    <div class="grid-videocontainer" id="grid-view"></div>
 </div>
     <script>
         const gridView = document.getElementById("grid-view");
@@ -436,7 +436,7 @@ mainVideo.addEventListener('ended', onVideoEnd);
           <br>
           <p style="font-size:24px;">Important Links</p>
 
-          <div id="links-container">
+          <div id="links-videocontainer">
             <ul id="links-list"></ul>
           </div>
         </div>
