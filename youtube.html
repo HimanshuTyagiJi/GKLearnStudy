@@ -154,12 +154,36 @@
 }
         } .overflow{overflow-y:auto;}
        
+    </style> <style>
+       
+        .moving-text {
+            font-size: 2em;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: move 10s linear infinite, colorChange 3s infinite;
+        }
+        @keyframes move {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        @keyframes colorChange {
+            0% { color: red; }
+            25% { color: orange; }
+            50% { color: yellow; }
+            75% { color: lime; }
+            100% { color: cyan; }
+        }
     </style>
 </head>
 <body> <div class="overflow">
     <div class="container" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+           
             <button class="back-button" id="back-btn">Home</button>
             <div class="subscribe-card channel1" id="subscribe-card1">
                
@@ -170,9 +194,11 @@
                 <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ" target="_blank">Subscribe</a>
             </div>
         </div></center>
+        <p></p>
         <div class="video-list" id="video-list"></div>
     </div>
-
+    <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
+    <div class="moving-text"> <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ">Subscribe to the channel! GK Learn Study </a></div>
     <div class="grid-container" id="grid-view"></div>
 </div>
     <script>
