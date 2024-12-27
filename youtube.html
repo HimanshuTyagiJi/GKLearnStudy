@@ -13,10 +13,7 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
-            overflow-x:auto;/* Prevent overflow of the container */
-        }body {
-            margin: 0;
-            font-family: Arial, sans-serif;
+            
         }
         .grid-container, .player-container {
             display: none;
@@ -142,11 +139,11 @@
             .video-list {
                 height: calc(100vh - 360px); /* Adjust the height of the video list */
             }
-        }
+        } .overflow{overflow-y:auto;}
        
     </style>
 </head>
-<body>
+<body> <div class="overflow">
     <div class="container" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
@@ -164,7 +161,7 @@
     </div>
 
     <div class="grid-container" id="grid-view"></div>
-
+</div>
     <script>
         const gridView = document.getElementById("grid-view");
         const playerView = document.getElementById("player-view");
