@@ -50,8 +50,9 @@
   <!-- Social Media Meta Tags -->
   <meta property="youtube:channel" content="">
   <meta property="instagram:profile" content="">
-  <link rel="stylesheet" href="./style.css">
-    <style>
+  <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
+ 
+ <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -199,10 +200,14 @@
         text-decoration: none;
         border-radius: 4px;
 }
-        } 
-      </style>
+        } .overflow{overflow-y:auto;}
+       
+    </style>
+
 </head>
-<body><div class="search-container">
+<body>
+
+<div class="search-container">
     <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
     <button class="back-icon" id="backBtn">←</button>
     <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
@@ -210,9 +215,14 @@
 
 <ul id="suggestions" class="suggestions"></ul>
 <div id="results"></div>
+   
+
     <div class="container" id="player-view" style="display: none;">
        <center> <div class="video-player">
             <iframe id="main-video" src="" allow="autoplay" allowfullscreen></iframe>
+            <div class="moving-text"> <a href="https://www.youtube.com/channel/UC5fXdqPu6-ewYPVV7JlHjkQ">Subscribe to the channel!</a></div><br>
+    <div class="moving-text"> <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ">Subscribe to the channel! GK Learn Study </a></div>
+   
             <button class="back-button" id="back-btn">Home</button>
             <div class="subscribe-card channel1" id="subscribe-card1">
                
@@ -223,9 +233,10 @@
                 <a href="https://www.youtube.com/channel/UCFo8q8WIrDifqtFHAvmr0NQ" target="_blank">Subscribe</a>
             </div>
         </div></center>
-    
+        
+   
         <div class="video-list" id="video-list"></div>
-  
+    </div>
     <div class="grid-container" id="grid-view"></div>
 </div>
     <script>
@@ -419,7 +430,7 @@ mainVideo.addEventListener('ended', onVideoEnd);
         loadVideosFromXML();
     </script>
     <script src="https://www.youtube.com/iframe_api"></script>
-      <hr>
+    <hr>
         <div class="important_link">
           <br>
           <p style="font-size:24px;">Important Links</p>
@@ -440,7 +451,11 @@ mainVideo.addEventListener('ended', onVideoEnd);
             </div>
           </div>
         </footer>
-        <script src="./menusearch.js"></script>
-        <script src="./script.js"></script>
+        <script src="https://gklearnstudy.in/menusearch.js"></script>
+        <script src="https://gklearnstudy.in/script.js"></script>
+        <script src="https://gklearnstudy.in/search.js"></script>
+  
+</body>
+</html>
 </body>
 </html>
