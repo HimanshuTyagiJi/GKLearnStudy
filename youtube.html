@@ -97,15 +97,17 @@
         .video-player {
             flex: 2;
           
-            position: relative;
+            position: fixed;
         }
 
        
         .video-list {
-            flex: 1;
-         
-           
-            padding: 10px;
+            display: flex;
+    flex: 1;
+    padding: 10px;
+    align-items: flex-end;
+    flex-direction: column;
+
         }
         .video-list-item {float:right;
            
@@ -186,6 +188,16 @@
             width: 520px;
             height: 310px;
             border: none;
+        }
+    
+    
+           
+        .video-list {
+           
+    flex: 1;
+    padding: 10px;
+   
+
         }}
         @media (max-width: 1400px) {
        
@@ -199,13 +211,26 @@
             .videocontainer {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
             } 
-            .video-player iframe {
+            .video-player iframe {border-top: 65px solid white;
             width: 360px;
             height: 200px;
-            border: none;
-        }
-           
-           
+          
+        }    .video-player{  top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    /* display: flex
+; */
+    flex: 2;
+    position: fixed;}
+        .video-list {
+        display: flex
+;
+        margin-top: 230px;
+        flex: 1;
+        padding: 10px;
+        align-items: center;
+    }
 
             .subscribe-card a {
         font-size: 33px;
