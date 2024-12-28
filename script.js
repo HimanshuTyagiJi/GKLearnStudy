@@ -1,3 +1,10 @@
+window.onload = function() {
+    localStorage.clear();
+    sessionStorage.clear();
+    caches.keys().then(function(names) {
+        for (let name of names) caches.delete(name);
+    });
+};
 
 
 
