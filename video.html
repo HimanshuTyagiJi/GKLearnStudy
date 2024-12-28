@@ -1,9 +1,58 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Videos</title>
+  <meta charset="UTF-8">
+  <title>Conversion</title>
+  <meta name="description" content="Conversion refers to the process of changing one quantity, value, measurement, or unit into another while preserving the underlying value or equivalence. Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="keywords" content="conversion, unit conversion, length conversion, area conversion, volume conversion, measurement conversion, conversion tools, online conversion, measurement tools, metric conversion, imperial conversion, temperature conversion, weight conversion, speed conversion, currency conversion, energy conversion, time conversion, area measurement, distance conversion, volume measurement, length measurement, conversion calculator, conversion chart, conversion guide, conversion software, conversion app, accurate conversion, quick conversion, easy conversion, reliable conversion, free conversion tools, advanced conversion tools, conversion resources, conversion solutions">
+  <meta name="author" content="Mr. Himanshu Tyagi">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="copyright" content="© 2024 GK Learn Study">
+  <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+
+  <!-- Open Graph Meta Tags for Facebook -->
+  <meta property="og:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta property="og:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta property="og:image" content="https://gklearnstudy.in/image/conversion.png">
+  <meta property="og:url" content="https://gklearnstudy.in/conversion.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GK Learn Study">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Conversion - Unit, Length, Area, Volume, and Measurement Conversions">
+  <meta name="twitter:description" content="Explore our comprehensive guides and tools for unit conversion, length conversion, area conversion, volume conversion, and measurement conversion.">
+  <meta name="twitter:image" content="https://gklearnstudy.in/conversion.png">
+  <meta name="twitter:site" content="@gklearnstudy">
+  <meta name="twitter:creator" content="@gklearnstudy">
+  <meta name="twitter:image:alt" content="Conversion Tools">
+
+  <!-- Additional Meta Tags -->
+  <meta property="article:section" content="Education">
+  <meta property="article:tag" content="Conversion, Measurement, Tools, Online Conversion">
+  <meta name="theme-color" content="#90EE90">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Conversion">
+  <meta name="application-name" content="Conversion">
+  <meta name="msapplication-TileColor" content="#90EE90">
+  <meta name="msapplication-TileImage" content="https://gklearnstudy.in/conversion.png">
+  <meta name="msapplication-config" content="browserconfig.xml">
+
+  <!-- Social Media Meta Tags -->
+  <meta property="youtube:channel" content="">
+  <meta property="instagram:profile" content="">
+  <link rel="stylesheet" href="https://gklearnstudy.in/style.css?v=2.0">
     <style>
         .tabs {
             display: flex;
@@ -98,6 +147,17 @@
     </style>
 </head>
 <body>
+
+<div class="search-container">
+    <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+    <button class="back-icon" id="backBtn">←</button>
+    <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+</div>
+
+<ul id="suggestions" class="suggestions"></ul>
+<div id="results"></div>
+   
+<div class="container">
     <h1>YouTube Channel Videos</h1>
     <div class="search-bar">
         <input type="text" id="search-query" placeholder="Search...">
@@ -237,6 +297,32 @@
         fetchVideos('shorts');
         fetchVideos('long');
         fetchVideos('playlists');
-    </script>
+    </script><hr>
+        <div class="important_link">
+          <br>
+          <p style="font-size:24px;">Important Links</p>
+
+          <div id="links-videocontainer">
+            <ul id="links-list"></ul>
+          </div>
+        </div>
+      
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+            </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+        <script src="https://gklearnstudy.in/menusearch.js?v=2.0"></script>
+        <script src="https://gklearnstudy.in/script.js?v=2.0"></script>
+        <script src="https://gklearnstudy.in/search.js?v=2.0"></script>
+  
 </body>
 </html>
+
+ 
