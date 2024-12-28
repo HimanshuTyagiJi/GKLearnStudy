@@ -126,7 +126,7 @@
         <button id="load-more-playlists" style="display: none;">Load More Playlists</button>
     </div>
 
-    <script>
+  <script>
         const apiKey = 'AIzaSyA-szOWO69y0eYSvxAsX9-rESUfs2n85qA';
         const channelIds = ['UC5fXdqPu6-ewYPVV7JlHjkQ', 'UCFo8q8WIrDifqtFHAvmr0NQ'];
 
@@ -157,49 +157,54 @@
                 return fetch(url).then(response => response.json());
             });
 
-            Promise.all(requests).then(responses => {
-                const videoList = document.getElementById(category + '-list');
-                const videos = [];
+            Promise.all(requests)
+                .then(responses => {
+                    const videoList = document.getElementById(category + '-list');
+                    const videos = [];
 
-                responses.forEach(data => {
-                    data.items.forEach(video => {
-                        const videoId = video.id.videoId;
-                        const title = video.snippet.title;
-                        const thumbnail = video.snippet.thumbnails.high.url;
-                        const uploadDate = new Date(video.snippet.publishedAt).getTime();
+                    responses.forEach(data => {
+                        data.items.forEach(video => {
+                            const videoId = video.id.videoId;
+                            const title = video.snippet.title;
+                            const thumbnail = video.snippet.thumbnails.high.url;
+                            const uploadDate = new Date(video.snippet.publishedAt).getTime();
 
-                        videos.push({ videoId, title, thumbnail, uploadDate });
+                            videos.push({ videoId, title, thumbnail, uploadDate });
+                        });
                     });
+
+                    // Sort videos by upload date
+                    videos.sort((a, b) => b.uploadDate - a.uploadDate);
+
+                    // Clear previous video list
+                    videoList.innerHTML = '';
+
+                    // Append sorted videos to the list
+                    videos.forEach(video => {
+                        const videoElement = document.createElement('div');
+                        videoElement.classList.add('video');
+                        videoElement.innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h3>${video.title}</h3>
+                            </div>
+                        `;
+                        videoList.appendChild(videoElement);
+                    });
+
+                    const nextPageTokenVar = category + 'NextPageToken';
+                    window[nextPageTokenVar] = responses[0].nextPageToken || '';
+                    const loadMoreButton = document.getElementById('load-more-' + category);
+                    if (window[nextPageTokenVar]) {
+                        loadMoreButton.style.display = 'block';
+                    } else {
+                        loadMoreButton.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching videos:', error);
+                    window.location.href = 'youtube.html';  // Redirect to fallback page
                 });
-
-                // Sort videos by upload date
-                videos.sort((a, b) => b.uploadDate - a.uploadDate);
-
-                // Clear previous video list
-                videoList.innerHTML = '';
-
-                // Append sorted videos to the list
-                videos.forEach(video => {
-                    const videoElement = document.createElement('div');
-                    videoElement.classList.add('video');
-                    videoElement.innerHTML = `
-                        <iframe src="https://www.youtube.com/embed/${video.videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        <div class="video-info">
-                            <h3>${video.title}</h3>
-                        </div>
-                    `;
-                    videoList.appendChild(videoElement);
-                });
-
-                const nextPageTokenVar = category + 'NextPageToken';
-                window[nextPageTokenVar] = responses[0].nextPageToken || '';
-                const loadMoreButton = document.getElementById('load-more-' + category);
-                if (window[nextPageTokenVar]) {
-                    loadMoreButton.style.display = 'block';
-                } else {
-                    loadMoreButton.style.display = 'none';
-                }
-            }).catch(error => console.error('Error fetching videos:', error));
         }
 
         document.getElementById('load-more-shorts').addEventListener('click', () => {
@@ -232,7 +237,6 @@
         fetchVideos('shorts');
         fetchVideos('long');
         fetchVideos('playlists');
-
     </script>
 </body>
 </html>
