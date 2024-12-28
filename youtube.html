@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +61,7 @@
         }
         .videocontainer {
             display: flex;
-            height: 100vh;
+          
             overflow: hidden;
             
         }
@@ -98,41 +99,46 @@
           
             position: relative;
         }
-        .video-player iframe {
-            width: 955px;
-            height: 537px;
-            border: none;
-        }
+
+       
         .video-list {
             flex: 1;
-            overflow-y: auto; /* Allow scrolling for the video list */
+         
            
             padding: 10px;
         }
-        .video-list-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+        .video-list-item {float:right;
+           
+          
+            margin-bottom: 10px; 
             cursor: pointer;
             border: 1px solid #ddd;
             border-radius: 4px;
-            overflow: hidden;
+           
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .video-list-item img {
-            width: 160px;
-            height: 90px;
-            object-fit: cover;
-        }
+    display: flex
+;
+    width: 320px;
+    height: 180px;
+    object-fit: cover;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: baseline;
+}
         .video-list-item div {
             flex: 1;
             padding: 10px;
         }
         .video-list-item h3 {
-            margin: 0;
-            font-size: 14px;
-            color: #333;
-        }
+    width: 300px;
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
         .back-button {
             position: fixed;
             top: 92%;
@@ -175,8 +181,21 @@
             background-color: #ddd;
         }
 
+        @media (max-width: 1500px) {
+        .video-player iframe {
+            width: 520px;
+            height: 310px;
+            border: none;
+        }}
+        @media (max-width: 1400px) {
+       
+       .video-player iframe {
+           width: 320px;
+           height: 210px;
+           border: none;
+       }}
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
             .videocontainer {
                 flex-direction: column; /* Stack the boxes vertically on mobile */
             } 
@@ -186,10 +205,7 @@
             border: none;
         }
            
-            .video-list {
-                height: calc(100vh - 360px); /* Adjust the height of the video list */
-            }
-
+           
 
             .subscribe-card a {
         font-size: 33px;
@@ -460,3 +476,4 @@ mainVideo.addEventListener('ended', onVideoEnd);
 </html>
 </body>
 </html>
+ 
