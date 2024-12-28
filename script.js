@@ -20,6 +20,20 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+// Automatically clear cache and load new content
+(function () {
+    const resources = document.querySelectorAll('link[rel="stylesheet"], script[src]');
+
+    resources.forEach((resource) => {
+        const url = new URL(resource.href || resource.src);
+        url.searchParams.set('v', Date.now()); // Add a unique version query param
+        if (resource.tagName === 'LINK') {
+            resource.href = url.toString();
+        } else if (resource.tagName === 'SCRIPT') {
+            resource.src = url.toString();
+        }
+    });
+})();
 
 (function() {
     // Check if the current URL has .html
