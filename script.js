@@ -2423,7 +2423,7 @@ function getSynonyms() {
                       <path d="M204.796,332.803l133.018,-76.801l-133.018,-76.801l0,153.602Z" style="fill:#fff;fill-rule:nonzero;"/>
                   </g>
               </svg>`,
-          href: 'https://www.example.com/'
+          href: 'https://youtube.com/@gklearnstudy'
       },
       {
           svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
@@ -2432,7 +2432,7 @@ function getSynonyms() {
                       <path d="M355.65,330l11.35,-74l-71,0l0,-48.022c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63c0,0 -29.297,-5 -57.305,-5c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89c13.033,2.045 26.392,3.11 40,3.11c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z" style="fill:#fff;fill-rule:nonzero;"/>
                   </g>
               </svg>`,
-          href: 'https://www.example.com/'
+          href: 'https://www.facebook.com/GoluLiv'
       },
       {
           svg: ` <svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
@@ -2450,7 +2450,7 @@ function getSynonyms() {
             </g>
         </g>
     </svg>`,
-          href: 'https://www.instagram.com/'
+          href: 'https://www.instagram.com/gklearnstudy'
       },
       // Add more SVG objects as needed...
   ];
