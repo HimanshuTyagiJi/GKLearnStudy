@@ -408,3 +408,40 @@ function activateLink(link) {
   });
   link.classList.add('active');
 }
+
+
+
+
+
+
+
+
+const linkData = [
+  {name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas", color: "red"},
+  {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas", color: "#03736f"},
+  {name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas", color: "#11f705"},
+  {name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table", color: "orange"},
+    ];
+
+// Getting a reference to the list element where the links will be added:
+const linksList = document.getElementById("links-list");
+
+// Looping through the link data and creating the links:
+for (let i = 0; i < linkData.length; i++) {
+  const link = document.createElement("a");
+  link.href = linkData[i].url;
+  link.textContent = linkData[i].name;
+
+  // Changing the link color:
+  link.style.color = linkData[i].color;
+const listItem = document.createElement("p");
+  
+  // Disabling the default <li> styles:
+  listItem.style.listStyle = 'none';
+  listItem.style.marginLeft = '-24px';
+  listItem.style.padding = '0';
+listItem.style.textAlign = 'left';  // Ensure text-align is not justified
+
+  listItem.appendChild(link);
+  linksList.appendChild(listItem);
+}
