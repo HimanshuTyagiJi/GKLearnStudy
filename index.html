@@ -1,24 +1,17 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="GK Learn Study is your go-to resource for educational technology insights, tips, and tutorials. Explore our web pages for comprehensive guides and expert advice.">
-    <meta name="keywords"
-        content="gktoday, gklearn, gkstudy, gk learn, study learn, gk education technology, edtech, online learning, tutorials, guides, tech tips, educational resources, e-learning, general knowledge, competitive exams, study materials, online courses, educational blog, exam preparation, current affairs, quiz, practice tests, learning platform, digital education, education blog, study guide, academic resources, knowledge hub, online tutorials, education tips, study hacks, academic success, school resources, college resources, education news, learning tips, academic blog, education insights, tech in education, virtual learning, education support, online education tools, student resources, learning strategies, study techniques, exam tips, educational trends, education updates">
-    <meta name="author" content="">
+    <meta name="description" content="GK Learn Study is your go-to resource for educational insights, tutorials, and comprehensive guides. Explore top-notch content for learning and competitive exam preparation.">
+    <meta name="keywords" content="GK Learn, GK Today, GK Study, Education, Competitive Exams, Tutorials, Guides, Study Materials, Online Learning, Exam Preparation, E-Learning, Current Affairs, Practice Tests">
+    <meta name="author" content="GK Learn Study Team">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     <meta name="bingbot" content="index, follow">
     <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
-    <meta property="og:title" content="GK Learn Study">
-    <meta property="og:description" content="GK Learn Study - Your source for general knowledge and study materials.">
+    <meta property="og:title" content="GK Learn Study - Best Educational Platform">
+    <meta property="og:description" content="Your source for quality educational content, general knowledge resources, and competitive exam preparation.">
     <meta property="og:image" content="https://gklearnstudy.in/GK-Learn-Study.png">
     <meta property="og:url" content="https://gklearnstudy.in">
     <meta property="og:type" content="website">
@@ -27,12 +20,11 @@
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="fb:app_id" content="">
-    <meta property="fb:pages" content="">
-    <meta property="article:author" content="">
+    <meta property="fb:app_id" content="1234567890">
+    <meta property="article:author" content="GK Learn Study Team">
     <meta property="article:section" content="Education">
-    <meta property="article:tag" content="Education, Technology, Online Learning">
-    <meta name="theme-color" content="#90EE90">
+    <meta property="article:tag" content="Education, Technology, Online Learning, Competitive Exams">
+    <meta name="theme-color" content="#4CAF50">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="GK Learn Study">
@@ -40,73 +32,119 @@
     <meta name="msapplication-TileColor" content="#4CAF50">
     <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png">
     <meta name="msapplication-config" content="browserconfig.xml">
+
+    <!-- Title -->
     <title>GK Learn Study</title>
+
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" sizes="32x32">
-    <link rel="shortcut icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://gklearnstudy.in/GK-Learn-Study.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://gklearnstudy.in/GK-Learn-Study.png">
-    <meta property="youtube:channel" content="">
-    <meta property="instagram:profile" content="">
     <link rel="manifest" href="manifest.json">
-
     <link rel="stylesheet" href="style.css">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="GK Learn Study - Quality Education Online">
+    <meta property="twitter:description" content="Learn, Explore, and Succeed with GK Learn Study - Your ultimate source for educational content and competitive exam preparation.">
+    <meta property="twitter:image" content="https://gklearnstudy.in/GK-Learn-Study.png">
+    <meta property="twitter:site" content="@GKLearnStudy">
+    
 </head>
+<style>
+    /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Dark Theme Specific Styles */
+    [data-theme="dark"] {
+        .row:hover {
+            background: black;
+        }
+        h4 {
+            color: white;
+        }
+    }
+
+    /* Row Styles */
+    .row {
+        display: flex;
+        overflow: hidden;
+        border: none; /* Remove all borders first */
+        border-bottom: 1px solid #ccc; /* Add a border on the bottom */
+        border-right: 1px solid #ccc; /* Add a border on the right */
+        border-radius: 0 0px 10px 0; /* Rounded corners (bottom-right and top-right) */
+        margin: 10px 0;
+        transition: background 0.3s ease;
+    }
+
+    /* Header Styles */
+    h4 {
+        line-height: 2;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    /* Image Styles */
+    .image {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+    }
+
+    /* Right Side Container */
+    .rightside {
+        margin: 0px;
+        margin-left: 8px;
+        padding-right: 8px;
+    }
+
+    .rightside p {
+        line-height: 1.5;
+        overflow: hidden; /* Hide extra text */
+        display: -webkit-box; /* Flexible box layout */
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical; /* Vertical orientation */
+        text-overflow: ellipsis; /* Show "..." for extra text */
+        white-space: normal; /* Allow text wrapping */
+        margin: 0;
+        font-size: 15px;
+        color: gray;
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 900px) {
+        .image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+        }
+
+        .rightside {
+            font-size: 14px;
+            margin: 0px;
+            margin-left: 8px;
+            padding-right: 5px;
+        }
+
+        h4 {
+            line-height: 2;
+            font-size: 15px;
+            margin: 0px;
+        }
+    }
+
+</style>
+
 <body>
-  
-
-   
-    <style>
-        [data-theme="dark"] {.row:hover {background: black;}
-                            
-                            h4{color:white}} 
-     
-        .row {display: flex;overflow: hidden;
-    border: none; /* Remove all borders first */
-    border-bottom: 1px solid #ccc; /* Add a border on the bottom */
-    border-right: 1px solid #ccc; /* Add a border on the right */
-    border-radius: 0 0px 10px 0; /* Apply rounded corners only to bottom-right and top-right */
-    overflow: hidden;
-    margin: 10px 0;
-    transition: background 0.3s ease;
-}
-       h4 {line-height:2;font-size: 15px;margin:0px}
-
-       
-  .image {width: 100px;height:100px;                border-radius: 10px; }
-
-       @media screen and (max-width: 900px) {
-            .image {width: 80px;height:80px;                border-radius: 10px; }
-           
-
-            .rightside {font-size: 14px;margin:0px; margin-left:8px;padding-right: 5px;  }
-             h4 {line-height:2;font-size: 15px;margin:0px;}
-           
-    }  .rightside {margin:0px;margin-left:8px;padding-right: 8px;  }
-        
-.rightside p {line-height:1.5;
-    overflow: hidden; /* अतिरिक्त टेक्स्ट छुपाने के लिए */
-    display: -webkit-box; /* फ्लेक्सिबल बॉक्स लेआउट */
-    -webkit-line-clamp: 2; /* केवल 2 लाइनों तक सीमित करें */
-    -webkit-box-orient: vertical; /* लाइन ओरिएंटेशन सेट करें */
-    text-overflow: ellipsis; /* अतिरिक्त टेक्स्ट के लिए ... दिखाएं */
-    white-space: normal; /* टेक्स्ट को टूटने दें */
-    margin: 0;
-    font-size: 15px;
-    color: gray;
-}
-
-    </style>
-<div class="search-container">
-    <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
-    <button class="back-icon" id="backBtn">←</button>
-    <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
-</div>
-
-<ul id="suggestions" class="suggestions"></ul>
-<div id="results"></div>
-   
-    <div class="container">
+    <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+     <div class="container">
                 <div><a href="https://gklearnstudy.in/conversion/angle-unit-conversion" target="_blank">
                     <div class="row">
                         <div class="leftside">
@@ -134,10 +172,7 @@
                     </div></a>
                 </div>
             
-                        
-              
-
-        <hr>
+         <hr>
         <div class="important_link">
             <br>
             <p style="font-size:24px;">Important Links</p>
@@ -159,7 +194,7 @@
             </div>
         </footer>
     </div>
-</body> <script>
+    <script>
         window.addEventListener('load', () => {
           registerSW();
         });
@@ -179,189 +214,89 @@
           }
         }
      </script>
-        <script src="./menusearch.js"></script>
-        <script src="./script.js"></script>
-        <script src="./search.js"></script>
-
-</html>
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Learn Study</title>
-
-    <!-- Default App Icon and PWA Icons -->
-    <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-
-    <!-- Manifest Setup for PWA -->
-    <link id="manifest" rel="manifest" href="manifest.json" />
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-           
-        }
-        .user-circle {
-            width: 35px;
-            height: 35px;
-            background-color: #f0f0f0;
-            color: #007bff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .login-container, .main-content {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        .login-container {
-            display: block;
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            width: 300px;
-        }
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-
-<body>
-  
-    <!-- JavaScript for Dynamic PWA Icon -->
+   <!-- JavaScript for Dynamic PWA Icon -->
     <script>
-        const defaultFaviconUrl = 'https://gklearnstudy.in/GK-Learn-Study.png';
-        
-        function setFavicon(url) {
-            let favicon = document.querySelector("link[rel~='icon']");
-            if (!favicon) {
-                favicon = document.createElement("link");
-                favicon.rel = "icon";
-                document.head.appendChild(favicon);
-            }
-            favicon.href = url;
+    const defaultFaviconUrl = 'https://gklearnstudy.in/GK-Learn-Study.png';
+    
+    function setFavicon(url) {
+        let favicon = document.querySelector("link[rel~='icon']");
+        if (!favicon) {
+            favicon = document.createElement("link");
+            favicon.rel = "icon";
+            document.head.appendChild(favicon);
         }
+        favicon.href = url;
+    }
 
-        function resetFavicon() {
-            setFavicon(defaultFaviconUrl);
-            updateManifestIcon(defaultFaviconUrl);
-        }
+    function resetFavicon() {
+        setFavicon(defaultFaviconUrl);
+        updateManifestIcon(defaultFaviconUrl);
+    }
 
-        function updateManifestIcon(iconUrl) {
-            const manifestContent = {
-                "short_name": "GK",
-                "name": "GK Learn Study",
-                "icons": [
-                    {
-                        "src": iconUrl,
-                        "sizes": "192x192",
-                        "type": "image/png"
-                    },
-                    {
-                        "src": iconUrl,
-                        "sizes": "512x512",
-                        "type": "image/png"
-                    }
-                ],
-                "start_url": "/",
-                "display": "standalone",
-                "background_color": "#ffffff",
-                "theme_color": "#ffffff"
-            };
-
-            const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-
-            const manifestLink = document.getElementById('manifest');
-            manifestLink.href = manifestUrl;
-        }
-
-        function updateUserIcon(initial) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 192;
-            canvas.height = 192;
-            const ctx = canvas.getContext('2d');
-            
-            // Draw circular background and clip it
-            ctx.beginPath();
-            ctx.arc(96, 96, 96, 0, Math.PI * 2, true); // Full circle
-            ctx.closePath();
-            ctx.clip();
-            ctx.fillStyle = '#007bff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw text in the center
-            ctx.font = '100px Arial';
-            ctx.fillStyle = '#fff';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(initial, canvas.width / 2, canvas.height / 2);
-
-            const newFaviconUrl = canvas.toDataURL('image/png');
-            setFavicon(newFaviconUrl);
-            updateManifestIcon(newFaviconUrl);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const userCircle = document.getElementById('userCircle');
-            const loginContainer = document.getElementById('loginContainer');
-            const mainContent = document.getElementById('mainContent');
-            const logoutButton = document.getElementById('logoutButton');
-
-            const savedUser = localStorage.getItem('userLoggedIn');
-            if (savedUser) {
-                const initial = savedUser.charAt(0).toUpperCase();
-                updateUserIcon(initial);
-                userCircle.textContent = initial;
-                loginContainer.style.display = 'none';
-                mainContent.style.display = 'block';
-            } else {
-                resetFavicon();
-            }
-
-            document.getElementById('loginForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                if (email && password) {
-                    const initial = email.charAt(0).toUpperCase();
-                    localStorage.setItem('userLoggedIn', email);
-                    updateUserIcon(initial);
-                    userCircle.textContent = initial;
-                    loginContainer.style.display = 'none';
-                    mainContent.style.display = 'block';
+    function updateManifestIcon(iconUrl) {
+        const manifestContent = {
+            "short_name": "GK",
+            "name": "GK Learn Study",
+            "icons": [
+                {
+                    "src": iconUrl,
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": iconUrl,
+                    "sizes": "512x512",
+                    "type": "image/png"
                 }
-            });
+            ],
+            "start_url": "/",
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#ffffff"
+        };
 
-            logoutButton.addEventListener('click', () => {
-                localStorage.removeItem('userLoggedIn');
-                resetFavicon();
-                loginContainer.style.display = 'block';
-                mainContent.style.display = 'none';
-                userCircle.textContent = 'A';
-            });
-        });
-    </script>
+        const manifestBlob = new Blob([JSON.stringify(manifestContent)], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+
+        const manifestLink = document.getElementById('manifest');
+        manifestLink.href = manifestUrl;
+    }
+
+    function updateUserIcon(initial) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 192;
+        canvas.height = 192;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw circular background and clip it
+        ctx.beginPath();
+        ctx.arc(96, 96, 96, 0, Math.PI * 2, true); // Full circle
+        ctx.closePath();
+        ctx.clip();
+        ctx.fillStyle = '#007bff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw text in the center
+        ctx.font = '100px Arial';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initial, canvas.width / 2, canvas.height / 2);
+
+        const newFaviconUrl = canvas.toDataURL('image/png');
+        setFavicon(newFaviconUrl);
+        updateManifestIcon(newFaviconUrl);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedUser = localStorage.getItem('userLoggedIn');
+        if (savedUser) {
+            const initial = savedUser.charAt(0).toUpperCase();
+            updateUserIcon(initial);
+        } else {
+            resetFavicon();
+        }
+    });
+</script>
 </body>
 </html>
