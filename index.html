@@ -118,7 +118,13 @@
 
     </style>
 
-    <div class="container">
+    <div class="container"><button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+    <button class="back-icon" id="backBtn">←</button>
+    <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+</div>
+
+<ul id="suggestions" class="suggestions"></ul>
+<div id="results"></div>
                 <div><a href="https://gklearnstudy.in/conversion/angle-unit-conversion" target="_blank">
                     <div class="row">
                         <div class="leftside">
