@@ -70,6 +70,10 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+        } 
+      .header-image:hover img {
+              transform: scale(1.1);
+        
         }
 
         .header-image .text {
@@ -178,10 +182,15 @@
         user-select: none;
         justify-content: center;}
 
-      
-.logo-item:hover img {
-    transform: scale(1.1); /* 1.1 means 10% zoom-in */
-}
+   .logo-item img {
+            transition: transform 0.3s ease; /* Smooth transition effect */
+            width: 100%; /* Adjust to fit container */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .logo-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
 
         /* Animations */
         @keyframes fadeIn {
