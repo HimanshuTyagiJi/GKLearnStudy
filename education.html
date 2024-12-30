@@ -421,6 +421,7 @@
 </a>
 
      </div>
+ 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // सभी एनिमेटेड एलिमेंट्स को सेलेक्ट करें
@@ -452,7 +453,28 @@
             animatedElements.forEach(el => observer.observe(el));
         });
     </script>
-  
+  <hr>
+        <div class="important_link">
+            <br>
+            <p style="font-size:24px;">Important Links</p>
+
+            <div id="links-container">
+                <ul id="links-list"></ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="custom-row">
+                <div class="custom-column"><b>Follow Us</b>
+                    <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+                </div>
+                 <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                  <div class="custom-column">
+                  <p id="my-paragraph"></p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
         <script src="https://gklearnstudy.in/menusearch.js"></script>
         <script src="https://gklearnstudy.in/script.js"></script>
