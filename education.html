@@ -50,121 +50,269 @@
   <meta property="youtube:channel" content="">
   <meta property="instagram:profile" content="">
   <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
-  <style>/* Existing styles */
 
-/* New styles for animated buttons */
-.animated-buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .header-image {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .header-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .header-image .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .header-image .text h1 {
+            font-size: 35px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .header-image .text h2 {
+            font-size: 20px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .orange-line {
+            background-color: orange;
+            height: 10px;
+            margin: 0 auto;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 20px;
+        }
+
+        .content img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: slideInLeft 1.5s ease-in-out;
+        }
+
+        .content .description {
+            flex: 1;
+            margin-left: 20px;
+            animation: slideInRight 1.5s ease-in-out;
+        }
+
+        .content .description p {
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .scroll-section {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .scroll-section .image-card {
+            text-align: center;
+            flex-shrink: 0;
+            border: 1px solid orange;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: transform 0.3s ease-in-out;
+            animation: zoomIn 1.5s ease-in-out;
+        }
+
+        .scroll-section .image-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            border: 2px solid orange;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .scroll-section .image-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .scroll-section .image-card button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: orange;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-section .image-card button:hover {
+            background-color: darkorange;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }/* प्रारंभिक स्थिति */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px); /* नीचे से ऊपर की ओर */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.animated-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #000;
-    background: #f0f0f0;
-    border-radius: 10px;
-    padding: 10px;
-    transition: transform 0.5s;
+/* जब .animate क्लास जुड़ती है */
+.animate-on-scroll.animate {
+    opacity: 1;
+    transform: translateY(0); /* मूल स्थिति */
 }
 
-.animated-button img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
-.animated-button p {
-    margin: 0;
-}
-
-.animated-button:hover {
-    transform: scale(1.1);
-}
-
-/* Scroll animation */
-@keyframes scroll-animation {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-.animated-button {
-    animation: scroll-animation 1s ease-out;
-}
-  </style>
+    </style>
 </head>
 <body>
-   
-<div class="search-container">
-    <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
-    <button class="back-icon" id="backBtn">←</button>
-    <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
-</div>
-
-<ul id="suggestions" class="suggestions"></ul>
-<div id="results"></div>
-
-   
-    <br>
-  </ul>
-  <div class="container">
-    <div class="animated-buttons-container">
-    <a href="hindi.html" class="animated-button"><img src="https://example.com/hindi.png" alt="Hindi"><p>Hindi</p></a>
-    <a href="english.html" class="animated-button"><img src="https://example.com/english.png" alt="English"><p>English</p></a>
-    <a href="physics.html" class="animated-button"><img src="https://example.com/physics.png" alt="Physics"><p>Physics</p></a>
-    <a href="chemistry.html" class="animated-button"><img src="https://example.com/chemistry.png" alt="Chemistry"><p>Chemistry</p></a>
-    <a href="mathematics.html" class="animated-button"><img src="https://example.com/mathematics.png" alt="Mathematics"><p>Mathematics</p></a>
-    <a href="biology.html" class="animated-button"><img src="https://example.com/biology.png" alt="Biology"><p>Biology</p></a>
-    <a href="history.html" class="animated-button"><img src="https://example.com/history.png" alt="History"><p>History</p></a>
-    <a href="geography.html" class="animated-button"><img src="https://example.com/geography.png" alt="Geography"><p>Geography</p></a>
-    <a href="political_science.html" class="animated-button"><img src="https://example.com/political_science.png" alt="Political Science"><p>Political Science</p></a>
-    <a href="economics.html" class="animated-button"><img src="https://example.com/economics.png" alt="Economics"><p>Economics</p></a>
-    <a href="computer_science.html" class="animated-button"><img src="https://example.com/computer_science.png" alt="Computer Science"><p>Computer Science</p></a>
-    <a href="physical_education.html" class="animated-button"><img src="https://example.com/physical_education.png" alt="Physical Education"><p>Physical Education</p></a>
-  </div>
- <hr>
-        <div class="important_link">
-          <br>
-          <p style="font-size:24px;">Important Links</p>
-
-          <div id="links-container">
-            <ul id="links-list"></ul>
-          </div>
+<div class="container">
+    <!-- Header Section -->
+    <div class="header-image">
+        <img src="https://gklearnstudy.in/image/education.jpg" alt="Education">
+        <div class="text">
+            <h1>Welcome to Education Page</h1>
+            <h2>GK Learn Study</h2>
         </div>
-      
-        <footer>
-          <div class="custom-row">
-            <div class="custom-column"><b>Follow Us</b>
-              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
-            </div>
-            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
-            <div class="custom-column">
-              <p id="my-paragraph"></p>
-            </div>
-          </div>
-        </footer>
+    </div>
+
+    <div class="orange-line"></div>
+
+    <!-- Content Section -->
+    <div class="content animate-on-scroll">
+        <img src="" alt="Education Image">
+        <div class="description">
+            <p>
+                यह शिक्षा पृष्ठ आपको अद्वितीय और रोचक तरीकों से सीखने के लिए विभिन्न बटन और विषय प्रदान करता है। 
+                नीचे स्क्रॉल करके अपनी पसंद के विषयों को खोजें और उनके बारे में गहराई से जानें।
+            </p>
+        </div>
+    </div> 
+   
+    <!-- Scroll Section -->
+    <div class="scroll-section">
+        <div class="image-card">
+            <img src="" alt="Subject 1">
+            <button>Button 1</button>
+        </div>
+        <div class="image-card">
+            <img src="" alt="Subject 2">
+            <button>Button 2</button>
+        </div>
+        <div class="image-card">
+            <img src="" alt="Subject 3">
+            <button>Button 3</button>
+        </div>
+        <div class="image-card">
+            <img src="" alt="Subject 4">
+            <button>Button 4</button>
+        </div>
+        <div class="image-card">
+            <img src="" alt="Subject 5">
+            <button>Button 5</button>
+        </div>
+        <div class="image-card">
+            <img src="" alt="Subject 6">
+            <button>Button 6</button>
+        </div>
+    </div>
     <script>
-      window.addEventListener('scroll', function() {
-    const animatedButtons = document.querySelectorAll('.animated-button');
-    animatedButtons.forEach(button => {
-        const position = button.getBoundingClientRect().top;
-        if (position < window.innerHeight) {
-            button.style.animation = 'scroll-animation 1s ease-out';
-        } else {
-            button.style.animation = 'none';
-        }
-    });
-});
+        document.addEventListener('DOMContentLoaded', function() {
+            // सभी एनिमेटेड एलिमेंट्स को सेलेक्ट करें
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    
+            // Intersection Observer के लिए विकल्प
+            const observerOptions = {
+                root: null, // व्यूइंग विंडो के सापेक्ष
+                rootMargin: '0px',
+                threshold: 0.1 // 10% एलिमेंट दिखने पर ट्रिगर होगा
+            };
+    
+            // Intersection Observer callback
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // एलिमेंट में .animate क्लास जोड़ें
+                        entry.target.classList.add('animate');
+                        // एक बार एनिमेशन होने के बाद ऑब्जर्वर को अनऑब्जर्व करें
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+    
+            // Intersection Observer बनाएं
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+    
+            // प्रत्येक एनिमेटेड एलिमेंट को ऑब्जर्व करें
+            animatedElements.forEach(el => observer.observe(el));
+        });
     </script>
+  
+
         <script src="https://gklearnstudy.in/menusearch.js"></script>
         <script src="https://gklearnstudy.in/script.js"></script>
         <script src="https://gklearnstudy.in/search.js"></script>
