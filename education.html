@@ -130,7 +130,9 @@
             line-height: 1.6;
             text-align: justify;
         }
-.content :hover img{     transform: scale(1.1);}
+.content.animate-on-scroll.animate:hover {
+        transform: scale(1.08);
+}
         .scroll-section {
             display: flex;
             overflow-x: auto;
@@ -187,9 +189,9 @@
             
         }
 img {width:150px;border-radius:10px}
-       a .logo-link:hover {
-            transform: scale(1.1); /* Zoom effect on hover */
-        }
+       a.logo-link:hover {
+        transform: scale(1.1);
+}
 
         /* Animations */
         @keyframes fadeIn {
