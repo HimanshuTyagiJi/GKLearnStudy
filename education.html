@@ -72,7 +72,7 @@
             object-fit: cover;
         } 
       .header-image:hover img {
-              transform: scale(1.1);
+              transform: scale(0.5);
         
         }
 
@@ -130,7 +130,7 @@
             line-height: 1.6;
             text-align: justify;
         }
-.content animate-on-scroll:hover img{     transform: scale(1.1);}
+.content :hover img{     transform: scale(1.05);}
         .scroll-section {
             display: flex;
             overflow-x: auto;
@@ -176,19 +176,18 @@
         .scroll-section .image-card button:hover {
             background-color: darkorange;
         }
-      img {width:150px;border-radius:10px}
+      
       .logo-item{        display: flex
 ;
         user-select: none;
         justify-content: center;}
 
-   .logo-link img {
+   .logo-link img {{width:150px;border-radius:10px
             transition: transform 0.3s ease; /* Smooth transition effect */
-            width: 100%; /* Adjust to fit container */
-            height: auto; /* Maintain aspect ratio */
+            
         }
 
-        .logo-link:hover img {
+       a .logo-link:hover {
             transform: scale(1.1); /* Zoom effect on hover */
         }
 
