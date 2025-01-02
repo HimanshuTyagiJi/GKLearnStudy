@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML से HTML डेटा लोड करें</title>
+    <link rel="stylesheet" href="styles.css"> <!-- आपके CSS फ़ाइल का लिंक -->
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+    // XML फ़ाइल पढ़ने का फंक्शन
+    function loadXMLDoc(filename) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            if (this.status === 200) {
+                displayContent(this);
+            }
+        }
+        xhttp.open("GET", filename, true);
+        xhttp.send();
+    }
+
+    // XML डेटा को HTML में प्रदर्शित करने का फंक्शन
+    function displayContent(xml) {
+        const xmlDoc = xml.responseXML;
+        const sites = xmlDoc.getElementsByTagName("site");
+        let content = "";
+
+        for (let i = 0; i < sites.length; i++) {
+            const url = sites[i].getElementsByTagName("url")[0].childNodes[0].nodeValue;
+            const image = sites[i].getElementsByTagName("image")[0].childNodes[0].nodeValue;
+            const title = sites[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+            const description = sites[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+
+            content += `
+            <div>
+                <a href="${url}" target="_blank">
+                    <div class="row">
+                        <div class="leftside">
+                            <img src="${image}" alt="${title}" class="image">
+                        </div>
+                        <div class="rightside">
+                            <h4>${title}</h4>
+                            <p>${description}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>`;
+        }
+
+        document.getElementById("content").innerHTML = content;
+    }
+
+    // XML फ़ाइल लोड करें
+    loadXMLDoc("sitemap.xml");
+</script>
+
+</body>
+</html>
