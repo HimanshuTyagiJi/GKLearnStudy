@@ -176,39 +176,41 @@
                 document.getElementById('data-container').innerHTML = '<p>Error loading XML data.</p>';
             });
 
-        function displayData() {
-            const start = currentPage * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageData = urls.slice(start, end);
-            let htmlContent = '';
+       function displayData() {
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageData = urls.slice(start, end);
+    let htmlContent = '';
 
-            pageData.forEach(url => {
-                const loc = url.getElementsByTagName("loc")[0].textContent;
-                const title = url.getElementsByTagName("title")[0].textContent;
-                const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
-                const description = url.getElementsByTagName("p")[0].textContent;
+    pageData.forEach(url => {
+        const loc = url.getElementsByTagName("loc")[0].textContent;
+        const title = url.getElementsByTagName("title")[0].textContent;
+        const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
+        const description = url.getElementsByTagName("p")[0].textContent;
 
-                htmlContent += `
-                    <a href="${loc}" target="_blank">
-                        <div class="row">
-                            <div class="leftside">
-                                <img src="${image}" alt="Image" class="image">
-                            </div>
-                            <div class="rightside">
-                                <h4>${title}</h4>
-                                <p>${description}</p>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            });
+        // Remove target="_blank"
+        htmlContent += `
+            <a href="${loc}">
+                <div class="row">
+                    <div class="leftside">
+                        <img src="${image}" alt="Image" class="image">
+                    </div>
+                    <div class="rightside">
+                        <h4>${title}</h4>
+                        <p>${description}</p>
+                    </div>
+                </div>
+            </a>
+        `;
+    });
 
-            document.getElementById('data-container').innerHTML = htmlContent;
+    document.getElementById('data-container').innerHTML = htmlContent;
 
-            // बटन दिखाएँ/छिपाएँ
-            document.getElementById('prev-button').style.display = currentPage > 0 ? 'block' : 'none';
-            document.getElementById('next-button').style.display = end < urls.length ? 'block' : 'none';
-        }
+    // बटन दिखाएँ/छिपाएँ
+    document.getElementById('prev-button').style.display = currentPage > 0 ? 'block' : 'none';
+    document.getElementById('next-button').style.display = end < urls.length ? 'block' : 'none';
+}
+
 
         // अगले पृष्ठ के लिए इवेंट लिस्नर
         document.getElementById('next-button').addEventListener('click', () => {
