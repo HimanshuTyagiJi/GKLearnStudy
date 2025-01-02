@@ -145,7 +145,7 @@
     </div>
     <ul id="suggestions" class="suggestions"></ul>
     <div id="results"></div>
-     <div class="container"><br><br>
+     <div class="container"><br>
           <div id="data-container"></div>
            <div class="pagination">
         <button id="prev-button" style="display:none;text-align:center;">Back</button>
@@ -154,10 +154,9 @@
 
     <script>
         const xmlUrl = 'sitemap.xml';
-        const itemsPerPage = 20; // प्रति पृष्ठ आइटम की संख्या
-        let currentPage = 0; // वर्तमान पृष्ठ
-        let urls = []; // XML से लोड किया गया डेटा
-
+        const itemsPerPage = 20; 
+        let currentPage = 0; 
+        let urls = []; 
         fetch(xmlUrl)
             .then(response => {
                 if (!response.ok) {
@@ -170,7 +169,7 @@
                 const xmlDoc = parser.parseFromString(data, "application/xml");
 
                 urls = Array.from(xmlDoc.getElementsByTagName("url"));
-                displayData(); // प्रारंभिक डेटा प्रदर्शित करें
+                displayData(); 
             })
             .catch(error => {
                 console.error('Error loading XML data:', error);
