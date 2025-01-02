@@ -1,46 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML Data Loader</title>
-    
+    <title>XML Data Display</title>
+    <style>
+        .row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .leftside {
+            width: 30%;
+        }
+        .rightside {
+            width: 70%;
+            padding-left: 20px;
+        }
+        .image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <div id="content"></div>
+    <h1>XML डेटा प्रदर्शित करें</h1>
+    <div id="data-container"></div>
 
     <script>
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url: "sitemap.xml",
-                dataType: "xml",
-                success: function(xml) {
-                    $(xml).find('url').each(function() {
-                        var loc = $(this).find('loc').text();
-                        var title = $(this).find('title').text();
-                        var image = $(this).find('image loc').text();
-                        var description = $(this).find('p').text();
+        // XML फाइल का URL
+        const xmlUrl = 'sitemap.xml';
 
-                        $('#content').append(
-                            '<div><a href="' + loc + '" target="_blank">' +
-                            '<div class="row">' +
-                            '<div class="leftside">' +
-                            '<img src="' + image + '" alt="Image" class="image">' +
-                            '</div>' +
-                            '<div class="rightside">' +
-                            '<h4>' + title + '</h4>' +
-                            '<p>' + description + '</p>' +
-                            '</div>' +
-                            '</div></a></div>'
-                        );
-                    });
-                },
-                error: function() {
-                    console.log("Error loading XML");
+        // XML को लोड करने के लिए फ़ेच API का उपयोग करें
+        fetch(xmlUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
+                return response.text();
+            })
+            .then(data => {
+                // XML को पार्स करें
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data, "application/xml");
+
+                // XML से URL, शीर्षक, इमेज और विवरण निकालें
+                const urls = xmlDoc.getElementsByTagName("url");
+                let htmlContent = '';
+
+                for (let i = 0; i < urls.length; i++) {
+                    const loc = urls[i].getElementsByTagName("loc")[0].textContent;
+                    const title = urls[i].getElementsByTagName("title")[0].textContent;
+                    const image = urls[i].getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
+                    const description = urls[i].getElementsByTagName("p")[0].textContent;
+
+                    // HTML में जोड़ें
+                    htmlContent += `
+                        <a href="${loc}" target="_blank">
+                            <div class="row">
+                                <div class="leftside">
+                                    <img src="${image}" alt="Image" class="image">
+                                </div>
+                                <div class="rightside">
+                                    <h4>${title}</h4>
+                                    <p>${description}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                }
+
+                // डेटा कंटेनर में HTML जोड़ें
+                document.getElementById('data-container').innerHTML = htmlContent;
+            })
+            .catch(error => {
+                console.error('Error loading XML data:', error);
+                document.getElementById('data-container').innerHTML = '<p>Error loading XML data.</p>';
             });
-        });
     </script>
 </body>
 </html>
