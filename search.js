@@ -1,22 +1,10 @@
 let titles = [];
 
-function transliterateToHindi(text) {
-    // Simple transliteration logic or API call can be used here
-    // Example: Convert 'kya' to 'क्या'
-    const mapping = {
-        'a': 'अ', 'b': 'ब', 'c': 'क', 'd': 'ड', 'e': 'ए', 'f': 'फ', 'g': 'ग', 'h': 'ह',
-        'i': 'इ', 'j': 'ज', 'k': 'क', 'l': 'ल', 'm': 'म', 'n': 'न', 'o': 'ओ', 'p': 'प',
-        'q': 'क्यू', 'r': 'र', 's': 'स', 't': 'ट', 'u': 'उ', 'v': 'व', 'w': 'व', 'x': 'क्स',
-        'y': 'य', 'z': 'जेड'
-    };
-
-    return text.split('').map(char => mapping[char.toLowerCase()] || char).join('');
-}
-
+// Load Sitemap and create transliterated titles
 function loadSitemap() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
@@ -30,19 +18,21 @@ function loadSitemap() {
                 const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
 
                 if (titleElement && locElement) {
-                    const titleText = titleElement.textContent;
-                    const paragraphText = paragraphElement ? paragraphElement.textContent : '';
+                    const originalTitle = titleElement.textContent;
+                    const originalParagraph = paragraphElement ? paragraphElement.textContent : '';
+
                     titles.push({
-                        title: titleText,
-                        transliteratedTitle: transliterateToHindi(titleText),
-                        paragraph: paragraphText,
-                        transliteratedParagraph: transliterateToHindi(paragraphText),
+                        title: originalTitle,
+                        transliteratedTitle: transliterateToHindi(originalTitle),
+                        paragraph: originalParagraph,
+                        transliteratedParagraph: transliterateToHindi(originalParagraph),
                         url: locElement.textContent,
                         image: imageURL
                     });
                 }
             }
 
+            // Initialize Fuse.js with options
             fuse = new Fuse(titles, options);
         } else if (xhr.readyState === 4) {
             console.error('Error loading sitemap:', xhr.status, xhr.statusText);
@@ -51,108 +41,108 @@ function loadSitemap() {
     xhr.send();
 }
 
+// Transliteration Function
+function transliterateToHindi(text) {
+    // Add your custom transliteration logic here
+    // Example: using a simple mapping (use a library for more accuracy)
+    const map = {
+        'a': 'अ', 'b': 'ब', 'c': 'क', 'd': 'ड', 'e': 'ए', // Add more mappings
+        // Add Hindi characters corresponding to English letters
+    };
+    return text.split('').map(char => map[char] || char).join('');
+}
+
+// Fuse.js options
 const options = {
     includeScore: true,
-    threshold: 0.4, // Higher threshold for better matching
-    keys: ['title', 'paragraph', 'transliteratedTitle', 'transliteratedParagraph'] // Added transliterated fields
+    threshold: 0.4, // Lower for stricter matching
+    keys: ['title', 'transliteratedTitle', 'paragraph', 'transliteratedParagraph']
 };
 
 let fuse;
 
 loadSitemap();
 
-document.getElementById("searchBtn").addEventListener("click", () => {
-    document.querySelector(".search-container").classList.add("active");
-    document.getElementById("searchInput").focus();
-});
-
-document.getElementById("backBtn").addEventListener("click", closeSearch);
-
-function closeSearch() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.classList.add("closing");
-    setTimeout(() => {
-        document.querySelector(".search-container").classList.remove("active");
-        searchInput.classList.remove("closing");
-        searchInput.value = "";
-        document.getElementById('results').innerHTML = ''; // Clear results
-        document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
-        document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
-        document.getElementById('results').style.display = 'none'; // Hide results
-    }, 300);
-}
-
+// Search functionality
 function searchTitles(event) {
     event.preventDefault();
     const query = document.getElementById('searchInput').value.trim();
-    const transliteratedQuery = transliterateToHindi(query); // Transliterate query
     const resultsDiv = document.getElementById('results');
-    const suggestionsDiv = document.getElementById('suggestions');
 
     resultsDiv.innerHTML = ''; // Clear previous results
-    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
 
     if (query.length > 0) {
-        // Combine results for original and transliterated query
-        const result = fuse.search(query).concat(fuse.search(transliteratedQuery));
+        const transliteratedQuery = transliterateToHindi(query);
+        const results = fuse.search(query).concat(fuse.search(transliteratedQuery));
 
-        // Remove duplicate results
-        const uniqueResults = [...new Set(result.map(item => item.item.title))];
-
+        // Remove duplicates and show results
+        const uniqueResults = [...new Set(results.map(item => item.item.title))];
         if (uniqueResults.length > 0) {
-            displayResults(uniqueResults, result, 1); // Load first page of results
-            resultsDiv.style.display = 'block'; // Show results
+            displayResults(uniqueResults, results, 1);
+            resultsDiv.style.display = 'block';
         } else {
             resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
-            resultsDiv.style.display = 'block'; // Show no result message
+            resultsDiv.style.display = 'block';
         }
     }
 }
 
+// Display results
+function displayResults(uniqueResults, results, page) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+
+    const start = (page - 1) * 10;
+    const end = start + 10;
+
+    uniqueResults.slice(start, end).forEach(title => {
+        const item = results.find(r => r.item.title === title).item;
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
+        resultItem.style.display = 'flex';
+        resultItem.style.alignItems = 'center';
+        resultItem.innerHTML = `
+            <a href="${item.url}" style="display: flex; align-items: center; width: 100%;">
+                <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; margin-right: 10px;">
+                <div class="result-content" style="flex-grow: 1;">
+                    <div class="result-title">${item.title}</div>
+                    <div class="result-paragraph">${item.paragraph}</div>
+                </div>
+            </a>
+        `;
+        resultsDiv.appendChild(resultItem);
+    });
+}
+
+// Suggestions functionality
 function showSuggestions(event) {
     const query = document.getElementById('searchInput').value.trim();
-    const transliteratedQuery = transliterateToHindi(query); // Transliterate query
     const suggestionsDiv = document.getElementById('suggestions');
-    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
+    suggestionsDiv.innerHTML = '';
 
     if (query.length > 0) {
-        // Combine suggestions for original and transliterated query
+        const transliteratedQuery = transliterateToHindi(query);
         const suggestions = fuse.search(query).concat(fuse.search(transliteratedQuery));
 
-        // Remove duplicates from suggestions
         const uniqueSuggestions = [...new Set(suggestions.map(item => item.item.title))];
 
         uniqueSuggestions.forEach(title => {
-            const item = suggestions.find(s => s.item.title === title).item;
             const suggestionItem = document.createElement('li');
-            suggestionItem.innerHTML = item.title; // No highlight
+            suggestionItem.innerHTML = title;
             suggestionItem.onclick = () => {
-                document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                suggestionsDiv.innerHTML = ''; // Clear suggestions
-                suggestionsDiv.style.display = 'none'; // Hide suggestions
-                document.getElementById('searchInput').focus(); // Keep input active
+                document.getElementById('searchInput').value = title;
+                suggestionsDiv.innerHTML = '';
+                suggestionsDiv.style.display = 'none';
             };
             suggestionsDiv.appendChild(suggestionItem);
         });
 
-        if (uniqueSuggestions.length > 0) {
-            suggestionsDiv.style.display = 'block'; // Show suggestions
-        } else {
-            suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
-            suggestionsDiv.style.display = 'block'; // Show no result message
-        }
+        suggestionsDiv.style.display = 'block';
     } else {
-        suggestionsDiv.style.display = 'none'; // Hide suggestions
+        suggestionsDiv.style.display = 'none';
     }
 }
 
-document.getElementById("searchInput").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        searchTitles(event);
-    } else {
-        showSuggestions(event);
-    }
-});
 
 
 
