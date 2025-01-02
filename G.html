@@ -37,36 +37,36 @@
 <div id="content"></div>
 
 <script>
-    // XML फ़ाइल पढ़ने का फंक्शन
     function loadXMLDoc(filename) {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             if (this.status === 200) {
                 displayContent(this);
+            } else {
+                console.error("Error loading XML file:", this.statusText);
             }
-        }
+        };
         xhttp.open("GET", filename, true);
         xhttp.send();
     }
 
-    // XML डेटा को HTML में प्रदर्शित करने का फंक्शन
     function displayContent(xml) {
         const xmlDoc = xml.responseXML;
-        const sites = xmlDoc.getElementsByTagName("site");
+        const urls = xmlDoc.getElementsByTagName("url");
         let content = "";
 
-        for (let i = 0; i < sites.length; i++) {
-            const url = sites[i].getElementsByTagName("url")[0].childNodes[0].nodeValue;
-            const image = sites[i].getElementsByTagName("image")[0].childNodes[0].nodeValue;
-            const title = sites[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
-            const description = sites[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+        for (let i = 0; i < urls.length; i++) {
+            const loc = urls[i].getElementsByTagName("loc")[0].childNodes[0].nodeValue;
+            const imageLoc = urls[i].getElementsByTagName("image")[0].getElementsByTagName("loc")[0].childNodes[0].nodeValue;
+            const title = urls[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+            const description = urls[i].getElementsByTagName("p")[0].childNodes[0].nodeValue;
 
             content += `
             <div>
-                <a href="${url}" target="_blank">
+                <a href="${loc}" target="_blank">
                     <div class="row">
                         <div class="leftside">
-                            <img src="${image}" alt="${title}" class="image">
+                            <img src="${imageLoc}" alt="${title}" class="image">
                         </div>
                         <div class="rightside">
                             <h4>${title}</h4>
