@@ -1,88 +1,46 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML से HTML डेटा लोड करें</title>
-    <style>
-        .row {
-            display: flex;
-            margin: 10px 0;
-        }
-
-        .leftside {
-            flex: 1;
-        }
-
-        .rightside {
-            flex: 2;
-        }
-
-        .image {
-            width: 100px;
-            height: auto;
-        }
-
-        h4 {
-            margin: 0;
-        }
-
-        p {
-            margin: 5px 0 0;
-        }
-    </style>
+    <title>XML Data Loader</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+    <div id="content"></div>
 
-<div id="content"></div>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "sitemap.xml",
+                dataType: "xml",
+                success: function(xml) {
+                    $(xml).find('url').each(function() {
+                        var loc = $(this).find('loc').text();
+                        var title = $(this).find('title').text();
+                        var image = $(this).find('image loc').text();
+                        var description = $(this).find('p').text();
 
-<script>
-    function loadXMLDoc(filename) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            if (this.status === 200) {
-                displayContent(this);
-            } else {
-                console.error("Error loading XML file:", this.statusText);
-            }
-        };
-        xhttp.open("GET", filename, true);
-        xhttp.send();
-    }
-
-    function displayContent(xml) {
-        const xmlDoc = xml.responseXML;
-        const urls = xmlDoc.getElementsByTagName("url");
-        let content = "";
-
-        for (let i = 0; i < urls.length; i++) {
-            const loc = urls[i].getElementsByTagName("loc")[0].childNodes[0].nodeValue;
-            const imageLoc = urls[i].getElementsByTagName("image")[0].getElementsByTagName("loc")[0].childNodes[0].nodeValue;
-            const title = urls[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
-            const description = urls[i].getElementsByTagName("p")[0].childNodes[0].nodeValue;
-
-            content += `
-            <div>
-                <a href="${loc}" target="_blank">
-                    <div class="row">
-                        <div class="leftside">
-                            <img src="${imageLoc}" alt="${title}" class="image">
-                        </div>
-                        <div class="rightside">
-                            <h4>${title}</h4>
-                            <p>${description}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>`;
-        }
-
-        document.getElementById("content").innerHTML = content;
-    }
-
-    // XML फ़ाइल लोड करें
-    loadXMLDoc("sitemap.xml");
-</script>
-
+                        $('#content').append(
+                            '<div><a href="' + loc + '" target="_blank">' +
+                            '<div class="row">' +
+                            '<div class="leftside">' +
+                            '<img src="' + image + '" alt="Image" class="image">' +
+                            '</div>' +
+                            '<div class="rightside">' +
+                            '<h4>' + title + '</h4>' +
+                            '<p>' + description + '</p>' +
+                            '</div>' +
+                            '</div></a></div>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.log("Error loading XML");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
