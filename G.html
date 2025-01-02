@@ -1,31 +1,14 @@
-
-    <style>
-        .row {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .leftside {
-            width: 30%;
-        }
-        .rightside {
-            width: 70%;
-            padding-left: 20px;
-        }
-        .image {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="data-container"></div>
+  <div class="pagination">
+        <button id="prev-button" style="display:none;">पिछला पृष्ठ</button>
+        <button id="next-button">अगला पृष्ठ</button>
+    </div>
 
     <script>
-        // XML फाइल का URL
         const xmlUrl = 'sitemap.xml';
+        const itemsPerPage = 20; // प्रति पृष्ठ आइटम की संख्या
+        let currentPage = 0; // वर्तमान पृष्ठ
+        let urls = []; // XML से लोड किया गया डेटा
 
-        // XML को लोड करने के लिए फ़ेच API का उपयोग करें
         fetch(xmlUrl)
             .then(response => {
                 if (!response.ok) {
@@ -34,42 +17,60 @@
                 return response.text();
             })
             .then(data => {
-                // XML को पार्स करें
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(data, "application/xml");
 
-                // XML से URL, शीर्षक, इमेज और विवरण निकालें
-                const urls = xmlDoc.getElementsByTagName("url");
-                let htmlContent = '';
-
-                for (let i = 0; i < urls.length; i++) {
-                    const loc = urls[i].getElementsByTagName("loc")[0].textContent;
-                    const title = urls[i].getElementsByTagName("title")[0].textContent;
-                    const image = urls[i].getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
-                    const description = urls[i].getElementsByTagName("p")[0].textContent;
-
-                    // HTML में जोड़ें
-                    htmlContent += `
-                        <a href="${loc}" target="_blank">
-                            <div class="row">
-                                <div class="leftside">
-                                    <img src="${image}" alt="Image" class="image">
-                                </div>
-                                <div class="rightside">
-                                    <h4>${title}</h4>
-                                    <p>${description}</p>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                }
-
-                // डेटा कंटेनर में HTML जोड़ें
-                document.getElementById('data-container').innerHTML = htmlContent;
+                urls = Array.from(xmlDoc.getElementsByTagName("url"));
+                displayData(); // प्रारंभिक डेटा प्रदर्शित करें
             })
             .catch(error => {
                 console.error('Error loading XML data:', error);
                 document.getElementById('data-container').innerHTML = '<p>Error loading XML data.</p>';
             });
-    </script>
 
+        function displayData() {
+            const start = currentPage * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageData = urls.slice(start, end);
+            let htmlContent = '';
+
+            pageData.forEach(url => {
+                const loc = url.getElementsByTagName("loc")[0].textContent;
+                const title = url.getElementsByTagName("title")[0].textContent;
+                const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
+                const description = url.getElementsByTagName("p")[0].textContent;
+
+                htmlContent += `
+                    <a href="${loc}" target="_blank">
+                        <div class="row">
+                            <div class="leftside">
+                                <img src="${image}" alt="Image" class="image">
+                            </div>
+                            <div class="rightside">
+                                <h4>${title}</h4>
+                                <p>${description}</p>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+
+            document.getElementById('data-container').innerHTML = htmlContent;
+
+            // बटन दिखाएँ/छिपाएँ
+            document.getElementById('prev-button').style.display = currentPage > 0 ? 'block' : 'none';
+            document.getElementById('next-button').style.display = end < urls.length ? 'block' : 'none';
+        }
+
+        // अगले पृष्ठ के लिए इवेंट लिस्नर
+        document.getElementById('next-button').addEventListener('click', () => {
+            currentPage++;
+            displayData();
+        });
+
+        // पिछले पृष्ठ के लिए इवेंट लिस्नर
+        document.getElementById('prev-button').addEventListener('click', () => {
+            currentPage--;
+            displayData();
+        });
+    </script>
