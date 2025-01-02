@@ -254,6 +254,13 @@ img {width:200px;border-radius:10px;transition: transform 0.3s ease;}
     </style>
 </head>
 <body>
+    <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
 <div class="container">
     <!-- Header Section -->
     <div class="header-image">
