@@ -12,7 +12,7 @@
     <script>
         // Apna custom domain ka URL yahan daalain
         const customDomain = 'https://gklearnstudy.in/'; // Apne domain ka URL dalen
-        const fileName = 'प्राचीन-भारतीय-इतिहासmn.html';
+        const fileName = 'प्राचीन-भारतीय-इतिहास.html';
 
         async function checkFileExists() {
             try {
@@ -21,16 +21,16 @@
                     // Agar file mil jaye toh link dikhaye
                     const link = document.createElement('a');
                     link.href = customDomain + fileName;
-                    link.textContent = 'Visit Prachin Page';
+                    link.textContent = '🌐 हिन्दी';
                     link.target = '_blank';
                     document.getElementById('link-container').appendChild(link);
                 } else {
                     // Agar file nahi ho toh message dikhaye
-                    document.getElementById('link-container').textContent = 'Prachin page not available.';
+                    document.getElementById('link-container').textContent = '';
                 }
             } catch (error) {
                 console.error('Error checking file:', error);
-                document.getElementById('link-container').textContent = 'Error loading Prachin page.';
+                document.getElementById('link-container').textContent = '-';
             }
         }
 
