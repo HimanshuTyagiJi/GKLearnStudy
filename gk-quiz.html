@@ -6,7 +6,7 @@
     <title>GK Quiz</title>
     <meta name="description" content="Take our GK Quiz and enhance your general knowledge with a wide range of questions. Test your skills in various categories including history, geography, science, sports, and more.">
     <meta name="keywords" content="GK quiz, general knowledge, quiz questions, quiz competition, trivia questions, quiz game, quiz online, quiz for students, quiz for kids, quiz for adults, quiz categories, history quiz, geography quiz, science quiz, sports quiz, current affairs quiz, political quiz, quiz on famous personalities, quiz on inventions, quiz on discoveries, world quiz, India quiz, quiz on rivers, quiz on mountains, quiz on countries, quiz on capitals, quiz on continents, quiz on states, quiz on languages, quiz on cultures, quiz on religions, quiz on arts, quiz on literature, quiz on music, quiz on films, quiz on awards, quiz on festivals, quiz on celebrations, quiz on technology, quiz on space, quiz on animals, quiz on plants, quiz on nature, quiz on environment, quiz on climate, quiz on weather, quiz on oceans, quiz on seas, quiz on lakes, quiz on rivers, quiz on famous landmarks, quiz on famous buildings, quiz on historical events, quiz on independence movements, quiz on world wars, quiz on ancient civilizations, quiz on medieval history, quiz on modern history, quiz on industrial revolution, quiz on scientific revolution, quiz on space exploration, quiz on internet, quiz on social media, quiz on computer science, quiz on programming languages, quiz on mathematics, quiz on physics, quiz on chemistry, quiz on biology, quiz on human body, quiz on health, quiz on medicine, quiz on nutrition, quiz on fitness, quiz on exercise, quiz on yoga, quiz on meditation, quiz on famous authors, quiz on famous books, quiz on Nobel Prize winners, quiz on Olympic Games, quiz on World Cup, quiz on cricket, quiz on football, quiz on tennis, quiz on basketball, quiz on athletics, quiz on famous scientists, quiz on famous explorers, quiz on famous leaders, quiz on famous artists, quiz on famous musicians, quiz on famous composers, quiz on famous actors, quiz on famous directors, quiz on famous philosophers, quiz on famous poets, quiz on famous painters, quiz on famous sculptures">
-    <meta name="author" content="Himanshu Tyagi">
+    <meta name="author" content="आपका नाम">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="GK Quiz">
@@ -40,95 +40,148 @@
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
-    <script>
-        function switchLanguage(lang) {
-            const hindiContent = document.querySelectorAll('.hindi-content');
-             const englishContent = document.querySelectorAll('.english-content');
+    <style>
+      
+        .language-switcher {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .language-switcher button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+        }
+
+        .language-switcher button:hover {
+            background-color: #ddd;
+        }
+
+        .language-switcher button.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Language Content Styles */
+        .language-content {
+            position: relative;
+        }
+
+        .hindi-content,
+        .english-content {
            
+            left: 0;
+            width: 100%;
+            display: none;
+        }
+
+        .hindi-content.active,
+        .english-content.active {
+            display: block;
+        }
+
+     
+        ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        // Function to switch between languages
+        function switchLanguage(lang) {
+            const englishContent = document.querySelector('.english-content');
+            const hindiContent = document.querySelector('.hindi-content');
+            const buttons = document.querySelectorAll('.language-switcher button');
 
             if (lang === 'en') {
-                englishContent.forEach(el => el.style.display = 'block');
-                hindiContent.forEach(el => el.style.display = 'none');
+                englishContent.classList.add('active');
+                hindiContent.classList.remove('active');
             } else {
-                englishContent.forEach(el => el.style.display = 'none');
-                hindiContent.forEach(el => el.style.display = 'block');
+                hindiContent.classList.add('active');
+                englishContent.classList.remove('active');
             }
+
+            // Update button styles
+            buttons.forEach(button => button.classList.remove('active'));
+            document.querySelector(`button[data-lang="${lang}"]`).classList.add('active');
         }
     </script>
 </head>
-<body>
-    
-    <div class="search-container">
+
+<body>       <div class="search-container">
         <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
         <button class="back-icon" id="backBtn">←</button>
         <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
     </div>
     <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-
-    <div class="container">
-         <div onload="switchLanguage('hi')">
+    <div id="results"></div> <div class="container"> <div onload="switchLanguage('en')">
+    <!-- Language Switcher -->
     <div class="language-switcher">
-        <button onclick="switchLanguage('en')">English</button>
-        <button onclick="switchLanguage('hi')">हिन्दी</button>
+        <button data-lang="en" onclick="switchLanguage('en')" class="active">English</button>
+        <button data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</button>
     </div>
-         </div>
-        <div class="color-content1">
+
+    <!-- Language Content -->
+    <div class="language-content">
+        <!-- English Content -->
+        <div class="english-content active">
             <h1>GK Quiz</h1>
+            <p>
+                Welcome to the GK Quiz! This platform offers a wide range of questions to test your knowledge across
+                various domains, such as history, geography, science, literature, and much more.
+            </p>
+            <p>
+                Each section is designed to provide challenging and engaging questions. Explore, learn, and compete with
+                others to enhance your general knowledge.
+            </p>
+            <p>
+                Below are the available topics:
+            </p>
+            <ul>
+                <li><a href="Ancient-Indian-History.html">Ancient Indian History</a></li>
+                <li><a href="Medieval-Indian-History.html">Medieval Indian History</a></li>
+                <li><a href="Modern-Indian-History.html">Modern Indian History</a></li>
+                <li><a href="World-Geography.html">World Geography</a></li>
+                <li><a href="Science-Discoveries.html">Science Discoveries</a></li>
+            </ul>
         </div>
 
-        <p class="english-content">
-            Looking to test your knowledge across various subjects? Dive into our GK Quiz, where you can challenge yourself with a wide array of questions covering history, geography, science, literature, and more. Our GK Quiz is designed to not only test your existing knowledge but also to expand your horizons with fascinating facts and trivia.
-        </p>
-        <br>
-        <p class="english-content">
-            Whether you're a student, professional, or just someone who loves learning, our GK Quiz offers something for everyone. Brush up on your general knowledge or delve into specific topics of interest – the choice is yours. With each question, you'll not only assess your understanding but also learn something new along the way.
-        </p>
-        <br>
-        <p class="english-content">
-            Join our community of curious minds and embark on a journey of exploration through our GK Quiz. Compete with friends, track your progress on the leaderboard, and expand your knowledge in a fun and interactive way. Get ready to challenge yourself and discover the depth of your intellect with our GK Quiz!
-        </p>
-
-        <p class="hindi-content" style="display: none;">
-            क्या आप विभिन्न विषयों पर अपने ज्ञान का परीक्षण करना चाहते हैं? हमारे GK Quiz में सम्मिलित हों, जहां आप इतिहास, भूगोल, विज्ञान, साहित्य और अन्य कई विषयों पर प्रश्नों के साथ अपने आप को परीक्षण दे सकते हैं। हमारा GK Quiz आपके मौजूदा ज्ञान को न केवल परीक्षण करने के लिए है, बल्कि आपकी दृष्टि को रोचक तथ्यों और वार्तालाप से विस्तारित करने के लिए भी डिज़ाइन किया गया है।
-        </p>
-        <br>
-        <p class="hindi-content" style="display: none;">
-            चाहे आप एक छात्र, पेशेवर व्यक्ति हों या सिर्फ विद्या के प्रेमी, हमारा GK Quiz हर किसी के लिए कुछ न कुछ प्रस्तुत करता है। आप अपने सामान्य ज्ञान को मजबूत कर सकते हैं या अपने रुचियों के विशिष्ट विषयों में प्रवेश कर सकते हैं - यह आपकी मर्जी है। प्रत्येक प्रश्न के साथ, आप न केवल अपने ज्ञान को मूल्यांकित करेंगे, बल्कि राह में कुछ नया भी सीखेंगे।
-        </p>
-        <br>
-        <p class="hindi-content" style="display: none;">
-            हमारे GK Quiz के माध्यम से खोजने के एक समुदाय में शामिल हों और एक अन्वेषण की यात्रा पर उतरें। दोस्तों के साथ प्रतिस्पर्धा करें, लीडरबोर्ड पर अपनी प्रगति का ट्रैक करें, और मजेदार और इंटरैक्टिव तरीके से अपने ज्ञान को विस्तारित करें। खुद को परीक्षण देने के लिए तैयार हों और हमारे GK Quiz के साथ अपने बुद्धिमत्ता की गहराई का खोज करें!
-        </p>
-
-        <div class="custom-row">
-            <div class="custom-column">
-              
-                <ul class="english-content">
-                    <li><a href="Ancient-Indian-History.html">Ancient Indian History</a></li>
-                    <li><a href="Medieval-Indian-History.html">Medieval Indian History</a></li>
-                    <li><a href="Modern-Indian-History.html">Modern Indian History</a></li>
-                    <li><a href="World-History.html">World History</a></li>
-                </ul>
-            </div>
-            <div class="custom-column">
-               
-                <ul class="hindi-content" style="display: none;">
-                    <li><a href="प्राचीन-भारतीय-इतिहास.html">प्राचीन भारतीय इतिहास</a></li>
-                    <li><a href="मध्यकालीन-भारतीय-इतिहास.html">मध्यकालीन भारतीय इतिहास</a></li>
-                    <li><a href="आधुनिक-भारतीय-इतिहास.html">आधुनिक भारतीय इतिहास</a></li>
-                    <li><a href="विश्व-इतिहास.html">विश्व इतिहास</a></li>
-                </ul>
-            </div>
+        <!-- Hindi Content -->
+        <div class="hindi-content">
+            <h1>GK क्विज़</h1>
+            <p>
+                GK क्विज़ में आपका स्वागत है! यह प्लेटफ़ॉर्म आपको इतिहास, भूगोल, विज्ञान, साहित्य और अन्य कई विषयों पर अपने
+                ज्ञान को परखने के लिए एक विस्तृत श्रृंखला प्रदान करता है।
+            </p>
+            <p>
+                हर खंड को चुनौतीपूर्ण और रोचक प्रश्नों के साथ डिज़ाइन किया गया है। खोजें, सीखें, और दूसरों के साथ प्रतिस्पर्धा
+                करें ताकि आप अपने सामान्य ज्ञान को बढ़ा सकें।
+            </p>
+            <p>
+                नीचे उपलब्ध विषय दिए गए हैं:
+            </p>
+            <ul>
+                <li><a href="प्राचीन-भारतीय-इतिहास.html">प्राचीन भारतीय इतिहास</a></li>
+                <li><a href="मध्यकालीन-भारतीय-इतिहास.html">मध्यकालीन भारतीय इतिहास</a></li>
+                <li><a href="आधुनिक-भारतीय-इतिहास.html">आधुनिक भारतीय इतिहास</a></li>
+                <li><a href="विश्व-भूगोल.html">विश्व भूगोल</a></li>
+                <li><a href="विज्ञान-की-खोजें.html">विज्ञान की खोजें</a></li>
+            </ul>
         </div>
+  
+    </div></div>
 
- 
 
-   
-<hr>
 
 <div class="important_link"></div>
-<br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr>
+
+<br><br><p style="font-size:24px;" >Important Links</p><br>
+
+<div id="links-container"><ul id="links-list"></ul></div>
+<hr>
    <footer>
           <div class="custom-row">
              <div class="custom-column"><b>Follow Us</b>
@@ -137,6 +190,7 @@
              <div class="custom-column"><p id="my-paragraph"></p></div>
           </div>
         </footer>
+</div>
     <script  src="https://gklearnstudy.in/search.js"></script>
     <script src="https://gklearnstudy.in/script.js"></script>
     <script src="https://gklearnstudy.in/menusearch.js"></script>
@@ -144,3 +198,4 @@
 
 </body>
 </html>
+
