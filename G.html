@@ -1,76 +1,41 @@
-  <div class="pagination">
-        <button id="prev-button" style="display:none;">पिछला पृष्ठ</button>
-        <button id="next-button">अगला पृष्ठ</button>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient Page</title>
+</head>
+<body>
+    <h1>Welcome to Ancient Page</h1>
+    <div id="link-container"></div>
 
     <script>
-        const xmlUrl = 'sitemap.xml';
-        const itemsPerPage = 20; // प्रति पृष्ठ आइटम की संख्या
-        let currentPage = 0; // वर्तमान पृष्ठ
-        let urls = []; // XML से लोड किया गया डेटा
+        // Apna custom domain ka URL yahan daalain
+        const customDomain = 'https://gklearnstudy.in/'; // Apne domain ka URL dalen
+        const fileName = 'प्राचीन-भारतीय-इतिहास.html';
 
-        fetch(xmlUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        async function checkFileExists() {
+            try {
+                const response = await fetch(customDomain + fileName, { method: 'HEAD' });
+                if (response.ok) {
+                    // Agar file mil jaye toh link dikhaye
+                    const link = document.createElement('a');
+                    link.href = customDomain + fileName;
+                    link.textContent = 'Visit Prachin Page';
+                    link.target = '_blank';
+                    document.getElementById('link-container').appendChild(link);
+                } else {
+                    // Agar file nahi ho toh message dikhaye
+                    document.getElementById('link-container').textContent = 'Prachin page not available.';
                 }
-                return response.text();
-            })
-            .then(data => {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data, "application/xml");
-
-                urls = Array.from(xmlDoc.getElementsByTagName("url"));
-                displayData(); // प्रारंभिक डेटा प्रदर्शित करें
-            })
-            .catch(error => {
-                console.error('Error loading XML data:', error);
-                document.getElementById('data-container').innerHTML = '<p>Error loading XML data.</p>';
-            });
-
-        function displayData() {
-            const start = currentPage * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageData = urls.slice(start, end);
-            let htmlContent = '';
-
-            pageData.forEach(url => {
-                const loc = url.getElementsByTagName("loc")[0].textContent;
-                const title = url.getElementsByTagName("title")[0].textContent;
-                const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
-                const description = url.getElementsByTagName("p")[0].textContent;
-
-                htmlContent += `
-                    <a href="${loc}" target="_blank">
-                        <div class="row">
-                            <div class="leftside">
-                                <img src="${image}" alt="Image" class="image">
-                            </div>
-                            <div class="rightside">
-                                <h4>${title}</h4>
-                                <p>${description}</p>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            });
-
-            document.getElementById('data-container').innerHTML = htmlContent;
-
-            // बटन दिखाएँ/छिपाएँ
-            document.getElementById('prev-button').style.display = currentPage > 0 ? 'block' : 'none';
-            document.getElementById('next-button').style.display = end < urls.length ? 'block' : 'none';
+            } catch (error) {
+                console.error('Error checking file:', error);
+                document.getElementById('link-container').textContent = 'Error loading Prachin page.';
+            }
         }
 
-        // अगले पृष्ठ के लिए इवेंट लिस्नर
-        document.getElementById('next-button').addEventListener('click', () => {
-            currentPage++;
-            displayData();
-        });
-
-        // पिछले पृष्ठ के लिए इवेंट लिस्नर
-        document.getElementById('prev-button').addEventListener('click', () => {
-            currentPage--;
-            displayData();
-        });
+        // Function ko call karein
+        checkFileExists();
     </script>
+</body>
+</html>
