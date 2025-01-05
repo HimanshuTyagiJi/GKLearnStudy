@@ -449,7 +449,7 @@ listItem.style.textAlign = 'left';  // Ensure text-align is not justified
 
 // Page list: Key-value pair me page names aur corresponding links
 const pageList = {
-    "ancient.html": "prachin.html",
+    "G.html": "प्राचीन-भारतीय-इतिहास.html",
     "river.html": "nadi.html",
     "mountain.html": "parvat.html"
 };
