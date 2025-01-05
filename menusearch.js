@@ -276,7 +276,7 @@ menu.appendChild(backArrow);
 
 // Add the brand inside the menu
 const menuBrand = document.createElement('a');
-menuBrand.href = './index.html';
+menuBrand.href = '/';
 menuBrand.className = 'menu-brand';
 menuBrand.textContent = 'GK';
 menu.appendChild(menuBrand);
@@ -296,13 +296,13 @@ menu.appendChild(rightArrow);
 // Define menu items
 const menuItems = [
   { text: "Home", href: "/" },
-  { text: "Video", href: "Video.html" },
-  { text: "Education", href: "education.html" },
-  { text: "All Formula", href: "all-formulas.html" },
-  { text: "Computer", href: "computer.html" },
-  { text: "How to", href: "how-to.html" },
-  { text: "GK Quiz", href: "gk-quiz.html" },
-  { text: "Test", href: "test.html" },
+  { text: "Video", href: "https://gklearnstudy.in/Video.html" },
+  { text: "Education", href: "https://gklearnstudy.in/education.html" },
+  { text: "All Formula", href: "https://gklearnstudy.in/all-formulas.html" },
+  { text: "Computer", href: "https://gklearnstudy.in/computer.html" },
+  { text: "How to", href: "https://gklearnstudy.in/how-to.html" },
+  { text: "GK Quiz", href: "https://gklearnstudy.in/gk-quiz.html" },
+  { text: "Test", href: "https://gklearnstudy.in/test.html" },
 ];
 
 // Create the menu inner container
