@@ -1,3 +1,35 @@
+// Page list: Key-value pair me page names aur corresponding links
+const pageList = {
+    "G.html": "प्राचीन-भारतीय-इतिहास.html",
+  
+};
+
+// Base URL apne domain ka
+const baseURL = "https://gklearnstudy.in";
+
+// Function to dynamically check files and create links
+async function generateDynamicLinksByClass(containerClass) {
+    const containers = document.getElementsByClassName(containerClass);
+
+    // Har ek container me dynamic links add karein
+    for (const container of containers) {
+        for (const [mainPage, linkedPage] of Object.entries(pageList)) {
+            try {
+                const response = await fetch(baseURL + linkedPage, { method: 'HEAD' });
+                if (response.ok) {
+                    // Agar file mil jaye toh link banayein
+                    const link = document.createElement("a");
+                    link.href = baseURL + linkedPage;
+                    link.textContent = `Link to ${linkedPage}`;
+                    link.style.display = "block"; // Har link ko nayi line par dikhayein
+                    container.appendChild(link);
+                }
+            } catch (error) {
+                console.error(`Error checking file: ${linkedPage}`, error);
+            }
+        }
+    }
+}
 
 
 
@@ -447,36 +479,3 @@ listItem.style.textAlign = 'left';  // Ensure text-align is not justified
 }
 
 
-// Page list: Key-value pair me page names aur corresponding links
-const pageList = {
-    "G.html": "प्राचीन-भारतीय-इतिहास.html",
-    "river.html": "nadi.html",
-    "mountain.html": "parvat.html"
-};
-
-// Base URL apne domain ka
-const baseURL = "https://gklearnstudy.in/";
-
-// Function to dynamically check files and create links
-async function generateDynamicLinksByClass(containerClass) {
-    const containers = document.getElementsByClassName(containerClass);
-
-    // Har ek container me dynamic links add karein
-    for (const container of containers) {
-        for (const [mainPage, linkedPage] of Object.entries(pageList)) {
-            try {
-                const response = await fetch(baseURL + linkedPage, { method: 'HEAD' });
-                if (response.ok) {
-                    // Agar file mil jaye toh link banayein
-                    const link = document.createElement("a");
-                    link.href = baseURL + linkedPage;
-                    link.textContent = `Link to ${linkedPage}`;
-                    link.style.display = "block"; // Har link ko nayi line par dikhayein
-                    container.appendChild(link);
-                }
-            } catch (error) {
-                console.error(`Error checking file: ${linkedPage}`, error);
-            }
-        }
-    }
-}
