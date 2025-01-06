@@ -1,9 +1,8 @@
-// Page Mapping: Key is source page, Value is target page
+// Page Mapping: Key is source page (without .html), Value is target page (without .html)
 const pageMappings = {
-    
-    "g.html": "प्राचीन-भारतीय-इतिहास.html",
-    "river.html": "nadi.html",
-    "mountains.html": "parvat.html"
+    "g": "प्राचीन-भारतीय-इतिहास",
+    "river": "nadi",
+    "mountains": "parvat"
 };
 
 // Custom domain or base URL
@@ -11,22 +10,22 @@ const customDomain = "https://gklearnstudy.in/";
 
 // Function to check and display link for the current page
 async function showCurrentPageLink() {
-    const currentPage = window.location.pathname.split("/").pop(); // Get current page name
+    const currentPage = window.location.pathname.split("/").pop().replace(/\.html$/, ""); // Get current page name without .html
     const targetPage = pageMappings[currentPage]; // Find mapping for the current page
 
     if (targetPage) {
         try {
             // Check if target file exists
-            const response = await fetch(customDomain + targetPage, { method: "HEAD" });
+            const response = await fetch(`${customDomain}${targetPage}`, { method: "HEAD" });
             if (response.ok) {
                 // Create link if file exists
                 const link = document.createElement("a");
-                link.href = customDomain + targetPage;
-                link.textContent = `🌐 `;
+                link.href = `${customDomain}${targetPage}`;
+                link.textContent = `🌐 Visit Hindi Version`;
                 document.getElementById("link-container").appendChild(link);
             }
         } catch (error) {
-            console.error(`Error checking file: ${customDomain + targetPage}`, error);
+            console.error(`Error checking file: ${customDomain}${targetPage}`, error);
         }
     }
 }
