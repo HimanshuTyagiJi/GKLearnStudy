@@ -1,8 +1,39 @@
 // Page Mapping: Key is source page (without .html), Value is target page (without .html)
 const pageMappings = {
-    "g": "प्राचीन-भारतीय-इतिहास",
-    "river": "nadi",
-    "mountains": "parvat"
+    "Ancient-Indian-History": "प्राचीन-भारतीय-इतिहास",
+    "Medieval-Indian-History": "मध्यकालीन-भारतीय-इतिहास",
+    "Modern-Indian-History": "आधुनिक-भारतीय-इतिहास",
+    "World-History": "विश्व-इतिहास",
+    "Indian-Polity-and-Constitution": "भारतीय-राजव्यवस्था-और-संविधान",
+    "Indian-Economy": "भारतीय-अर्थव्यवस्था",
+    "Environment-and-Biodiversity": "पर्यावरण-और-जैवविविधता",
+    "Indian-Art-and-Culture": "भारतीय-कला-और-संस्कृति",
+    "General-Science-Physics": "भौतिकी",
+    "General-Science-Chemistry": "रसायन विज्ञान",
+    "General-Science-Biology": "जीव विज्ञान",
+    "Computer": "कंप्यूटर",
+    "Sanskrit": "संस्कृत",
+    "Books-and-Authors": "पुस्तकें-और-लेखक",
+    "Sports-GK": "खेल-कूद-सामान्य-ज्ञान",
+    "Famous-Personalities": "प्रसिद्ध-व्यक्तित्व",
+    "Technology-and-Inventions": "प्रौद्योगिकी-और-आविष्कार",
+    "Space-and-Universe": "अंतरिक्ष-और-ब्रह्मांड",
+    "Indian-Geography": "भारतीय-भूगोल",
+    "World-Geography": "विश्व-भूगोल",
+    "Indian-Festivals-and-Traditions": "भारतीय-त्योहार-और-परंपराएं",
+    "World-Organizations": "विश्व-संगठन",
+    "International-Relations": "अंतरराष्ट्रीय-संबंध",
+    "Awards-and-Honours": "पुरस्कार-और-सम्मान",
+    "Current-Affairs": "समसामयिक-घटनाएं",
+    "Indian-Defense": "भारतीय-रक्षा",
+    "Important-Dates-and-Events": "महत्वपूर्ण-तिथियां-और-घटनाएं",
+    "Transport-and-Communication": "परिवहन-और-संचार",
+    "Famous-Monuments": "प्रसिद्ध-स्मारक",
+    "Wildlife-and-National-Parks": "वन्यजीव-और-राष्ट्रीय-उद्यान",
+    "Rivers-and-Lakes": "नदियां-और-झीलें",
+    "Disasters-and-Calamities": "आपदाएं-और-दुर्घटनाएं",
+    "Science-and-Technology": "विज्ञान-और-प्रौद्योगिकी",
+    "Mathematical-GK": "गणितीय-सामान्य-ज्ञान"
 };
 
 // Custom domain or base URL
@@ -21,7 +52,7 @@ async function showCurrentPageLink() {
                 // Create link if file exists
                 const link = document.createElement("a");
                 link.href = `${customDomain}${targetPage}`;
-                link.textContent = `🌐 Visit Hindi Version`;
+                link.textContent = `🌐 हिन्दी`;
                 document.getElementById("link-container").appendChild(link);
             }
         } catch (error) {
