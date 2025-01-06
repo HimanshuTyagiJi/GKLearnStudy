@@ -1,6 +1,6 @@
-// Page Mapping: Key is source page (without .html), Value is target page (without .html)
 const pageMappings = {
     "gk-quiz/Ancient-Indian-History/page1": "gk-quiz/प्राचीन-भारतीय-इतिहास/page1",
+    // ... (baaki mappings)
     "Medieval-Indian-History": "मध्यकालीन-भारतीय-इतिहास",
     "Modern-Indian-History": "आधुनिक-भारतीय-इतिहास",
     "World-History": "विश्व-इतिहास",
@@ -34,15 +34,18 @@ const pageMappings = {
     "Disasters-and-Calamities": "आपदाएं-और-दुर्घटनाएं",
     "Science-and-Technology": "विज्ञान-और-प्रौद्योगिकी",
     "Mathematical-GK": "गणितीय-सामान्य-ज्ञान"
+
 };
 
 // Custom domain or base URL
 const customDomain = "https://gklearnstudy.in/";
 
-// Function to check and display link for the current page
 async function showCurrentPageLink() {
-    const currentPage = window.location.pathname.split("/").pop().replace(/\.html$/, ""); // Get current page name without .html
+    const currentPage = window.location.pathname.substring(1); // Get full path without leading slash
+    console.log('Current Page:', currentPage); // Debugging log
+
     const targetPage = pageMappings[currentPage]; // Find mapping for the current page
+    console.log('Target Page:', targetPage); // Debugging log
 
     if (targetPage) {
         try {
@@ -54,15 +57,20 @@ async function showCurrentPageLink() {
                 link.href = `${customDomain}${targetPage}`;
                 link.textContent = `🌐 हिन्दी`;
                 document.getElementById("link-container").appendChild(link);
+            } else {
+                console.log(`File does not exist: ${customDomain}${targetPage}`); // Log if file does not exist
             }
         } catch (error) {
             console.error(`Error checking file: ${customDomain}${targetPage}`, error);
         }
+    } else {
+        console.log(`No mapping found for current page: ${currentPage}`); // Log if no mapping found
     }
 }
 
 // Call function to show the link for the current page
 showCurrentPageLink();
+
 
 
 
