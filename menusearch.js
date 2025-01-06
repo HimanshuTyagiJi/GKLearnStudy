@@ -1,36 +1,38 @@
-// Page list: Key-value pair me page names aur corresponding links
-const pageList = {
+
+// Page Mapping: Key is source page, Value is target page
+const pageMappings = {
     "G.html": "प्राचीन-भारतीय-इतिहास.html",
-  
 };
 
-// Base URL apne domain ka
-const baseURL = "https://gklearnstudy.in";
+// Custom domain or base URL
+const customDomain = "https://gklearnstudy.in/";
 
-// Function to dynamically check files and create links
-async function generateDynamicLinksByClass(containerClass) {
-    const containers = document.getElementsByClassName(containerClass);
+// Function to check file existence and update links
+async function updateLinks() {
+    const container = document.getElementById("link-container"); // Main container
 
-    // Har ek container me dynamic links add karein
-    for (const container of containers) {
-        for (const [mainPage, linkedPage] of Object.entries(pageList)) {
-            try {
-                const response = await fetch(baseURL + linkedPage, { method: 'HEAD' });
-                if (response.ok) {
-                    // Agar file mil jaye toh link banayein
-                    const link = document.createElement("a");
-                    link.href = baseURL + linkedPage;
-                    link.textContent = `Link to ${linkedPage}`;
-                    link.style.display = "block"; // Har link ko nayi line par dikhayein
-                    container.appendChild(link);
-                }
-            } catch (error) {
-                console.error(`Error checking file: ${linkedPage}`, error);
+    for (const [sourcePage, targetPage] of Object.entries(pageMappings)) {
+        try {
+            // Check if target file exists
+            const response = await fetch(customDomain + targetPage, { method: "HEAD" });
+            if (response.ok) {
+                // Create link if file exists
+                const link = document.createElement("a");
+                link.href = customDomain + targetPage;
+                link.textContent = `Visit ${sourcePage.split('.')[0]} in Hindi`;
+                container.appendChild(link);
+
+                // Add line break for better readability
+                container.appendChild(document.createElement("br"));
             }
+        } catch (error) {
+            console.error(`Error checking file: ${customDomain + targetPage}`, error);
         }
     }
 }
 
+// Call function to update links on page load
+updateLinks();
 
 
 
