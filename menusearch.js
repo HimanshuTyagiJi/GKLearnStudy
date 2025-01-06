@@ -2,6 +2,7 @@
 // Page Mapping: Key is source page, Value is target page
 const pageMappings = {
     "G.html": "प्राचीन-भारतीय-इतिहास.html",
+        "h.html": "प्राचीन-भारतीय-इतिहास.html",
 };
 
 // Custom domain or base URL
@@ -19,7 +20,7 @@ async function updateLinks() {
                 // Create link if file exists
                 const link = document.createElement("a");
                 link.href = customDomain + targetPage;
-                link.textContent = `Visit ${sourcePage.split('.')[0]} in Hindi`;
+                link.textContent = `🌐 हिन्दी`;
                 container.appendChild(link);
 
                 // Add line break for better readability
