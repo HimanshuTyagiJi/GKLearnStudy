@@ -1,6 +1,6 @@
 // Page Mapping: Key is source page (without .html), Value is target page (without .html)
 const pageMappings = {
-    "Ancient-Indian-History": "प्राचीन-भारतीय-इतिहास",
+    "gk-quiz/Ancient-Indian-History/page1": "gk-quiz/प्राचीन-भारतीय-इतिहास/page1",
     "Medieval-Indian-History": "मध्यकालीन-भारतीय-इतिहास",
     "Modern-Indian-History": "आधुनिक-भारतीय-इतिहास",
     "World-History": "विश्व-इतिहास",
