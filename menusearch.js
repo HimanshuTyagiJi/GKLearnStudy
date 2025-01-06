@@ -1,5 +1,5 @@
 const pageMappings = {
-    "Ancient-Indian-History/page1": "प्राचीन-भारतीय-इतिहास/page1",
+    "page1": "प्राचीन-भारतीय-इतिहास/page1",
     // ... (baaki mappings)
     "Medieval-Indian-History": "मध्यकालीन-भारतीय-इतिहास",
     "Modern-Indian-History": "आधुनिक-भारतीय-इतिहास",
