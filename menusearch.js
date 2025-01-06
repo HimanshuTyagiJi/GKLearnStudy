@@ -1,18 +1,20 @@
-
 // Page Mapping: Key is source page, Value is target page
 const pageMappings = {
-    "G.html": "प्राचीन-भारतीय-इतिहास.html",
-        "h.html": "प्राचीन-भारतीय-इतिहास.html",
+    
+    "g.html": "प्राचीन-भारतीय-इतिहास.html",
+    "river.html": "nadi.html",
+    "mountains.html": "parvat.html"
 };
 
 // Custom domain or base URL
 const customDomain = "https://gklearnstudy.in/";
 
-// Function to check file existence and update links
-async function updateLinks() {
-    const container = document.getElementById("link-container"); // Main container
+// Function to check and display link for the current page
+async function showCurrentPageLink() {
+    const currentPage = window.location.pathname.split("/").pop(); // Get current page name
+    const targetPage = pageMappings[currentPage]; // Find mapping for the current page
 
-    for (const [sourcePage, targetPage] of Object.entries(pageMappings)) {
+    if (targetPage) {
         try {
             // Check if target file exists
             const response = await fetch(customDomain + targetPage, { method: "HEAD" });
@@ -20,11 +22,8 @@ async function updateLinks() {
                 // Create link if file exists
                 const link = document.createElement("a");
                 link.href = customDomain + targetPage;
-                link.textContent = `🌐 हिन्दी`;
-                container.appendChild(link);
-
-                // Add line break for better readability
-                container.appendChild(document.createElement("br"));
+                link.textContent = `🌐 `;
+                document.getElementById("link-container").appendChild(link);
             }
         } catch (error) {
             console.error(`Error checking file: ${customDomain + targetPage}`, error);
@@ -32,8 +31,9 @@ async function updateLinks() {
     }
 }
 
-// Call function to update links on page load
-updateLinks();
+// Call function to show the link for the current page
+showCurrentPageLink();
+
 
 
 
