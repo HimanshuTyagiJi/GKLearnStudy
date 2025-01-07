@@ -350,6 +350,13 @@
             resetFavicon();
         }
     });
+
+        // Check if URL contains "index" or "index.html"
+if (window.location.pathname === '/index' || window.location.pathname === '/index.html') {
+    // Redirect to root
+    window.location.href = '/';
+}
+
 </script>
 <script src="https://gklearnstudy.in/menusearch.js"></script>
 <script src="https://gklearnstudy.in/script.js"></script>
