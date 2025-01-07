@@ -1,34 +1,38 @@
-// 1. फोल्डर और उनके प्रश्नों की संख्या का कॉन्फ़िगरेशन
+// Dynamic configuration for pages per folder
 const folderPageConfig = {
-    'gk-quiz/Ancient-Indian-History.html': 20, // प्रति पृष्ठ 20 प्रश्न
-    'gk-quiz/ancient.html': 10, // प्रति पृष्ठ 10 प्रश्न
-    'gk-quiz/hello.html': 9,    // प्रति पृष्ठ 9 प्रश्न
+    'gk-quiz/prachin.html': 20,  // प्राचीन में 20 प्रश्न प्रति पृष्ठ
+    'gk-quiz/ancient.html': 10, // प्राचीन में 10 प्रश्न प्रति पृष्ठ
+    'gk-quiz/hello.html': 9     // हेलो में 9 प्रश्न प्रति पृष्ठ
 };
 
-
-
-// 2. URL से फोल्डर का नाम प्राप्त करने का फ़ंक्शन
-function getFolderName() {
-    const url = window.location.pathname; // वर्तमान URL का path प्राप्त करें
-    const folderMatch = url.match(/gk-quiz\/[^/]+/); // 'gk-quiz' और उसके बाद का नाम निकालें
-    return folderMatch ? folderMatch[0] : null; // फोल्डर का नाम लौटाएं या null
+// Function to get the current folder and file
+function getCurrentFolder() {
+    const url = window.location.pathname;
+    const match = url.match(/gk-quiz\/[^/]+\.html/);
+    return match ? match[0] : null;
 }
 
-// 3. URL से पृष्ठ संख्या प्राप्त करने का फ़ंक्शन
+// Get the current page number from the URL
 function getPageNumber() {
-    const url = window.location.href; // वर्तमान पृष्ठ का URL
-    const pageMatch = url.match(/page(\d+)/); // 'page' के बाद की संख्या निकालें
-    return pageMatch ? parseInt(pageMatch[1]) : 1; // यदि संख्या मिले तो लौटाएं, अन्यथा 1
+    const url = window.location.href;
+    const pageMatch = url.match(/page(\d+)/);
+    return pageMatch ? parseInt(pageMatch[1]) : 1;
 }
 
-// 4. पेजिनेशन रेंडर करने का फ़ंक्शन
+// Function to dynamically calculate the total pages
+function getTotalPages() {
+    const folder = getCurrentFolder();
+    return folder ? folderPageConfig[folder] || 1 : 1;
+}
+
+// Function to render pagination
 function renderPagination(currentPage, totalPages) {
     const paginationContainer = document.querySelector('.paginations');
-    paginationContainer.innerHTML = ''; // पहले के पेजिनेशन को साफ करें
+    paginationContainer.innerHTML = ''; // Clear previous pagination
 
-    // पहली पृष्ठ लिंक
+    // First Page Link
     const firstPageLink = document.createElement('a');
-    firstPageLink.href = `?page1`;
+    firstPageLink.href = `page1`;
     firstPageLink.innerText = 'First';
     firstPageLink.className = 'button';
     if (currentPage === 1) {
@@ -36,15 +40,24 @@ function renderPagination(currentPage, totalPages) {
     }
     paginationContainer.appendChild(firstPageLink);
 
-    // पृष्ठ सीमा की गणना
-    const range = 2; // वर्तमान पृष्ठ के आसपास दिखाने वाले पृष्ठों की संख्या
-    let startPage = Math.max(2, currentPage - range); // प्रारंभिक सीमा
-    let endPage = Math.min(totalPages - 1, currentPage + range); // अंतिम सीमा
+    // Calculate range for pagination
+    const range = 2;
+    let startPage = Math.max(2, currentPage - range);
+    let endPage = Math.min(totalPages - 1, currentPage + range);
 
-    // मध्य पृष्ठ लिंक
+    // Adjust range to maintain 5 pages if possible
+    if (endPage - startPage < 4) {
+        if (startPage === 2) {
+            endPage = Math.min(totalPages - 1, startPage + 4);
+        } else if (endPage === totalPages - 1) {
+            startPage = Math.max(2, endPage - 4);
+        }
+    }
+
+    // Create page links
     for (let i = startPage; i <= endPage; i++) {
         const pageLink = document.createElement('a');
-        pageLink.href = `?page${i}`;
+        pageLink.href = `page${i}`;
         pageLink.innerText = i;
         pageLink.className = 'button';
         if (i === currentPage) {
@@ -53,9 +66,9 @@ function renderPagination(currentPage, totalPages) {
         paginationContainer.appendChild(pageLink);
     }
 
-    // अंतिम पृष्ठ लिंक
+    // Last Page Link
     const lastPageLink = document.createElement('a');
-    lastPageLink.href = `?page${totalPages}`;
+    lastPageLink.href = `page${totalPages}`;
     lastPageLink.innerText = 'Last';
     lastPageLink.className = 'button';
     if (currentPage === totalPages) {
@@ -64,60 +77,27 @@ function renderPagination(currentPage, totalPages) {
     paginationContainer.appendChild(lastPageLink);
 }
 
-// 5. मुख्य कोड
-const currentFolder = getFolderName(); // फोल्डर का नाम प्राप्त करें
-const currentPage = getPageNumber();  // पृष्ठ संख्या प्राप्त करें
-
-if (!currentFolder) {
-    console.error('Folder name not found in the URL');
-} else {
-    const totalPages = folderPageConfig[currentFolder]; // फोल्डर के आधार पर कुल पृष्ठ
-
-    if (!totalPages) {
-        console.error('Total pages not defined for this folder');
-    } else {
-        renderPagination(currentPage, totalPages); // पेजिनेशन रेंडर करें
-    }
+// Function to auto-number questions based on page
+function autoNumberQuestions(startNumber) {
+    const questions = document.querySelectorAll('.questions');
+    let questionNumber = startNumber;
+    questions.forEach((question) => {
+        const questionHeader = question.querySelector('h3');
+        if (questionHeader) {
+            questionHeader.textContent = `Q-${questionNumber}: ${questionHeader.textContent}`;
+            questionNumber++;
+        }
+    });
 }
 
-// 6. पेजिनेशन के लिए CSS
-const styles = `
-    .paginations {
-        justify-content: center;
-        text-align: center;
-        margin: 20px 0;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .paginations a:link, 
-    .paginations a:visited {
-        color: white;
-    }
-    .button {
-        display: inline-block;
-        margin: 0 5px;
-        padding: 5px 10px;
-        font-size: 16px;
-        color: white;
-        background-color: #007BFF;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
-    .button.active {
-        background-color: green;
-    }
-    .active {
-        pointer-events: none;
-    }
-`;
+// Main Code Execution
+const currentPage = getPageNumber();
+const totalPages = getTotalPages();
+const questionsPerPage = folderPageConfig[getCurrentFolder()] || 1;
 
-// CSS जोड़ें
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
+// Calculate starting question number
+const startingNumber = (currentPage - 1) * questionsPerPage + 1;
+
+// Display questions and pagination
+autoNumberQuestions(startingNumber);
+renderPagination(currentPage, totalPages);
