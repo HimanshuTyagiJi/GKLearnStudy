@@ -1,45 +1,48 @@
-// Function to get page number from the URL
+// URL से पृष्ठ संख्या प्राप्त करने के लिए फ़ंक्शन
 function getPageNumber() {
-    // Get page number from the current URL
-    const url = window.location.href; // Current page URL
-    const pageMatch = url.match(/page(\d+)/); // Extract the number after 'page' in the URL
+    // वर्तमान URL से पृष्ठ संख्या प्राप्त करें
+    const url = window.location.href; // वर्तमान पृष्ठ का URL
+    const pageMatch = url.match(/page(\d+)/); // URL में 'page' के बाद की संख्या निकालें
 
-    // Return the page number if found, otherwise return default 1
+    // यदि पृष्ठ संख्या मिली तो उसे लौटाएं, अन्यथा डिफ़ॉल्ट 1 लौटाएं
     return pageMatch ? parseInt(pageMatch[1]) : 1;
 }
 
-// Function for auto-numbering questions from the starting number
+// प्रारंभिक संख्या से क्रमांकित प्रश्नों के लिए फ़ंक्शन
 function autoNumberQuestions(startNumber) {
-    // Get all questions
+    // सभी प्रश्नों को प्राप्त करें
     const questions = document.querySelectorAll('.questions');
 
-    // Set the starting number
+    // प्रारंभिक संख्या सेट करें
     let questionNumber = startNumber;
 
-    // Set the number for each question
+    // प्रत्येक प्रश्न के लिए क्रमांक सेट करें
     questions.forEach((question) => {
         question.querySelector('h3').textContent = `Q-${questionNumber}: ${question.querySelector('h3').textContent}`;
         questionNumber++;
     });
 }
 
-// Main code
+// मुख्य कोड
 const pageNumber = getPageNumber();
 let startingNumber = 1; // Default starting number
 
-// Set the starting number based on the page number
+// पृष्ठ संख्या के आधार पर प्रारंभिक संख्या सेट करें
 if (pageNumber === 1) {
-    startingNumber = 1; // Start from 1 for page 1
+    startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
 } else if (pageNumber === 2) {
-    startingNumber = 31; // Start from 31 for page 2
+    startingNumber = 26; // page2 के लिए 5 से प्रारंभ करें
 } else {
-    startingNumber = (pageNumber - 1) * 31 + 1; // Increment for pages 3 to 20
+    startingNumber = (pageNumber - 1) * 26 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
 }
 
-// Display questions
+// प्रश्नों को प्रदर्शित करें
 autoNumberQuestions(startingNumber);
 
-// Add CSS styles
+
+
+
+ // Add CSS styles
 const styles = `
     .paginations {
         justify-content: center;
@@ -71,6 +74,7 @@ const styles = `
         background-color: green;
     }
     .active {
+      
         pointer-events: none; /* Disable click on active page */
     }
 `;
@@ -92,12 +96,9 @@ function renderPagination(currentPage, totalPages) {
     const paginationContainer = document.querySelector('.paginations');
     paginationContainer.innerHTML = ''; // Clear previous pagination
 
-    // Check if the URL does not contain 'page'
-    const baseLink = url.includes('page') ? `https://gklearnstudy.in/gk-quiz/ancient-indian-history/page` : `https://gklearnstudy.in/gk-quiz/ancient-indian-history`;
-
     // Check if on the first page
     const firstPageLink = document.createElement('a');
-    firstPageLink.href = `${baseLink}/page1`;
+    firstPageLink.href = `page1`;
     firstPageLink.innerText = 'First';
     firstPageLink.className = 'button';
     if (currentPage === 1) {
@@ -122,7 +123,7 @@ function renderPagination(currentPage, totalPages) {
     // Create page links
     for (let i = startPage; i <= endPage; i++) {
         const pageLink = document.createElement('a');
-        pageLink.href = `${baseLink}/page${i}`;
+        pageLink.href = `page${i}`;
         pageLink.innerText = i;
         pageLink.className = 'button';
         if (i === currentPage) {
@@ -133,7 +134,7 @@ function renderPagination(currentPage, totalPages) {
 
     // Check if on the last page
     const lastPageLink = document.createElement('a');
-    lastPageLink.href = `${baseLink}/page${totalPages}`;
+    lastPageLink.href = `page${totalPages}`;
     lastPageLink.innerText = 'Last';
     lastPageLink.className = 'button';
     if (currentPage === totalPages) {
