@@ -271,7 +271,7 @@ menu.appendChild(backArrow);
 
 // Add the brand inside the menu
 const menuBrand = document.createElement('a');
-menuBrand.href = '/';
+menuBrand.href = 'https://gklearnstudy.in';
 menuBrand.className = 'menu-brand';
 menuBrand.textContent = 'GK';
 menu.appendChild(menuBrand);
@@ -290,7 +290,7 @@ menu.appendChild(rightArrow);
 
 // Define menu items
 const menuItems = [
-  { text: "Home", href: "/" },
+  { text: "Home", href: "https://gklearnstudy.in" },
   { text: "Video", href: "https://gklearnstudy.in/Video.html" },
   { text: "Education", href: "https://gklearnstudy.in/education.html" },
   { text: "All Formula", href: "https://gklearnstudy.in/all-formulas.html" },
