@@ -60,28 +60,13 @@
 </head>
 
 <body>
-    <main class="container">
-
-        <form id="searchForm" onsubmit="performSearch(event);">
-            <div class="search-container">
-                <span class="search-icon" id="searchIcon">
-                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-                </span>
-                <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
-                    oninput="updateSuggestions(event)">
-                <button type="button" id="searchButton" onclick="performSearch()">Search</button>
-            </div>
-            <div id="suggestions" class="suggestions-list"></div>
-        </form>
-
-        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
-            <div class="modal1-content">
-                <span class="close" onclick="closeModal1(event)">&times;</span>
-                <h2>Search Results</h2>
-                <div id="results"></div>
-            </div>
-        </div>
-    </main>
+    <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
 
     <button class="menu-toggle" onclick="toggleMenu()">➤</button>
     <ul class="menu-list" id="menuList">
@@ -477,7 +462,7 @@
 
             <script src="..\script.js"></script>
             <script src="..\search.js"></script>
-            <script src="..\menusearch1.js"></script>
+            <script src="..\menusearch.js"></script>
            
 
 </body>
