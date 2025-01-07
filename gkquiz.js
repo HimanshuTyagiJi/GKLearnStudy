@@ -5,6 +5,8 @@ const folderPageConfig = {
     'gk-quiz/hello.html': 9,    // प्रति पृष्ठ 9 प्रश्न
 };
 
+
+
 // 2. URL से फोल्डर का नाम प्राप्त करने का फ़ंक्शन
 function getFolderName() {
     const url = window.location.pathname; // वर्तमान URL का path प्राप्त करें
@@ -19,24 +21,7 @@ function getPageNumber() {
     return pageMatch ? parseInt(pageMatch[1]) : 1; // यदि संख्या मिले तो लौटाएं, अन्यथा 1
 }
 
-// 4. प्रारंभिक प्रश्न संख्या की गणना करने का फ़ंक्शन
-function calculateStartingNumber(folder, currentPage) {
-    const questionsPerPage = folderPageConfig[folder] || 20; // Default 20 प्रश्न
-    return (currentPage - 1) * questionsPerPage + 1; // प्रारंभिक संख्या की गणना
-}
-
-// 5. सभी प्रश्नों को क्रमांकित करने का फ़ंक्शन
-function autoNumberQuestions(startNumber) {
-    const questions = document.querySelectorAll('.questions'); // सभी प्रश्न प्राप्त करें
-    let questionNumber = startNumber; // प्रारंभिक संख्या सेट करें
-
-    questions.forEach((question) => {
-        question.querySelector('h3').textContent = `Q-${questionNumber}: ${question.querySelector('h3').textContent}`;
-        questionNumber++;
-    });
-}
-
-// 6. पेजिनेशन रेंडर करने का फ़ंक्शन
+// 4. पेजिनेशन रेंडर करने का फ़ंक्शन
 function renderPagination(currentPage, totalPages) {
     const paginationContainer = document.querySelector('.paginations');
     paginationContainer.innerHTML = ''; // पहले के पेजिनेशन को साफ करें
@@ -53,8 +38,8 @@ function renderPagination(currentPage, totalPages) {
 
     // पृष्ठ सीमा की गणना
     const range = 2; // वर्तमान पृष्ठ के आसपास दिखाने वाले पृष्ठों की संख्या
-    let startPage = Math.max(2, currentPage - range);
-    let endPage = Math.min(totalPages - 1, currentPage + range);
+    let startPage = Math.max(2, currentPage - range); // प्रारंभिक सीमा
+    let endPage = Math.min(totalPages - 1, currentPage + range); // अंतिम सीमा
 
     // मध्य पृष्ठ लिंक
     for (let i = startPage; i <= endPage; i++) {
@@ -79,25 +64,23 @@ function renderPagination(currentPage, totalPages) {
     paginationContainer.appendChild(lastPageLink);
 }
 
-// 7. मुख्य कोड
+// 5. मुख्य कोड
 const currentFolder = getFolderName(); // फोल्डर का नाम प्राप्त करें
 const currentPage = getPageNumber();  // पृष्ठ संख्या प्राप्त करें
 
 if (!currentFolder) {
     console.error('Folder name not found in the URL');
 } else {
-    const startingNumber = calculateStartingNumber(currentFolder, currentPage); // प्रारंभिक संख्या की गणना
-    autoNumberQuestions(startingNumber); // प्रश्नों को क्रमांकित करें
+    const totalPages = folderPageConfig[currentFolder]; // फोल्डर के आधार पर कुल पृष्ठ
 
-    // कुल प्रश्न और पृष्ठ संख्या की गणना
-    const questionsPerPage = folderPageConfig[currentFolder];
-    const totalQuestions = 200; // उदाहरण के लिए कुल प्रश्न
-    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
-
-    renderPagination(currentPage, totalPages); // पेजिनेशन रेंडर करें
+    if (!totalPages) {
+        console.error('Total pages not defined for this folder');
+    } else {
+        renderPagination(currentPage, totalPages); // पेजिनेशन रेंडर करें
+    }
 }
 
-// 8. पेजिनेशन के लिए CSS
+// 6. पेजिनेशन के लिए CSS
 const styles = `
     .paginations {
         justify-content: center;
