@@ -1,5 +1,10 @@
-# URL rewriting for .html files
+# Enable the Rewrite Engine
 RewriteEngine On
+
+# Redirect requests for index.html to the root URL
+RewriteRule ^index\.html$ / [L,R=301]
+
+# URL rewriting for .html files
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
@@ -7,5 +12,5 @@ RewriteRule ^(.*)$ $1.html [L]
 <IfModule mod_headers.c>
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
-    Header set Expires 0
+    Header set Expires "0"
 </IfModule>
