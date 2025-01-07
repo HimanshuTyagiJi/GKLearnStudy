@@ -54,9 +54,16 @@
                 <li data-correct="false">Yamuna</li>
             </ul>
             <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
-        </div>
-
-<div class="questions">
+        </div> <div class="questions">
+            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
+            <ul class="options">
+                <li data-correct="true">Indus</li>
+                <li data-correct="false">Ganga</li>
+                <li data-correct="false">Saraswati</li>
+                <li data-correct="false">Yamuna</li>
+            </ul>
+            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
+        </div> <div class="questions">
             <h3>Which river was the lifeline of the Harappan Civilization?</h3>
             <ul class="options">
                 <li data-correct="true">Indus</li>
@@ -66,7 +73,7 @@
             </ul>
             <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
         </div>
-      
+
         <div class="paginations"></div>
         <hr>
 
@@ -96,13 +103,18 @@
         <script>
             const questions = document.querySelectorAll('.questions');
             const maxQuestionsPerPage = 1;
+            const currentPage = window.location.href;
 
-            if (questions.length > maxQuestionsPerPage) {
-                const currentPage = window.location.href;
-                const nextPage = currentPage.replace(/(\d+)(\.html)$/, function(match, p1, p2) {
-                    return (parseInt(p1) + 1) + p2;
-                });
-                window.location.href = nextPage; // Redirect to next page if question count exceeds limit
+            // Check if the page has been visited before
+            if (!sessionStorage.getItem('visited')) {
+                sessionStorage.setItem('visited', 'true');
+                // Check for questions length
+                if (questions.length > maxQuestionsPerPage) {
+                    const nextPage = currentPage.replace(/(\d+)(\.html)$/, function(match, p1, p2) {
+                        return (parseInt(p1) + 1) + p2;
+                    });
+                    window.location.href = nextPage; // Redirect to next page if question count exceeds limit
+                }
             }
 
             questions.forEach(question => {
