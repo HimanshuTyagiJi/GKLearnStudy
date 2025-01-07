@@ -1,119 +1,772 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8">
-    <title>General Knowledge Quiz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://gklearnstudy.in/style.css"> 
-    <style>
-        .container { margin-top: 100px; }
-        .questions { 
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 15px;
-            border: 1px solid #ccc;
-            font-weight: bold;
-            font-size: 15px;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Ancient Indian History">
+    <meta name="description" content="Important information based on Ancient Indian History, including the Indus Valley Civilization, Vedic Period, Maurya Empire, Gupta Empire, and other significant events.">
+    <meta name="keywords" content="Ancient Indian History, Indus Valley Civilization, Vedic Period, Maurya Empire, Gupta Empire, Indian History in English">
+    <meta name="author" content="Himanshu">
+    <meta name="language" content="English">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph Meta Tags (for social media sharing) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ancient Indian History">
+    <meta property="og:description" content="Important information based on Ancient Indian History, from the Indus Valley Civilization to the Gupta Empire.">
+    <meta property="og:url" content="https://gklearnstudy.in/ancient-indian-history.html">
+    <meta property="og:image" content="https://gklearnstudy.in/images/ancient-history-thumbnail.jpg">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ancient Indian History">
+    <meta name="twitter:description" content="Important information based on Ancient Indian History, from the Indus Valley Civilization to the Gupta Empire.">
+    <meta name="twitter:image" content="https://gklearnstudy.in/images/ancient-history-thumbnail.jpg">
+    <meta name="twitter:site" content="@yourtwitterhandle">
+
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://gklearnstudy.in/ancient-indian-history.html">
+
+    <!-- Alternate Language Tags -->
+    <link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/प्राचीन-भारतीय-इतिहास.html">
+    <link rel="alternate" hreflang="en" href="https://gklearnstudy.in/ancient-indian-history.html">
+
+    <!-- Structured Data (Schema Markup) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://gklearnstudy.in/ancient-indian-history.html"
+      },
+      "headline": "Ancient Indian History",
+      "description": "Important information based on Ancient Indian History, including the Indus Valley Civilization, Vedic Period, Maurya Empire, Gupta Empire.",
+      "image": "https://gklearnstudy.in/images/ancient-history-thumbnail.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "Himanshu"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GK Learn Study",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://gklearnstudy.in/ancient-history-thumbnail.jpg"
         }
-        .options { font-weight: 100; list-style-type: none; padding: 0; }
+      },
+      "datePublished": "2025-01-06",
+      "dateModified": "2025-01-06"
+    }
+    </script>
+
+    <!-- Additional Meta Tags -->
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Favicons -->
+    <link rel="icon" href="https://gklearnstudy.in/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://gklearnstudy.in/apple-touch-icon.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What was the lifeline of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Indus River"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was a major city of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mohenjo-Daro"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is another name for the Indus Valley Civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Harappan Civilization"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which metal was most used by the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copper"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "From which site was the statue of a dancing girl found?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mohenjo-Daro"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the largest site of the Indus Valley Civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dholavira"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Kalibangan famous for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Burnt brick construction"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which site of the Indus Valley Civilization is famous for being a port?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lothal"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What caused the decline of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Environmental changes"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which civilization is considered the oldest in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Indus Valley Civilization"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What type of script was used in the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pictographic script"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which site is famous for its drainage system in the Indus Valley Civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mohenjo-Daro"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which animal was considered sacred by the people of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cow"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What fabric was commonly used in the Indus Valley Civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cotton"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was the use of bullock carts in the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Freight transport"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which site was discovered first in the Indus Valley Civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Harappa"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What type of houses did the people of the Harappan civilization build?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Houses made of baked bricks"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Besides copper, which metal was used in the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bronze"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What were clay sculptures made for in the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Religious worship"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was the lifeline of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Indus River was central to the Harappan civilization, supporting its agricultural economy and trade."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was a major city of the Harappan civilization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mohenjo-Daro is one of the major cities of the Harappan civilization, known for its advanced urban planning."
+          }
+        },{
+  "@type": "Question",
+  "name": "What is another name for the Indus Valley Civilization?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The Indus Valley Civilization is also known as the Harappan Civilization, as its first site was discovered in Harappa."
+  }
+},
+{
+  "@type": "Question",
+  "name": "What metal was most commonly used by the Harappan people?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The Harappan people extensively used copper, which was found in their daily use items."
+  }
+},
+{
+  "@type": "Question",
+  "name": "From which site was the statue of a dancing girl found?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The famous statue of a dancing girl was obtained from Mohenjo-Daro."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Which is the largest site of the Indus Valley Civilization?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Dholavira is the largest site of the Indus Valley Civilization, located in present-day Gujarat."
+  }
+},
+{
+  "@type": "Question",
+  "name": "What is Kalibangan known for?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Kalibangan is famous for its burnt brick construction system and agricultural structures."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Which site of the Indus Valley Civilization is known for its port?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Lothal was a major port of the Indus Valley Civilization, significant for trade."
+  }
+},
+{
+  "@type": "Question",
+  "name": "What caused the decline of the Harappan Civilization?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The decline of the Harappan Civilization was due to environmental changes and the alteration of river courses."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Which civilization is considered the oldest in India?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The Indus Valley Civilization is regarded as the oldest and most organized civilization in India."
+  }
+},
+{
+  "@type": "Question",
+  "name": "What type of script was used in the Harappan Civilization?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A pictographic script was used in the Harappan Civilization, which has not yet been fully deciphered."
+  }
+}
+]
+}
+</script>
+<style>
+      .container{margin-top:100px;
+                }
+        .questions { 
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 0px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 15px;
+   
+        }
+    
+        .options {font-weight:100;
+            list-style-type: none;
+            padding: 0;
+        }
         .options li {
             padding: 10px;
             margin: 5px 0;
             cursor: pointer;
             border: 1px solid #ccc;
-            border-radius: 15px;
-            width: 300px;
+          border-radius:15px;
+          width:300px;
         }
-        .options li.correct { background-color: green; color: white; }
-        .options li.wrong { background-color: red; color: white; }
-        .explanation { display: none; margin-top: 10px; border-left: 5px solid green; padding-left: 10px; }
+        .options li.correct {
+            background-color: green;
+            color: white;
+        }
+        .options li.wrong {
+            background-color: red;
+            color: white;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            border-left: 5px solid green; /* Left green line */
+            padding-left: 10px;
+       
+        }
     </style>
+  <link rel="stylesheet" href="https://gklearnstudy.in/style.css"> 
 </head>
-<body>
+       <body>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+<li><a class="active" href="https://gklearnstudy.in/ancient-indian-history.html">Ancient Indian History</a></li>
+<li><a href='https://gklearnstudy.in/medieval-indian-history'>Medieval Indian History</a></li>
+<li><a href='https://gklearnstudy.in/modern-indian-history'>Modern Indian History</a></li>
+<li><a href='https://gklearnstudy.in/world-history'>World History</a></li>
+<li><a href="https://gklearnstudy.in/indian-government-and-constitution.html">Indian Government and Constitution</a></li>
+<li><a href="https://gklearnstudy.in/indian-economy.html">Indian Economy</a></li>
+<li><a href="https://gklearnstudy.in/environment-and-biodiversity.html">Environment and Biodiversity</a></li>
+<li><a href="https://gklearnstudy.in/indian-art-and-culture.html">Indian Art and Culture</a></li>
+<li><a href="https://gklearnstudy.in/physics.html">Physics</a></li>
+<li><a href='https://gklearnstudy.in/chemistry'>Chemistry</a></li>
+<li><a href="https://gklearnstudy.in/biology.html">Biology</a></li>
+<li><a href="https://gklearnstudy.in/computer.html">Computer</a></li>
+<li><a href="https://gklearnstudy.in/sanskrit.html">Sanskrit</a></li>
+<li><a href="https://gklearnstudy.in/books-and-authors.html">Books and Authors</a></li>
+<li><a href="https://gklearnstudy.in/sports-general-knowledge.html">Sports General Knowledge</a></li>
+<li><a href="https://gklearnstudy.in/famous-personalities.html">Famous Personalities</a></li>
+<li><a href="https://gklearnstudy.in/technology-and-inventions.html">Technology and Inventions</a></li>
+<li><a href="https://gklearnstudy.in/space-and-universe.html">Space and Universe</a></li>
+<li><a href="https://gklearnstudy.in/indian-geography.html">Indian Geography</a></li>
+<li><a href="https://gklearnstudy.in/world-geography.html">World Geography</a></li>
+<li><a href="https://gklearnstudy.in/indian-festivals-and-traditions.html">Indian Festivals and Traditions</a></li>
+<li><a href="https://gklearnstudy.in/world-organizations.html">World Organizations</a></li>
+<li><a href="https://gklearnstudy.in/international-relations.html">International Relations</a></li>
+<li><a href="https://gklearnstudy.in/awards-and-honors.html">Awards and Honors</a></li>
+<li><a href="https://gklearnstudy.in/current-affairs.html">Current Affairs</a></li>
+<li><a href="https://gklearnstudy.in/indian-defense.html">Indian Defense</a></li>
+<li><a href="https://gklearnstudy.in/important-dates-and-events.html">Important Dates and Events</a></li>
+<li><a href="https://gklearnstudy.in/transport-and-communication.html">Transport and Communication</a></li>
+<li><a href="https://gklearnstudy.in/famous-monuments.html">Famous Monuments</a></li>
+<li><a href="https://gklearnstudy.in/wildlife-and-national-parks.html">Wildlife and National Parks</a></li>
+<li><a href="https://gklearnstudy.in/rivers-and-lakes.html">Rivers and Lakes</a></li>
+<li><a href="https://gklearnstudy.in/disasters-and-accidents.html">Disasters and Accidents</a></li>
+<li><a href="https://gklearnstudy.in/science-and-technology.html">Science and Technology</a></li>
+<li><a href="https://gklearnstudy.in/mathematical-general-knowledge.html">Mathematical General Knowledge</a></li>
+
+    </ul>
     <div class="container">
-        <div id="link-container"></div>
+        <button style="boder:1px;border-radius:10px;margin:10px;float:right !important;"><a href="https://gklearnstudy.in/प्राचीन-भारतीय-इतिहास/page2.html">🌐 हिन्दी</a></button>
+      <div class="questions">
+    <h3>What was the lifeline of the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Indus</li>
+        <li data-correct="false">Ganges</li>
+        <li data-correct="false">Saraswati</li>
+        <li data-correct="false">Yamuna</li>
+    </ul>
+    <p class="explanation">The Indus River was central to the Harappan civilization, supporting its agricultural economy and trade.</p>
+</div>
+<div class="questions">
+    <h3>Which was a major city of the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Mohenjo-Daro</li>
+        <li data-correct="false">Pataliputra</li>
+        <li data-correct="false">Kashi</li>
+        <li data-correct="false">Magadh</li>
+    </ul>
+    <p class="explanation">Mohenjo-Daro was a major city of the Harappan civilization, famous for its urban planning.</p>
+</div>
+<div class="questions">
+    <h3>What is another name for the Indus Valley Civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Harappan Civilization</li>
+        <li data-correct="false">Vedic Civilization</li>
+        <li data-correct="false">Mauryan Civilization</li>
+        <li data-correct="false">Gupta Civilization</li>
+    </ul>
+    <p class="explanation">The Indus Valley Civilization is also known as the Harappan Civilization because its first site was discovered in Harappa.</p>
+</div>
+<div class="questions">
+    <h3>What metal was predominantly used by the people of the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Copper</li>
+        <li data-correct="false">Iron</li>
+        <li data-correct="false">Gold</li>
+        <li data-correct="false">Silver</li>
+    </ul>
+    <p class="explanation">The people of the Harappan civilization extensively used copper, which was found in their daily use items.</p>
+</div>
+<div class="questions">
+    <h3>From which site was the statue of a dancing girl found?</h3>
+    <ul class="options">
+        <li data-correct="true">Mohenjo-Daro</li>
+        <li data-correct="false">Harappa</li>
+        <li data-correct="false">Lothal</li>
+        <li data-correct="false">Dholavira</li>
+    </ul>
+    <p class="explanation">The famous statue of a dancing girl was discovered at Mohenjo-Daro.</p>
+</div>
+<div class="questions">
+    <h3>Which is the largest site of the Indus Valley Civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Dholavira</li>
+        <li data-correct="false">Lothal</li>
+        <li data-correct="false">Kalibangan</li>
+        <li data-correct="false">Mohenjo-Daro</li>
+    </ul>
+    <p class="explanation">Dholavira is the largest site of the Indus Valley Civilization, located in present-day Gujarat.</p>
+</div>
+<div class="questions">
+    <h3>What is Kalibangan famous for?</h3>
+    <ul class="options">
+        <li data-correct="true">Burnt brick construction system</li>
+        <li data-correct="false">Canal system</li>
+        <li data-correct="false">Iron tools</li>
+        <li data-correct="false">Gold ornaments</li>
+    </ul>
+    <p class="explanation">Kalibangan is famous for its burnt brick construction system and agricultural structure.</p>
+</div>
+<div class="questions">
+    <h3>Which site of the Indus Valley Civilization is famous for being a port?</h3>
+    <ul class="options">
+        <li data-correct="true">Lothal</li>
+        <li data-correct="false">Harappa</li>
+        <li data-correct="false">Mohenjo-Daro</li>
+        <li data-correct="false">Dholavira</li>
+    </ul>
+    <p class="explanation">Lothal was a major port of the Indus Valley Civilization, significant for trade.</p>
+</div>
+<div class="questions">
+    <h3>What caused the decline of the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Environmental changes</li>
+        <li data-correct="false">Invasions</li>
+        <li data-correct="false">Drought</li>
+        <li data-correct="false">Epidemics</li>
+    </ul>
+    <p class="explanation">The decline of the Harappan civilization was due to environmental changes and river course alterations.</p>
+</div>
+<div class="questions">
+    <h3>Which civilization is considered the oldest in India?</h3>
+    <ul class="options">
+        <li data-correct="true">Indus Valley Civilization</li>
+        <li data-correct="false">Vedic Civilization</li>
+        <li data-correct="false">Mauryan Civilization</li>
+        <li data-correct="false">Gupta Civilization</li>
+    </ul>
+    <p class="explanation">The Indus Valley Civilization is considered the oldest and most organized civilization in India.</p>
+</div>
+<div class="questions">
+    <h3>What type of script was used in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Pictographic script</li>
+        <li data-correct="false">Devanagari script</li>
+        <li data-correct="false">Brahmi script</li>
+        <li data-correct="false">Sanskrit script</li>
+    </ul>
+    <p class="explanation">The Harappan civilization used pictographic script, which has not been fully deciphered yet.</p>
+</div>
+<div class="questions">
+    <h3>Which site is famous for the drainage system of the Indus Valley Civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Mohenjo-Daro</li>
+        <li data-correct="false">Lothal</li>
+        <li data-correct="false">Harappa</li>
+        <li data-correct="false">Dholavira</li>
+    </ul>
+    <p class="explanation">Mohenjo-Daro is famous for its advanced drainage system, an excellent example of urban planning.</p>
+</div>
+<div class="questions">
+    <h3>Which animal was considered sacred by the people of the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Cow</li>
+        <li data-correct="false">Elephant</li>
+        <li data-correct="false">Bull</li>
+        <li data-correct="false">Goat</li>
+    </ul>
+    <p class="explanation">The people of the Harappan civilization considered the cow sacred, which was part of their religious and cultural life.</p>
+</div>
+<div class="questions">
+    <h3>What fabric was predominantly used in the Indus Valley Civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Cotton</li>
+        <li data-correct="false">Silk</li>
+        <li data-correct="false">Wool</li>
+        <li data-correct="false">Jute</li>
+    </ul>
+    <p class="explanation">Cotton was the primary fabric used in the Indus Valley Civilization, which was the main textile material of that time.</p>
+</div>
+<div class="questions">
+    <h3>What was the bullock cart used for in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Freight transport</li>
+        <li data-correct="false">Warfare</li>
+        <li data-correct="false">Travel</li>
+        <li data-correct="false">Animal husbandry</li>
+    </ul>
+    <p class="explanation">The bullock cart was mainly used for freight transport in the Harappan civilization.</p>
+</div>
+<div class="questions">
+    <h3>Which was the first site discovered in the Indus Valley Civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Harappa</li>
+        <li data-correct="false">Mohenjo-Daro</li>
+        <li data-correct="false">Lothal</li>
+        <li data-correct="false">Kalibangan</li>
+    </ul>
+    <p class="explanation">Harappa was the first site discovered in the Indus Valley Civilization by archaeologists.</p>
+</div>
+<div class="questions">
+    <h3>What type of houses did the people of the Harappan civilization build?</h3>
+    <ul class="options">
+        <li data-correct="true">Built of baked bricks</li>
+        <li data-correct="false">Made of wood</li>
+        <li data-correct="false">Made of stone</li>
+        <li data-correct="false">Made of mud</li>
+    </ul>
+    <p class="explanation">The people of the Harappan civilization built houses of baked bricks, which reflects their advanced construction skills.</p>
+</div>
+<div class="questions">
+    <h3>Besides copper, which metal was used in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Bronze</li>
+        <li data-correct="false">Iron</li>
+        <li data-correct="false">Gold</li>
+        <li data-correct="false">Silver</li>
+    </ul>
+    <p class="explanation">In addition to copper, bronze was also used in the Harappan civilization, which was made as an alloy.</p>
+</div>
+<div class="questions">
+    <h3>For what purpose were clay idols made in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Religious worship</li>
+        <li data-correct="false">Decoration</li>
+        <li data-correct="false">Trade</li>
+        <li data-correct="false">Collection</li>
+    </ul>
+    <p class="explanation">Clay idols were primarily made for religious worship.</p>
+</div>
+<div class="questions">
+    <h3>Which textile industry developed in the Indus Valley civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Textile industry</li>
+        <li data-correct="false">Silk industry</li>
+        <li data-correct="false">Jute industry</li>
+        <li data-correct="false">Leather industry</li>
+    </ul>
+    <p class="explanation">The textile industry developed in the Indus Valley civilization, with cotton textiles being prominent.</p>
+</div>
+<div class="questions">
+    <h3>What type of currency was used in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">No currency was used</li>
+        <li data-correct="false">Gold currency</li>
+        <li data-correct="false">Silver currency</li>
+        <li data-correct="false">Copper currency</li>
+    </ul>
+    <p class="explanation">The Harappan civilization used a barter system and did not use currency.</p>
+</div>
+<div class="questions">
+    <h3>Which was the main trading port of the Indus Valley civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Lothal</li>
+        <li data-correct="false">Dholavira</li>
+        <li data-correct="false">Mohenjo-Daro</li>
+        <li data-correct="false">Harappa</li>
+    </ul>
+    <p class="explanation">Lothal was the main trading port of the Indus Valley civilization, located in Gujarat.</p>
+</div>
+<div class="questions">
+    <h3>What type of agriculture was practiced in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Irrigation-based agriculture</li>
+        <li data-correct="false">Rainfed agriculture</li>
+        <li data-correct="false">Shifting cultivation</li>
+        <li data-correct="false">Slash-and-burn agriculture</li>
+    </ul>
+    <p class="explanation">Irrigation-based agriculture was practiced in the Harappan civilization, which involved the use of canals and wells.</p>
+</div>
+<div class="questions">
+    <h3>Which deity was worshiped in the Indus Valley civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Pashupati</li>
+        <li data-correct="false">Indra</li>
+        <li data-correct="false">Vishnu</li>
+        <li data-correct="false">Shiva</li>
+    </ul>
+    <p class="explanation">In the Indus Valley civilization, Pashupati was worshiped, who is considered an early form of Shiva.</p>
+</div>
+<div class="questions">
+    <h3>What was the main source of income in the Indus Valley civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Agriculture</li>
+        <li data-correct="false">Trade</li>
+        <li data-correct="false">Hunting</li>
+        <li data-correct="false">Labor</li>
+    </ul>
+    <p class="explanation">Agriculture was the main source of income in the Indus Valley civilization, with wheat and barley cultivation being prominent.</p>
+</div>
+<div class="questions">
+    <h3>What type of clay pots were made in the Harappan civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Painted pottery</li>
+        <li data-correct="false">Raw clay pots</li>
+        <li data-correct="false">Metal pots</li>
+        <li data-correct="false">Wooden pots</li>
+    </ul>
+    <p class="explanation">Painted pottery, i.e., decorated clay pots, was a characteristic of the Harappan civilization.</p>
+</div>
+<div class="questions">
+    <h3>Which site of the Harappan civilization is famous for its water reservoirs?</h3>
+    <ul class="options">
+        <li data-correct="true">Dholavira</li>
+        <li data-correct="false">Mohenjo-daro</li>
+        <li data-correct="false">Lothal</li>
+        <li data-correct="false">Kalibangan</li>
+    </ul>
+    <p class="explanation">Dholavira is famous for its water reservoirs, showcasing advanced water conservation techniques.</p>
+</div>
+<div class="questions">
+    <h3>In the Harappan civilization, what ratio was used for brick construction?</h3>
+    <ul class="options">
+        <li data-correct="true">1:2:4</li>
+        <li data-correct="false">1:1:2</li>
+        <li data-correct="false">1:3:5</li>
+        <li data-correct="false">2:4:6</li>
+    </ul>
+    <p class="explanation">Bricks in the Harappan civilization were made in a ratio of 1:2:4, demonstrating their advanced construction techniques.</p>
+</div>
+<div class="questions">
+    <h3>What type of plow was used in Kalibangan?</h3>
+    <ul class="options">
+        <li data-correct="true">Wooden plow</li>
+        <li data-correct="false">Iron plow</li>
+        <li data-correct="false">Stone plow</li>
+        <li data-correct="false">Copper plow</li>
+    </ul>
+    <p class="explanation">A wooden plow was used in Kalibangan, indicating the development of agricultural tools.</p>
+</div>
+<div class="questions">
+    <h3>What type of stone tools were used in the Indus Valley civilization?</h3>
+    <ul class="options">
+        <li data-correct="true">Polished stone</li>
+        <li data-correct="false">Raw stone</li>
+        <li data-correct="false">Iron</li>
+        <li data-correct="false">Metal mixed stone</li>
+    </ul>
+    <p class="explanation">The tools of the Indus Valley civilization were made of polished stone, reflecting the artisans' skills.</p>
+</div>
 
-        <div class="questions">
-            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
-            <ul class="options">
-                <li data-correct="true">Indus</li>
-                <li data-correct="false">Ganga</li>
-                <li data-correct="false">Saraswati</li>
-                <li data-correct="false">Yamuna</li>
-            </ul>
-            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
-        </div>  <div class="questions">
-            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
-            <ul class="options">
-                <li data-correct="true">Indus</li>
-                <li data-correct="false">Ganga</li>
-                <li data-correct="false">Saraswati</li>
-                <li data-correct="false">Yamuna</li>
-            </ul>
-            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
-        </div>  <div class="questions">
-            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
-            <ul class="options">
-                <li data-correct="true">Indus</li>
-                <li data-correct="false">Ganga</li>
-                <li data-correct="false">Saraswati</li>
-                <li data-correct="false">Yamuna</li>
-            </ul>
-            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
+  <div class="paginations"></div>
+<hr>
+ <div class="important_link">
+          <br>
+          <p style="font-size:24px;">Important Links</p>
+
+          <div id="links-container">
+            <ul id="links-list"></ul>
+          </div>
         </div>
-
-        <div class="paginations"></div>
-        <hr>
-
+      
         <footer>
-            <div class="custom-row">
-                <div class="custom-column"><b>Follow Us</b>
-                    <div id="social-links" style="display: flex; gap: 10px; justify-content: center;"></div>
-                </div>
-                <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
-                <div class="custom-column"><p id="my-paragraph"></p></div>
+          <div class="custom-row">
+            <div class="custom-column"><b>Follow Us</b>
+              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
             </div>
+            <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
         </footer>
+        <script src="https://gklearnstudy.in/menusearch.js"></script>
+        <script src="https://gklearnstudy.in/script.js"></script>
+        <script src="https://gklearnstudy.in/search.js"></script>
+        <script src="https://gklearnstudy.in/gk-quiz/ancient.js"></script>
 
-        <script>
-            const questions = document.querySelectorAll('.questions');
-            const maxQuestionsPerPage = 1; // Set your limit here
 
-            // Check if the page has been visited before
-            if (!sessionStorage.getItem('visited')) {
-                sessionStorage.setItem('visited', 'true');
-            } else {
-                // Redirect if more than 1 visit (meaning refresh)
-                window.location.href = "nextPage.html"; // Change this to your actual next page URL
-            }
+<script>
+    const questions = document.querySelectorAll('.questions');
 
-            if (questions.length > maxQuestionsPerPage) {
-                window.location.href = "nextPage.html"; // Redirect to next page if question count exceeds limit
-            }
+    questions.forEach(questions => {
+        const options = questions.querySelectorAll('.options li');
+        const explanation = questions.querySelector('.explanation');
 
-            questions.forEach(question => {
-                const options = question.querySelectorAll('.options li');
-                const explanation = question.querySelector('.explanation');
-
-                options.forEach(option => {
-                    option.addEventListener('click', () => {
-                        options.forEach(opt => { opt.style.pointerEvents = 'none'; });
-
-                        if (option.getAttribute('data-correct') === 'true') {
-                            option.classList.add('correct');
-                        } else {
-                            option.classList.add('wrong');
-                            options.forEach(opt => {
-                                if (opt.getAttribute('data-correct') === 'true') {
-                                    opt.classList.add('correct');
-                                }
-                            });
-                        }
-                        explanation.style.display = 'block';
-                    });
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // Disable all options after the first click
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none'; // Prevent further clicks
                 });
+
+                // Check if the clicked option is correct
+                if (option.getAttribute('data-correct') === 'true') {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('wrong');
+                    // Highlight the correct answer
+                    options.forEach(opt => {
+                        if (opt.getAttribute('data-correct') === 'true') {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+                explanation.style.display = 'block'; // Show explanation
             });
-        </script>
-    </div>
+        });
+    });
+</script>
 </body>
 </html>
