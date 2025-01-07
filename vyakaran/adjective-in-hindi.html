@@ -15,33 +15,12 @@
         <meta name="twitter:title" content="विशेषण - हिंदी व्याकरण">
         <meta name="twitter:description" content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।">
         <meta name="twitter:image" content="URL_of_the_image">
-        <link rel="stylesheet" href="..\style.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
         <title>विशेषण - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
     </head>
     
   <body> 
-    <main class="container">
-
-        <form id="searchForm" onsubmit="performSearch(event);">
-          <div class="search-container">
-            <span class="search-icon" id="searchIcon">
-              <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-            </span>
-            <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
-              oninput="updateSuggestions(event)">
-            <button type="button" id="searchButton" onclick="performSearch()">Search</button>
-          </div>
-          <div id="suggestions" class="suggestions-list"></div>
-        </form>
-    
-        <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
-          <div class="modal1-content">
-            <span class="close" onclick="closeModal1(event)">&times;</span>
-            <h2>Search Results</h2>
-            <div id="results"></div>
-          </div>
-        </div>
-      </main>
+   
 
   <button class="menu-toggle" onclick="toggleMenu()">➤</button>
   <ul class="menu-list" id="menuList">
@@ -95,7 +74,13 @@
 </div>
 
 
-
+ <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
         <div class="container"><div class="grid-wrapper">
           <article class="half-left">
             <h1 id="विशेषण– परिभाषा, भेद और उदाहरण"><b class="color-content2">विशेषण– परिभाषा, भेद और उदाहरण</b></h1> <br>
@@ -696,7 +681,7 @@
       </div><br>
         
         <at>पढ़ें सम्पूर्ण हिंदी व्याकरण</at>
-        <table id="Table" style="border-collapse: collapse; width: 100%;">
+        <table id="Table" style="border-collapse: collapse; width: 100%;text-align:left">
   
           <style>
             
@@ -711,7 +696,7 @@
     <tbody>
         <tr>
             <td>
-                <a href="..\vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
+                <a href="https://gklearnstudy.in/vyakaran-language.html"><li>भाषा और व्याकरण</li></a>
             </td>
             <td>
                 <a href="phonology-in-hindi.html"><li>वर्ण-विचार</li></a>
@@ -850,9 +835,9 @@
   </table>
   
   <div class="important_link"><br><br><p style="font-size:24px;" >Important Links</p><br><div id="links-container"><ul id="links-list"></ul></div></div><hr> <footer><div class="custom-row"> <div class="custom-column"> <b>Follow Us</b><div id="image-links"></div></div><div class="custom-column"><button onclick="goToUrl()">Contact</button></div><div class="custom-column"><p id="my-paragraph"></p></div></div></footer>
-  <script src="..\script.js"></script>
-            <script src="..\search.js"></script>
-            <script src="..\menusearch1.js"></script>
+  <script src="https://gklearnstudy.in/script.js"></script>
+            <script src="https://gklearnstudy.in/search.js"></script>
+            <script src="https://gklearnstudy.in/menusearch1.js"></script>
            
   </body>
   </html>
