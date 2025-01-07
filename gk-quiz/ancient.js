@@ -92,9 +92,12 @@ function renderPagination(currentPage, totalPages) {
     const paginationContainer = document.querySelector('.paginations');
     paginationContainer.innerHTML = ''; // Clear previous pagination
 
+    // Check if the URL does not contain 'page'
+    const baseLink = url.includes('page') ? `https://gklearnstudy.in/gk-quiz/ancient-indian-history/page` : `https://gklearnstudy.in/gk-quiz/ancient-indian-history`;
+
     // Check if on the first page
     const firstPageLink = document.createElement('a');
-    firstPageLink.href = currentPage === 1 ? `page1` : `/page1`; // Add '/' if not on the first page
+    firstPageLink.href = `${baseLink}/page1`;
     firstPageLink.innerText = 'First';
     firstPageLink.className = 'button';
     if (currentPage === 1) {
@@ -119,7 +122,7 @@ function renderPagination(currentPage, totalPages) {
     // Create page links
     for (let i = startPage; i <= endPage; i++) {
         const pageLink = document.createElement('a');
-        pageLink.href = (i === currentPage) ? `page${i}` : `/page${i}`; // Add '/' for other pages
+        pageLink.href = `${baseLink}/page${i}`;
         pageLink.innerText = i;
         pageLink.className = 'button';
         if (i === currentPage) {
@@ -130,7 +133,7 @@ function renderPagination(currentPage, totalPages) {
 
     // Check if on the last page
     const lastPageLink = document.createElement('a');
-    lastPageLink.href = currentPage === totalPages ? `page${totalPages}` : `/page${totalPages}`; // Add '/' if not on the last page
+    lastPageLink.href = `${baseLink}/page${totalPages}`;
     lastPageLink.innerText = 'Last';
     lastPageLink.className = 'button';
     if (currentPage === totalPages) {
