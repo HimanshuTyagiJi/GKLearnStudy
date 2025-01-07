@@ -94,7 +94,7 @@ function renderPagination(currentPage, totalPages) {
 
     // Check if on the first page
     const firstPageLink = document.createElement('a');
-    firstPageLink.href = `page1`;
+    firstPageLink.href = currentPage === 1 ? `page1` : `/page1`; // Add '/' if not on the first page
     firstPageLink.innerText = 'First';
     firstPageLink.className = 'button';
     if (currentPage === 1) {
@@ -119,7 +119,7 @@ function renderPagination(currentPage, totalPages) {
     // Create page links
     for (let i = startPage; i <= endPage; i++) {
         const pageLink = document.createElement('a');
-        pageLink.href = `page${i}`;
+        pageLink.href = (i === currentPage) ? `page${i}` : `/page${i}`; // Add '/' for other pages
         pageLink.innerText = i;
         pageLink.className = 'button';
         if (i === currentPage) {
@@ -130,7 +130,7 @@ function renderPagination(currentPage, totalPages) {
 
     // Check if on the last page
     const lastPageLink = document.createElement('a');
-    lastPageLink.href = `page${totalPages}`;
+    lastPageLink.href = currentPage === totalPages ? `page${totalPages}` : `/page${totalPages}`; // Add '/' if not on the last page
     lastPageLink.innerText = 'Last';
     lastPageLink.className = 'button';
     if (currentPage === totalPages) {
