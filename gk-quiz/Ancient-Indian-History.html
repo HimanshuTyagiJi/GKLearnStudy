@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>General Knowledge Quiz</title>
-    <meta name="description" content="Test your knowledge with our comprehensive General Knowledge quiz. Explore a wide range of questions, answers, explanations, examples, images, and videos.">
-    <meta property="youtube:channel" content="">
-    <meta property="instagram:profile" content="">
-    <meta name="copyright" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://gklearnstudy.in/style.css"> 
     <style>
@@ -34,14 +30,6 @@
     </style>
 </head>
 <body>
-    <sidebar>
-        <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-        <ul class="menu-list" id="menuList">
-            <li><a class="active" href="Ancient-Indian-History.html">Ancient Indian History</a></li>
-            <!-- Other menu items -->
-        </ul>
-    </sidebar>
-
     <div class="container">
         <div id="link-container"></div>
 
@@ -54,7 +42,7 @@
                 <li data-correct="false">Yamuna</li>
             </ul>
             <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
-        </div> <div class="questions">
+        </div>  <div class="questions">
             <h3>Which river was the lifeline of the Harappan Civilization?</h3>
             <ul class="options">
                 <li data-correct="true">Indus</li>
@@ -63,7 +51,7 @@
                 <li data-correct="false">Yamuna</li>
             </ul>
             <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
-        </div> <div class="questions">
+        </div>  <div class="questions">
             <h3>Which river was the lifeline of the Harappan Civilization?</h3>
             <ul class="options">
                 <li data-correct="true">Indus</li>
@@ -77,14 +65,6 @@
         <div class="paginations"></div>
         <hr>
 
-        <div class="important_link">
-            <br>
-            <p style="font-size: 24px;">Important Links</p>
-            <div id="links-container">
-                <ul id="links-list"></ul>
-            </div>
-        </div>
-
         <footer>
             <div class="custom-row">
                 <div class="custom-column"><b>Follow Us</b>
@@ -94,27 +74,21 @@
                 <div class="custom-column"><p id="my-paragraph"></p></div>
             </div>
         </footer>
-        
-        <script src="https://gklearnstudy.in/menusearch.js"></script>
-        <script src="https://gklearnstudy.in/script.js"></script>
-        <script src="https://gklearnstudy.in/search.js"></script>
-        <script src="https://gklearnstudy.in/gkquiz.js"></script>
-        
+
         <script>
             const questions = document.querySelectorAll('.questions');
-            const maxQuestionsPerPage = 1;
-            const currentPage = window.location.href;
+            const maxQuestionsPerPage = 1; // Set your limit here
 
             // Check if the page has been visited before
             if (!sessionStorage.getItem('visited')) {
                 sessionStorage.setItem('visited', 'true');
-                // Check for questions length
-                if (questions.length > maxQuestionsPerPage) {
-                    const nextPage = currentPage.replace(/(\d+)(\.html)$/, function(match, p1, p2) {
-                        return (parseInt(p1) + 1) + p2;
-                    });
-                    window.location.href = nextPage; // Redirect to next page if question count exceeds limit
-                }
+            } else {
+                // Redirect if more than 1 visit (meaning refresh)
+                window.location.href = "nextPage.html"; // Change this to your actual next page URL
+            }
+
+            if (questions.length > maxQuestionsPerPage) {
+                window.location.href = "nextPage.html"; // Redirect to next page if question count exceeds limit
             }
 
             questions.forEach(question => {
