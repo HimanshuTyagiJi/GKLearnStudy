@@ -1,6 +1,6 @@
 // 1. फोल्डर और उनके प्रश्नों की संख्या का कॉन्फ़िगरेशन
 const folderPageConfig = {
-    'gk-quiz/prachin.html': 20, // प्रति पृष्ठ 20 प्रश्न
+    'gk-quiz/Ancient-Indian-History.html': 20, // प्रति पृष्ठ 20 प्रश्न
     'gk-quiz/ancient.html': 10, // प्रति पृष्ठ 10 प्रश्न
     'gk-quiz/hello.html': 9,    // प्रति पृष्ठ 9 प्रश्न
 };
