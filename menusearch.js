@@ -162,7 +162,7 @@ logocontainer1.appendChild(logoText);
 
 // Create the brand link
 const brandLink = document.createElement('a');
-brandLink.href = './index.html';
+brandLink.href = 'https://gklearnstudy.in';
 brandLink.className = 'brand';
 brandLink.appendChild(logocontainer1); // Append the logo container1 to the brand link
 
