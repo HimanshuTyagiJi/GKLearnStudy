@@ -1,63 +1,118 @@
-// URL से पृष्ठ संख्या प्राप्त करने के लिए फ़ंक्शन
-function getPageNumber() {
-    // वर्तमान URL से पृष्ठ संख्या प्राप्त करें
-    const url = window.location.href; // वर्तमान पृष्ठ का URL
-    const pageMatch = url.match(/page(\d+)/); // URL में 'page' के बाद की संख्या निकालें
+// 1. फोल्डर और उनके प्रश्नों की संख्या का कॉन्फ़िगरेशन
+const folderPageConfig = {
+    'gk-quiz/prachin.html': 20, // प्रति पृष्ठ 20 प्रश्न
+    'gk-quiz/ancient.html': 10, // प्रति पृष्ठ 10 प्रश्न
+    'gk-quiz/hello.html': 9,    // प्रति पृष्ठ 9 प्रश्न
+};
 
-    // यदि पृष्ठ संख्या मिली तो उसे लौटाएं, अन्यथा डिफ़ॉल्ट 1 लौटाएं
-    return pageMatch ? parseInt(pageMatch[1]) : 1;
+// 2. URL से फोल्डर का नाम प्राप्त करने का फ़ंक्शन
+function getFolderName() {
+    const url = window.location.pathname; // वर्तमान URL का path प्राप्त करें
+    const folderMatch = url.match(/gk-quiz\/[^/]+/); // 'gk-quiz' और उसके बाद का नाम निकालें
+    return folderMatch ? folderMatch[0] : null; // फोल्डर का नाम लौटाएं या null
 }
 
-// प्रारंभिक संख्या से क्रमांकित प्रश्नों के लिए फ़ंक्शन
+// 3. URL से पृष्ठ संख्या प्राप्त करने का फ़ंक्शन
+function getPageNumber() {
+    const url = window.location.href; // वर्तमान पृष्ठ का URL
+    const pageMatch = url.match(/page(\d+)/); // 'page' के बाद की संख्या निकालें
+    return pageMatch ? parseInt(pageMatch[1]) : 1; // यदि संख्या मिले तो लौटाएं, अन्यथा 1
+}
+
+// 4. प्रारंभिक प्रश्न संख्या की गणना करने का फ़ंक्शन
+function calculateStartingNumber(folder, currentPage) {
+    const questionsPerPage = folderPageConfig[folder] || 20; // Default 20 प्रश्न
+    return (currentPage - 1) * questionsPerPage + 1; // प्रारंभिक संख्या की गणना
+}
+
+// 5. सभी प्रश्नों को क्रमांकित करने का फ़ंक्शन
 function autoNumberQuestions(startNumber) {
-    // सभी प्रश्नों को प्राप्त करें
-    const questions = document.querySelectorAll('.questions');
+    const questions = document.querySelectorAll('.questions'); // सभी प्रश्न प्राप्त करें
+    let questionNumber = startNumber; // प्रारंभिक संख्या सेट करें
 
-    // प्रारंभिक संख्या सेट करें
-    let questionNumber = startNumber;
-
-    // प्रत्येक प्रश्न के लिए क्रमांक सेट करें
     questions.forEach((question) => {
         question.querySelector('h3').textContent = `Q-${questionNumber}: ${question.querySelector('h3').textContent}`;
         questionNumber++;
     });
 }
 
-// मुख्य कोड
-const pageNumber = getPageNumber();
-let startingNumber = 1; // Default starting number
+// 6. पेजिनेशन रेंडर करने का फ़ंक्शन
+function renderPagination(currentPage, totalPages) {
+    const paginationContainer = document.querySelector('.paginations');
+    paginationContainer.innerHTML = ''; // पहले के पेजिनेशन को साफ करें
 
-// पृष्ठ संख्या के आधार पर प्रारंभिक संख्या सेट करें
-if (pageNumber === 1) {
-    startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
-} else if (pageNumber === 2) {
-    startingNumber = 26; // page2 के लिए 5 से प्रारंभ करें
-} else {
-    startingNumber = (pageNumber - 1) * 26 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
+    // पहली पृष्ठ लिंक
+    const firstPageLink = document.createElement('a');
+    firstPageLink.href = `?page1`;
+    firstPageLink.innerText = 'First';
+    firstPageLink.className = 'button';
+    if (currentPage === 1) {
+        firstPageLink.classList.add('active');
+    }
+    paginationContainer.appendChild(firstPageLink);
+
+    // पृष्ठ सीमा की गणना
+    const range = 2; // वर्तमान पृष्ठ के आसपास दिखाने वाले पृष्ठों की संख्या
+    let startPage = Math.max(2, currentPage - range);
+    let endPage = Math.min(totalPages - 1, currentPage + range);
+
+    // मध्य पृष्ठ लिंक
+    for (let i = startPage; i <= endPage; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = `?page${i}`;
+        pageLink.innerText = i;
+        pageLink.className = 'button';
+        if (i === currentPage) {
+            pageLink.classList.add('active');
+        }
+        paginationContainer.appendChild(pageLink);
+    }
+
+    // अंतिम पृष्ठ लिंक
+    const lastPageLink = document.createElement('a');
+    lastPageLink.href = `?page${totalPages}`;
+    lastPageLink.innerText = 'Last';
+    lastPageLink.className = 'button';
+    if (currentPage === totalPages) {
+        lastPageLink.classList.add('active');
+    }
+    paginationContainer.appendChild(lastPageLink);
 }
 
-// प्रश्नों को प्रदर्शित करें
-autoNumberQuestions(startingNumber);
+// 7. मुख्य कोड
+const currentFolder = getFolderName(); // फोल्डर का नाम प्राप्त करें
+const currentPage = getPageNumber();  // पृष्ठ संख्या प्राप्त करें
 
+if (!currentFolder) {
+    console.error('Folder name not found in the URL');
+} else {
+    const startingNumber = calculateStartingNumber(currentFolder, currentPage); // प्रारंभिक संख्या की गणना
+    autoNumberQuestions(startingNumber); // प्रश्नों को क्रमांकित करें
 
+    // कुल प्रश्न और पृष्ठ संख्या की गणना
+    const questionsPerPage = folderPageConfig[currentFolder];
+    const totalQuestions = 200; // उदाहरण के लिए कुल प्रश्न
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
 
+    renderPagination(currentPage, totalPages); // पेजिनेशन रेंडर करें
+}
 
- // Add CSS styles
+// 8. पेजिनेशन के लिए CSS
 const styles = `
     .paginations {
         justify-content: center;
         text-align: center;
         margin: 20px 0;
-        display: flex; /* Make the container flex */
-        flex-wrap: wrap; /* Allow wrapping */
+        display: flex;
+        flex-wrap: wrap;
     }
     .paginations a:link, 
     .paginations a:visited {
-        color: white; /* Make visited links white */
+        color: white;
     }
     .button {
         display: inline-block;
-        margin: 0 5px; /* Reduced margin for smaller screens */
+        margin: 0 5px;
         padding: 5px 10px;
         font-size: 16px;
         color: white;
@@ -74,74 +129,12 @@ const styles = `
         background-color: green;
     }
     .active {
-      
-        pointer-events: none; /* Disable click on active page */
+        pointer-events: none;
     }
 `;
 
-// Create a style element
+// CSS जोड़ें
 const styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
-
-// Total number of pages
-const totalPages = 20;
-
-// Get the current page from the URL
-const url = window.location.href;
-const currentPage = parseInt(url.match(/page(\d+)/)?.[1]) || 1;
-
-function renderPagination(currentPage, totalPages) {
-    const paginationContainer = document.querySelector('.paginations');
-    paginationContainer.innerHTML = ''; // Clear previous pagination
-
-    // Check if on the first page
-    const firstPageLink = document.createElement('a');
-    firstPageLink.href = `page1`;
-    firstPageLink.innerText = 'First';
-    firstPageLink.className = 'button';
-    if (currentPage === 1) {
-        firstPageLink.classList.add('active');
-    }
-    paginationContainer.appendChild(firstPageLink);
-
-    // Calculate the range of pages to show
-    const range = 2; // Number of pages to show around the current page
-    let startPage = Math.max(2, currentPage - range); // Start from 2 if not on the first page
-    let endPage = Math.min(totalPages - 1, currentPage + range); // End before last page if not on it
-
-    // Ensure the range is always 5 pages
-    if (endPage - startPage < 4) {
-        if (startPage === 2) {
-            endPage = Math.min(totalPages - 1, startPage + 4);
-        } else if (endPage === totalPages - 1) {
-            startPage = Math.max(2, endPage - 4);
-        }
-    }
-
-    // Create page links
-    for (let i = startPage; i <= endPage; i++) {
-        const pageLink = document.createElement('a');
-        pageLink.href = `page${i}`;
-        pageLink.innerText = i;
-        pageLink.className = 'button';
-        if (i === currentPage) {
-            pageLink.classList.add('active'); // Mark as active
-        }
-        paginationContainer.appendChild(pageLink);
-    }
-
-    // Check if on the last page
-    const lastPageLink = document.createElement('a');
-    lastPageLink.href = `page${totalPages}`;
-    lastPageLink.innerText = 'Last';
-    lastPageLink.className = 'button';
-    if (currentPage === totalPages) {
-        lastPageLink.classList.add('active');
-    }
-    paginationContainer.appendChild(lastPageLink);
-}
-
-// Render the pagination on page load
-renderPagination(currentPage, totalPages);
