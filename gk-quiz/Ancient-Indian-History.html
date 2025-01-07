@@ -1,1 +1,133 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>General Knowledge Quiz</title>
+    <meta name="description" content="Test your knowledge with our comprehensive General Knowledge quiz. Explore a wide range of questions, answers, explanations, examples, images, and videos.">
+    <meta property="youtube:channel" content="">
+    <meta property="instagram:profile" content="">
+    <meta name="copyright" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://gklearnstudy.in/style.css"> 
+    <style>
+        .container { margin-top: 100px; }
+        .questions { 
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .options { font-weight: 100; list-style-type: none; padding: 0; }
+        .options li {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            width: 300px;
+        }
+        .options li.correct { background-color: green; color: white; }
+        .options li.wrong { background-color: red; color: white; }
+        .explanation { display: none; margin-top: 10px; border-left: 5px solid green; padding-left: 10px; }
+    </style>
+</head>
+<body>
+    <sidebar>
+        <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+        <ul class="menu-list" id="menuList">
+            <li><a class="active" href="Ancient-Indian-History.html">Ancient Indian History</a></li>
+            <!-- Other menu items -->
+        </ul>
+    </sidebar>
+
+    <div class="container">
+        <div id="link-container"></div>
+
+        <div class="questions">
+            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
+            <ul class="options">
+                <li data-correct="true">Indus</li>
+                <li data-correct="false">Ganga</li>
+                <li data-correct="false">Saraswati</li>
+                <li data-correct="false">Yamuna</li>
+            </ul>
+            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
+        </div>
+
+<div class="questions">
+            <h3>Which river was the lifeline of the Harappan Civilization?</h3>
+            <ul class="options">
+                <li data-correct="true">Indus</li>
+                <li data-correct="false">Ganga</li>
+                <li data-correct="false">Saraswati</li>
+                <li data-correct="false">Yamuna</li>
+            </ul>
+            <p class="explanation">The Indus River was central to the Harappan Civilization, supporting its agricultural economy and trade.</p>
+        </div>
+      
+        <div class="paginations"></div>
+        <hr>
+
+        <div class="important_link">
+            <br>
+            <p style="font-size: 24px;">Important Links</p>
+            <div id="links-container">
+                <ul id="links-list"></ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="custom-row">
+                <div class="custom-column"><b>Follow Us</b>
+                    <div id="social-links" style="display: flex; gap: 10px; justify-content: center;"></div>
+                </div>
+                <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                <div class="custom-column"><p id="my-paragraph"></p></div>
+            </div>
+        </footer>
+        
+        <script src="https://gklearnstudy.in/menusearch.js"></script>
+        <script src="https://gklearnstudy.in/script.js"></script>
+        <script src="https://gklearnstudy.in/search.js"></script>
+        <script src="https://gklearnstudy.in/gkquiz.js"></script>
+        
+        <script>
+            const questions = document.querySelectorAll('.questions');
+            const maxQuestionsPerPage = 20;
+
+            if (questions.length > maxQuestionsPerPage) {
+                const currentPage = window.location.href;
+                const nextPage = currentPage.replace(/(\d+)(\.html)$/, function(match, p1, p2) {
+                    return (parseInt(p1) + 1) + p2;
+                });
+                window.location.href = nextPage; // Redirect to next page if question count exceeds limit
+            }
+
+            questions.forEach(question => {
+                const options = question.querySelectorAll('.options li');
+                const explanation = question.querySelector('.explanation');
+
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        options.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+                        if (option.getAttribute('data-correct') === 'true') {
+                            option.classList.add('correct');
+                        } else {
+                            option.classList.add('wrong');
+                            options.forEach(opt => {
+                                if (opt.getAttribute('data-correct') === 'true') {
+                                    opt.classList.add('correct');
+                                }
+                            });
+                        }
+                        explanation.style.display = 'block';
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
