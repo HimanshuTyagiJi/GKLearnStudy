@@ -1,6 +1,6 @@
 // Dynamic configuration for pages per folder
 const folderPageConfig = {
-    'gk-quiz/prachin.html': 20,  // प्राचीन में 20 प्रश्न प्रति पृष्ठ
+    'gk-quiz/ancient-indian-history.html': 20,  // प्राचीन में 20 प्रश्न प्रति पृष्ठ
     'gk-quiz/ancient.html': 10, // प्राचीन में 10 प्रश्न प्रति पृष्ठ
     'gk-quiz/hello.html': 9     // हेलो में 9 प्रश्न प्रति पृष्ठ
 };
