@@ -1,38 +1,42 @@
- <!DOCTYPE html>
-<html lang="en" >
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Test</title>
-  <link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
+    <meta name="keywords" content="test, subjects, Hindi, Computer science, quizzes, educational resources">
+    <meta name="author" content="Himanshu Tyagi">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Test Page - Explore Various Subjects and Resources">
+    <meta property="og:description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gklearnstudy.in/test">
+    <meta property="og:image" content="https:///gklearnstudy.in/image/test.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Test Page - Explore Various Subjects and Resources">
+    <meta name="twitter:description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
+    <meta name="twitter:image" content="https:///gklearnstudy.in/image/test.jpg">
+    <title>Test Page - Explore Various Subjects | Himanshu Tyagi</title>
+    <link rel="stylesheet" href="style.css">
 
 
 </head>
 <body></body>
-  <main class="container">
-
-    <form id="searchForm" onsubmit="performSearch(event);">
-      <div class="search-container">
-        <span class="search-icon" id="searchIcon">
-          <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-        </span>
-        <input type="text" id="searchInput" placeholder="Enter your search term" autocomplete="off"
-          oninput="updateSuggestions(event)">
-        <button type="button" id="searchButton" onclick="performSearch()">Search</button>
-      </div>
-      <div id="suggestions" class="suggestions-list"></div>
-    </form>
-
-    <div id="searchModal1" class="modal1" onclick="closeModal1(event)">
-      <div class="modal1-content">
-        <span class="close" onclick="closeModal1(event)">&times;</span>
-        <h2>Search Results</h2>
-        <div id="results"></div>
-      </div>
+ 
+<div class="container"> <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
     </div>
-  </main>
-<div class="container">
-
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+<img src="https://gklearnstudy.in/image/test.jpg" alt="Test Image" width="400px" height="auto">
   <style>
     .box {
       display: inline-block;
