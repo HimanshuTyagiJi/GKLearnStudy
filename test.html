@@ -7,9 +7,6 @@
     <meta name="keywords" content="test, subjects, Hindi, Computer science, quizzes, educational resources">
     <meta name="author" content="Himanshu Tyagi">
     <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="bingbot" content="index, follow">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Test Page - Explore Various Subjects and Resources">
@@ -23,72 +20,52 @@
     <meta name="twitter:title" content="Test Page - Explore Various Subjects and Resources">
     <meta name="twitter:description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
     <meta name="twitter:image" content="https://gklearnstudy.in/image/test.jpg">
-    <title>Test Page - Explore Various Subjects | Himanshu Tyagi</title>
+    
+    <title>Test Page - Explore Various Subjects</title>
     <link rel="stylesheet" href="style.css">
-
-
+    <style>
+        .box {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+            padding: 20px;
+            width: 200px;
+            border: 1px solid #a4c0fb;
+            border-radius: 10px;
+        }
+        .box:hover {
+            background-color: red;
+        }
+        .link-name {
+            color: black;
+            margin-top: 5px;
+        }
+        [data-theme="dark"] .link-name {
+            color: white;
+        }
+        .box:hover .link-name {
+            color: white;
+        }
+    </style>
 </head>
-<body></body>
- 
-<div class="container"> <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+<body>
+    <div class="container"> 
+        <button class="search-icon" id="searchBtn">
+            <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+        </button>
         <button class="back-icon" id="backBtn">←</button>
         <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
     </div>
     <ul id="suggestions" class="suggestions"></ul>
     <div id="results"></div>
-<img src="https://gklearnstudy.in/image/test.jpg" alt="Test Image" width="400px" height="auto">
-  <style>
-    .box {
-      display: inline-block;
-      text-align: center;
-      margin: 10px;
-  padding: 20px;
-      width: 200px;
-      
-      border: 1px solid #a4c0fb;
-      border-radius: 10px;
-    } .box:hover{background-color:red; .link-name{ color:white;}
-      }
+    <img src="https://gklearnstudy.in/image/test.jpg" alt="Test Image" width="400px" height="auto">
+    
+    <center>
+        <div class="box"><a href="GK-Quiz-Hindi-Test.html"><div class="link-name">Hindi</div></a></div>
+        <div class="box"><a href="Computer.html"><div class="link-name">Computer</div></a></div>
+    </center>
 
-    .link-name {color:black;
-      margin-top: 5px;
-    }
-    [data-theme="dark"]{ .link-name {color:white;
-      margin-top: 5px;
- } .box{border: 1px solid #f7c3c3;
-    }}
-  </style>
-<center>
-  <div  class="box"><a href="GK-Quiz-Hindi-Test.html"><div class="link-name">Hindi</div></a></div>
-  
-  <div  class="box"><a href=".html"><div class="link-name">Computer</div></a></div>
-
-  
-
-</center>
-  
-  
-
-
-
-
-
-
-
-<script src="search.js"></script>
-<script src="menusearch.js"></script>
-
-</div>
-</div>
+    <script src="search.js"></script>
+    <script src="menusearch.js"></script>
 </body>
 </html>
-
-
-
-
-
-        
-  
-
-       
-        
