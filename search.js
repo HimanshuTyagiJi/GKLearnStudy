@@ -2,7 +2,7 @@ let titles = [];
 
 function loadSitemap() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://gklearnstudy.in/sitemap.xml', true);
+    xhr.open('GET', 'https://gklearnstudy.in/searchsitemap.xml', true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const parser = new DOMParser();
