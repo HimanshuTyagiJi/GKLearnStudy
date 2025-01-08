@@ -2,7 +2,10 @@
  <url>
   <loc>https://www.example.com</loc>
   <lastmod>2023-11-23</lastmod>
-  <changefreq>monthly</changefreq>
+ <image:image>
+      <image:loc>https://www.yourwebsite.com/image1.jpg</loc>
+      <image:caption>A beautiful image of a cat</image:caption>
+    </image:image>
   <priority>0.8</priority>
   <name>Home Page</name>
   <about>This is the homepage of our website.</about>
