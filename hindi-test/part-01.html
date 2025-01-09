@@ -1,544 +1,568 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="This is an MCQ test webpage where multiple choice questions are provided to assess your knowledge on various topics.">
-    <meta name="keywords" content="MCQ, test, multiple choice questions, online quiz, assessment, knowledge test">
-    <meta name="author" content="">
+    <meta name="description" content="यह एक हिंदी टेस्ट पृष्ठ है, जिसमें बहुविकल्पीय प्रश्न (MCQ) दिए गए हैं। इसमें आपके हिंदी ज्ञान की परख की जाएगी।">
+    <meta name="keywords" content="हिंदी टेस्ट, MCQ, बहुविकल्पीय प्रश्न, हिंदी क्विज, ज्ञान परख, ऑनलाइन टेस्ट">
+    <meta name="author" content="Himanshu">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="MCQ Test Page">
-    <meta property="og:description" content="Participate in our MCQ test and evaluate your knowledge with a variety of multiple choice questions.">
+    <meta property="og:title" content="हिंदी टेस्ट भाग - 1">
+    <meta property="og:description" content="हमारे हिंदी टेस्ट में भाग लें और विभिन्न बहुविकल्पीय प्रश्नों के माध्यम से अपने हिंदी ज्ञान का मूल्यांकन करें।">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <link rel="stylesheet" href="./style.css">
-     <title>Hindi Test Part - 1</title>
+  
+    <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
+    <title>हिंदी टेस्ट भाग - 1</title>
 </head>
-<body> <div class="container">
-   <form id="quiz-form" style="display: none;"> <h3>Hindi Test Part - 01 </h3><div id="questions-container"></div><div id="timer">Time: 0:00</div><button type="submit" class="submit-btn" style="display: none;">Submit</button></form><div id="result"></div><button id="retry-btn" style="display: none;" onclick="retryQuiz()">Try Again</button><div id="startModal" class="modal"><div class="modal-content">
-    <center><h3>Some Rules of this Test</h3></center>
-        <p>1. The test consists of 50 questions.</p>
-        <p>2. The test will track the total time taken for all questions.</p>
-        <p>3. Once you move to the next question or skip a question, you cannot go back to previous questions.</p>
-        <p>4. You cannot skip the test while playing.</p>
-        <p>5. You will get points based on your correct answers.</p>
-    <center><button class="start-btn" onclick="startQuiz()">Start</button></center></div></div><div id="resultModal" class="modal"><div class="modal-content">
-            <h3>Quiz Results</h3>
-            <div id="resultContent"></div>
-            <button class="review-btn" onclick="reviewQuestions()">Review Questions</button>
-            <button class="retry-btn" onclick="retryQuiz()">Try Again</button></div></div>
+<body>
+    <div class="container">
+        <form id="quiz-form" style="display: none;">
+            <h3>हिंदी टेस्ट भाग - 01</h3>
+            <div id="questions-container"></div>
+            <div id="timer">समय: 0:00</div>
+            <button type="submit" class="submit-btn" style="display: none;">सबमिट करें</button>
+        </form>
+        <div id="result"></div>
+        <button id="retry-btn" style="display: none;" onclick="retryQuiz()">फिर से प्रयास करें</button>
+        <div id="startModal" class="modal">
+            <div class="modal-content">
+                <center><h3>इस टेस्ट के कुछ नियम</h3></center>
+                <p>1. इस टेस्ट में 50 प्रश्न होंगे।</p>
+                <p>2. यह टेस्ट सभी प्रश्नों के लिए कुल समय ट्रैक करेगा।</p>
+                <p>3. जब आप अगले प्रश्न पर जाएं या प्रश्न छोड़ें, तो आप पहले के प्रश्नों पर वापस नहीं जा सकते।</p>
+                <p>4. आप टेस्ट को बीच में छोड़ नहीं सकते।</p>
+                <p>5. सही उत्तर देने पर आपको अंक मिलेंगे।</p>
+                <center><button class="start-btn" onclick="startQuiz()">शुरू करें</button></center>
+            </div>
+        </div>
+        <div id="resultModal" class="modal">
+            <div class="modal-content">
+                <h3>क्विज परिणाम</h3>
+                <div id="resultContent"></div>
+                <button class="review-btn" onclick="reviewQuestions()">प्रश्नों की समीक्षा करें</button>
+                <button class="retry-btn" onclick="retryQuiz()">फिर से प्रयास करें</button>
+            </div>
+        </div>
 
-    <div id="review-questions"></div>
+        <div id="review-questions"></div>
+
+      
 
     <script>
        var totalSeconds = 0;
 var timerInterval;
 var userAnswers = [];
 var questions = [
-    
-
-
-    
-
-    {
-        "question": "प्रेमचंद के किस उपन्यास को 'हिंदी का पहला समाजवादी उपन्यास' कहा जाता है?",
+      {
+        "question": "‘गोदान’ उपन्यास में प्रमुख पात्र कौन है?",
         "options": [
-            { "text": "A. गोदान", "value": "a" },
-            { "text": "B. रंगभूमि", "value": "b" },
-            { "text": "C. कर्मभूमि", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'कर्मभूमि' को 'हिंदी का पहला समाजवादी उपन्यास' कहा जाता है।"
-    },
-    {
-        "question": "'गोदान' उपन्यास का नायक कौन है?",
-        "options": [
-            { "text": "A. गोपाल", "value": "a" },
+            { "text": "A. सूरदास", "value": "a" },
             { "text": "B. होरी", "value": "b" },
-            { "text": "C. माधव", "value": "c" }
+            { "text": "C. गोबर", "value": "c" }
         ],
         "correctOption": "b",
-        "explanation": "'गोदान' उपन्यास का नायक होरी है।"
+        "explanation": "‘गोदान’ उपन्यास में प्रमुख पात्र होरी है।"
     },
     {
-        "question": "'सूरज का सातवाँ घोड़ा' किस लेखक द्वारा लिखा गया है?",
+        "question": "‘प्रिय प्रवास’ किस प्रकार की रचना है?",
         "options": [
-            { "text": "A. मोहन राकेश", "value": "a" },
-            { "text": "B. धर्मवीर भारती", "value": "b" },
-            { "text": "C. फणीश्वरनाथ रेणु", "value": "c" }
+            { "text": "A. खंडकाव्य", "value": "a" },
+            { "text": "B. महाकाव्य", "value": "b" },
+            { "text": "C. गीत संग्रह", "value": "c" }
         ],
         "correctOption": "b",
-        "explanation": "'सूरज का सातवाँ घोड़ा' धर्मवीर भारती द्वारा लिखा गया है।"
+        "explanation": "‘प्रिय प्रवास’ एक महाकाव्य है।"
     },
     {
-        "question": "'मैला आँचल' उपन्यास का लेखक कौन है?",
+        "question": "‘गबन’ उपन्यास में किसकी कहानी है?",
         "options": [
-            { "text": "A. फणीश्वरनाथ रेणु", "value": "a" },
-            { "text": "B. यशपाल", "value": "b" },
-            { "text": "C. अमृतलाल नागर", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'मैला आँचल' उपन्यास के लेखक फणीश्वरनाथ रेणु हैं।"
-    },
-    {
-        "question": "'राग दरबारी' किसके द्वारा लिखा गया है?",
-        "options": [
-            { "text": "A. श्रीलाल शुक्ल", "value": "a" },
-            { "text": "B. धर्मवीर भारती", "value": "b" },
-            { "text": "C. मोहन राकेश", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'राग दरबारी' श्रीलाल शुक्ल द्वारा लिखा गया है।"
-    },
-    {
-        "question": "'अलगोझा' उपन्यास के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. फणीश्वरनाथ रेणु", "value": "a" },
-            { "text": "B. नागार्जुन", "value": "b" },
-            { "text": "C. निर्मल वर्मा", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'अलगोझा' उपन्यास के लेखक नागार्जुन हैं।"
-    },
-    {
-        "question": "'गबन' उपन्यास का मुख्य पात्र कौन है?",
-        "options": [
-            { "text": "A. झुनिया", "value": "a" },
-            { "text": "B. रतन", "value": "b" },
-            { "text": "C. रमा", "value": "c" }
+            { "text": "A. सामाजिक जीवन", "value": "a" },
+            { "text": "B. पारिवारिक समस्याएँ", "value": "b" },
+            { "text": "C. आर्थिक और नैतिक पतन", "value": "c" }
         ],
         "correctOption": "c",
-        "explanation": "'गबन' उपन्यास का मुख्य पात्र रमा है।"
+        "explanation": "‘गबन’ उपन्यास में आर्थिक और नैतिक पतन की कहानी है।"
     },
     {
-        "question": "'नरक के पंक्षी' किसके द्वारा लिखा गया है?",
+        "question": "‘पुष्प की अभिलाषा’ कविता के रचयिता कौन हैं?",
         "options": [
-            { "text": "A. यशपाल", "value": "a" },
-            { "text": "B. भगवतीचरण वर्मा", "value": "b" },
-            { "text": "C. मोहन राकेश", "value": "c" }
+            { "text": "A. रामधारी सिंह दिनकर", "value": "a" },
+            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
+            { "text": "C. माखनलाल चतुर्वेदी", "value": "c" }
         ],
-        "correctOption": "a",
-        "explanation": "'नरक के पंक्षी' यशपाल द्वारा लिखा गया है।"
+        "correctOption": "c",
+        "explanation": "‘पुष्प की अभिलाषा’ कविता के रचयिता माखनलाल चतुर्वेदी हैं।"
     },
     {
-        "question": "'वोल्गा से गंगा' के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. राहुल सांकृत्यायन", "value": "a" },
-            { "text": "B. हजारीप्रसाद द्विवेदी", "value": "b" },
-            { "text": "C. जयशंकर प्रसाद", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'वोल्गा से गंगा' के लेखक राहुल सांकृत्यायन हैं।"
-    },
-    {
-        "question": "'तितली' उपन्यास के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. शरत चंद्र चट्टोपाध्याय", "value": "a" },
-            { "text": "B. फणीश्वरनाथ रेणु", "value": "b" },
-            { "text": "C. नागार्जुन", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'तितली' उपन्यास के लेखक फणीश्वरनाथ रेणु हैं।"
-    },
-    {
-        "question": "'कामायनी' किसके द्वारा लिखी गई है?",
+        "question": "‘चंद्रगुप्त’ नाटक के लेखक कौन हैं?",
         "options": [
             { "text": "A. जयशंकर प्रसाद", "value": "a" },
-            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
+            { "text": "B. रामधारी सिंह दिनकर", "value": "b" },
+            { "text": "C. भारतेंदु हरिश्चंद्र", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "‘चंद्रगुप्त’ नाटक के लेखक जयशंकर प्रसाद हैं।"
+    },
+    {
+        "question": "‘रश्मिरथी’ किसकी प्रसिद्ध रचना है?",
+        "options": [
+            { "text": "A. सुमित्रानंदन पंत", "value": "a" },
+            { "text": "B. रामधारी सिंह दिनकर", "value": "b" },
+            { "text": "C. सुभद्रा कुमारी चौहान", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘रश्मिरथी’ रामधारी सिंह दिनकर की प्रसिद्ध रचना है।"
+    },
+
+
+  
+    {
+        "question": "किस हिंदी साहित्यकार को 'महाकवि' कहा जाता है?",
+        "options": [
+            { "text": "A. जयशंकर प्रसाद", "value": "a" },
+            { "text": "B. सूरदास", "value": "b" },
+            { "text": "C. तुलसीदास", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "तुलसीदास को 'महाकवि' कहा जाता है।"
+    },
+    {
+        "question": "सूरदास की रचनाओं का मुख्य विषय क्या है?",
+        "options": [
+            { "text": "A. प्रेम", "value": "a" },
+            { "text": "B. भक्ति", "value": "b" },
+            { "text": "C. समाज सुधार", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "सूरदास की रचनाओं का मुख्य विषय भक्ति है।"
+    },
+    {
+        "question": "किस काव्य को 'हिंदी का बाइबिल' कहा जाता है?",
+        "options": [
+            { "text": "A. रामचरितमानस", "value": "a" },
+            { "text": "B. गीत गोविंद", "value": "b" },
+            { "text": "C. साकेत", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "रामचरितमानस को 'हिंदी का बाइबिल' कहा जाता है।"
+    },
+    {
+        "question": "जयशंकर प्रसाद की प्रसिद्ध रचना कौन सी है?",
+        "options": [
+            { "text": "A. कामायनी", "value": "a" },
+            { "text": "B. गोदान", "value": "b" },
+            { "text": "C. भारत भारती", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "कामायनी जयशंकर प्रसाद की प्रसिद्ध रचना है।"
+    },
+    {
+        "question": "रहीम के दोहे किस छंद में लिखे गए हैं?",
+        "options": [
+            { "text": "A. सोरठा", "value": "a" },
+            { "text": "B. दोहा", "value": "b" },
+            { "text": "C. चौपाई", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "रहीम के दोहे दोहा छंद में लिखे गए हैं।"
+    },
+    {
+        "question": "कालीदास के किस महाकाव्य को 'ऋतुसंहार' कहा जाता है?",
+        "options": [
+            { "text": "A. मेघदूत", "value": "a" },
+            { "text": "B. ऋतुसंहार", "value": "b" },
+            { "text": "C. कुमारसंभव", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "ऋतुसंहार कालीदास का प्रसिद्ध महाकाव्य है।"
+    },
+    {
+        "question": "किस रचना को हिंदी का पहला उपन्यास माना जाता है?",
+        "options": [
+            { "text": "A. चंद्रकांता", "value": "a" },
+            { "text": "B. रंगभूमि", "value": "b" },
+            { "text": "C. गोदान", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "चंद्रकांता को हिंदी का पहला उपन्यास माना जाता है।"
+    },
+    {
+        "question": "महादेवी वर्मा को किस प्रकार की कविता के लिए जाना जाता है?",
+        "options": [
+            { "text": "A. छायावादी", "value": "a" },
+            { "text": "B. प्रगतिवादी", "value": "b" },
+            { "text": "C. रहस्यवादी", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "महादेवी वर्मा को छायावादी कवयित्री के रूप में जाना जाता है।"
+    },
+    {
+        "question": "हिंदी साहित्य का आदिकाल कौन सा है?",
+        "options": [
+            { "text": "A. 1050 से 1350", "value": "a" },
+            { "text": "B. 1350 से 1500", "value": "b" },
+            { "text": "C. 1500 से 1700", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "1050 से 1350 का समय हिंदी साहित्य का आदिकाल माना जाता है।"
+    },
+    {
+        "question": "भक्तिकाल में किस काव्य धारा का प्रमुख योगदान है?",
+        "options": [
+            { "text": "A. निर्गुण काव्यधारा", "value": "a" },
+            { "text": "B. सगुण काव्यधारा", "value": "b" },
+            { "text": "C. दोनों", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "भक्तिकाल में निर्गुण और सगुण दोनों काव्य धाराओं का प्रमुख योगदान है।"
+    }
+,
+    {
+        "question": "किस हिंदी साहित्यकार को 'आधुनिक हिंदी साहित्य का जन्मदाता' कहा जाता है?",
+        "options": [
+            { "text": "A. भारतेंदु हरिश्चंद्र", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
             { "text": "C. महादेवी वर्मा", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'कामायनी' के लेखक जयशंकर प्रसाद हैं।"
+        "explanation": "भारतेंदु हरिश्चंद्र को 'आधुनिक हिंदी साहित्य का जन्मदाता' कहा जाता है।"
     },
     {
-        "question": "'साकेत' महाकाव्य के रचयिता कौन हैं?",
+        "question": "किसे 'उपन्यास सम्राट' कहा जाता है?",
+        "options": [
+            { "text": "A. मुंशी प्रेमचंद", "value": "a" },
+            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "C. महात्मा गांधी", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "मुंशी प्रेमचंद को 'उपन्यास सम्राट' कहा जाता है।"
+    },
+    {
+        "question": "'गोदान' उपन्यास के मुख्य पात्र का नाम क्या है?",
+        "options": [
+            { "text": "A. होरी", "value": "a" },
+            { "text": "B. गोवर्धन", "value": "b" },
+            { "text": "C. अमरकांत", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "गोदान उपन्यास के मुख्य पात्र का नाम होरी है।"
+    },
+    {
+        "question": "जयशंकर प्रसाद के नाटक 'चंद्रगुप्त' का मुख्य विषय क्या है?",
+        "options": [
+            { "text": "A. ऐतिहासिक घटनाएँ", "value": "a" },
+            { "text": "B. प्रेम", "value": "b" },
+            { "text": "C. समाज सुधार", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'चंद्रगुप्त' का मुख्य विषय ऐतिहासिक घटनाएँ हैं।"
+    },
+    {
+        "question": "किसे 'हिंदी खड़ी बोली का कवि' कहा जाता है?",
         "options": [
             { "text": "A. मैथिलीशरण गुप्त", "value": "a" },
-            { "text": "B. निराला", "value": "b" },
+            { "text": "B. भारतेंदु हरिश्चंद्र", "value": "b" },
             { "text": "C. हरिवंश राय बच्चन", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'साकेत' महाकाव्य के रचयिता मैथिलीशरण गुप्त हैं।"
+        "explanation": "मैथिलीशरण गुप्त को 'हिंदी खड़ी बोली का कवि' कहा जाता है।"
     },
     {
-        "question": "'राम की शक्तिपूजा' कविता किसने लिखी?",
+        "question": "पंत जी की कविता 'पुष्प की अभिलाषा' किस छायावादी गुण का उदाहरण है?",
         "options": [
-            { "text": "A. सुमित्रानंदन पंत", "value": "a" },
-            { "text": "B. जयशंकर प्रसाद", "value": "b" },
-            { "text": "C. निराला", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'राम की शक्तिपूजा' कविता के लेखक निराला हैं।"
-    },
-    {
-        "question": "'अंधा युग' किसके द्वारा लिखी गई है?",
-        "options": [
-            { "text": "A. धर्मवीर भारती", "value": "a" },
-            { "text": "B. हजारीप्रसाद द्विवेदी", "value": "b" },
-            { "text": "C. महादेवी वर्मा", "value": "c" }
+            { "text": "A. देशभक्ति", "value": "a" },
+            { "text": "B. प्रकृति प्रेम", "value": "b" },
+            { "text": "C. रहस्यवाद", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'अंधा युग' के लेखक धर्मवीर भारती हैं।"
+        "explanation": "'पुष्प की अभिलाषा' कविता में देशभक्ति का भाव झलकता है।"
     },
     {
-        "question": "'गोदान' उपन्यास का नायक कौन है?",
+        "question": "सूरदास की 'साहित्य लहरी' किस प्रकार की रचना है?",
         "options": [
-            { "text": "A. गोपाल", "value": "a" },
-            { "text": "B. होरी", "value": "b" },
-            { "text": "C. माधव", "value": "c" }
+            { "text": "A. भक्ति रचना", "value": "a" },
+            { "text": "B. वीर रस रचना", "value": "b" },
+            { "text": "C. प्रकृति रचना", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'साहित्य लहरी' भक्ति रस से ओत-प्रोत है।"
+    },
+    {
+        "question": "महादेवी वर्मा की किस रचना को 'गद्य की कविता' कहा जाता है?",
+        "options": [
+            { "text": "A. मेरी जीवन कथा", "value": "a" },
+            { "text": "B. नीरजा", "value": "b" },
+            { "text": "C. सप्तपर्णा", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'मेरी जीवन कथा' को 'गद्य की कविता' कहा जाता है।"
+    },
+    {
+        "question": "रामचरितमानस किस प्रकार की रचना है?",
+        "options": [
+            { "text": "A. महाकाव्य", "value": "a" },
+            { "text": "B. उपन्यास", "value": "b" },
+            { "text": "C. नाटक", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'रामचरितमानस' एक महाकाव्य है।"
+    },
+    {
+        "question": "निर्गुण भक्ति धारा के प्रमुख कवि कौन हैं?",
+        "options": [
+            { "text": "A. तुलसीदास", "value": "a" },
+            { "text": "B. कबीर", "value": "b" },
+            { "text": "C. सूरदास", "value": "c" }
         ],
         "correctOption": "b",
-        "explanation": "'गोदान' उपन्यास का नायक होरी है।"
+        "explanation": "कबीर निर्गुण भक्ति धारा के प्रमुख कवि हैं।"
+    }
+, {
+        "question": "'साकेत' महाकाव्य के रचनाकार कौन हैं?",
+        "options": [
+            { "text": "A. जयशंकर प्रसाद", "value": "a" },
+            { "text": "B. मैथिलीशरण गुप्त", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'साकेत' महाकाव्य के रचनाकार मैथिलीशरण गुप्त हैं।"
     },
     {
-        "question": "'मधुशाला' के लेखक कौन हैं?",
+        "question": "किस रचना को 'हिंदी साहित्य का गौरव' कहा जाता है?",
+        "options": [
+            { "text": "A. कामायनी", "value": "a" },
+            { "text": "B. गोदान", "value": "b" },
+            { "text": "C. रामचरितमानस", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "रामचरितमानस को 'हिंदी साहित्य का गौरव' कहा जाता है।"
+    },
+    {
+        "question": "कबीर के काव्य में किस प्रकार की भाषा का प्रयोग हुआ है?",
+        "options": [
+            { "text": "A. अवधी", "value": "a" },
+            { "text": "B. ब्रजभाषा", "value": "b" },
+            { "text": "C. सधुक्कड़ी", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "कबीर के काव्य में सधुक्कड़ी भाषा का प्रयोग हुआ है।"
+    },
+    {
+        "question": "‘सूरसागर’ के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. तुलसीदास", "value": "a" },
+            { "text": "B. सूरदास", "value": "b" },
+            { "text": "C. कबीर", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘सूरसागर’ के रचयिता सूरदास हैं।"
+    },
+    {
+        "question": "महादेवी वर्मा की आत्मकथा का नाम क्या है?",
+        "options": [
+            { "text": "A. पथ के साथी", "value": "a" },
+            { "text": "B. मेरी जीवन कथा", "value": "b" },
+            { "text": "C. स्मृति की रेखाएँ", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "महादेवी वर्मा की आत्मकथा का नाम 'मेरी जीवन कथा' है।"
+    },
+    {
+        "question": "'गीतांजलि' के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. जयशंकर प्रसाद", "value": "a" },
+            { "text": "B. रवींद्रनाथ टैगोर", "value": "b" },
+            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "'गीतांजलि' के रचयिता रवींद्रनाथ टैगोर हैं।"
+    },
+    {
+        "question": "‘कामायनी’ का प्रमुख भाव क्या है?",
+        "options": [
+            { "text": "A. प्रेम", "value": "a" },
+            { "text": "B. रहस्यवाद", "value": "b" },
+            { "text": "C. मानवीय संवेदनाएँ", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘कामायनी’ का प्रमुख भाव रहस्यवाद है।"
+    },
+    {
+        "question": "'भारत भारती' किस प्रकार की रचना है?",
+        "options": [
+            { "text": "A. महाकाव्य", "value": "a" },
+            { "text": "B. गद्य", "value": "b" },
+            { "text": "C. काव्य", "value": "c" }
+        ],
+        "correctOption": "c",
+        "explanation": "'भारत भारती' एक काव्य रचना है।"
+    },
+    {
+        "question": "'सत्य हरिश्चंद्र' किस साहित्यकार की रचना है?",
+        "options": [
+            { "text": "A. भारतेंदु हरिश्चंद्र", "value": "a" },
+            { "text": "B. महावीर प्रसाद द्विवेदी", "value": "b" },
+            { "text": "C. बालकृष्ण भट्ट", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "'सत्य हरिश्चंद्र' भारतेंदु हरिश्चंद्र की रचना है।"
+    },
+    {
+        "question": "‘अभिज्ञान शाकुंतलम्’ के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. कालिदास", "value": "a" },
+            { "text": "B. भास", "value": "b" },
+            { "text": "C. भवभूति", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "‘अभिज्ञान शाकुंतलम्’ के रचयिता कालिदास हैं।"
+    }
+,
+    {
+        "question": "‘रामचरितमानस’ में कुल कितने कांड हैं?",
+        "options": [
+            { "text": "A. पाँच", "value": "a" },
+            { "text": "B. सात", "value": "b" },
+            { "text": "C. नौ", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘रामचरितमानस’ में कुल सात कांड हैं।"
+    },
+    {
+        "question": "‘रंगभूमि’ उपन्यास के नायक कौन हैं?",
+        "options": [
+            { "text": "A. होरी", "value": "a" },
+            { "text": "B. सूरदास", "value": "b" },
+            { "text": "C. घीसू", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘रंगभूमि’ उपन्यास के नायक सूरदास हैं।"
+    },
+    {
+        "question": "‘कविप्रिया’ के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. तुलसीदास", "value": "a" },
+            { "text": "B. केशवदास", "value": "b" },
+            { "text": "C. बिहारी", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘कविप्रिया’ के रचयिता केशवदास हैं।"
+    },
+    {
+        "question": "‘अंधेर नगरी’ किसकी रचना है?",
+        "options": [
+            { "text": "A. भारतेंदु हरिश्चंद्र", "value": "a" },
+            { "text": "B. प्रेमचंद", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "‘अंधेर नगरी’ भारतेंदु हरिश्चंद्र की रचना है।"
+    },
+    {
+        "question": "‘गीत गोविंद’ के रचयिता कौन हैं?",
+        "options": [
+            { "text": "A. तुलसीदास", "value": "a" },
+            { "text": "B. जयदेव", "value": "b" },
+            { "text": "C. कबीर", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘गीत गोविंद’ के रचयिता जयदेव हैं।"
+    },
+    {
+        "question": "‘सुदर्शन’ किस प्रकार की रचना है?",
+        "options": [
+            { "text": "A. कहानी", "value": "a" },
+            { "text": "B. नाटक", "value": "b" },
+            { "text": "C. उपन्यास", "value": "c" }
+        ],
+        "correctOption": "b",
+        "explanation": "‘सुदर्शन’ एक नाटक है।"
+    },
+    {
+        "question": "‘मधुशाला’ के कवि कौन हैं?",
         "options": [
             { "text": "A. हरिवंश राय बच्चन", "value": "a" },
             { "text": "B. सुमित्रानंदन पंत", "value": "b" },
-            { "text": "C. महादेवी वर्मा", "value": "c" }
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'मधुशाला' के लेखक हरिवंश राय बच्चन हैं।"
+        "explanation": "‘मधुशाला’ के कवि हरिवंश राय बच्चन हैं।"
     },
     {
-        "question": "'गीतांजलि' का रचयिता कौन है?",
-        "options": [
-            { "text": "A. जयशंकर प्रसाद", "value": "a" },
-            { "text": "B. रवींद्रनाथ ठाकुर", "value": "b" },
-            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'गीतांजलि' के रचयिता रवींद्रनाथ ठाकुर हैं।"
-    },
-    {
-        "question": "'पंचवटी' कविता के रचयिता कौन हैं?",
+        "question": "‘नीरजा’ किसकी रचना है?",
         "options": [
             { "text": "A. महादेवी वर्मा", "value": "a" },
-            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "B. सुभद्रा कुमारी चौहान", "value": "b" },
             { "text": "C. सुमित्रानंदन पंत", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'पंचवटी' कविता के रचयिता महादेवी वर्मा हैं।"
+        "explanation": "‘नीरजा’ महादेवी वर्मा की रचना है।"
     },
     {
-        "question": "'अज्ञेय' का वास्तविक नाम क्या था?",
+        "question": "‘अज्ञेय’ का मूल नाम क्या है?",
         "options": [
             { "text": "A. सच्चिदानंद हीरानंद वात्स्यायन", "value": "a" },
             { "text": "B. रामधारी सिंह दिनकर", "value": "b" },
-            { "text": "C. मैथिलीशरण गुप्त", "value": "c" }
+            { "text": "C. हरिवंश राय बच्चन", "value": "c" }
         ],
         "correctOption": "a",
-        "explanation": "'अज्ञेय' का वास्तविक नाम सच्चिदानंद हीरानंद वात्स्यायन था।"
+        "explanation": "‘अज्ञेय’ का मूल नाम सच्चिदानंद हीरानंद वात्स्यायन है।"
     },
     {
-        "question": "'परिमल' किस प्रकार की रचना है?",
+        "question": "‘पंचवटी’ किस रचनाकार का काव्य है?",
         "options": [
-            { "text": "A. उपन्यास", "value": "a" },
-            { "text": "B. कविता संग्रह", "value": "b" },
-            { "text": "C. निबंध संग्रह", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'परिमल' कविता संग्रह है।"
-    },
-    {
-        "question": "वह शब्द जो दो शब्दों को जोड़ता है, उसे क्या कहते हैं?",
-        "options": [
-            { "text": "A. समास", "value": "a" },
-            { "text": "B. संधि", "value": "b" },
-            { "text": "C. उपसर्ग", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "वह शब्द जो दो शब्दों को जोड़ता है, उसे संधि कहते हैं।"
-    },
-    {
-        "question": "द्वन्द्व संधि का एक उदाहरण क्या है?",
-        "options": [
-            { "text": "A. देवेंद्र", "value": "a" },
-            { "text": "B. देवेश", "value": "b" },
-            { "text": "C. देवराज", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "द्वन्द्व संधि का उदाहरण 'देवेंद्र' है।"
-    },
-    {
-        "question": "'हरि' और 'ईश्वर' के संधि करने से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. हरिश्वर", "value": "a" },
-            { "text": "B. हरिश", "value": "b" },
-            { "text": "C. हरिश्वराय", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'हरि' और 'ईश्वर' के संधि करने से 'हरिश्वर' शब्द बनता है।"
-    },
-    {
-        "question": "'विद्या' और 'आनंद' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. विद्यायानंद", "value": "a" },
-            { "text": "B. विद्यालंद", "value": "b" },
-            { "text": "C. विद्यानंद", "value": "c" }
+            { "text": "A. सुमित्रानंदन पंत", "value": "a" },
+            { "text": "B. महादेवी वर्मा", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
         ],
         "correctOption": "c",
-        "explanation": "'विद्या' और 'आनंद' के संधि से 'विद्यानंद' शब्द बनता है।"
+        "explanation": "‘पंचवटी’ जयशंकर प्रसाद का काव्य है।"
     },
     {
-        "question": "'स्वामी' और 'अधिकार' के संधि से कौन-सा शब्द बनेगा?",
+        "question": "‘राम की शक्ति पूजा’ किसकी रचना है?",
         "options": [
-            { "text": "A. स्वामिधिकार", "value": "a" },
-            { "text": "B. स्वाम्यधिकार", "value": "b" },
-            { "text": "C. स्वाम्यधि", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'स्वामी' और 'अधिकार' के संधि से 'स्वाम्यधिकार' शब्द बनता है।"
-    },
-    {
-        "question": "'लक्ष्मी' और 'ईश्वर' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. लक्ष्मीश्वर", "value": "a" },
-            { "text": "B. लक्ष्मेश्वर", "value": "b" },
-            { "text": "C. लक्ष्मीश्वराय", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'लक्ष्मी' और 'ईश्वर' के संधि से 'लक्ष्मीश्वर' शब्द बनता है।"
-    },
-    {
-        "question": "'जन' और 'उद्धार' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. जनुद्धार", "value": "a" },
-            { "text": "B. जनोद्धार", "value": "b" },
-            { "text": "C. जनउद्धार", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'जन' और 'उद्धार' के संधि से 'जनोद्धार' शब्द बनता है।"
-    },
-    {
-        "question": "'गौ' और 'ऋण' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. गौरिण", "value": "a" },
-            { "text": "B. गौर्ण", "value": "b" },
-            { "text": "C. गौरिण्य", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'गौ' और 'ऋण' के संधि से 'गौरिण' शब्द बनता है।"
-    },
-    {
-        "question": "'राज' और 'ऋषि' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. राजर्षि", "value": "a" },
-            { "text": "B. राजृषि", "value": "b" },
-            { "text": "C. राजृष", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'राज' और 'ऋषि' के संधि से 'राजर्षि' शब्द बनता है।"
-    },
-    {
-        "question": "'धर्म' और 'अध्यात्म' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. धर्मध्यात्म", "value": "a" },
-            { "text": "B. धर्माद्यात्म", "value": "b" },
-            { "text": "C. धर्माध्यात्म", "value": "c" }
+            { "text": "A. दिनकर", "value": "a" },
+            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
+            { "text": "C. जयशंकर प्रसाद", "value": "c" }
         ],
         "correctOption": "c",
-        "explanation": "'धर्म' और 'अध्यात्म' के संधि से 'धर्माध्यात्म' शब्द बनता है।"
+        "explanation": "‘राम की शक्ति पूजा’ जयशंकर प्रसाद की रचना है।"
     },
     {
-        "question": "'सत्य' और 'युग' के संधि से कौन-सा शब्द बनेगा?",
+        "question": "‘सरस्वती’ पत्रिका के संपादक कौन थे?",
         "options": [
-            { "text": "A. सत्ययुग", "value": "a" },
-            { "text": "B. सत्युग", "value": "b" },
-            { "text": "C. सत्ययुगम", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सत्य' और 'युग' के संधि से 'सत्ययुग' शब्द बनता है।"
-    },
-    {
-        "question": "'भू' और 'ईश' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. भूईश", "value": "a" },
-            { "text": "B. भूष", "value": "b" },
-            { "text": "C. भूईश्वर", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'भू' और 'ईश' के संधि से 'भूईश' शब्द बनता है।"
-    },
-    {
-        "question": "'द्वन्द्व' और 'योग' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. द्वन्द्वयोग", "value": "a" },
-            { "text": "B. द्वन्द्योग", "value": "b" },
-            { "text": "C. द्वन्द्वयोगम", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'द्वन्द्व' और 'योग' के संधि से 'द्वन्द्वयोग' शब्द बनता है।"
-    },
-    {
-        "question": "'बूढ़ी काकी' कहानी के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. सुभद्रा कुमारी चौहान", "value": "b" },
-            { "text": "C. महादेवी वर्मा", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'बूढ़ी काकी' कहानी के लेखक प्रेमचंद हैं।"
-    }, {
-        "question": "'विद्या' और 'आनंद' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. विद्यायानंद", "value": "a" },
-            { "text": "B. विद्यालंद", "value": "b" },
-            { "text": "C. विद्यानंद", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'विद्या' और 'आनंद' के संधि से 'विद्यानंद' शब्द बनता है।"
-    },
-    {
-        "question": "'स्वामी' और 'अधिकार' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. स्वामिधिकार", "value": "a" },
-            { "text": "B. स्वाम्यधिकार", "value": "b" },
-            { "text": "C. स्वाम्यधि", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'स्वामी' और 'अधिकार' के संधि से 'स्वाम्यधिकार' शब्द बनता है।"
-    },
-    {
-        "question": "'लक्ष्मी' और 'ईश्वर' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. लक्ष्मीश्वर", "value": "a" },
-            { "text": "B. लक्ष्मेश्वर", "value": "b" },
-            { "text": "C. लक्ष्मीश्वराय", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'लक्ष्मी' और 'ईश्वर' के संधि से 'लक्ष्मीश्वर' शब्द बनता है।"
-    },
-    {
-        "question": "'जन' और 'उद्धार' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. जनुद्धार", "value": "a" },
-            { "text": "B. जनोद्धार", "value": "b" },
-            { "text": "C. जनउद्धार", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'जन' और 'उद्धार' के संधि से 'जनोद्धार' शब्द बनता है।"
-    },
-    {
-        "question": "'गौ' और 'ऋण' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. गौरिण", "value": "a" },
-            { "text": "B. गौर्ण", "value": "b" },
-            { "text": "C. गौरिण्य", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'गौ' और 'ऋण' के संधि से 'गौरिण' शब्द बनता है।"
-    },
-    {
-        "question": "'राज' और 'ऋषि' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. राजर्षि", "value": "a" },
-            { "text": "B. राजृषि", "value": "b" },
-            { "text": "C. राजृष", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'राज' और 'ऋषि' के संधि से 'राजर्षि' शब्द बनता है।"
-    },
-    {
-        "question": "'धर्म' और 'अध्यात्म' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. धर्मध्यात्म", "value": "a" },
-            { "text": "B. धर्माद्यात्म", "value": "b" },
-            { "text": "C. धर्माध्यात्म", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'धर्म' और 'अध्यात्म' के संधि से 'धर्माध्यात्म' शब्द बनता है।"
-    },
-    { "question": "'सत्य' और 'युग' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. सत्ययुग", "value": "a" },
-            { "text": "B. सत्युग", "value": "b" },
-            { "text": "C. सत्ययुगम", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सत्य' और 'युग' के संधि से 'सत्ययुग' शब्द बनता है।"
-    },
-    {
-        "question": "'भू' और 'ईश' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. भूईश", "value": "a" },
-            { "text": "B. भूष", "value": "b" },
-            { "text": "C. भूईश्वर", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'भू' और 'ईश' के संधि से 'भूईश' शब्द बनता है।"
-    },
-    {
-        "question": "'द्वन्द्व' और 'योग' के संधि से कौन-सा शब्द बनेगा?",
-        "options": [
-            { "text": "A. द्वन्द्वयोग", "value": "a" },
-            { "text": "B. द्वन्द्योग", "value": "b" },
-            { "text": "C. द्वन्द्वयोगम", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'द्वन्द्व' और 'योग' के संधि से 'द्वन्द्वयोग' शब्द बनता है।"
-    },
-    {
-        "question": "'बूढ़ी काकी' कहानी के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. सुभद्रा कुमारी चौहान", "value": "b" },
-            { "text": "C. महादेवी वर्मा", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'बूढ़ी काकी' कहानी के लेखक प्रेमचंद हैं।"
-    },
-    {
-        "question": "'ठेकेदार' कहानी के मुख्य पात्र का नाम क्या है?",
-        "options": [
-            { "text": "A. घीसू", "value": "a" },
-            { "text": "B. माधव", "value": "b" },
-            { "text": "C. मंगू", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'ठेकेदार' कहानी के मुख्य पात्र का नाम मंगू है।"
-    },
-    {
-        "question": "'नमक का दरोगा' कहानी का मुख्य पात्र कौन है?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. बंशीधर", "value": "b" },
-            { "text": "C. मुंशी", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'नमक का दरोगा' कहानी का मुख्य पात्र बंशीधर है।"
-    },
-    {
-        "question": "'पूस की रात' कहानी के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. सुभद्रा कुमारी चौहान", "value": "a" },
-            { "text": "B. जयशंकर प्रसाद", "value": "b" },
+            { "text": "A. भारतेंदु हरिश्चंद्र", "value": "a" },
+            { "text": "B. महावीर प्रसाद द्विवेदी", "value": "b" },
             { "text": "C. प्रेमचंद", "value": "c" }
         ],
+        "correctOption": "b",
+        "explanation": "‘सरस्वती’ पत्रिका के संपादक महावीर प्रसाद द्विवेदी थे।"
+    },
+    {
+        "question": "‘साखी’ किसने लिखी है?",
+        "options": [
+            { "text": "A. कबीर", "value": "a" },
+            { "text": "B. रहीम", "value": "b" },
+            { "text": "C. तुलसीदास", "value": "c" }
+        ],
+        "correctOption": "a",
+        "explanation": "‘साखी’ कबीर ने लिखी है।"
+    },
+    {
+        "question": "‘भारत दुर्दशा’ नाटक का विषय क्या है?",
+        "options": [
+            { "text": "A. भारत का गौरव", "value": "a" },
+            { "text": "B. समाज की बुराइयाँ", "value": "b" },
+            { "text": "C. ब्रिटिश शासन का प्रभाव", "value": "c" }
+        ],
         "correctOption": "c",
-        "explanation": "'पूस की रात' कहानी के लेखक प्रेमचंद हैं।"
-    },
-    {
-        "question": "'सपनों का सौदागर' कहानी के मुख्य पात्र कौन है?",
-        "options": [
-            { "text": "A. सुरेश", "value": "a" },
-            { "text": "B. मन्नू", "value": "b" },
-            { "text": "C. मुंशी", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सपनों का सौदागर' कहानी के मुख्य पात्र सुरेश हैं।"
-    },
-    {
-        "question": "'इदगाह' कहानी के लेखक कौन हैं?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. हरिवंश राय बच्चन", "value": "b" },
-            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'इदगाह' कहानी के लेखक प्रेमचंद हैं।"
+        "explanation": "‘भारत दुर्दशा’ नाटक में ब्रिटिश शासन के प्रभाव को दर्शाया गया है।"
     }
+
+
+  
+
+  
     
 
     
