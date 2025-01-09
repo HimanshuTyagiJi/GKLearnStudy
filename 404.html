@@ -133,7 +133,24 @@
         html {
             overflow-x: hidden;
         }
-    </style>
+    </style><script>
+        // Map of old URLs to their respective new URLs
+        const redirects = {
+            "https://gklearnstudy.in/hindi-test-part-01": "https://gklearnstudy.in/hindi-test/part-01",
+           "https://gklearnstudy.in/hindi-test-part-02": "https://gklearnstudy.in/hindi-test/part-02",
+           "https://gklearnstudy.in/hindi-test-part-03": "https://gklearnstudy.in/hindi-test/part-03",
+            "https://gklearnstudy.in/old-link-3": "https://gklearnstudy.in/new-link-3",
+            // Add up to 207 or more mappings here
+        };
+
+        // Get the current URL
+        const currentURL = window.location.href;
+
+        // Check if the current URL exists in the redirects map
+        if (redirects[currentURL]) {
+            // Redirect to the new URL
+            window.location.replace(redirects[currentURL]);
+        }</script>
 </head>
 <body>
     <a href="index.html" class="logo-link">
