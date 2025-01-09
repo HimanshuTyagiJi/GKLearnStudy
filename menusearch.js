@@ -1,3 +1,12 @@
+if (window.location.pathname === "/hindi-test-part-01") {
+    window.location.replace("/hindi-test/part-01");
+}
+
+if (window.location.pathname === "/vyakaran.html") {
+    window.location.replace("/vyakaran-language.html");
+}
+
+
 // common.js
 (function() {
   // Automatically add manifest link
