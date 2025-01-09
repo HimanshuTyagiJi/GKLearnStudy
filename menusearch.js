@@ -159,7 +159,7 @@ logoText.style.animation = 'fadeInScale 2s ease-in-out forwards';
 logoText.style.opacity = '0';
 logoText.style.transform = 'scale(0.8)';
 
-// Logo text content (h1 and p)
+// Logo text content (h2 and p)
 logoText.innerHTML = `
     <h2 style="font-size: 20px; margin: 0;">GK</h2>
     <p style="color: green; font-size: 9px; margin: 0;">Learn Study</p>
@@ -191,7 +191,7 @@ function applyResponsiveStyles() {
        
         logocontainer1.style.width = '25px';
         logocontainer1.style.height = '25px';
-        logoText.querySelector('h1').style.fontSize = '9px';
+        logoText.querySelector('h2').style.fontSize = '9px';
         logoText.querySelector('p').style.fontSize = '3px';
         demo2.style.top = '40%';
         
@@ -200,7 +200,7 @@ function applyResponsiveStyles() {
         
        logocontainer1.style.width = '35px';
        logocontainer1.style.height = '35px';
-       logoText.querySelector('h1').style.fontSize = '12px';
+       logoText.querySelector('h2').style.fontSize = '12px';
        logoText.querySelector('p').style.fontSize = '4px';
        demo2.style.top = '40%';
         
@@ -208,7 +208,7 @@ function applyResponsiveStyles() {
         // Apply styles for screens with a min width of 720px
         logocontainer1.style.width = '45px';
         logocontainer1.style.height = '45px';
-        logoText.querySelector('h1').style.fontSize = '20px';
+        logoText.querySelector('h2').style.fontSize = '20px';
         logoText.querySelector('p').style.fontSize = '5px';
         demo2.style.top = '60%';
     }
