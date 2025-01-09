@@ -19,3 +19,5 @@ RewriteRule ^(.*)$ $1.html [L]
 Redirect 301 /vyakaran.html /vyakaran-language.html
 RewriteEngine On
 RewriteRule ^hindi-test-part-02$ /hindi-test/part-02 [R=301,L]
+RewriteEngine On
+RewriteRule ^hindi-test-part-01$ /hindi-test/part-01 [R=301,L]
