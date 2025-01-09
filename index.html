@@ -144,23 +144,37 @@
         }
     }
 
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            text-align: center;
+            background: -webkit-linear-gradient(#ffda79, #ff007f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 20px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+    
 </style>
 
 <body>
-    <div class="search-container">
+   
+     <div class="container"><br>
+         <h1>Welcome to GK Learn Study</h1>
+          <div id="data-container"></div>
+         <center> <div class="pagination">
+        <button id="prev-button" style="display:none;">Back</button>
+        <button id="next-button"">Next</button>
+    </div></center> 
+ <div class="search-container">
         <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
         <button class="back-icon" id="backBtn">←</button>
         <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
     </div>
     <ul id="suggestions" class="suggestions"></ul>
     <div id="results"></div>
-     <div class="container"><br>
-          <div id="data-container"></div>
-         <center> <div class="pagination">
-        <button id="prev-button" style="display:none;">Back</button>
-        <button id="next-button"">Next</button>
-    </div></center> 
-
     <script>
         const xmlUrl = 'searchsitemap.xml';
         const itemsPerPage = 50; 
