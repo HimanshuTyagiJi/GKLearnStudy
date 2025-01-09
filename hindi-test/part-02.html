@@ -1,35 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="This is an MCQ test webpage where multiple choice questions are provided to assess your knowledge on various topics.">
-    <meta name="keywords" content="MCQ, test, multiple choice questions, online quiz, assessment, knowledge test">
-    <meta name="author" content="">
+    <meta name="description" content="यह हिंदी टेस्ट का भाग - 2 है, जिसमें आपके हिंदी ज्ञान को परखने के लिए बहुविकल्पीय प्रश्न (MCQ) दिए गए हैं।">
+    <meta name="keywords" content="हिंदी टेस्ट भाग - 2, MCQ, हिंदी प्रश्न, हिंदी क्विज, ज्ञान परख, ऑनलाइन हिंदी टेस्ट">
+    <meta name="author" content="Himanshu">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="MCQ Test Page">
-    <meta property="og:description" content="Participate in our MCQ test and evaluate your knowledge with a variety of multiple choice questions.">
+    <meta property="og:title" content="हिंदी टेस्ट भाग - 2">
+    <meta property="og:description" content="हिंदी टेस्ट भाग - 2 में भाग लें और विभिन्न बहुविकल्पीय प्रश्नों के माध्यम से अपने हिंदी ज्ञान का मूल्यांकन करें।">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <link rel="stylesheet" href="./style.css">
-     <title>Hindi Test Part 02</title>
+  
+    <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
+    <title>हिंदी टेस्ट भाग - 2</title>
 </head>
-<body> <div class="container">
-    <form id="quiz-form" style="display: none;"><h3>Hindi Test Part - 02 </h3><div id="questions-container"></div><div id="timer">Time: 0:00</div><button type="submit" class="submit-btn" style="display: none;">Submit</button></form><div id="result"></div><button id="retry-btn" style="display: none;" onclick="retryQuiz()">Try Again</button><div id="startModal" class="modal"><div class="modal-content">
-    <center><h3>Some Rules of this Quiz</h3></center>
-            <p>1. You only get 30 seconds for each question.</p>
-            <p>2. Once you have selected your option, it cannot be undone.</p>
-            <p>3. You can't select any option once time goes off.</p>
-            <p>4. You can not skip the quiz while playing.</p>
-            <p>5. You will get points based on your correct answers.</p>
-    <center><button class="start-btn" onclick="startQuiz()">Start</button></center></div></div><div id="resultModal" class="modal"><div class="modal-content">
-            <h3>Quiz Results</h3>
-            <div id="resultContent"></div>
-            <button class="review-btn" onclick="reviewQuestions()">Review Questions</button>
-            <button class="retry-btn" onclick="retryQuiz()">Try Again</button></div></div>
+<body>
+    <div class="container">
+        <form id="quiz-form" style="display: none;">
+            <h3>हिंदी टेस्ट भाग - 02</h3>
+            <div id="questions-container"></div>
+            <div id="timer">समय: 0:00</div>
+            <button type="submit" class="submit-btn" style="display: none;">सबमिट करें</button>
+        </form>
+        <div id="result"></div>
+        <button id="retry-btn" style="display: none;" onclick="retryQuiz()">फिर से प्रयास करें</button>
+        <div id="startModal" class="modal">
+            <div class="modal-content">
+                <center><h3>इस टेस्ट के कुछ नियम</h3></center>
+                <p>1. इस टेस्ट में 50 प्रश्न होंगे।</p>
+                <p>2. यह टेस्ट सभी प्रश्नों के लिए कुल समय ट्रैक करेगा।</p>
+                <p>3. जब आप अगले प्रश्न पर जाएं या प्रश्न छोड़ें, तो आप पहले के प्रश्नों पर वापस नहीं जा सकते।</p>
+                <p>4. आप टेस्ट को बीच में छोड़ नहीं सकते।</p>
+                <p>5. सही उत्तर देने पर आपको अंक मिलेंगे।</p>
+                <center><button class="start-btn" onclick="startQuiz()">शुरू करें</button></center>
+            </div>
+        </div>
+        <div id="resultModal" class="modal">
+            <div class="modal-content">
+                <h3>क्विज परिणाम</h3>
+                <div id="resultContent"></div>
+                <button class="review-btn" onclick="reviewQuestions()">प्रश्नों की समीक्षा करें</button>
+                <button class="retry-btn" onclick="retryQuiz()">फिर से प्रयास करें</button>
+            </div>
+        </div>
 
-    <div id="review-questions"></div>
+        <div id="review-questions"></div>
+    </div>
+    <script src="https://gklearnstudy.in/script.js"></script>
+</body>
+
 
     <script>
        var totalSeconds = 0;
