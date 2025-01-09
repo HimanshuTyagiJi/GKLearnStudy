@@ -161,7 +161,7 @@ logoText.style.transform = 'scale(0.8)';
 
 // Logo text content (h1 and p)
 logoText.innerHTML = `
-    <h1 style="font-size: 20px; margin: 0;">GK</h1>
+    <h2 style="font-size: 20px; margin: 0;">GK</h2>
     <p style="color: green; font-size: 9px; margin: 0;">Learn Study</p>
 `;
 
