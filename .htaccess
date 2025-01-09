@@ -14,3 +14,9 @@ RewriteRule ^(.*)$ $1.html [L]
     Header set Pragma "no-cache"
     Header set Expires "0"
 </IfModule>
+
+
+Redirect 301 /vyakaran.html /vyakaran-language.html
+Redirect 301 /hindi-test-part-01 /hindi-test/part-01
+Redirect 301 /hindi-test-part-02 /hindi-test/part-02
+Redirect 301 /hindi-test-part-03 /hindi-test/part-03
