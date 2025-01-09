@@ -44,7 +44,7 @@ body {background-color: var(--background-color);color: var(--text-color);}
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    .menu-list {border : 2px solid #575757}
+    .menu-list {border : 2px solid #575757; left:0;}
     .menu-list a:link  {color: pink;}
   
     .scrollmenu-container {background-color: rgb(0, 0, 0);border-radius:15px ;}
@@ -708,7 +708,7 @@ hr{height: 5%;}
 /*=========================================================================================================================================================================================*/
 
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
- 
+  .h1{font-size:20px;}
   .menu { position: fixed;margin-top: 55px;font-size: 18px;left: -100%;width: 255px;z-index: 10;overflow: auto;box-shadow: var(--shadow-medium); transition: all 0.5s ease-in-out;}
   .menu-inner::-webkit-scrollbar {display: none; /* Scrollbar ko hide karega */}
   .menu.is-active .back-arrow {font-size: 32px; display: inline-block; position: fixed;padding: 5px;top: 0;left: 185px;width: 50px; ;z-index: 10000; transition: all 0.3s ease;background-color: transparent;text-align: center;cursor: pointer;}
