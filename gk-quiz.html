@@ -111,13 +111,9 @@
     </script>
 </head>
 
-<body>       <div class="search-container">
-        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
-        <button class="back-icon" id="backBtn">←</button>
-        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div> <div class="container"> <div onload="switchLanguage('en')">
+<body>       <div class="container"> <h1>GK Quiz</h1>
+    
+    <div onload="switchLanguage('en')">
     <!-- Language Switcher -->
     <div class="language-switcher">
         <button data-lang="en" onclick="switchLanguage('en')" class="active">English</button>
@@ -175,7 +171,13 @@
         </div>
   
     </div></div>
-
+ <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
 
 
 <div class="important_link"></div>
