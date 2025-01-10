@@ -18,7 +18,7 @@ if (window.location.pathname === "https://gklearnstudy.in/vyakaran") {
 
   // Automatically register service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
+    navigator.serviceWorker.register('https://gklearnstudy.in/js/serviceworker.js', { scope: '/' })
       .then(() => console.log("Service Worker Registered"))
       .catch((err) => console.log("Service Worker Registration Failed", err));
   }
