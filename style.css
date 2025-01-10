@@ -673,7 +673,7 @@ hr{height: 5%;}
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   
   
-  .menu-list {top:60px;width:16%;display: block;overflow-y: auto;margin:-10px ;}
+  .menu-list {top:60px;width:16%;display: block;overflow-y: auto;margin:-10px ;  left: 0;}
   .menu-list::-webkit-scrollbar {display: none; /* Scrollbar ko hide karega */}
   .menu-list li { line-height: 3; /* Li ki line-height 2 */list-style: none; /* Bullet points ko hatane ke liye */}
   .menu-list li a { display: inline; /* Multiline ke liye inline rakhein */ line-height: 1; /* Sirf a tag ke liye line-height normal */}
