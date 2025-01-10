@@ -1,10 +1,9 @@
-
-if (window.location.pathname === "https://gklearnstudy.in/hindi-test-part-01") {
-    window.location.replace("https://gklearnstudy.in/hindi-test/part-01");
+if (window.location.pathname === "/hindi-test-part-01") {
+    window.location.replace("/hindi-test/part-01");
 }
 
-if (window.location.pathname === "https://gklearnstudy.in/vyakaran") {
-    window.location.replace("https://gklearnstudy.in/vyakaran-language");
+if (window.location.pathname === "/vyakaran.html") {
+    window.location.replace("/vyakaran-language.html");
 }
 
 
@@ -13,12 +12,12 @@ if (window.location.pathname === "https://gklearnstudy.in/vyakaran") {
   // Automatically add manifest link
   const manifestLink = document.createElement('link');
   manifestLink.rel = 'manifest';
-  manifestLink.href = 'https://gklearnstudy.in/manifest.json';
+  manifestLink.href = '/manifest.json';
   document.head.appendChild(manifestLink);
 
   // Automatically register service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('https://gklearnstudy.in/js/serviceworker.js', { scope: '/' })
+    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
       .then(() => console.log("Service Worker Registered"))
       .catch((err) => console.log("Service Worker Registration Failed", err));
   }
@@ -31,8 +30,8 @@ if (window.location.pathname === "https://gklearnstudy.in/vyakaran") {
 const body = document.body;
 const themeToggle = document.createElement('button');
 const themeIcon = document.createElement('span');
-const sunIcon = document.createElementNS('https://www.w3.org/2000/svg', 'svg');
-const moonIcon = document.createElementNS('https://www.w3.org/2000/svg', 'svg');
+const sunIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+const moonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
 // Set attributes and properties
 themeToggle.id = 'themeToggle';
@@ -42,7 +41,7 @@ themeIcon.id = 'themeIcon';
 sunIcon.setAttribute('id', 'sunIcon');
 sunIcon.setAttribute('fill', 'yellow');
 sunIcon.setAttribute('version', '1.1');
-sunIcon.setAttribute('xmlns', 'https://www.w3.org/2000/svg');
+sunIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 sunIcon.setAttribute('viewBox', '-87.6 -87.6 1051.20 1051.20');
 sunIcon.setAttribute('xml:space', 'preserve');
 sunIcon.setAttribute('stroke', 'red');
@@ -136,7 +135,7 @@ demo2.style.height = '0px';
 
 // SVG code
 demo2.innerHTML = `
-<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
     <defs>
         <path id="gentle-wave" class="st0" d="M-160,35.6 c 30,0,58-6.6,88-6.6 s58,6.6,88,6.6s58-6.6,88-6.6s58,6.6,88,6.6V59h-352V35.6z"></path>
     </defs>
@@ -450,3 +449,4 @@ listItem.style.textAlign = 'left';  // Ensure text-align is not justified
   listItem.appendChild(link);
   linksList.appendChild(listItem);
 }
+
