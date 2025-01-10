@@ -1,10 +1,10 @@
 
-if (window.location.pathname === "/hindi-test-part-01") {
-    window.location.replace("/hindi-test/part-01");
+if (window.location.pathname === "https://gklearnstudy.in/hindi-test-part-01") {
+    window.location.replace("https://gklearnstudy.in/hindi-test/part-01");
 }
 
-if (window.location.pathname === "/vyakaran.html") {
-    window.location.replace("/vyakaran-language.html");
+if (window.location.pathname === "https://gklearnstudy.in/vyakaran") {
+    window.location.replace("https://gklearnstudy.in/vyakaran-language");
 }
 
 
@@ -13,7 +13,7 @@ if (window.location.pathname === "/vyakaran.html") {
   // Automatically add manifest link
   const manifestLink = document.createElement('link');
   manifestLink.rel = 'manifest';
-  manifestLink.href = '/manifest.json';
+  manifestLink.href = 'https://gklearnstudy.in/manifest.json';
   document.head.appendChild(manifestLink);
 
   // Automatically register service worker
