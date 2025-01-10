@@ -1,6 +1,6 @@
 // serviceworker.js
 
-const CACHE_NAME = "cache-v1.003";
+const CACHE_NAME = "cache-v1.004";
 const STATIC_ASSETS = [
   "/",
   "index.html",
