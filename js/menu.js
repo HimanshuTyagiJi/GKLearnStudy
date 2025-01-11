@@ -25,13 +25,15 @@ if (window.location.pathname === "/vyakaran.html") {
 
 
 
+//theme
+
 
 // Create elements
 const body = document.body;
 const themeToggle = document.createElement('button');
 const themeIcon = document.createElement('span');
-const sunIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-const moonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+const sunIcon = document.createElement('svg'); // Removed namespace
+const moonIcon = document.createElement('svg'); // Removed namespace
 
 // Set attributes and properties
 themeToggle.id = 'themeToggle';
@@ -40,10 +42,7 @@ themeIcon.id = 'themeIcon';
 
 sunIcon.setAttribute('id', 'sunIcon');
 sunIcon.setAttribute('fill', 'yellow');
-sunIcon.setAttribute('version', '1.1');
-sunIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 sunIcon.setAttribute('viewBox', '-87.6 -87.6 1051.20 1051.20');
-sunIcon.setAttribute('xml:space', 'preserve');
 sunIcon.setAttribute('stroke', 'red');
 sunIcon.setAttribute('stroke-width', '20.00876');
 sunIcon.innerHTML = '<g><circle cx="438" cy="438" r="246"></circle><path d="M420.5,163h35c11.046,0,20-8.954,20-20V20c0-11.046-8.954-20-20-20h-35c-11.046,0-20,8.954-20,20v123C400.5,154.046,409.454,163,420.5,163z"></path><path d="M713,420.5v35c0,11.046,8.954,20,20,20h123c11.046,0,20-8.954,20-20v-35c0-11.046-8.954-20-20-20H733C721.954,400.5,713,409.454,713,420.5z"></path><path d="M455.5,876c11.046,0,20-8.954,20-20V733c0-11.046-8.954-20-20-20h-35c-11.046,0-20,8.954-20,20v123c0,11.046,8.954,20,20,20H455.5z"></path><path d="M20,475.5h123c11.046,0,20-8.954,20-20v-35c0-11.046-8.954-20-20-20H20c-11.046,0-20,8.954-20,20v35C0,466.546,8.954,475.5,20,475.5z"></path><path d="M644.829,255.92c7.811,7.81,20.474,7.811,28.284,0l86.975-86.974c7.811-7.812,7.811-20.474,0-28.284l-24.749-24.749c-7.811-7.811-20.474-7.811-28.284,0l-86.975,86.974c-7.812,7.81-7.812,20.474,0,28.284L644.829,255.92z"></path><path d="M735.338,760.087l24.749-24.749c7.811-7.81,7.811-20.474,0-28.284l-86.975-86.974c-7.812-7.811-20.475-7.811-28.284,0l-24.749,24.749c-7.812,7.811-7.812,20.474,0,28.284l86.975,86.974C714.865,767.898,727.528,767.898,735.338,760.087z"></path><path d="M168.946,760.087l86.975-86.974c7.812-7.811,7.812-20.475,0-28.284l-24.749-24.749c-7.811-7.811-20.474-7.811-28.284,0l-86.975,86.974c-7.811,7.812-7.811,20.475,0,28.284l24.749,24.749C148.472,767.898,161.135,767.898,168.946,760.087z"></path><path d="M202.887,255.92c7.811,7.811,20.474,7.81,28.284,0l24.749-24.749c7.812-7.81,7.812-20.474,0-28.284l-86.975-86.974c-7.811-7.811-20.474-7.811-28.284,0l-24.749,24.749c-7.811,7.81-7.811,20.474,0,28.284L202.887,255.92z"></path></g>';
@@ -53,7 +52,7 @@ moonIcon.setAttribute('viewBox', '0 0 48.00 48.00');
 moonIcon.setAttribute('fill', '#ffffff');
 moonIcon.setAttribute('stroke', '#000000');
 moonIcon.style.display = 'none';
-moonIcon.innerHTML = '<path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>';
+moonIcon.innerHTML = '<path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>;
 
 // Append icons to themeIcon
 themeIcon.appendChild(sunIcon);
@@ -99,8 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Toggle theme on button click
 themeToggle.addEventListener('click', switchTheme);
-
-
 
 
 
