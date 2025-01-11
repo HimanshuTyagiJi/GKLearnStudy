@@ -138,7 +138,7 @@ logoText.className = 'logo-text';
 logoText.style.position = 'absolute';
 logoText.style.top = '12%';
 logoText.style.width = '100%';
-logoText.style.color = 'brown';
+logoText.style.color = 'red';
 logoText.style.textAlign = 'center';
 logoText.style.fontFamily = 'Arial, sans-serif';
 logoText.style.animation = 'fadeInScale 2s ease-in-out forwards';
@@ -187,7 +187,7 @@ function applyResponsiveStyles() {
        logocontainer1.style.width = '35px';
        logocontainer1.style.height = '35px';
        logoText.querySelector('h2').style.fontSize = '9px';
-       logoText.querySelector('p').style.fontSize = '6px';
+       logoText.querySelector('p').style.fontSize = '5px';
        demo2.style.top = '40%';
         
     } else if (min900.matches) {
