@@ -35,7 +35,7 @@ const moonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
 // Set attributes and properties
 themeToggle.id = 'themeToggle';
-themeToggle.textContent = '';
+themeToggle.textContent = 'Theme';
 themeIcon.id = 'themeIcon';
 
 sunIcon.setAttribute('id', 'sunIcon');
