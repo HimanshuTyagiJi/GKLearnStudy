@@ -457,7 +457,8 @@ const svgLinks = [
                       <path d="M204.796,332.803l133.018,-76.801l-133.018,-76.801l0,153.602Z" style="fill:#fff;fill-rule:nonzero;"/>
                   </g>
               </svg>`,
-          href: 'https://youtube.com/@gklearnstudy'
+          href: 'https://youtube.com/@gklearnstudy',
+         label: 'GK Learn Study YouTube channel'
       },
       {
           svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
@@ -466,7 +467,8 @@ const svgLinks = [
                       <path d="M355.65,330l11.35,-74l-71,0l0,-48.022c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63c0,0 -29.297,-5 -57.305,-5c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89c13.033,2.045 26.392,3.11 40,3.11c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z" style="fill:#fff;fill-rule:nonzero;"/>
                   </g>
               </svg>`,
-          href: 'https://www.facebook.com/GoluLiv'
+          href: 'https://www.facebook.com/GoluLiv',
+        label: 'GK Learn Study Facebook page'
       },
       {
           svg: ` <svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
@@ -484,21 +486,22 @@ const svgLinks = [
             </g>
         </g>
     </svg>`,
-          href: 'https://www.instagram.com/gklearnstudy'
+          href: 'https://www.instagram.com/gklearnstudy',
+        label: 'GK Learn Study Instagram page'
       },
 ];
 
-// Getting a reference to the social icon container:
-const iconContainer = document.getElementById("social-icons");
+ const socialLinksDiv = document.getElementById('social-links');
+        socialLinksDiv.style.display = 'flex';
+        socialLinksDiv.style.gap = '10px';
+        socialLinksDiv.style.justifyContent = 'center';
 
-// Adding social icons to the container:
-svgLinks.forEach(link => {
-    const iconLink = document.createElement("a");
-    iconLink.href = link.href;
-    iconLink.title = link.label;
-    iconLink.innerHTML = link.svg; // This should render the SVG icon
-
-    // Optional styles for the icons:
-    iconLink.style.marginRight = '10px'; // Space between icons
-    iconContainer.appendChild(iconLink);
-});
+        // Links ko create aur append karna
+        svgLinks.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.href;
+            a.target = '_blank'; // Open in a new tab
+            a.innerHTML = link.svg;
+            a.setAttribute('aria-label', link.label); // Accessibility ke liye aria-label add karna
+            socialLinksDiv.appendChild(a); // ID ke through element ko dhoondhna
+        });
