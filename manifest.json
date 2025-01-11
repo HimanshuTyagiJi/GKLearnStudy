@@ -1,19 +1,16 @@
-
-  
-
 {
   "name": "GK Learn Study",
   "short_name": "GK Learn",
   "description": "Learn GK anytime, anywhere",
   "start_url": "/index.html",
-  "scope": "/", 
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#5900b3",
   "icons": [
     {
       "src": "https://gklearnstudy.in/GK-Learn-Study.png",
-      "sizes": "192x192", 
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
@@ -41,5 +38,17 @@
       "sizes": "144x144",
       "type": "image/png"
     }
-  ]
+  ],
+  "id": "GK",
+  "categories": [
+    "education"
+  ],
+  "share_target": {
+    "method": "GET",
+    "action": "https://gklearnstudy.in",
+    "params": {
+      "title": "GK Learn Study",
+      "url": "https://gklearnstudy.in/"
+    }
+  }
 }
