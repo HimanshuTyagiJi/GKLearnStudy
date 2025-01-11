@@ -403,8 +403,6 @@ function activateLink(link) {
 
 //important link 
 
-
-
 const linkData = [
     { name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas" },
     { name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas" },
@@ -434,7 +432,7 @@ linkData.forEach(item => {
     link.style.color = 'inherit'; // Use the inherited color from parent
 
     const listItem = document.createElement("li");
-  
+
     // Disabling the default <li> styles:
     listItem.style.listStyle = 'none';
     listItem.style.margin = '0'; // Reset margin
@@ -444,21 +442,15 @@ linkData.forEach(item => {
     linksList.appendChild(listItem);
 });
 
-
-
-// footer
-
-
- function goToUrl() {
+// Footer function
+function goToUrl() {
     window.location.href = "mailto:contact@gklearnstudy.in";
-  }
-      document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
+}
+document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
 
-
-
-// social icon 
-        const svgLinks = [
-           {
+// Social icons
+const svgLinks = [
+    {
         svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
                 <g>
                     <path d="M501.299,132.766c-5.888,-22.03 -23.234,-39.377 -45.264,-45.264c-39.932,-10.701 -200.037,-10.701 -200.037,-10.701c0,0 -160.105,0 -200.038,10.701c-22.025,5.887 -39.376,23.234 -45.264,45.264c-10.696,39.928 -10.696,123.236 -10.696,123.236c0,0 0,83.308 10.696,123.232c5.888,22.03 23.239,39.381 45.264,45.268c39.933,10.697 200.038,10.697 200.038,10.697c0,0 160.105,0 200.037,-10.697c22.03,-5.887 39.376,-23.238 45.264,-45.268c10.701,-39.924 10.701,-123.232 10.701,-123.232c0,0 0,-83.308 -10.701,-123.236Z" style="fill:#ed1f24;fill-rule:nonzero;"/>
@@ -481,26 +473,25 @@ linkData.forEach(item => {
     {
         svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
                 <g>
-                    <path d="M105.843,29.837c0,4.242-3.439,7.68-7.68,7.68c-4.241,0-7.68-3.438-7.68-7.68c0-4.242,3.439-7.68,7.68-7.68C102.405,22.157,105.843,25.595,105.843,29.837z M64,85.333c-11.782,0-21.333-9.551-21.333-21.333c0-11.782,9.551-21.333,21.333-21.333c11.782,0,21.333,9.551,21.333,21.333C85.333,75.782,75.782,85.333,64,85.333z M64,31.135c-18.151,0-32.865,14.714-32.865,32.865c0,18.151,14.714,32.865,32.865,32.865c18.151,0,32.865-14.714,32.865-32.865C96.865,45.849,82.151,31.135,64,31.135z M64,11.532c17.089,0,19.113,0.065,25.861,0.373c6.24,0.285,9.629,1.327,11.884,2.204c2.987,1.161,5.119,2.548,7.359,4.788c2.24,2.239,3.627,4.371,4.788,7.359c0.876,2.255,1.919,5.644,2.204,11.884c0.308,6.749,0.373,8.773,0.373,25.862c0,17.089-0.065,19.113-0.373,25.861c-0.285,6.24-1.327,9.629-2.204,11.884c-1.161,2.987-2.548,5.119-4.788,7.359c-2.239,2.24-4.371,3.627-7.359,4.788c-2.255,0.876-5.644,1.919-11.884,2.204C44.887,11.597,46.911,11.532,64,11.532z M64,0C46.619,0,44.439,0.074,37.613,0.235C20.658,0.553,10.194,3.036,2.467,10.39C-3.491,16.137-6.292,23.439-6.292,32.179C-6.292,40.67-3.032,48.891,2.627,55.128c5.662,6.086,12.571,8.019,22.697,8.019c11.553,0,19.02-3.574,25.136-8.699C58.182,48.879,64,41.148,64,32.179C64,23.581,61.093,16.167,56.432,10.052C51.477,4.037,44.968,0.236,37.613,0.235C44.439,0.074,46.619,0,64,0z" style="fill:#f5f5f5;fill-rule:nonzero;"/>
+                    <path d="M105.843,29.837c0,4.242-3.439,7.68-7.68,7.68c-4.241,0-7.68-3.438-7.68-7.68c0-4.242,3.439-7.68,7.68-7.68C102.405,22.157,105.843,25.595,105.843,29.837z M64,85.333c-11.782,0-21.333-9.551-21.333-21.333c0-11.782,9.551-21.333,21.333-21.333c11.782,0,21.333,9.551,21.333,21.333C85.333,75.782,75.782,85.333,64,85.333z M64,31.135c-18.151,0-32.865,14.714-32.865,32.865c0,18.151,14.714,32.865,32.865,32.865c18.151,0,32.865-14.714,32.865-32.865C96.865,45.849,82.151,31.135,64,31.135z M64,11.532c17.089,0,19.113,0.065,25.861,0.373c6.24,0.285,9.629,1.327,11.884,2.204c2.987,1.161,5.119,2.548,7.359,4.788c2.24,2.239,3.627,4.371,4.788,7.359c0.876,2.255,1.919,5.644,2.204,11.884c0.308,6.749,0.373,8.773,0.373,25.862c0,17.089-0.065,19.113-0.373,25.861c-0.285,6.24-1.327,9.629-2.204,11.884c-1.161,2.987-2.548,5.119-4.788,7.359c-2.239,2.24-4.371,3.627-7.359,4.788c-2.255,0.876-5.644,1.919-11.884,2.204c-6.749,0.308-8.773,0.373-25.861,0.373c-17.089,0-19.113-0.065-25.861-0.373c-6.24-0.285-9.629-1.327-11.884-2.204c-2.987-1.161-5.119-2.548-7.359-4.788c-2.239-2.24-3.627-4.371-4.788-7.359c-0.876-2.255-1.919-5.644-2.204-11.884c-0.308-6.749-0.373-8.773-0.373-25.862c0-17.089,0.065-19.113,0.373-25.861c0.285-6.24,1.327-9.629,2.204-11.884c1.161-2.987,2.548-5.119,4.788-7.359c2.239-2.24,4.371-3.627,7.359-4.788c2.255-0.876,5.644-1.919,11.884-2.204c6.749-0.308,8.773-0.373,25.861-0.373z M64,179.194c-6.618,0-12,5.381-12,12c0,6.618,5.382,12,12,12s12-5.382,12-12C76,184.575,70.618,179.194,64,179.194z" style="fill:#ed1f24;fill-rule:nonzero;"/>
                 </g>
             </svg>`,
         href: 'https://www.instagram.com/gklearnstudy',
         label: 'GK Learn Study Instagram page'
-    }
-        ];
+    },
+];
 
-        // Div ke styling ko JavaScript se set karna
-        const socialLinksDiv = document.getElementById('social-links');
-        socialLinksDiv.style.display = 'flex';
-        socialLinksDiv.style.gap = '10px';
-        socialLinksDiv.style.justifyContent = 'center';
+// Getting a reference to the social icon container:
+const iconContainer = document.getElementById("social-icons");
 
-        // Links ko create aur append karna
-        svgLinks.forEach(link => {
-            const a = document.createElement('a');
-            a.href = link.href;
-            a.target = '_blank'; // Open in a new tab
-            a.innerHTML = link.svg;
-            a.setAttribute('aria-label', link.label); // Accessibility ke liye aria-label add karna
-            socialLinksDiv.appendChild(a); // ID ke through element ko dhoondhna
-        });
+// Adding social icons to the container:
+svgLinks.forEach(link => {
+    const iconLink = document.createElement("a");
+    iconLink.href = link.href;
+    iconLink.title = link.label;
+    iconLink.innerHTML = link.svg; // This should render the SVG icon
+
+    // Optional styles for the icons:
+    iconLink.style.marginRight = '10px'; // Space between icons
+    iconContainer.appendChild(iconLink);
+});
