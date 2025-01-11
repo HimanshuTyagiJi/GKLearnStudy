@@ -1,16 +1,15 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+    registerSW();
+});
 
-        window.addEventListener('load', () => {
-            registerSW();
-        });
-        
-        // Register the Service Worker
-        async function registerSW() {
-            if ('serviceWorker' in navigator) {
-                try {
-                    await navigator.serviceWorker.register('serviceworker.js');
-                    console.log("Service Worker Registered!");
-                } catch (e) {
-                    console.log('SW registration failed:', e);
-                }
-            }
+// Register the Service Worker
+async function registerSW() {
+    if ('serviceWorker' in navigator) {
+        try {
+            await navigator.serviceWorker.register('serviceworker.js');
+            console.log("Service Worker Registered!");
+        } catch (e) {
+            console.error('SW registration failed:', e);
         }
+    }
+}
