@@ -496,12 +496,12 @@ const svgLinks = [
         socialLinksDiv.style.gap = '10px';
         socialLinksDiv.style.justifyContent = 'center';
 
-        // Links ko create aur append karna
-        svgLinks.forEach(link => {
-            const a = document.createElement('a');
-            a.href = link.href;
-            a.target = '_blank'; // Open in a new tab
-            a.innerHTML = link.svg;
-            a.setAttribute('aria-label', link.label); // Accessibility ke liye aria-label add karna
-            socialLinksDiv.appendChild(a); // ID ke through element ko dhoondhna
-        });
+     
+
+svgLinks.forEach(link => {
+    const anchor = document.createElement('a');
+    anchor.href = link.href;
+    anchor.setAttribute('aria-label', link.label);  // Added aria-label for accessibility
+    anchor.innerHTML = link.svg;
+    document.body.appendChild(anchor);
+});
