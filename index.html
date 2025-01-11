@@ -193,11 +193,12 @@
                     const title = url.getElementsByTagName("title")[0].textContent;
                     const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
                     const description = url.getElementsByTagName("p")[0].textContent;
+                    const alt = url.getElementsByTagName("image")[0].getElementsByTagName("alt")[0]?.textContent || title;
 
                     htmlContent += `
                         <div class="row">
                             <div class="leftside">
-                                <img class="image" src="${image}" alt="Image">
+                                <img class="image" src="${image}" alt="${alt}">
                             </div>
                             <div class="rightside">
                                 <h4><a href="${loc}">${title}</a></h4>
@@ -211,6 +212,8 @@
                 document.getElementById('prev-button').style.display = currentPage > 0 ? 'inline-block' : 'none';
                 document.getElementById('next-button').style.display = end < urls.length ? 'inline-block' : 'none';
             }
+
+            
 
             document.getElementById('next-button').addEventListener('click', () => {
                 currentPage++;
