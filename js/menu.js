@@ -18,12 +18,11 @@ const themeToggle = document.createElement('button');
 const themeIcon = document.createElement('span');
 
 themeToggle.id = 'themeToggle';
-themeToggle.textContent = 'Theme';
 themeIcon.id = 'themeIcon';
 
 // Define SVG icons as strings
 const sunIcon = `
-<svg id="sunIcon" fill="yellow" viewBox="-87.6 -87.6 1051.20 1051.20" stroke="red" stroke-width="20.00876">
+<svg id="sunIcon" fill="yellow" viewBox="-87.6 -87.6 1051.20 1051.20" stroke="red" stroke-width="20.00876" aria-hidden="true">
     <g>
         <circle cx="438" cy="438" r="246"></circle>
         <path d="M420.5,163h35c11.046,0,20-8.954,20-20V20c0-11.046-8.954-20-20-20h-35c-11.046,0-20,8.954-20,20v123C400.5,154.046,409.454,163,420.5,163z"></path>
@@ -38,12 +37,15 @@ const sunIcon = `
 </svg>`;
 
 const moonIcon = `
-<svg id="moonIcon" viewBox="0 0 48.00 48.00" fill="#ffffff" stroke="#000000" style="display: none;">
+<svg id="moonIcon" viewBox="0 0 48.00 48.00" fill="#ffffff" stroke="#000000" style="display: none;" aria-hidden="true">
     <path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>
 </svg>`;
 
 // Set innerHTML for icons
 themeIcon.innerHTML = sunIcon + moonIcon;
+
+// Set aria-label for accessibility
+themeToggle.setAttribute('aria-label', 'Switch theme');
 
 // Append themeIcon to themeToggle
 themeToggle.appendChild(themeIcon);
