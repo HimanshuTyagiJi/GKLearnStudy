@@ -67,7 +67,7 @@
             .row:hover {
                 background: black;
             }
-            h2 , h3 {
+            h4 {
                 color: white;
             }
         }
@@ -86,13 +86,11 @@
         }
 
         /* Header Styles */
-        h2 {text-align:left;
+        h4 {
             line-height: 2;
             font-size: 15px;
             margin: 0;
         }
-        h3{text-align:center;
-           font-size: 20px;}
 
         /* Image Styles */
         .image {
@@ -136,7 +134,7 @@
                 padding-right: 5px;
             }
 
-            h2 {
+            h4 {
                 line-height: 2;
                 font-size: 15px;
                 margin: 0px;
@@ -155,7 +153,9 @@
         <ul id="suggestions" class="suggestions"></ul>
       <div id="results"></div>
   <div class="container"><br/>
-        <h1>Welcome to GK Learn Study</h1>
+        <h1 class="color-content1">Welcome to GK Learn Study</h1>
+        <h2 class="color-content2" style="text-align:18px">Recent Posts</h2>
+        <h3 class="color-content3">hello</h3>
         <div id="data-container"></div>
         <center>
             <div class="pagination">
@@ -206,7 +206,7 @@
                                 <img class="image" src="${image}" alt="Image">
                             </div>
                             <div class="rightside">
-                                <h2><a href="${loc}">${title}</a></h2>
+                                <h4><a href="${loc}">${title}</a></h4>
                                 <p>${description}</p>
                             </div>
                         </div>`;
@@ -273,7 +273,7 @@
      <hr/>
         <div class="important_link">
     <br/>
-    <h3>Important Links<h3 />
+    <p style="font-size: 24px;">Important Links</p>
     <div id="links-container">
         <ul id="links-list"></ul>
     </div>
