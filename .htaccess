@@ -24,3 +24,7 @@ RewriteRule ^(.*)$ $1.html [L]
 <IfModule mod_headers.c>
     Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://trusted-script-source.com; object-src 'none';"
 </IfModule>
+
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "script-src 'self';"
+</IfModule>
