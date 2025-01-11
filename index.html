@@ -188,24 +188,28 @@
                 const pageData = urls.slice(start, end);
                 let htmlContent = '';
 
-                pageData.forEach(url => {
-                    const loc = url.getElementsByTagName("loc")[0].textContent;
-                    const title = url.getElementsByTagName("title")[0].textContent;
-                    const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
-                    const description = url.getElementsByTagName("p")[0].textContent;
-                    const alt = url.getElementsByTagName("image")[0].getElementsByTagName("alt")[0]?.textContent || title;
+               pageData.forEach(url => {
+    const loc = url.getElementsByTagName("loc")[0].textContent;
+    const title = url.getElementsByTagName("title")[0].textContent;
+    const image = url.getElementsByTagName("image")[0].getElementsByTagName("loc")[0].textContent;
+    const description = url.getElementsByTagName("p")[0].textContent;
+    const altElement = url.getElementsByTagName("image")[0].getElementsByTagName("alt")[0];
+    
+    // Check if alt exists, if not create a new one with title + " image"
+    const alt = altElement ? altElement.textContent : `${title} image`;
 
-                    htmlContent += `
-                        <div class="row">
-                            <div class="leftside">
-                                <img class="image" src="${image}" alt="${alt}">
-                            </div>
-                            <div class="rightside">
-                                <h4><a href="${loc}">${title}</a></h4>
-                                <p>${description}</p>
-                            </div>
-                        </div>`;
-                });
+    htmlContent += `
+        <div class="row">
+            <div class="leftside">
+                <img class="image" src="${image}" alt="${alt}">
+            </div>
+            <div class="rightside">
+                <h4><a href="${loc}">${title}</a></h4>
+                <p>${description}</p>
+            </div>
+        </div>`;
+});
+
 
                 document.getElementById('data-container').innerHTML = htmlContent;
 
