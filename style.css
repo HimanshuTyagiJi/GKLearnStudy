@@ -7,7 +7,7 @@
   --toggle-color: lineaDr-gradient(45deg, rgb(255, 255, 255) 50%, rgb(0, 0, 0) 90%); 
 }
 
-body {background-color: var(--background-color);color: var(--text-color);}
+body { font-family: 'Arial', sans-serif;background-color: var(--background-color);color: var(--text-color);}
 
 /*============================================================================================================================================================================================================*/
  
