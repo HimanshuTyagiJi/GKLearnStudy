@@ -13,13 +13,12 @@ if (window.location.pathname === "/vyakaran.html") {
 
 //theme
 
-
 // Create elements
 const body = document.body;
 const themeToggle = document.createElement('button');
 const themeIcon = document.createElement('span');
-const sunIcon = document.createElement('svg'); // Removed namespace
-const moonIcon = document.createElement('svg'); // Removed namespace
+const sunIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+const moonIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
 // Set attributes and properties
 themeToggle.id = 'themeToggle';
@@ -38,7 +37,7 @@ moonIcon.setAttribute('viewBox', '0 0 48.00 48.00');
 moonIcon.setAttribute('fill', '#ffffff');
 moonIcon.setAttribute('stroke', '#000000');
 moonIcon.style.display = 'none';
-moonIcon.innerHTML = '<path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>;
+moonIcon.innerHTML = '<path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>';
 
 // Append icons to themeIcon
 themeIcon.appendChild(sunIcon);
