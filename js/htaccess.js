@@ -1,8 +1,6 @@
-
-
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3000; // यह केवल एक स्थानीय सर्वर के लिए है
 
 // Middleware to disable caching for static assets
 app.use((req, res, next) => {
@@ -16,5 +14,5 @@ app.use((req, res, next) => {
 app.use(express.static('public'));
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`); // यह केवल जानकारी के लिए है
 });
