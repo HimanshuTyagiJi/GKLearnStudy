@@ -142,7 +142,16 @@
         }
     </style>
 </head>
-<body>
+<body> 
+    <div class="search-container">
+            <button class="search-icon" id="searchBtn">
+                <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </button>
+            <button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"/>
+        </div>
+        <ul id="suggestions" class="suggestions"></ul>
+      <div id="results"></div>
   <div class="container"><br/>
         <h1>Welcome to GK Learn Study</h1>
         <div id="data-container"></div>
@@ -152,15 +161,7 @@
                 <button id="next-button">Next</button>
             </div>
         </center>
-        <div class="search-container">
-            <button class="search-icon" id="searchBtn">
-                <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-            </button>
-            <button class="back-icon" id="backBtn">←</button>
-            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"/>
-        </div>
-        <ul id="suggestions" class="suggestions"></ul>
-      <div id="results"></div>
+       
         <script>
             const xmlUrl = 'https://gklearnstudy.in/searchsitemap.xml';
             const itemsPerPage = 50; 
