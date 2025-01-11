@@ -138,7 +138,7 @@ logoText.className = 'logo-text';
 logoText.style.position = 'absolute';
 logoText.style.top = '12%';
 logoText.style.width = '100%';
-logoText.style.color = 'red';
+logoText.style.color = 'brown';
 logoText.style.textAlign = 'center';
 logoText.style.fontFamily = 'Arial, sans-serif';
 logoText.style.animation = 'fadeInScale 2s ease-in-out forwards';
@@ -148,7 +148,7 @@ logoText.style.transform = 'scale(0.8)';
 // Logo text content (h2 and p)
 logoText.innerHTML = `
     <h2 style="font-size: 20px; margin: 0;">GK</h2>
-    <p style="color: green; font-size: 9px; margin: 0;">Learn Study</p>
+    <p style="color: #0c7951; font-size: 9px; margin: 0;">Learn Study</p>
 `;
 
 // Append the demo2 and logoText to logocontainer1
@@ -178,7 +178,7 @@ function applyResponsiveStyles() {
         logocontainer1.style.width = '25px';
         logocontainer1.style.height = '25px';
         logoText.querySelector('h2').style.fontSize = '7px';
-        logoText.querySelector('p').style.fontSize = '5px';
+        logoText.querySelector('p').style.fontSize = '4px';
         demo2.style.top = '40%';
         
     } else if (minMax900.matches) {
@@ -187,7 +187,7 @@ function applyResponsiveStyles() {
        logocontainer1.style.width = '35px';
        logocontainer1.style.height = '35px';
        logoText.querySelector('h2').style.fontSize = '9px';
-       logoText.querySelector('p').style.fontSize = '7px';
+       logoText.querySelector('p').style.fontSize = '6px';
        demo2.style.top = '40%';
         
     } else if (min900.matches) {
