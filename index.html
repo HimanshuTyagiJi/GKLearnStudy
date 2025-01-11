@@ -57,6 +57,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9MVMPKSKT"></script>
     <script src="https://gklearnstudy.in/js/gtag.js"></script>
     <style>
+        
        [data-theme="dark"] {
             .row:hover {
                 background: black;
@@ -64,6 +65,7 @@
             h4 {
                 color: white;
             }
+           .rightside p {color:#e5e5e5;}
         }
 
         /* Row Styles */
@@ -110,7 +112,7 @@
             white-space: normal; /* Allow text wrapping */
             margin: 0;
             font-size: 15px;
-            color: gray;
+            color: blue;
         }
 
         /* Media Queries */
@@ -147,10 +149,10 @@
         <ul id="suggestions" class="suggestions"></ul>
       <div id="results"></div>
   <div class="container"><br/>
-        <h1 class="color-content1">Welcome to GK Learn Study</h1>
+        <header><h1 class="color-content1" style="font-size:16px">Welcome to GK Learn Study</h1></header>
         <h2 class="color-content2" style="text-align:left">Recent Posts</h2>
         <h3 class="color-content3"><hr/></h3>
-        <div id="data-container"></div>
+        <main id="data-container"></main>
         <center>
             <div class="pagination">
                 <button id="prev-button" style="display:none;">Back</button>
@@ -160,7 +162,7 @@
        
         <script>
             const xmlUrl = 'https://gklearnstudy.in/searchsitemap.xml';
-            const itemsPerPage = 50; 
+            const itemsPerPage = 30; 
             let currentPage = 0; 
             let urls = []; 
 
