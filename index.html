@@ -40,7 +40,18 @@
     <meta name="msapplication-TileColor" content="#4CAF50" />
     <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
     <meta name="msapplication-config" content="browserconfig.xml" />
-    
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self'; 
+    script-src 'self' 'nonce-<random_nonce>'; 
+    style-src 'self' 'nonce-<random_nonce>'; 
+    img-src 'self' data:; 
+    connect-src 'self'; 
+    font-src 'self'; 
+    frame-ancestors 'none'; 
+    object-src 'none'; 
+    base-uri 'self';
+"/>
+
 
     <link rel="canonical" href="https://gklearnstudy.in" />  
     <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
@@ -50,7 +61,6 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://gklearnstudy.in/style.css" />
     
-    <script src="https://gklearnstudy.in/js/htaccess.js"></script>
     <script src="https://gklearnstudy.in/js/schema.js"></script>
     <script src="https://gklearnstudy.in/js/sw-register.js"></script>
     <script src="https://gklearnstudy.in/js/favicon.js"></script>
