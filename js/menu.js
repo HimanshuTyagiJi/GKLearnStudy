@@ -400,9 +400,7 @@ function activateLink(link) {
 }
 
 
-
-//important link 
-
+// Array of links
 const linkData = [
     { name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas" },
     { name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas" },
@@ -410,10 +408,12 @@ const linkData = [
     { name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table" },
 ];
 
-// Getting a reference to the list element where the links will be added:
+// Getting references to the list element and paragraph
 const linksList = document.getElementById("links-list");
+const myParagraph = document.getElementById("my-paragraph");
+const contactButton = document.getElementById("contact-button");
 
-// Applying styles to the list:
+// Applying styles to the list
 linksList.style.display = 'flex';
 linksList.style.flexDirection = 'column';
 linksList.style.gap = '10px';
@@ -421,19 +421,19 @@ linksList.style.justifyContent = 'center';
 linksList.style.padding = '0';
 linksList.style.margin = '0';
 
-// Looping through the link data and creating the links:
+// Looping through the link data and creating the links
 linkData.forEach(item => {
     const link = document.createElement("a");
     link.href = item.url;
     link.textContent = item.name;
 
-    // Adding styles to the link:
+    // Adding styles to the link
     link.style.textDecoration = 'none'; // Remove underline
     link.style.color = 'inherit'; // Use the inherited color from parent
 
     const listItem = document.createElement("li");
 
-    // Disabling the default <li> styles:
+    // Disabling the default <li> styles
     listItem.style.listStyle = 'none';
     listItem.style.margin = '0'; // Reset margin
     listItem.style.padding = '0'; // Reset padding
@@ -442,39 +442,27 @@ linkData.forEach(item => {
     linksList.appendChild(listItem);
 });
 
-// Footer function
-function goToUrl() {
-    window.location.href = "mailto:contact@gklearnstudy.in";
-}
-document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
-
 // Social icons
 const svgLinks = [
     {
-        svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
-                <g>
-                    <path d="M501.299,132.766c-5.888,-22.03 -23.234,-39.377 -45.264,-45.264c-39.932,-10.701 -200.037,-10.701 -200.037,-10.701c0,0 -160.105,0 -200.038,10.701c-22.025,5.887 -39.376,23.234 -45.264,45.264c-10.696,39.928 -10.696,123.236 -10.696,123.236c0,0 0,83.308 10.696,123.232c5.888,22.03 23.239,39.381 45.264,45.268c39.933,10.697 200.038,10.697 200.038,10.697c0,0 160.105,0 200.037,-10.697c22.03,-5.887 39.376,-23.238 45.264,-45.268c10.701,-39.924 10.701,-123.232 10.701,-123.232c0,0 0,-83.308 -10.701,-123.236Z" style="fill:#ed1f24;fill-rule:nonzero;"/>
-                    <path d="M204.796,332.803l133.018,-76.801l-133.018,-76.801l0,153.602Z" style="fill:#fff;fill-rule:nonzero;"/>
-                </g>
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512" width="25px" fill="#ed1f24">
+                <path d="M501.299,132.766c-5.888,-22.03 -23.234,-39.377 -45.264,-45.264c-39.932,-10.701 -200.037,-10.701 -200.037,-10.701c0,0 -160.105,0 -200.038,10.701c-22.025,5.887 -39.376,23.234 -45.264,45.264c-10.696,39.928 -10.696,123.236 -10.696,123.236c0,0 0,83.308 10.696,123.232c5.888,22.03 23.239,39.381 45.264,45.268c39.933,10.697 200.038,10.697 200.038,10.697c0,0 160.105,0 200.037,-10.697c22.03,-5.887 39.376,-23.238 45.264,-45.268c10.701,-39.924 10.701,-123.232 10.701,-123.232c0,0 0,-83.308 -10.701,-123.236Z"/>
+                <path d="M204.796,332.803l133.018,-76.801l-133.018,-76.801l0,153.602Z"/>
             </svg>`,
         href: 'https://youtube.com/@gklearnstudy',
         label: 'GK Learn Study YouTube channel'
     },
     {
-        svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
-                <g>
-                    <path d="M512,256c0,-141.385 -114.615,-256 -256,-256c-141.385,0 -256,114.615 -256,256c0,127.777 93.616,233.685 216,252.89l0,-178.89l-65,0l0,-74l65,0l0,-56.4c0,-64.16 38.219,-99.6 96.695,-99.6c28.009,0 57.305,5 57.305,5l0,63l-32.281,0c-31.801,0 -41.719,19.733 -41.719,39.978l0,48.022l71,0l-11.35,74l-59.65,0l0,178.89c122.385,-19.205 216,-125.113 216,-252.89Z" style="fill:#1877f2;fill-rule:nonzero;"/>
-                    <path d="M355.65,330l11.35,-74l-71,0l0,-48.022c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63c0,0 -29.297,-5 -57.305,-5c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89c13.033,2.045 26.392,3.11 40,3.11c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z" style="fill:#fff;fill-rule:nonzero;"/>
-                </g>
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512" width="25px" fill="#1877f2">
+                <path d="M512,256c0,-141.385 -114.615,-256 -256,-256c-141.385,0 -256,114.615 -256,256c0,127.777 93.616,233.685 216,252.89l0,-178.89l-65,0l0,-74l65,0l0,-56.4c0,-64.16 38.219,-99.6 96.695,-99.6c28.009,0 57.305,5 57.305,5l0,63l-32.281,0c-31.801,0 -41.719,19.733 -41.719,39.978l0,48.022l71,0l-11.35,74l-59.65,0l0,178.89c122.385,-19.205 216,-125.113 216,-252.89Z"/>
+                <path d="M355.65,330l11.35,-74l-71,0l0,-48.022c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63c0,0 -29.297,-5 -57.305,-5c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89c13.033,2.045 26.392,3.11 40,3.11c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z"/>
             </svg>`,
         href: 'https://www.facebook.com/GoluLiv',
         label: 'GK Learn Study Facebook page'
     },
     {
-        svg: `<svg height="100%" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" viewBox="0 0 512 512" width="25px">
-                <g>
-                    <path d="M105.843,29.837c0,4.242-3.439,7.68-7.68,7.68c-4.241,0-7.68-3.438-7.68-7.68c0-4.242,3.439-7.68,7.68-7.68C102.405,22.157,105.843,25.595,105.843,29.837z M64,85.333c-11.782,0-21.333-9.551-21.333-21.333c0-11.782,9.551-21.333,21.333-21.333c11.782,0,21.333,9.551,21.333,21.333C85.333,75.782,75.782,85.333,64,85.333z M64,31.135c-18.151,0-32.865,14.714-32.865,32.865c0,18.151,14.714,32.865,32.865,32.865c18.151,0,32.865-14.714,32.865-32.865C96.865,45.849,82.151,31.135,64,31.135z M64,11.532c17.089,0,19.113,0.065,25.861,0.373c6.24,0.285,9.629,1.327,11.884,2.204c2.987,1.161,5.119,2.548,7.359,4.788c2.24,2.239,3.627,4.371,4.788,7.359c0.876,2.255,1.919,5.644,2.204,11.884c0.308,6.749,0.373,8.773,0.373,25.862c0,17.089-0.065,19.113-0.373,25.861c-0.285,6.24-1.327,9.629-2.204,11.884c-1.161,2.987-2.548,5.119-4.788,7.359c-2.239,2.24-4.371,3.627-7.359,4.788c-2.255,0.876-5.644,1.919-11.884,2.204c-6.749,0.308-8.773,0.373-25.861,0.373c-17.089,0-19.113-0.065-25.861-0.373c-6.24-0.285-9.629-1.327-11.884-2.204c-2.987-1.161-5.119-2.548-7.359-4.788c-2.239-2.24-3.627-4.371-4.788-7.359c-0.876-2.255-1.919-5.644-2.204-11.884c-0.308-6.749-0.373-8.773-0.373-25.862c0-17.089,0.065-19.113,0.373-25.861c0.285-6.24,1.327-9.629,2.204-11.884c1.161-2.987,2.548-5.119,4.788-7.359c2.239-2.24,4.371-3.627,7.359-4.788c2.255-0.876,5.644-1.919,11.884-2.204c6.749-0.308,8.773-0.373,25.861-0.373z M64,179.194c-6.618,0-12,5.381-12,12c0,6.618,5.382,12,12,12s12-5.382,12-12C76,184.575,70.618,179.194,64,179.194z" style="fill:#ed1f24;fill-rule:nonzero;"/>
-                </g>
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512" width="25px" fill="#ed1f24">
+                <path d="M105.843,29.837c0,4.242-3.439,7.68-7.68,7.68c-4.241,0-7.68-3.438-7.68-7.68c0-4.242,3.439-7.68,7.68-7.68C102.405,22.157,105.843,25.595,105.843,29.837z M64,85.333c-11.782,0-21.333-9.551-21.333-21.333c0-11.782,9.551-21.333,21.333-21.333c11.782,0,21.333,9.551,21.333,21.333C85.333,75.782,75.782,85.333,64,85.333z M64,31.135c-18.151,0-32.865,14.714-32.865,32.865c0,18.151,14.714,32.865,32.865,32.865c18.151,0,32.865-14.714,32.865-32.865C96.865,45.849,82.151,31.135,64,31.135z M64,11.532c17.089,0,19.113,0.065,25.861,0.373c6.24,0.285,9.629,1.327,11.884,2.204c2.987,1.161,5.119,2.548,7.359,4.788c2.24,2.239,3.627,4.371,4.788,7.359c0.876,2.255,1.919,5.644,2.204,11.884c0.308,6.749,0.373,8.773,0.373,25.862c0,17.089-0.065,19.113-0.373,25.861c-0.285,6.24-1.327,9.629-2.204,11.884c-1.161,2.987-2.548,5.119-4.788,7.359c-2.239,2.24-4.371,3.627-7.359,4.788c-2.255,0.876-5.644,1.919-11.884,2.204c-6.749,0.308-8.773,0.373-25.861,0.373c-17.089,0-19.113-0.065-25.861-0.373c-6.24-0.285-9.629-1.327-11.884-2.204c-2.987-1.161-5.119-2.548-7.359-4.788c-2.239-2.24-3.627-4.371-4.788-7.359c-0.876-2.255-1.919-5.644-2.204-11.884c-0.308-6.749-0.373-8.773-0.373-25.862c0-17.089,0.065-19.113,0.373-25.861c0.285-6.24,1.327-9.629,2.204-11.884c1.161-2.987,2.548-5.119,4.788-7.359c2.239-2.24,4.371-3.627,7.359-4.788c2.255-0.876,5.644-1.919,11.884-2.204c6.749-0.308,8.773-0.373,25.861-0.373z M64,179.194c-6.618,0-12,5.381-12,12c0,6.618,5.382,12,12,12s12-5.382,12-12C76,184.575,70.618,179.194,64,179.194z" style="fill:#ed1f24;fill-rule:nonzero;"/>
             </svg>`,
         href: 'https://www.instagram.com/gklearnstudy',
         label: 'GK Learn Study Instagram page'
@@ -495,3 +483,13 @@ svgLinks.forEach(link => {
     iconLink.style.marginRight = '10px'; // Space between icons
     iconContainer.appendChild(iconLink);
 });
+
+// Setting the copyright text
+myParagraph.innerHTML = "Copyright All rights reserved.";
+
+// Footer function
+contactButton.addEventListener('click', goToUrl);
+
+function goToUrl() {
+    window.location.href = "mailto:contact@gklearnstudy.in";
+}
