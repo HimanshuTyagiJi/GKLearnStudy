@@ -7,21 +7,7 @@ if (window.location.pathname === "/vyakaran.html") {
 }
 
 
-// common.js
-(function() {
-  // Automatically add manifest link
-  const manifestLink = document.createElement('link');
-  manifestLink.rel = 'manifest';
-  manifestLink.href = '/manifest.json';
-  document.head.appendChild(manifestLink);
 
-  // Automatically register service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/serviceworker.js', { scope: '/' })
-      .then(() => console.log("Service Worker Registered"))
-      .catch((err) => console.log("Service Worker Registration Failed", err));
-  }
-})();
 
 
 
