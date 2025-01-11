@@ -1,6 +1,36 @@
+# Netlify configuration file
+
+# सभी फ़ाइलों के लिए कैशिंग हेडर
 [[headers]]
   for = "/*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
+
+# सभी HTML फ़ाइलों के लिए हेडर
+[[headers]]
+  for = "/*.html"  # यह सभी HTML फ़ाइलों पर लागू होगा
+  [headers.values]
+    Content-Encoding = "br"  # Brotli संपीड़न लागू करेगा
+    Cache-Control = "max-age=31536000"  # कैश को अधिकतम समय तक स्टोर करेगा
+
+# सभी CSS फ़ाइलों के लिए हेडर
+[[headers]]
+  for = "/*.css"  # सभी CSS फ़ाइलों पर लागू होगा
+  [headers.values]
+    Content-Encoding = "br"  # Brotli संपीड़न लागू करेगा
+    Cache-Control = "max-age=31536000"  # कैश को अधिकतम समय तक स्टोर करेगा
+
+# सभी JS फ़ाइलों के लिए हेडर
+[[headers]]
+  for = "/*.js"  # सभी JS फ़ाइलों पर लागू होगा
+  [headers.values]
+    Content-Encoding = "br"  # Brotli संपीड़न लागू करेगा
+    Cache-Control = "max-age=31536000"  # कैश को अधिकतम समय तक स्टोर करेगा
+
+# रीडायरेक्ट्स के लिए कॉन्फ़िगरेशन
+[[redirects]]
+  from = "/old-page"
+  to = "/new-page"
+  status = 301  # Permanent redirect
