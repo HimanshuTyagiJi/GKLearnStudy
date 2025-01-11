@@ -186,8 +186,8 @@ function applyResponsiveStyles() {
         
        logocontainer1.style.width = '35px';
        logocontainer1.style.height = '35px';
-       logoText.querySelector('h2').style.fontSize = '9px';
-       logoText.querySelector('p').style.fontSize = '5px';
+       logoText.querySelector('h2').style.fontSize = '11px';
+       logoText.querySelector('p').style.fontSize = '4px';
        demo2.style.top = '40%';
         
     } else if (min900.matches) {
