@@ -1,19 +1,26 @@
-// Set Content Security Policy
-const csp = "default-src 'self'; script-src 'self' https://trusted-script-source.com; object-src 'none';";
-const metaCSP = document.createElement('meta');
-metaCSP.httpEquiv = "Content-Security-Policy";
-metaCSP.content = csp;
-document.head.appendChild(metaCSP);
+// एक सुरक्षित Content Security Policy सेट करें
+(function() {
+    const csp = "default-src 'self'; " +
+                "script-src 'self' 'nonce-" + generateNonce() + "'; " +
+                "style-src 'self' 'nonce-" + generateNonce() + "'; " +
+                "img-src 'self' data:; " +
+                "connect-src 'self'; " +
+                "font-src 'self'; " +
+                "frame-ancestors 'none'; " +
+                "object-src 'none'; " +
+                "base-uri 'self';";
 
-// Set other security-related settings in JavaScript
-function setSecurityHeaders() {
-    // Note: Actual HTTP headers cannot be set via JavaScript, these are just reminders for server-side configuration
-    console.log("Set Cache-Control: no-cache, no-store, must-revalidate");
-    console.log("Set Pragma: no-cache");
-    console.log("Set Expires: 0");
-    console.log("Set X-Content-Type-Options: nosniff");
-    console.log("Set X-Frame-Options: DENY");
-}
+    // एक meta टैग बनाएं
+    const meta = document.createElement('meta');
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = csp;
 
-// Call the function to set security headers
-setSecurityHeaders();
+    // meta टैग को document के head में जोड़ें
+    document.head.appendChild(meta);
+
+    // नॉनस जनरेट करने के लिए एक फ़ंक्शन
+    function generateNonce() {
+        // 16 बाइट्स का एक रैंडम नॉनस जनरेट करें
+        return btoa(String.fromCharCode.apply(null, window.crypto.getRandomValues(new Uint8Array(16))));
+    }
+})();
