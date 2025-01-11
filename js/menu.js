@@ -491,17 +491,30 @@ const svgLinks = [
       },
 ];
 
- const socialLinksDiv = document.getElementById('social-links');
-        socialLinksDiv.style.display = 'flex';
-        socialLinksDiv.style.gap = '10px';
-        socialLinksDiv.style.justifyContent = 'center';
+// Set up the container styles for social links
+const socialLinksDiv = document.getElementById('social-links');
+socialLinksDiv.style.display = 'flex';
+socialLinksDiv.style.gap = '10px';
+socialLinksDiv.style.justifyContent = 'center';
 
-     
+// Loop through the svgLinks array to dynamically add links
+svgLinks.forEach(linkInfo => {
+    // Create a container div for each SVG link
+    const div = document.createElement('div');
+    div.className = 'svg-link';
 
-svgLinks.forEach(link => {
-    const anchor = document.createElement('a');
-    anchor.href = link.href;
-    anchor.setAttribute('aria-label', link.label);  // Added aria-label for accessibility
-    anchor.innerHTML = link.svg;
-    document.body.appendChild(anchor);
+    // Create the <a> element with the appropriate href and target
+    const link = document.createElement('a');
+    link.href = linkInfo.href;
+    link.target = "_blank"; // Open in a new tab
+    link.setAttribute('aria-label', linkInfo.label); // Accessibility
+
+    // Add the SVG content to the <a> element
+    link.innerHTML = linkInfo.svg;
+
+    // Append the link to the div container
+    div.appendChild(link);
+
+    // Append the div to the main container
+    socialLinksDiv.appendChild(div);
 });
