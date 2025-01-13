@@ -489,7 +489,7 @@ div.scrollmenu a {
   color: white;
 } .container {max-width: 98%;margin: 0 auto;margin-top: 80px;text-align: justify;line-height: 2;}
  
- 
+ footer {text-align:center;}
 @media screen and (min-width: 769.01px) {
   .navbar {
   display: flex;
@@ -498,6 +498,18 @@ div.scrollmenu a {
    height: 60px !important;
     }
 .container {max-width: 65%;margin-top: 60px;}
+      .custom-row{padding: 4px;}
+    .custom-column{padding: 10px;}
+    .custom-column {
+      flex: 1;
+  }.custom-row {
+    display: flex
+;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+  
 
   .burger {
     display: none;
