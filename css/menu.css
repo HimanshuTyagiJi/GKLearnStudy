@@ -487,8 +487,9 @@ div.scrollmenu a {
   border-radius: 5px;
   background: #5151ff;
   color: white;
-}
-
+} .container {max-width: 98%;margin: 0 auto;margin-top: 80px;text-align: justify;line-height: 2;}
+ 
+ 
 @media screen and (min-width: 769.01px) {
   .navbar {
   display: flex;
@@ -496,8 +497,8 @@ div.scrollmenu a {
     align-items: center;
    height: 60px !important;
     }
+.container {max-width: 65%;margin-top: 60px;}
 
-  
   .burger {
     display: none;
    
