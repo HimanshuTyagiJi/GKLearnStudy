@@ -209,6 +209,10 @@ body {
   top: 0;
   left: 0;
 }
+
+  .menu-brand a:hover:not(.active), .menu a:hover:not(.active) { color: rgb(69, 1, 255);background-color: transparent;}
+  .burger {display: none;visibility: hidden;}
+  
 .menu-inner {
   display: flex;
   flex-direction: column;
@@ -549,7 +553,7 @@ div.scrollmenu a {
 }
 
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
-  .menu {
+  .menu {height:100%;
     position: fixed;
     margin-top: 55px;
     font-size: 18px;
