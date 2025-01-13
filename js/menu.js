@@ -115,8 +115,8 @@ logocontainer1.style.overflow = 'hidden';
 const demo2 = document.createElement('div');
 demo2.className = 'demo2';
 demo2.style.position = 'relative';
-demo2.style.width = '200%';
-demo2.style.height = '0px';
+demo2.style.width = '100px';
+demo2.style.height = '50';
 
 
 // SVG code
@@ -282,7 +282,10 @@ const rightArrow = document.createElement('div');
 rightArrow.className = 'menu-arrow right';
 rightArrow.innerHTML = '&#8250;';
 menu.appendChild(rightArrow);
-
+document.querySelectorAll('.logo-container1, .menu-inner, .burger-line').forEach(el => {
+    el.style.position = 'absolute';
+    el.style.transition = 'none';
+});
 // Define menu items
 const menuItems = [
   { text: "Home", href: "https://gklearnstudy.in" },
