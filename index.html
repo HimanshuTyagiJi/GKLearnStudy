@@ -55,17 +55,20 @@
     <script src="https://gklearnstudy.in/js/favicon.js" defer></script>
     <style>
         
-       [data-theme="dark"] {
-            .row:hover {
-                background: black;
-            }
-            h4 {
-                color: white;
-            }
-           .rightside p {color:#e5e5e5;}
-        }
+     [data-theme="dark"] .row:hover {
+    background: black;
+}
 
-        /* Row Styles */
+[data-theme="dark"] h4 {
+    color: white;
+}
+
+[data-theme="dark"] .rightside p {
+    color: #e5e5e5;
+}
+
+
+       
         .row {
             display: flex;
             overflow: hidden;
@@ -132,7 +135,7 @@
                 font-size: 15px;
                 margin: 0px;
             }
-        }
+        } .pagination{text-align:center;}button{border-radius:10px}
     </style>
 </head>
 <body> 
@@ -147,15 +150,15 @@
       <div id="results"></div>
   <div class="container"><br/>
         <header><h1 class="color-content1">Welcome <br/>to<br /> GK Learn Study</h1></header>
-        <h2 class="color-content2" style="text-align:left">Recent Posts</h2>
-        <h3 class="color-content3"><hr/></h3>
+        <h2><span class="color-content2" style="text-align:left">Recent Posts</span></h2>
+        <h3><span class="color-content3">🔴🟠🟡🟢🔵🟣🟤⚫⚪</span></h3>
         <main id="data-container"></main>
-        <center>
+        
             <div class="pagination">
                 <button id="prev-button" style="display:none;">Back</button>
                 <button id="next-button">Next</button>
             </div>
-        </center>
+      
        
         <script>
             const xmlUrl = 'https://gklearnstudy.in/searchsitemap.xml';
