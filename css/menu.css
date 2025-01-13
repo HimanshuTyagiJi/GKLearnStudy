@@ -490,6 +490,11 @@ div.scrollmenu a {
 } .container {max-width: 98%;margin: 0 auto;margin-top: 80px;text-align: justify;line-height: 2;}
  
  footer {text-align:center;}
+
+
+
+
+
 @media screen and (min-width: 769.01px) {
   .navbar {
   display: flex;
@@ -510,11 +515,9 @@ div.scrollmenu a {
 }
 
   
-
-  .burger {
-    display: none;
-   
-  }
+ .menu-brand a:hover:not(.active), .menu a:hover:not(.active) { color: rgb(69, 1, 255);background-color: transparent;}
+  .burger {display: none;visibility: hidden;}
+  
   .brand {
    
     font-size: 1.6rem;
