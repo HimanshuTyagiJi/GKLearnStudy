@@ -1,5 +1,28 @@
-.important_link {top:0;overflow-y: auto;font-size: 21px;}
-@media screen and (min-width: 769.01px)  {
- .important_link{position:fixed;left:83%;height:100%;width:17%;padding:1em;margin-bottom:20px;top:0%;}}
- @media screen and (max-width: 768px) {
-.important_link {top:0%;margin: 0 auto;padding: 0em;margin-bottom: 20px;}}
+.important_link {
+    top: 0;
+    overflow-y: auto;
+    font-size: 21px;
+    text-align: left; /* Text alignment to left */
+}
+
+@media screen and (min-width: 769.01px) {
+    .important_link {
+        position: fixed;
+        left: 83%;
+        height: 100%;
+        width: 17%;
+        padding: 1em;
+        margin-bottom: 20px;
+        top: 0%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .important_link {
+        top: 0%;
+        margin: 0 auto;
+        padding: 0em;
+        margin-bottom: 20px;
+        width: 100%; /* Ensuring full width on smaller screens */
+    }
+}
