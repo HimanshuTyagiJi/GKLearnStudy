@@ -291,7 +291,6 @@ document.querySelectorAll('.logo-container1, .menu-inner, .burger-line').forEach
 // Define menu items
 const menuItems = [
   { text: "Home", href: "https://gklearnstudy.in" },
-  { text: "Video", href: "https://gklearnstudy.in/Video.html" },
   { text: "Education", href: "https://gklearnstudy.in/education.html" },
   { text: "All Formula", href: "https://gklearnstudy.in/all-formulas.html" },
   { text: "Computer", href: "https://gklearnstudy.in/computer.html" },
