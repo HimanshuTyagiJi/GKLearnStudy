@@ -17,7 +17,7 @@ body {
     top: 0;
     right: 0;
     height: 100%;
-    background-color: #f8f9fa;
+   
     border-left: 2px solid #ddd;
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
@@ -42,13 +42,13 @@ body {
 
 #right-sidebar ul li a {
     text-decoration: none;
-    color: #007BFF;
+    
     font-size: 1em;
 }
 
 #right-sidebar ul li a:hover {
     text-decoration: underline;
-    color: #0056b3;
+
 }
 
 /* Responsive Design for Mobile (max-width: 768px) */
