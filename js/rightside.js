@@ -7,7 +7,6 @@ const links = [
   {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas"},
   {name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas"},
   {name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table"},
- 
 ];
 
 // Function to add links dynamically
@@ -16,7 +15,6 @@ function addLinks() {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = link.url;
-        a.target = '_blank'; // Opens the link in a new tab
         a.textContent = link.name;
         li.appendChild(a);
         linkList.appendChild(li);
