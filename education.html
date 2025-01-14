@@ -103,10 +103,13 @@
                     }
 
                     .header-images img {
-                        width: 100%;
-                        height: auto;
-                        object-fit: cover;transition: transform 0.3s ease;}
-     
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    max-width: 800px; /* Ensure it doesn't go beyond 800px */
+    min-width: 400px; /* Ensure it doesn't go below 400px */
+}
                   .header-images:hover img {transition: transform 0.3s ease;
                           transform: scale(1.1);
 
@@ -224,7 +227,15 @@
                         transition: transform 0.3s ease; /* Smooth transition effect */
 
                     }
-            img {width:130px;border-radius:10px;transition: transform 0.3s ease;}
+            img {border-radius:10px;transition: transform 0.3s ease;
+                 width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    max-width: 360px; /* Ensure it doesn't go beyond 800px */
+    min-width: 270px; /* Ensure it doesn't go below 400px */
+}
+}
                    a.logo-link:hover {transition: transform 0.3s ease;
                     transform: scale(1.1);
             }
