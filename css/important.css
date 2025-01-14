@@ -1,47 +1,71 @@
-.important_link {
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Main Content Styling */
+#main-content {
+    padding: 20px;
+    margin-right: 300px; /* Space for the right sidebar */
+}
+
+/* Right Sidebar Styling */
+#right-sidebar {
+    width: 280px;
+    position: fixed;
     top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #f8f9fa;
+    border-left: 2px solid #ddd;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    font-size: 21px;
-    text-align: left; /* Text alignment to left */
-    min-height: 50px; /* Adjust this value as needed */
-    min-width: 150px; /* Adjust this value as needed */
-    font-family: Arial, sans-serif; /* Fallback font */
-    background-color: var(--bg-color); /* Use CSS variables for dynamic theming */
-    color: var(--text-color); /* Use CSS variables for dynamic theming */
+    transition: all 0.3s ease-in-out;
 }
 
-@media screen and (min-width: 769.01px) {
-    .important_link {
-        position: fixed;
-        left: 83%;
-        height: 100%;
-        width: 17%;
-        padding: 1em;
-        margin-bottom: 20px;
-        top: 0%;
+#right-sidebar h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+#right-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#right-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+#right-sidebar ul li a {
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 1em;
+}
+
+#right-sidebar ul li a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Responsive Design for Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+    #right-sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-left: none;
+        box-shadow: none;
+        margin-top: 20px;
+        padding: 15px;
+        margin-right: 0;
+        border-top: 2px solid #ddd;
     }
-}
 
-@media screen and (max-width: 768px) {
-    .important_link {
-        top: 0%;
-        margin: 0 auto;
-        padding: 0em;
-        margin-bottom: 20px;
-        width: 100%; /* Ensuring full width on smaller screens */
-    }
-}
-
-/* Define light mode colors */
-:root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-}
-
-/* Define dark mode colors */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #333333;
-        --text-color: #ffffff;
+    #main-content {
+        margin-right: 0;
     }
 }
