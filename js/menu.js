@@ -11,6 +11,8 @@ if (window.location.pathname === "/vyakaran.html") {
 
 
 
+
+
 //theme
 // Create elements
 const body = document.body;
@@ -404,46 +406,7 @@ function activateLink(link) {
 
 
 
-//important link 
 
-const linkData = [
-    { name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas" },
-    { name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas" },
-    { name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas" },
-    { name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table" },
-];
-
-// Getting a reference to the list element where the links will be added:
-const linksList = document.getElementById("links-list");
-
-// Applying styles to the list:
-linksList.style.display = 'flex';
-linksList.style.flexDirection = 'column';
-linksList.style.gap = '10px';
-linksList.style.justifyContent = 'center';
-linksList.style.padding = '0';
-linksList.style.margin = '0';
-
-// Looping through the link data and creating the links:
-linkData.forEach(item => {
-    const link = document.createElement("a");
-    link.href = item.url;
-    link.textContent = item.name;
-
-    // Adding styles to the link:
-    link.style.textDecoration = 'none'; // Remove underline
-    link.style.color = 'inherit'; // Use the inherited color from parent
-
-    const listItem = document.createElement("li");
-
-    // Disabling the default <li> styles:
-    listItem.style.listStyle = 'none';
-    listItem.style.margin = '0'; // Reset margin
-    listItem.style.padding = '0'; // Reset padding
-
-    listItem.appendChild(link);
-    linksList.appendChild(listItem);
-});
 
 // Footer function
 function goToUrl() {
