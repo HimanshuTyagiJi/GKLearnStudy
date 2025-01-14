@@ -227,15 +227,11 @@
                         transition: transform 0.3s ease; /* Smooth transition effect */
 
                     }
-            img {border-radius:10px;transition: transform 0.3s ease;
-                 width: 100%;
-    height: auto;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    max-width: 360px; /* Ensure it doesn't go beyond 800px */
-    min-width: 270px; /* Ensure it doesn't go below 400px */
-}
-}
+        img {width:130px;border-radius:10px;transition: transform 0.3s ease;}
+                   a.logo-link:hover {transition: transform 0.3s ease;
+                    transform: scale(1.1);
+            }
+
                    a.logo-link:hover {transition: transform 0.3s ease;
                     transform: scale(1.1);
             }
@@ -349,7 +345,13 @@
         <img
           src="https://gklearnstudy.in/images/book.ico"
           alt="Education images"
-          style="width: 360px; height: 270px"
+          style="width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    max-width: 360px; /* Ensure it doesn't go beyond 800px */
+    min-width: 270px; /* Ensure it doesn't go below 400px */
+"
         />
         <div class="description">
           <p>
