@@ -13,8 +13,8 @@
     <meta name="googlebot" content="index, follow" />
     <meta name="bingbot" content="index, follow" />
     <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <!-- Open Graph / Facebook -->
@@ -88,219 +88,218 @@
 
     <!-- Meta Tags Generated with https://metatags.io -->
     <style>
-              /* General Styling */
-              body {
-                  margin: 0;
-                  padding: 0;
-                  font-family: 'Arial', sans-serif;
-                  overflow-x: hidden;
-              }
+                    /* General Styling */
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        font-family: 'Arial', sans-serif;
+                        overflow-x: hidden;
+                    }
 
-              .header-images {
-                  position: relative;
-                  text-align: center;
-                  color: white;
-              }
+                    .header-images {
+                        position: relative;
+                        text-align: center;
+                        color: white;
+                    }
 
-              .header-images img {
-                  width: 98%;
-                  height: 400px;
-                  object-fit: cover;transition: transform 0.3s ease;
-              }
-            .header-images:hover img {transition: transform 0.3s ease;
+                    .header-images img {
+                        width: 100%;
+                        height: 400px;
+                        object-fit: cover;transition: transform 0.3s ease;
+                    }
+                  .header-images:hover img {transition: transform 0.3s ease;
+                          transform: scale(1.1);
+
+                    }
+
+                    .header-images .text {#FF69B4;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        text-align: center;
+                        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+                        animation: fadeIn 1.5s ease-in-out;
+                    }
+
+                    .header-images .text h1 {
+                        font-size: 35px;
+                        margin: 0;
+                        font-weight: bold;
+                    }
+
+                    .header-images .text h2 {
+                        font-size: 20px;
+                        margin-top: 10px;
+                        font-style: italic;
+                    }
+
+                    .orange-line {
+                        background-color: orange;
+                        height: 10px;
+                        margin: 0 auto;
+                    }
+
+                    .content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 40px 20px;
+                    }
+
+                    .content img {
+                        width: 150px;
+                        height: auto;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                        animation: slideInLeft 1.5s ease-in-out;
+                    }
+
+                    .content .description {
+                        flex: 1;
+                        margin-left: 20px;
+                        animation: slideInRight 1.5s ease-in-out;
+                    }
+
+                    .content .description p {
+                        font-size: 18px;
+                        line-height: 1.6;
+                        text-align: justify;
+                    }
+            .content.animate-on-scroll.animate:hover {
+                    transform: scale(1.08);
+            }
+                    .scroll-section {
+                        display: flex;
+                        overflow-x: auto;
+                        gap: 15px;
+                        padding: 20px;
+                    }
+
+                    .scroll-section .images-card {
+                        text-align: center;
+                        flex-shrink: 0;
+                        border: 1px solid orange;
+                        padding: 10px;
+                        border-radius: 8px;
+                        background-color: #f9f9f9;
+                        transition: transform 0.3s ease-in-out;
+                        animation: zoomIn 1.5s ease-in-out;
+                    }
+
+                    .scroll-section .images-card img {
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 8px;
+                        border: 2px solid orange;
+                        transition: transform 0.3s ease-in-out;
+                    }
+
+                    .scroll-section .images-card img:hover {
+                        transform: scale(1.1);
+                    }
+
+                    .scroll-section .images-card button {
+                        margin-top: 10px;
+                        padding: 8px 15px;
+                        border: none;
+                        border-radius: 5px;
+                        background-color: orange;
+                        color: white;
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+
+                    .scroll-section .images-card button:hover {
+                        background-color: darkorange;
+                    }
+
+                  .logo-item{        display: flex
+            ;font-size:22px;
+                    user-select: none;
+                    justify-content: center;}
+
+               .logo-link img {width:100px;height:100px;border-radius:10px;
+                        transition: transform 0.3s ease; /* Smooth transition effect */
+
+                    }
+            img {width:130px;border-radius:10px;transition: transform 0.3s ease;}
+                   a.logo-link:hover {transition: transform 0.3s ease;
                     transform: scale(1.1);
+            }
 
-              }
+                    /* Animations */
+                    @keyframes fadeIn {
+                        from {
+                            opacity: 0;
+                        }
+                        to {
+                            opacity: 1;
+                        }
+                    }
 
-              .header-images .text {
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  text-align: center;
-                  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-                  animation: fadeIn 1.5s ease-in-out;
-              }
+                    @keyframes slideInLeft {
+                        from {
+                            transform: translateX(-100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
 
-              .header-images .text h1 {
-                  font-size: 35px;
-                  margin: 0;
-                  font-weight: bold;
-              }
+                    @keyframes slideInRight {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
 
-              .header-images .text h2 {
-                  font-size: 20px;
-                  margin-top: 10px;
-                  font-style: italic;
-              }
+                    @keyframes zoomIn {
+                        from {
+                            transform: scale(0.5);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: scale(1);
+                            opacity: 1;
+                        }
+                    }/* प्रारंभिक स्थिति */
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
 
-              .orange-line {
-                  background-color: orange;
-                  height: 10px;
-                  margin: 0 auto;
-              }
+            /* जब .animate क्लास जुड़ती है */
+            .animate-on-scroll.animate {
+                opacity: 1;
+                transform: translateY(0); /* मूल स्थिति */
+            }
 
-              .content {
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  padding: 40px 20px;
-              }
+                  @media screen and (max-width: 1200px) {
+                    .content
+                    { display:flex;
+                     flex-direction: column;}}
+          @media (max-width: 768px) {
+        .header-images img {
+          height: auto;
+        }
 
-              .content img {
-                  width: 150px;
-                  height: auto;
-                  border-radius: 10px;
-                  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                  animation: slideInLeft 1.5s ease-in-out;
-              }
+        .header-images .text h1 {
+          font-size: 24px;
+        }
 
-              .content .description {
-                  flex: 1;
-                  margin-left: 20px;
-                  animation: slideInRight 1.5s ease-in-out;
-              }
-
-              .content .description p {
-                  font-size: 18px;
-                  line-height: 1.6;
-                  text-align: justify;
-              }
-      .content.animate-on-scroll.animate:hover {
-              transform: scale(1.08);
+        .header-images .text h2 {
+          font-size: 16px;
+        }
       }
-              .scroll-section {
-                  display: flex;
-                  overflow-x: auto;
-                  gap: 15px;
-                  padding: 20px;
-              }
-
-              .scroll-section .images-card {
-                  text-align: center;
-                  flex-shrink: 0;
-                  border: 1px solid orange;
-                  padding: 10px;
-                  border-radius: 8px;
-                  background-color: #f9f9f9;
-                  transition: transform 0.3s ease-in-out;
-                  animation: zoomIn 1.5s ease-in-out;
-              }
-
-              .scroll-section .images-card img {
-                  width: 150px;
-                  height: 150px;
-                  border-radius: 8px;
-                  border: 2px solid orange;
-                  transition: transform 0.3s ease-in-out;
-              }
-
-              .scroll-section .images-card img:hover {
-                  transform: scale(1.1);
-              }
-
-              .scroll-section .images-card button {
-                  margin-top: 10px;
-                  padding: 8px 15px;
-                  border: none;
-                  border-radius: 5px;
-                  background-color: orange;
-                  color: white;
-                  font-size: 16px;
-                  cursor: pointer;
-                  transition: background-color 0.3s;
-              }
-
-              .scroll-section .images-card button:hover {
-                  background-color: darkorange;
-              }
-
-            .logo-item{        display: flex
-      ;font-size:22px;
-              user-select: none;
-              justify-content: center;}
-
-         .logo-link img {width:100px;height:100px;border-radius:10px;
-                  transition: transform 0.3s ease; /* Smooth transition effect */
-
-              }
-      img {width:130px;border-radius:10px;transition: transform 0.3s ease;}
-             a.logo-link:hover {transition: transform 0.3s ease;
-              transform: scale(1.1);
-      }
-
-              /* Animations */
-              @keyframes fadeIn {
-                  from {
-                      opacity: 0;
-                  }
-                  to {
-                      opacity: 1;
-                  }
-              }
-
-              @keyframes slideInLeft {
-                  from {
-                      transform: translateX(-100%);
-                      opacity: 0;
-                  }
-                  to {
-                      transform: translateX(0);
-                      opacity: 1;
-                  }
-              }
-
-              @keyframes slideInRight {
-                  from {
-                      transform: translateX(100%);
-                      opacity: 0;
-                  }
-                  to {
-                      transform: translateX(0);
-                      opacity: 1;
-                  }
-              }
-
-              @keyframes zoomIn {
-                  from {
-                      transform: scale(0.5);
-                      opacity: 0;
-                  }
-                  to {
-                      transform: scale(1);
-                      opacity: 1;
-                  }
-              }/* प्रारंभिक स्थिति */
-      .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      }
-
-      /* जब .animate क्लास जुड़ती है */
-      .animate-on-scroll.animate {
-          opacity: 1;
-          transform: translateY(0); /* मूल स्थिति */
-      }
-
-            @media screen and (max-width: 1200px) {
-              .content
-              { display:flex;
-               flex-direction: column;}}
-    @media (max-width: 768px) {
-  .header-images img {
-    height: auto;
-  }
-  
-  .header-images .text h1 {
-    font-size: 24px;
-  }
-  
-  .header-images .text h2 {
-    font-size: 16px;
-  }
-}
-
     </style>
   </head>
   <body>
@@ -339,13 +338,27 @@
       <!-- Content Section -->
       <div class="content animate-on-scroll">
         <img
-          src="https://gklearnstudy.in/images/book.ico" 
-          alt="Education images" style="width: 270px;"
+          src="https://gklearnstudy.in/images/book.ico"
+          alt="Education images"
+          style="width: 270px"
         />
         <div class="description">
-        <p>This educational page is thoughtfully designed to provide you with a wide range of topics and interactive buttons, making learning both engaging and effective.</p>
-<p>Whether you're looking to gain knowledge on a specific subject or explore various areas of interest, this platform offers a unique and user-friendly experience.</p>
-<p>Scroll down to discover the topics that resonate with you, and dive deep into detailed, well-structured content to enhance your understanding. The page is tailored to cater to learners of all levels, ensuring a rich and rewarding educational journey.</p>
+          <p>
+            This educational page is thoughtfully designed to provide you with a
+            wide range of topics and interactive buttons, making learning both
+            engaging and effective.
+          </p>
+          <p>
+            Whether you're looking to gain knowledge on a specific subject or
+            explore various areas of interest, this platform offers a unique and
+            user-friendly experience.
+          </p>
+          <p>
+            Scroll down to discover the topics that resonate with you, and dive
+            deep into detailed, well-structured content to enhance your
+            understanding. The page is tailored to cater to learners of all
+            levels, ensuring a rich and rewarding educational journey.
+          </p>
         </div>
       </div>
 
@@ -380,35 +393,59 @@
           <span class="logo-item">वाक्य-विचार</span>
         </a>
         <a href="vyakaran/noun-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/noun.ico" alt="परिभाषा - संज्ञा" />
+          <img
+            src="https://gklearnstudy.in/images/noun.ico"
+            alt="परिभाषा - संज्ञा"
+          />
           <span class="logo-item">संज्ञा</span>
         </a>
         <a href="vyakaran/number-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/number.ico" alt="परिभाषा - वचन" />
+          <img
+            src="https://gklearnstudy.in/images/number.ico"
+            alt="परिभाषा - वचन"
+          />
           <span class="logo-item">वचन</span>
         </a>
         <a href="vyakaran/gender-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/gender.ico" alt="परिभाषा - लिंग" />
+          <img
+            src="https://gklearnstudy.in/images/gender.ico"
+            alt="परिभाषा - लिंग"
+          />
           <span class="logo-item">लिंग</span>
         </a>
         <a href="vyakaran/case-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/case.ico" alt="परिभाषा - कारक" />
+          <img
+            src="https://gklearnstudy.in/images/case.ico"
+            alt="परिभाषा - कारक"
+          />
           <span class="logo-item">कारक</span>
         </a>
         <a href="vyakaran/pronoun-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/pronoun.ico" alt="परिभाषा - सर्वनाम" />
+          <img
+            src="https://gklearnstudy.in/images/pronoun.ico"
+            alt="परिभाषा - सर्वनाम"
+          />
           <span class="logo-item">सर्वनाम</span>
         </a>
         <a href="vyakaran/adjective-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/adjective.ico" alt="परिभाषा - विशेषण" />
+          <img
+            src="https://gklearnstudy.in/images/adjective.ico"
+            alt="परिभाषा - विशेषण"
+          />
           <span class="logo-item">विशेषण</span>
         </a>
         <a href="vyakaran/verb-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/verb.ico" alt="परिभाषा - क्रिया" />
+          <img
+            src="https://gklearnstudy.in/images/verb.ico"
+            alt="परिभाषा - क्रिया"
+          />
           <span class="logo-item">क्रिया</span>
         </a>
         <a href="vyakaran/tense-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/tense.ico" alt="परिभाषा - काल" />
+          <img
+            src="https://gklearnstudy.in/images/tense.ico"
+            alt="परिभाषा - काल"
+          />
           <span class="logo-item">काल</span>
         </a>
         <a href="vyakaran/indeclinable-words-in-hindi.html" class="logo-link">
@@ -419,15 +456,24 @@
           <span class="logo-item">अव्यय</span>
         </a>
         <a href="vyakaran/particle-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/particle.ico" alt="परिभाषा - निपात" />
+          <img
+            src="https://gklearnstudy.in/images/particle.ico"
+            alt="परिभाषा - निपात"
+          />
           <span class="logo-item">निपात</span>
         </a>
         <a href="vyakaran/voice-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/voice.ico" alt="परिभाषा - वाच्य" />
+          <img
+            src="https://gklearnstudy.in/images/voice.ico"
+            alt="परिभाषा - वाच्य"
+          />
           <span class="logo-item">वाच्य</span>
         </a>
         <a href="vyakaran/person-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/person.ico" alt="परिभाषा - पुरुष" />
+          <img
+            src="https://gklearnstudy.in/images/person.ico"
+            alt="परिभाषा - पुरुष"
+          />
           <span class="logo-item">पुरुष</span>
         </a>
         <a href="vyakaran/punctuation-in-hindi.html" class="logo-link">
@@ -438,19 +484,31 @@
           <span class="logo-item">विराम-चिन्ह</span>
         </a>
         <a href="vyakaran/prefix-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/prefix.ico" alt="परिभाषा - उपसर्ग" />
+          <img
+            src="https://gklearnstudy.in/images/prefix.ico"
+            alt="परिभाषा - उपसर्ग"
+          />
           <span class="logo-item">उपसर्ग</span>
         </a>
         <a href="vyakaran/suffix-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/suffix.ico" alt="परिभाषा - प्रत्यय" />
+          <img
+            src="https://gklearnstudy.in/images/suffix.ico"
+            alt="परिभाषा - प्रत्यय"
+          />
           <span class="logo-item">प्रत्यय</span>
         </a>
         <a href="vyakaran/joining.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/joining.ico" alt="परिभाषा - संधि" />
+          <img
+            src="https://gklearnstudy.in/images/joining.ico"
+            alt="परिभाषा - संधि"
+          />
           <span class="logo-item">संधि</span>
         </a>
         <a href="vyakaran/compound-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/compound.ico" alt="परिभाषा - समास" />
+          <img
+            src="https://gklearnstudy.in/images/compound.ico"
+            alt="परिभाषा - समास"
+          />
           <span class="logo-item">समास</span>
         </a>
         <a href="vyakaran/tatsam-tadbhav-in-hindi.html" class="logo-link">
@@ -482,7 +540,10 @@
           <span class="logo-item">पर्यावाची-शब्द</span>
         </a>
         <a href="vyakaran/idioms-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/idioms.ico" alt="परिभाषा - मुहावरे" />
+          <img
+            src="https://gklearnstudy.in/images/idioms.ico"
+            alt="परिभाषा - मुहावरे"
+          />
           <span class="logo-item">मुहावरे</span>
         </a>
         <a href="vyakaran/proverbs-in-hindi.html" class="logo-link">
@@ -538,15 +599,24 @@
           <span class="logo-item">युग्म शब्द</span>
         </a>
         <a href="vyakaran/ras-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/ras.ico" alt="परिभाषा - रस" />
+          <img
+            src="https://gklearnstudy.in/images/ras.ico"
+            alt="परिभाषा - रस"
+          />
           <span class="logo-item">रस</span>
         </a>
         <a href="vyakaran/chhand-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/chhand.ico" alt="परिभाषा - छन्द" />
+          <img
+            src="https://gklearnstudy.in/images/chhand.ico"
+            alt="परिभाषा - छन्द"
+          />
           <span class="logo-item">छन्द</span>
         </a>
         <a href="vyakaran/alankar-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/alankar.ico" alt="परिभाषा - अलंकार" />
+          <img
+            src="https://gklearnstudy.in/images/alankar.ico"
+            alt="परिभाषा - अलंकार"
+          />
           <span class="logo-item">अलंकार</span>
         </a>
         <a href="vyakaran/paragraph-writing-in-hindi.html" class="logo-link">
@@ -571,7 +641,10 @@
           <span class="logo-item">पत्र-लेखन</span>
         </a>
         <a href="vyakaran/essay-in-hindi.html" class="logo-link">
-          <img src="https://gklearnstudy.in/images/essay.ico" alt="परिभाषा - निबंध" />
+          <img
+            src="https://gklearnstudy.in/images/essay.ico"
+            alt="परिभाषा - निबंध"
+          />
           <span class="logo-item">निबंध</span>
         </a>
         <a href="vyakaran/quiz-for-exam.html" class="logo-link">
@@ -584,96 +657,126 @@
       </div>
       <h1 style="text-align: left">Conversion</h1>
       <div class="scrollmenu">
-       <a href="https://gklearnstudy.in/conversion/angle-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/angle-unit-conversion.svg"
-    alt="परिभाषा - Angle Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Angle Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/area-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/area-unit-conversion.svg"
-    alt="परिभाषा - Area Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Area Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/length-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/length-unit-conversion.svg"
-    alt="परिभाषा - Length Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Length Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/power-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/power-unit-conversion.svg"
-    alt="परिभाषा - Power Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Power Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/pressure-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/pressure-unit-conversion.svg"
-    alt="परिभाषा - Pressure Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Pressure Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/speed-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/speed-unit-conversion.svg"
-    alt="परिभाषा - Speed Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Speed Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/temperature-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/temperature-unit-conversion.svg"
-    alt="परिभाषा - Temperature Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Temperature Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/time-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/time-unit-conversion.svg"
-    alt="परिभाषा - Time Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Time Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/volume-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/volume-unit-conversion.svg"
-    alt="परिभाषा - Volume Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Volume Conversion</span>
-</a>
-<a href="https://gklearnstudy.in/conversion/weight&mass-unit-conversion" class="logo-link">
-  <img
-    src="https://gklearnstudy.in/images/weight-mass-unit-conversion.svg"
-    alt="define - Weight & Mass Conversion"
-    width="100px" height="100px"
-    
-  />
-  <span class="logo-item">Weight & Mass Conversion</span>
-</a>
+        <a
+          href="https://gklearnstudy.in/conversion/angle-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/angle-unit-conversion.svg"
+            alt="परिभाषा - Angle Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Angle Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/area-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/area-unit-conversion.svg"
+            alt="परिभाषा - Area Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Area Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/length-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/length-unit-conversion.svg"
+            alt="परिभाषा - Length Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Length Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/power-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/power-unit-conversion.svg"
+            alt="परिभाषा - Power Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Power Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/pressure-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/pressure-unit-conversion.svg"
+            alt="परिभाषा - Pressure Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Pressure Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/speed-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/speed-unit-conversion.svg"
+            alt="परिभाषा - Speed Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Speed Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/temperature-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/temperature-unit-conversion.svg"
+            alt="परिभाषा - Temperature Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Temperature Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/time-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/time-unit-conversion.svg"
+            alt="परिभाषा - Time Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Time Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/volume-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/volume-unit-conversion.svg"
+            alt="परिभाषा - Volume Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Volume Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/weight&mass-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/weight-mass-unit-conversion.svg"
+            alt="define - Weight & Mass Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Weight & Mass Conversion</span>
+        </a>
       </div>
       <script>
         document.addEventListener("DOMContentLoaded", function () {
