@@ -1,4 +1,14 @@
-/* General Styling */
+
+
+
+  /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+[data-theme="dark"] #right-sidebar ul li a { color:#FFE4B5;}
+[data-theme="dark"] #right-sidebar ul li a:hover {color:#FF69B4;  }
+
+    
+    
+    /* General Styling */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -42,11 +52,11 @@ body {
 
 #right-sidebar ul li a {
     text-decoration: none;
-    
+     color:black;
     font-size: 1em;
 }
 
-#right-sidebar ul li a:hover {
+#right-sidebar ul li a:hover { color:blue;
     text-decoration: underline;
 
 }
