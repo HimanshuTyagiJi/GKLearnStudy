@@ -88,233 +88,62 @@
 
     <!-- Meta Tags Generated with https://metatags.io -->
     <style>
-                    /* General Styling */
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        font-family: 'Arial', sans-serif;
-                        overflow-x: hidden;
-                    }
+      .logo-item {
+        display: flex;
+        font-size: 22px;
+        user-select: none;
+        justify-content: center;
+      }
 
-                    .header-images {
-                        position: relative;
-                        text-align: center;
-                        color: white;
-                    }
+      .logo-link img {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        transition: transform 0.3s ease; /* Smooth transition effect */
+      }
+      img {
+        width: 130px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+      a.logo-link:hover {
+        transition: transform 0.3s ease;
+        transform: scale(1.1);
+      }
 
-                    .header-images img {
-   
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    max-width: 850px; /* Ensure it doesn't go beyond 800px */
-    min-width: 400px; /* Ensure it doesn't go below 400px */ width: 100%;
-    height: auto;
-}
-                  .header-images:hover img {transition: transform 0.3s ease;
-                          transform: scale(1.1);
+      a.logo-link:hover {
+        transition: transform 0.3s ease;
+        transform: scale(1.1);
+      }
 
-                    }
+      /* Animations */
 
-                    .header-images .text {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        text-align: center;
-                        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-                        animation: fadeIn 1.5s ease-in-out;
-                    }
+      .video-container {
+        position: relative;
+        width: 98%;
+        max-width: 431px; /* Set the max width of the video */
+        height: auto;
+        aspect-ratio: 16 / 9; /* Maintains the aspect ratio of the video */
+        overflow: hidden;
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
 
-                    .header-images .text h1 {
-                        font-size: 35px;
-                        margin: 0;
-                        font-weight: bold;
-                    }
-
-                    .header-images .text h2 {
-                        font-size: 20px;
-                        margin-top: 10px;
-                        font-style: italic;
-                    }
-
-                    .orange-line {
-                        background-color: orange;
-                        height: 10px;
-                        margin: 0 auto;
-                    }
-
-                    .content {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 40px 20px;
-                    }
-
-                   
-
-                    .content .description {
-                        flex: 1;
-                        margin-left: 20px;
-                        animation: slideInRight 1.5s ease-in-out;
-                    }
-
-                    .content .description p {
-                        font-size: 18px;
-                        line-height: 1.6;
-                        text-align: justify;
-                    }
-            .content.animate-on-scroll.animate:hover {
-                    transform: scale(1.08);
-            }
-                    .scroll-section {
-                        display: flex;
-                        overflow-x: auto;
-                        gap: 15px;
-                        padding: 20px;
-                    }
-
-                    .scroll-section .images-card {
-                        text-align: center;
-                        flex-shrink: 0;
-                        border: 1px solid orange;
-                        padding: 10px;
-                        border-radius: 8px;
-                        background-color: #f9f9f9;
-                        transition: transform 0.3s ease-in-out;
-                        animation: zoomIn 1.5s ease-in-out;
-                    }
-
-                    .scroll-section .images-card img {
-                        width: 150px;
-                        height: 150px;
-                        border-radius: 8px;
-                        border: 2px solid orange;
-                        transition: transform 0.3s ease-in-out;
-                    }
-
-                    .scroll-section .images-card img:hover {
-                        transform: scale(1.1);
-                    }
-
-                    .scroll-section .images-card button {
-                        margin-top: 10px;
-                        padding: 8px 15px;
-                        border: none;
-                        border-radius: 5px;
-                        background-color: orange;
-                        color: white;
-                        font-size: 16px;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
-                    }
-
-                    .scroll-section .images-card button:hover {
-                        background-color: darkorange;
-                    }
-
-                  .logo-item{        display: flex
-            ;font-size:22px;
-                    user-select: none;
-                    justify-content: center;}
-
-               .logo-link img {width:100px;height:100px;border-radius:10px;
-                        transition: transform 0.3s ease; /* Smooth transition effect */
-
-                    }
-        img {width:130px;border-radius:10px;transition: transform 0.3s ease;}
-                   a.logo-link:hover {transition: transform 0.3s ease;
-                    transform: scale(1.1);
-            }
-
-                   a.logo-link:hover {transition: transform 0.3s ease;
-                    transform: scale(1.1);
-            }
-
-                    /* Animations */
-                    @keyframes fadeIn {
-                        from {
-                            opacity: 0;
-                        }
-                        to {
-                            opacity: 1;
-                        }
-                    }
-
-                    @keyframes slideInLeft {
-                        from {
-                            transform: translateX(-100%);
-                            opacity: 0;
-                        }
-                        to {
-                            transform: translateX(0);
-                            opacity: 1;
-                        }
-                    }
-
-                    @keyframes slideInRight {
-                        from {
-                            transform: translateX(100%);
-                            opacity: 0;
-                        }
-                        to {
-                            transform: translateX(0);
-                            opacity: 1;
-                        }
-                    }
-
-                    @keyframes zoomIn {
-                        from {
-                            transform: scale(0.5);
-                            opacity: 0;
-                        }
-                        to {
-                            transform: scale(1);
-                            opacity: 1;
-                        }
-                    }/* प्रारंभिक स्थिति */
-            .animate-on-scroll {
-                opacity: 0;
-                transform: translateY(20px);
-                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            }
-
-            /* जब .animate क्लास जुड़ती है */
-            .animate-on-scroll.animate {
-                opacity: 1;
-                transform: translateY(0); /* मूल स्थिति */
-            }
-
-                  @media screen and (max-width: 1200px) {
-                    .content
-                    { display:flex;
-                     flex-direction: column;}}
-          @media (max-width: 768px) {
-      
-
-        .header-images .text h1 {
-          font-size: 24px;
-        }
-
-        .header-images .text h2 {
-          font-size: 16px;
-        }
-      }.video-container {
-    position: relative;
-    width: 100%;
-    max-width: 431px; /* Set the max width of the video */
-    height: auto;
-    aspect-ratio: 16 / 9; /* Maintains the aspect ratio of the video */
-    overflow: hidden;
-}
-.video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
+      /* Video styling */
+      video {
+        justify-content: center;
+        display: block;
+        align-items: center;
+        width: 98%;
+        border-radius: 10px;
+        object-fit: cover;
+      }
     </style>
   </head>
   <body>
@@ -336,64 +165,28 @@
     <ul id="suggestions" class="suggestions"></ul>
     <div id="results"></div>
     <div class="container">
-
-
-      <style>
-        /* Video styling */
-      video { justify-content: center; 
-            display: block;align-items: center; 
-            width: 100%;
-            border-radius:10px;
-            object-fit: cover;
-        }
-    </style>
-    <script>
-        // Disable right-click globally
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault(); // Prevent the context menu
-        });
-
-        // Additional security to disable keyboard shortcuts for saving content
-        document.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey && e.key === 's') || // Disable Ctrl+S
-                (e.ctrlKey && e.key === 'u') || // Disable Ctrl+U
-                (e.ctrlKey && e.key === 'c') || // Disable Ctrl+C
-                (e.ctrlKey && e.key === 'p')) { // Disable Ctrl+P
-                e.preventDefault();
-            }
-        });
-    </script> 
-
-    <video 
-        src="https://gklearnstudy.in/GK%20Learn%20Study.mp4" 
-        autoplay 
-        muted 
-        loop 
-        style="pointer-events: none;">
-    </video>
-
-      
-     
+      <video
+        src="https://gklearnstudy.in/GK%20Learn%20Study.mp4"
+        autoplay
+        muted
+        loop
+        style="pointer-events: none"
+      ></video>
 
       <!-- Content Section -->
       <div class="content animate-on-scroll">
-      
         <div class="description">
           <p>
-            This educational page is thoughtfully designed to provide you with a
-            wide range of topics and interactive buttons, making learning both
-            engaging and effective.
+            This educational page offers a variety of topics and interactive
+            features, making learning engaging and effective.
           </p>
           <p>
-            Whether you're looking to gain knowledge on a specific subject or
-            explore various areas of interest, this platform offers a unique and
-            user-friendly experience.
+            Explore specific subjects or diverse interests with a user-friendly
+            experience tailored for all learners.
           </p>
           <p>
-            Scroll down to discover the topics that resonate with you, and dive
-            deep into detailed, well-structured content to enhance your
-            understanding. The page is tailored to cater to learners of all
-            levels, ensuring a rich and rewarding educational journey.
+            Scroll down to find topics you love and dive into detailed content
+            for a rewarding educational journey.
           </p>
         </div>
       </div>
@@ -873,6 +666,25 @@
         </div>
       </footer>
     </div>
+    <script>
+      // Disable right-click globally
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault(); // Prevent the context menu
+      });
+
+      // Additional security to disable keyboard shortcuts for saving content
+      document.addEventListener("keydown", function (e) {
+        if (
+          (e.ctrlKey && e.key === "s") || // Disable Ctrl+S
+          (e.ctrlKey && e.key === "u") || // Disable Ctrl+U
+          (e.ctrlKey && e.key === "c") || // Disable Ctrl+C
+          (e.ctrlKey && e.key === "p")
+        ) {
+          // Disable Ctrl+P
+          e.preventDefault();
+        }
+      });
+    </script>
     <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
     <script src="https://gklearnstudy.in/js/menu.js"></script>
     <script src="https://gklearnstudy.in/js/search.js"></script>
