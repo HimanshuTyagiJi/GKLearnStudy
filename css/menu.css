@@ -23,7 +23,9 @@ body {
   --text-color: #bababa;
   --toggle-color: lineaDr-gradient(45deg, black 50%, white 90%);
   --toggle-border-color: white;
-
+ p {
+          color: #ddd; /* Color for dark theme */
+        }
   /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
   .header {
@@ -714,3 +716,10 @@ div.scrollmenu a {
   }
 }
 button{border-radius:10px;padding:5px;font-width:25px}
+
+
+p {
+        color: #333; /* Default color for light theme */
+      }
+
+    
