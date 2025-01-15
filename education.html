@@ -349,7 +349,7 @@
       video { justify-content: center; 
             display: block;align-items: center; 
             width: 100%;
-            
+            border-radius:10px;
             object-fit: cover;
         }
     </style>
@@ -367,6 +367,13 @@
                 (e.ctrlKey && e.key === 'p')) { // Disable Ctrl+P
                 e.preventDefault();
             }
+        });
+    </script> <script>
+        const video = document.getElementById('myVideo');
+        video.addEventListener('canplay', function() {
+            // Set video quality to 144p
+            video.playbackRate = 0.1; // Slow down the playback to adjust quality
+            video.play();
         });
     </script>
 
