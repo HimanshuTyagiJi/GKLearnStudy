@@ -344,6 +344,40 @@
     <div class="container">
 
 
+      <style>
+        /* Video styling */
+        video {
+            display: block;
+            width: 560px;
+            height: 315px;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        // Disable right-click globally
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault(); // Prevent the context menu
+        });
+
+        // Additional security to disable keyboard shortcuts for saving content
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey && e.key === 's') || // Disable Ctrl+S
+                (e.ctrlKey && e.key === 'u') || // Disable Ctrl+U
+                (e.ctrlKey && e.key === 'c') || // Disable Ctrl+C
+                (e.ctrlKey && e.key === 'p')) { // Disable Ctrl+P
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    <video 
+        src="https://gklearnstudy.in/GK%20Learn%20Study%20Videos.mp4" 
+        autoplay 
+        muted 
+        loop 
+        style="pointer-events: none;">
+    </video>
+
       
       <!-- Header Section -->
       <div class="header-images">
