@@ -41,7 +41,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
     <link id="manifest" rel="manifest" href="/manifest.json"/>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/style.css">
+    
     <link rel="stylesheet" href="/css/rightside.css">
     
     <script src="/js/sw-register.js" defer></script>
@@ -51,7 +51,7 @@
     <meta property="youtube:channel" content="">
     <meta property="instagram:profile" content="">
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/menu.css">
 </head>
 
 
@@ -60,6 +60,19 @@
 
 
 <style>
+
+.accordion-container {width:100%;display: flex;flex-direction: column;}
+.accordion-item {border-radius: 10px;display: flex;flex-direction: column;margin-bottom: 30px;}
+.accordion-item {border-radius: none;display: flex;flex-direction: column;margin-bottom: 30px;margin-bottom: 10px;border: 1px solid #ccc;padding: 10px;}
+.accordion .title-content {display: flex;}
+.accordion .title-content img { margin-right: 15px;}
+.accordion .icon {display: flex;  }
+.accordion {display:flex;cursor: pointer;  border-radius: 10px;text-align: left;outline: none; padding: 5px;margin-bottom:10px;} 
+.panel {border-radius: 10px;color:blue;padding: 10px;display: none;overflow: hidden;margin-bottom:25px;} 
+.accordion-box { display: flex;align-items: center;}
+.accordion-box img {max-width: 120px;height: 100px;margin-right: 10px;}
+.box {display: flex;align-items: center;}
+.accordion img, .panel img {border-radius: 10px;width: 200px;height: 120px;}
 
 .accordion {border:1px solid#ddd;}
  
@@ -459,21 +472,18 @@
             </div><button id="show-more-btn">Show More</button></div> </div>
     </div>
 
+ <div id="right-sidebar">
+         <strong>Important Links</strong>
 
-
-           <div class="important_link">
-          <br>
-          <p style="font-size:24px;">Important Links</p>
-
-          <div id="links-container">
-            <ul id="links-list"></ul>
-          </div>
-        </div>
-      
-        <footer>
+        <ul id="link-list"></ul>
+    </div>
+    
+  
+ 
+<footer>
           <div class="custom-row">
             <div class="custom-column"><b>Follow Us</b>
-              <div id="social-links" style="display: flex;gap: 10px;justify-content: center;"></div>
+              <div id="social-links"></div>
             </div>
             <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
             <div class="custom-column">
@@ -481,6 +491,8 @@
             </div>
           </div>
         </footer>
+
+         
        
     
     <script>
@@ -534,7 +546,22 @@ showMoreBtn.addEventListener('click',showQuestions);
            <script src="https://gklearnstudy.in/js/menu.js"></script>
            <script src="https://gklearnstudy.in/js/rightside.js"></script>
            <script src="https://gklearnstudy.in/js/search.js"></script>
-       
+       <script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
   
 </body>
 </html>
