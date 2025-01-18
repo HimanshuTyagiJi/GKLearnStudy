@@ -116,7 +116,10 @@ hr{height:5%}
 .custom-row {display: flex;flex-direction: row;margin-bottom: 20px;}
 .burger {display: none;visibility: hidden;}
 .brand {font-size: 1.6rem;font-weight: 600;  }
- 
+         .search-container.active .search-input {
+                width: calc(81% - 70px);
+                opacity: 1;
+        }
 .menu {text-align: center !important;margin-top: -10px;font-size: 22px;height: auto;box-shadow: none;align-items: center;align-items: center;width: auto; /* Set the maximum width */max-width: 68%;position: absolute;left: 50%;top: 30%;transform: translate(-50%, -50%);}
 .menu a {display: block;margin: 0 auto 0px;margin-left: 10px;text-decoration: none;width: fit-content;}
 .menu-inner {display: flex;flex-direction: row;margin-left: 3rem;margin-top: 18px !important;}
