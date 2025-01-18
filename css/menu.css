@@ -9,7 +9,7 @@
     --link-hover-color: blue; /* Link color on hover */
     --link-active-color: #951895; /* Link color when active */
     --body-bg: #FFFFFF;    /* Background color for light theme */
-   --logo:#AD0000;
+    --logo:#AD0000;
     --box-shadow:  0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);
 }
 
@@ -36,7 +36,9 @@ h1 {color: var(--red);text-align: center;}
 h2 {color: var(--purple);text-align: left;}
 h3 {color: var(--green); text-align: center;}
 h4 {color: var(--brown);  text-align: left;}
-p {color: var(--paragraph);}
+h5 {color: var(--purple);text-align:center;}
+h6 {color: var(--brown);text-align:left;}
+p {color: var(--text);}
 
 
 
