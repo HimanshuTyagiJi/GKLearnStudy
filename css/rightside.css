@@ -60,7 +60,7 @@ body {
     text-decoration: underline;
 
 }
-@media (min-width: 768px) { #right-sidebar {width:12%}}
+@media (min-width: 768.01px) { #right-sidebar {width:12%}}
 /* Responsive Design for Mobile (max-width: 768px) */
 @media (max-width: 768px) {
     #right-sidebar {
