@@ -22,7 +22,7 @@ body {
 
 /* Right Sidebar Styling */
 #right-sidebar {
-    width: 12%;
+    
     position: fixed;
     top: 0;
     right: 0;
@@ -60,12 +60,12 @@ body {
     text-decoration: underline;
 
 }
-
+@media (max-width: 768px) { #right-sidebar {width:12%}}
 /* Responsive Design for Mobile (max-width: 768px) */
 @media (max-width: 768px) {
     #right-sidebar {
         position: static;
-      width:98%;
+      
         height: auto;
         border-left: none;
         box-shadow: none;
