@@ -560,6 +560,45 @@ for (i = 0; i < acc.length; i++) {
    }
  });
 }
+
+
+
+
+          document.addEventListener('DOMContentLoaded', function () {
+  const lazyAccordions = document.querySelectorAll('.accordion.lazy');
+
+  if ('IntersectionObserver' in window) {
+    const accordionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('lazy');
+          entry.target.style.display = 'block';
+          observer.unobserve(entry.target);
+          
+          entry.target.addEventListener('click', function () {
+            this.classList.toggle('active');
+            const panel = this.nextElementSibling;
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    lazyAccordions.forEach(accordion => {
+      accordionObserver.observe(accordion);
+    });
+  } else {
+    // Intersection Observer का समर्थन नहीं करने वाले ब्राउज़र के लिए
+    lazyAccordions.forEach(accordion => {
+      accordion.style.display = 'block';
+      accordion.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  }
+});
 </script>
  
 </body>
