@@ -36,9 +36,9 @@ h1 {color: var(--red);text-align: center;}
 h2 {color: var(--purple);text-align: left;}
 h3 {color: var(--green); text-align: center;}
 h4 {color: var(--brown);  text-align: left;}
-h5 {color: var(--purple);text-align:center;}
-h6 {color: var(--brown);text-align:left;}
-p {color: var(--text);}
+h5 {color: var(--purple);text-align:center;font-size:20px}
+h6 {color: var(--brown);text-align:left;font-size:18px}
+p {color: var(--text);font-size:16px}
 
 
 
