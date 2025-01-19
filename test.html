@@ -1,43 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
-    <meta name="keywords" content="test, subjects, Hindi, Computer science, quizzes, educational resources">
-    <meta name="author" content="Himanshu Tyagi">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Test Page - Explore Various Subjects and Resources">
-    <meta property="og:description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gklearnstudy.in/test">
-    <meta property="og:image" content="https://gklearnstudy.in/image/test.jpg">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Test Page - Explore Various Subjects and Resources">
-    <meta name="twitter:description" content="Explore our comprehensive test page featuring various subjects including Hindi and Computer. Discover quizzes, resources, and more!">
-    <meta name="twitter:image" content="https://gklearnstudy.in/image/test.jpg">
-    
-    <title>Test Page - Explore Various Subjects</title>
-    <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
+    <!-- Primary Meta Tags -->
+    <title>All Test Preparation</title>
+    <meta name="title" content="All Test Preparation - GK Learn Study" />
+    <meta name="description" content="Prepare for various tests and competitive exams with GK Learn Study. Find tutorials, mock tests, and tips to excel in exams like SSC, UPSC, banking, and more." />
+    <meta name="keywords" content="test preparation, competitive exams, SSC, UPSC, banking, mock tests, online tutorials, GK Learn Study" />
+    <meta name="author" content="GK Learn Study" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gklearnstudy.in/test" />
+    <meta property="og:title" content="All Test Preparation - GK Learn Study" />
+    <meta property="og:description" content="Prepare for various tests and competitive exams with GK Learn Study. Find tutorials, mock tests, and tips to excel in exams like SSC, UPSC, banking, and more." />
+    <meta property="og:image" content="https://gklearnstudy.in/images/test-page-banner.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://gklearnstudy.in/test" />
+    <meta property="twitter:title" content="All Test Preparation - GK Learn Study" />
+    <meta property="twitter:description" content="Prepare for various tests and competitive exams with GK Learn Study. Find tutorials, mock tests, and tips to excel in exams like SSC, UPSC, banking, and more." />
+    <meta property="twitter:image" content="https://gklearnstudy.in/images/test-page-banner.png" />
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#4CAF50" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Links -->
+    <link rel="canonical" href="https://gklearnstudy.in/all-tests" />
+    <link rel="icon" type="image/png" href="https://gklearnstudy.in/images/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+
+    <!-- Scripts -->
+    <script src="https://gklearnstudy.in/js/main.js" defer></script>
+    <script src="https://gklearnstudy.in/js/sw-register.js" defer></script>
+
+    <!-- Page-Specific Styles -->
     <style>
+        .contained {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+           
+           
+            padding: 20px;
+        }
+       
         .box {
             display: inline-block;
+           
             text-align: center;
             margin: 10px;
             padding: 20px;
             width: 200px;
-            border: 1px solid #a4c0fb;
+            border: 1px solid #4CAF50;
             border-radius: 10px;
+            transition: all 0.3s ease;
         }
         .box:hover {
-            background-color: red;
+            background-color: #4CAF50;
+            color: white;
         }
         .link-name {
             color: black;
+            font-weight: bold;
             margin-top: 5px;
         }
         [data-theme="dark"] .link-name {
@@ -49,23 +79,56 @@
     </style>
 </head>
 <body>
-    <div class="container"> 
+    <div class="search-container">
         <button class="search-icon" id="searchBtn">
-            <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+          <span style="display: inline-block; transform: rotate(270deg)">⌕</span>
         </button>
         <button class="back-icon" id="backBtn">←</button>
-        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-    <img src="https://gklearnstudy.in/image/test.jpg" alt="Test Image" width="400px" height="auto">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          autocomplete="off"
+          placeholder="Search..."
+          required
+          oninput="showSuggestions(event)"
+        />
+      </div>
+      <ul id="suggestions" class="suggestions"></ul>
+      <div id="results"></div>
+    <div class="container"><div class="contained">
     
-    <center>
+    
         <div class="box"><a href="https://gklearnstudy.in/hindi-test.html"><div class="link-name">Hindi</div></a></div>
-        <div class="box"><a href="Computer.html"><div class="link-name">Computer</div></a></div>
-    </center>
+        <div class="box"><a href="Computer.html"><div class="link-name">Computer</div></a></div></div>
+   
 
-    <script src="https://gklearnstudy.in/search.js"></script>
-    <script src="https://gklearnstudy.in/menusearch.js"></script>
+  
+<hr />
+
+<div id="right-sidebar">
+  <strong>Important Links</strong>
+
+  <ul id="link-list"></ul>
+</div>
+
+<footer>
+  <div class="custom-row">
+    <div class="custom-column">
+      <b>Follow Us</b>
+      <div id="social-links"></div>
+    </div>
+    <div class="custom-column">
+      <button onclick="goToUrl()">Contact</button>
+    </div>
+    <div class="custom-column">
+      <p id="my-paragraph"></p>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+<script src="https://gklearnstudy.in/js/menu.js"></script>
+<script src="https://gklearnstudy.in/js/search.js"></script>
 </body>
 </html>
