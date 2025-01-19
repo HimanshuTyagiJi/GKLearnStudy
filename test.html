@@ -124,21 +124,42 @@
 
   <ul id="link-list"></ul>
 </div>
+<div id="footer-placeholder">Footer is loading...</div>
+    <footer>
+        <div class="custom-row">
+            <div class="custom-column">
+                <b>Follow Us</b>
+                <div id="social-links"></div>
+            </div>
+            <div class="custom-column">
+                <button onclick="goToUrl()">Contact</button>
+            </div>
+            <div class="custom-column">
+                <p id="my-paragraph">Copyright All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-<footer>
-  <div class="custom-row">
-    <div class="custom-column">
-      <b>Follow Us</b>
-      <div id="social-links"></div>
-    </div>
-    <div class="custom-column">
-      <button onclick="goToUrl()">Contact</button>
-    </div>
-    <div class="custom-column">
-      <p id="copyright"></p>
-    </div>
-  </div>
-</footer>
+    <script>
+        // Footer को lazy load करने के लिए function
+        document.addEventListener('scroll', function() {
+            const placeholder = document.getElementById('footer-placeholder');
+            const footer = document.querySelector('footer');
+
+            // Check if the footer-placeholder is visible
+            const rect = placeholder.getBoundingClientRect();
+            if (rect.top < window.innerHeight && footer.style.display === 'none') {
+                // Footer को दिखाने के लिए
+                footer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        });
+
+        // URL पर जाने के लिए function
+        function goToUrl() {
+            alert('Contact button clicked!');
+        }
+    </script>
 </div>
 
 <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
