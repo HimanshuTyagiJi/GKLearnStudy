@@ -23,7 +23,9 @@
     <meta property="twitter:description" content="Prepare for various tests and competitive exams with GK Learn Study. Find tutorials, mock tests, and tips to excel in exams like SSC, UPSC, banking, and more." />
     <meta property="twitter:image" content="https://gklearnstudy.in/images/test.ico" />
 
-   <meta name="theme-color" content="#4CAF50" />
+    <meta name="theme-color" content="#4CAF50" />
+    <meta name="theme-color" content="#000" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FFF" media="(prefers-color-scheme: light)">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
@@ -143,37 +145,5 @@
 <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
 <script src="https://gklearnstudy.in/js/menu.js"></script>
 <script src="https://gklearnstudy.in/js/search.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4CAF50" />
-    <title>Text Color Change</title>
-   
-    <script>
-        // Function to change the text color based on the theme color
-        function changeTextColor() {
-            const themeColor = getComputedStyle(document.body).backgroundColor;
-            const rgb = themeColor.match(/\d+/g); // Extract RGB values
-            const brightness = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]); // Calculate brightness
-
-            // Change text color based on brightness
-            if (brightness < 128) {
-                document.body.style.color = 'white'; // Dark background -> light text
-            } else {
-                document.body.style.color = 'black'; // Light background -> dark text
-            }
-        }
-
-        // Call function to set text color
-        window.onload = changeTextColor;
-    </script>
-</head>
-<body>
-    <h1>Welcome to GK Learn Study</h1>
-    <p>This is a sample text where the color will change based on the background.</p>
 </body>
 </html>
