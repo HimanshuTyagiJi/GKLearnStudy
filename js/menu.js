@@ -6,12 +6,24 @@ if (window.location.pathname === "/vyakaran.html") {
     window.location.replace("/vyakaran-language.html");
 }
 
+//footer scroll 
+  document.addEventListener('scroll', function() {
+            const placeholder = document.getElementById('footer-placeholder');
+            const footer = document.querySelector('footer');
 
+            // Check if the footer-placeholder is visible
+            const rect = placeholder.getBoundingClientRect();
+            if (rect.top < window.innerHeight && footer.style.display === 'none') {
+                // Footer को दिखाने के लिए
+                footer.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        });
 
-
-
-
-
+        // URL पर जाने के लिए function
+        function goToUrl() {
+            alert('Contact button clicked!');
+        }
 
 //theme
 // Create elements
