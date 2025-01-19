@@ -1,0 +1,36 @@
+ .contained {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+           
+           
+            padding: 20px;
+        }
+       
+        .box {
+            display: inline-block;
+           
+            text-align: center;
+            margin: 10px;
+            padding: 20px;
+            width: 200px;
+            border: 1px solid #4CAF50;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .box:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .link-name {
+            color: black;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        [data-theme="dark"] .link-name {
+            color: white;
+        }
+        .box:hover .link-name {
+            color: white;
+        }
