@@ -15,7 +15,7 @@
 
 .modal {display: none;position: fixed;z-index: 1;width: 99%;position: absolute;left: 50%;transform: translateX(-50%);top:2%;overflow: auto;text-align: center;}
 .modal-content { background-color: #fefefe; margin: 10px;padding: 10px;border: 1px solid #888;margin-bottom: 1px;text-align: left;border-radius: 15px;}
-.start-btn, .close-btn, .review-btn, .retry-btn {margin-top: 20px;padding: 10px 20px;font-size: 16px;}
+.start-btn, .close-btn, .review-btn, .retry-btn {margin-top: 20px;padding: 10px;font-size: 16px;}
 .retry-btn {background-color: #f44336;color: white;border: none;padding: 10px 24px;text-align: center;text-decoration: none;display: inline-block;cursor: pointer;transition-duration: 0.4s;}
 
 
