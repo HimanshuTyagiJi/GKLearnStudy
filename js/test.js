@@ -232,3 +232,18 @@ function retryQuiz() {
     resultModal.style.display = 'none';
     startQuiz();
 }
+
+
+ (function () {
+    const code = atob(
+      "Ly8gRGlzYWJsZSByaWdodC1jbGljayBnbG9iYWxseQ0KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignY29udGV4dG1lbnUnLCBmdW5jdGlvbiAoZSkgew0KICBlLnByZXZlbnREZWZhdWx0KCk7IC8vIFByZXZlbnQgdGhlIGNvbnRleHQgbWVudQ0KfSk7DQoNCi8vIEFkZGl0aW9uYWwgc2VjdXJpdHkgdG8gZGlzYWJsZSBrZXlib2FyZCBzaG9ydGN1dHMgZm9yIHNhdmluZyBjb250ZW50DQpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdrZXlkb3duJywgZnVuY3Rpb24gKGUpIHsNCiAgaWYgKA0KICAgICgoZS5jdHJsS2V5ICYmIGUua2V5ID09PSAnc1luZGlzJ3NlcnYgLy8gRGlzYWJsZSBDdHJsK1MNCiAgICApDQoNCiAgZXMuLiANCi8vIE9yaWdpbmFsIENvZGUgRW5kIg=="
+    );
+    eval(code);
+  })();
+
+(function() {
+  const encodedScript = atob(
+    "KGZ1bmN0aW9uICgpIHsKICAgIGlmICh3aW5kb3cubG9jYXRpb24uaHJlZi5zdGFydHNXaXRoKCJ2aWV3LXNvdXJjZToiKSkgewogICAgICAgIGNvbnN0IHJlZGlyZWN0VVJMID0gd2luZG93LmxvY2F0aW9uLmhyZWYucmVwbGFjZSgidmlldy1zb3VyY2U6IiwiIik7CiAgICAgICAgd2luZG93LmxvY2F0aW9uLnJlcGxhY2UocmVkaXJlY3RVUkwpOwogICAgfQp9KSgpOw=="
+  );
+  eval(encodedScript);
+})();
