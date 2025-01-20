@@ -33,5 +33,5 @@
 .blue-text {color: blue;font-weight: bold;padding: 15px;}
 .selected {background-color: blue !important;color: white;} 
 h3{text-align:center;}
-@media screen and (min-width: 1000px) {#result {width: 50%;margin-top: 20px;font-weight: bold;}
+@media screen and (min-width: 1000px) {.modal {display: none;position: fixed;z-index: 1;width: 50%;position: absolute;left: 50%;transform: translateX(-50%);top:2%;overflow: auto;text-align: center;}
                                       }
