@@ -139,6 +139,10 @@ function showNextQuestion(currentIndex) {
 
 function submitQuiz() {
     stopTimer();
+
+    // प्रश्नों को छुपाने के लिए कोड
+    document.getElementById('quiz-form').style.display = 'none';
+
     var score = 0;
     var totalQuestions = questions.length;
     var skipped = 0;
@@ -170,6 +174,7 @@ function submitQuiz() {
     resultContentDiv.innerHTML = resultContent;
     resultModal.style.display = 'block';
 }
+
 
 function reviewQuestions() {
     stopTimer();
