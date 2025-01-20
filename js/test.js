@@ -162,18 +162,56 @@ function submitQuiz() {
 
     var percentage = (correct / totalQuestions) * 100;
 
-    var resultContent = 
-        '<p>Skipped: ' + skipped + '</p>' +
-        '<p>Correct: ' + correct + '</p>' +
-        '<p>Incorrect: ' + incorrect + '</p>' +
-        '<p>Percentage: ' + percentage.toFixed(2) + '%</p>' +
-        '<p>Score: ' + score + '/' + totalQuestions + '</p>' +
-        '<p>Total Time taken: ' + Math.floor(totalSeconds / 60) + ' minutes ' + (totalSeconds % 60) + ' seconds</p>';
+    // सर्कल चार्ट का ग्रीन और रेड पार्ट निकालना
+    var greenPercentage = percentage; // सही उत्तर का प्रतिशत
+    var redPercentage = 100 - greenPercentage; // गलत/स्किप उत्तर का प्रतिशत
+
+    // HTML के लिए परिणाम तैयार करना
+    var resultContent = `
+        <div style="text-align: center;">
+            <div style="position: relative; width: 150px; height: 150px; margin: auto;">
+                <svg viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                    <!-- ग्रीन पार्ट -->
+                    <path
+                        d="M18 2.0845
+                           a 15.9155 15.9155 0 0 1 0 31.831
+                           a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="lightgreen"
+                        stroke-width="3"
+                        stroke-dasharray="${greenPercentage}, 100"
+                    />
+                    <!-- रेड पार्ट -->
+                    <path
+                        d="M18 2.0845
+                           a 15.9155 15.9155 0 0 1 0 31.831
+                           a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="red"
+                        stroke-width="3"
+                        stroke-dasharray="${redPercentage}, 100"
+                        stroke-dashoffset="-${greenPercentage}"
+                    />
+                </svg>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: bold;">
+                    ${percentage.toFixed(2)}%
+                </div>
+            </div>
+            <p style="color: green; font-size: 20px; font-weight: bold;">Correct: ${correct}</p>
+           
+        </div>
+        <p>Skipped: ${skipped}</p>
+        <p style="color: red;">Incorrect: ${incorrect}</p>
+        <p>Score: ${score}/${totalQuestions}</p>
+        <p>Total Time Taken: ${Math.floor(totalSeconds / 60)} minutes ${totalSeconds % 60} seconds</p>
+    `;
 
     var resultContentDiv = document.getElementById('resultContent');
     resultContentDiv.innerHTML = resultContent;
     resultModal.style.display = 'block';
 }
+
+
 
 
 function reviewQuestions() {
