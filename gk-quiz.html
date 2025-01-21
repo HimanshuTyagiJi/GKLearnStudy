@@ -59,7 +59,17 @@
         <script src="https://gklearnstudy.in/js/language.js" defer></script>
     </head>
 
-    <body>
+    <body> 
+        <div class="search-container">
+                <button class="search-icon" id="searchBtn">
+                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+                </button>
+                <button class="back-icon" id="backBtn">←</button>
+                <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
+            </div>
+            <ul id="suggestions" class="suggestions"></ul>
+            <div id="results"></div>
+        
         <div class="container">
             <h1>GK Quiz</h1>
 
@@ -69,6 +79,7 @@
                     <button data-lang="en" onclick="switchLanguage('en')" class="active">English</button>
                     <button data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</button>
                 </div>
+                <main>
                 <div class="language-content">
                     <!-- English Content -->
                     <div class="english-content active">
@@ -112,6 +123,7 @@
                         </ul>
                     </div>
                 </div>
+            </main>
             </div>
             <hr />
 
@@ -121,15 +133,7 @@
                 <ul id="link-list"></ul>
             </div>
 
-            <div class="search-container">
-                <button class="search-icon" id="searchBtn">
-                    <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-                </button>
-                <button class="back-icon" id="backBtn">←</button>
-                <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
-            </div>
-            <ul id="suggestions" class="suggestions"></ul>
-            <div id="results"></div>
+           
 
             <footer>
                 <div class="custom-row">
