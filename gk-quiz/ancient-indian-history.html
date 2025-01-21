@@ -24,12 +24,12 @@
         <meta property="article:author" content="GK Learn Study" />
         <meta property="article:section" content="Education" />
 
-        <meta name="theme-color" content="#4CAF50" />
+        <meta name="theme-color" content="#87ceeb" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
         <meta name="application-name" content="GK Learn Study" />
-        <meta name="msapplication-TileColor" content="#4CAF50" />
+        <meta name="msapplication-TileColor" content="#87ceeb" />
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
         <meta name="msapplication-config" content="browserconfig.xml" />
 
@@ -39,7 +39,9 @@
         <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link id="manifest" rel="manifest" href="/manifest.json" />
         <link rel="icon" href="favicon.ico" type="images/x-icon" />
+        
         <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+       <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" />
         <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
         <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
         <script src="https://gklearnstudy.in/js/menu.js" defer></script>
@@ -55,7 +57,7 @@
                 },
                 "headline": "Ancient Indian History",
                 "description": "Important information based on Ancient Indian History, including the Indus Valley Civilization, Vedic Period, Maurya Empire, Gupta Empire.",
-                "image": "https://gklearnstudy.in/gk-quiz/images/ancient-history-thumbnail.jpg",
+                "image": "https://gklearnstudy.in/gk-quiz/images/ancient-history-thumbnail.ico",
                 "author": {
                     "@type": "Person",
                     "name": "Himanshu"
@@ -65,7 +67,7 @@
                     "name": "GK Learn Study",
                     "logo": {
                         "@type": "ImageObject",
-                        "url": "https://gklearnstudy.in/gk-quiz/ancient-history-thumbnail.jpg"
+                        "url": "https://gklearnstudy.in/gk-quiz/ancient-history-thumbnail.ico"
                     }
                 },
                 "datePublished": "2025-01-06",
@@ -73,16 +75,10 @@
             }
         </script>
 
-        <!-- Additional Meta Tags -->
-        <meta name="distribution" content="global" />
-        <meta name="rating" content="general" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="theme-color" content="#ffffff" />
-
+       
         <!-- Favicons -->
         <link rel="icon" href="https://gklearnstudy.in/gk-quiz/favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" href="https://gklearnstudy.in/gk-quiz/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="https://gklearnstudy.in/gk-quiz/apple-touch-icon.ico" />
 
         <script type="application/ld+json">
             {
@@ -332,55 +328,7 @@
                 ]
             }
         </script>
-        <style>
-            h3 {
-                text-align: left;
-            }
-            h3 {
-                color: var(--text);
-            }
-            .container {
-                margin-top: 100px;
-            }
-            .questions {
-                margin-bottom: 20px;
-                padding: 10px;
-                border-radius: 15px;
-                margin: 0px;
-                border: 1px solid #ccc;
-                margin-bottom: 20px;
-                font-weight: bold;
-                font-size: 15px;
-            }
-
-            .options {
-                font-weight: 100;
-                list-style-type: none;
-                padding: 0;
-            }
-            .options li {
-                padding: 10px;
-                margin: 5px 0;
-                cursor: pointer;
-                border: 1px solid #ccc;
-                border-radius: 15px;
-                width: 300px;
-            }
-            .options li.correct {
-                background-color: green;
-                color: white;
-            }
-            .options li.wrong {
-                background-color: red;
-                color: white;
-            }
-            .explanation {
-                display: none;
-                margin-top: 10px;
-                border-left: 5px solid green; /* Left green line */
-                padding-left: 10px;
-            }
-        </style>
+     
     </head>
     <body>
         <button class="menu-toggle" onclick="toggleMenu()">➤</button>
@@ -750,166 +698,7 @@
                 </div>
             </center>
         </main>
-            <script>
-                const questions = document.querySelectorAll(".questions");
-
-                questions.forEach((questions) => {
-                    const options = questions.querySelectorAll(".options li");
-                    const explanation = questions.querySelector(".explanation");
-
-                    options.forEach((option) => {
-                        option.addEventListener("click", () => {
-                            // Disable all options after the first click
-                            options.forEach((opt) => {
-                                opt.style.pointerEvents = "none"; // Prevent further clicks
-                            });
-
-                            // Check if the clicked option is correct
-                            if (option.getAttribute("data-correct") === "true") {
-                                option.classList.add("correct");
-                            } else {
-                                option.classList.add("wrong");
-                                // Highlight the correct answer
-                                options.forEach((opt) => {
-                                    if (opt.getAttribute("data-correct") === "true") {
-                                        opt.classList.add("correct");
-                                    }
-                                });
-                            }
-                            explanation.style.display = "block"; // Show explanation
-                        });
-                    });
-                });
-
-                // URL से पृष्ठ संख्या प्राप्त करने के लिए फ़ंक्शन
-                function getPageNumber() {
-                    // वर्तमान URL से पृष्ठ संख्या प्राप्त करें
-                    const url = window.location.href; // वर्तमान पृष्ठ का URL
-                    const pageMatch = url.match(/page(\d+)/); // URL में 'page' के बाद की संख्या निकालें
-
-                    // यदि पृष्ठ संख्या मिली तो उसे लौटाएं, अन्यथा डिफ़ॉल्ट 1 लौटाएं
-                    return pageMatch ? parseInt(pageMatch[1]) : 1;
-                }
-
-                // प्रारंभिक संख्या से क्रमांकित प्रश्नों के लिए फ़ंक्शन
-                function autoNumberQuestions(startNumber) {
-                    // सभी प्रश्नों को प्राप्त करें
-                    const questions = document.querySelectorAll(".questions");
-
-                    // प्रारंभिक संख्या सेट करें
-                    let questionNumber = startNumber;
-
-                    // प्रत्येक प्रश्न के लिए क्रमांक सेट करें
-                    questions.forEach((question) => {
-                        question.querySelector("h3").textContent = `Q-${questionNumber}: ${question.querySelector("h3").textContent}`;
-                        questionNumber++;
-                    });
-                }
-
-                // मुख्य कोड
-                const pageNumber = getPageNumber();
-                let startingNumber = 1; // Default starting number
-
-                // पृष्ठ संख्या के आधार पर प्रारंभिक संख्या सेट करें
-                if (pageNumber === 1) {
-                    startingNumber = 1; // page1 के लिए 1 से प्रारंभ करें
-                } else if (pageNumber === 2) {
-                    startingNumber = 31; // page2 के लिए 31 से प्रारंभ करें
-                } else {
-                    startingNumber = (pageNumber - 1) * 31 + 1; // page3 से page20 के लिए 5 से बढ़ते हुए क्रमांकित करें
-                }
-
-                // प्रश्नों को प्रदर्शित करें
-                autoNumberQuestions(startingNumber);
-
-                // Add CSS styles
-                const styles = `
-   
-    .paginations a:link, 
-    .paginations a:visited {
-        color: white; /* Make visited links white */
-    }
-  
-    .button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
-    .button.active {
-        background-color: green;
-    }
-    .active {
-      
-        pointer-events: none; /* Disable click on active page */
-    }
-`;
-
-                // Create a style element
-                const styleSheet = document.createElement("style");
-                styleSheet.type = "text/css";
-                styleSheet.innerText = styles;
-                document.head.appendChild(styleSheet);
-
-                // Total number of pages
-                const totalPages = 20;
-
-                // Get the current page from the URL
-                const url = window.location.href;
-                const currentPage = parseInt(url.match(/page(\d+)/)?.[1]) || 1;
-
-                function renderPagination(currentPage, totalPages) {
-                    const paginationContainer = document.querySelector(".paginations");
-                    paginationContainer.innerHTML = ""; // Clear previous pagination
-
-                    // Check if on the first page
-                    const firstPageLink = document.createElement("a");
-                    firstPageLink.href = `page1`;
-                    firstPageLink.innerText = "First";
-                    firstPageLink.className = "button";
-                    if (currentPage === 1) {
-                        firstPageLink.classList.add("active");
-                    }
-                    paginationContainer.appendChild(firstPageLink);
-
-                    // Calculate the range of pages to show
-                    const range = 2; // Number of pages to show around the current page
-                    let startPage = Math.max(2, currentPage - range); // Start from 2 if not on the first page
-                    let endPage = Math.min(totalPages - 1, currentPage + range); // End before last page if not on it
-
-                    // Ensure the range is always 5 pages
-                    if (endPage - startPage < 4) {
-                        if (startPage === 2) {
-                            endPage = Math.min(totalPages - 1, startPage + 4);
-                        } else if (endPage === totalPages - 1) {
-                            startPage = Math.max(2, endPage - 4);
-                        }
-                    }
-
-                    // Create page links
-                    for (let i = startPage; i <= endPage; i++) {
-                        const pageLink = document.createElement("a");
-                        pageLink.href = `page${i}`;
-                        pageLink.innerText = i;
-                        pageLink.className = "button";
-                        if (i === currentPage) {
-                            pageLink.classList.add("active"); // Mark as active
-                        }
-                        paginationContainer.appendChild(pageLink);
-                    }
-
-                    // Check if on the last page
-                    const lastPageLink = document.createElement("a");
-                    lastPageLink.href = `page${totalPages}`;
-                    lastPageLink.innerText = "Last";
-                    lastPageLink.className = "button";
-                    if (currentPage === totalPages) {
-                        lastPageLink.classList.add("active");
-                    }
-                    paginationContainer.appendChild(lastPageLink);
-                }
-
-                // Render the pagination on page load
-                renderPagination(currentPage, totalPages);
-            </script>
+          
 
             <div id="right-sidebar">
                 <strong>Important Links</strong>
@@ -934,6 +723,7 @@
         </div>
        
         <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+        <script src="https://gklearnstudy.in/js/gkquiz.js" defer></script>
         <script src="https://gklearnstudy.in/js/menu.js"></script>
         <script src="https://gklearnstudy.in/js/search.js"></script>
     </body>
