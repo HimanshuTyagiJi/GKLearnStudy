@@ -101,7 +101,7 @@ function showLastPageNotification(currentFolder) {
     // Define custom links based on the current folder
     const customLinks = {
         'gk': {
-            link: 'gk/page1',
+            link: 'https://gklearnstudy.in/gk-quiz/ancient-indian-history/page2',
             text: 'GK Page'
         },
         'hi': {
