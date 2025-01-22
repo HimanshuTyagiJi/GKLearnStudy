@@ -68,20 +68,15 @@
         });
     }
 
-    // Initialize the script
-    const startingNumber = getStartingNumber(); // Determine the starting question number
-    autoNumberQuestions(startingNumber); // Auto-number questions
-    initializeQuestionInteractions(); // Set up interactions
-
-
-    // Function to get all links on the current page
+ 
+    // Function to get all links on the current page and find the largest page number
     function findLargestPageNumber() {
         const allLinks = document.querySelectorAll("a[href]");
         let maxPageNumber = 0;
 
         allLinks.forEach((link) => {
             const href = link.getAttribute("href");
-            const match = href.match(/page(\d+)/);
+            const match = href.match(/\/page(\d+)/);
             const pageNumber = match ? parseInt(match[1]) : 0;
 
             if (pageNumber > maxPageNumber) {
@@ -102,8 +97,8 @@
         notificationContainer.style.textAlign = "center";
 
         const lastPageLink = lastPageNumber > 0 
-            ? `/gk/ancient/page${lastPageNumber}` 
-            : `/gk/ancient`;
+            ? `/page${lastPageNumber}` 
+            : `/`;
 
         notificationContainer.innerHTML = `
             <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
@@ -135,4 +130,3 @@
 
     // Show the last updated time
     showLastUpdatedTime();
-
