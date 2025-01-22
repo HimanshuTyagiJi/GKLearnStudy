@@ -72,3 +72,67 @@
     const startingNumber = getStartingNumber(); // Determine the starting question number
     autoNumberQuestions(startingNumber); // Auto-number questions
     initializeQuestionInteractions(); // Set up interactions
+
+
+    // Function to get all links on the current page
+    function findLargestPageNumber() {
+        const allLinks = document.querySelectorAll("a[href]");
+        let maxPageNumber = 0;
+
+        allLinks.forEach((link) => {
+            const href = link.getAttribute("href");
+            const match = href.match(/page(\d+)/);
+            const pageNumber = match ? parseInt(match[1]) : 0;
+
+            if (pageNumber > maxPageNumber) {
+                maxPageNumber = pageNumber;
+            }
+        });
+
+        return maxPageNumber;
+    }
+
+    // Function to display the last page notification
+    function showLastPageNotification(lastPageNumber) {
+        const notificationContainer = document.createElement("div");
+        notificationContainer.style.border = "1px solid #ccc";
+        notificationContainer.style.padding = "10px";
+        notificationContainer.style.margin = "20px 0";
+        notificationContainer.style.backgroundColor = "#f9f9f9";
+        notificationContainer.style.textAlign = "center";
+
+        const lastPageLink = lastPageNumber > 0 
+            ? `/gk/ancient/page${lastPageNumber}` 
+            : `/gk/ancient`;
+
+        notificationContainer.innerHTML = `
+            <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
+        `;
+        document.body.prepend(notificationContainer);
+    }
+
+    // Function to display the last updated time
+    function showLastUpdatedTime() {
+        const dateContainer = document.createElement("div");
+        dateContainer.style.textAlign = "center";
+        dateContainer.style.marginTop = "20px";
+        dateContainer.style.fontSize = "14px";
+        dateContainer.style.color = "#555";
+
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString();
+        const formattedTime = currentDate.toLocaleTimeString();
+
+        dateContainer.innerHTML = `<p>Page last updated on: ${formattedDate} at ${formattedTime}</p>`;
+        document.body.append(dateContainer);
+    }
+
+    // Find the largest page number from the existing links
+    const lastPageNumber = findLargestPageNumber();
+
+    // Show the notification for the last page
+    showLastPageNotification(lastPageNumber);
+
+    // Show the last updated time
+    showLastUpdatedTime();
+
