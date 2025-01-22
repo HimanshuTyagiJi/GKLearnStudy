@@ -68,15 +68,20 @@
         });
     }
 
- 
-    // Function to get all links on the current page and find the largest page number
+    // Initialize the script
+    const startingNumber = getStartingNumber(); // Determine the starting question number
+    autoNumberQuestions(startingNumber); // Auto-number questions
+    initializeQuestionInteractions(); // Set up interactions
+
+
+    // Function to get all links on the current page
     function findLargestPageNumber() {
         const allLinks = document.querySelectorAll("a[href]");
         let maxPageNumber = 0;
 
         allLinks.forEach((link) => {
             const href = link.getAttribute("href");
-            const match = href.match(/\/page(\d+)/);
+            const match = href.match(/page(\d+)/);
             const pageNumber = match ? parseInt(match[1]) : 0;
 
             if (pageNumber > maxPageNumber) {
