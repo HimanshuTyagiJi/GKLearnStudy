@@ -1,12 +1,29 @@
 
-    // Function to determine the current page number from the URL
+    // Function to extract page information from the URL
     function getPageNumber() {
         let url = window.location.href;
-        let match = url.match(/\/page(\d+)/); // Match '/page1', '/page2', etc.
-        return match ? parseInt(match[1]) : 1; // Default to page 1 if not found
+        
+        // Match '/pageX' in the URL
+        let match = url.match(/\/page(\d+)/);
+        
+        // If '/pageX' exists, return its number, else return 0 (indicating '/gk/ancient')
+        return match ? parseInt(match[1]) : 0;
     }
 
-    // Function to auto-number the questions based on the starting number
+    // Function to determine the starting number based on the URL
+    function getStartingNumber() {
+        const pageNumber = getPageNumber(); // Get the current page number
+        
+        if (pageNumber === 0) {
+            // Default case for '/gk/ancient': Questions 1-30
+            return 1;
+        } else {
+            // For '/pageX': Calculate starting number dynamically
+            return (pageNumber * 30) + 1;
+        }
+    }
+
+    // Function to auto-number the questions
     function autoNumberQuestions(startNumber) {
         let questionElements = document.querySelectorAll(".questions");
         let questionNumber = startNumber;
@@ -17,25 +34,7 @@
         });
     }
 
-    // Function to initialize question numbering
-    function initializeQuestionNumbering() {
-        const pageNumber = getPageNumber(); // Get the current page number
-        let startingNumber;
-
-        // Determine the starting number based on the page number
-        if (pageNumber === 1) {
-            startingNumber = 1; // Page 1: Questions 1-30
-        } else if (pageNumber === 2) {
-            startingNumber = 31; // Page 2: Questions 31-60
-        } else {
-            startingNumber = (pageNumber - 1) * 30 + 1; // Subsequent pages
-        }
-
-        // Apply auto-numbering to the questions
-        autoNumberQuestions(startingNumber);
-    }
-
-    // Add event listeners to options for each question
+    // Function to initialize question interactions
     function initializeQuestionInteractions() {
         const questions = document.querySelectorAll(".questions");
 
@@ -69,6 +68,7 @@
         });
     }
 
-    // Initialize numbering and interactions
-    initializeQuestionNumbering();
-    initializeQuestionInteractions();
+    // Initialize the script
+    const startingNumber = getStartingNumber(); // Determine the starting question number
+    autoNumberQuestions(startingNumber); // Auto-number questions
+    initializeQuestionInteractions(); // Set up interactions
