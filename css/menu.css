@@ -84,7 +84,7 @@ hr{height:5%}
 .search-container.active{justify-content:flex-end}
 .search-container.active .back-icon{display:flex}
 .search-container.active .search-icon{display:none}
-.search-container.active{width:100%;right:5px}
+.search-container.active{width:100%;right:5px;z-index:99;}
 .search-container.active .search-input{width:calc(100% - 70px);opacity:1}
 .suggestions,#results{position:fixed !important;border:1px solid #ccc;max-width:540px;max-height:55%;margin:0px auto 0;text-align:left;padding:0;list-style:none;position:absolute;background-color:#fff;color:black;width:55%;box-shadow:0 4px 8px rgba(0,0,0,0.1);z-index:1000;left:50%;transform:translateX(-50%);display:none;overflow:auto}
 .suggestions li,#results .result-item{color:black;padding:10px;cursor:pointer}
