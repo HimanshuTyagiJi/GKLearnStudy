@@ -1,4 +1,4 @@
-     
+
     // Function to extract page information from the URL
     function getPageNumber() {
         let url = window.location.href;
