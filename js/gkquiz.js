@@ -101,8 +101,8 @@
             notificationContainer.style.textAlign = "center";
 
             const lastPageLink = lastPageNumber > 0 
-                ? `/gk/ancient/page${lastPageNumber}` 
-                : `/gk/ancient`;
+                ? `page${lastPageNumber}` 
+                : ``;
 
             notificationContainer.innerHTML = `
                 <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
