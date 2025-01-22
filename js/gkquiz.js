@@ -68,32 +68,20 @@
         });
     }
 
-    // Initialize the script
-    const startingNumber = getStartingNumber(); // Determine the starting question number
-    autoNumberQuestions(startingNumber); // Auto-number questions
-    initializeQuestionInteractions(); // Set up interactions
-
-
-    // Function to get all links on the current page
-    function findLargestPageNumber() {
-        const allLinks = document.querySelectorAll("a[href]");
-        let maxPageNumber = 0;
-
-        allLinks.forEach((link) => {
-            const href = link.getAttribute("href");
+  
+    // Function to extract the last page number from the canonical link
+    function getLastCanonicalPageNumber() {
+        const canonicalLink = document.querySelector("link[rel='canonical']");
+        if (canonicalLink) {
+            const href = canonicalLink.getAttribute("href");
             const match = href.match(/page(\d+)/);
-            const pageNumber = match ? parseInt(match[1]) : 0;
-
-            if (pageNumber > maxPageNumber) {
-                maxPageNumber = pageNumber;
-            }
-        });
-
-        return maxPageNumber;
+            return match ? parseInt(match[1]) : 0;
+        }
+        return 0;
     }
 
     // Function to display the last page notification
-    function showLastPageNotification(lastPageNumber) {
+    function showLastPageNotification(lastPageNumber, baseURL) {
         const notificationContainer = document.createElement("div");
         notificationContainer.style.border = "1px solid #ccc";
         notificationContainer.style.padding = "10px";
@@ -102,8 +90,8 @@
         notificationContainer.style.textAlign = "center";
 
         const lastPageLink = lastPageNumber > 0 
-            ? `/page${lastPageNumber}` 
-            : ``;
+            ? `${baseURL}/page${lastPageNumber}` 
+            : baseURL;
 
         notificationContainer.innerHTML = `
             <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
@@ -127,11 +115,15 @@
         document.body.append(dateContainer);
     }
 
-    // Find the largest page number from the existing links
-    const lastPageNumber = findLargestPageNumber();
+    // Get the last page number from the canonical link
+    const lastPageNumber = getLastCanonicalPageNumber();
+
+    // Base URL from the canonical link
+    const canonicalLink = document.querySelector("link[rel='canonical']");
+    const baseURL = canonicalLink ? canonicalLink.getAttribute("href").replace(/\/page\d+$/, '') : '';
 
     // Show the notification for the last page
-    showLastPageNotification(lastPageNumber);
+    showLastPageNotification(lastPageNumber, baseURL);
 
     // Show the last updated time
     showLastUpdatedTime();
