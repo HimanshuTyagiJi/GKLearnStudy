@@ -69,15 +69,24 @@
     }
 
   
-    // Function to extract the last page number from the canonical link
+ 
+    // Function to extract the last page number from all canonical links
     function getLastCanonicalPageNumber() {
-        const canonicalLink = document.querySelector("link[rel='canonical']");
-        if (canonicalLink) {
-            const href = canonicalLink.getAttribute("href");
+        const canonicalLinks = document.querySelectorAll("link[rel='canonical']");
+        let maxPageNumber = 0;
+
+        canonicalLinks.forEach(link => {
+            const href = link.getAttribute("href");
             const match = href.match(/page(\d+)/);
-            return match ? parseInt(match[1]) : 0;
-        }
-        return 0;
+            if (match) {
+                const pageNumber = parseInt(match[1]);
+                if (pageNumber > maxPageNumber) {
+                    maxPageNumber = pageNumber;
+                }
+            }
+        });
+
+        return maxPageNumber;
     }
 
     // Function to display the last page notification
@@ -115,15 +124,16 @@
         document.body.append(dateContainer);
     }
 
-    // Get the last page number from the canonical link
-    const lastPageNumber = getLastCanonicalPageNumber();
+    // Base URL from the first canonical link
+    const firstCanonicalLink = document.querySelector("link[rel='canonical']");
+    const baseURL = firstCanonicalLink ? firstCanonicalLink.getAttribute("href").replace(/\/page\d+$/, '') : '';
 
-    // Base URL from the canonical link
-    const canonicalLink = document.querySelector("link[rel='canonical']");
-    const baseURL = canonicalLink ? canonicalLink.getAttribute("href").replace(/\/page\d+$/, '') : '';
+    // Get the last page number from the canonical links
+    const lastPageNumber = getLastCanonicalPageNumber();
 
     // Show the notification for the last page
     showLastPageNotification(lastPageNumber, baseURL);
 
     // Show the last updated time
     showLastUpdatedTime();
+
