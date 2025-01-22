@@ -68,72 +68,65 @@
         });
     }
 
-  
- 
-    // Function to extract the last page number from all canonical links
-    function getLastCanonicalPageNumber() {
-        const canonicalLinks = document.querySelectorAll("link[rel='canonical']");
-        let maxPageNumber = 0;
+   // Function to find the largest page number
+        function findLargestPageNumber() {
+            const allLinks = document.querySelectorAll("a[href]");
+            let maxPageNumber = 0;
 
-        canonicalLinks.forEach(link => {
-            const href = link.getAttribute("href");
-            const match = href.match(/page(\d+)/);
-            if (match) {
-                const pageNumber = parseInt(match[1]);
-                if (pageNumber > maxPageNumber) {
-                    maxPageNumber = pageNumber;
+            allLinks.forEach((link) => {
+                const href = link.getAttribute("href");
+                const match = href.match(/page(\d+)/);
+                if (match) {
+                    const pageNumber = parseInt(match[1], 10);
+                    if (pageNumber > maxPageNumber) {
+                        maxPageNumber = pageNumber;
+                    }
                 }
-            }
-        });
+            });
 
-        return maxPageNumber;
-    }
+            return maxPageNumber;
+        }
 
-    // Function to display the last page notification
-    function showLastPageNotification(lastPageNumber, baseURL) {
-        const notificationContainer = document.createElement("div");
-        notificationContainer.style.border = "1px solid #ccc";
-        notificationContainer.style.padding = "10px";
-        notificationContainer.style.margin = "20px 0";
-        notificationContainer.style.backgroundColor = "#f9f9f9";
-        notificationContainer.style.textAlign = "center";
+        // Function to display the last page notification
+        function showLastPageNotification(lastPageNumber) {
+            const notificationContainer = document.createElement("div");
+            notificationContainer.style.border = "1px solid #ccc";
+            notificationContainer.style.padding = "10px";
+            notificationContainer.style.margin = "20px 0";
+            notificationContainer.style.backgroundColor = "#f9f9f9";
+            notificationContainer.style.textAlign = "center";
 
-        const lastPageLink = lastPageNumber > 0 
-            ? `${baseURL}/page${lastPageNumber}` 
-            : baseURL;
+            const lastPageLink = lastPageNumber > 0 
+                ? `page${lastPageNumber}` 
+                : ``;
 
-        notificationContainer.innerHTML = `
-            <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
-        `;
-        document.body.prepend(notificationContainer);
-    }
+            notificationContainer.innerHTML = `
+                <p>New questions have been added on the last page. <a href="${lastPageLink}" style="color: blue; text-decoration: underline;">Click here</a> to view the latest page.</p>
+            `;
+            document.body.prepend(notificationContainer);
+        }
 
-    // Function to display the last updated time
-    function showLastUpdatedTime() {
-        const dateContainer = document.createElement("div");
-        dateContainer.style.textAlign = "center";
-        dateContainer.style.marginTop = "20px";
-        dateContainer.style.fontSize = "14px";
-        dateContainer.style.color = "#555";
+        // Function to display the last updated time
+        function showLastUpdatedTime() {
+            const dateContainer = document.createElement("div");
+            dateContainer.style.textAlign = "center";
+            dateContainer.style.marginTop = "20px";
+            dateContainer.style.fontSize = "14px";
+            dateContainer.style.color = "#555";
 
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString();
-        const formattedTime = currentDate.toLocaleTimeString();
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString();
+            const formattedTime = currentDate.toLocaleTimeString();
 
-        dateContainer.innerHTML = `<p>Page last updated on: ${formattedDate} at ${formattedTime}</p>`;
-        document.body.append(dateContainer);
-    }
+            dateContainer.innerHTML = `<p>Page last updated on: ${formattedDate} at ${formattedTime}</p>`;
+            document.body.append(dateContainer);
+        }
 
-    // Base URL from the first canonical link
-    const firstCanonicalLink = document.querySelector("link[rel='canonical']");
-    const baseURL = firstCanonicalLink ? firstCanonicalLink.getAttribute("href").replace(/\/page\d+$/, '') : '';
+        // Get the largest page number from existing links
+        const lastPageNumber = findLargestPageNumber();
 
-    // Get the last page number from the canonical links
-    const lastPageNumber = getLastCanonicalPageNumber();
+        // Show the notification for the last page
+        showLastPageNotification(lastPageNumber);
 
-    // Show the notification for the last page
-    showLastPageNotification(lastPageNumber, baseURL);
-
-    // Show the last updated time
-    showLastUpdatedTime();
-
+        // Show the last updated time
+        showLastUpdatedTime();
