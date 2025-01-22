@@ -1,4 +1,5 @@
 
+
     // Function to extract page information from the URL
     function getPageNumber() {
         let url = window.location.href;
@@ -67,3 +68,8 @@
             });
         });
     }
+
+    // Initialize the script
+    const startingNumber = getStartingNumber(); // Determine the starting question number
+    autoNumberQuestions(startingNumber); // Auto-number questions
+    initializeQuestionInteractions(); // Set up interactions
