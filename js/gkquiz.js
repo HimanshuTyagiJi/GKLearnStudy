@@ -73,3 +73,19 @@
     const startingNumber = getStartingNumber(); // Determine the starting question number
     autoNumberQuestions(startingNumber); // Auto-number questions
     initializeQuestionInteractions(); // Set up interactions
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const link = "gk-quiz";
+    const el = document.querySelector(`a[href*="${link}"]`);
+    if (el) {
+        const updateColor = () => {
+            el.style.color = document.documentElement.getAttribute("data-theme") === "dark" ? "yellow" : "red";
+        };
+        updateColor();
+        new MutationObserver(updateColor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    }
+});
+
