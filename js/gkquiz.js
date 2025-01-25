@@ -78,14 +78,28 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const link = "gk-quiz";
-    const el = document.querySelector(`a[href*="${link}"]`);
+    const link = "https://gklearnstudy.in/gk-quiz.html"; // The specific link to activate
+    const el = document.querySelector(`a[href="${link}"]`); // Select the anchor tag with the given href
+
     if (el) {
+        // Function to update the link's color based on the theme
         const updateColor = () => {
             el.style.color = document.documentElement.getAttribute("data-theme") === "dark" ? "yellow" : "red";
         };
+
+        // Update the color initially
         updateColor();
-        new MutationObserver(updateColor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+        // Observe changes to the 'data-theme' attribute
+        new MutationObserver(updateColor).observe(document.documentElement, { 
+            attributes: true, 
+            attributeFilter: ["data-theme"] 
+        });
+
+        // Optionally, you can also add the 'active' class for styling purposes
+        el.classList.add("active");
     }
 });
+
+
 
