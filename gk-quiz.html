@@ -1,133 +1,189 @@
 <!DOCTYPE html>
 <html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Quiz</title>
-    <meta name="title" content="GK Quiz: Education Simplified">
-    <meta name="description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey.">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gklearnstudy.in/">
-    <meta property="og:title" content="GK Quiz: Education Simplified">
-    <meta property="og:description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey.">
-    <meta property="og:image" content="https://gklearnstudy.in/images/gk-quiz.ico">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://gklearnstudy.in/gk-quiz">
-    <meta property="twitter:title" content="GK Quiz: Education Simplified">
-    <meta property="twitter:description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey.">
-    <meta property="twitter:image" content="https://gklearnstudy.in/images/gk-quiz.ico">
-    
-    <meta property="article:author" content="GK Quiz">
-    <meta property="article:section" content="Education">
-    
-    <meta name="theme-color" content="#ffcc99">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GK Quiz">
-    <meta name="application-name" content="GK Quiz">
-    <meta name="msapplication-TileColor" content="#ffcc99">
-    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png">
-    <meta name="msapplication-config" content="browserconfig.xml">
-    
-    <link rel="canonical" href="https://gklearnstudy.in/gk-quiz">
-    <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml">
-    <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png">
-    <link id="manifest" rel="manifest" href="/manifest.json">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
-    <!-- CSS Files with Versioning -->
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css?v=1.0.1">
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css?v=1.0.1">
-    
-    <!-- JS Files with Versioning -->
-    <script src="https://gklearnstudy.in/js/menu.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/rightside.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/gkquiz.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/search.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/language.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/sw-register.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/schema.js?v=1.0.2" defer></script>
-    <script src="https://gklearnstudy.in/js/favicon.js?v=1.0.2" defer></script>
-    
-    <style>
-        body {
-            font-display: swap;
-        }
-    </style>
-</head>
-<body> 
-    <div class="search-container">
-        <button class="search-icon" id="searchBtn">
-            <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-        </button>
-        <button class="back-icon" id="backBtn">←</button>
-        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-    
-    <div class="container">
-        <h1>GK Quiz</h1>
-        <div onload="switchLanguage('en')">
-            <!-- Language Switcher -->
-            <div class="language-switcher">
-                <button data-lang="en" onclick="switchLanguage('en')" class="active">English</button>
-                <button data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</button>
-            </div>
-            <main>
-                <div class="language-content">
-                    <!-- English Content -->
-                    <div class="english-content active">
-                        <p>Welcome to the GK Quiz! This platform offers a wide range of questions to test your knowledge across various domains, such as history, geography, science, literature, and more.</p>
-                        <p>Each section is designed to provide challenging and engaging questions. Explore, learn, and compete with others to enhance your general knowledge.</p>
-                        <p>Below are the available topics:</p>
-                        <ul>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/modern-indian-history">Modern Indian History</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/world-geography">World Geography</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/science-discoveries">Science Discoveries</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Hindi Content -->
-                    <div class="hindi-content">
-                        <p>GK क्विज़ में आपका स्वागत है! यह प्लेटफ़ॉर्म आपको इतिहास, भूगोल, विज्ञान, साहित्य और अन्य विभिन्न क्षेत्रों में आपके ज्ञान का परीक्षण करने के लिए एक विस्तृत श्रृंखला प्रदान करता है।</p>
-                        <p>हर खंड को चुनौतीपूर्ण और रोचक प्रश्नों के साथ डिज़ाइन किया गया है। अपने सामान्य ज्ञान को बढ़ाने के लिए खोजें, सीखें और दूसरों के साथ प्रतिस्पर्धा करें।</p>
-                        <p>नीचे उपलब्ध विषय दिए गए हैं:</p>
-                        <ul>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/prachin-bhartiya-itihas">प्राचीन भारतीय इतिहास</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/madhyakaleen-bhartiya-itihas">मध्यकालीन भारतीय इतिहास</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/aadhunik-bhartiya-itihas">आधुनिक भारतीय इतिहास</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/vishv-bhugol">विश्व भूगोल</a></li>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/vigyan-ki-khojen">विज्ञान की खोजें</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </main>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GK Quiz</title>
+        <meta name="title" content="GK Quiz: Education Simplified" />
+        <meta name="description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey." />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://gklearnstudy.in/" />
+        <meta property="og:title" content="GK Quiz: Education Simplified" />
+        <meta property="og:description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey." />
+        <meta property="og:image" content="https://gklearnstudy.in/images/gk-quiz.ico" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://gklearnstudy.in/gk-quiz" />
+        <meta property="twitter:title" content="GK Quiz: Education Simplified" />
+        <meta property="twitter:description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey." />
+        <meta property="twitter:image" content="https://gklearnstudy.in/images/gk-quiz.ico" />
+
+        <meta property="article:author" content="GK Quiz" />
+        <meta property="article:section" content="Education" />
+
+        <meta name="theme-color" content="#ffcc99" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="GK Quiz" />
+        <meta name="application-name" content="GK Quiz" />
+        <meta name="msapplication-TileColor" content="#ffcc99" />
+        <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <meta name="msapplication-config" content="browserconfig.xml" />
+
+        <link rel="canonical" href="https://gklearnstudy.in/gk-quiz" />
+        <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
+        <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <link id="manifest" rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <!-- CSS Files with Versioning -->
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css?v=1.0.1" />
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css?v=1.0.1" />
+
+        <!-- JS Files with Versioning -->
+        <script src="https://gklearnstudy.in/js/menu.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/rightside.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/gkquiz.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/search.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/language.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/sw-register.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/schema.js?v=1.0.2" defer></script>
+        <script src="https://gklearnstudy.in/js/favicon.js?v=1.0.2" defer></script>
+
+        <style>
+            body {
+                font-display: swap;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="search-container">
+            <button class="search-icon" id="searchBtn">
+                <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
+            </button>
+            <button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
         </div>
-        <hr>
-        <div id="right-sidebar">
-            <strong>Important Links</strong>
-            <ul id="link-list"></ul>
-        </div>
-        <footer>
-            <div class="custom-row">
-                <div class="custom-column">
-                    <b>Follow Us</b>
-                    <div id="social-links"></div>
+        <ul id="suggestions" class="suggestions"></ul>
+        <div id="results"></div>
+
+        <div class="container">
+            <h1>GK Quiz</h1>
+            <div onload="switchLanguage('en')">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button data-lang="en" onclick="switchLanguage('en')" class="active">English</button>
+                    <button data-lang="hi" onclick="switchLanguage('hi')">हिन्दी</button>
                 </div>
-                <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
-                <div class="custom-column">
-                    <p id="my-paragraph"></p>
-                </div>
+                <main>
+                    <div class="language-content">
+                        <!-- English Content -->
+                        <div class="english-content active">
+                            <p>Welcome to the GK Quiz! This platform offers a wide range of questions to test your knowledge across various domains, such as history, geography, science, literature, and more.</p>
+                            <p>Each section is designed to provide challenging and engaging questions. Explore, learn, and compete with others to enhance your general knowledge.</p>
+                            <p>Below are the available topics:</p>
+                            <ul>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/modern-indian-history">Modern Indian History</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/world-history">World History</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz">Indian Government and Constitution</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz">Indian Economy</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz">Environment and Biodiversity</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz">Indian Art and Culture</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/physics-mcq-quiz">Physics</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz">Chemistry</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz">Mathematical MCQ Quiz</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/biology-mcq-quiz">Biology</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/computer-mcq-quiz">Computer</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz">Sanskrit</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz">Science and Technology</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz">Books and Authors</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz">Sports General Knowledge</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz">Famous Personalities</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz">Technology and Inventions</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz">Space and Universe</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz">World Geography</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz">Indian Festivals and Traditions</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz">World Organizations</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz">International Relations</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz">Awards and Honors</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz">Indian Defense</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz">Important Dates and Events</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz">Transport and Communication</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz">Famous Monuments</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz">Wildlife and National Parks</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz">Rivers and Lakes</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz">Disasters and Accidents</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Hindi Content -->
+                        <div class="hindi-content">
+                            <p>GK क्विज़ में आपका स्वागत है! यह प्लेटफ़ॉर्म आपको इतिहास, भूगोल, विज्ञान, साहित्य और अन्य विभिन्न क्षेत्रों में आपके ज्ञान का परीक्षण करने के लिए एक विस्तृत श्रृंखला प्रदान करता है।</p>
+                            <p>हर खंड को चुनौतीपूर्ण और रोचक प्रश्नों के साथ डिज़ाइन किया गया है। अपने सामान्य ज्ञान को बढ़ाने के लिए खोजें, सीखें और दूसरों के साथ प्रतिस्पर्धा करें।</p>
+                            <p>नीचे उपलब्ध विषय दिए गए हैं:</p>
+                            <ul>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/praachin-bhartiya-itihaas-mcq-quiz">प्राचीन भारतीय इतिहास</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/madhyakalin-bhartiya-itihaas-mcq-quiz">मध्यकालीन भारतीय इतिहास</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/aadhunik-bhartiya-itihaas-mcq-quiz">आधुनिक भारतीय इतिहास</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/vishwa-itihaas-mcq-quiz">विश्व इतिहास</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-sarkar-aur-samvidhaan-mcq-quiz">भारतीय सरकार और संविधान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-arthavyavastha-mcq-quiz">भारतीय अर्थव्यवस्था</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/paryavaran-aur-jaiv-vividhata-mcq-quiz">पर्यावरण और जैव विविधता</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-kala-aur-sanskriti-mcq-quiz">भारतीय कला और संस्कृति</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhautik-shastra-mcq-quiz">भौतिकी</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/rasaayan-shastra-mcq-quiz">रसायन विज्ञान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/ganit-mcq-quiz">गणितीय</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/jeev-vigyaan-mcq-quiz">जीव विज्ञान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/computer-hi-mcq-quiz">कंप्यूटर</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz">संस्कृत</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/vigyaan-aur-proudyogiki-mcq-quiz">विज्ञान और प्रौद्योगिकी</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/pustakein-aur-lekhak-mcq-quiz">पुस्तकें और लेखक</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/khel-samanya-gyan-mcq-quiz">खेल सामान्य ज्ञान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/prasiddh-vyakti-mcq-quiz">प्रसिद्ध व्यक्ति</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/prodyogiki-aur-avaishkaar-mcq-quiz">प्रौद्योगिकी और आविष्कार</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/antariksh-aur-brahmand-mcq-quiz">अंतरिक्ष और ब्रह्मांड</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-bhugol-mcq-quiz">भारतीय भूगोल</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/vishwa-bhugol-mcq-quiz">विश्व भूगोल</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-tyohar-aur-paramparaen-mcq-quiz">भारतीय त्यौहार और परंपराएँ</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/vishwa-sangathan-mcq-quiz">विश्व संगठनों</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/antarraashtreey-sambandh-mcq-quiz">अंतरराष्ट्रीय संबंध</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/puraskaar-aur-samman-mcq-quiz">पुरस्कार और सम्मान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/bhartiya-raksha-mcq-quiz">भारतीय रक्षा</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/mahatvapurn-tithiyan-aur-ghatnaen-mcq-quiz">महत्वपूर्ण तिथियाँ और घटनाएँ</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/parivahan-aur-sanchar-mcq-quiz">परिवहन और संचार</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/prasiddh-smarak-mcq-quiz">प्रसिद्ध स्मारक</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/vanya-jeev-aur-rashtriya-udyaan-mcq-quiz">वन्यजीव और राष्ट्रीय उद्यान</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/nadiyan-aur-jheelien-mcq-quiz">नदियाँ और झीलें</a></li>
+                                <li><a href="https://gklearnstudy.in/gk-quiz/apaadain-aur-durghatnayein-mcq-quiz">आपदाएँ और दुर्घटनाएँ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </main>
             </div>
-        </footer>
-    </div>
-</body>
+            <hr />
+            <div id="right-sidebar">
+                <strong>Important Links</strong>
+                <ul id="link-list"></ul>
+            </div>
+            <footer>
+                <div class="custom-row">
+                    <div class="custom-column">
+                        <b>Follow Us</b>
+                        <div id="social-links"></div>
+                    </div>
+                    <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
+                    <div class="custom-column">
+                        <p id="my-paragraph"></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
 </html>
