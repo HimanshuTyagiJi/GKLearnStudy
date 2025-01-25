@@ -1,13 +1,15 @@
 # सभी JS फ़ाइलों के लिए हेडर
 [[headers]]
-  for = "/*.js"  # सभी JS फ़ाइलों पर लागू होगा
+  for = "/*.js"  # केवल JavaScript फाइलों पर लागू
   [headers.values]
-    Cache-Control = "max-age=31536000"  # कैश को अधिकतम समय तक स्टोर करेगा
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
 
-# सभी फ़ाइलों के लिए कैशिंग हेडर
+# सभी अन्य फाइलों के लिए हेडर (HTML, CSS, Images आदि)
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "max-age=0, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
