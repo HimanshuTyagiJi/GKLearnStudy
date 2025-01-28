@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) {
         // Function to update the link's color based on the theme
         const updateColor = () => {
-            el.style.color = document.documentElement.getAttribute("data-theme") === "dark" ? "yellow" : "red";
+            el.style.color = document.documentElement.getAttribute("data-theme") === "dark" ? "yellow" : "#B30000";
         };
 
         // Update the color initially
