@@ -23,3 +23,10 @@ const _0x5518c5=_0xd7f4;(function(_0x37f867,_0x1d8022){const _0x1501d1=_0xd7f4,_
     gtag('config', 'G-GWD5PC5YH6');
   };
 })();
+
+
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+  if (!link.hasAttribute('rel')) {
+    link.setAttribute('rel', 'noopener');
+  }
+});
