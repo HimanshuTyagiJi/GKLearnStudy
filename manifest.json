@@ -1,48 +1,26 @@
 {
   "name": "GK Learn Study",
-  "short_name": "GK Learn",
+  "short_name": "GK Learn Study",
   "description": "Learn GK anytime, anywhere",
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#5900b3",
   "icons": [
     {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
+      "src": "/GK-Learn-Study.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
+      "src": "/GK-Learn-Study.png",
       "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "https://gklearnstudy.in/GK-Learn-Study.png",
-      "sizes": "144x144",
       "type": "image/png"
     }
   ],
   "id": "GK",
-  "categories": [
-    "education"
-  ],
+  "categories": ["education"],
   "share_target": {
     "method": "GET",
     "action": "https://gklearnstudy.in",
