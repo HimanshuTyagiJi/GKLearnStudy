@@ -3,7 +3,7 @@ name: Android CI
 on:
   push:
     branches:
-      - main  # या तुम्हारी branch का नाम
+      - main
   pull_request:
     branches:
       - main
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3  # ✅ Latest version
+        uses: actions/checkout@v3
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -46,13 +46,13 @@ jobs:
         run: ./gradlew assembleRelease --stacktrace
 
       - name: Upload Debug APK
-        uses: actions/upload-artifact@v3  # ✅ Use v3 instead of v2
+        uses: actions/upload-artifact@v3  # ✅ Ensure latest version
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Release APK
-        uses: actions/upload-artifact@v3  # ✅ Use v3 instead of v2
+        uses: actions/upload-artifact@v3  # ✅ Ensure latest version
         with:
           name: app-release
           path: app/build/outputs/apk/release/app-release.apk
