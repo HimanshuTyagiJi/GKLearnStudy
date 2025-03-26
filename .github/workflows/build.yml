@@ -3,11 +3,11 @@ name: Android CI
 on:
   push:
     branches:
-      - main
+      - main  # या तुम्हारी branch का नाम
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # Manually Trigger करने के लिए
 
 jobs:
   build:
@@ -21,12 +21,12 @@ jobs:
         uses: actions/setup-java@v3  # ✅ Updated to v3
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '17'  # तुम्हारे Android Studio के हिसाब से Java Version बदल सकते हो
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
 
-      - name: Cache Gradle
+      - name: Cache Gradle Dependencies
         uses: actions/cache@v3
         with:
           path: |
@@ -39,11 +39,20 @@ jobs:
       - name: Grant Execute Permission to Gradle
         run: chmod +x ./gradlew
 
-      - name: Build APK
+      - name: Build Debug APK
         run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3  # ✅ Updated to v3
+      - name: Build Release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v2  # ✅ Changed to v2 to fix errors
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v2  # ✅ Changed to v2 to fix errors
         with:
           name: app-release
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/release/app-release.apk
