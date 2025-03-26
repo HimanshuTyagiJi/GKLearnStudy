@@ -1,32 +1,24 @@
-name: Build & Release APK
-
-on:
-  push:
-    branches:
-      - main  # जब भी main branch में बदलाव हो
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup JDK
-        uses: actions/setup-java@v1
+        uses: actions/checkout@v3  # Updated from v2 to v3
+      
+      - name: Set up Java
+        uses: actions/setup-java@v3  # Updated from v1 to v3
         with:
+          distribution: 'zulu'
           java-version: '17'
-
-      - name: Setup Android SDK
+      
+      - name: Set up Android SDK
         uses: android-actions/setup-android@v2
-
+      
       - name: Build APK
-        run: |
-          ./gradlew assembleDebug
-
+        run: ./gradlew assembleDebug
+      
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # 🔥 Update v2 → v3
         with:
-          name: GK-Learn-Study.apk
-          path: app/build/outputs/apk/debug/GK-Learn-Study.apk
+          name: app-release
+          path: app/build/outputs/apk/debug/app-debug.apk
