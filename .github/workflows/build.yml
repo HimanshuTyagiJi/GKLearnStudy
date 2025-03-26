@@ -1,0 +1,32 @@
+name: Build & Release APK
+
+on:
+  push:
+    branches:
+      - main  # जब भी main branch में बदलाव हो
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build APK
+        run: |
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: GK-Learn-Study.apk
+          path: app/build/outputs/apk/debug/GK-Learn-Study.apk
