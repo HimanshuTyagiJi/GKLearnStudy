@@ -1,4 +1,4 @@
-const CACHE_NAME = "cache-v1.003"; 
+const CACHE_NAME = "cache-v1.004";
 const STATIC_ASSETS = [
   "/",
   "index.html",
@@ -17,7 +17,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Activate Event (Old Cache Delete)
+// Activate Event (पुराना Cache हटाएं)
 self.addEventListener("activate", (event) => {
   console.log("Service Worker Activating...");
   event.waitUntil(
@@ -35,16 +35,20 @@ self.addEventListener("activate", (event) => {
   return self.clients.claim();
 });
 
-// Fetch Event (Auto Update)
+// Fetch Event (हमेशा लाइव अपडेट दिखाने के लिए)
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") {
+    return;
+  }
+
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request) // हमेशा नया डेटा लाने की कोशिश करें
       .then((response) => {
         return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, response.clone());
-          return response;
+          cache.put(event.request, response.clone()); // नया डेटा स्टोर करें
+          return response; // लाइव डेटा दिखाएं
         });
       })
-      .catch(() => caches.match(event.request)) // अगर इंटरनेट न हो तो कैश से लोड करे
+      .catch(() => caches.match(event.request)) // अगर इंटरनेट नहीं है, तो कैश से दिखाएं
   );
 });
