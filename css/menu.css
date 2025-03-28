@@ -108,7 +108,16 @@ hr{height:5%}
 .menu.is-active .back-arrow,.menu.is-active .menu-brand{color:var(--red);}
 
 @keyframes fadeInScale {0% {opacity: 0;transform: scale(0.8);}50% {opacity: 0.5;transform: scale(1.1);}100% { opacity: 1; transform: scale(1);}}
-
+#filterInput {
+    width: 98%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    user-select: none;
+}
 @media screen and (min-width: 769.01px) {
 .navbar {display: flex;  flex-direction: row;  align-items: center; height: 60px !important;  }
 .container {max-width: 65%;margin-top: 60px;}
