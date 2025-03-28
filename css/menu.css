@@ -137,7 +137,7 @@ hr{height:5%}
 .menu-inner {display: flex;flex-direction: row;margin-left: 3rem;margin-top: 18px !important;}
 .menu-inner::-webkit-scrollbar {display: none;}
 #themeToggle {z-index: 11;position: fixed;top: 13px;right: 15px;padding: 0px 0px;border: none;}
-#filterInput { width: 97%;}}
+#filterInput { width: 97.%;}}
 
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
   .menu {height:100%;background:var(--body-bg);position: fixed;margin-top: 55px;font-size: 18px;left: -100%;width: 255px;z-index: 10;overflow: auto;box-shadow: var(--box-shadow);transition: all 0.5s ease-in-out;} 
