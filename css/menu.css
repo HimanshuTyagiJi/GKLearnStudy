@@ -119,6 +119,7 @@ hr{height:5%}
     user-select: none;
 }
 @media screen and (min-width: 769.01px) {
+
 .navbar {display: flex;  flex-direction: row;  align-items: center; height: 60px !important;  }
 .container {max-width: 65%;margin-top: 60px;}
 .custom-row{padding: 4px;}
@@ -135,7 +136,8 @@ hr{height:5%}
 .menu a {display: block;margin: 0 auto 0px;margin-left: 10px;text-decoration: none;width: fit-content;}
 .menu-inner {display: flex;flex-direction: row;margin-left: 3rem;margin-top: 18px !important;}
 .menu-inner::-webkit-scrollbar {display: none;}
-#themeToggle {z-index: 11;position: fixed;top: 13px;right: 15px;padding: 0px 0px;border: none;}}
+#themeToggle {z-index: 11;position: fixed;top: 13px;right: 15px;padding: 0px 0px;border: none;}
+#filterInput { width: 97%;}}
 
 @media screen and (min-width: 320.01px) and (max-width: 768px) {
   .menu {height:100%;background:var(--body-bg);position: fixed;margin-top: 55px;font-size: 18px;left: -100%;width: 255px;z-index: 10;overflow: auto;box-shadow: var(--box-shadow);transition: all 0.5s ease-in-out;} 
