@@ -1,0 +1,38 @@
+name: Minify JS files
+
+on:
+  push:
+    branches:
+      - main  # या जो भी तुम्हारी मेन ब्रांच हो
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install UglifyJS
+        run: npm install -g uglify-js
+
+      - name: Minify JS files
+        run: |
+          mkdir -p minified-js
+          for file in js/*.js; do
+            uglifyjs "$file" -o "minified-js/$(basename "$file" .js).min.js"
+          done
+
+      - name: Commit Minified JS
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          cp -r minified-js/* js/
+          git add js/
+          git commit -m "Auto-minified JS files"
+          git push
