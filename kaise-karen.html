@@ -365,6 +365,22 @@
 }
 
     </style>
+   <style>
+.hidden {
+    display: none;
+}
+#showMoreBtn {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#showMoreBtn:hover {
+    background-color: #0056b3;
+}
+</style>
     <body>
         <div class="search-container">
            <button class="search-icon" id="searchBtn">
@@ -382,18 +398,42 @@
             <div class="color-content1">
                 <h1>कैसे करें: डिजिटल समस्याओं के समाधान</h1>
 
-               <h2>अक्सर पूछे जाने वाले प्रश्न (FAQ) – डिजिटल और तकनीकी समाधान</h2>
-<h2>जनरल नॉलेज (GK) – महत्वपूर्ण जानकारी और तथ्य</h2>
+               <h2>Table of Contents</h2>
+<ul id="toc">
+    <li><a href="#PC-folder">PC में फ़ोल्डर कैसे बनाएं?</a></li>
+    <li><a href="#PC-ShutDown">PC को कैसे Shutdown करें?</a></li>
+    <li><a href="#WhatsApp-पर-नंबर-कैसे-चेंज-करें">WhatsApp पर नंबर कैसे चेंज करें?</a></li>
+    <li><a href="#QR-code">QR code क्या है और अपना खुद का कैसे बनाएं?</a></li>
+    <li><a href="#ऑनलाइन-फ्रॉड">ऑनलाइन फ्रॉड से कैसे बचा जा सकता है?</a></li>
+    <li><a href="#OTP">OTP (One Time Password) से कैसे बचा जा सकता है?</a></li>
+    <li><a href="#बैटरी">Android Phone और PC में बैटरी कैसे बचाए?</a></li>
+    <li><a href="#Google-अकाउंट">Google खाता कैसे सुरक्षित रखें?</a></li>
+    <li><a href="#फ़ाइल-लॉक">PC या Computer पर किसी भी फ़ाइल या फ़ोल्डर को लॉक कैसे करें?</a></li>
+    <li><a href="#Facebook-सुरक्षित">Facebook Account को सुरक्षित कैसे रखें?</a></li>
+    <li class="hidden"><a href="#Facebook-डिलीट">Facebook Account को डिलीट कैसे करें?</a></li>
+    <li class="hidden"><a href="#Instagram-सुरक्षित">Instagram Account को सुरक्षित कैसे रखें?</a></li>
+    <li class="hidden"><a href="#Instagram-डिलीट">Instagram Account को डिलीट कैसे करें?</a></li>
+    <li class="hidden"><a href="#Telegram-डिलीट">Telegram Account को डिलीट कैसे करें?</a></li>
+    <li class="hidden"><a href="#Google-डिलीट">Google Account को डिलीट कैसे करें?</a></li>
+</ul>
+<button id="showMoreBtn" onclick="showMoreContent()">Show More</button>
+               <script>
+function showMoreContent() {
+    const hiddenLinks = document.querySelectorAll('#toc .hidden');
+    hiddenLinks.forEach((link, index) => {
+        if (index < 10) { // Show up to 10 hidden links at a time
+            link.classList.remove('hidden');
+        }
+    });
 
-<h3><strong>1. </strong>मैं अपना <strong>Google, Facebook, Instagram</strong> अकाउंट कैसे डिलीट कर सकता हूँ?</h3>
-<p>आप अपने Google, Facebook, और Instagram अकाउंट को सेटिंग्स में जाकर <strong>"Delete Account"</strong> ऑप्शन का उपयोग करके स्थायी रूप से हटा सकते हैं।</p>
+    // If no more hidden links, hide the "Show More" button
+    if (document.querySelectorAll('#toc .hidden').length === 0) {
+        document.getElementById('showMoreBtn').style.display = 'none';
+    }
+}
+</script>
 
-<h3><strong>2. </strong>अगर मैं अपना सोशल मीडिया अकाउंट भूल गया हूँ तो उसे कैसे रिकवर करूँ?</h3>
-<p>आप <strong>"Forgot Password"</strong> ऑप्शन का उपयोग करके अपने अकाउंट को रिकवर कर सकते हैं। इसके लिए आपका ईमेल या फोन नंबर लिंक होना चाहिए।</p>
-
-<h3><strong>3. </strong>मैं अपने अकाउंट को सुरक्षित कैसे रख सकता हूँ?</h3>
-<p>अपने अकाउंट की सुरक्षा के लिए <strong>2-स्टेप वेरिफिकेशन</strong> ऑन करें, मजबूत पासवर्ड का उपयोग करें, और अनजान डिवाइसेस पर लॉग इन करने से बचें।</p>
-  </div></section>
+<!-- Other content of the page --> </div></section>
 
             <input type="text" id="filterInput" autocomplete="off" placeholder="Search any questions..." />
 <section>
