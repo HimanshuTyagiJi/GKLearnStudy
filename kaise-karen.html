@@ -1220,53 +1220,63 @@ function showMoreContent() {
             </div>
 </section></main>
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const questionsContainer = document.getElementById("questions-container");
-                    const showMoreBtn = document.getElementById("show-more-btn");
-                    const filterInput = document.getElementById("filterInput");
-                    const QUESTIONS_PER_BATCH = 15;
-                    let currentBatchIndex = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+        const questionsContainer = document.getElementById("questions-container");
+        const showMoreBtn = document.getElementById("show-more-btn");
+        const filterInput = document.getElementById("filterInput");
+        const QUESTIONS_PER_BATCH = 15;
+        let currentBatchIndex = 0;
 
-                    function showQuestions() {
-                        const allQuestions = questionsContainer.querySelectorAll(".accordion");
-                        const nextBatchIndex = currentBatchIndex + QUESTIONS_PER_BATCH;
+        function showQuestions() {
+            const allQuestions = questionsContainer.querySelectorAll(".accordion");
+            const nextBatchIndex = currentBatchIndex + QUESTIONS_PER_BATCH;
 
-                        allQuestions.forEach((question, index) => {
-                            if (index < nextBatchIndex) {
-                                question.style.display = "block";
-                            }
-                        });
-
-                        currentBatchIndex = nextBatchIndex;
-                        updateVisibility();
+            allQuestions.forEach((question, index) => {
+                if (index < nextBatchIndex) {
+                    question.style.display = "block";
+                    const img = question.querySelector("img");
+                    if (img && img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute("data-src");
                     }
+                }
+            });
 
-                    function updateVisibility() {
-                        const allQuestions = questionsContainer.querySelectorAll(".accordion");
-                        if (currentBatchIndex >= allQuestions.length) {
-                            showMoreBtn.style.display = "none";
-                        }
+            currentBatchIndex = nextBatchIndex;
+            updateVisibility();
+        }
+
+        function updateVisibility() {
+            const allQuestions = questionsContainer.querySelectorAll(".accordion");
+            if (currentBatchIndex >= allQuestions.length) {
+                showMoreBtn.style.display = "none";
+            }
+        }
+
+        showMoreBtn.addEventListener("click", showQuestions);
+        filterInput.addEventListener("input", function () {
+            const filterValue = filterInput.value.toLowerCase();
+            const allQuestions = questionsContainer.querySelectorAll(".accordion");
+
+            allQuestions.forEach((question) => {
+                const title = question.querySelector(".heading-box h4").textContent.toLowerCase();
+                if (title.includes(filterValue)) {
+                    question.style.display = "block";
+                    const img = question.querySelector("img");
+                    if (img && img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute("data-src");
                     }
+                } else {
+                    question.style.display = "none";
+                }
+            });
+        });
 
-                    showMoreBtn.addEventListener("click", showQuestions);
-                    filterInput.addEventListener("input", function () {
-                        const filterValue = filterInput.value.toLowerCase();
-                        const allQuestions = questionsContainer.querySelectorAll(".accordion");
-
-                        allQuestions.forEach((question) => {
-                            const title = question.querySelector(".heading-box h4").textContent.toLowerCase();
-                            if (title.includes(filterValue)) {
-                                question.style.display = "block";
-                            } else {
-                                question.style.display = "none";
-                            }
-                        });
-                    });
-
-                    // Initial call to show the first batch of questions
-                    showQuestions();
-                });
-            </script>
+        // Initial call to show the first batch of questions
+        showQuestions();
+    });
+</script>
 
             <script>
                 var acc = document.getElementsByClassName("accordion");
