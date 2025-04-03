@@ -421,22 +421,42 @@
 </ul>
  <div class="center-button-container">
         <button id="showMoreBtn" onclick="showMoreContent()">Show More</button>
-    </div>            <script>
-function showMoreContent() {
-    const hiddenLinks = document.querySelectorAll('#toc .hidden');
-    hiddenLinks.forEach((link, index) => {
-        if (index < 10) { // Show up to 10 hidden links at a time
-            link.classList.remove('hidden');
-        }
-    });
+    </div>          <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableOfContents = document.querySelectorAll('#toc a');
+            const showMoreButton = document.getElementById('show-more-btn');
 
-    // If no more hidden links, hide the "Show More" button
-    if (document.querySelectorAll('#toc .hidden').length === 0) {
-        document.getElementById('showMoreBtn').style.display = 'none';
-    }
-}
-      
-</script>
+            tableOfContents.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const targetID = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetID);
+
+                    if (targetElement && targetElement.closest('.hidden')) {
+                        showMoreButton.click();
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }, 500); // Adjust the delay as needed
+                    } else {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        function showMoreContent() {
+            const hiddenLinks = document.querySelectorAll('#toc .hidden');
+            hiddenLinks.forEach((link, index) => {
+                if (index < 10) { // Show up to 10 hidden links at a time
+                    link.classList.remove('hidden');
+                }
+            });
+
+            // If no more hidden links, hide the "Show More" button
+            if (document.querySelectorAll('#toc .hidden').length === 0) {
+                document.getElementById('show-more-btn').style.display = 'none';
+            }
+        }
+    </script>
 
 <!-- Other content of the page --> </div></section>
 
@@ -1493,27 +1513,6 @@ function showMoreContent() {
                 </div>
             </footer>
         </div>
-        <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tableOfContents = document.querySelectorAll('.table-of-content a');
-        const showMoreButton = document.querySelector('.show-more-button');
-
-        tableOfContents.forEach(link => {
-            link.addEventListener('click', function(event) {
-                const targetID = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetID);
-
-                if (targetElement && targetElement.closest('.hidden-content')) {
-                    showMoreButton.click();
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }, 500); // Adjust the delay as needed
-                } else {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    });
-    </script>
+       
     </body>
 </html>
