@@ -420,11 +420,22 @@
     <li class="hidden"><a href="#Google-डिलीट">Google Account को डिलीट कैसे करें?</a></li>
 </ul>
  <div class="center-button-container">
-       <button id="showMoreBtn" class="show-more-btn" onclick="showMoreContent()">Show More</button>
-
+       <button id="showMoreBtn" onclick="handleShowMoreClick()">Show More</button>
+    
   
-    </div>          <script>
-        
+    </div>         
+               <script>
+        function handleShowMoreClick() {
+            // Call the existing showMoreContent function
+            showMoreContent();
+
+            // Ensure the second show-more-btn button is clicked
+            const showMoreBtn2 = document.getElementById('show-more-btn');
+            if (showMoreBtn2) {
+                showMoreBtn2.click();
+            }
+        }
+
         function showMoreContent() {
             const hiddenLinks = document.querySelectorAll('#toc .hidden');
             hiddenLinks.forEach((link, index) => {
@@ -435,11 +446,29 @@
 
             // If no more hidden links, hide the "Show More" button
             if (document.querySelectorAll('#toc .hidden').length === 0) {
-                document.getElementById('show-more-btn').style.display = 'none';
+                document.getElementById('showMoreBtn').style.display = 'none';
             }
         }
-    </script>
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableOfContents = document.querySelectorAll('#toc a');
+            tableOfContents.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const targetID = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetID);
+
+                    if (targetElement && targetElement.closest('.hidden')) {
+                        handleShowMoreClick();
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }, 500); // Adjust the delay as needed
+                    } else {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
 <!-- Other content of the page --> </div></section>
 
             <input type="text" id="filterInput" autocomplete="off" placeholder="Search any questions..." /><h3>...</h3>
