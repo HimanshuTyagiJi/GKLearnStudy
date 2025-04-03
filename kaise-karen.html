@@ -42,22 +42,22 @@
 
 <!-- ✅ Canonical & Sitemap -->
 <link rel="canonical" href="https://gklearnstudy.in/kaise-karen">
-<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml">
 
-<!-- ✅ Favicon & Apple Icon -->
-<link rel="icon" href="/favicon.png" type="image/x-icon">
+<!-- ✅  & Apple Icon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png">
 <link rel="manifest" href="/manifest.json">
 
 
 <!-- ✅ CSS Files (No Duplicates, No Extra Spaces) -->
-<link rel="stylesheet" href="/css/menu.css">
-<link rel="stylesheet" href="/css/rightside.css">
+<link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
+<link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
 
 <!-- ✅ JS Files (Optimized with Defer) -->
-<script src="/js/rightside.js" defer></script>
-<script src="/js/menu.js" defer></script>
-<script src="/js/search.js" defer></script>
+<script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+<script src="https://gklearnstudy.in/js/menu.js" defer></script>
+<script src="https://gklearnstudy.in/js/search.js" defer></script>
 
 
 
@@ -369,7 +369,7 @@
 .hidden {
     display: none;
 }
-#showMoreBtn {justice-align:center;
+#showMoreBtn {
     margin-top: 10px;
     padding: 10px;
     background-color: #0000FF;
@@ -379,7 +379,8 @@
 }
 #showMoreBtn:hover {
     background-color: #0056b3;
-}
+}.center-button-container{display: flex;
+            justify-content: center;}
 </style>
     <body>
         <div class="search-container">
@@ -416,8 +417,9 @@
     <li class="hidden"><a href="#Telegram-डिलीट">Telegram Account को डिलीट कैसे करें?</a></li>
     <li class="hidden"><a href="#Google-डिलीट">Google Account को डिलीट कैसे करें?</a></li>
 </ul>
-<button id="showMoreBtn" onclick="showMoreContent()">Show More</button>
-               <script>
+ <div class="center-button-container">
+        <button id="showMoreBtn" onclick="showMoreContent()">Show More</button>
+    </div>            <script>
 function showMoreContent() {
     const hiddenLinks = document.querySelectorAll('#toc .hidden');
     hiddenLinks.forEach((link, index) => {
