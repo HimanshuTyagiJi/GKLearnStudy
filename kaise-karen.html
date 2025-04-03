@@ -420,29 +420,11 @@
     <li class="hidden"><a href="#Google-डिलीट">Google Account को डिलीट कैसे करें?</a></li>
 </ul>
  <div class="center-button-container">
-        <button id="showMoreBtn" onclick="showMoreContent()">Show More</button>
+       <button id="showMoreBtn" class="show-more-btn" onclick="showMoreContent()">Show More</button>
+
+  
     </div>          <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tableOfContents = document.querySelectorAll('#toc a');
-            const showMoreButton = document.getElementById('show-more-btn');
-
-            tableOfContents.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    const targetID = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetID);
-
-                    if (targetElement && targetElement.closest('.hidden')) {
-                        showMoreButton.click();
-                        setTimeout(() => {
-                            targetElement.scrollIntoView({ behavior: 'smooth' });
-                        }, 500); // Adjust the delay as needed
-                    } else {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-        });
-
+        
         function showMoreContent() {
             const hiddenLinks = document.querySelectorAll('#toc .hidden');
             hiddenLinks.forEach((link, index) => {
