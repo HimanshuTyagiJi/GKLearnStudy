@@ -1,216 +1,150 @@
-/* ======= COMMON STYLES ======= */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+#right-sidebar,.menu-list{
+    overflow-y:auto;
+    height:90%;
+    position:fixed
+}
+[data-theme=dark] #right-sidebar ul li a{
+    color:#ffe4b5
+}
+[data-theme=dark] #right-sidebar ul li a:hover{
+    color:#ff69b4
+}
+body{
+    margin:0;
+    font-family:Arial,sans-serif
+}
+#main-content{
+    padding:20px;
+    margin-right:300px
+}
+#right-sidebar{
+    top:0;
+    right:0;
+    border-left:2px solid #ddd;
+    padding:20px;width: 300px;
+    box-shadow:-2px 0 5px rgba(0,0,0,.1);
+    transition:.3s ease-in-out
 }
 
-/* ======= MAIN CONTENT ======= */
-#main-content {
-    padding: 20px;
-    margin-right: 300px; /* Sidebar की जगह छोड़ना */
+
+#right-sidebar h3{
+    margin-top:0;
+    font-size:1.5em;
+    color:#333
 }
-
-/* ======= RIGHT SIDEBAR ======= */
-#right-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px; /* Sidebar की चौड़ाई */
-    height: 100vh; /* पूरी ऊंचाई */
-    border-left: 2px solid #ddd;
-    padding: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: visibility 0.3s ease-in-out, opacity 0.3s;
-    background-color: white;
-    visibility: visible;
-    opacity: 1;
-    
-    /* 🔹 Scroll Enable */
-    overflow-y: auto; /* Vertical Scroll */
-    overflow-x: hidden; /* Horizontal Scroll हटाना */
+#right-sidebar ul{
+    text-align:left;
+    list-style-type:none;
+    padding:0
 }
-
-/* ======= SCROLLBAR STYLING ======= */
-#right-sidebar::-webkit-scrollbar {
-    width: 6px;
+#right-sidebar ul li{
+    margin-bottom:10px
 }
-
-#right-sidebar::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
+#right-sidebar ul li a{
+    text-decoration:none;
+    color:#000;
+    font-size:1em
 }
-
-#right-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #555;
+#right-sidebar ul li a:hover{
+    color:#00f;
+    text-decoration:underline
 }
-
-/* ======= SIDEBAR HEADING ======= */
-#right-sidebar h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #333;
-}
-
-/* ======= SIDEBAR LIST ======= */
-#right-sidebar ul {
-    text-align: left;
-    list-style-type: none;
-    padding: 0;
-}
-
-#right-sidebar ul li {
-    margin-bottom: 10px;
-}
-
-#right-sidebar ul li a {
-    text-decoration: none;
-    color: #000;
-    font-size: 1em;
-    display: block;
-    padding: 8px;
-}
-
-#right-sidebar ul li a:hover {
-    color: #00f;
-    text-decoration: underline;
-}
-
-/* ======= DARK MODE STYLES ======= */
-[data-theme="dark"] #right-sidebar ul li a {
-    color: #ffe4b5;
-}
-
-[data-theme="dark"] #right-sidebar ul li a:hover {
-    color: #ff69b4;
-}
-
-/* ======= RESPONSIVE DESIGN ======= */
-@media (max-width: 768px) {
-    #main-content, #right-sidebar {
-        margin-right: 0;
-    }
-
-    #right-sidebar {
-        position: static;
-        height: auto;
-        border-left: none;
-        box-shadow: none;
-        margin-top: 20px;
-        padding: 15px;
-        border-top: 2px solid #ddd;
-        
-        /* 🔹 Scroll Enable for Mobile */
-        max-height: 400px;
-        overflow-y: auto;
+@media (min-width:768.01px){
+    #right-sidebar{
+        width:12%
     }
 }
-
-/* ======= MENU LIST STYLES ======= */
-.menu-list {
-    left: 0;
-    background-color: var(--body-bg);
-    border: 2px solid #d2d2d2;
-    top: 35px;
-    width: 220px;
-    line-height: 50px;
-    margin-left: -10px;
-    font-size: 19px;
-    display: none;
-    z-index: 1;
-    padding: 10px;
-    
-    /* 🔹 Scroll Enable */
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.menu-list a:link {
-    color: var(--text);
-}
-
-.menu-list li a.active {
-    background-color: #b721ab;
-    color: #fff;
-    margin-right: 30px;
-}
-
-.menu-list a:hover:not(.active) {
-    color: #fff;
-    background-color: #019347;
-    margin-right: 30px;
-}
-
-.menu-list li {
-    line-height: 3;
-    list-style: none;
-    text-align: left;
-}
-
-.menu-list li a {
-    display: block;
-    line-height: 1.2;
-    padding: 10px;
-    white-space: normal;
-    word-break: break-word;
-    text-decoration: none;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.menu-list a.active,
-.menu-list a:link,
-.menu-list a:visited {
-    margin: 10px;
-}
-
-.menu-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.menu-list::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.menu-list::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* ======= MENU TOGGLE ======= */
-.menu-toggle {
-    top: 50px;
-    display: block;
-    position: fixed;
-    margin: 0;
-    font-size: 20px;
-}
-
-/* ======= RESPONSIVE MENU ======= */
-@media screen and (min-width: 769.01px) {
-    .menu-list {
-        top: 60px;
-        width: 16%;
-        display: block;
-        overflow-y: auto;
-        margin: -10px;
-        left: 0;
+@media (max-width:768px){
+    #main-content,#right-sidebar{
+        margin-right:0
     }
-
-    .menu-list::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .menu-list li {
-        line-height: 3;
-        list-style: none;
-    }
-
-    .menu-list li a {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1.2;
-        white-space: normal;
-        word-break: break-word;
-        text-decoration: none;
+    #right-sidebar{
+        position:static;
+        height:auto;
+        border-left:none;
+        box-shadow:none;
+        margin-top:20px;
+        padding:15px;
+        border-top:2px solid #ddd
     }
 }
+.menu-list{
+    left:0;
+    background-color:var(--body-bg);
+    border:2px solid #d2d2d2;
+    top:35px;
+    width:220px;
+    line-height:50px;
+    margin-left:-10px;
+    font-size:19px;
+    display:none;
+    z-index:1;
+    padding:10px
+}
+.menu-list a:link{
+    color:var(--text)
+}
+.menu-list li a.active{
+    background-color:#b721ab;
+    color:#fff;
+    margin-right:30px
+}
+.menu-list a:hover:not(.active){
+    color:#fff;
+    background-color:#019347;
+    margin-right:30px
+} 
+.menu-list li{
+    line-height:3;
+    list-style:none;
+    text-align:left
+}
+.menu-list li a{
+    display:block;
+    line-height:1.2;
+    padding:10px;
+    white-space:normal;
+    word-break:break-word;
+    text-decoration:none;
+    width:100%;
+    box-sizing:border-box
+}
+.menu-list a.active,.menu-list a:link,.menu-list a:visited{
+    margin:10px
+}
+.menu-list::-webkit-scrollbar{
+    display:none
+}
+.menu-toggle{
+    top:50px;
+    display:block;
+    position:fixed;
+    margin:0;
+    font-size:20px
+}
+@media screen and (min-width:769.01px){
+    .menu-list{
+        top:60px;
+        width:16%;
+        display:block;
+        overflow-y:auto;
+        margin:-10px;
+        left:0
+    }
+    .menu-list::-webkit-scrollbar{
+        display:none
+    }
+    .menu-list li{
+        line-height:3;
+        list-style:none
+    }
+    .menu-list li a{
+        display:inline-block;
+        vertical-align:middle;
+        line-height:1.2;
+        white-space:normal;
+        word-break:break-word;
+        text-decoration:none
+    }
+}
+ 
