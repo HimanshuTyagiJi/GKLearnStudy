@@ -15,8 +15,8 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px; /* निश्चित चौड़ाई */
-    min-height: 100vh; /* पूरी ऊंचाई */
+    width: 300px; /* Sidebar की चौड़ाई */
+    height: 100vh; /* पूरी ऊंचाई */
     border-left: 2px solid #ddd;
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
@@ -24,6 +24,24 @@ body {
     background-color: white;
     visibility: visible;
     opacity: 1;
+    
+    /* 🔹 Scroll Enable */
+    overflow-y: auto; /* Vertical Scroll */
+    overflow-x: hidden; /* Horizontal Scroll हटाना */
+}
+
+/* ======= SCROLLBAR STYLING ======= */
+#right-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#right-sidebar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+#right-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* ======= SIDEBAR HEADING ======= */
@@ -67,12 +85,6 @@ body {
 }
 
 /* ======= RESPONSIVE DESIGN ======= */
-@media (min-width: 768.01px) {
-    #right-sidebar {
-        width: 12%;
-    }
-}
-
 @media (max-width: 768px) {
     #main-content, #right-sidebar {
         margin-right: 0;
@@ -86,6 +98,10 @@ body {
         margin-top: 20px;
         padding: 15px;
         border-top: 2px solid #ddd;
+        
+        /* 🔹 Scroll Enable for Mobile */
+        max-height: 400px;
+        overflow-y: auto;
     }
 }
 
@@ -102,6 +118,10 @@ body {
     display: none;
     z-index: 1;
     padding: 10px;
+    
+    /* 🔹 Scroll Enable */
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .menu-list a:link {
@@ -144,7 +164,16 @@ body {
 }
 
 .menu-list::-webkit-scrollbar {
-    display: none;
+    width: 6px;
+}
+
+.menu-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.menu-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 /* ======= MENU TOGGLE ======= */
@@ -168,7 +197,7 @@ body {
     }
 
     .menu-list::-webkit-scrollbar {
-        display: none;
+        width: 6px;
     }
 
     .menu-list li {
