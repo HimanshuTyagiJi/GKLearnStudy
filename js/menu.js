@@ -101,6 +101,8 @@ logocontainer1.className = 'logo-container1';
 const brandLink = document.createElement('a');
 brandLink.href = 'https://gklearnstudy.in';
 brandLink.className = 'brand';
+brandLink.setAttribute('aria-label', 'GK Learn Study'); // Accessibility fix
+
 brandLink.appendChild(logocontainer1); // Append the logo container1 to the brand link
 
 // Append the brand link to the nav
