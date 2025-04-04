@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GK Quiz: Education Simplified | Indian History, World Knowledge</title>
+    <title>GK Quiz: Education Simplified | GK Learn</title>
     <meta name="title" content="GK Quiz: Education Simplified" />
     <meta name="description" content="GK Quiz offers comprehensive educational tutorials, and insights designed to help you excel in competitive exams and enhance your learning journey in Indian History and World Knowledge." />
 <meta name="keywords" content="GK Quiz, Education Simplified, Indian History, World Knowledge, Competitive Exams, Comprehensive Tutorials, Learning Journey, General Knowledge, Ancient Indian History, Medieval Indian History, Modern Indian History, World History, Indian Government, Constitution, Indian Economy, Environment, Biodiversity, Indian Art, Culture, Physics, Chemistry, Mathematical MCQ, Biology, Computer, Sanskrit, Science, Technology, Books, Authors, Sports General Knowledge, Famous Personalities, Technology Inventions, Space, Universe, Indian Geography, World Geography, Indian Festivals, Traditions, World Organizations, International Relations, Awards, Honors, Indian Defense, Important Dates, Events, Transport, Communication, Famous Monuments, Wildlife, National Parks, Rivers, Lakes, Disasters, Accidents, Education, Tutorials, Insights, Learning, Knowledge, Competitive, Exams, Ancient History, Medieval History, Modern History, Government, Economy, Environment, Biodiversity, Art, Culture, Physics MCQ, Chemistry MCQ, Maths MCQ, Biology MCQ, Computer MCQ, Sanskrit MCQ, Science MCQ, Technology MCQ, Books MCQ, Authors MCQ, Sports GK, Personalities MCQ, Inventions MCQ, Space MCQ, Universe MCQ, Geography MCQ, World Geography MCQ, Festivals MCQ, Traditions MCQ, Organizations MCQ, Relations MCQ, Awards MCQ, Honors MCQ, Defense MCQ, Dates MCQ, Events MCQ, Communication MCQ, Monuments MCQ, Wildlife MCQ, National Parks MCQ, Rivers MCQ, Lakes MCQ, Disasters MCQ, Accidents MCQ, Education Quiz, Learning Quiz, Knowledge Quiz, Competitive Quiz, Exams Quiz, Ancient Quiz, Medieval Quiz, Modern Quiz, Government Quiz, Economy Quiz, Environment Quiz, Biodiversity Quiz, Art Quiz, Culture Quiz, Physics Quiz, Chemistry Quiz, Maths Quiz, Biology Quiz, Computer Quiz, Sanskrit Quiz, Science Quiz, Technology Quiz, Books Quiz, Authors Quiz, Sports Quiz, Personalities Quiz, Inventions Quiz, Space Quiz, Universe Quiz, Geography Quiz, World Quiz, Festivals Quiz, Traditions Quiz, Organizations Quiz, Relations Quiz, Awards Quiz, Honors Quiz, Defense Quiz, Dates Quiz, Events Quiz, Communication Quiz, Monuments Quiz, Wildlife Quiz, National Parks Quiz, Rivers Quiz, Lakes Quiz, Disasters Quiz, Accidents Quiz, Education Articles, Learning Articles, Knowledge Articles, Competitive Articles, Exams Articles, Ancient Articles, Medieval Articles, Modern Articles, Government Articles, Economy Articles, Environment Articles, Biodiversity Articles, Art Articles, Culture Articles, Physics Articles, Chemistry Articles, Maths Articles, Biology Articles, Computer Articles, Sanskrit Articles, Science Articles, Technology Articles, Books Articles, Authors Articles, Sports Articles, Personalities Articles, Inventions Articles, Space Articles, Universe Articles, Geography Articles, World Articles, Festivals Articles, Traditions Articles, Organizations Articles, Relations Articles, Awards Articles, Honors Articles, Defense Articles, Dates Articles, Events Articles, Communication Articles, Monuments Articles, Wildlife Articles, National Parks Articles, Rivers Articles, Lakes Articles, Disasters Articles, Accidents Articles" />
@@ -42,8 +42,11 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
     <!-- CSS Files with Versioning -->
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css?v=1.0.1" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css?v=1.0.1" />
+  <!-- Critical CSS -->
+<link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css?v=1.0.1"/>
+
+<!-- Non-critical CSS -->
+<link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css?v=1.0.1" media="print" onload="this.media='all'" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -75,18 +78,12 @@
 </head>
 
 <body>
-    <div class="search-container">
-        <button class="search-icon" id="searchBtn">
-            <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-        </button>
-        <button class="back-icon" id="backBtn">←</button>
-        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-
+    <div class="search-container"><button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"></div><ul id="suggestions" class="suggestions"></ul><div id="results"></div>
+   
     <div class="container">
         <h1>GK Quiz: Excel in Competitive Exams</h1>
+        <h2>Enhance Your General Knowledge with GK Quiz</h2>
+       
         <div onload="switchLanguage('en')">
             <!-- Language Switcher -->
             <div class="language-switcher">
@@ -100,8 +97,9 @@
                         <p>Welcome to the GK Quiz! This platform offers a wide range of questions to test your knowledge across various domains, such as Indian history, world knowledge, geography, science, and more.</p>
                         <p>Each section is designed to provide challenging and engaging questions. Explore, learn, and compete with others to enhance your general knowledge.</p>
                         <p>Below are the available topics:</p>
+                        <h2>Explore Topics in Indian History, Science, and More</h2>
                         <ul>
-                            <li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
+                            <li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history" target="_blank" rel="noopener">Ancient Indian History</a></li>
                             <li><a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
                             <li><a href="https://gklearnstudy.in/gk-quiz/modern-indian-history">Modern Indian History</a></li>
                             <li><a href="https://gklearnstudy.in/gk-quiz/world-history">World History</a></li>
@@ -200,11 +198,10 @@
                 </div>
             </footer>
         </div>
-         <script src="https://gklearnstudy.in/js/menu.js?v=1.0.2" defer></script>
-        <script src="https://gklearnstudy.in/js/rightside.js?v=1.0.2" defer></script>
-        <script src="https://gklearnstudy.in/js/gkquiz.js?v=1.0.2" defer></script>
-        <script src="https://gklearnstudy.in/js/search.js?v=1.0.2" defer></script>
-        <script src="https://gklearnstudy.in/js/language.js?v=1.0.2" defer></script>
-
+      <script src="https://gklearnstudy.in/js/menu.js?v=1.0.2" defer></script>
+<script src="https://gklearnstudy.in/js/rightside.js?v=1.0.2" defer></script>
+<script src="https://gklearnstudy.in/js/gkquiz.js?v=1.0.2" defer></script>
+<script src="https://gklearnstudy.in/js/search.js?v=1.0.2" defer></script>
+<script src="https://gklearnstudy.in/js/language.js?v=1.0.2" defer></script>
     </body>
 </html>
