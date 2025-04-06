@@ -30,8 +30,8 @@
         }
 
 img {
-    width: 360px;
-    height: 220px;
+    width: auto;
+    height: auto;
 }
         .heading-box h4 {
             width: 100%;
@@ -79,10 +79,7 @@ img {
             h1 {
                 font-size: 30px;
             }
-          img {
-    width: 480px;
-    height: 270px;
-}
+         
         }
         .red-link {
     color: red;
