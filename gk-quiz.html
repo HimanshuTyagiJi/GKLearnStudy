@@ -76,6 +76,14 @@
             }
         }
     </script>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%; /* Adjust width as needed */
+        }
+    </style>
 </head>
 <body>
     <div class="search-container"><button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"></div><ul id="suggestions" class="suggestions"></ul><div id="results"></div>
@@ -83,7 +91,7 @@
     <div class="container"><main><section>
         <h1>GK Quiz: Excel in Competitive Exams</h1>
         <h2>Enhance Your General Knowledge with GK Quiz</h2>
-        <img src="images/gk-quiz.png" alt="GK Quiz: Education Simplified | Indian History, World Knowledge, Today news ">
+        <img src="images/gk-quiz.png" alt="GK Quiz: Education Simplified | Indian History, World Knowledge, Today news " class="center" loading="lazy">
         <div onload="switchLanguage('en')">
             <!-- Language Switcher -->
             <div class="language-switcher">
