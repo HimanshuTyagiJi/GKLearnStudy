@@ -22,8 +22,9 @@
   "id": "GK",
   "categories": ["education"],
   "share_target": {
-    "method": "GET",
     "action": "https://gklearnstudy.in",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
     "params": {
       "title": "GK Learn Study",
       "url": "https://gklearnstudy.in/"
