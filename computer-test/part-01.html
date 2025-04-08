@@ -41,117 +41,94 @@ b <!DOCTYPE html>
     <link id="manifest" rel="manifest" href="https://gklearnstudy.in/manifest.json" />
     <link rel="icon" href="https://gklearnstudy.in/favicon.ico" type="images/x-icon" />
     <link rel="stylesheet" href="https://gklearnstudy.in/css/test.css">
-<script>
-const testMeta = {
-    "title": "Computer Test Part - 1",
-    "description": "Practice 10 important multiple choice questions (MCQs) from computer basics. Useful for competitive exams and general knowledge improvement.",
-    "keywords": "computer test, MCQs, online quiz, computer gk, general knowledge, test practice, computer basics"
-};
-
-const questions = [
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "question": "Who is known as the father of computers?",
-        "options": [
-            { "text": "A. Charles Babbage", "value": "a" },
-            { "text": "B. Bill Gates", "value": "b" },
-            { "text": "C. Steve Jobs", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "Charles Babbage is known as the father of computers."
+      "@type": "Question",
+      "name": "Who is known as the father of computers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Charles Babbage is known as the father of computers."
+      }
     },
     {
-        "question": "What is the full form of CPU?",
-        "options": [
-            { "text": "A. Central Process Unit", "value": "a" },
-            { "text": "B. Central Processing Unit", "value": "b" },
-            { "text": "C. Central Processor Unit", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "The full form of CPU is Central Processing Unit."
+      "@type": "Question",
+      "name": "What is the full form of CPU?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The full form of CPU is Central Processing Unit."
+      }
     },
     {
-        "question": "Which part of the computer is called the 'brain'?",
-        "options": [
-            { "text": "A. RAM", "value": "a" },
-            { "text": "B. Motherboard", "value": "b" },
-            { "text": "C. CPU", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "The CPU is called the 'brain' of the computer."
+      "@type": "Question",
+      "name": "Which part of the computer is called the 'brain'?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The CPU is called the 'brain' of the computer."
+      }
     },
     {
-        "question": "What is the full form of RAM?",
-        "options": [
-            { "text": "A. Random Access Memory", "value": "a" },
-            { "text": "B. Read Access Memory", "value": "b" },
-            { "text": "C. Run Access Memory", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "The full form of RAM is Random Access Memory."
+      "@type": "Question",
+      "name": "What is the full form of RAM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The full form of RAM is Random Access Memory."
+      }
     },
     {
-        "question": "Which is a storage device?",
-        "options": [
-            { "text": "A. Hard Disk", "value": "a" },
-            { "text": "B. Monitor", "value": "b" },
-            { "text": "C. Keyboard", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "Hard Disk is a storage device."
+      "@type": "Question",
+      "name": "Which is a storage device?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hard Disk is a storage device."
+      }
     },
     {
-        "question": "Data processing in a computer is done by?",
-        "options": [
-            { "text": "A. Mouse", "value": "a" },
-            { "text": "B. Processor", "value": "b" },
-            { "text": "C. Keyboard", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "Data processing in a computer is done by the Processor."
+      "@type": "Question",
+      "name": "Data processing in a computer is done by?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Data processing in a computer is done by the Processor."
+      }
     },
     {
-        "question": "What is the full form of IP in computer networking?",
-        "options": [
-            { "text": "A. Internet Protocol", "value": "a" },
-            { "text": "B. Internal Protocol", "value": "b" },
-            { "text": "C. Internet Process", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "The full form of IP is Internet Protocol."
+      "@type": "Question",
+      "name": "What is the full form of IP in computer networking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The full form of IP is Internet Protocol."
+      }
     },
     {
-        "question": "Which is used to store data permanently in a computer?",
-        "options": [
-            { "text": "A. RAM", "value": "a" },
-            { "text": "B. Hard Disk", "value": "b" },
-            { "text": "C. ROM", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "Hard Disk is used to store data permanently in a computer."
+      "@type": "Question",
+      "name": "Which is used to store data permanently in a computer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hard Disk is used to store data permanently in a computer."
+      }
     },
     {
-        "question": "What is the full form of ASCII in computers?",
-        "options": [
-            { "text": "A. American Standard Code for Information Interchange", "value": "a" },
-            { "text": "B. American Standard Code for Internet Interchange", "value": "b" },
-            { "text": "C. American Standard Code for Internal Interchange", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "The full form of ASCII is American Standard Code for Information Interchange."
+      "@type": "Question",
+      "name": "What is the full form of ASCII in computers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The full form of ASCII is American Standard Code for Information Interchange."
+      }
     },
     {
-        "question": "Which is the smallest memory unit in a computer?",
-        "options": [
-            { "text": "A. Kilobyte", "value": "a" },
-            { "text": "B. Byte", "value": "b" },
-            { "text": "C. Bit", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "Bit is the smallest memory unit in a computer."
+      "@type": "Question",
+      "name": "Which is the smallest memory unit in a computer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bit is the smallest memory unit in a computer."
+      }
     }
-];
+  ]
+}
 </script>
-
 </head>
 <body>
     <div class="container">
