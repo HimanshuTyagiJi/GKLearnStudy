@@ -56,7 +56,8 @@
         <div id="startModal" class="modal">
             <div class="modal-content">
                 <center><h3>Some Rules for This Test</h3></center>
-                <p>1. This test will have 50 questions.</p>
+                <p id="question-count">1. This test will have X questions.</p>
+               
                 <p>2. The test will track the total time for all questions.</p>
                 <p>3. Once you move to the next question or skip a question, you cannot go back to the previous ones.</p>
                 <p>4. You cannot leave the test in the middle.</p>
@@ -181,7 +182,19 @@ var questions = [
     }
 
 ];
+ // ✅ 3. Show Modal and Question Count on Load
+    window.onload = function () {
+        document.getElementById("startModal").style.display = "block";
+        const count = questions.length;
+        document.getElementById("question-count").textContent = `1. This test will have ${count} question${count > 1 ? 's' : ''}.`;
+    };
 
+    // ✅ 4. Start Quiz Function
+    function startQuiz() {
+        document.getElementById("startModal").style.display = "none";
+        document.getElementById("quiz-form").style.display = "block";
+        // Your quiz logic can go here
+    }
     </script><script src="https://gklearnstudy.in/js/test.js"></script>
 </body>
 </html>
