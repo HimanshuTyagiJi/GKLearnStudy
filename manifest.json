@@ -8,7 +8,6 @@
   "background_color": "#ffffff",
   "theme_color": "#5900b3",
   "icons": [
-   
     {
       "src": "/GK-Learn-Study.png",
       "sizes": "192x192",
@@ -23,9 +22,8 @@
   "id": "GK",
   "categories": ["education"],
   "share_target": {
+    "method": "GET",
     "action": "https://gklearnstudy.in",
-    "method": "POST",
-    "enctype": "application/x-www-form-urlencoded",
     "params": {
       "title": "GK Learn Study",
       "url": "https://gklearnstudy.in/"
