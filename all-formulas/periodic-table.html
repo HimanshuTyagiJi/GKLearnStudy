@@ -8,17 +8,13 @@
     <meta name="author" content="Mr. Himanshu">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-    <meta name="bingbot" content="index, follow">
     <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
 
-
-    <!-- Open Graph Meta Tags for Facebook -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Periodic Table">
     <meta property="og:description" content="A comprehensive list of all chemical elements present in the periodic table, detailing their symbols, atomic numbers, and other essential properties.">
     <meta property="og:image" content="https://gklearnstudy.in/image/periodic-table.png">
-    <!-- Update with the actual image URL -->
-    <meta property="og:url" content="https://gklearnstudy.in/periodic-table.html"> <!-- Update with the actual page URL -->
+    <meta property="og:url" content="https://gklearnstudy.in/periodic-table.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="GK Learn Study">
     <meta property="og:locale" content="en_US">
@@ -30,7 +26,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Periodic Table">
     <meta name="twitter:description" content="A comprehensive list of all chemical elements present in the periodic table, detailing their symbols, atomic numbers, and other essential properties.">
-    <meta name="twitter:image" content="gklearnstudy.in/periodic-table.png"> <!-- Update with the actual image URL -->
+    <meta name="twitter:image" content="https://gklearnstudy.in/periodic-table.png">
     <meta name="twitter:site" content="@yourtwitterhandle">
     <meta name="twitter:creator" content="@yourtwitterhandle">
     <meta name="twitter:image:alt" content="Periodic Table">
@@ -43,47 +39,17 @@
     <meta name="application-name" content="Periodic Table">
     <meta name="msapplication-TileColor" content="#ffccff">
     <meta name="msapplication-TileImage" content="https://gklearnstudy.in/image/periodic-table.png">
-    <!-- Update with the actual image URL -->
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <title>Periodic Table</title>
-    <link rel="stylesheet" href="https://gklearnstudy.in/menu.css">
-   
-    <link rel="stylesheet" href="https://gklearnstudy.in/rightside.css">
-</head>
-
-<body>
-
-    <div class="search-container"><button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"></div><ul id="suggestions" class="suggestions"></ul><div id="results"></div>
-   
-    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-    <ul class="menu-list" id="menuList">
-
-
-        <b>
-            <li><a class="active" href="periodic-table.html">Periodic Table</a></li>
-            <li><a href="element-of-name.html">Elements of name</a></li>
-            <li><a href="all-chemical-formulas.html">Chemical formulas</a></li>
-            <li><a href="reaction-in-chemistry.html">Reaction</a></li>
-            <li><a href="reaction-in-hindi.html">Reaction in Hindi</a></li>
-
-        </b>
-    </ul>
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
 
     <style>
+        /* Include your CSS styles here */
         table {
             border-collapse: collapse;
-
         }
-
-
-
 
         table,
         th,
@@ -92,56 +58,36 @@
             border-radius: 9px;
         }
 
-        [data-theme="dark"] {
+        [data-theme="dark"] table,
+        [data-theme="dark"] th,
+        [data-theme="dark"] tr {
+            border: 3px solid #212121;
+        }
 
-            table,
-            th,
-            tr {
-                border: 3px solid #212121;
-            }
+        [data-theme="dark"] th {
+            color: white !important;
+        }
 
-            th {
-                color: white !important;
-            }
-
-
-            table,
-            tr th {
-                background-color: var(--background-color)
-            }
-
-
+        [data-theme="dark"] tr th {
+            background-color: var(--background-color);
         }
 
         th,
         tr {
             font-weight: normal;
             padding: 5px;
-
-
             cursor: pointer;
-
         }
 
-
-
-
-        tr,
+        tr:hover,
         th:hover {
             background-color: transparent !important;
-            /* Change this color as needed */
         }
 
         .dark-mode th:hover {
             color: rgb(234, 234, 234) !important;
-            ;
-            background-color: var(--background-color)
-                /* Change this color as needed */
+            background-color: var(--background-color);
         }
-
-
-
-
 
         .close {
             position: absolute;
@@ -150,69 +96,53 @@
             cursor: pointer;
         }
 
-
-
-
         .alkali-metals {
             background-color: rgba(255, 0, 0, 0.2);
-            /* Light green for non-metals */
         }
 
         .actinide {
             background-color: rgba(64, 255, 192, 0.35);
-            /* Light green for non-metals */
         }
 
         .transition-metals {
             background-color: rgba(0, 128, 255, 0.3);
-            /* Light green for non-metals */
         }
 
         .alkaline-earth {
-            background-color: rgba(64, 64, 255, 0.25)
-                /* Light green for non-metals */
+            background-color: rgba(64, 64, 255, 0.25);
         }
 
         .lanthanide {
             background-color: rgba(0, 255, 255, 0.35);
-            /* Light green for non-metals */
         }
 
         .post-transition {
-            background-color: rgba(0, 255, 0, 0.3)
-                /* Light green for non-metals */
+            background-color: rgba(0, 255, 0, 0.3);
         }
 
         .non-metal {
-            background-color: none;
-            /* Light green for non-metals */
+            background-color: transparent;
         }
 
         .metalloids {
             background-color: rgba(140, 190, 0, 0.3);
-            /* Light green for non-metals */
         }
 
         .noble-gases {
             background-color: rgba(255, 152, 0, 0.3);
-            /* Light green for non-metals */
         }
 
         .reactive-nonmetals {
-            background-color: rgba(255, 255, 0, 0.3)
-                /* Light green for non-metals */
+            background-color: rgba(255, 255, 0, 0.3);
         }
 
         .rotate-text {
             writing-mode: vertical-lr;
-            /* Yeh text ko 90 degree clockwise rotate karta hai */
             transform: rotate(180deg);
-            /* Agar kisi browser mein writing-mode support na ho toh yeh alternative hai */
         }
 
         .containers {
             display: flex;
-
         }
 
         .text-box {
@@ -220,10 +150,7 @@
         }
 
         .xobo {
-
             margin: 10px;
-
-
             cursor: pointer;
             position: relative;
         }
@@ -247,143 +174,146 @@
             overflow: auto;
         }
     </style>
+</head>
 
-    <div class="container"><br>  <div class="color-content2">
-                <h1 style="text-align:center">Periodic Table</h1>
+<body>
+    <div class="search-container">
+        <button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button>
+        <button class="back-icon" id="backBtn">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)">
+    </div>
+
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+        <li><a class="active" href="periodic-table.html"><b>Periodic Table</b></a></li>
+        <li><a href="element-of-name.html"><b>Elements of name</b></a></li>
+        <li><a href="all-chemical-formulas.html"><b>Chemical formulas</b></a></li>
+        <li><a href="reaction-in-chemistry.html"><b>Reaction</b></a></li>
+        <li><a href="reaction-in-hindi.html"><b>Reaction in Hindi</b></a></li>
+    </ul>
+
+    
+
+
+    <div class="container"><br>
+    <div class="color-content2">
+        <h1 style="text-align:center">Periodic Table</h1>
+    </div>
+
+    <div class="notranslate">
+        <center>
+            <div class="scrollmenu">
+                <a href="https://gklearnstudy.in/physics-all-formulas.html">
+                    <h2>Physics</h2>
+                </a>
+                <a href="https://gklearnstudy.in/mathematics-all-formulas.html">
+                    <h2>Mathematics</h2>
+                </a>
             </div>
+        </center>
 
-        <div class="notranslate">
+        <div class="containers" id="contentContainer">
+            <div class="custom-container">
+                <div class="custom-row"><br><br>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <!-- Column 1 -->
+                                <th>
+                                    <div class="xobo all" onclick="toggleSelection(this); showxobes('all')">
+                                        <b><center>ALL</center></b><span class="tick">✔</span>
+                                    </div>
+                                    <span class="xobo solid" onclick="toggleSelection(this); showxobes('solid')">
+                                        Solid<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo liquid" onclick="toggleSelection(this); showxobes('liquid')">
+                                        Liquid<span class="tick">✔</span>
+                                    </span><br><br>
+                                    <span class="xobo gas" onclick="toggleSelection(this); showxobes('gas')">
+                                        Gas<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo unKnown" onclick="toggleSelection(this); showxobes('unKnown')">
+                                        UnKnown<span class="tick">✔</span>
+                                    </span>
+                                </th>
 
-            <center>
-                <div class="scrollmenu"><a href="https://gklearnstudy.in/physics-all-formulas.html">
-                        <h2>Physics</h2>
-                    </a>
-                    <a href="https://gklearnstudy.in/mathematics-all-formulas.html">
-                        <h2>Mathematics</h2>
-                    </a>
+                                <!-- Column 2 -->
+                                <th>
+                                    <div class="xobo metals" onclick="toggleSelection(this); showxobes('metals')">
+                                        <b><center>Metals</center></b><span class="tick">✔</span>
+                                    </div>
+                                    <span class="xobo alkali-metals" onclick="toggleSelection(this); showxobes('alkali-metals')">
+                                        Alkali metals<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo actinide" onclick="toggleSelection(this); showxobes('actinide')">
+                                        Actinide<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo transition-metals" onclick="toggleSelection(this); showxobes('transition-metals')">
+                                        Transition metals<span class="tick">✔</span>
+                                    </span>
+                                    <div class="xobo alkaline-earth" onclick="toggleSelection(this); showxobes('alkaline-earth')">
+                                        Alkaline earth metals<span class="tick">✔</span>
+                                    </div>
+                                    <span class="xobo lanthanide" onclick="toggleSelection(this); showxobes('lanthanide')">
+                                        Lanthanide<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo post-transition" onclick="toggleSelection(this); showxobes('post-transition')">
+                                        Post-transition metals<span class="tick">✔</span>
+                                    </span>
+                                </th>
+
+                                <!-- Column 3 -->
+                                <th>
+                                    <div class="xobo non-metal" onclick="toggleSelection(this); showxobes('non-metal')">
+                                        <b><center>Non Metals</center></b><span class="tick">✔</span>
+                                    </div>
+                                    <span class="xobo metalloids" onclick="toggleSelection(this); showxobes('metalloids')">
+                                        Metalloids<span class="tick">✔</span>
+                                    </span><br><br>
+                                    <span class="xobo noble-gases" onclick="toggleSelection(this); showxobes('noble-gases')">
+                                        Noble gases<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo reactive-nonmetals" onclick="toggleSelection(this); showxobes('reactive-nonmetals')">
+                                        Reactive nonmetals<span class="tick">✔</span>
+                                    </span>
+                                </th>
+
+                                <!-- Column 4 -->
+                                <th>
+                                    <div class="xobo all" onclick="toggleSelection(this); showxobes('all')">
+                                        <b><center>Blocks</center></b><span class="tick">✔</span>
+                                    </div>
+                                    <span class="xobo s-blocks" onclick="toggleSelection(this); showxobes('s-blocks')">
+                                        s-blocks<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo p-blocks" onclick="toggleSelection(this); showxobes('p-blocks')">
+                                        p-blocks<span class="tick">✔</span>
+                                    </span><br><br>
+                                    <span class="xobo d-blocks" onclick="toggleSelection(this); showxobes('d-blocks')">
+                                        d-blocks<span class="tick">✔</span>
+                                    </span>
+                                    <span class="xobo f-blocks" onclick="toggleSelection(this); showxobes('f-blocks')">
+                                        f-blocks<span class="tick">✔</span>
+                                    </span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </center>
+                <br>
+                <div><strong>Group👉🏻</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-          
-
-            <div class="containers" id="contentContainer">
-
-                <div class="custom-container">
-                    <div class="custom-row">
-
-                        <br><br>
-                        <table>
-                            <tbody>
-                                <tr>
-
-
-                                    <th>
-                                        <div class="xobo all " onclick="toggleSelection(this); showxobes('all')"><b>
-                                                <center>ALL</center>
-                                            </b><span class="tick">✔</span></div>
-
-                                        <span class="xobo solid"
-                                            onclick="toggleSelection(this); showxobes('solid')">Solid<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo liquid"
-                                            onclick="toggleSelection(this); showxobes('liquid')">Liquid<span
-                                                class="tick">✔</span></span><br><br>
-                                        <span class="xobo gas"
-                                            onclick="toggleSelection(this); showxobes('gas')">Gas<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo unKnown"
-                                            onclick="toggleSelection(this); showxobes('unKnown')">UnKnown<span
-                                                class="tick">✔</span></span>
-                                    </th>
-                                    <th>
-                                        <div class="xobo metals" onclick="toggleSelection(this); showxobes('metals')">
-                                            <b>
-                                                <center>Metals</center>
-                                            </b><span class="tick">✔</span></div>
-                                        <span class="xobo alkali-metals"
-                                            onclick="toggleSelection(this); showxobes('alkali-metals')">Alkali
-                                            metals<span class="tick">✔</span></span>
-                                        <span class="xobo actinide"
-                                            onclick="toggleSelection(this); showxobes('actinide')">Actinide<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo transition-metals"
-                                            onclick="toggleSelection(this); showxobes('transition-metals')">Transition
-                                            metals<span class="tick">✔</span></span>
-
-                                        <div class="xobo alkaline-earth"
-                                            onclick="toggleSelection(this); showxobes('alkaline-earth')">Alkaline earth
-                                            metals<span class="tick">✔</span></div>
-                                        <span class="xobo lanthanide"
-                                            onclick="toggleSelection(this); showxobes('lanthanide')">Lanthanide<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo post-transition"
-                                            onclick="toggleSelection(this); showxobes('post-transition')">Post-transition
-                                            metals<span class="tick">✔</span></span>
-
-                                    </th>
-
-                                    <th>
-
-                                        <div class="xobo non-metal"
-                                            onclick="toggleSelection(this); showxobes('non-metal')"><b>
-                                                <center>Non Metals</center>
-                                            </b><span class="tick">✔</span></div>
-                                        <span class="xobo metalloids"
-                                            onclick="toggleSelection(this); showxobes('metalloids')">Metalloids<span
-                                                class="tick">✔</span></span><br><br>
-                                        <span class="xobo noble-gases"
-                                            onclick="toggleSelection(this); showxobes('noble-gases')">Noble gases<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo reactive-nonmetals"
-                                            onclick="toggleSelection(this); showxobes('reactive-nonmetals')">Reactive
-                                            nonmetals<span class="tick">✔</span></span>
-                                    </th>
-
-                                    <th>
-                                        <div class="xobo all" onclick="toggleSelection(this); showxobes('all')"><b>
-                                                <center>blocks</center>
-                                            </b><span class="tick">✔</span></div>
-                                        <span class="xobo s-blocks"
-                                            onclick="toggleSelection(this); showxobes('s-blocks')">s-blocks<span
-                                                class="tick">✔</span></span>
-                                        <span class="xobo p-blocks"
-                                            onclick="toggleSelection(this); showxobes('p-blocks')">p-blocks<span
-                                                class="tick">✔</span></span><br><br>
-                                        <span class="xobo d-blocks"
-                                            onclick="toggleSelection(this); showxobes('d-blocks')">d-blocks<span
-                                                class="tick">✔</span></span>
-
-                                        <span class="xobo f-blocks"
-                                            onclick="toggleSelection(this); showxobes('f-blocks')">f-blocks<span
-                                                class="tick">✔</span></span>
-
-                                    </th>
-
-
-
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                    Group👉🏻
-                    <div class="containers" id="contentContainer">
-
-
-
-                        <div class="containers" id="contentContainer">
-
-                        </div>
-                        <div class="containers" id="contentContainer">
-
-                        </div>
-                        <div class="containers" id="contentContainer">
-                        </div>
-                        <div class="containers" id="contentContainer">
-                        </div>
-                        <table>
+                      <figure>
+  <figcaption>आवर्त सारणी - रासायनिक तत्वों की HTML तालिका</figcaption>
+  <table>
+    <caption>आवर्त सारणी</caption>  
                             <tbody>
                                 <tr>
                                     <th>
@@ -713,16 +643,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                                </figure>
+                   
                     <div id="popup" class="popup">
                         <span id="closeBtn" class="close">×</span>
                         <div id="popupContent"></div>
                     </div><br><br><br>
-                    <img src="../images/periodic-table.png" alt="periodic-table" style="width: 95%;">
+                    <img src="https://gklearnstudy.in/image/periodic-table.png" alt="periodic-table" style="width: 95%;">
 
                     <div id="overlay" class="overlay"></div>
-                </div>
-            </div>
+              
             <script>
                 function showxobes(type) {
                     var xobes = document.querySelectorAll('.xob');
@@ -770,7 +700,5 @@
 <script src="https://gklearnstudy.in/js/search.js" defer></script>
             <script src="https://gklearnstudy.in/js/periodictable.js" defer></script>
 
-        </div>
-    </div>
-
-</html>
+        </body>
+        </html>
