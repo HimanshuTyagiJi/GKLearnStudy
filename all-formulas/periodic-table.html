@@ -47,18 +47,15 @@
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <title>Periodic Table</title>
-    <link rel="stylesheet" href="https://gklearnstudy.in/style.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in/menu.css">
+   
+    <link rel="stylesheet" href="https://gklearnstudy.in/rightside.css">
 </head>
 
 <body>
 
-    <div class="search-container">
-        <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
-        <button class="back-icon" id="backBtn">←</button>
-        <input type="text" class="search-input" id="searchInput" autocomplete="off"  placeholder="Search..." required oninput="showSuggestions(event)">
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
+    <div class="search-container"><button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"></div><ul id="suggestions" class="suggestions"></ul><div id="results"></div>
+   
     <button class="menu-toggle" onclick="toggleMenu()">➤</button>
     <ul class="menu-list" id="menuList">
 
@@ -767,9 +764,12 @@
             </div>
           </div>
         </footer>
-            <script src="https://gklearnstudy.in/script.js"></script>
-            <script src="https://gklearnstudy.in/search.js"></script>
-            <script src="https://gklearnstudy.in/menusearch.js"></script>
+<script src="https://gklearnstudy.in/js/menu.js?v=1.0.2" defer></script>
+<script src="https://gklearnstudy.in/js/rightside.js?v=1.0.2" defer></script>
+
+<script src="https://gklearnstudy.in/js/search.js?v=1.0.2" defer></script>
+            <script src="https://gklearnstudy.in/js/periodictable.js?v=1.0.2" defer></script>
+
         </div>
     </div>
 
