@@ -139,45 +139,6 @@ a:link:hover {
     align-items: center;
     gap: 10px;
 }
-#myTable tr:hover,
-table tr:hover {
-    background-color: #0a4c57;
-}
-#myTable td:hover,
-table td:hover {
-    color: yellow;
-}
-#mytable td,
-table td {
-    color: white;
-}
-table th {
-    background-color: rgba(94, 94, 94, 0.843);
-    color: var(--text);
-}
-
-#myTable tr:nth-child(odd) {
-    background-color: var(--body-bg);
-}
-table {
-    border: 0px solid #e1e1e1;
-}
-
-#myTable th,
-#myTable td {
-    color: var(--text);
-}
-table tr:hover {
-    background-color: transparent;
-}
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-#mtable tr:nth-child(even) {
-    background-color: var( --body-bg) ;
-}
-#mtable tr:hover {
-    background-color: var(--brown);
-}
 #themeIcon {
     width: 30px;
     height: 30px;
@@ -477,34 +438,6 @@ footer {
         transform: scale(1);
     }
 }
-
-/*-------------------------------------------------------------------------------------------------------------------------------------*/
-#myul {
-    padding: 0;
-    list-style: none;
-}
-#myUL li a {
-    justify-content: center;
-    width: auto;
-    border: 1px solid green;
-    margin-top: 10px;
-    background-color: none;
-    padding: 10px;
-    margin: 10px;
-    text-decoration: none;
-    color: black;
-    display: block;
-    border-radius: 8px;
-}
-#myUL li a:hover:not(.header) {
-    background-color: hsl(240, 54%, 90%);
-    border: 1px solid rgb(247, 246, 246);
-}
-
-/*-------------------------------------------------------------------------------------------------------------------------------------*/
-
-
-
 #filterInput {
     width: 94.5%;
     padding: 10px;
