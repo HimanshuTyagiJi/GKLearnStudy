@@ -834,63 +834,100 @@ h6 {
     scroll-margin-top: 80px;
 }
 
-#myTable tr:hover, table tr:hover {background-color: #0a4c57;}
-#myTable td:hover , table td:hover {color:yellow;}
-#mytable td , table td {color: white;}
-
-#myTable th,table th {background-color: var(--text); color: var(--body-bg);}
-
-#myTable tr:nth-child(odd) {background-color: #000000;}
-table {border: 0px solid #e1e1e1;} 
-#myUL li a {border: 1px solid #022D34;background-color: #0b2024;color: white;} 
-#myUL li a:hover:not(.header) {background-color: #0a4c57;}
- #myTable td {color:rgb(255, 255, 255);} 
-table tr:hover{background-color:transparent;}
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
- 
-#mtable tr:nth-child(even){background-color: black;} 
-#mtable tr:hover {background-color: red;}
-
-        
-#mtable {border-collapse: collapse;}
-#mtable td, #mtable th {border: 1px solid #ddd;padding: 8px;}
-#mtable tr:nth-child(even){background-color: #FFF8DC;}
-#mtable tr:hover {background-color: #F5DEB3;}
-#mtable td {text-align: center;}
-
-/*-------------------------------------------------------------------------------------------------------------------------------------*/
-#myul{padding: 0;list-style: none;}
-#myUL li a {justify-content: center  ;width:auto;border: 1px solid var(--green);margin-top: 10px; background-color: none;padding: 10px;margin: 10px;text-decoration: none;color: var(--text);display: block;border-radius:8px;} 
-#myUL li a:hover:not(.header) {background-color: hsl(240, 54%, 90%);border: 1px solid var(--body-bg);}
-
-/*-------------------------------------------------------------------------------------------------------------------------------------*/
-
-#myTable {border-collapse: collapse;width: 100%;;border: 1px solid var(--body-bg);} 
-#myTable th, #myTable td {padding: 10px;font-size: 17px; text-align: left;} 
-
- #myTable td {padding: 10px;font-size: 17px; text-align: left;color:var(--text)} 
-#myTable tr {border-bottom: 1px solid var(--text);} 
-#myTable tr:hover , table tr:hover {background-color: var(--body-bg);} 
-
-#myTable td:hover, table td:hover{color:var(--red);}
-
-#myTable tr:nth-child(odd) {background-color: var(--table);}
-table {
+/* ------------------ Table Styling ------------------ */
+table, #myTable, #mtable {
   border-collapse: collapse;
   width: 100%;
+  border: 0px solid #e1e1e1;
+}
 
+/* ------------------ Table Row Colors ------------------ */
+#myTable tr:nth-child(odd),
+#myTable tr:nth-child(odd) {
+  background-color: var(--table);
 }
-table td {
+#mtable tr:nth-child(even) {
+  background-color: #FFF8DC;
+}
+
+/* ------------------ Table Hover Effects ------------------ */
+#myTable tr:hover,
+table tr:hover,
+#mtable tr:hover {
+  background-color: var(--table);
+}
+
+#mtable tr:hover {
+  background-color: red;
+}
+
+/* ------------------ Table Cell Styling ------------------ */
+table td,
+#myTable td,
+#mtable td {
   padding: 10px;
+  text-align: left;
+  font-size: 17px;
+  color: var(--text);
 }
-table td a:link {
-  color: var(--blue);;
- 
+
+#mtable td {
+  text-align: center;
 }
+
+#myTable td:hover,
+table td:hover {
+  color: var(--red); /* or yellow if you prefer */
+}
+
+/* ------------------ Table Header Styling ------------------ */
+#myTable th,
+table th {
+  background-color: var(--text);
+  color: var(--body-bg);
+  padding: 10px;
+  font-size: 17px;
+}
+
+/* ------------------ Border between Rows ------------------ */
+#myTable tr {
+  border-bottom: 1px solid var(--text);
+}
+
+/* ------------------ Anchor Styling inside Table ------------------ */
+table td a:link,
 table td a:visited {
-  color: var(--blue); /* Color for visited links */
+  color: var(--blue);
 }
-table td a:link:hover , td a:visited:hover{ display: block; color:var(--text);background-color: var(--blue);border-radius: 8px;
-   /* Color change on hover */
-} 
-table tr:hover{background-color:transparent;}
+table td a:link:hover,
+table td a:visited:hover {
+  display: block;
+  color: var(--text);
+  background-color: var(--blue);
+  border-radius: 8px;
+}
+
+/* ------------------ UL + LI Styling ------------------ */
+#myUL,
+#myul {
+  padding: 0;
+  list-style: none;
+}
+
+#myUL li a {
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  width: auto;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid var(--green);
+  color: var(--text);
+  justify-content: center;
+  background-color: transparent;
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: hsl(240, 54%, 90%);
+  border: 1px solid var(--body-bg);
+}
