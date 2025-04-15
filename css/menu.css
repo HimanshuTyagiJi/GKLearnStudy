@@ -62,6 +62,7 @@ div.scrollmenu a {
     --link-active-color: #951895;
     --body-bg: #ffffff;
     --logo: #ad0000;
+    --table:#f3f3f3;
 }
 [data-theme="dark"] {
     --red: #ffc2c2;
@@ -74,6 +75,7 @@ div.scrollmenu a {
     --link-hover-color: rgb(216, 196, 255);
     --link-active-color: rgb(60, 216, 187);
     --body-bg: #212121;
+    --table:black;
 }
 body {
     font-size: 18px;
@@ -831,3 +833,64 @@ h6 {
 .content {
     scroll-margin-top: 80px;
 }
+
+#myTable tr:hover, table tr:hover {background-color: #0a4c57;}
+#myTable td:hover , table td:hover {color:yellow;}
+#mytable td , table td {color: white;}
+
+#myTable th,table th {background-color: var(--text); color: var(--body-bg);}
+
+#myTable tr:nth-child(odd) {background-color: #000000;}
+table {border: 0px solid #e1e1e1;} 
+#myUL li a {border: 1px solid #022D34;background-color: #0b2024;color: white;} 
+#myUL li a:hover:not(.header) {background-color: #0a4c57;}
+ #myTable td {color:rgb(255, 255, 255);} 
+table tr:hover{background-color:transparent;}
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ 
+#mtable tr:nth-child(even){background-color: black;} 
+#mtable tr:hover {background-color: red;}
+
+        
+#mtable {border-collapse: collapse;}
+#mtable td, #mtable th {border: 1px solid #ddd;padding: 8px;}
+#mtable tr:nth-child(even){background-color: #FFF8DC;}
+#mtable tr:hover {background-color: #F5DEB3;}
+#mtable td {text-align: center;}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+#myul{padding: 0;list-style: none;}
+#myUL li a {justify-content: center  ;width:auto;border: 1px solid var(--green);margin-top: 10px; background-color: none;padding: 10px;margin: 10px;text-decoration: none;color: var(--text);display: block;border-radius:8px;} 
+#myUL li a:hover:not(.header) {background-color: hsl(240, 54%, 90%);border: 1px solid var(--body-bg);}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+
+#myTable {border-collapse: collapse;width: 100%;;border: 1px solid var(--body-bg);} 
+#myTable th, #myTable td {padding: 10px;font-size: 17px; text-align: left;} 
+
+ #myTable td {padding: 10px;font-size: 17px; text-align: left;color:var(--text)} 
+#myTable tr {border-bottom: 1px solid var(--text);} 
+#myTable tr:hover , table tr:hover {background-color: var(--body-bg);} 
+
+#myTable td:hover, table td:hover{color:var(--red);}
+
+#myTable tr:nth-child(odd) {background-color: var(--table);}
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+table td {
+  padding: 10px;
+}
+table td a:link {
+  color: var(--blue);;
+ 
+}
+table td a:visited {
+  color: var(--blue); /* Color for visited links */
+}
+table td a:link:hover , td a:visited:hover{ display: block; color:var(--text);background-color: var(--blue);border-radius: 8px;
+   /* Color change on hover */
+} 
+table tr:hover{background-color:transparent;}
