@@ -888,11 +888,11 @@ table th {
   background-color: var(--text);
   color: var(--body-bg);
   padding: 10px;
-  font-size: 17px;
+  font-size: 12px;
 }
 
 /* ------------------ Border between Rows ------------------ */
-#myTable tr {
+#myTable tr {font-size: 10px;
   border-bottom: 1px solid var(--text);
 }
 
