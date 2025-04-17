@@ -1,4 +1,4 @@
-:root,
+ :root,
 [data-theme="dark"] {
     --box-shadow: 0 4px 6px -1px rgba(123, 123, 123, 0.284), 0 2px 4px -1px rgba(82, 81, 81, 0.226);
 }
@@ -892,7 +892,7 @@ table th {
 }
 
 /* ------------------ Border between Rows ------------------ */
-#myTable tr {font-size: 10px;
+#myTable tr,#myTable td {font-size: 10px;
   border-bottom: 1px solid var(--text);
 }
 
