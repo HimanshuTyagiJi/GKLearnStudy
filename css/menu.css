@@ -869,7 +869,7 @@ table td,
 #mtable td {
   padding: 10px;
   text-align: left;
-  font-size: 12px;
+  font-size: 17px;
   color: var(--text);
 }
 
@@ -888,8 +888,12 @@ table th {
   background-color: var(--text);
   color: var(--body-bg);
   padding: 10px;
-  font-size: 12px;
+  font-size: 17px;
 }
+  @media only screen and (max-width: 700px){#myTable th, #myTable td{
+       
+        font-size: 12px;
+      }}
 
 /* ------------------ Border between Rows ------------------ */
 #myTable tr
