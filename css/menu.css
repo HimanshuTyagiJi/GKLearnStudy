@@ -869,7 +869,7 @@ table td,
 #mtable td {
   padding: 10px;
   text-align: left;
-  font-size: 17px;
+  font-size: 12px;
   color: var(--text);
 }
 
@@ -892,7 +892,7 @@ table th {
 }
 
 /* ------------------ Border between Rows ------------------ */
-#myTable tr,#myTable td {font-size: 10px;
+#myTable tr
   border-bottom: 1px solid var(--text);
 }
 
