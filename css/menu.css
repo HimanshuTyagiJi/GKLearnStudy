@@ -938,4 +938,8 @@ table td a:visited:hover {
   border: 1px solid var(--body-bg);
 }
 
-  
+ input{ border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    width: 90%;
+    user-select: none;}
