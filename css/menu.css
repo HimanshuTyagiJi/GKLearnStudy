@@ -839,6 +839,8 @@ table, #myTable, #mtable {
   border-collapse: collapse;
   width: 100%;
   border: 0px solid #e1e1e1;
+     table-layout: fixed; /* Fixed layout apply karein */
+    margin: auto;
 }
 
 /* ------------------ Table Row Colors ------------------ */
@@ -931,3 +933,5 @@ table td a:visited:hover {
   background-color: hsl(240, 54%, 90%);
   border: 1px solid var(--body-bg);
 }
+
+  
