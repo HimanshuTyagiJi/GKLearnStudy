@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Root Display</title>
+  <style>
+    .root-container {
+      font-size: 24px;
+      margin: 20px;
+    }
+
+    .root {
+      display: inline-flex;
+      align-items: flex-start;
+    }
+
+    .root-index {
+      font-size: 0.6em;
+      margin-right: 0px;
+      margin-top: -5px;
+    }
+
+    .radical-symbol {
+      position: relative;
+      padding-left: 10px;
+    }
+
+    .radical-symbol::before {
+      content: "√";
+      font-size: 1em;
+      position: absolute;
+      left: -2px;
+      top: 1px;
+    }
+
+    .root-content {
+      border-top: 2px solid black;
+      padding: 0 6px;
+      display: inline-block;
+    }
+
+    .frac {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .frac .top {
+      border-bottom: 1px solid black;
+      padding: 0 4px;
+    }
+
+    .frac .bottom {
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Normal square root -->
+<div class="root-container">
+  <span class="root">
+    <span class="root-index">2</span>
+    <span class="radical-symbol">
+      <span class="root-content">78456</span>
+    </span>
+  </span>
+</div>
+
+<!-- Cube root with symbols -->
+<div class="root-container">
+  <span class="root">
+    <span class="root-index">3</span>
+    <span class="radical-symbol">
+      <span class="root-content">125000⁶⅚#@&¢£€§¶</span>
+    </span>
+  </span>
+</div>
+
+<!-- Fifth root -->
+<div class="root-container">
+  <span class="root">
+    <span class="root-index">5</span>
+    <span class="radical-symbol">
+      <span class="root-content">9876</span>
+    </span>
+  </span>
+</div>
+
+<!-- Large number -->
+<div class="root-container">
+  <span class="root">
+    <span class="root-index">2</span>
+    <span class="radical-symbol">
+      <span class="root-content">1234567890</span>
+    </span>
+  </span>
+</div>
+
+<!-- Root with fraction inside -->
+<div class="root-container">
+  <span class="root">
+    <span class="root-index">2</span>
+    <span class="radical-symbol">
+      <span class="root-content">
+        <span class="frac">
+          <span class="top">784</span><br>
+          <span class="bottom">49</span>
+        </span>
+      </span>
+    </span>
+  </span>
+</div>
+
+</body>
+</html>
