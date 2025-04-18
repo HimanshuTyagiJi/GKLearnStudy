@@ -20,18 +20,36 @@
       margin-right: -6px;
       margin-top: -5px;
     }
+    .root-index1 {
+      font-size: 12px;
+      margin-right: -6px;
+      margin-top: -5px;
+    }
 
     .radical-symbol {
       position: relative;
       padding-left: 10px;
     }
-
+.radical-symbol1 {
+      position: relative;
+      padding-left: 20px;
+    }
     .radical-symbol::before {
       content: "√";
       font-size: 1em;
       position: absolute;
       left: 2.5px;
       top: 0px;
+    }
+    .radical-symbol1::before {
+      content: "√";
+      font-size: 2.2em;
+      position: absolute;
+      left: -7px;
+      
+      padding-left:10px;
+      font-weight:100;
+      
     }
 
     .root-content {
@@ -58,6 +76,12 @@
       .radical-symbol::before {
       content: "√";
       font-size: 1em;
+      position: absolute;
+      left: 2px;
+      top: -1px;
+    } .radical-symbol1::before {
+      content: "√";
+      font-size: 3em;
       position: absolute;
       left: 2px;
       top: -1px;
@@ -110,8 +134,8 @@
 <!-- Root with fraction inside -->
 <div class="root-container">
   <span class="root">
-    <span class="root-index">2</span>
-    <span class="radical-symbol">
+    <span class="root-index1">2</span>
+    <span class="radical-symbol1">
       <span class="root-content">
         <span class="frac">
           <span class="top">784</span><br>
