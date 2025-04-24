@@ -1,1 +1,58 @@
+.matrix-wrapper{display:inline-block;margin:10px}.matrix{display:flex;flex-direction:column;gap:10px;padding:5px 10px;position:relative}.matrix::before,.matrix::after{content:'';position:absolute;top:0;bottom:0;width:10px;border:2px solid #000}.matrix::before{left:0;border-right:none;border-radius:5px 0 0 5px}.matrix::after{right:0;border-left:none;border-radius:0 5px 5px 0}.matrix-row{display:flex;justify-content:center;gap:15px}.matrix-cell{min-width:40px;height:30px;border:1px solid #888;text-align:center;line-height:30px;font-size:16px;border-radius:4px}
+  .svg-root {
+      display: inline-block;
+      vertical-align: middle;
+    }
+.frac {
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .frac > span {
+      display: block;
+    }
+    .frac span.bottom {
+      border-top: thin solid black;
+      padding-top: 0.1em;
+    }
+.bracket {
+      font-size: 1em;
+      vertical-align: middle;
+      display: inline-block;
+      transform: scaleY(3); /* यह height stretch करता है */
+    }
+
+ .container {
+                word-spacing: 3px; 
+            }
+            .class-buttons {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .btn-link {
+                display: inline-block;
+                text-decoration: none;
+                background-color: var(--body-bg);
+                color: var(--text);
+                padding: 10px 18px;
+                margin: 5px;
+                border-radius: 5px;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+            }
+
+           
+            .container h2 {
+                text-align: center;
+                font-size: 22px;
+            }
+            .container h3 {
+                font-size: 19px;
+            }  .frac,
+            .root {
+                line-height: 1.2;
+            }
+
 
