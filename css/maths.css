@@ -58,7 +58,11 @@
   display: inline-block;
   margin: 10px;
 }
-
+.matrix-container {
+ 
+  flex-direction: column;
+  gap: 20px;
+}
 .matrix {
   display: inline-flex;
   flex-direction: column;
@@ -90,6 +94,7 @@
   border-radius: 0 5px 5px 0;
 }
 
+
 .matrix-row {
   display: flex;
   justify-content: center;
@@ -99,10 +104,25 @@
 .matrix-cell {
   min-width: 35px;
   height: 28px;
-  text-align: center;
+  text-align: center; vertical-align: middle;
   line-height: 28px;
   font-size: 15px;
   border: none; /* No border for preview mode */
   background: transparent;
 }
+body{margin:10px;}
+ 
+
+.equation-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.symbol {
+  font-size: 24px;
+  font-weight: 100;
+}
+
 
