@@ -68,79 +68,146 @@
             }
         </script>
     </head>
-    <body> <div class="search-container"><button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)"></div><ul id="suggestions" class="suggestions"></ul><div id="results"></div>
-   
-   
+    <body>
+        <div class="search-container">
+            <button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
+        </div>
+        <ul id="suggestions" class="suggestions"></ul>
+        <div id="results"></div>
+
         <button class="menu-toggle" onclick="toggleMenu()">➤</button>
         <ul class="menu-list" id="menuList">
             <span style="color: var(--purple);"> Class : 9th</span>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Number-System">1. संख्या पद्धति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Polynomials">2. बहुपद</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Coordinate-Geometry">3. निर्देशांक ज्यामिति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Linear-Equations">4. एक चर वाले रैखिक समीकरण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Lines-Angles">5. रेखाएँ और कोण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Triangles">6. त्रिभुज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Quadrilaterals">7. चतुर्भुज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Circles">8. वृत्त</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Mensuration">9. क्षेत्रमिति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Statistics">10. सांख्यिकी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Probability">11. प्रायिकता</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Surface-Volume">12. पृष्ठ क्षेत्रफल और आयतन</a></li> <br>
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Number-System">1. संख्या पद्धति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Polynomials">2. बहुपद</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Coordinate-Geometry">3. निर्देशांक ज्यामिति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Linear-Equations">4. एक चर वाले रैखिक समीकरण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Lines-Angles">5. रेखाएँ और कोण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Triangles">6. त्रिभुज</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Quadrilaterals">7. चतुर्भुज</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Circles">8. वृत्त</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Mensuration">9. क्षेत्रमिति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Statistics">10. सांख्यिकी</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Probability">11. प्रायिकता</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Surface-Volume">12. पृष्ठ क्षेत्रफल और आयतन</a></li>
+
             <span style="color: var(--purple);"> Class : 10th</span>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Real-Numbers">1. वास्तविक संख्याएँ</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Polynomials">2. बहुपद</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Pair-Linear-Equations">3. दो चर वाले रैखिक समीकरण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Quadratic-Equations">4. द्विघात समीकरण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Arithmetic-Progression">5. अंकगणितीय प्रगति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Trigonometry">6. त्रिकोणमिति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Circles">7. वृत्त</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Constructions">8. रचनाएँ</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Mensuration">9. पृष्ठ क्षेत्रफल और आयतन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Statistics">10. सांख्यिकी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Probability">11. प्रायिकता</a></li> <br>
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Real-Numbers">1. वास्तविक संख्याएँ</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Polynomials">2. बहुपद</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Pair-Linear-Equations">3. दो चर वाले रैखिक समीकरण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Quadratic-Equations">4. द्विघात समीकरण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Arithmetic-Progression">5. अंकगणितीय प्रगति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Trigonometry">6. त्रिकोणमिति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Circles">7. वृत्त</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Constructions">8. रचनाएँ</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Mensuration">9. पृष्ठ क्षेत्रफल और आयतन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Statistics">10. सांख्यिकी</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Probability">11. प्रायिकता</a></li>
+
             <span style="color: var(--purple);"> Class : 11th</span>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Sets">1. समुच्चय</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Relations-Functions">2. संबंध और फलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Trigonometric-Functions">3. त्रिकोणमितीय फलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Complex-Numbers">4. सम्मिश्र संख्याएँ</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Quadratic-Equations">5. द्विघात समीकरण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Sequence-Series">6. अनुक्रम और श्रेणी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Straight-Lines">7. सरल रेखाएँ</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Conic-Sections">8. शंकवक्र</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Limits-Derivatives">9. सीमाएँ और अवकलज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Probability">10. प्रायिकता</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Statistics">11. सांख्यिकी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Simple-Compound-Interest">12. साधारण और चक्रवृद्धि ब्याज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Permutations-Combinations">13. क्रमचय और संचय</a></li> <br>
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Sets">1. समुच्चय</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Relations-Functions">2. संबंध और फलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Trigonometric-Functions">3. त्रिकोणमितीय फलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Complex-Numbers">4. सम्मिश्र संख्याएँ</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Quadratic-Equations">5. द्विघात समीकरण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Sequence-Series">6. अनुक्रम और श्रेणी</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Straight-Lines">7. सरल रेखाएँ</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Conic-Sections">8. शंकवक्र</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Limits-Derivatives">9. सीमाएँ और अवकलज</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Probability">10. प्रायिकता</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Statistics">11. सांख्यिकी</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Simple-Compound-Interest">12. साधारण और चक्रवृद्धि ब्याज</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Permutations-Combinations">13. क्रमचय और संचय</a></li>
+
             <span style="color: var(--purple);"> Class : 12th</span>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Relations-Functions">1. संबंध और फलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Inverse-Trigonometric">2. व्युत्क्रम त्रिकोणमिति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Matrices">3. मैट्रिक्स</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Determinants">4. सारणिक</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Continuity-Differentiability">5. सांतत्य और अवकलनीयता</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Applications-Derivatives">6. अवकलज के अनुप्रयोग</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Integrals">7. समाकलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Differential-Equations">8. अवकल समीकरण</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Vector-Algebra">9. सदिश बीजगणित</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#3D-Geometry">10. त्रिविमीय ज्यामिति</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Linear-Programming">11. रेखीय प्रोग्रामिंग</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Probability">12. प्रायिकता</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Linear-Inequalities">13. रेखीय असमानताएँ</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Differentiation">14. अवकलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Integration">15. समाकलन</a></li> <br>
-            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Statistics">16. सांख्यिकी</a></li> <br>
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Relations-Functions">1. संबंध और फलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Inverse-Trigonometric">2. व्युत्क्रम त्रिकोणमिति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Matrices">3. मैट्रिक्स</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Determinants">4. सारणिक</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Continuity-Differentiability">5. सांतत्य और अवकलनीयता</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Applications-Derivatives">6. अवकलज के अनुप्रयोग</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Integrals">7. समाकलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Differential-Equations">8. अवकल समीकरण</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Vector-Algebra">9. सदिश बीजगणित</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#3D-Geometry">10. त्रिविमीय ज्यामिति</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Linear-Programming">11. रेखीय प्रोग्रामिंग</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Probability">12. प्रायिकता</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Linear-Inequalities">13. रेखीय असमानताएँ</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Differentiation">14. अवकलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Integration">15. समाकलन</a></li>
+
+            <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Statistics">16. सांख्यिकी</a></li>
+
             <span style="color: var(--purple);">6th-10th + Competitive</span>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#Percentage">1. प्रतिशत</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#SimpleInterest">2. साधारण ब्याज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#CompoundInterest">3. चक्रवृद्धि ब्याज</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#Partnership">4. साझेदारी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#ProfitLoss">5. लाभ और हानि</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#SquareCube">6. स्क्वेयर & क्यूब रूट</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#TimeWork">7. समय, दूरी और कार्य</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#PipesCisterns">8. पाइप और टंकी</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#TrainProblems">9. रेलगाड़ी पर प्रश्न</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#BoatsStreams">10. नाव और धारा</a></li> <br>
-            <li><a href="https://gklearnstudy.in/competitive/mathsformula#AgeProblems">11. आयु संबंधी प्रश्न</a></li> <br>
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#Percentage">1. प्रतिशत</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#SimpleInterest">2. साधारण ब्याज</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#CompoundInterest">3. चक्रवृद्धि ब्याज</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#Partnership">4. साझेदारी</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#ProfitLoss">5. लाभ और हानि</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#SquareCube">6. स्क्वेयर & क्यूब रूट</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#TimeWork">7. समय, दूरी और कार्य</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#PipesCisterns">8. पाइप और टंकी</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#TrainProblems">9. रेलगाड़ी पर प्रश्न</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#BoatsStreams">10. नाव और धारा</a></li>
+
+            <li><a href="https://gklearnstudy.in/competitive/mathsformula#AgeProblems">11. आयु संबंधी प्रश्न</a></li>
         </ul>
 
         <div class="container">
@@ -158,36 +225,109 @@
             </p>
             <h3>प्रतीक:</h3>
             <ul>
-                <li>प्रतिशत का प्रतीक चिन्ह होता है: <b>%</b></li> <br>
+                <li>प्रतिशत का प्रतीक चिन्ह होता है: <b>%</b></li>
+                <br />
             </ul>
             <h3>मुख्य सूत्र (Formulas):</h3>
-             <ul> <li><b>प्रतिशत = <span class="frac"><span>मूल्य</span><span class="bottom">कुल मान</span></span> × 100</b></li> <br> <li><b>किसी संख्या का x% = <span class="frac"><span>x</span><span class="bottom">100</span></span> × वह संख्या</b></li> <br> <li><b>वृद्धि प्रतिशत = <span class="frac"><span>अंतर</span><span class="bottom">प्रारंभिक मान</span></span> × 100</b></li> <br> <li><b>कमी प्रतिशत = <span class="frac"><span>अंतर</span><span class="bottom">प्रारंभिक मान</span></span> × 100</b></li> <br> </ul>
+            <ul>
+                <li>
+                    <b>
+                        प्रतिशत = <span class="frac"><span>मूल्य</span><span class="bottom">कुल मान</span></span> × 100
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        किसी संख्या का x% = <span class="frac"><span>x</span><span class="bottom">100</span></span> × वह संख्या
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        वृद्धि प्रतिशत = <span class="frac"><span>अंतर</span><span class="bottom">प्रारंभिक मान</span></span> × 100
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        कमी प्रतिशत = <span class="frac"><span>अंतर</span><span class="bottom">प्रारंभिक मान</span></span> × 100
+                    </b>
+                </li>
+                <br />
+            </ul>
             <h3>प्रयोग:</h3>
             <ul>
-                <li>परीक्षा के अंक प्रतिशत में निकाले जाते हैं।</li> <br>
-                <li>डिस्काउंट, लाभ-हानि में प्रतिशत का प्रयोग होता है।</li> <br>
-                <li>जनसंख्या, ब्याज, आदि की गणनाओं में इसका उपयोग होता है।</li> <br>
+                <li>परीक्षा के अंक प्रतिशत में निकाले जाते हैं।</li>
+                <br />
+                <li>डिस्काउंट, लाभ-हानि में प्रतिशत का प्रयोग होता है।</li>
+                <br />
+                <li>जनसंख्या, ब्याज, आदि की गणनाओं में इसका उपयोग होता है।</li>
+                <br />
             </ul>
             <h3>उदाहरण 1: छात्राओं का प्रतिशत</h3>
             <ul>
-                <li>प्रश्न: किसी कक्षा में 50 विद्यार्थी हैं, जिनमें से 20 छात्राएं हैं। छात्राओं का प्रतिशत ज्ञात करें।</li> <br>
+                <li>प्रश्न: किसी कक्षा में 50 विद्यार्थी हैं, जिनमें से 20 छात्राएं हैं। छात्राओं का प्रतिशत ज्ञात करें।</li>
+                <br />
             </ul>
-            <ul> <li><b>Solution-</b></li> <br> <li>कुल विद्यार्थी = 50</li> <br> <li>छात्राएं = 20</li> <br> <li>प्रतिशत = <span class="frac"><span>20</span><span class="bottom">50</span></span> × 100 = 40%</li> <br> </ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <br />
+                <li>कुल विद्यार्थी = 50</li>
+                <br />
+                <li>छात्राएं = 20</li>
+                <br />
+                <li>
+                    प्रतिशत = <span class="frac"><span>20</span><span class="bottom">50</span></span> × 100 = 40%
+                </li>
+                <br />
+            </ul>
             <h3>उदाहरण 2: किसी संख्या का x%</h3>
             <ul>
-                <li>प्रश्न: 600 का 25% कितना होगा?</li> <br>
+                <li>प्रश्न: 600 का 25% कितना होगा?</li>
+                <br />
             </ul>
-            <ul> <li><b >Solution-</b></li> <br> <li>25% = <span class="frac"><span>25</span><span class="bottom">100</span></span></li> <br> <li>= <span class="frac"><span>25</span><span class="bottom">100</span></span> × 600 = 150</li> <br> </ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <br />
+                <li>
+                    25% = <span class="frac"><span>25</span><span class="bottom">100</span></span>
+                </li>
+                <br />
+                <li>
+                    = <span class="frac"><span>25</span><span class="bottom">100</span></span> × 600 = 150
+                </li>
+                <br />
+            </ul>
             <h3>उदाहरण 3: किसी वस्तु का मूल्य बढ़ा</h3>
             <ul>
-                <li>प्रश्न: किसी वस्तु का मूल्य पहले ₹800 था, अब वह ₹1000 हो गया है। मूल्य में कितनी प्रतिशत वृद्धि हुई?</li> <br>
+                <li>प्रश्न: किसी वस्तु का मूल्य पहले ₹800 था, अब वह ₹1000 हो गया है। मूल्य में कितनी प्रतिशत वृद्धि हुई?</li>
+                <br />
             </ul>
-             <ul> <li><b >Solution-</b></li> <br> <li>वृद्धि = 1000 - 800 = 200</li> <br> <li>वृद्धि प्रतिशत = <span class="frac"><span>200</span><span class="bottom">800</span></span> × 100 = 25%</li> <br> </ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <br />
+                <li>वृद्धि = 1000 - 800 = 200</li>
+                <br />
+                <li>
+                    वृद्धि प्रतिशत = <span class="frac"><span>200</span><span class="bottom">800</span></span> × 100 = 25%
+                </li>
+                <br />
+            </ul>
             <h3>उदाहरण 4: वस्तु का मूल्य घटा</h3>
             <ul>
-                <li>प्रश्न: किसी वस्तु की कीमत ₹500 थी, जो घटकर ₹400 रह गई। प्रतिशत में कितनी कमी हुई?</li> <br>
+                <li>प्रश्न: किसी वस्तु की कीमत ₹500 थी, जो घटकर ₹400 रह गई। प्रतिशत में कितनी कमी हुई?</li>
+                <br />
             </ul>
-            <ul> <li><b >Solution-</b></li> <br> <li>कमी = 500 - 400 = 100</li> <br> <li>कमी प्रतिशत = <span class="frac"><span>100</span><span class="bottom">500</span></span> × 100 = 20%</li> <br> </ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <br />
+                <li>कमी = 500 - 400 = 100</li>
+                <br />
+                <li>
+                    कमी प्रतिशत = <span class="frac"><span>100</span><span class="bottom">500</span></span> × 100 = 20%
+                </li>
+                <br />
+            </ul>
             <section id="SimpleInterest"></section>
             <br />
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
@@ -198,112 +338,154 @@
             <h3>महत्वपूर्ण सूत्र:</h3>
 
             <ul>
-               
-                    
-      <li><b>1. SI = <span class="frac"><span>P × R × T</span><span class="bottom">100</span></span></b></li> <br>
-      <li><b>2. A = P + SI</b></li> <br>
-      <li><b>3. R = <span class="frac"><span>SI × 100</span><span class="bottom">P × T</span></span></b></li> <br>
-      <li><b>4. T = <span class="frac"><span>SI × 100</span><span class="bottom">P × R</span></span></b></li> <br>
-      <li><b>5. P = <span class="frac"><span>SI × 100</span><span class="bottom">R × T</span></span></b></li> <br>
+                <li>
+                    <b>
+                        1. SI = <span class="frac"><span>P × R × T</span><span class="bottom">100</span></span>
+                    </b>
+                </li>
+                <br />
+                <li><b>2. A = P + SI</b></li>
+                <br />
+                <li>
+                    <b>
+                        3. R = <span class="frac"><span>SI × 100</span><span class="bottom">P × T</span></span>
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        4. T = <span class="frac"><span>SI × 100</span><span class="bottom">P × R</span></span>
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        5. P = <span class="frac"><span>SI × 100</span><span class="bottom">R × T</span></span>
+                    </b>
+                </li>
+                <br />
             </ul>
 
-      <h3>उदाहरण 1: साधारण ब्याज निकालना</h3>
-<ul>
-    <li>प्रश्न: ₹5000 की राशि को 3 वर्षों के लिए 6% वार्षिक दर पर निवेश किया गया। साधारण ब्याज ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 1: साधारण ब्याज निकालना</h3>
+            <ul>
+                <li>प्रश्न: ₹5000 की राशि को 3 वर्षों के लिए 6% वार्षिक दर पर निवेश किया गया। साधारण ब्याज ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>सूत्र: SI = <span class="frac"><span>P × R × T</span><span class="bottom">100</span></span></b>
-</center>
+            <center>
+                <b>
+                    सूत्र: SI = <span class="frac"><span>P × R × T</span><span class="bottom">100</span></span>
+                </b>
+            </center>
 
-<ul>
-    <li><b>Solution-</b></li>
-    <li>P = ₹5000</li>
-    <li>R = 6%</li>
-    <li>T = 3 वर्ष</li>
-    <li>SI = <span class="frac"><span>5000 × 6 × 3</span><span class="bottom">100</span></span></li>
-    <li>= <span class="frac"><span>90000</span><span class="bottom">100</span></span></li>
-    <li>= ₹900</li>
-    <li><b>उत्तर: ₹900</b></li>
-</ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <li>P = ₹5000</li>
+                <li>R = 6%</li>
+                <li>T = 3 वर्ष</li>
+                <li>
+                    SI = <span class="frac"><span>5000 × 6 × 3</span><span class="bottom">100</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>90000</span><span class="bottom">100</span></span>
+                </li>
+                <li>= ₹900</li>
+                <li><b>उत्तर: ₹900</b></li>
+            </ul>
 
-<h3>उदाहरण 2: कुल राशि निकालना</h3>
-<ul>
-    <li>प्रश्न: यदि ₹7000 पर 2 वर्षों में 10% की दर से साधारण ब्याज ₹1400 हुआ, तो कुल राशि क्या होगी?</li>
-</ul>
+            <h3>उदाहरण 2: कुल राशि निकालना</h3>
+            <ul>
+                <li>प्रश्न: यदि ₹7000 पर 2 वर्षों में 10% की दर से साधारण ब्याज ₹1400 हुआ, तो कुल राशि क्या होगी?</li>
+            </ul>
 
-<center><b>सूत्र: A = P + SI</b></center>
+            <center><b>सूत्र: A = P + SI</b></center>
 
-<ul>
-    <li><b>Solution-</b></li>
-    <li>P = ₹7000</li>
-    <li>SI = ₹1400</li>
-    <li>A = 7000 + 1400</li>
-    <li>= ₹8400</li>
-    <li><b>उत्तर: ₹8400</b></li>
-</ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <li>P = ₹7000</li>
+                <li>SI = ₹1400</li>
+                <li>A = 7000 + 1400</li>
+                <li>= ₹8400</li>
+                <li><b>उत्तर: ₹8400</b></li>
+            </ul>
 
-<h3>उदाहरण 3: ब्याज दर निकालना</h3>
-<ul>
-    <li>प्रश्न: ₹4000 की राशि पर 2 वर्षों में ₹320 का साधारण ब्याज मिला। ब्याज दर ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 3: ब्याज दर निकालना</h3>
+            <ul>
+                <li>प्रश्न: ₹4000 की राशि पर 2 वर्षों में ₹320 का साधारण ब्याज मिला। ब्याज दर ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>सूत्र: R = <span class="frac"><span>SI × 100</span><span class="bottom">P × T</span></span></b>
-</center>
+            <center>
+                <b>
+                    सूत्र: R = <span class="frac"><span>SI × 100</span><span class="bottom">P × T</span></span>
+                </b>
+            </center>
 
-<ul>
-    <li><b>Solution-</b></li>
-    <li>SI = ₹320</li>
-    <li>P = ₹4000</li>
-    <li>T = 2</li>
-    <li>R = <span class="frac"><span>320 × 100</span><span class="bottom">4000 × 2</span></span></li>
-    <li>= <span class="frac"><span>32000</span><span class="bottom">8000</span></span></li>
-    <li>= 4%</li>
-    <li><b>उत्तर: 4%</b></li>
-</ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <li>SI = ₹320</li>
+                <li>P = ₹4000</li>
+                <li>T = 2</li>
+                <li>
+                    R = <span class="frac"><span>320 × 100</span><span class="bottom">4000 × 2</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>32000</span><span class="bottom">8000</span></span>
+                </li>
+                <li>= 4%</li>
+                <li><b>उत्तर: 4%</b></li>
+            </ul>
 
-<h3>उदाहरण 4: समय निकालना</h3>
-<ul>
-    <li>प्रश्न: ₹6000 पर 5% की दर से ₹750 साधारण ब्याज प्राप्त हुआ। समय ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 4: समय निकालना</h3>
+            <ul>
+                <li>प्रश्न: ₹6000 पर 5% की दर से ₹750 साधारण ब्याज प्राप्त हुआ। समय ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>सूत्र: T = <span class="frac"><span>SI × 100</span><span class="bottom">P × R</span></span></b>
-</center>
+            <center>
+                <b>
+                    सूत्र: T = <span class="frac"><span>SI × 100</span><span class="bottom">P × R</span></span>
+                </b>
+            </center>
 
-<ul>
-    <li><b>Solution-</b></li>
-    <li>SI = ₹750</li>
-    <li>P = ₹6000</li>
-    <li>R = 5%</li>
-    <li>T = <span class="frac"><span>750 × 100</span><span class="bottom">6000 × 5</span></span></li>
-    <li>= <span class="frac"><span>75000</span><span class="bottom">30000</span></span></li>
-    <li>= 2.5 वर्ष</li>
-    <li><b>उत्तर: 2.5 वर्ष</b></li>
-</ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <li>SI = ₹750</li>
+                <li>P = ₹6000</li>
+                <li>R = 5%</li>
+                <li>
+                    T = <span class="frac"><span>750 × 100</span><span class="bottom">6000 × 5</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>75000</span><span class="bottom">30000</span></span>
+                </li>
+                <li>= 2.5 वर्ष</li>
+                <li><b>उत्तर: 2.5 वर्ष</b></li>
+            </ul>
 
-<h3>उदाहरण 5: मूलधन निकालना</h3>
-<ul>
-    <li>प्रश्न: यदि किसी राशि पर 4 वर्षों में 8% दर से ₹640 साधारण ब्याज मिला, तो मूलधन ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 5: मूलधन निकालना</h3>
+            <ul>
+                <li>प्रश्न: यदि किसी राशि पर 4 वर्षों में 8% दर से ₹640 साधारण ब्याज मिला, तो मूलधन ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>सूत्र: P = <span class="frac"><span>SI × 100</span><span class="bottom">R × T</span></span></b>
-</center>
+            <center>
+                <b>
+                    सूत्र: P = <span class="frac"><span>SI × 100</span><span class="bottom">R × T</span></span>
+                </b>
+            </center>
 
-<ul>
-    <li><b>Solution-</b></li>
-    <li>SI = ₹640</li>
-    <li>R = 8%</li>
-    <li>T = 4</li>
-    <li>P = <span class="frac"><span>640 × 100</span><span class="bottom">8 × 4</span></span></li>
-    <li>= <span class="frac"><span>64000</span><span class="bottom">32</span></span></li>
-    <li>= ₹2000</li>
-    <li><b>उत्तर: ₹2000</b></li>
-</ul>
+            <ul>
+                <li><b>Solution-</b></li>
+                <li>SI = ₹640</li>
+                <li>R = 8%</li>
+                <li>T = 4</li>
+                <li>
+                    P = <span class="frac"><span>640 × 100</span><span class="bottom">8 × 4</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>64000</span><span class="bottom">32</span></span>
+                </li>
+                <li>= ₹2000</li>
+                <li><b>उत्तर: ₹2000</b></li>
+            </ul>
 
-    
             <section id="CompoundInterest"></section>
             <br />
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
@@ -315,110 +497,140 @@
             <h3>महत्वपूर्ण सूत्र</h3>
 
             <ul>
-                
-      <li><b>1. A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket"> ) </span><sup>n</sup></b></li> <br>
-      <li><b>2. CI = A - P</b></li> <br>
-      <li>3. यदि दर वार्षिक हो और समय वर्ष में:<b> A = P × <span class="bracket"> ( </span> 1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket"> ) </span><sup>T</sup></b></li> <br>
-      
-      <li>4. यदि ब्याज अर्धवार्षिक या त्रैमासिक हो:</li> <br>
-      
-        <li><b>अर्धवार्षिक: A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">2 × 100</span></span><span class="bracket"> ) </span><sup>2T</sup></b></li> <br><br>
-        <li><b>त्रैमासिक: A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">4 × 100</span></span><span class="bracket"> ) </span><sup>4T</sup></b></li> <br>
-      
+                <li>
+                    <b>
+                        1. A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket"> ) </span><sup>n</sup>
+                    </b>
+                </li>
+                <br />
+                <li><b>2. CI = A - P</b></li>
+                <br />
+                <li>
+                    3. यदि दर वार्षिक हो और समय वर्ष में:
+                    <b>
+                        A = P × <span class="bracket"> ( </span> 1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket"> ) </span><sup>T</sup>
+                    </b>
+                </li>
+                <br />
+
+                <li>4. यदि ब्याज अर्धवार्षिक या त्रैमासिक हो:</li>
+                <br />
+
+                <li>
+                    <b>
+                        अर्धवार्षिक: A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">2 × 100</span></span><span class="bracket"> ) </span><sup>2T</sup>
+                    </b>
+                </li>
+                <br />
+                <br />
+                <li>
+                    <b>
+                        त्रैमासिक: A = P × <span class="bracket"> ( </span>1 + <span class="frac"><span>R</span><span class="bottom">4 × 100</span></span><span class="bracket"> ) </span><sup>4T</sup>
+                    </b>
+                </li>
+                <br />
             </ul>
             <br />
-         <h3>उदाहरण 1: वार्षिक चक्रवृद्धि ब्याज</h3>
-<ul>
-    <li>प्रश्न: ₹5000 की राशि को 2 वर्षों के लिए 10% वार्षिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 1: वार्षिक चक्रवृद्धि ब्याज</h3>
+            <ul>
+                <li>प्रश्न: ₹5000 की राशि को 2 वर्षों के लिए 10% वार्षिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>T</sup>
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>T</sup>
+                </b>
+            </center>
 
-<b>Solution-</b> <br>
-P = ₹5000 <br>
-R = 10% <br>
-T = 2 वर्ष <br>
+            <b>Solution-</b> <br />
+            P = ₹5000 <br />
+            R = 10% <br />
+            T = 2 वर्ष <br />
 
-A = 5000 × <span class="bracket">(</span>1 + <span class="frac"><span>10</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>2</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 5000 × (1.1)<sup>2</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 5000 × 1.21 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= ₹6050 <br>
+            A = 5000 × <span class="bracket">(</span>1 + <span class="frac"><span>10</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>2</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 5000 × (1.1)<sup>2</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 5000 × 1.21 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= ₹6050 <br />
 
-CI = A - P <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 6050 - 5000 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= ₹1050 <br>
+            CI = A - P <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 6050 - 5000 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= ₹1050 <br />
 
-<b>उत्तर: ₹1050</b> <br><br>
+            <b>उत्तर: ₹1050</b> <br />
+            <br />
 
-<h3>उदाहरण 2: अर्धवार्षिक चक्रवृद्धि ब्याज</h3>
-<ul>
-    <li>प्रश्न: ₹8000 को 1.5 वर्ष के लिए 8% अर्धवार्षिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 2: अर्धवार्षिक चक्रवृद्धि ब्याज</h3>
+            <ul>
+                <li>प्रश्न: ₹8000 को 1.5 वर्ष के लिए 8% अर्धवार्षिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">2 × 100</span></span><span class="bracket">)</span><sup>2T</sup>
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">2 × 100</span></span><span class="bracket">)</span><sup>2T</sup>
+                </b>
+            </center>
 
-<b>Solution-</b> <br>
-P = ₹8000 <br>
-R = 8% <br>
-T = 1.5 वर्ष <br>
-2T = 3 <br>
-R/2 = 4% <br>
+            <b>Solution-</b> <br />
+            P = ₹8000 <br />
+            R = 8% <br />
+            T = 1.5 वर्ष <br />
+            2T = 3 <br />
+            R/2 = 4% <br />
 
-A = 8000 × <span class="bracket">(</span>1 + <span class="frac"><span>4</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>3</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 8000 × (1.04)<sup>3</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 8000 × 1.124864 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;≈ ₹8998.91 <br>
+            A = 8000 × <span class="bracket">(</span>1 + <span class="frac"><span>4</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>3</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 8000 × (1.04)<sup>3</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 8000 × 1.124864 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;≈ ₹8998.91 <br />
 
-CI = A - P <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 8998.91 - 8000 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;≈ ₹998.91 <br>
+            CI = A - P <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 8998.91 - 8000 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;≈ ₹998.91 <br />
 
-<b>उत्तर: ₹998.91</b> <br><br>
+            <b>उत्तर: ₹998.91</b> <br />
+            <br />
 
-<h3>उदाहरण 3: त्रैमासिक चक्रवृद्धि ब्याज</h3>
-<ul>
-    <li>प्रश्न: ₹10000 की राशि को 2 वर्षों के लिए 12% त्रैमासिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 3: त्रैमासिक चक्रवृद्धि ब्याज</h3>
+            <ul>
+                <li>प्रश्न: ₹10000 की राशि को 2 वर्षों के लिए 12% त्रैमासिक चक्रवृद्धि दर पर निवेश किया गया। चक्रवृद्धि ब्याज ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">4 × 100</span></span><span class="bracket">)</span><sup>4T</sup>
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">4 × 100</span></span><span class="bracket">)</span><sup>4T</sup>
+                </b>
+            </center>
 
-<b>Solution-</b> <br>
-P = ₹10000 <br>
-R = 12% <br>
-T = 2 वर्ष <br>
-4T = 8 <br>
-R/4 = 3% <br>
+            <b>Solution-</b> <br />
+            P = ₹10000 <br />
+            R = 12% <br />
+            T = 2 वर्ष <br />
+            4T = 8 <br />
+            R/4 = 3% <br />
 
-A = 10000 × <span class="bracket">(</span>1 + <span class="frac"><span>3</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>8</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 10000 × (1.03)<sup>8</sup> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 10000 × 1.26677 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;≈ ₹12667.7 <br>
+            A = 10000 × <span class="bracket">(</span>1 + <span class="frac"><span>3</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>8</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 10000 × (1.03)<sup>8</sup> <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 10000 × 1.26677 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;≈ ₹12667.7 <br />
 
-CI = A - P <br>
-&nbsp;&nbsp;&nbsp;&nbsp;= 12667.7 - 10000 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;≈ ₹2667.7 <br>
+            CI = A - P <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;= 12667.7 - 10000 <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;≈ ₹2667.7 <br />
 
-<b>उत्तर: ₹2667.7</b> <br><br>
+            <b>उत्तर: ₹2667.7</b> <br />
+            <br />
 
-<h3>सारांश (Summary)</h3>
-<ul>
-    <li><b>चक्रवृद्धि ब्याज</b> में प्रत्येक अवधि के ब्याज को मूलधन में जोड़ दिया जाता है।</li>
-    <li>वार्षिक: <b>A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>T</sup></b></li>
-    <li>CI = A - P</li>
-    <li>अर्धवार्षिक या त्रैमासिक के लिए समय व दर को उचित रूप में परिवर्तित करें।</li>
-</ul>
+            <h3>सारांश (Summary)</h3>
+            <ul>
+                <li><b>चक्रवृद्धि ब्याज</b> में प्रत्येक अवधि के ब्याज को मूलधन में जोड़ दिया जाता है।</li>
+                <li>
+                    वार्षिक:
+                    <b>
+                        A = P × <span class="bracket">(</span>1 + <span class="frac"><span>R</span><span class="bottom">100</span></span><span class="bracket">)</span><sup>T</sup>
+                    </b>
+                </li>
+                <li>CI = A - P</li>
+                <li>अर्धवार्षिक या त्रैमासिक के लिए समय व दर को उचित रूप में परिवर्तित करें।</li>
+            </ul>
 
             <section id="Partnership"></section>
             <br />
@@ -435,34 +647,49 @@ CI = A - P <br>
 
             <center><b>सूत्र: लाभ = (व्यक्ति का निवेश / कुल निवेश) × कुल लाभ</b></center>
 
-           <h3>📘 उदाहरण 1: तीन व्यक्तियों के बीच लाभ का वितरण</h3>
-<p><b>निवेश:</b> राम = ₹5000, श्याम = ₹3000, मोहन = ₹2000</p>
-<p><b>कुल निवेश =</b> ₹5000 + ₹3000 + ₹2000 = ₹10000</p>
-<p><b>कुल लाभ =</b> ₹6000</p>
+            <h3>📘 उदाहरण 1: तीन व्यक्तियों के बीच लाभ का वितरण</h3>
+            <p><b>निवेश:</b> राम = ₹5000, श्याम = ₹3000, मोहन = ₹2000</p>
+            <p><b>कुल निवेश =</b> ₹5000 + ₹3000 + ₹2000 = ₹10000</p>
+            <p><b>कुल लाभ =</b> ₹6000</p>
 
-<ul>
-  <li>राम का लाभ = (<span class="frac"><span>5000</span><span class="bottom">10000</span></span>) × 6000 = ₹3000</li> <br>
-  <li>श्याम का लाभ = (<span class="frac"><span>3000</span><span class="bottom">10000</span></span>) × 6000 = ₹1800</li> <br>
-  <li>मोहन का लाभ = (<span class="frac"><span>2000</span><span class="bottom">10000</span></span>) × 6000 = ₹1200</li> <br>
-</ul>
+            <ul>
+                <li>
+                    राम का लाभ = (<span class="frac"><span>5000</span><span class="bottom">10000</span></span>) × 6000 = ₹3000
+                </li>
+                <br />
+                <li>
+                    श्याम का लाभ = (<span class="frac"><span>3000</span><span class="bottom">10000</span></span>) × 6000 = ₹1800
+                </li>
+                <br />
+                <li>
+                    मोहन का लाभ = (<span class="frac"><span>2000</span><span class="bottom">10000</span></span>) × 6000 = ₹1200
+                </li>
+                <br />
+            </ul>
 
-<p><b>✅ उत्तर:</b> राम को ₹3000, श्याम को ₹1800 और मोहन को ₹1200 का लाभ मिलेगा।</p>
-<h3>📘 उदाहरण 1: तीन व्यक्तियों के बीच लाभ का वितरण</h3>
-<p><b>निवेश:</b> राम = ₹5000, श्याम = ₹3000, मोहन = ₹2000</p>
-<p><b>कुल निवेश =</b> ₹5000 + ₹3000 + ₹2000 = ₹10000</p>
-<p><b>कुल लाभ =</b> ₹6000</p>
+            <p><b>✅ उत्तर:</b> राम को ₹3000, श्याम को ₹1800 और मोहन को ₹1200 का लाभ मिलेगा।</p>
+            <h3>📘 उदाहरण 1: तीन व्यक्तियों के बीच लाभ का वितरण</h3>
+            <p><b>निवेश:</b> राम = ₹5000, श्याम = ₹3000, मोहन = ₹2000</p>
+            <p><b>कुल निवेश =</b> ₹5000 + ₹3000 + ₹2000 = ₹10000</p>
+            <p><b>कुल लाभ =</b> ₹6000</p>
 
-<ul>
-  <li>राम का लाभ = (<span class="frac"><span>5000</span><span class="bottom">10000</span></span>) × 6000 = ₹3000</li> <br>
-  <li>श्याम का लाभ = (<span class="frac"><span>3000</span><span class="bottom">10000</span></span>) × 6000 = ₹1800</li> <br>
-  <li>मोहन का लाभ = (<span class="frac"><span>2000</span><span class="bottom">10000</span></span>) × 6000 = ₹1200</li> <br>
-</ul>
+            <ul>
+                <li>
+                    राम का लाभ = (<span class="frac"><span>5000</span><span class="bottom">10000</span></span>) × 6000 = ₹3000
+                </li>
+                <br />
+                <li>
+                    श्याम का लाभ = (<span class="frac"><span>3000</span><span class="bottom">10000</span></span>) × 6000 = ₹1800
+                </li>
+                <br />
+                <li>
+                    मोहन का लाभ = (<span class="frac"><span>2000</span><span class="bottom">10000</span></span>) × 6000 = ₹1200
+                </li>
+                <br />
+            </ul>
 
-<p><b>✅ उत्तर:</b> राम को ₹3000, श्याम को ₹1800 और मोहन को ₹1200 का लाभ मिलेगा।</p>
+            <p><b>✅ उत्तर:</b> राम को ₹3000, श्याम को ₹1800 और मोहन को ₹1200 का लाभ मिलेगा।</p>
 
-
-
-            
             <section id="ProfitLoss"></section>
             <br />
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
@@ -472,162 +699,220 @@ CI = A - P <br>
 
             <h3>प्रमुख परिभाषाएँ (Key Terms)</h3>
             <ul>
-                <li><b>क्रय मूल्य (Cost Price - CP):</b> जिस मूल्य पर वस्तु खरीदी जाती है।</li> <br>
-                <li><b>विक्रय मूल्य (Selling Price - SP):</b> जिस मूल्य पर वस्तु बेची जाती है।</li> <br>
-                <li><b>लाभ (Profit):</b> SP > CP होने पर।</li> <br>
-                <li><b>हानि (Loss):</b> CP > SP होने पर।</li> <br>
+                <li><b>क्रय मूल्य (Cost Price - CP):</b> जिस मूल्य पर वस्तु खरीदी जाती है।</li>
+                <br />
+                <li><b>विक्रय मूल्य (Selling Price - SP):</b> जिस मूल्य पर वस्तु बेची जाती है।</li>
+                <br />
+                <li><b>लाभ (Profit):</b> SP > CP होने पर।</li>
+                <br />
+                <li><b>हानि (Loss):</b> CP > SP होने पर।</li>
+                <br />
             </ul>
 
             <h3>महत्वपूर्ण सूत्र (Important Formulas)</h3>
             <ul>
-                
-  <li><b>1. लाभ = SP - CP</b></li> <br>
-  <li><b>2. हानि = CP - SP</b></li> <br>
-  <li><b>3. लाभ प्रतिशत = <span class="frac"><span>लाभ</span><span class="bottom">CP</span></span> × 100</b></li> <br>
-  <li><b>4. हानि प्रतिशत = <span class="frac"><span>हानि</span><span class="bottom">CP</span></span> × 100</b></li> <br>
-  <li><b>5. SP = CP × (1 + <span class="frac"><span>Profit%</span><span class="bottom">100</span></span>)</b></li> <br>
-  <li><b>6. SP = CP × (1 - <span class="frac"><span>Loss%</span><span class="bottom">100</span></span>)</b></li> <br>
-  <li><b>7. CP = <span class="frac"><span>SP</span><span class="bottom">(1 + <span class='frac'><span>Profit%</span><span class='bottom'>100</span></span>)</span></span></b></li> <br>
-  <li><b>8. CP = <span class="frac"><span>SP</span><span class="bottom">(1 - <span class='frac'><span>Loss%</span><span class='bottom'>100</span></span>)</span></span></b></li> <br>
-
+                <li><b>1. लाभ = SP - CP</b></li>
+                <br />
+                <li><b>2. हानि = CP - SP</b></li>
+                <br />
+                <li>
+                    <b>
+                        3. लाभ प्रतिशत = <span class="frac"><span>लाभ</span><span class="bottom">CP</span></span> × 100
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        4. हानि प्रतिशत = <span class="frac"><span>हानि</span><span class="bottom">CP</span></span> × 100
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        5. SP = CP × (1 + <span class="frac"><span>Profit%</span><span class="bottom">100</span></span>)
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        6. SP = CP × (1 - <span class="frac"><span>Loss%</span><span class="bottom">100</span></span>)
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        7. CP =
+                        <span class="frac">
+                            <span>SP</span>
+                            <span class="bottom">
+                                (1 + <span class="frac"><span>Profit%</span><span class="bottom">100</span></span>)
+                            </span>
+                        </span>
+                    </b>
+                </li>
+                <br />
+                <li>
+                    <b>
+                        8. CP =
+                        <span class="frac">
+                            <span>SP</span>
+                            <span class="bottom">
+                                (1 - <span class="frac"><span>Loss%</span><span class="bottom">100</span></span>)
+                            </span>
+                        </span>
+                    </b>
+                </li>
+                <br />
             </ul>
 
-           <h3>उदाहरण 1: लाभ प्रतिशत ज्ञात कीजिए</h3>
-<ul>
-    <li>प्रश्न: किसी वस्तु को ₹800 में खरीदा और ₹960 में बेचा गया। लाभ प्रतिशत ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 1: लाभ प्रतिशत ज्ञात कीजिए</h3>
+            <ul>
+                <li>प्रश्न: किसी वस्तु को ₹800 में खरीदा और ₹960 में बेचा गया। लाभ प्रतिशत ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: लाभ प्रतिशत = 
-        <span class="frac"><span>लाभ</span><span class="bottom">CP</span></span> × 100
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: लाभ प्रतिशत =
+                    <span class="frac"><span>लाभ</span><span class="bottom">CP</span></span> × 100
+                </b>
+            </center>
 
-<ul>
-    <li>Solution-</b></li>
-    <li>CP = ₹800</li>
-    <li>SP = ₹960</li>
-    <li>लाभ = SP - CP = 960 - 800 = ₹160</li>
-    <li>लाभ प्रतिशत = <span class="frac"><span>160</span><span class="bottom">800</span></span> × 100 = 0.2 × 100 = 20%</li>
-    <li><b>उत्तर: 20%</b></li>
-</ul>
+            <ul>
+                <li>Solution-</li>
+                <li>CP = ₹800</li>
+                <li>SP = ₹960</li>
+                <li>लाभ = SP - CP = 960 - 800 = ₹160</li>
+                <li>
+                    लाभ प्रतिशत = <span class="frac"><span>160</span><span class="bottom">800</span></span> × 100 = 0.2 × 100 = 20%
+                </li>
+                <li><b>उत्तर: 20%</b></li>
+            </ul>
 
-<h3>उदाहरण 2: हानि प्रतिशत ज्ञात कीजिए</h3>
-<ul>
-    <li>प्रश्न: किसी वस्तु को ₹1200 में खरीदा और ₹1080 में बेचा गया। हानि प्रतिशत ज्ञात कीजिए।</li>
-</ul>
+            <h3>उदाहरण 2: हानि प्रतिशत ज्ञात कीजिए</h3>
+            <ul>
+                <li>प्रश्न: किसी वस्तु को ₹1200 में खरीदा और ₹1080 में बेचा गया। हानि प्रतिशत ज्ञात कीजिए।</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: हानि प्रतिशत = 
-        <span class="frac"><span>हानि</span><span class="bottom">CP</span></span> × 100
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: हानि प्रतिशत =
+                    <span class="frac"><span>हानि</span><span class="bottom">CP</span></span> × 100
+                </b>
+            </center>
 
-<ul>
-    <li>Solution-</b></li>
-    <li>CP = ₹1200</li>
-    <li>SP = ₹1080</li>
-    <li>हानि = CP - SP = 1200 - 1080 = ₹120</li>
-    <li>हानि प्रतिशत = <span class="frac"><span>120</span><span class="bottom">1200</span></span> × 100 = 0.1 × 100 = 10%</li>
-    <li><b>उत्तर: 10%</b></li>
-</ul>
+            <ul>
+                <li>Solution-</li>
+                <li>CP = ₹1200</li>
+                <li>SP = ₹1080</li>
+                <li>हानि = CP - SP = 1200 - 1080 = ₹120</li>
+                <li>
+                    हानि प्रतिशत = <span class="frac"><span>120</span><span class="bottom">1200</span></span> × 100 = 0.1 × 100 = 10%
+                </li>
+                <li><b>उत्तर: 10%</b></li>
+            </ul>
 
-<h3>उदाहरण 3: लाभ प्रतिशत ज्ञात करने के लिए SP ज्ञात कीजिए</h3>
-<ul>
-    <li>प्रश्न: ₹2000 में खरीदी गई वस्तु को कितने में बेचा जाए जिससे 15% का लाभ हो?</li>
-</ul>
+            <h3>उदाहरण 3: लाभ प्रतिशत ज्ञात करने के लिए SP ज्ञात कीजिए</h3>
+            <ul>
+                <li>प्रश्न: ₹2000 में खरीदी गई वस्तु को कितने में बेचा जाए जिससे 15% का लाभ हो?</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: SP = CP × (1 + <span class="frac"><span>Profit%</span><span class="bottom">100</span></span>)
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: SP = CP × (1 + <span class="frac"><span>Profit%</span><span class="bottom">100</span></span>)
+                </b>
+            </center>
 
-<ul>
-    <li>Solution-</b></li>
-    <li>CP = ₹2000</li>
-    <li>Profit% = 15</li>
-    <li>SP = 2000 × (1 + <span class="frac"><span>15</span><span class="bottom">100</span></span>) = 2000 × 1.15 = ₹2300</li>
-    <li><b>उत्तर: ₹2300</b></li>
-</ul>
+            <ul>
+                <li>Solution-</li>
+                <li>CP = ₹2000</li>
+                <li>Profit% = 15</li>
+                <li>
+                    SP = 2000 × (1 + <span class="frac"><span>15</span><span class="bottom">100</span></span>) = 2000 × 1.15 = ₹2300
+                </li>
+                <li><b>उत्तर: ₹2300</b></li>
+            </ul>
 
-<h3>उदाहरण 4: हानि प्रतिशत के साथ SP ज्ञात कीजिए</h3>
-<ul>
-    <li>प्रश्न: किसी वस्तु को ₹1500 में खरीदा गया। यदि 10% हानि हो तो विक्रय मूल्य क्या होगा?</li>
-</ul>
+            <h3>उदाहरण 4: हानि प्रतिशत के साथ SP ज्ञात कीजिए</h3>
+            <ul>
+                <li>प्रश्न: किसी वस्तु को ₹1500 में खरीदा गया। यदि 10% हानि हो तो विक्रय मूल्य क्या होगा?</li>
+            </ul>
 
-<center>
-    <b>
-        सूत्र: SP = CP × (1 - <span class="frac"><span>Loss%</span><span class="bottom">100</span></span>)
-    </b>
-</center>
+            <center>
+                <b>
+                    सूत्र: SP = CP × (1 - <span class="frac"><span>Loss%</span><span class="bottom">100</span></span>)
+                </b>
+            </center>
 
-<ul>
-    <li>Solution-</b></li>
-    <li>CP = ₹1500</li>
-    <li>Loss% = 10</li>
-    <li>SP = 1500 × (1 - <span class="frac"><span>10</span><span class="bottom">100</span></span>) = 1500 × 0.9 = ₹1350</li>
-    <li><b>उत्तर: ₹1350</b></li>
-</ul>
+            <ul>
+                <li>Solution-</li>
+                <li>CP = ₹1500</li>
+                <li>Loss% = 10</li>
+                <li>
+                    SP = 1500 × (1 - <span class="frac"><span>10</span><span class="bottom">100</span></span>) = 1500 × 0.9 = ₹1350
+                </li>
+                <li><b>उत्तर: ₹1350</b></li>
+            </ul>
 
-
-
-            
             <section id="SquareCube"></section>
             <br />
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
-           <h2>स्क्वेयर रूट & क्यूब रूट</h2>
+            <h2>स्क्वेयर रूट & क्यूब रूट</h2>
 
-<h2>📘 स्क्वेयर रूट (Square Root)</h2>
-<p>
-    स्क्वेयर रूट किसी संख्या के उस मान को दर्शाता है जिसे स्वयं से गुणा करने पर मूल संख्या प्राप्त होती है।<br>
-    उदाहरण के लिए, <span class="root">16</span> = 4, क्योंकि 4 × 4 = 16
-</p>
+            <h2>📘 स्क्वेयर रूट (Square Root)</h2>
+            <p>
+                स्क्वेयर रूट किसी संख्या के उस मान को दर्शाता है जिसे स्वयं से गुणा करने पर मूल संख्या प्राप्त होती है।<br />
+                उदाहरण के लिए, <span class="root">16</span> = 4, क्योंकि 4 × 4 = 16
+            </p>
 
-<p><b>📌 सूत्र (Formula):</b><br>
-    √a = <span class="root">a</span>
-</p>
+            <p>
+                <b>📌 सूत्र (Formula):</b><br />
+                √a = <span class="root">a</span>
+            </p>
 
-<p><b>🔢 उदाहरण:</b><br>
-    यदि a = 25, तो √25 = <span class="root">25</span> = 5 क्योंकि 5 × 5 = 25  <br>
-    यदि a = 36, तो √36 = <span class="root">36</span> = 6 क्योंकि 6 × 6 = 36
-</p>
+            <p>
+                <b>🔢 उदाहरण:</b><br />
+                यदि a = 25, तो √25 = <span class="root">25</span> = 5 क्योंकि 5 × 5 = 25 <br />
+                यदि a = 36, तो √36 = <span class="root">36</span> = 6 क्योंकि 6 × 6 = 36
+            </p>
 
-<p><b>🧠 Pair बनाकर निकालना:</b><br>
-    मान लो a = 144  <br>
-    Step 1: 144 के pair बनाओ — 1 | 44  <br> 
-    Step 2: सबसे पास perfect square देखो — 12 × 12 = 144  <br>
-    तो √144 = <span class="root">144</span> = 12<br>
-</p>
+            <p>
+                <b>🧠 Pair बनाकर निकालना:</b><br />
+                मान लो a = 144 <br />
+                Step 1: 144 के pair बनाओ — 1 | 44 <br />
+                Step 2: सबसे पास perfect square देखो — 12 × 12 = 144 <br />
+                तो √144 = <span class="root">144</span> = 12<br />
+            </p>
 
-<h2>📘 क्यूब रूट (Cube Root)</h2>
-<p>
-    क्यूब रूट किसी संख्या के उस मान को दर्शाता है जिसे स्वयं से तीन बार गुणा करने पर मूल संख्या प्राप्त होती है।<br>
-    उदाहरण के लिए, ∛27 = 3, क्योंकि 3 × 3 × 3 = 27
-</p>
+            <h2>📘 क्यूब रूट (Cube Root)</h2>
+            <p>
+                क्यूब रूट किसी संख्या के उस मान को दर्शाता है जिसे स्वयं से तीन बार गुणा करने पर मूल संख्या प्राप्त होती है।<br />
+                उदाहरण के लिए, ∛27 = 3, क्योंकि 3 × 3 × 3 = 27
+            </p>
 
-<p><b>📌 सूत्र (Formula):</b><br>
-    ∛a = <sup>3</sup><span class="root">a</span>
-</p>
+            <p>
+                <b>📌 सूत्र (Formula):</b><br />
+                ∛a = <sup>3</sup><span class="root">a</span>
+            </p>
 
-<p><b>🔢 उदाहरण:</b><br>
-    यदि a = 64, तो ∛64 = <sup>3</sup><span class="root">64</span> = 4  <br>
-    यदि a = 125, तो ∛125 = <sup>3</sup><span class="root">125</span> = 5
-</p>
+            <p>
+                <b>🔢 उदाहरण:</b><br />
+                यदि a = 64, तो ∛64 = <sup>3</sup><span class="root">64</span> = 4 <br />
+                यदि a = 125, तो ∛125 = <sup>3</sup><span class="root">125</span> = 5
+            </p>
 
-<p><b>🧠 कैसे निकालते हैं:</b><br>
-    मान लो a = 1000  <br>
-    Step 1: ∛1000 = <sup>3</sup><span class="root">1000</span>  <br>
-    Step 2: 10 × 10 × 10 = 1000 <br>
-    तो उत्तर है: 10
-</p>
+            <p>
+                <b>🧠 कैसे निकालते हैं:</b><br />
+                मान लो a = 1000 <br />
+                Step 1: ∛1000 = <sup>3</sup><span class="root">1000</span> <br />
+                Step 2: 10 × 10 × 10 = 1000 <br />
+                तो उत्तर है: 10
+            </p>
 
-<p><b>✅ निष्कर्ष:</b><br>
-    <span class="root">a</span> = स्क्वेयर रूट<br>
-    <sup>3</sup><span class="root">a</span> = क्यूब रूट
-</p>
+            <p>
+                <b>✅ निष्कर्ष:</b><br />
+                <span class="root">a</span> = स्क्वेयर रूट<br />
+                <sup>3</sup><span class="root">a</span> = क्यूब रूट
+            </p>
 
             <section id="TimeWork"></section>
             <br />
@@ -636,162 +921,200 @@ CI = A - P <br>
 
             <p>समय, कार्य और दूरी के बीच एक महत्वपूर्ण संबंध है जो शारीरिक गति और काम करने के समय की गणना से संबंधित है। यह विषय मुख्य रूप से गति, समय और दूरी के नियमों पर आधारित है।</p>
 
-           <h3>सूत्र</h3>
-<ul>
-    <li><b>समय (Time) = कार्य (Work) / गति (Speed)</b></li>
-    <li><b>कार्य (Work) = गति (Speed) × समय (Time)</b></li>
-    <li><b>दूरी (Distance) = गति (Speed) × समय (Time)</b></li>
-</ul>
+            <h3>सूत्र</h3>
+            <ul>
+                <li><b>समय (Time) = कार्य (Work) / गति (Speed)</b></li>
+                <li><b>कार्य (Work) = गति (Speed) × समय (Time)</b></li>
+                <li><b>दूरी (Distance) = गति (Speed) × समय (Time)</b></li>
+            </ul>
 
-<h3>उदाहरण 1: अगर कोई व्यक्ति 10 किलोमीटर प्रति घंटे की गति से यात्रा करता है, तो वह 2 घंटे में कितनी दूरी तय करेगा?</h3>
+            <h3>उदाहरण 1: अगर कोई व्यक्ति 10 किलोमीटर प्रति घंटे की गति से यात्रा करता है, तो वह 2 घंटे में कितनी दूरी तय करेगा?</h3>
 
-<center><b>सूत्र: Distance = Speed × Time</b></center>
+            <center><b>सूत्र: Distance = Speed × Time</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>गति = 10 km/h</li>
-    <li>समय = 2 hours</li>
-    <li>दूरी = 10 × 2 = 20 km</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>गति = 10 km/h</li>
+                <li>समय = 2 hours</li>
+                <li>दूरी = 10 × 2 = 20 km</li>
+            </ul>
 
-<b>उत्तर: वह 20 किलोमीटर की दूरी तय करेगा।</b>
+            <b>उत्तर: वह 20 किलोमीटर की दूरी तय करेगा।</b>
 
-<h3>उदाहरण 2: एक ट्रैन 60 किलोमीटर प्रति घंटे की गति से यात्रा करती है। अगर वह 3 घंटे यात्रा करती है, तो वह कितनी दूरी तय करती है?</h3>
+            <h3>उदाहरण 2: एक ट्रैन 60 किलोमीटर प्रति घंटे की गति से यात्रा करती है। अगर वह 3 घंटे यात्रा करती है, तो वह कितनी दूरी तय करती है?</h3>
 
-<center><b>सूत्र: Distance = Speed × Time</b></center>
+            <center><b>सूत्र: Distance = Speed × Time</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>गति = 60 km/h</li>
-    <li>समय = 3 hours</li>
-    <li>दूरी = 60 × 3 = 180 km</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>गति = 60 km/h</li>
+                <li>समय = 3 hours</li>
+                <li>दूरी = 60 × 3 = 180 km</li>
+            </ul>
 
-<b>उत्तर: ट्रैन 180 किलोमीटर की दूरी तय करेगी।</b>
+            <b>उत्तर: ट्रैन 180 किलोमीटर की दूरी तय करेगी।</b>
 
-<h3>उदाहरण 3: एक व्यक्ति 100 किलोमीटर की दूरी 5 घंटे में तय करता है। उसकी गति ज्ञात करें।</h3>
+            <h3>उदाहरण 3: एक व्यक्ति 100 किलोमीटर की दूरी 5 घंटे में तय करता है। उसकी गति ज्ञात करें।</h3>
 
-<center><b>सूत्र: Speed = Distance / Time</b></center>
+            <center><b>सूत्र: Speed = Distance / Time</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>दूरी = 100 km</li>
-    <li>समय = 5 hours</li>
-    <li>गति = 100 / 5 = 20 km/h</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>दूरी = 100 km</li>
+                <li>समय = 5 hours</li>
+                <li>गति = 100 / 5 = 20 km/h</li>
+            </ul>
 
-<b>उत्तर: व्यक्ति की गति 20 किलोमीटर प्रति घंटे होगी।</b>
+            <b>उत्तर: व्यक्ति की गति 20 किलोमीटर प्रति घंटे होगी।</b>
 
-<h3>प्रैक्टिस प्रश्न (Practice Questions)</h3>
-<ul>
-    <li>1. एक वाहन 50 किलोमीटर प्रति घंटे की गति से यात्रा करता है। अगर वह 4 घंटे यात्रा करता है, तो वह कितनी दूरी तय करेगा?</li>
-    <li>2. एक व्यक्ति 72 किलोमीटर की दूरी 8 घंटे में तय करता है। उसकी गति ज्ञात करें।</li>
-</ul>
+            <h3>प्रैक्टिस प्रश्न (Practice Questions)</h3>
+            <ul>
+                <li>1. एक वाहन 50 किलोमीटर प्रति घंटे की गति से यात्रा करता है। अगर वह 4 घंटे यात्रा करता है, तो वह कितनी दूरी तय करेगा?</li>
+                <li>2. एक व्यक्ति 72 किलोमीटर की दूरी 8 घंटे में तय करता है। उसकी गति ज्ञात करें।</li>
+            </ul>
 
-            
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
             <h2>कार्य और समय (Work and Time)</h2>
 
             <p>कार्य और समय के बीच संबंध यह बताता है कि कोई काम कितने समय में पूरा किया जाएगा। इसे आमतौर पर "कार्य दर" के रूप में समझा जाता है, जो समय के साथ काम की मात्रा को परिभाषित करता है।</p>
 
-           <h3>सूत्र</h3>
-<ul>
-    <li><b>कार्य (Work) = दर (Rate) × समय (Time)</b></li>
-    <li><b>समय (Time) = कार्य (Work) / दर (Rate)</b></li>
-</ul>
+            <h3>सूत्र</h3>
+            <ul>
+                <li><b>कार्य (Work) = दर (Rate) × समय (Time)</b></li>
+                <li><b>समय (Time) = कार्य (Work) / दर (Rate)</b></li>
+            </ul>
 
-<h3>उदाहरण 1: अगर एक व्यक्ति 6 घंटे में 30 किलोमीटर की यात्रा करता है, तो उसकी कार्य दर (speed) ज्ञात करें।</h3>
+            <h3>उदाहरण 1: अगर एक व्यक्ति 6 घंटे में 30 किलोमीटर की यात्रा करता है, तो उसकी कार्य दर (speed) ज्ञात करें।</h3>
 
-<center><b>सूत्र: Rate = Work / Time</b></center>
+            <center><b>सूत्र: Rate = Work / Time</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>कार्य = 30 km</li>
-    <li>समय = 6 hours</li>
-    <li>दर (Rate) = 30 / 6 = 5 km/h</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>कार्य = 30 km</li>
+                <li>समय = 6 hours</li>
+                <li>दर (Rate) = 30 / 6 = 5 km/h</li>
+            </ul>
 
-<b>उत्तर: व्यक्ति की कार्य दर 5 किलोमीटर प्रति घंटा होगी।</b>
+            <b>उत्तर: व्यक्ति की कार्य दर 5 किलोमीटर प्रति घंटा होगी।</b>
 
-<h3>उदाहरण 2: एक व्यक्ति 8 घंटे में 64 किलोमीटर की यात्रा करता है। उसका समय कितनी दूरी तय करने में लगेगा अगर वह 10 किलोमीटर प्रति घंटे की गति से चलता है?</h3>
+            <h3>उदाहरण 2: एक व्यक्ति 8 घंटे में 64 किलोमीटर की यात्रा करता है। उसका समय कितनी दूरी तय करने में लगेगा अगर वह 10 किलोमीटर प्रति घंटे की गति से चलता है?</h3>
 
-<center><b>सूत्र: Work = Rate × Time</b></center>
+            <center><b>सूत्र: Work = Rate × Time</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>दर = 10 km/h</li>
-    <li>समय = 8 hours</li>
-    <li>कार्य = 10 × 8 = 80 km</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>दर = 10 km/h</li>
+                <li>समय = 8 hours</li>
+                <li>कार्य = 10 × 8 = 80 km</li>
+            </ul>
 
-<b>उत्तर: व्यक्ति 80 किलोमीटर की दूरी तय करेगा।</b>
+            <b>उत्तर: व्यक्ति 80 किलोमीटर की दूरी तय करेगा।</b>
 
-<section id="PipesCisterns"></section>
-<br />
-<hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
-<h2>पाइप और टंकी (Pipes and Tanks)</h2>
+            <section id="PipesCisterns"></section>
+            <br />
+            <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
+            <h2>पाइप और टंकी (Pipes and Tanks)</h2>
 
-<p>पाइप और टंकी के विषय में गणना करते समय, एक टंकी को भरने और खाली करने वाले पाइपों के काम की दर का अंतर लिया जाता है। यह गणना इस प्रकार की जाती है कि भरने और खाली करने वाली दरें आपस में जोड़कर टंकी भरने में कितना समय लगेगा, यह बताया जा सकता है।</p>
+            <p>
+                पाइप और टंकी के विषय में गणना करते समय, एक टंकी को भरने और खाली करने वाले पाइपों के काम की दर का अंतर लिया जाता है। यह गणना इस प्रकार की जाती है कि भरने और खाली करने वाली दरें आपस में जोड़कर टंकी भरने में कितना समय लगेगा, यह
+                बताया जा सकता है।
+            </p>
 
-<h3>सूत्र</h3>
-<ul>
-  <li><b>समय (Time) = टंकी की क्षमता (Capacity) / (भरने की दर - खाली करने की दर)</b></li>
-  <li><b>काम करने की दर (Work rate) = (भरने की दर) - (खाली करने की दर)</b></li>
-</ul>
+            <h3>सूत्र</h3>
+            <ul>
+                <li><b>समय (Time) = टंकी की क्षमता (Capacity) / (भरने की दर - खाली करने की दर)</b></li>
+                <li><b>काम करने की दर (Work rate) = (भरने की दर) - (खाली करने की दर)</b></li>
+            </ul>
 
-<h3>उदाहरण 1: अगर एक पाइप 4 घंटे में टंकी को भरता है और दूसरा पाइप 6 घंटे में टंकी को खाली करता है, तो दोनों पाइप मिलकर टंकी को कितने घंटे में भरेंगे?</h3>
+            <h3>उदाहरण 1: अगर एक पाइप 4 घंटे में टंकी को भरता है और दूसरा पाइप 6 घंटे में टंकी को खाली करता है, तो दोनों पाइप मिलकर टंकी को कितने घंटे में भरेंगे?</h3>
 
-<center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
+            <center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>भरने की दर = <span class="frac"><span>1</span><span class="bottom">4</span></span> (4 घंटे में टंकी भरता है)</li>
-    <li>खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">6</span></span> (6 घंटे में टंकी खाली करता है)</li>
-    <li>कुल दर = ( <span class="frac"><span>1</span><span class="bottom">4</span></span> - <span class="frac"><span>1</span><span class="bottom">6</span></span> )</li>
-    <li>         = <span class="frac"><span>3</span><span class="bottom">12</span></span> - <span class="frac"><span>2</span><span class="bottom">12</span></span></li>
-    <li>         = <span class="frac"><span>1</span><span class="bottom">12</span></span></li>
-    <li>समय = <span class="frac"><span>1</span><span class="bottom">1/12</span></span> = 12 घंटे</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>
+                    भरने की दर = <span class="frac"><span>1</span><span class="bottom">4</span></span> (4 घंटे में टंकी भरता है)
+                </li>
+                <li>
+                    खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">6</span></span> (6 घंटे में टंकी खाली करता है)
+                </li>
+                <li>
+                    कुल दर = ( <span class="frac"><span>1</span><span class="bottom">4</span></span> - <span class="frac"><span>1</span><span class="bottom">6</span></span> )
+                </li>
+                <li>
+                    = <span class="frac"><span>3</span><span class="bottom">12</span></span> - <span class="frac"><span>2</span><span class="bottom">12</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>1</span><span class="bottom">12</span></span>
+                </li>
+                <li>
+                    समय = <span class="frac"><span>1</span><span class="bottom">1/12</span></span> = 12 घंटे
+                </li>
+            </ul>
 
-<b>उत्तर: दोनों पाइप मिलकर 12 घंटे में टंकी भरेंगे।</b>
+            <b>उत्तर: दोनों पाइप मिलकर 12 घंटे में टंकी भरेंगे।</b>
 
-<h3>उदाहरण 2: एक पाइप 3 घंटे में टंकी को भरता है और दूसरा पाइप 5 घंटे में टंकी को खाली करता है। यदि दोनों पाइप एक साथ काम करते हैं, तो टंकी भरने में कितने घंटे लगेंगे?</h3>
+            <h3>उदाहरण 2: एक पाइप 3 घंटे में टंकी को भरता है और दूसरा पाइप 5 घंटे में टंकी को खाली करता है। यदि दोनों पाइप एक साथ काम करते हैं, तो टंकी भरने में कितने घंटे लगेंगे?</h3>
 
-<center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
+            <center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>भरने की दर = <span class="frac"><span>1</span><span class="bottom">3</span></span> (3 घंटे में टंकी भरता है)</li>
-    <li>खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">5</span></span> (5 घंटे में टंकी खाली करता है)</li>
-    <li>कुल दर = ( <span class="frac"><span>1</span><span class="bottom">3</span></span> - <span class="frac"><span>1</span><span class="bottom">5</span></span> )</li>
-    <li>         = <span class="frac"><span>5</span><span class="bottom">15</span></span> - <span class="frac"><span>3</span><span class="bottom">15</span></span></li>
-    <li>         = <span class="frac"><span>2</span><span class="bottom">15</span></span></li>
-    <li>समय = <span class="frac"><span>1</span><span class="bottom">2/15</span></span> = <span class="frac"><span>15</span><span class="bottom">2</span></span> = 7.5 घंटे</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>
+                    भरने की दर = <span class="frac"><span>1</span><span class="bottom">3</span></span> (3 घंटे में टंकी भरता है)
+                </li>
+                <li>
+                    खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">5</span></span> (5 घंटे में टंकी खाली करता है)
+                </li>
+                <li>
+                    कुल दर = ( <span class="frac"><span>1</span><span class="bottom">3</span></span> - <span class="frac"><span>1</span><span class="bottom">5</span></span> )
+                </li>
+                <li>
+                    = <span class="frac"><span>5</span><span class="bottom">15</span></span> - <span class="frac"><span>3</span><span class="bottom">15</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>2</span><span class="bottom">15</span></span>
+                </li>
+                <li>
+                    समय = <span class="frac"><span>1</span><span class="bottom">2/15</span></span> = <span class="frac"><span>15</span><span class="bottom">2</span></span> = 7.5 घंटे
+                </li>
+            </ul>
 
-<b>उत्तर: दोनों पाइप मिलकर 7.5 घंटे में टंकी भरेंगे।</b>
+            <b>उत्तर: दोनों पाइप मिलकर 7.5 घंटे में टंकी भरेंगे।</b>
 
-<h3>उदाहरण 3: एक पाइप टंकी को 10 घंटे में भरता है और दूसरा पाइप 12 घंटे में टंकी को खाली करता है। यदि दोनों पाइप एक साथ काम कर रहे हैं, तो टंकी को भरने में कितना समय लगेगा?</h3>
+            <h3>उदाहरण 3: एक पाइप टंकी को 10 घंटे में भरता है और दूसरा पाइप 12 घंटे में टंकी को खाली करता है। यदि दोनों पाइप एक साथ काम कर रहे हैं, तो टंकी को भरने में कितना समय लगेगा?</h3>
 
-<center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
+            <center><b>सूत्र: Time = Capacity / (Filling rate - Emptying rate)</b></center>
 
-<b>Solution-</b>
-<ul>
-    <li>भरने की दर = <span class="frac"><span>1</span><span class="bottom">10</span></span> (10 घंटे में टंकी भरता है)</li>
-    <li>खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">12</span></span> (12 घंटे में टंकी खाली करता है)</li>
-    <li>कुल दर = ( <span class="frac"><span>1</span><span class="bottom">10</span></span> - <span class="frac"><span>1</span><span class="bottom">12</span></span> )</li>
-    <li>         = <span class="frac"><span>6</span><span class="bottom">60</span></span> - <span class="frac"><span>5</span><span class="bottom">60</span></span></li>
-    <li>         = <span class="frac"><span>1</span><span class="bottom">60</span></span></li>
-    <li>समय = <span class="frac"><span>1</span><span class="bottom">1/60</span></span> = 60 घंटे</li>
-</ul>
+            <b>Solution-</b>
+            <ul>
+                <li>
+                    भरने की दर = <span class="frac"><span>1</span><span class="bottom">10</span></span> (10 घंटे में टंकी भरता है)
+                </li>
+                <li>
+                    खाली करने की दर = <span class="frac"><span>1</span><span class="bottom">12</span></span> (12 घंटे में टंकी खाली करता है)
+                </li>
+                <li>
+                    कुल दर = ( <span class="frac"><span>1</span><span class="bottom">10</span></span> - <span class="frac"><span>1</span><span class="bottom">12</span></span> )
+                </li>
+                <li>
+                    = <span class="frac"><span>6</span><span class="bottom">60</span></span> - <span class="frac"><span>5</span><span class="bottom">60</span></span>
+                </li>
+                <li>
+                    = <span class="frac"><span>1</span><span class="bottom">60</span></span>
+                </li>
+                <li>
+                    समय = <span class="frac"><span>1</span><span class="bottom">1/60</span></span> = 60 घंटे
+                </li>
+            </ul>
 
-<b>उत्तर: दोनों पाइप मिलकर 60 घंटे में टंकी भरेंगे।</b>
+            <b>उत्तर: दोनों पाइप मिलकर 60 घंटे में टंकी भरेंगे।</b>
 
-<h3>प्रैक्टिस प्रश्न (Practice Questions)</h3>
-<ul>
-    <li>1. यदि एक पाइप 8 घंटे में टंकी भरता है और दूसरा पाइप 6 घंटे में टंकी खाली करता है, तो दोनों मिलकर टंकी को कितने घंटे में भरेंगे?</li>
-    <li>2. एक पाइप 4 घंटे में टंकी भरता है और दूसरा पाइप 5 घंटे में टंकी खाली करता है। अगर दोनों पाइप एक साथ कार्य करें तो टंकी भरने में कितना समय लगेगा?</li>
-</ul>
+            <h3>प्रैक्टिस प्रश्न (Practice Questions)</h3>
+            <ul>
+                <li>1. यदि एक पाइप 8 घंटे में टंकी भरता है और दूसरा पाइप 6 घंटे में टंकी खाली करता है, तो दोनों मिलकर टंकी को कितने घंटे में भरेंगे?</li>
+                <li>2. एक पाइप 4 घंटे में टंकी भरता है और दूसरा पाइप 5 घंटे में टंकी खाली करता है। अगर दोनों पाइप एक साथ कार्य करें तो टंकी भरने में कितना समय लगेगा?</li>
+            </ul>
 
             <section id="TrainProblems"></section>
             <br />
@@ -802,74 +1125,92 @@ CI = A - P <br>
             <h3>उदाहरण 1: ट्रेन की गति ज्ञात करना</h3>
             <p><b>प्रश्न:</b> एक ट्रेन 240 किलोमीटर की दूरी 4 घंटे में तय करती है। ट्रेन की गति ज्ञात करें।</p>
 
-          <center><b>सूत्र: Speed = Distance / Time</b></center>
+            <center><b>सूत्र: Speed = Distance / Time</b></center>
 
-<b>Solution-</b>
-दूरी = 240 km, समय = 4 hours
+            <b>Solution-</b>
+            <ul>
+                <li>दूरी = 240 km</li>
+                <li>समय = 4 hours</li>
+                <li>
+                    गति = <span class="frac"><span>240</span><span class="bottom">4</span></span> = 60 km/h
+                </li>
+            </ul>
 
-गति = <span class="frac"><span>240</span><span class="bottom">4</span></span> = 60 km/h
+            <b>उत्तर:</b> ट्रेन की गति 60 किलोमीटर प्रति घंटा होगी।
 
-<b>उत्तर:</b> ट्रेन की गति 60 किलोमीटर प्रति घंटा होगी।
+            <h3>उदाहरण 2: यात्रा में समय का अनुमान</h3>
+            <p><b>प्रश्न:</b> एक ट्रेन 150 किलोमीटर की दूरी 3 घंटे में तय करती है। ट्रेन की गति का अनुमान करें।</p>
 
-<h3>उदाहरण 2: यात्रा में समय का अनुमान</h3>
-<p><b>प्रश्न:</b> एक ट्रेन 150 किलोमीटर की दूरी 3 घंटे में तय करती है। ट्रेन की गति का अनुमान करें।</p>
+            <center><b>सूत्र: Speed = Distance / Time</b></center>
 
-<center><b>सूत्र: Speed = Distance / Time</b></center>
+            <b>Solution-</b>
+            <ul>
+                <li>दूरी = 150 km</li>
+                <li>समय = 3 hours</li>
+                <li>
+                    गति = <span class="frac"><span>150</span><span class="bottom">3</span></span> = 50 km/h
+                </li>
+            </ul>
 
-<b>Solution-</b>
-दूरी = 150 km, समय = 3 hours
+            <b>उत्तर:</b> ट्रेन की गति 50 किलोमीटर प्रति घंटा होगी।
 
-गति = <span class="frac"><span>150</span><span class="bottom">3</span></span> = 50 km/h
+            <h3>उदाहरण 3: यात्रा में दूरी का अनुमान</h3>
+            <p><b>प्रश्न:</b> एक ट्रेन 80 किलोमीटर प्रति घंटे की गति से यात्रा कर रही है। अगर ट्रेन 5 घंटे तक यात्रा करती है, तो वह कितनी दूरी तय करेगी?</p>
 
-<b>उत्तर:</b> ट्रेन की गति 50 किलोमीटर प्रति घंटा होगी।
+            <center><b>सूत्र: Distance = Speed × Time</b></center>
 
-<h3>उदाहरण 3: यात्रा में दूरी का अनुमान</h3>
-<p><b>प्रश्न:</b> एक ट्रेन 80 किलोमीटर प्रति घंटे की गति से यात्रा कर रही है। अगर ट्रेन 5 घंटे तक यात्रा करती है, तो वह कितनी दूरी तय करेगी?</p>
+            <b>Solution-</b>
+            <ul>
+                <li>गति = 80 km/h</li>
+                <li>समय = 5 hours</li>
+                <li>दूरी = 80 × 5 = 400 km</li>
+            </ul>
 
-<center><b>सूत्र: Distance = Speed × Time</b></center>
+            <b>उत्तर:</b> ट्रेन 5 घंटे में 400 किलोमीटर की दूरी तय करेगी।
 
-<b>Solution-</b>
-गति = 80 km/h, समय = 5 hours
+            <h3>उदाहरण 4: यात्रा में समय का अनुमान</h3>
+            <p><b>प्रश्न:</b> एक ट्रेन की गति 120 किलोमीटर प्रति घंटा है। अगर उसे 360 किलोमीटर की यात्रा करनी है, तो ट्रेन को यात्रा में कितने घंटे लगेंगे?</p>
 
-दूरी = 80 × 5 = 400 km
+            <center><b>सूत्र: Time = Distance / Speed</b></center>
 
-<b>उत्तर:</b> ट्रेन 5 घंटे में 400 किलोमीटर की दूरी तय करेगी।
+            <b>Solution-</b>
+            <ul>
+                <li>दूरी = 360 km</li>
+                <li>गति = 120 km/h</li>
+                <li>
+                    समय = <span class="frac"><span>360</span><span class="bottom">120</span></span> = 3 hours
+                </li>
+            </ul>
 
-<h3>उदाहरण 4: यात्रा में समय का अनुमान</h3>
-<p><b>प्रश्न:</b> एक ट्रेन की गति 120 किलोमीटर प्रति घंटा है। अगर उसे 360 किलोमीटर की यात्रा करनी है, तो ट्रेन को यात्रा में कितने घंटे लगेंगे?</p>
+            <b>उत्तर:</b> ट्रेन को यात्रा करने में 3 घंटे का समय लगेगा।
 
-<center><b>सूत्र: Time = Distance / Speed</b></center>
+            <h3>उदाहरण 5: दूरी का अनुमान</h3>
+            <p><b>प्रश्न:</b> एक ट्रेन की गति 90 किलोमीटर प्रति घंटा है और उसे 8 घंटे तक यात्रा करनी है। ट्रेन कितनी दूरी तय करेगी?</p>
 
-<b>Solution-</b>
-दूरी = 360 km, गति = 120 km/h
+            <center><b>सूत्र: Distance = Speed × Time</b></center>
 
-समय = <span class="frac"><span>360</span><span class="bottom">120</span></span> = 3 hours
+            <b>Solution-</b>
+            <ul>
+                <li>गति = 90 km/h</li>
+                <li>समय = 8 hours</li>
+                <li>दूरी = 90 × 8 = 720 km</li>
+            </ul>
 
-<b>उत्तर:</b> ट्रेन को यात्रा करने में 3 घंटे का समय लगेगा।
+            <b>उत्तर:</b> ट्रेन 8 घंटे में 720 किलोमीटर की दूरी तय करेगी।
 
-<h3>उदाहरण 5: दूरी का अनुमान</h3>
-<p><b>प्रश्न:</b> एक ट्रेन की गति 90 किलोमीटर प्रति घंटा है और उसे 8 घंटे तक यात्रा करनी है। ट्रेन कितनी दूरी तय करेगी?</p>
+            <h3>अवधि और गत्यात्मक प्रश्न</h3>
+            <p><b>प्रश्न:</b> एक ट्रेन की गति 150 किलोमीटर प्रति घंटे है और वह 12 घंटे तक यात्रा करती है। यात्रा की कुल दूरी ज्ञात करें।</p>
 
-<center><b>सूत्र: Distance = Speed × Time</b></center>
+            <center><b>सूत्र: Distance = Speed × Time</b></center>
 
-<b>Solution-</b>
-गति = 90 km/h, समय = 8 hours
+            <b>Solution-</b>
+            <ul>
+                <li>गति = 150 km/h</li>
+                <li>समय = 12 hours</li>
+                <li>दूरी = 150 × 12 = 1800 km</li>
+            </ul>
 
-दूरी = 90 × 8 = 720 km
-
-<b>उत्तर:</b> ट्रेन 8 घंटे में 720 किलोमीटर की दूरी तय करेगी।
-
-<h3>अवधि और गत्यात्मक प्रश्न</h3>
-<p><b>प्रश्न:</b> एक ट्रेन की गति 150 किलोमीटर प्रति घंटे है और वह 12 घंटे तक यात्रा करती है। यात्रा की कुल दूरी ज्ञात करें।</p>
-
-<center><b>सूत्र: Distance = Speed × Time</b></center>
-
-<b>Solution-</b>
-गति = 150 km/h, समय = 12 hours
-
-दूरी = 150 × 12 = 1800 km
-
-<b>उत्तर:</b> ट्रेन 12 घंटे में 1800 किलोमीटर की दूरी तय करेगी।
+            <b>उत्तर:</b> ट्रेन 12 घंटे में 1800 किलोमीटर की दूरी तय करेगी।
 
             <section id="BoatsStreams"></section>
             <br />
@@ -883,10 +1224,14 @@ CI = A - P <br>
 
             <h3>⚙️ मुख्य शब्द:</h3>
             <ul>
-                <li><b>नाव की चाल (Speed of Boat in Still Water):</b> b km/h</li> <br>
-                <li><b>धारा की चाल (Speed of Stream):</b> s km/h</li> <br>
-                <li><b>अनुकूल धारा (Downstream):</b> जब नाव धारा की दिशा में चलती है ⇒ चाल = (b + s)</li> <br>
-                <li><b>प्रतिकूल धारा (Upstream):</b> जब नाव धारा के विपरीत चलती है ⇒ चाल = (b - s)</li> <br>
+                <li><b>नाव की चाल (Speed of Boat in Still Water):</b> b km/h</li>
+                <br />
+                <li><b>धारा की चाल (Speed of Stream):</b> s km/h</li>
+                <br />
+                <li><b>अनुकूल धारा (Downstream):</b> जब नाव धारा की दिशा में चलती है ⇒ चाल = (b + s)</li>
+                <br />
+                <li><b>प्रतिकूल धारा (Upstream):</b> जब नाव धारा के विपरीत चलती है ⇒ चाल = (b - s)</li>
+                <br />
             </ul>
 
             <h3>📐 महत्वपूर्ण सूत्र:</h3>
@@ -932,8 +1277,10 @@ CI = A - P <br>
             <h3>🧮 उदाहरण 1:</h3>
             <p><b>प्रश्न:</b> एक नाव की स्थिर जल में चाल 10 km/h है और धारा की चाल 2 km/h है। अनुकूल और प्रतिकूल धारा में नाव की चाल ज्ञात करें।</p>
             <ul>
-                <li><b>अनुकूल चाल =</b> b + s = 10 + 2 = <b>12 km/h</b></li> <br>
-                <li><b>प्रतिकूल चाल =</b> b - s = 10 - 2 = <b>8 km/h</b></li> <br>
+                <li><b>अनुकूल चाल =</b> b + s = 10 + 2 = <b>12 km/h</b></li>
+                <br />
+                <li><b>प्रतिकूल चाल =</b> b - s = 10 - 2 = <b>8 km/h</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -944,17 +1291,22 @@ CI = A - P <br>
             <ul>
                 <li>
                     <b>चरण 1:</b> Downstream speed = <span class="frac"><span>30</span><span class="bottom">2</span></span> = 15 km/h
-                </li> <br>
+                </li>
+                <br />
                 <li>
                     <b>चरण 2:</b> Upstream speed = <span class="frac"><span>30</span><span class="bottom">3</span></span> = 10 km/h
-                </li> <br>
+                </li>
+                <br />
                 <li>
                     <b>चरण 3:</b> नाव की चाल (b) = <span class="frac"><span>15 + 10</span><span class="bottom">2</span></span> = 12.5 km/h
-                </li> <br>
+                </li>
+                <br />
                 <li>
                     <b>चरण 4:</b> धारा की चाल (s) = <span class="frac"><span>15 - 10</span><span class="bottom">2</span></span> = 2.5 km/h
-                </li> <br>
-                <li><b>उत्तर:</b> नाव = <b>12.5 km/h</b>, धारा = <b>2.5 km/h</b></li> <br>
+                </li>
+                <br />
+                <li><b>उत्तर:</b> नाव = <b>12.5 km/h</b>, धारा = <b>2.5 km/h</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -963,31 +1315,42 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> एक नाव की चाल स्थिर जल में 14 km/h है और धारा की चाल 4 km/h है। नाव को 36 km प्रतिकूल धारा में जाने और लौटने में कितना समय लगेगा?</p>
 
             <ul>
-                <li><b>चरण 1:</b> प्रतिकूल चाल = 14 - 4 = 10 km/h</li> <br>
-                <li><b>चरण 2:</b> अनुकूल चाल = 14 + 4 = 18 km/h</li> <br>
+                <li><b>चरण 1:</b> प्रतिकूल चाल = 14 - 4 = 10 km/h</li>
+                <br />
+                <li><b>चरण 2:</b> अनुकूल चाल = 14 + 4 = 18 km/h</li>
+                <br />
                 <li>
                     <b>चरण 3:</b> प्रतिकूल में समय = <span class="frac"><span>36</span><span class="bottom">10</span></span> = 3.6 घंटे
-                </li> <br>
+                </li>
+                <br />
                 <li>
                     <b>चरण 4:</b> अनुकूल में समय = <span class="frac"><span>36</span><span class="bottom">18</span></span> = 2 घंटे
-                </li> <br>
-                <li><b>कुल समय =</b> 3.6 + 2 = <b>5.6 घंटे</b></li> <br>
+                </li>
+                <br />
+                <li><b>कुल समय =</b> 3.6 + 2 = <b>5.6 घंटे</b></li>
+                <br />
             </ul>
 
             <hr />
 
             <h3>📌 उपयोगी टिप्स:</h3>
             <ul>
-                <li>यदि दूरी समान हो और समय दिया हो, तो चाल = दूरी / समय</li> <br>
-                <li>यदि चाल दी हो और दूरी पूछी जाए, तो दूरी = चाल × समय</li> <br>
-                <li>समय कम, चाल अधिक ⇒ अनुपात का प्रयोग करें</li> <br>
+                <li>यदि दूरी समान हो और समय दिया हो, तो चाल = दूरी / समय</li>
+                <br />
+                <li>यदि चाल दी हो और दूरी पूछी जाए, तो दूरी = चाल × समय</li>
+                <br />
+                <li>समय कम, चाल अधिक ⇒ अनुपात का प्रयोग करें</li>
+                <br />
             </ul>
 
             <h3>🎯 निष्कर्ष:</h3>
             <ul>
-                <li>धारा की चाल जोड़ने से नाव तेजी से जाती है (अनुकूल धारा)</li> <br>
-                <li>धारा की चाल घटाने से नाव धीमी हो जाती है (प्रतिकूल धारा)</li> <br>
-                <li>सभी सवालों में सूत्र एक जैसे हैं — फर्क सिर्फ दूरी, समय, और चाल के रूप में पूछे जाने में होता है।</li> <br>
+                <li>धारा की चाल जोड़ने से नाव तेजी से जाती है (अनुकूल धारा)</li>
+                <br />
+                <li>धारा की चाल घटाने से नाव धीमी हो जाती है (प्रतिकूल धारा)</li>
+                <br />
+                <li>सभी सवालों में सूत्र एक जैसे हैं — फर्क सिर्फ दूरी, समय, और चाल के रूप में पूछे जाने में होता है।</li>
+                <br />
             </ul>
             <section id="AgeProblems"></section>
             <br />
@@ -1000,19 +1363,28 @@ CI = A - P <br>
 
             <h3>🧩 आयु संबंध के मुख्य प्रकार:</h3>
             <ol>
-                <li><b>वर्तमान आयु पर आधारित प्रश्न</b></li> <br>
-                <li><b>भूतकाल की आयु पर आधारित प्रश्न</b></li> <br>
-                <li><b>भविष्य की आयु पर आधारित प्रश्न</b></li> <br>
-                <li><b>संयुक्त आयु या कुल आयु से संबंधित प्रश्न</b></li> <br>
-                <li><b>आयु का अनुपात या अंतर से संबंधित प्रश्न</b></li> <br>
+                <li><b>वर्तमान आयु पर आधारित प्रश्न</b></li>
+                <br />
+                <li><b>भूतकाल की आयु पर आधारित प्रश्न</b></li>
+                <br />
+                <li><b>भविष्य की आयु पर आधारित प्रश्न</b></li>
+                <br />
+                <li><b>संयुक्त आयु या कुल आयु से संबंधित प्रश्न</b></li>
+                <br />
+                <li><b>आयु का अनुपात या अंतर से संबंधित प्रश्न</b></li>
+                <br />
             </ol>
 
             <h3>📌 प्रमुख सूत्र (Important Formulas)</h3>
             <ul>
-                <li><b>n वर्षों बाद की आयु = वर्तमान आयु + n</b></li> <br>
-                <li><b>n वर्षों पहले की आयु = वर्तमान आयु - n</b></li> <br>
-                <li><b>संयुक्त आयु = सभी व्यक्तियों की वर्तमान आयु का योग</b></li> <br>
-                <li><b>अनुपात = एक व्यक्ति की आयु / दूसरे व्यक्ति की आयु</b></li> <br>
+                <li><b>n वर्षों बाद की आयु = वर्तमान आयु + n</b></li>
+                <br />
+                <li><b>n वर्षों पहले की आयु = वर्तमान आयु - n</b></li>
+                <br />
+                <li><b>संयुक्त आयु = सभी व्यक्तियों की वर्तमान आयु का योग</b></li>
+                <br />
+                <li><b>अनुपात = एक व्यक्ति की आयु / दूसरे व्यक्ति की आयु</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1021,14 +1393,20 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> राम और श्याम की वर्तमान आयु का अनुपात 3:4 है। यदि राम की आयु 15 वर्ष है, तो श्याम की आयु ज्ञात कीजिए।</p>
 
             <ul>
-                <li><b>चरण 1:</b> दिया गया अनुपात राम : श्याम = 3 : 4</li> <br>
-                <li><b>चरण 2:</b> यह मान लीजिए कि राम की आयु = 3x और श्याम की आयु = 4x</li> <br>
-                <li><b>चरण 3:</b> लेकिन राम की आयु = 15 वर्ष दी गई है।</li> <br>
-                <li><b>तो 3x = 15</b></li> <br>
+                <li><b>चरण 1:</b> दिया गया अनुपात राम : श्याम = 3 : 4</li>
+                <br />
+                <li><b>चरण 2:</b> यह मान लीजिए कि राम की आयु = 3x और श्याम की आयु = 4x</li>
+                <br />
+                <li><b>चरण 3:</b> लेकिन राम की आयु = 15 वर्ष दी गई है।</li>
+                <br />
+                <li><b>तो 3x = 15</b></li>
+                <br />
                 <li>
                     x = <span class="frac"><span>15</span><span class="bottom">3</span></span> = 5
-                </li> <br>
-                <li><b>चरण 4:</b> अब श्याम की आयु = 4x = 4 × 5 = <b>20 वर्ष</b></li> <br>
+                </li>
+                <br />
+                <li><b>चरण 4:</b> अब श्याम की आयु = 4x = 4 × 5 = <b>20 वर्ष</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1037,11 +1415,16 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> रीता की वर्तमान आयु 10 वर्ष है और उसके भाई की आयु 5 वर्ष है। 5 वर्षों बाद उनका आयु अनुपात क्या होगा?</p>
 
             <ul>
-                <li><b>चरण 1:</b> रीता की वर्तमान आयु = 10 वर्ष, भाई की = 5 वर्ष</li> <br>
-                <li><b>चरण 2:</b> 5 वर्षों बाद रीता = 10 + 5 = 15 वर्ष, भाई = 5 + 5 = 10 वर्ष</li> <br>
-                <li><b>चरण 3:</b> अनुपात = रीता : भाई = 15 : 10</li> <br>
-                <li><b>चरण 4:</b> इसे सरल करने के लिए 5 से भाग दें: (15 ÷ 5) : (10 ÷ 5) = 3 : 2</li> <br>
-                <li><b>उत्तर:</b> 5 वर्षों बाद उनका आयु अनुपात = <b>3 : 2</b></li> <br>
+                <li><b>चरण 1:</b> रीता की वर्तमान आयु = 10 वर्ष, भाई की = 5 वर्ष</li>
+                <br />
+                <li><b>चरण 2:</b> 5 वर्षों बाद रीता = 10 + 5 = 15 वर्ष, भाई = 5 + 5 = 10 वर्ष</li>
+                <br />
+                <li><b>चरण 3:</b> अनुपात = रीता : भाई = 15 : 10</li>
+                <br />
+                <li><b>चरण 4:</b> इसे सरल करने के लिए 5 से भाग दें: (15 ÷ 5) : (10 ÷ 5) = 3 : 2</li>
+                <br />
+                <li><b>उत्तर:</b> 5 वर्षों बाद उनका आयु अनुपात = <b>3 : 2</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1050,11 +1433,16 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> सुषमा की वर्तमान आयु 25 वर्ष है। 10 वर्ष पहले उसकी आयु कितनी थी और उसका अनुपात वर्तमान से क्या होगा?</p>
 
             <ul>
-                <li><b>चरण 1:</b> वर्तमान आयु = 25 वर्ष</li> <br>
-                <li><b>चरण 2:</b> 10 वर्ष पहले = 25 - 10 = 15 वर्ष</li> <br>
-                <li><b>चरण 3:</b> अनुपात = पुरानी आयु : वर्तमान आयु = 15 : 25</li> <br>
-                <li><b>चरण 4:</b> इसे 5 से सरल करें = 3 : 5</li> <br>
-                <li><b>उत्तर:</b> 10 वर्ष पहले आयु = <b>15 वर्ष</b>, अनुपात = <b>3 : 5</b></li> <br>
+                <li><b>चरण 1:</b> वर्तमान आयु = 25 वर्ष</li>
+                <br />
+                <li><b>चरण 2:</b> 10 वर्ष पहले = 25 - 10 = 15 वर्ष</li>
+                <br />
+                <li><b>चरण 3:</b> अनुपात = पुरानी आयु : वर्तमान आयु = 15 : 25</li>
+                <br />
+                <li><b>चरण 4:</b> इसे 5 से सरल करें = 3 : 5</li>
+                <br />
+                <li><b>उत्तर:</b> 10 वर्ष पहले आयु = <b>15 वर्ष</b>, अनुपात = <b>3 : 5</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1063,9 +1451,12 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> मोहन की आयु सोहन से 6 वर्ष अधिक है। यदि सोहन की वर्तमान आयु 14 वर्ष है, तो मोहन की आयु ज्ञात करें।</p>
 
             <ul>
-                <li><b>चरण 1:</b> सोहन की आयु = 14 वर्ष</li> <br>
-                <li><b>चरण 2:</b> मोहन की आयु = सोहन की आयु + 6 = 14 + 6</li> <br>
-                <li><b>उत्तर:</b> मोहन की आयु = <b>20 वर्ष</b></li> <br>
+                <li><b>चरण 1:</b> सोहन की आयु = 14 वर्ष</li>
+                <br />
+                <li><b>चरण 2:</b> मोहन की आयु = सोहन की आयु + 6 = 14 + 6</li>
+                <br />
+                <li><b>उत्तर:</b> मोहन की आयु = <b>20 वर्ष</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1074,14 +1465,20 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> अंजली और सुषमा की कुल आयु 40 वर्ष है। अंजली की आयु, सुषमा की आयु का दुगुना है। उनकी व्यक्तिगत आयु ज्ञात करें।</p>
 
             <ul>
-                <li><b>चरण 1:</b> मान लीजिए सुषमा की आयु = x वर्ष</li> <br>
-                <li><b>चरण 2:</b> तो अंजली की आयु = 2x वर्ष</li> <br>
-                <li><b>चरण 3:</b> कुल = x + 2x = 3x</li> <br>
+                <li><b>चरण 1:</b> मान लीजिए सुषमा की आयु = x वर्ष</li>
+                <br />
+                <li><b>चरण 2:</b> तो अंजली की आयु = 2x वर्ष</li>
+                <br />
+                <li><b>चरण 3:</b> कुल = x + 2x = 3x</li>
+                <br />
                 <li>
                     3x = 40 ⇒ x = <span class="frac"><span>40</span><span class="bottom">3</span></span> ≈ 13.33 वर्ष
-                </li> <br>
-                <li><b>चरण 4:</b> सुषमा = x = 13.33 वर्ष, अंजली = 2x = 26.67 वर्ष</li> <br>
-                <li><b>उत्तर:</b> सुषमा = <b>13.33 वर्ष</b>, अंजली = <b>26.67 वर्ष</b></li> <br>
+                </li>
+                <br />
+                <li><b>चरण 4:</b> सुषमा = x = 13.33 वर्ष, अंजली = 2x = 26.67 वर्ष</li>
+                <br />
+                <li><b>उत्तर:</b> सुषमा = <b>13.33 वर्ष</b>, अंजली = <b>26.67 वर्ष</b></li>
+                <br />
             </ul>
 
             <hr />
@@ -1090,24 +1487,36 @@ CI = A - P <br>
             <p><b>प्रश्न:</b> एक पिता की आयु उसके पुत्र से 24 वर्ष अधिक है। 2 वर्षों बाद पिता की आयु, पुत्र की आयु से दुगुनी हो जाएगी। वर्तमान आयु ज्ञात करें।</p>
 
             <ul>
-                <li><b>चरण 1:</b> मान लीजिए पुत्र की वर्तमान आयु = x वर्ष</li> <br>
-                <li><b>चरण 2:</b> पिता की आयु = x + 24</li> <br>
-                <li><b>चरण 3:</b> 2 वर्षों बाद:</li> <br>
+                <li><b>चरण 1:</b> मान लीजिए पुत्र की वर्तमान आयु = x वर्ष</li>
+                <br />
+                <li><b>चरण 2:</b> पिता की आयु = x + 24</li>
+                <br />
+                <li><b>चरण 3:</b> 2 वर्षों बाद:</li>
+                <br />
                 <ul>
-                    <li>पुत्र = x + 2</li> <br>
-                    <li>पिता = x + 24 + 2 = x + 26</li> <br>
+                    <li>पुत्र = x + 2</li>
+                    <br />
+                    <li>पिता = x + 24 + 2 = x + 26</li>
+                    <br />
                 </ul>
-                <li><b>चरण 4:</b> दिया गया है कि पिता = 2 × पुत्र ⇒ x + 26 = 2(x + 2)</li> <br>
+                <li><b>चरण 4:</b> दिया गया है कि पिता = 2 × पुत्र ⇒ x + 26 = 2(x + 2)</li>
+                <br />
                 <li>
                     <b>चरण 5:</b> समीकरण हल करें:
                     <ul>
-                        <li>x + 26 = 2x + 4</li> <br>
-                        <li>26 - 4 = 2x - x</li> <br>
-                        <li>22 = x</li> <br>
+                        <li>x + 26 = 2x + 4</li>
+                        <br />
+                        <li>26 - 4 = 2x - x</li>
+                        <br />
+                        <li>22 = x</li>
+                        <br />
                     </ul>
-                </li> <br>
-                <li><b>चरण 6:</b> पुत्र = 22 वर्ष, पिता = 22 + 24 = <b>46 वर्ष</b></li> <br>
-                <li><b>उत्तर:</b> पुत्र = <b>22 वर्ष</b>, पिता = <b>46 वर्ष</b></li> <br>
+                </li>
+                <br />
+                <li><b>चरण 6:</b> पुत्र = 22 वर्ष, पिता = 22 + 24 = <b>46 वर्ष</b></li>
+                <br />
+                <li><b>उत्तर:</b> पुत्र = <b>22 वर्ष</b>, पिता = <b>46 वर्ष</b></li>
+                <br />
             </ul>
             <hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;" />
 
