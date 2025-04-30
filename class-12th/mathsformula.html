@@ -719,1642 +719,233 @@ A<sup>−1</sup> =
                 </tbody>
             </table>
             
- </section>
-<hr style="border: none; height: 5px; background-color: orange; margin: 20px 0;">
-<section id="Trigonometry"> <h2>Tigonometry</h2>
+
+            
+            <br>
+           <h3>📘 1. सीमाएँ (Limits) के सूत्र:</h3>
+<ul> <li><b>lim</b><sub>x→a</sub> c = c</li> <li><b>lim</b><sub>x→a</sub> x = a</li> <li><b>lim</b><sub>x→a</sub> [f(x) ± g(x)] = lim f(x) ± lim g(x)</li> <li><b>lim</b><sub>x→a</sub> [f(x) × g(x)] = lim f(x) × lim g(x)</li> <li><b>lim</b><sub>x→a</sub> [f(x) / g(x)] = lim f(x) / lim g(x), जब lim g(x) ≠ 0</li> <li><b>lim</b><sub>x→0</sub> (sin x)/x = 1</li> <li><b>lim</b><sub>x→0</sub> (tan x)/x = 1</li> <li><b>lim</b><sub>x→0</sub> (1 - cos x)/x<sup>2</sup> = 1/2</li> <li><b>lim</b><sub>x→∞</sub> (1 + 1/x)<sup>x</sup> = e</li> </ul>
+<h3>📘 2. बाएँ और दाएँ सीमा (Left & Right Limits):</h3>
+<ul> <li>बाएँ सीमा (Left Hand Limit): lim<sub>x→a⁻</sub> f(x)</li> <li>दाएँ सीमा (Right Hand Limit): lim<sub>x→a⁺</sub> f(x)</li> <li>यदि lim<sub>x→a⁻</sub> f(x) = lim<sub>x→a⁺</sub> f(x), तब सीमा अस्तित्व में है।</li> </ul>
+<h3>📘 3. बिंदु पर सांतत्य (Continuity at a Point):</h3>
+<ul> <li>f(x) किसी बिंदु x = a पर सतत (Continuous) है यदि:</li> <li>lim<sub>x→a</sub> f(x) = f(a)</li> <li>अर्थात:</li> <ul> <li>f(a) परिभाषित हो</li> <li>lim<sub>x→a</sub> f(x) अस्तित्व में हो</li> <li>lim<sub>x→a</sub> f(x) = f(a)</li> </ul> </ul>
+<h3>📘 4. अंतराल में सांतत्य (Continuity in Interval):
+<ul> <li>यदि f(x) दिए गए अंतराल के प्रत्येक बिंदु पर सतत हो तो वह उस अंतराल में सतत कहलाती है।</li> </ul>
+<h3>📘 5. अवकलनीयता की परिभाषा (Definition of Differentiability):</h3>
+<ul> <li>f(x) एक बिंदु x = a पर अवकलनीय है यदि:</li> <li>lim<sub>h→0</sub> <span class="frac"><span>f(a + h) - f(a)</span><span class="symbol">/</span><span class="bottom">h</span></span> का मान अस्तित्व में हो</li> <li>यदि f(x) अवकलनीय है, तो वह सतत भी होती है, परंतु सतत होना अवकलनीयता की गारंटी नहीं देता।</li> </ul>
+<h3>📘 6. चेन नियम द्वारा अवकलज (Chain Rule):</h3>
+<ul> <li>यदि y = f(u) और u = g(x), तो:</li> <li><b>dy/dx = (dy/du) × (du/dx)</b></li> </ul>
+<h3>📘 7. अंतर्निहित फलनों का अवकलन (Implicit Differentiation):</h3>
+<ul> <li>यदि x और y आपस में जुड़े हों और प्रत्यक्ष रूप से y = f(x) नहीं लिखा जा सकता तो:</li> <li>उदाहरण: x<sup>2</sup> + y<sup>2</sup> = 1</li> <li>दोनों पक्षों का x के सापेक्ष अवकलन करें और y को y के रूप में रहने दें, पर dy/dx के रूप में अवकलन करें।</li> </ul>
+<h3>📘 8. लघुगणकीय अवकलन (Logarithmic Differentiation):</h3>
+
+<ul> <li>जब कोई फलन गुणन या घात रूप में हो:</li> <li>y = f(x)<sup>g(x)</sup> ⇒ ln y = g(x) ln f(x)</li> <li>फिर दोनों पक्षों का अवकलन करें:</li> <li><b>(dy/dx) / y = d/dx [g(x) ln f(x)]</b></li> <li>अंत में, dy/dx = y × [डेरिवेटिव]</li> </ul>
+<h3>📘 9. व्युत्क्रम त्रिकोणमितीय फलनों के अवकलन (Inverse Trigonometric Functions Derivatives):</h3>
+<table border="1" cellpadding="5" cellspacing="0"> <tr><th>Function</th><th>Derivative</th></tr> <tr><td>d/dx (sin⁻¹x)</td><td><span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">√(1 - x²)</span></span></td></tr> <tr><td>d/dx (cos⁻¹x)</td><td><span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">√(1 - x²)</span></span></td></tr> <tr><td>d/dx (tan⁻¹x)</td><td><span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1 + x²</span></span></td></tr> <tr><td>d/dx (cot⁻¹x)</td><td><span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">1 + x²</span></span></td></tr> <tr><td>d/dx (sec⁻¹x)</td><td><span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">|x|√(x² − 1)</span></span></td></tr> <tr><td>d/dx (cosec⁻¹x)</td><td><span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">|x|√(x² − 1)</span></span></td></tr> </table>
 
 
- <h2 id="Relations between Trigonometric Functions"><br><b class="color-content1">Relations between Trigonometric Functions</b></h2>
-                
-                <p id="Addition-&-Subtraction-Formulas"><br><br><b class="color-content5">Addition and Subtraction Formulas</b></p>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <td>sin(x + y)</td>
-                            
-                            <td>sin x cos y + sin y cos x</td>
-                        </tr>
-                        <tr>
-                            <td>sin(x - y)</td>
-                            
-                            <td>sin x cos y - sin y cos x</td>
-                        </tr>
-                        <tr>
-                            <td>cos(x + y)</td>
-                            
-                            <td>- cos x cos y - sin x sin y</td>
-                        </tr>
-                        <tr>
-                            <td>cos(x - y)</td>
-                            
-                            <td>- cos x cos y + sin x sin y</td>
-                        </tr>
-                        <tr>
-                            <td>tan (x + y) </td>
-                            
-                            <td><span class="frac">tan x + tan y<span class="bottom">1 - tan x . tan y</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>tan (x - y) </td>
-                            
-                            <td><span class="frac">tan x - tan y<span class="bottom">1 + tan x . tan y</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot (x + y) </td>
-                            
-                            <td><span class="frac">1 - tan x . tan y<span class="bottom">tan x + tan y</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot (x - y) </td>
-                            
-                            <td><span class="frac">1 + tan x . tan y<span class="bottom">tan x - tan y</span></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p id="Double-Angle-Formulas"><br><br><b class="color-content5">Double Angle Formulas&nbsp;</b></p>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <td>sin 2θ</td>
-                            
-                            <td>2sinθcosθ</td>
-                        </tr>
-                        <tr>
-                            <td>cos 2θ</td>
-                            
-                            <td>cos<sup>2</sup>θ-sin<sup>2</sup>θ Or 1-2sin<sup>2</sup>θ Or 2 cos<sup>2</sup>θ-1</td>
-                        </tr>
-                        <tr>
-                            <td>tan 2θ</td>
-                            
-                            <td><span class="frac">2 tanθ<span class="bottom">1-tan<sup>2</sup>θ</span></span> or <span class="frac">2<span class="bottom">cotθ - tanθ</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot 2θ</td>
-                            
-                            <td><span class="frac">cot<sup>2</sup>θ - 1<span class="bottom">2 cotθ</span></span> or <span class="frac">cotθ - tanθ<span class="bottom">2</span></span></td>
-                        </tr>
-                    </tbody>
-                </table>
+
+<h3>📘 1. मूल सिद्धांत से अवकलज (Derivative from First Principles):</h3>
+<ul> <li><b>f'(x) = lim<sub>h→0</sub> <span class="frac"><span>f(x + h) - f(x)</span><span class="symbol">/</span><span class="bottom">h</span></span></b></li> </ul>
+यह सूत्र अवकलन की मूल परिभाषा है, जिसका उपयोग किसी भी सामान्य फलन के अवकलज को निकालने के लिए किया जाता है।
+
+<h3>📘 2. घातांक फलनों का अवकलन (Derivatives of Exponential Functions):</h3>
+<ul> <li><b>d/dx (a<sup>x</sup>) = a<sup>x</sup> ln a</b></li> <li><b>d/dx (e<sup>x</sup>) = e<sup>x</sup></b></li> <li><b>d/dx (a<sup>f(x)</sup>) = a<sup>f(x)</sup> ln a × f'(x)</b></li> </ul>
+<h3>📘 3. त्रिकोणमितीय फलनों का अवकलन (Derivatives of Trigonometric Functions):</h3>
+<table border="1" cellpadding="5" cellspacing="0"> <tr><th>Function</th><th>Derivative</th></tr> <tr><td>d/dx (sin x)</td><td>cos x</td></tr> <tr><td>d/dx (cos x)</td><td>−sin x</td></tr> <tr><td>d/dx (tan x)</td><td>sec<sup>2</sup> x</td></tr> <tr><td>d/dx (cot x)</td><td>−csc<sup>2</sup> x</td></tr> <tr><td>d/dx (sec x)</td><td>sec x tan x</td></tr> <tr><td>d/dx (cosec x)</td><td>−cosec x cot x</td></tr> </table>
+<h3>📘 4. व्युत्क्रम त्रिकोणमितीय फलनों का अवकलन (Derivatives of Inverse Trigonometric Functions):</h3>
+<ul> <li><b>d/dx (sin⁻¹x) = <span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">√(1 - x²)</span></span></b></li> <li><b>d/dx (cos⁻¹x) = <span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">√(1 - x²)</span></span></b></li> <li><b>d/dx (tan⁻¹x) = <span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">1 + x²</span></span></b></li> <li><b>d/dx (cot⁻¹x) = <span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">1 + x²</span></span></b></li> <li><b>d/dx (sec⁻¹x) = <span class="frac"><span>1</span><span class="symbol">/</span><span class="bottom">|x|√(x² − 1)</span></span></b></li> <li><b>d/dx (cosec⁻¹x) = <span class="frac"><span>−1</span><span class="symbol">/</span><span class="bottom">|x|√(x² − 1)</span></span></b></li> </ul>
+<h3>📘 5. अतिरेक फलनों (Hyperbolic Functions) का अवकलन (Derivatives of Hyperbolic Functions):</h3>
+<table border="1" cellpadding="5" cellspacing="0"> <tr><th>Function</th><th>Derivative</th></tr> <tr><td>d/dx (sinh x)</td><td>cosh x</td></tr> <tr><td>d/dx (cosh x)</td><td>sinh x</td></tr> <tr><td>d/dx (tanh x)</td><td>sech<sup>2</sup> x</td></tr> <tr><td>d/dx (coth x)</td><td>−csch<sup>2</sup> x</td></tr> <tr><td>d/dx (sech x)</td><td>−sech x tanh x</td></tr> <tr><td>d/dx (csch x)</td><td>−csch x coth x</td></tr> </table>
+<h3>📘 6. जोड़, गुणा, भाग तथा श्रृंखला नियम (Sum, Product, Quotient, and Chain Rule):</h3>
+<ul> <li><b>Sum Rule:</b> <span class="frac"><span>d/dx [f(x) + g(x)] = f'(x) + g'(x)</span></span></li> <li><b>Product Rule:</b> <span class="frac"><span>d/dx [f(x) × g(x)] = f'(x)g(x) + f(x)g'(x)</span></span></li> <li><b>Quotient Rule:</b> <span class="frac"><span>d/dx [f(x) / g(x)] = (g(x)f'(x) − f(x)g'(x)) / g(x)<sup>2</sup></span></span></li> <li><b>Chain Rule:</b> <span class="frac"><span>d/dx [f(g(x))] = f'(g(x)) × g'(x)</span></span></li> </ul>
+<h3>📘 7. पैरामीट्रिक रूप से परिभाषित फलनों का अवकलन (Parametric Differentiation):</h3>
+<ul> <li>यदि x = f(t) और y = g(t) हो, तो:</li> <li><b>dx/dt = f'(t)</b></li> <li><b>dy/dt = g'(t)</b></li> <li>अब <b>dy/dx = (dy/dt) / (dx/dt)</b></li> </ul>
+<h3>📘 8. उच्च कोटि के अवकलज (Higher Order Derivatives):</h3>
+<ul> <li>यदि f'(x) = f<sup>1</sup>(x) हो, तो:</li> <li>f''(x) = d/dx [f'(x)] = f<sup>2</sup>(x)</li> <li>f<sup>n</sup>(x) = d<sup>n</sup>/dx<sup>n</sup> [f(x)]</li> <li>उच्चतम कोटि के अवकलज को n<sup>th</sup> derivative कहा जाता है।</li> </ul>
 
 
-<p id="Multiple-Angle-Formulas"><br><br><b>Multiple Angle Formulas</b></p>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <td>sin 3θ</td>
-                            
-                            <td>3 sinθ−4 sin³θ</td>
-                        </tr>
-                        <tr>
-                            <td>sin 4θ</td>
-                            
-                            <td>4 sinθ.cosθ - 8 sin<sup>3</sup>θ.cosθ</td>
-                        </tr>
-                        <tr>
-                            <td>sin 5θ</td>
-                            
-                            <td>5 sinθ-20 sin<sup>3</sup>θ + 16 sin<sup>5</sup>θ</td>
-                        </tr>
-                        <tr>
-                            <td>cos 3θ</td>
-                            
-                            <td>4 cos<sup>3</sup>θ − 3 cosθ = cos<sup>3</sup>θ . sin<sup>2</sup>θ</td>
-                        </tr>
-                        <tr>
-                            <td>cos 4θ</td>
-                            
-                            <td>8 cos<sup>4</sup>θ − 8 cos<sup>2</sup>θ + 1</td>
-                        </tr>
-                        <tr>
-                            <td>cos 5θ</td>
-                            
-                            <td>16 cos<sup>5</sup>θ − 20 cos<sup>3</sup>θ + 5 cosθ</td>
-                        </tr>
-                        <tr>
-                            <td>tan 3θ</td>
-                            
-                            <td><span class="frac">3 tan θ - tan<sup>3</sup>θ<span class="bottom">1 - 3 tan<sup>2</sup>θ</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>tan 4θ</td>
-                            
-                            <td><span class="frac">4 tan θ - 4 tan<sup>3</sup>θ<span class="bottom">1 - 6 tan<sup>2</sup>θ + tan<sup>4</sup>θ</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>tan 5θ</td>
-                            
-                            <td><span class="frac">tan<sup>5</sup>θ - 10 tan<sup>3</sup>θ + 5 tanθ<span class="bottom">1 - 10 tan<sup>2</sup>θ + 5 tan<sup>4</sup>θ</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot 3θ</td>
-                            
-                            <td>4 cos³θ − 3 cosθ</td>
-                        </tr>
-                        <tr>
-                            <td>cot 4θ</td>
-                            
-                            <td><span class="frac">1 - 6 tan<sup>2</sup>θ + tan<sup>4</sup>θ<span class="bottom">4 tan θ - 4 tan<sup>3</sup>θ</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot 5θ</td>
-                            
-                            <td><span class="frac">1 - 10 tan<sup>2</sup>θ + 5 tan<sup>4</sup>θ<span class="bottom">tan<sup>5</sup>θ - 10 tan<sup>3</sup>θ + 5 tan θ</span></span></td>
-                        </tr>
-                    </tbody>
-                </table><br>
 
+
+
+ <h2>अवकलज के अनुप्रयोग (Applications of Derivatives)</h2>
+
+    <h3>📘 1. बढ़ती एवं घटती फलन की पहचान (Identification of Increasing and Decreasing Functions)</h3>
+    <p><b>बढ़ती फलन (Increasing Function):</b> यदि f'(x) > 0, तो f(x) फलन बढ़ता है।</p>
+    <p><b>घटती फलन (Decreasing Function):</b> यदि f'(x) < 0, तो f(x) फलन घटता है।</p>
+    <p><b>स्थिर फलन (Constant Function):</b> यदि f'(x) = 0, तो f(x) फलन स्थिर रहता है।</p>
+
+    <h3>📘 2. अधिकतम और न्यूनतम मान (Maximum and Minimum Values)</h3>
+    <p><b>स्थानीय अधिकतम (Local Maximum):</b> यदि f'(x) = 0 और f''(x) < 0, तो यह अधिकतम मान होता है।</p>
+    <p><b>स्थानीय न्यूनतम (Local Minimum):</b> यदि f'(x) = 0 और f''(x) > 0, तो यह न्यूनतम मान होता है।</p>
+    <p><b>संपूर्ण अधिकतम और न्यूनतम (Global Maximum and Minimum):</b> यह पूरे डोमेन में पाया जा सकता है।</p>
+
+    <h3>📘 3. पहले अवकलज की परीक्षा (First Derivative Test)</h3>
+    <p>पहले अवकलज का उपयोग किसी भी बिंदु पर फलन के बढ़ने या घटने की दिशा को जानने के लिए किया जाता है।</p>
+    <p><b>विधि:</b> 
+        <ul>
+            <li>फलन f'(x) = 0 पर इसे हल करें।</li>
+            <li>फिर पहले अवकलज के संकेत को बदलने का परीक्षण करें।</li>
+            <li>यदि f'(x) की दिशा बदलती है, तो अधिकतम या न्यूनतम मान प्राप्त होता है।</li>
+        </ul>
     
-                <h2>
 
-                    
-                    <p id="Half-Angle-Formulas"><br><br><b>Half Angle Formulas</b></p>
-                </h2><table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Function</th>
-                            <th>Half-Angle Formula</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>sin(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((1 - cos(θ)) / 2)</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cos(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((1 + cos(θ)) / 2)</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>tan(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((1 - cos(θ)) / (1 + cos(θ)))</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>tan(θ/2)</td>
-                            <td>sin(θ) / (1 + cos(θ))</td>
-                        </tr>
-                        <tr>
-                            <td>tan(θ/2)</td>
-                            <td>(1 - cos(θ)) / sin(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>sec(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((2) / (1 + cos(θ)))</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>csc(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((2) / (1 - cos(θ)))</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>cot(θ/2)</td>
-                            <td>±&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">((1 + cos(θ)) / (1 - cos(θ)))</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>sec(θ/2)</td>
-                            <td>(1 + cos(θ)) / cos(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>csc(θ/2)</td>
-                            <td>(1 - cos(θ)) / sin(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>cot(θ/2)</td>
-                            <td>(1 + cos(θ)) / sin(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>sec(θ/2)</td>
-                            <td>1 / cos(θ/2)</td>
-                        </tr>
-                        <tr>
-                            <td>csc(θ/2)</td>
-                            <td>1 / sin(θ/2)</td>
-                        </tr>
-                        <tr>
-                            <td>cot(θ/2)</td>
-                            <td>1 / tan(θ/2)</td>
-                        </tr>
-                        <tr>
-                            <td>sin α</td>
-                            <td><span class="frac"><span>2 tan(<span class="frac"><span>α</span><span class="bottom">2</span></span>)</span><span class="bottom">1 + tan<sup>2</sup>(<span class="frac"><span>α</span><span class="bottom">2</span></span>)</span></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+    <h3>📘 4. द्वितीय अवकलज की परीक्षा (Second Derivative Test)</h3>
+    <p>द्वितीय अवकलज का उपयोग अधिकतम या न्यूनतम बिंदुओं को पहचानने के लिए किया जाता है।</p>
+    <p><b>विधि:</b> 
+        <ul>
+            <li>यदि f''(x) > 0, तो बिंदु न्यूनतम होता है।</li>
+            <li>यदि f''(x) < 0, तो बिंदु अधिकतम होता है।</li>
+            <li>यदि f''(x) = 0, तो कोई निश्चित निर्णय नहीं लिया जा सकता।</li>
+        </ul>
+    
 
-                  
-            
-               <h2>
-                <p id="Product-to-Sum-Formulas"><br><br><b>Product to Sum Formulas:</b></p></h2>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Identity</th>
-                            <th>Formula</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Sine and Cosine</td>
-                            <td>
-                                <p><b>sin A cos B</b> = ½ [sin (A + B) + sin (A - B)]</p>
-                                <p><b>cos A sin B</b> = ½ [sin (A + B) - sin (A - B)]</p>
-                                <p><b>cos A cos B</b> = ½ [cos (A + B) + cos (A - B)]</p>
-                                <p><b>sin A sin B</b> = ½ [cos (A - B) - cos (A + B)]</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            
-                <h2>
-                    <p id="Sum-to-Product-Formulas"><br><br><b>Sum to Product Formulas</b></p>
-                </h2>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Identity</th>
-                            <th>Formula</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Sine and Cosine</td>
-                            <td>
-                                <p><b>sin A + sin B</b> = 2 sin (½ (A + B)) cos (½ (A - B))</p>
-                                <p><b>sin A - sin B</b> = 2 cos (½ (A + B)) sin (½ (A - B))</p>
-                                <p><b>cos A + cos B</b> = 2 cos (½ (A + B)) cos (½ (A - B))</p>
-                                <p><b>cos A - cos B</b> = -2 sin (½ (A + B)) sin (½ (A - B))</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+    <h3>📘 5. स्पर्शरेखा और लंब (Tangents and Normals)</h3>
+    <p><b>स्पर्शरेखा (Tangent):</b> 
+        स्पर्शरेखा उस बिंदु पर फलन के अवकलज की दिशा होती है। यदि f'(a) = m, तो स्पर्शरेखा का समीकरण होगा: 
+        <b>y - f(a) = m(x - a)</b>.
+    </p>
+
+    <p><b>लंब (Normal):</b>
+        लंब, स्पर्शरेखा पर लंबवत रेखा होती है। इसका समीकरण होता है:
+        <b>y - f(a) = -1/m(x - a)</b>.
+    </p>
+
+    <h3>📘 6. दर परिवर्तन (Rate of Change)</h3>
+    <p><b>दर परिवर्तन (Rate of Change):</b> यह एक ऐसा अनुप्रयोग है, जो वास्तविक जीवन में बदलाव की दर को मापता है, जैसे गति, वृद्धि, और गिरावट आदि।</p>
+    <p>दृष्टांत:
+        <ul>
+            <li>गति = <span class="frac"><span>ds</span><span class="symbol">/</span><span class="bottom">dt</span></span></li>
+            <li>वृद्धि दर = <span class="frac"><span>dx</span><span class="symbol">/</span><span class="bottom">dy</span></span></li>
+        </ul>
+    </p>
+
+    <h3>📘 7. सन्निकटन (Approximation)</h3>
+    <p><b>सन्निकटन (Approximation):</b> यह प्रक्रिया किसी फलन के मान को उस बिंदु के निकटतम सन्निकटन द्वारा मानने की होती है।</p>
+    <p><b>विधि:</b> 
+        <ul>
+            <li>बड़े x के लिए किसी भी समीकरण का लघुगणकीय सन्निकटन किया जाता है।</li>
+            <li>इसके लिए, x के मान का उपयोग करके हम कुछ निश्चित रेंज में मान प्राप्त कर सकते हैं।</li>
+        </ul>
+   
+   
+   
+   
+   
+   
+   
+   
+       <h1>समाकलन (Integration)</h1>
+
+    <h3>📘 1. अनिश्चित समाकलन के मूलभूत सूत्र (Fundamental Formulas of Indefinite Integration)</h3>
+    <p><b>अनिश्चित समाकलन (Indefinite Integral):</b> 
+        ∫ f(x) dx = F(x) + C, जहाँ C समाकलन का स्थिरांक होता है।
+    </p>
+    <p>यह समाकलन किसी फलन f(x) का अवकलज के विपरीत होता है।</p>
+
+    <h3>📘 2. प्रतिस्थापन द्वारा समाकलन (Integration by Substitution)</h3>
+    <p><b>प्रतिस्थापन द्वारा समाकलन (Integration by Substitution):</b> 
+        यदि u = g(x), तो फिर ∫ f(g(x)) g'(x) dx = ∫ f(u) du।
+    </p>
+    <p>यह विधि तब प्रयोग की जाती है जब समाकलन में कुछ जटिलता हो और किसी उपयुक्त परिवर्तन से इसे सरल किया जा सके।</p>
+
+    <h3>📘 3. खंडों में समाकलन (Integration by Parts)</h3>
+    <p><b>खंडों में समाकलन (Integration by Parts):</b> 
+        ∫ u dv = uv - ∫ v du, यह सूत्र उत्पाद के समाकलन के लिए होता है।
+    </p>
+    <p>यह विधि तब उपयोग की जाती है जब फलन के भागों को अलग-अलग समाकलित करना सरल हो।</p>
+
+    <h3>📘 4. आंशिक भिन्नों द्वारा समाकलन (Integration by Partial Fractions)</h3>
+    <p><b>आंशिक भिन्नों द्वारा समाकलन (Integration by Partial Fractions):</b>
+        यदि f(x) को भिन्नों के रूप में व्यक्त किया जा सकता है, तो उसे भागों में विभाजित करके समाकलन किया जाता है।
+    </p>
+    <p>उदाहरण के लिए, यदि ∫(P(x)/Q(x)) dx, तो इसे आंशिक भिन्नों में विभाजित करके समाकलित किया जाता है।</p>
+
+    <h3>📘 5. त्रिकोणमितीय फलनों का समाकलन (Integration of Trigonometric Functions)</h3>
+    <p><b>त्रिकोणमितीय फलनों का समाकलन (Integration of Trigonometric Functions):</b>
+        ∫ sin(x) dx = -cos(x) + C,<br>
+        ∫ cos(x) dx = sin(x) + C,<br>
+        ∫ sec²(x) dx = tan(x) + C,<br>
+        ∫ csc²(x) dx = -cot(x) + C,<br>
+        ∫ tan(x) dx = -ln|cos(x)| + C,<br>
+        ∫ cot(x) dx = ln|sin(x)| + C
+    </p>
+    
+    
+    
+    
+    
+    
+    <h3>📘 6. विशेष समाकलन (Special Integrals)</h3>
+∫e<sup>x</sup>f(x) dx
+html
+Copy
+Edit
+<p><b>विशेष समाकलन 1:</b> ∫ e<sup>x</sup> f(x) dx = e<sup>x</sup> ∫ f(x) dx</p>
+<p>यह समाकलन तब उपयोग किया जाता है जब किसी फलन में e<sup>x</sup> शामिल हो।</p>
+∫f′(x)/f(x) dx = log|f(x)| + C
+html
+Copy
+Edit
+<p><b>विशेष समाकलन 2:</b> ∫ (f′(x)/f(x)) dx = log|f(x)| + C</p>
+<p>यह समाकलन तब प्रयोग किया जाता है जब किसी फलन का अनुपात उसकी स्वयं की अवकलज से होता है।</p><h3>
+<h3>📘 7. निश्चित समाकलन के गुण (Properties of Definite Integrals)</h3>
+html
+Copy
+Edit
+<p><b>दृष्टांत:</b> यदि a और b निश्चित सीमा हैं, तो समाकलन के कुछ गुण इस प्रकार हैं:</p>
+<ul>
+    <li>∫<sub>a</sub><sup>b</sup> f(x) dx = - ∫<sub>b</sub><sup>a</sup> f(x) dx (सीमाओं का परिवर्तन)</li>
+    <li>∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) - F(a), जहाँ F(x) f(x) का अवकलज है।</li>
+    <li>∫<sub>a</sub><sup>a</sup> f(x) dx = 0 (यदि सीमाएँ समान हैं)</li>
+</ul><h3>
+<h3>📘 8. वक्रों के क्षेत्रफल का निर्धारण (Determining Area Under Curves)</h3>
+html
+Copy
+Edit
+<p><b>वक्रों के क्षेत्रफल का निर्धारण (Area Under Curves):</b> 
+    वक्र के नीचे के क्षेत्रफल का निर्धारण निश्चित समाकलन द्वारा किया जाता है। यह समीकरण इस प्रकार होता है: 
+    <b>A = ∫<sub>a</sub><sup>b</sup> f(x) dx</b>, जहाँ A वक्र द्वारा घेरित क्षेत्रफल है।</p>
+<p>यह सूत्र किसी कर्व द्वारा निर्धारित क्षेत्र को ज्ञात करने के लिए उपयोग किया जाता है।</p>
 
 
 
 
 
-            <h2><p id="Chebyshev-Polynomials"><br><br><b>Chebyshev Polynomials (चेबिशेव बहुपद)</b></p></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Polynomial</th>
-                        <th>Formula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>First Kind (प्रथम प्रकार)</td>
-                        <td>
-                            <p><b>Tₙ(x)</b> = cos(n cos⁻¹(x))</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Second Kind (द्वितीय प्रकार)</td>
-                        <td>
-                            <p><b>Uₙ(x)</b> = sin((n+1) cos⁻¹(x)) / sin(cos⁻¹(x))</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <p id="Exponential-Trigonometric-Functions"><br><br><b>Exponential Form of Trigonometric Functions (त्रिकोणमितीय संख्याओं के घातांक रूप)</b></p>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Formula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Euler's Formulas (यूलर के फॉर्मूला)</td>
-                        <td>
-                            <p><b>e<sup>(iθ)</sup></b> = cos(θ) + i sin(θ)</p>
-                            <p><b>e<sup>(-iθ)</sup></b> = cos(θ) - i sin(θ)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>sin(θ) and cos(θ)</td>
-                        <td>
-                            <p><b>sin(θ)</b> = (e<sup>(iθ)</sup> - e<sup>(-iθ)</sup>) / 2i</p>
-                            <p><b>cos(θ)</b> = (e<sup>(iθ)</sup> + e<sup>(-iθ)</sup>) / 2</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table><br>
-            
-            <h2 id="Sum-Difference-Identities-Inverse-Trigonometric-Functions"><br><br><b>Sum and Difference Identities for Inverse Trigonometric Functions (प्रतिलोम त्रिकोणमितीय संख्याओं के योग और अंतर संख्याएँ)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Identity</th>
-                        <th>Formula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sum Formulas (योग फॉर्मूला)</td>
-                        <td>
-                            <p><b>sin⁻¹(x) + sin⁻¹(y)</b> = sin⁻¹(x&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-y²</span></span> + y&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-x²</span></span>)</p>
-                            <p><b>cos⁻¹(x) + cos⁻¹(y)</b> = cos⁻¹(xy - &nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-x²</span></span>&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-y²</span></span>)</p>
-                            <p><b>tan⁻¹(x) + tan⁻¹(y)</b> = tan⁻¹((x + y) / (1 - xy))</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Difference Formulas (अंतर फॉर्मूला)</td>
-                        <td>
-                            <p><b>sin⁻¹(x) - sin⁻¹(y)</b> = sin⁻¹(x&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-y²</span></span> - y&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-x²</span></span>)</p>
-                            <p><b>cos⁻¹(x) - cos⁻¹(y)</b> = cos⁻¹(xy + &nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-x²</span></span>&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">1-y²</span></span>)</p>
-                            <p><b>tan⁻¹(x) - tan⁻¹(y)</b> = tan⁻¹((x - y) / (1 + xy))</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            
-            
-            <br>
-            
-            <h2 id="Transformations-Using-Trigonometric-Identities"><br><br><b>Transformations Using Trigonometric Identities (त्रिकोणमितीय संख्याओं का उपयोग करके रूपांतरण)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Transformation</th>
-                        <th>Formula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sin(θ + 90°)</td>
-                        <td><b>cos(θ)</b></td>
-                    </tr>
-                    <tr>
-                        <td>cos(θ + 90°)</td>
-                        <td><b>-sin(θ)</b></td>
-                    </tr>
-                    <tr>
-                        <td>tan(θ + 90°)</td>
-                        <td><b>-cot(θ)</b></td>
-                    </tr>
-                    <tr>
-                        <td>cot(θ + 90°)</td>
-                        <td><b>-tan(θ)</b></td>
-                    </tr>
-                    <tr>
-                        <td>sec(θ + 90°)</td>
-                        <td><b>-csc(θ)</b></td>
-                    </tr>
-                    <tr>
-                        <td>csc(θ + 90°)</td>
-                        <td><b>sec(θ)</b></td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <h2 id="Inverse-Trigonometric-Identities"><br><br><b>Inverse Trigonometric Identities (प्रतिलोम त्रिकोणमितीय संख्याएँ)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Formula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Inverse Sine (आर्कसाइन)</td>
-                        <td>
-                            <p><b>sin<sup>-1</sup>(x)</b> = θ, where <b>sin θ = x</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Inverse Cosine (आर्ककोसाइन)</td>
-                        <td>
-                            <p><b>cos<sup>-1</sup>(x)</b> = θ, where <b>cos θ = x</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Inverse Tangent (आर्कटैनजेंट)</td>
-                        <td>
-                            <p><b>tan<sup>-1</sup>(x)</b> = θ, where <b>tan θ = x</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Inverse Cotangent (आर्ककोटेंजेंट)</td>
-                        <td>
-                            <p><b>cot<sup>-1</sup>(x)</b> = θ, where <b>cot θ = x</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Inverse Secant (आर्कसेकेंट)</td>
-                        <td>
-                            <p><b>sec<sup>-1</sup>(x)</b> = θ, where <b>sec θ = x</b></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Inverse Cosecant (आर्ककोसेकेंट)</td>
-                        <td>
-                            <p><b>csc<sup>-1</sup>(x)</b> = θ, where <b>csc θ = x</b></p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <h2 id="Principal-Inverse-Trigonometric-Functions"><br><br><b>Principal Values of Inverse Trigonometric Functions (प्रतिलोम त्रिकोणमितीय संख्याओं के मुख्य मान)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Principal Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sin⁻¹(x)</td>
-                        <td><b>[-π/2, π/2]</b></td>
-                    </tr>
-                    <tr>
-                        <td>cos⁻¹(x)</td>
-                        <td><b>[0, π]</b></td>
-                    </tr>
-                    <tr>
-                        <td>tan⁻¹(x)</td>
-                        <td><b>[-π/2, π/2]</b></td>
-                    </tr>
-                    <tr>
-                        <td>cot⁻¹(x)</td>
-                        <td><b>[0, π]</b></td>
-                    </tr>
-                    <tr>
-                        <td>sec⁻¹(x)</td>
-                        <td><b>[0, π] except π/2</b></td>
-                    </tr>
-                    <tr>
-                        <td>csc⁻¹(x)</td>
-                        <td><b>[-π/2, π/2] except 0</b></td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            
-            
-            
-            <h2 id="General-Trigonometric-Equations"><br><br><b>General Solutions of Trigonometric Equations (त्रिकोणमितीय समीकरणों के सामान्य समाधान)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Equation</th>
-                        <th>General Solution</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sin(θ) = 0</td>
-                        <td><b>θ = nπ</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>cos(θ) = 0</td>
-                        <td><b>θ = (2n+1)π/2</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>tan(θ) = 0</td>
-                        <td><b>θ = nπ</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>sin(θ) = a</td>
-                        <td><b>θ = nπ + (-1)ⁿ arcsin(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>cos(θ) = a</td>
-                        <td><b>θ = 2nπ ± arccos(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>tan(θ) = a</td>
-                        <td><b>θ = nπ + arctan(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>cot(θ) = a</td>
-                        <td><b>θ = nπ + arccot(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>sec(θ) = a</td>
-                        <td><b>θ = 2nπ ± arcsec(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                    <tr>
-                        <td>csc(θ) = a</td>
-                        <td><b>θ = nπ + (-1)ⁿ arccsc(a)</b>, where n ∈ ℤ</td>
-                    </tr>
-                </tbody>
-            </table>
-</section>
+ <h1>अवकल समीकरण (Differential Equations)</h1>
 
-<section id="Integrals">
+    <h3>📘 1. अवकल समीकरण की परिभाषा (Definition of Differential Equations)</h3>
+    <p><b>अवकल समीकरण (Differential Equation):</b> एक समीकरण जिसमें एक या अधिक अवकलज (derivatives) शामिल होते हैं, अवकल समीकरण कहलाता है। यह समीकरण फलन और उसके अवकलजों के बीच संबंध को व्यक्त करता है।</p>
 
-<h1>Important Trigonometric Integrals Formulas</h1><h2 id="Trigonometric-Integrals"></h2><br>
-            <p>Integrals with trigonometric functions are often encountered in calculus. Here are some examples:</p>
-            <h2>Trigonometric Integrals Formulas</h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <th>Integral</th>
-                        <th>Result</th>
-                    </tr>
-                    <tr>
-                        <td>∫ sin(θ) dθ</td>
-                        <td>-cos(θ) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cos(θ) dθ</td>
-                        <td>sin(θ) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec²(θ) dθ</td>
-                        <td>tan(θ) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc²(θ) dθ</td>
-                        <td>-cot(θ) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec(θ) tan(θ) dθ</td>
-                        <td>sec(θ) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc(θ) cot(θ) dθ</td>
-                        <td>-csc(θ) + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-           <br>
-            
-            <h2 id="Integration-Formulas"><br><br><b>Integration Formulas</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Integral</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>∫ k dx</td>
-                        <td>kx + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ x<sup>n</sup> dx</td>
-                        <td><span class="frac">x<sup>n+1</sup><span class="bottom">n + 1</span></span> + C (where n ≠ -1)</td>
-                    </tr>
-                    <tr>
-                        <td>∫ 1/x dx</td>
-                        <td>ln |x| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ e<sup>x</sup> dx</td>
-                        <td>e<sup>x</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ a<sup>x</sup> dx</td>
-                        <td><span class="frac">a<sup>x</sup><span class="bottom">ln a</span></span> + C (where a &gt; 0 and a ≠ 1)</td>
-                    </tr>
-                </tbody>
-            </table><br>
+    <h3>📘 2. क्रम (Order) और घात (Degree) (Order and Degree)</h3>
+    <p><b>क्रम (Order):</b> अवकल समीकरण में सबसे उच्च अवकलज की शक्ति को क्रम कहा जाता है। उदाहरण के लिए, यदि समीकरण में सबसे उच्च अवकलज <i>d²y/dx²</i> है, तो क्रम 2 होगा।</p>
+    <p><b>घात (Degree):</b> अवकल समीकरण के सबसे उच्च अवकलज के घात को घात कहा जाता है। यह तब परिभाषित किया जाता है जब समीकरण को पूरी तरह से शुद्ध रूप में लिखा गया हो।</p>
+
+    <h3>📘 3. सामान्य और विशेष हल (General and Particular Solutions)</h3>
+    <p><b>सामान्य हल (General Solution):</b> एक अवकल समीकरण का सामान्य हल वह हल होता है जिसमें एक या एक से अधिक अवज्ञात स्थिरांक (constants) होते हैं।</p>
+    <p><b>विशेष हल (Particular Solution):</b> एक अवकल समीकरण का विशेष हल वह हल होता है जिसमें स्थिरांक के मान ज्ञात होते हैं।</p>
+
+    <h3>📘 4. अवकल समीकरण का निर्माण (Formation of Differential Equations)</h3>
+    <p><b>अवकल समीकरण का निर्माण (Formation of Differential Equations):</b> अवकल समीकरण बनाने के लिए, एक फलन का अवकलज लिया जाता है और उसे फलन के साथ जोड़कर समीकरण में व्यक्त किया जाता है। उदाहरण के लिए, यदि y = x², तो इसका अवकलन y' = 2x होगा।</p>
+
+    <h2>📘 5. हल की विधियाँ (Methods of Solving)</h2>
+    <h3>📘 5.1. चर पृथक्करण विधि (Method of Separation of Variables)</h3>
+    <p><b>चर पृथक्करण विधि (Method of Separation of Variables):</b> इस विधि में, अवकल समीकरण के दोनों पक्षों को इस प्रकार विभाजित किया जाता है कि एक पक्ष में केवल y के संदर्भ में और दूसरे पक्ष में केवल x के संदर्भ में फलन हो। फिर दोनों पक्षों का समाकलन किया जाता है।</p>
+
+    <h3>📘 5.2. समरूपी समीकरण (Homogeneous Equations)</h3>
+    <p><b>समरूपी समीकरण (Homogeneous Equations):</b> एक अवकल समीकरण जिसमें हर पद में x और y दोनों के ही समरूप घात होते हैं, उसे समरूपी समीकरण कहा जाता है।</p>
+    <p>उदाहरण: M(x, y) dx + N(x, y) dy = 0 यदि M और N समान घात के हों, तो यह समरूपी समीकरण कहलाता है।</p>
+
+    <h3>📘 5.3. रैखिक अवकल समीकरण (Linear Differential Equations)</h3>
+    <p><b>रैखिक अवकल समीकरण (Linear Differential Equations):</b> यदि अवकल समीकरण को इस रूप में लिखा जा सके:</p>
+    <p><b>dy/dx + P(x) y = Q(x)</b>,<br>
+    जहाँ P(x) और Q(x) केवल x के फलन हैं, तो यह रैखिक अवकल समीकरण कहलाता है।</p>
+
+
+
+
+
+ 
            
-            <h2 id="Inverse-Trigonometric-Rules"><br><br><b>Inverse Trigonometric Rules</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Integral</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom"><span class="sqrt"><span class="overline">( 1 - x<sup>2</sup>)</span></span></span></span> dx</td>
-                        <td>sin<sup>-1</sup>x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">-1<span class="bottom"><span class="sqrt"><span class="overline">( 1 - x<sup>2</sup>)</span></span></span></span> dx</td>
-                        <td>cos<sup>-1</sup>x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom">1 + x<sup>2</sup></span></span> dx</td>
-                        <td>tan<sup>-1</sup>x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">-1<span class="bottom">1 + x<sup>2</sup></span></span> dx</td>
-                        <td>cot<sup>-1</sup>x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">( x<sup>2</sup> - 1 )</span></span></span></span> dx</td>
-                        <td>sec<sup>-1</sup>x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">-1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">( x<sup>2</sup> - 1 )</span></span></span></span> dx</td>
-                        <td>csc<sup>-1</sup>x + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h2 id="Hyperbolic-Rules"><br><br><b>हाइपरबोलिक नियम (Hyperbolic Rules)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Integral</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>∫ sinh x dx</td>
-                        <td>cosh x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cosh x dx</td>
-                        <td>sinh x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ tanh x dx</td>
-                        <td>ln |cosh x| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ coth x dx</td>
-                        <td>ln |sinh x| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sech x dx</td>
-                        <td>arctan (sinh x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csch x dx</td>
-                        <td>ln |coth x - csch x| + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h2 id="Special-Integrals"><br><br><b>विशेष एकीकरण (Special Integrals)</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Integral</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom">a<sup>2</sup> + x<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac">1<span class="bottom">a</span></span> tan<sup>-1</sup>(x/a) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom">a<sup>2</sup> - x<sup>2</sup></span></span> dx</td>
-                        <td>sin<sup>-1</sup>(x/a) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac">1<span class="bottom">x<sup>2</sup> - a<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac">1<span class="bottom">2a</span></span> ln |(x - a)/(x + a)| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ e<sup>ax</sup> dx</td>
-                        <td><span class="frac">e<sup>ax</sup><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ x e<sup>ax</sup> dx</td>
-                        <td><span class="frac">e<sup>ax</sup><span class="bottom">a<sup>2</sup></span></span> (a x - 1) + C</td>
-                    </tr>
-                </tbody>
-            
-            </table></section><section id="Differential-Equations"><br>  <p id="Derivative"><br><h1>Derivative Formulas</h1>
-
-
-
-            <h2 id="Basic Definition of Derivative"><b>Basic Definition of Derivative</b></h2>
-            <p><b>f′</b>(x) = lim<sub>h→0</sub> <span class="frac">f(x + h) - f(x)<span class="bottom">h</span></span></p>
-            
-           
-
-
-
-
- <h2 id="Derivatives of Common Functions"><b>Derivatives of Common Functions</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <th>Function</th>
-                        <th>Derivative</th>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (c)</td>
-                        <td>0 (where c is a constant)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (x)</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (x<sup>n</sup>)</td>
-                        <td>nx<sup>n-1</sup> (where n is any real number)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sin x)</td>
-                        <td>cos x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cos x)</td>
-                        <td>-sin x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (tan x)</td>
-                        <td>sec<sup>2</sup> x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cot x)</td>
-                        <td>-csc<sup>2</sup> x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sec x)</td>
-                        <td>sec x tan x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (csc x)</td>
-                        <td>-csc x cot x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (e<sup>x</sup>)</td>
-                        <td>e<sup>x</sup></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (a<sup>x</sup>)</td>
-                        <td>a<sup>x</sup> ln a (where a &gt; 0)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (ln x)</td>
-                        <td><span class="frac">1<span class="bottom">x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (log<sub>a</sub> x)</td>
-                        <td><span class="frac">1<span class="bottom">x ln a</span></span> (where a &gt; 0)</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p id="Rules"></p><br>
-            <h2 id="Product Rule"><b>Product Rule</b></h2>
-            <p><span class="frac">∂<span class="bottom">∂x</span></span> [u(x)v(x)] = u′(x)v(x) + u(x)v′(x)</p>
-            
-            <h2 id="Quotient Rule"><b>Quotient Rule</b></h2>
-            <p><span class="frac">∂<span class="bottom">∂x</span></span> (u(x)/v(x)) = <span class="frac">u′(x)v(x) - u(x)v′(x)<span class="bottom">[v(x)]<sup>2</sup></span></span></p>
-            
-            <h2 id="Chain Rule"><b>Chain Rule</b></h2>
-            <p><span class="frac">∂<span class="bottom">∂x</span></span> [f(g(x))] = f′(g(x)) ⋅ g′(x)</p>
-            <h2> <p id="Derivatives-of-Basic-Trigonometric-Functions">Derivatives of Basic Trigonometric Functions</p></h2>
-                <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <th>Trigonometric Function</th>
-                            <th>Derivative</th>
-                        </tr>
-                        <tr>
-                            <td>sin(θ)</td>
-                            <td>cos(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>cos(θ)</td>
-                            <td>-sin(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>tan(θ)</td>
-                            <td>sec<sup>2</sup>(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>cot(θ)</td>
-                            <td>-csc<sup>2</sup>(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>sec(θ)</td>
-                            <td>sec(θ)tan(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>csc(θ)</td>
-                            <td>-csc(θ)cot(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>sin<sup>2</sup>(θ)</td>
-                            <td>2sin(θ)cos(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>cos<sup>2</sup>(θ)</td>
-                            <td>-2sin(θ)cos(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>tan<sup>2</sup>(θ)</td>
-                            <td>sec<sup>2</sup>(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>cot<sup>2</sup>(θ)</td>
-                            <td>-csc<sup>2</sup>(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>sec<sup>2</sup>(θ)</td>
-                            <td>2sec(θ)tan(θ)</td>
-                        </tr>
-                        <tr>
-                            <td>csc<sup>2</sup>(θ)</td>
-                            <td>-2csc(θ)cot(θ)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            <h2 id="Derivatives-of-Trigonometric-Functions"><br><br><b>Derivatives of Trigonometric Functions</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <th>Function</th>
-                        <th>Derivative</th>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sin<sup>-1</sup>x)</td>
-                        <td><span class="frac">1<span class="bottom">&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">( 1 - x<sup>2</sup>)</span></span></span></span></td>
-             
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cos<sup>-1</sup>x)</td>
-                        <td><span class="frac">-1<span class="bottom">&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">( 1 - x<sup>2</sup>)</span></span></span></span></td>
-             
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (tan<sup>-1</sup>x)</td>
-                        <td><span class="frac">1<span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cot<sup>-1</sup>x)</td>
-                        <td><span class="frac">-1<span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sec<sup>-1</sup>x)</td>
-                        <td><span class="frac">1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">(x<sup>2</sup> - 1)</span></span></span></span></td>
-             
-                    </tr>
-                    <tr>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (csc<sup>-1</sup>x)</td>
-                        <td><span class="frac">-1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">(x<sup>2</sup> - 1)</span></span></span></span></td>
-             
-                    </tr>
-                </tbody>
-            </table>
-            <h2 id="Derivatives-of-Hyperbolic"><br><br><b>Derivatives of Hyperbolic Functions</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Derivative</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sinh x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sinh x) = cosh x</td>
-                    </tr>
-                    <tr>
-                        <td>cosh x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cosh x) = sinh x</td>
-                    </tr>
-                    <tr>
-                        <td>tanh x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (tanh x) = sech<sup>2</sup> x</td>
-                    </tr>
-                    <tr>
-                        <td>coth x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (coth x) = -csch<sup>2</sup> x</td>
-                    </tr>
-                    <tr>
-                        <td>sech x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sech x) = -sech x tanh x</td>
-                    </tr>
-                    <tr>
-                        <td>csch x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (csch x) = -csch x coth x</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h2 id="Derivatives-of-Inverse-Functions"><br><br><b>Derivatives of Inverse Functions</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Derivative</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>sin<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sin<sup>-1</sup>x) = <span class="frac">1<span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <td>cos<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cos<sup>-1</sup>x) = <span class="frac">-1<span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <td>tan<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (tan<sup>-1</sup>x) = <span class="frac">1<span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>cot<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (cot<sup>-1</sup>x) = <span class="frac">-1<span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>sec<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (sec<sup>-1</sup>x) = <span class="frac">1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">(x<sup>2</sup> -1)</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>csc<sup>-1</sup>x</td>
-                        <td><span class="frac">∂<span class="bottom">∂x</span></span> (csc<sup>-1</sup>x) = <span class="frac">-1<span class="bottom">|x|&nbsp;&nbsp;&nbsp;<span class="sqrt"><span class="overline">(x<sup>2</sup> - 1)</span></span></span></span></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h2 id="Higher-Order-Derivatives"><br><b>Higher Order Derivatives</b></h2>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th>Notation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Second Order</td>
-                        <td><span class="frac">∂<sup>2</sup>y<span class="bottom">∂x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>Third Order</td>
-                        <td><span class="frac">∂<sup>3</sup>y<span class="bottom">∂x<sup>3</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>n-th Order</td>
-                        <td><span class="frac">∂<sup>n</sup>y<span class="bottom">∂x<sup>n</sup></span></span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-           
-            <h1>
-                <p id="Derivative-Formulas"><br><b>Derivative Formulas</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>(Cu)'</td>
-            
-                        <td>Cu'</td>
-                    </tr>
-                    <tr>
-                        <td>(u + v - w)'</td>
-            
-                        <td>u' + v' - w'</td>
-                    </tr>
-                    <tr>
-                        <td>(uv)'</td>
-            
-                        <td>u'v + v'u</td>
-                    </tr>
-                    <tr>
-                        <td>(uvw)'</td>
-            
-                        <td>u'vw + v'w u + w'uv</td>
-                    </tr>
-                    <tr>
-                        <td>(<span class="frac"><span>u</span><span class="bottom">v</span></span>)'</td>
-            
-                        <td><span class="frac"><span>u'v - v'u</span><span class="bottom">v<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>[f(u(x))]'</td>
-            
-                        <td>f'(u)u'(x)</td>
-                    </tr>
-                    <tr>
-                        <td>(C)'</td>
-            
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>(x)'</td>
-            
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>(x<sup>n</sup>)'</td>
-            
-                        <td>nx<sup>n-1</sup></td>
-                    </tr>
-                    <tr>
-                        <td>(<span class="frac"><span>1</span><span class="bottom">x</span></span>)'</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span>&nbsp;)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">2&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span></span></td>
-                    </tr>x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(ln x)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(log<sub>a</sub> x)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">x log<sub>a</sub> e</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(e<sup>x</sup>)'</td>
-            
-                        <td>e<sup>x</sup></td>
-                    </tr>
-                    <tr>
-                        <td>(a<sup>x</sup>)'</td>
-            
-                        <td>a<sup>x</sup> ln a</td>
-                    </tr>
-                    <tr>
-                        <td>(sin x)'</td>
-            
-                        <td>cos x</td>
-                    </tr>
-                    <tr>
-                        <td>(cos x)'</td>
-            
-                        <td>-sin x</td>
-                    </tr>
-                    <tr>
-                        <td>(tan x)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">cos<sup>2</sup> x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(cot x)'</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">sin<sup>2</sup> x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(arc sin x)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(arc cos x)'</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(arc tan x)'</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(arc cot x)'</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td>(u<sup>v</sup>)'</td>
-            
-                        <td>vu<sup>v-1</sup>(u)' + u<sup>v</sup> ln u (v)'</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h1>
-                <p id="Differentiation-Formulas"><br><b>Differentiation Formulas</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td><span class="frac"><span>d(Cu)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>C<span class="frac"><span>du</span><span class="bottom">dx</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(u + v - w)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>du</span><span class="bottom">dx</span></span> + <span class="frac"><span>dv</span><span class="bottom">dx</span></span> - <span class="frac"><span>dw</span><span class="bottom">dx</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(uv)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>u<span class="frac"><span>dv</span><span class="bottom">dx</span></span> + v<span class="frac"><span>du</span><span class="bottom">dx</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(uvw)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>u<span class="frac"><span>dvw</span><span class="bottom">dx</span></span> + v<span class="frac"><span>duw</span><span class="bottom">dx</span></span> + w<span class="frac"><span>duv</span><span class="bottom">dx</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(<span class="frac"><span>u</span><span class="bottom">v</span></span>)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>v<span class="frac"><span>du</span><span class="bottom">dx</span></span> - u<span class="frac"><span>dv</span><span class="bottom">dx</span></span></span><span class="bottom">v<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(f(u(x)))</span><span class="bottom">dx</span></span></td>
-            
-                        <td>f'(u)<span class="frac"><span>du</span><span class="bottom">dx</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>dC</span><span class="bottom">dx</span></span></td>
-            
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>dx</span><span class="bottom">dx</span></span></td>
-            
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(x<sup>n</sup>)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>nx<sup>n-1</sup></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(<span class="frac"><span>1</span><span class="bottom">x</span></span>)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">x<sup>2</sup></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> )</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">2&nbsp;&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(ln x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(log<sub>a</sub> x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">x log<sub>a</sub> e</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(e<sup>x</sup>)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>e<sup>x</sup></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(a<sup>x</sup>)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>a<sup>x</sup> ln a</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(sin x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>cos x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(cos x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>-sin x</td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(tan x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">cos<sup>2</sup> x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(cot x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">sin<sup>2</sup> x</span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(arc sin x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(arc cos x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">(1 - x<sup>2</sup>)</span></span></span></span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="frac"><span>d(arc tan x)</span><span class="bottom">dx</span></span></td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">1 + x<sup>2</sup></span></span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <h1>
-                <p id="Indefinite-Integral-Formulas"><br><b>Indefinite Integral Formulas</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫C dx</td>
-            
-                        <td>Cx + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫x<sup>n</sup> dx</td>
-            
-                        <td><span class="frac"><span>x<sup>n+1</sup></span><span class="bottom">n+1</span></span> + C (n ≠ -1)</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">x</span></span> dx</td>
-            
-                        <td>ln |x| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫e<sup>x</sup> dx</td>
-            
-                        <td>e<sup>x</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫a<sup>x</sup> dx</td>
-            
-                        <td><span class="frac"><span>a<sup>x</sup></span><span class="bottom">ln a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫sin x dx</td>
-            
-                        <td>-cos x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫cos x dx</td>
-            
-                        <td>sin x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫sec<sup>2</sup> x dx</td>
-            
-                        <td>tan x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫csc<sup>2</sup> x dx</td>
-            
-                        <td>-cot x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫sec x tan x dx</td>
-            
-                        <td>sec x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫csc x cot x dx</td>
-            
-                        <td>-csc x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">1 + x<sup>2</sup></span></span> dx</td>
-            
-                        <td>tan<sup>-1</sup> x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">( 1 - x<sup>2</sup>)</span></span></span></span> dx</td>
-            
-                        <td>sin<sup>-1</sup> x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">x<sup>2</sup> + a<sup>2</sup></span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a</span></span> tan<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">x<sup>2</sup> - a<sup>2</sup></span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">2a</span></span> ln |<span class="frac"><span>x - a</span><span class="bottom">x + a</span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom"><span class="sqrt"><span class="overline">(a<sup>2</sup> - x<sup>2</sup>)</span></span></span></span> dx</td>
-            
-                        <td>sin<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">a<sup>2</sup> + x<sup>2</sup></span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a</span></span> tan<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ln x dx</td>
-            
-                        <td>x ln x - x + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫e<sup>ax</sup> dx</td>
-            
-                        <td><span class="frac"><span>e<sup>ax</sup></span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h1>
-                <p id="Integrals-Partial-Fractions"><br><b>Integrals by Partial Fractions</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x - a)(x - b)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a - b</span></span> ln |<span class="frac"><span>x - a</span><span class="bottom">x - b</span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x + a)(x + b)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">b - a</span></span> ln |<span class="frac"><span>x + a</span><span class="bottom">x + b</span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x - a)<sup>2</sup></span></span> dx</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">x - a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x + a)<sup>2</sup></span></span> dx</td>
-            
-                        <td>-<span class="frac"><span>1</span><span class="bottom">x + a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x - a)(x - b)(x - c)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">b - a</span></span> ln |<span class="frac"><span>x - a</span><span class="bottom">x - b</span></span>| + <span class="frac"><span>1</span><span class="bottom">c - b</span></span> ln |<span class="frac"><span>x - b</span><span class="bottom">x - c</span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x + a)(x + b)(x + c)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a - b</span></span> ln |<span class="frac"><span>x + a</span><span class="bottom">x + b</span></span>| + <span class="frac"><span>1</span><span class="bottom">c - a</span></span> ln |<span class="frac"><span>x + a</span><span class="bottom">x + c</span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">(x<sup>2</sup> + a<sup>2</sup>)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a</span></span> tan<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>x</span><span class="bottom">(x<sup>2</sup> + a<sup>2</sup>)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">2</span></span> ln |x<sup>2</sup> + a<sup>2</sup>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>x</span><span class="bottom">(x<sup>2</sup> - a<sup>2</sup>)</span></span> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">2</span></span> ln |<span class="frac"><span>x - a</span><span class="bottom">x + a</span></span>| + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h1>
-                <p id="Integrals-Involving-Roots"><br><b>Integrals Involving Roots</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span></span></span> dx</td>
-                        <td>2&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫<span class="frac"><span>1</span><span class="bottom">a&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span></span></span> dx</td>
-                        <td><span class="frac"><span>2</span><span class="bottom">a</span></span>&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> dx</td>
-                        <td><span class="frac"><span>2</span><span class="bottom">3</span></span> x&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ x&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> dx</td>
-                        <td><span class="frac"><span>2</span><span class="bottom">5</span></span> x<sup>5/2</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ &nbsp;&nbsp;<span class="sqrts"><span class="overline">x + a</span></span> dx</td>
-                        <td><span class="frac"><span>2</span><span class="bottom">3</span></span> (x + a)<sup>3/2</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ x&nbsp;&nbsp;<span class="sqrts"><span class="overline">x</span></span> dx</td>
-                        <td><span class="frac"><span>2</span><span class="bottom">5</span></span> x<sup>5/2</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> - x<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac"><span>a<sup>2</sup></span><span class="bottom">2</span></span> sin<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + <span class="frac"><span>x</span><span class="bottom">2</span></span> &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> - x<sup>2</sup></span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> + a<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac"><span>x</span><span class="bottom">2</span></span> &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> + a<sup>2</sup></span></span> + <span class="frac"><span>a<sup>2</sup></span><span class="bottom">2</span></span> ln |x + &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> + a<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac"><span>x</span><span class="bottom">2</span></span> &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span> - <span class="frac"><span>a<sup>2</sup></span><span class="bottom">2</span></span> ln |x + &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>x</span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> + a<sup>2</sup></span></span></span></span> dx</td>
-                        <td>&nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> + a<sup>2</sup></span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>x</span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span></span></span> dx</td>
-                        <td>&nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span> dx</td>
-                        <td><span class="frac"><span>x</span><span class="bottom">2</span></span> &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span> + <span class="frac"><span>a<sup>2</sup></span><span class="bottom">2</span></span> ln |x + &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>1</span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> - x<sup>2</sup></span></span></span></span> dx</td>
-                        <td>sin<sup>-1</sup> <span class="frac"><span>x</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>1</span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span></span></span> dx</td>
-                        <td>ln |x + &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>1</span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span></span></span> dx</td>
-                        <td>ln |x + &nbsp;&nbsp;<span class="sqrt"><span class="overline">x<sup>2</sup> - a<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ <span class="frac"><span>x<sup>2</sup></span><span class="bottom">&nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span></span></span> dx</td>
-                        <td>&nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span> - a ln |a + &nbsp;&nbsp;<span class="sqrt"><span class="overline">a<sup>2</sup> + x<sup>2</sup></span></span>| + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h1>
-                <p id="Integrals-Involving-Trigonometric-Functions"><br><b>Integrals Involving Trigonometric Functions</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫ sin(x) dx</td>
-            
-                        <td>-cos(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cos(x) dx</td>
-            
-                        <td>sin(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ tan(x) dx</td>
-            
-                        <td>-ln|cos(x)| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cot(x) dx</td>
-            
-                        <td>ln|sin(x)| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec(x) dx</td>
-            
-                        <td>ln|sec(x) + tan(x)| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc(x) dx</td>
-            
-                        <td>-ln|csc(x) + cot(x)| + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec<sup>2</sup>(x) dx</td>
-            
-                        <td>tan(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc<sup>2</sup>(x) dx</td>
-            
-                        <td>-cot(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec(x)tan(x) dx</td>
-            
-                        <td>sec(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc(x)cot(x) dx</td>
-            
-                        <td>-csc(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sin<sup>2</sup>(x) dx</td>
-            
-                        <td><span class="frac"><span>x</span><span class="bottom">2</span></span> - <span class="frac"><span>sin(2x)</span><span class="bottom">4</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cos<sup>2</sup>(x) dx</td>
-            
-                        <td><span class="frac"><span>x</span><span class="bottom">2</span></span> + <span class="frac"><span>sin(2x)</span><span class="bottom">4</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sin(x)cos(x) dx</td>
-            
-                        <td><span class="frac"><span>-cos(2x)</span><span class="bottom">4</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sin<sup>3</sup>(x) dx</td>
-            
-                        <td><span class="frac"><span>-cos(x)</span><span class="bottom">3</span></span> + <span class="frac"><span>cos<sup>3</sup>(x)</span><span class="bottom">3</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cos<sup>3</sup>(x) dx</td>
-            
-                        <td><span class="frac"><span>sin(x)</span><span class="bottom">3</span></span> + <span class="frac"><span>sin<sup>3</sup>(x)</span><span class="bottom">3</span></span> + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h1>
-                <p id="Transformations-of-Integrals"><br><b>Transformations of Integrals</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫ f(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a</span></span> F(ax + b) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ f(x) dx</td>
-            
-                        <td>F(x) + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ e<sup>ax</sup> dx</td>
-            
-                        <td><span class="frac"><span>1</span><span class="bottom">a</span></span> e<sup>ax</sup> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sin(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>-cos(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ cos(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>sin(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec<sup>2</sup>(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>tan(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc<sup>2</sup>(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>-cot(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ sec(ax + b)tan(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>sec(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                    <tr>
-                        <td>∫ csc(ax + b)cot(ax + b) dx</td>
-            
-                        <td><span class="frac"><span>-csc(ax + b)</span><span class="bottom">a</span></span> + C</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h1>
-                <p id="Definite-Integrals"><br><b>Definite Integrals</b></p>
-            </h1>
-            <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> f(x) dx</td>
-            
-                        <td>F(b) - F(a)</td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> c dx</td>
-            
-                        <td>c(b - a)</td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> x dx</td>
-            
-                        <td><span class="frac"><span>b<sup>2</sup></span><span class="bottom">2</span></span> - <span class="frac"><span>a<sup>2</sup></span><span class="bottom">2</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> x<sup>n</sup> dx</td>
-            
-                        <td><span class="frac"><span>b<sup>n+1</sup></span><span class="bottom">n+1</span></span> - <span class="frac"><span>a<sup>n+1</sup></span><span class="bottom">n+1</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> e<sup>kx</sup> dx</td>
-            
-                        <td><span class="frac"><span>e<sup>kb</sup></span><span class="bottom">k</span></span> - <span class="frac"><span>e<sup>ka</sup></span><span class="bottom">k</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> sin(kx) dx</td>
-            
-                        <td><span class="frac"><span>-cos(kb)</span><span class="bottom">k</span></span> - <span class="frac"><span>-cos(ka)</span><span class="bottom">k</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> cos(kx) dx</td>
-            
-                        <td><span class="frac"><span>sin(kb)</span><span class="bottom">k</span></span> - <span class="frac"><span>sin(ka)</span><span class="bottom">k</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> sec<sup>2</sup>(kx) dx</td>
-            
-                        <td><span class="frac"><span>tan(kb)</span><span class="bottom">k</span></span> - <span class="frac"><span>tan(ka)</span><span class="bottom">k</span></span></td>
-                    </tr>
-                    <tr>
-                        <td>∫<sup>b</sup><sub>a</sub> csc<sup>2</sup>(kx) dx</td>
-            
-                        <td><span class="frac"><span>-cot(kb)</span><span class="bottom">k</span></span> - <span class="frac"><span>-cot(ka)</span><span class="bottom">k</span></span></td>
-                    </tr>
-                </tbody>
-            </table> <br>
-</section>
 
 
 <section id="3D-Geometry">
