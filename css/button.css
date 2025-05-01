@@ -50,22 +50,27 @@
             margin: 40px auto;
             text-align: center;
         }
-        
-        .custom-btn {
+
+
+.custom-btn {
+    min-width: 120px;
+    min-height: 48px;
+    margin: 12px;
+    padding: 10px 20px;
     display: inline-block;
-    padding: 25px 50px; /* Increased padding */
-    font-size: 25px;
-    color: #ffffff;
-    background-color: green;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    cursor: pointer;
-    margin: 25px; /* Increased margin */
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s, background-color 0.3s;
+    text-align: center;
+    font-size: 16px;
 }
+.custom-button {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 1.5;
+    text-decoration: none;
+    color: white;
+}
+
+      
         .custom-btn span {
             display: block;
             position: absolute;
@@ -80,7 +85,7 @@
             left: 100%;
         }
         .custom-btn:hover {
-            background-color: #0056b3;
+            background-color: yellow;
             transform: scale(1.1);
         }
         .custom-btn a {
