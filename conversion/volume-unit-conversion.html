@@ -83,8 +83,15 @@
             <li><a class="active" href="volume-unit-conversion.html">Volume Conversion</a></li>
             <li><a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a></li>
         </ul>
-
+ <div class="search-container">
+                <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+                <button class="back-icon" id="backBtn">←</button>
+                <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
+            </div>
+            <ul id="suggestions" class="suggestions"></ul>
+            <div id="results"></div>
         <div class="container">
+            
             <h1>Volume Unit Conversion - Definition, Types, Importance</h1>
 
             <div class="custom-container">
