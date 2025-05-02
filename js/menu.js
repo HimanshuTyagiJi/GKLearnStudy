@@ -1,30 +1,30 @@
+const searchInput = document.getElementById("searchInput");
 
-// Search bar ke focus ko rokne ke liye
-document.getElementById("searchInput").addEventListener("keydown", function (event) {
-    // Agar user "Enter" ya "Tab" press kare toh default behavior ko rok dein
-    if (event.key === "Enter" || event.key === "Tab") {
-        event.preventDefault();
-        // Search function ko call karein (agar zarurat ho toh)
-        console.log("Search function called"); // Apne search function ko yaha call karein
-    }
-});
-
-// Mobile devices par keyboard behavior customize karne ke liye
-document.getElementById("searchInput").addEventListener("focus", function () {
-    // Search input par focus rehne de aur dusre inputs ko disable karein
-    document.querySelectorAll("input").forEach((input) => {
-        if (input !== this) {
-            input.setAttribute("tabindex", "-1"); // Dusre inputs ko focus se hata dein
+if (searchInput) {
+    // Search bar ke focus ko rokne ke liye
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === "Tab") {
+            event.preventDefault();
+            console.log("Search function called"); // Apne search function ko yaha call karein
         }
     });
-});
 
-document.getElementById("searchInput").addEventListener("blur", function () {
-    // Jab search input ka focus chhodein tab inputs ko wapas enable karein
-    document.querySelectorAll("input").forEach((input) => {
-        input.removeAttribute("tabindex");
+    // Mobile devices par keyboard behavior customize karne ke liye
+    searchInput.addEventListener("focus", function () {
+        document.querySelectorAll("input").forEach((input) => {
+            if (input !== this) {
+                input.setAttribute("tabindex", "-1");
+            }
+        });
     });
-});
+
+    searchInput.addEventListener("blur", function () {
+        document.querySelectorAll("input").forEach((input) => {
+            input.removeAttribute("tabindex");
+        });
+    });
+}
+
 
 
 if (window.location.pathname === "/hindi-test-part-01") {
