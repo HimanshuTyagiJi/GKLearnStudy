@@ -63,6 +63,28 @@ div.scrollmenu a {
     --body-bg: #ffffff;
     --logo: #ad0000;
     --table:#f3f3f3;
+ 
+.pink-background {background-color: hsl(354, 70%, 95%);border-radius:15px;padding: 10px;}
+.blue-background {background-color: #f9f0fa;border-radius:15px;padding: 10px;}
+.blue1-background {background-color: #e9f0f9;border-radius:15px;padding: 10px;}
+.green-background {background-color: #e6f8f3;border-radius:15px;padding: 10px;}
+.yellow-background {background-color: #f6f8e6;border-radius:15px;padding: 10px;}
+.orange-background {background-color: #faefe9;border-radius:15px;padding: 10px;}
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.color-content1 {color:#0000CD;}
+.color-content2 {color:rgb(11, 70, 198)}
+.color-content3 {color:#6d0658}
+.color-content4 {color:#ff3737}
+.color-content5 {color:rgb(154, 41, 41)}
+.color-content6 {color:#d41cde}
+.color-content8 {color:#006067}
+.color-content7 {color:#1e3b1c}
+.color-content9 {color:rgb(78, 76, 217)}
+.color-content10 {color:#000000}
+
+ 
 }
 [data-theme="dark"] {
     --red: #ffc2c2;
@@ -76,6 +98,26 @@ div.scrollmenu a {
     --link-active-color: rgb(60, 216, 187);
     --body-bg: #212121;
     --table:black;
+
+ .pink-background {background-color: hsl(354, 24%, 17%);border-radius:15px;padding: 10px;}
+    .blue-background {background-color: #37233a;border-radius:15px;padding: 10px;}
+    .blue1-background {background-color: #293545;border-radius:15px;padding: 10px;}
+    .green-background {background-color: #365048;border-radius:15px;padding: 10px;}
+    .yellow-background {background-color: #505431;border-radius:15px;padding: 10px;}
+    .orange-background {background-color: #4e3a2f;border-radius:15px;padding: 10px;}
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    
+    .color-content1 {color:#FAFAD2;}
+    .color-content2 {color:rgb(125, 209, 141)}
+    .color-content3 {color:#f4bcf4}
+    .color-content4 {color:#b8ffcc;}
+    .color-content5 {color:rgb(243, 140, 255)}
+    .color-content6 {color:#cfc3ff;}
+    .color-content7 {color:#e2e2a1}
+    .color-content8 {color:#fcf9bf}
+    .color-content9 {color:rgb(255, 156, 156)}
+    .color-content10{color:#ff6347;}
 }
 body {
     font-size: 18px;
@@ -943,22 +985,4 @@ table td a:visited:hover {
     padding: 10px;
     width: 90%;
     user-select: none;}
- .pink-background {background-color: hsl(354, 24%, 17%);border-radius:15px;padding: 10px;}
-    .blue-background {background-color: #37233a;border-radius:15px;padding: 10px;}
-    .blue1-background {background-color: #293545;border-radius:15px;padding: 10px;}
-    .green-background {background-color: #365048;border-radius:15px;padding: 10px;}
-    .yellow-background {background-color: #505431;border-radius:15px;padding: 10px;}
-    .orange-background {background-color: #4e3a2f;border-radius:15px;padding: 10px;}
-
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    
-    .color-content1 {color:#FAFAD2;}
-    .color-content2 {color:rgb(125, 209, 141)}
-    .color-content3 {color:#f4bcf4}
-    .color-content4 {color:#b8ffcc;}
-    .color-content5 {color:rgb(243, 140, 255)}
-    .color-content6 {color:#cfc3ff;}
-    .color-content7 {color:#e2e2a1}
-    .color-content8 {color:#fcf9bf}
-    .color-content9 {color:rgb(255, 156, 156)}
-    .color-content10{color:#ff6347;}
+ 
