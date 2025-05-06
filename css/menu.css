@@ -986,3 +986,38 @@ table td a:visited:hover {
     width: 90%;
     user-select: none;}
  
+
+
+
+
+
+
+
+
+
+
+
+
+  td a:link, td a:visited {
+    color: rgb(55, 0, 255);
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 15px;
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  td a::after {
+    content: ' 🎯';
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  td a:hover {
+    color: white;
+    background-color: rgb(89, 0, 255);
+  }
+  td a:hover::after {
+    opacity: 1;
+  }
