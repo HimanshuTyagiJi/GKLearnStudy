@@ -126,10 +126,10 @@ h4 a {
                 width: 80px;
                 height: 80px;
                 border-radius: 10px;
-            }.placeholder {
-      width: 80px;
-      height: 80px;}
-
+            }
+.placeholder {
+      width: 160px;
+      height: 160px;}
             .rightside {
                 font-size: 14px;
                 margin: 0px;
@@ -144,140 +144,6 @@ h4 a {
             }
         } .pagination{text-align:center;}button{border-radius:10px}
     </style>
-    
-        <style>/* Container for all rows */
-#data-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-}
-
-/* Each row section */
-.row {
-  display: flex;
-  align-items: flex-start;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #fff;
-}
-
-.row:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-}
-
-/* Left side: image or placeholder */
-.leftside {
-  width: 160px;
-  height: 160px;
-  flex-shrink: 0;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Image itself */
-.leftside img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Placeholder design */
-.placeholder {
-  width: 100%;
-  height: 100%;
-  background-color: #eef2f3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  color: #444;
-  font-size: 15px;
-  text-align: center;
-  padding: 10px;
-  border: 2px dashed #ccc;
-}
-
-.placeholder .emoji {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-/* Right content (title & description) */
-.rightside {
-  flex: 1;
-  padding: 12px 16px;
-}
-
-.rightside h4 {
-  margin: 0 0 8px;
- 
-}
-
-.rightside h4 a {
-  text-decoration: none;
-  color: #2c3e50;
-  transition: color 0.3s ease;
-}
-
-
-
-
-/* Pagination buttons */
-.pagination {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.pagination button {
-  padding: 8px 16px;
-  margin: 0 5px;
-  font-size: 15px;
-  background-color: #007acc;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.pagination button:hover {
-  background-color: #005f99;
-}
-
-</style>
-   <style>
-    .placeholder {
-      width: 160px;
-      height: 160px;
-       animation: bgchange 4s infinite alternate;
-      transition: background 0.5s, transform 0.3s;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      color:white;
-   
-    }
-
-   
-
-    .placeholder .emoji {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    @keyframes bgchange {
-      0%   { background: linear-gradient(45deg, #4e54c8, #8f94fb); }
-      50%  { background: linear-gradient(45deg, #ff6a00, #ee0979); }
-      100% { background: linear-gradient(45deg, #11998e, #38ef7d); }
-    }
-  </style>
 </head>
 <body> 
     <div class="search-container">
@@ -407,7 +273,160 @@ document.addEventListener("DOMContentLoaded", fetchData);
 
         <ul id="link-list"></ul>
     </div>
+    <style>/* Container for all rows */
+#data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
 
+/* Each row section */
+.row {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+}
+
+.row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Left side: image or placeholder */
+.leftside {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image itself */
+.leftside img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder design */
+.placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #eef2f3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #444;
+  font-size: 15px;
+  text-align: center;
+  padding: 10px;
+  border: 2px dashed #ccc;
+}
+
+.placeholder .emoji {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+/* Right content (title & description) */
+.rightside {
+  flex: 1;
+  padding: 12px 16px;
+}
+
+.rightside h4 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.rightside h4 a {
+  text-decoration: none;
+  color: #2c3e50;
+  transition: color 0.3s ease;
+}
+
+.rightside h4 a:hover {
+  color: #007acc;
+}
+
+.rightside p {
+  margin: 0;
+  color: #555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Pagination buttons */
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 15px;
+  background-color: #007acc;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #005f99;
+}
+
+</style>
+   <style>
+    .placeholder {
+      width: 160px;
+      height: 160px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+      color: white;
+      font-weight: bold;
+      text-transform: capitalize;
+      border-radius: 10px;
+      margin: 10px;
+      animation: bgchange 4s infinite alternate;
+      transition: background 0.5s, transform 0.3s;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .placeholder:hover {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      transform: scale(1.05);
+     
+    }
+
+    .placeholder .emoji {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    @keyframes bgchange {
+      0%   { background: linear-gradient(45deg, #4e54c8, #8f94fb); }
+      50%  { background: linear-gradient(45deg, #ff6a00, #ee0979); }
+      100% { background: linear-gradient(45deg, #11998e, #38ef7d); }
+    }
+  </style>
  
 <footer>
           <div class="custom-row">
