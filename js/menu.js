@@ -311,27 +311,36 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    const currentPath = window.location.pathname; // e.g., /gk-quiz/ancient
+    const currentPath = window.location.pathname.toLowerCase(); // lowercase for safety
 
     menuItems.forEach(item => {
         const link = document.createElement('a');
         link.href = item.href;
         link.textContent = item.text;
 
-        const itemPath = new URL(item.href).pathname; // e.g., /gk-quiz.html
+        const itemPath = new URL(item.href).pathname.toLowerCase().replace(/\/$/, '');
+        const current = currentPath.replace(/\/$/, '');
 
-        // Check if the current path starts with the menu path OR they are equal
-        if (
-            currentPath === itemPath ||
-            currentPath.startsWith(itemPath.replace('.html', '')) || // For directories like /gk-quiz/
-            (currentPath === "/" && itemPath.endsWith("index.html"))
-        ) {
+        // Special rule: if current path includes "formula", activate only "All Formula"
+        if (current.includes('formula') && item.text.toLowerCase() === 'all formula') {
             link.classList.add('active');
+        }
+        // Normal matching for other items (except index.html)
+        else if (
+            (current === itemPath) ||
+            (current.startsWith(itemPath.replace('.html', '')) &&
+             !itemPath.endsWith('index.html'))
+        ) {
+            // Don't allow All Formula to get double-active from regular match
+            if (!current.includes('formula') || item.text.toLowerCase() !== 'all formula') {
+                link.classList.add('active');
+            }
         }
 
         menuInner.appendChild(link);
     });
 }
+
 
 
 
