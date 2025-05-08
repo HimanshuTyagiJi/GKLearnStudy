@@ -311,24 +311,25 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    // Get current page path
-    const currentPath = window.location.pathname.split('/').pop(); // Extract current file name
+    const currentPath = window.location.pathname.split('/').pop(); // e.g., 'education.html'
 
-    // Loop through each item and create link elements
     menuItems.forEach(item => {
         const link = document.createElement('a');
         link.href = item.href;
         link.textContent = item.text;
 
-        // Compare link's href with current path and add active class if they match
-        if (currentPath === item.href) {
-            link.classList.add('active'); // Add active class
+        // Extract just the file name from item.href (e.g., 'education.html')
+        const itemPath = item.href.split('/').pop();
+
+        // Compare file names to set active
+        if (currentPath === itemPath || (currentPath === "" && itemPath === "index.html")) {
+            link.classList.add('active');
         }
 
-        // Append each link to the menu inner container
         menuInner.appendChild(link);
     });
 }
+
 
 // Call function to set active link
 setActiveLink();
