@@ -311,7 +311,7 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    const currentPath = window.location.pathname.toLowerCase(); // lowercase for safety
+    const currentPath = window.location.pathname.toLowerCase();
 
     menuItems.forEach(item => {
         const link = document.createElement('a');
@@ -321,17 +321,16 @@ function setActiveLink() {
         const itemPath = new URL(item.href).pathname.toLowerCase().replace(/\/$/, '');
         const current = currentPath.replace(/\/$/, '');
 
-        // Special rule: if current path includes "formula", activate only "All Formula"
+        // 1. Activate only All Formula when URL includes "formula"
         if (current.includes('formula') && item.text.toLowerCase() === 'all formula') {
             link.classList.add('active');
         }
-        // Normal matching for other items (except index.html)
+        // 2. Don't activate Home if it's index.html or "/"
         else if (
-            (current === itemPath) ||
-            (current.startsWith(itemPath.replace('.html', '')) &&
-             !itemPath.endsWith('index.html'))
+            (current === itemPath || current.startsWith(itemPath.replace('.html', ''))) &&
+            !(itemPath.endsWith('index.html') && (current === '/' || current.endsWith('index.html')))
         ) {
-            // Don't allow All Formula to get double-active from regular match
+            // Avoid double activation of All Formula
             if (!current.includes('formula') || item.text.toLowerCase() !== 'all formula') {
                 link.classList.add('active');
             }
@@ -340,6 +339,7 @@ function setActiveLink() {
         menuInner.appendChild(link);
     });
 }
+
 
 
 
