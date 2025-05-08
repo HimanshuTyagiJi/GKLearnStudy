@@ -1,21 +1,22 @@
- document.addEventListener("DOMContentLoaded", () => {
+
+        // JavaScript for image error handling and auto placeholder generation
+        document.addEventListener("DOMContentLoaded", () => {
             const images = document.querySelectorAll("img");
 
             images.forEach(img => {
-                // Define image path (the URL without the domain)
-                const imagePath = img.src.split('/').pop();  // Get image name like 'phonology.webp'
-
-                // Create a new image element for checking availability (without fetching the link)
+                const imagePath = img.src.split('/').pop();  // Get the image name like 'phonology.webp'
+                
+                // Check if image is available
                 const image = new Image();
                 image.src = img.src;
-
+                
                 image.onload = () => {
-                    // If image loads successfully, no need to do anything
-                    console.log("Image loaded successfully:", img.src);
+                    // Image loaded successfully, no placeholder needed
+                    console.log("Image loaded:", img.src);
                 };
 
                 image.onerror = () => {
-                    // If image doesn't load, create a placeholder
+                    // Image not found, show placeholder
                     const name = imagePath.split(".")[0];  // Get name of the image without extension
                     const placeholder = document.createElement("div");
                     placeholder.className = "placeholder";
@@ -24,9 +25,6 @@
                         <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
                     `;
                     img.replaceWith(placeholder);
-
-                    // Optionally, you can show a message in the console, but no error will show up
-                    console.log(`Image not found at: ${img.src}`);
                 };
             });
         });
