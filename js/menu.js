@@ -311,34 +311,33 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    const currentPath = window.location.pathname.toLowerCase();
+  const currentPath = window.location.pathname.toLowerCase();
 
-    menuItems.forEach(item => {
-        const link = document.createElement('a');
-        link.href = item.href;
-        link.textContent = item.text;
+  menuItems.forEach(item => {
+    const link = document.createElement('a');
+    link.href = item.href;
+    link.textContent = item.text;
 
-        const itemPath = new URL(item.href).pathname.toLowerCase().replace(/\/$/, '');
-        const current = currentPath.replace(/\/$/, '');
+    const itemPath = new URL(item.href).pathname.toLowerCase();
 
-        // 1. Activate only All Formula when URL includes "formula"
-        if (current.includes('formula') && item.text.toLowerCase() === 'all formula') {
-            link.classList.add('active');
-        }
-        // 2. Don't activate Home if it's index.html or "/"
-        else if (
-            (current === itemPath || current.startsWith(itemPath.replace('.html', ''))) &&
-            !(itemPath.endsWith('index.html') && (current === '/' || current.endsWith('index.html')))
-        ) {
-            // Avoid double activation of All Formula
-            if (!current.includes('formula') || item.text.toLowerCase() !== 'all formula') {
-                link.classList.add('active');
-            }
-        }
+    // ✅ "All Formula" active if URL includes "formula"
+    if (currentPath.includes("formula") && item.text.toLowerCase() === "all formula") {
+      link.classList.add("active");
+    }
 
-        menuInner.appendChild(link);
-    });
+    // ✅ Match exact path or startsWith (for subpages)
+    else if (
+      currentPath === itemPath ||
+      currentPath.startsWith(itemPath.replace(".html", "")) &&
+      !(itemPath.endsWith("index.html") && currentPath !== "/" && currentPath !== "/index.html")
+    ) {
+      link.classList.add("active");
+    }
+
+    menuInner.appendChild(link);
+  });
 }
+
 
 
 
