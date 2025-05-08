@@ -27,7 +27,7 @@
     />
     <meta
       property="og:images"
-      content="https://gklearnstudy.in/images/education.avif"
+      content="https://gklearnstudy.in/images/education..webp"
     />
 
     <!-- Twitter -->
@@ -40,14 +40,14 @@
     />
     <meta
       property="twitter:images"
-      content="https://gklearnstudy.in/images/education.avif"
+      content="https://gklearnstudy.in/images/education..webp"
     />
 
     <meta property="article:author" content="GK Learn Study" />
     <meta property="article:section" content="Education" />
 
     <meta name="theme-color" content="blue" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+   
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
@@ -57,7 +57,7 @@
     <meta name="msapplication-TileColor" content="#4CAF50" />
     <meta
       name="msapplication-Tileimages"
-      content="https://gklearnstudy.in/GK-Learn-Study.webp"
+      content="https://gklearnstudy.in/GK-Learn-Study.png"
     />
     <meta name="msapplication-config" content="browserconfig.xml" />
 
@@ -70,12 +70,12 @@
     <link
       rel="icon"
       type="images/ico"
-      href="https://gklearnstudy.in/GK-Learn-Study.webp"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
     />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="https://gklearnstudy.in/GK-Learn-Study.webp"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
     />
     <link id="manifest" rel="manifest" href="/manifest.json" />
     <link rel="icon" href="favicon.webp" type="images/x-icon" />
@@ -717,22 +717,37 @@
     }
   </style>
       <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const images = document.querySelectorAll("img");
+document.addEventListener("DOMContentLoaded", () => {
+    const images = document.querySelectorAll("img");
 
-      images.forEach(img => {
+    images.forEach(img => {
         img.onerror = () => {
-          const name = img.src.split("/").pop().split(".")[0];
-          const placeholder = document.createElement("div");
-          placeholder.className = "placeholder";
-          placeholder.innerHTML = `
-            <div class="emoji">📘</div>
-            <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
-          `;
-          img.replaceWith(placeholder);
+            const name = img.src.split("/").pop().split(".")[0];
+
+            // Cloudflare path correction
+            const correctedPath = `https://gklearnstudy.in/images/${name}.webp`;
+
+            const placeholder = document.createElement("div");
+            placeholder.className = "placeholder";
+            placeholder.innerHTML = `
+                <div class="emoji">📘</div>
+                <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
+            `;
+
+            // Display placeholder
+            img.replaceWith(placeholder);
+
+            // Optionally, you can try the corrected image source
+            const newImage = new Image();
+            newImage.src = correctedPath;
+            newImage.onload = () => {
+                // Image loaded successfully
+                placeholder.replaceWith(newImage);
+            };
         };
-      });
     });
+});
+
   </script>
     <script>
   document.addEventListener("DOMContentLoaded", () => {
