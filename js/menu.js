@@ -311,24 +311,28 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    const currentPath = window.location.pathname.split('/').pop(); // e.g., 'education.html'
+    const currentPath = window.location.pathname; // e.g., /gk-quiz/ancient
 
     menuItems.forEach(item => {
         const link = document.createElement('a');
         link.href = item.href;
         link.textContent = item.text;
 
-        // Extract just the file name from item.href (e.g., 'education.html')
-        const itemPath = item.href.split('/').pop();
+        const itemPath = new URL(item.href).pathname; // e.g., /gk-quiz.html
 
-        // Compare file names to set active
-        if (currentPath === itemPath || (currentPath === "" && itemPath === "index.html")) {
+        // Check if the current path starts with the menu path OR they are equal
+        if (
+            currentPath === itemPath ||
+            currentPath.startsWith(itemPath.replace('.html', '')) || // For directories like /gk-quiz/
+            (currentPath === "/" && itemPath.endsWith("index.html"))
+        ) {
             link.classList.add('active');
         }
 
         menuInner.appendChild(link);
     });
 }
+
 
 
 // Call function to set active link
