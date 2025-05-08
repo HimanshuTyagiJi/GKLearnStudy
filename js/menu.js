@@ -1,3 +1,28 @@
+// Prevent right-click context menu
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault(); // Prevent the context menu
+});
+
+// Disable specific keyboard shortcuts
+document.addEventListener("keydown", function (e) {
+    if (
+        (e.ctrlKey && e.key === "s") || // Disable Ctrl+S
+        (e.ctrlKey && e.key === "u") || // Disable Ctrl+U
+        (e.ctrlKey && e.key === "c") || // Disable Ctrl+C
+        (e.ctrlKey && e.key === "p") || // Disable Ctrl+P
+        (e.ctrlKey && e.shiftKey && e.key === "I") // Disable Ctrl+Shift+I (DevTools)
+    ) {
+        e.preventDefault();
+    }
+});
+
+// Redirect if 'view-source:' URL is detected
+if (window.location.protocol === 'view-source:') {
+    window.location.href = "https://your-website-url.com"; // Replace with your website URL
+}
+
+
+
 
         // JavaScript for image error handling and auto placeholder generation
         document.addEventListener("DOMContentLoaded", () => {
