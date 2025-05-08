@@ -1,3 +1,6 @@
+
+
+
 const searchInput = document.getElementById("searchInput");
 
 if (searchInput) {
@@ -25,22 +28,7 @@ if (searchInput) {
     });
 }
 
-  document.addEventListener("DOMContentLoaded", () => {
-      const images = document.querySelectorAll("img");
-
-      images.forEach(img => {
-        img.onerror = () => {
-          const name = img.src.split("/").pop().split(".")[0];
-          const placeholder = document.createElement("div");
-          placeholder.className = "placeholder";
-          placeholder.innerHTML = `
-            <div class="emoji">📘</div>
-            <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
-          `;
-          img.replaceWith(placeholder);
-        };
-      });
-    });
+ 
 
 if (window.location.pathname === "/hindi-test-part-01") {
     window.location.replace("/hindi-test/part-01");
@@ -490,3 +478,20 @@ function myFunction() {
         }       
     }
 }
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const images = document.querySelectorAll("img");
+
+      images.forEach(img => {
+        img.onerror = () => {
+          const name = img.src.split("/").pop().split(".")[0];
+          const placeholder = document.createElement("div");
+          placeholder.className = "placeholder";
+          placeholder.innerHTML = `
+            <div class="emoji">📘</div>
+            <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
+          `;
+          img.replaceWith(placeholder);
+        };
+      });
+    });
