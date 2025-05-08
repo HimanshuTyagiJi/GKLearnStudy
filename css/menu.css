@@ -97,6 +97,7 @@ div.scrollmenu a {
     --link-hover-color: rgb(216, 196, 255);
     --link-active-color: rgb(60, 216, 187);
     --body-bg: #212121;
+ --logo:yellow;
     --table:black;
 
  .pink-background {background-color: hsl(354, 24%, 17%);border-radius:15px;padding: 10px;;margin:15px;}
@@ -1056,3 +1057,7 @@ table td a:visited:hover {
       50%  { background: linear-gradient(45deg, #ff6a00, #ee0979); }
       100% { background: linear-gradient(45deg, #11998e, #38ef7d); }
     }
+.menu-inner a.active {
+   
+   color:var(--logo);
+}
