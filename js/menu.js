@@ -1,4 +1,34 @@
 
+        // JavaScript for image error handling and auto placeholder generation
+        document.addEventListener("DOMContentLoaded", () => {
+            const images = document.querySelectorAll("img");
+
+            images.forEach(img => {
+                const imagePath = img.src.split('/').pop();  // Get the image name like 'phonology.webp'
+                
+                // Check if image is available
+                const image = new Image();
+                image.src = img.src;
+                
+                image.onload = () => {
+                    // Image loaded successfully, no placeholder needed
+                    console.log("Image loaded:", img.src);
+                };
+
+                image.onerror = () => {
+                    // Image not found, show placeholder
+                    const name = imagePath.split(".")[0];  // Get name of the image without extension
+                    const placeholder = document.createElement("div");
+                    placeholder.className = "placeholder";
+                    placeholder.innerHTML = `
+                        <div class="emoji">📘</div>
+                        <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
+                    `;
+                    img.replaceWith(placeholder);
+                };
+            });
+        });
+    
 
 
 const searchInput = document.getElementById("searchInput");
