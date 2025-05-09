@@ -345,9 +345,9 @@ hr {
 }
 .back-icon {
     margin-top: -5px;
-    font-size: 22px;
+    font-size: 32px;
     cursor: pointer;
-    padding: 10px;
+    
     border: none;
     border-radius: 50%;
     outline: 0;
@@ -357,7 +357,8 @@ hr {
 .search-input {
     background-color: #fff;
     width: 0;
-    height: 40px;
+ margin-top:0px;
+    height: 44px;
     padding: 0 10px;
     border: 2px solid #ddd;
     border-radius: 20px;
@@ -648,7 +649,14 @@ footer {
     }
     .search-container {
         top: 6px;
-    }
+    }#results, .suggestions {
+    position: fixed !important;
+    border: 1px solid #ccc;
+    max-width: 540px;
+    max-height: 55%;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: -20px;}
 }
 @media screen and (max-width: 320px) {
     .menu.is-active .back-arrow,
