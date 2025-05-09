@@ -1,4 +1,12 @@
-
+ .contained {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+           
+           
+            padding: 20px;
+        }
         .box {
             display: inline-block;
            
@@ -26,12 +34,7 @@
             color: white;
         }
 .container h3{font-size:20px; !important}
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
+       
        
         p {
             font-size: 1rem;
