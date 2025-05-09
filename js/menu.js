@@ -14,7 +14,7 @@ document.addEventListener("keydown", function (e) {
     ) {
         e.preventDefault();
     }
-});
+}); 
 
 // Redirect if 'view-source:' URL is detected
 if (window.location.protocol === 'view-source:') {
@@ -326,35 +326,13 @@ function setActiveLink() {
     }
 
     // ✅ Match exact path or startsWith (for subpages)
-    else if (
-      currentPath === itemPath ||
-      currentPath.startsWith(itemPath.replace(".html", "")) &&
-      !(itemPath.endsWith("index.html") && currentPath !== "/" && currentPath !== "/index.html")
-    ) {
-      link.classList.add("active");
-    }
-
+    
     menuInner.appendChild(link);
   });
 }
 
 
-// Function to ignore "index.html" or similar paths
-function ignoreIndexLinks() {
-    const currentPath = window.location.pathname.toLowerCase();
 
-    // If the path is root ("/") or "index.html", make it inactive
-    if (currentPath === "/" || currentPath.includes("index.html")) {
-        const links = document.querySelectorAll('a'); // Select all anchor tags
-        links.forEach(link => {
-            const linkPath = new URL(link.href).pathname.toLowerCase();
-
-            if (linkPath === "/" || linkPath.includes("index.html")) {
-                link.classList.remove("active"); // Remove active class
-            }
-        });
-    }
-}
 
 // Call the function on page load
 document.addEventListener("DOMContentLoaded", ignoreIndexLinks);
