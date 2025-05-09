@@ -344,10 +344,11 @@ hr {
     align-items: center;
 }
 .back-icon {
-    margin-top: -5px;
-    font-size: 32px;
+    margin-top: -8px;
+    font-size: 30px;
     cursor: pointer;
-    
+        color: var(--text);
+    background-color: var(--body-bg);
     border: none;
     border-radius: 50%;
     outline: 0;
