@@ -311,7 +311,7 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-  const currentPath = window.location.pathname.toLowerCase();
+  const currentPath = window.location.pathname.toLowerCase(); // current path
 
   menuItems.forEach(item => {
     const link = document.createElement('a');
@@ -320,13 +320,26 @@ function setActiveLink() {
 
     const itemPath = new URL(item.href).pathname.toLowerCase();
 
-    // ✅ "All Formula" active if URL includes "formula"
+    // ✅ All Formula should be active if URL includes "formula"
     if (currentPath.includes("formula") && item.text.toLowerCase() === "all formula") {
       link.classList.add("active");
     }
 
-    // ✅ Match exact path or startsWith (for subpages)
-    
+    // ✅ GK Quiz, Computer, How to → active even for subpaths like /gk-quiz/topic.html
+    else if (
+      (currentPath.startsWith("/gk-quiz") && item.text.toLowerCase() === "gk quiz") ||
+      (currentPath.startsWith("/computer") && item.text.toLowerCase() === "computer") ||
+      (currentPath.startsWith("/kaise-karen") && item.text.toLowerCase() === "how to") ||
+      (currentPath === itemPath)
+    ) {
+      link.classList.add("active");
+    }
+
+    // ✅ Home active only if currentPath is "/" or "/index.html"
+    else if ((currentPath === "/" || currentPath === "/index.html") && item.text.toLowerCase() === "home") {
+      link.classList.add("active");
+    }
+
     menuInner.appendChild(link);
   });
 }
