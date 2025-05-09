@@ -319,27 +319,43 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-    // Get current page path
-    const currentPath = window.location.pathname.split('/').pop(); // Extract current file name
+    const currentPath = window.location.pathname.toLowerCase(); // e.g., /education.html
 
-    // Loop through each item and create link elements
     menuItems.forEach(item => {
         const link = document.createElement('a');
         link.href = item.href;
         link.textContent = item.text;
 
-        // Compare link's href with current path and add active class if they match
-        if (currentPath === item.href) {
-            link.classList.add('active'); // Add active class
+        const itemPath = new URL(item.href).pathname.toLowerCase();
+
+        // 1. Home should be active only on root or /index.html
+        if ((currentPath === "/" || currentPath === "/index.html") && item.text.toLowerCase() === "home") {
+            link.classList.add("active");
         }
 
-        // Append each link to the menu inner container
+        // 2. All Formula should be active if "formula" is in URL
+        else if (currentPath.includes("formula") && item.text.toLowerCase() === "all formula") {
+            link.classList.add("active");
+        }
+
+        // 3. GK Quiz, Computer, How to – sublink active
+        else if (
+            (currentPath.startsWith("/gk-quiz") && item.text.toLowerCase() === "gk quiz") ||
+            (currentPath.startsWith("/computer") && item.text.toLowerCase() === "computer") ||
+            (currentPath.startsWith("/kaise-karen") && item.text.toLowerCase() === "how to") ||
+            (currentPath.startsWith("/education") && item.text.toLowerCase() === "education") ||
+            (currentPath.startsWith("/test") && item.text.toLowerCase() === "test")
+        ) {
+            link.classList.add("active");
+        }
+
         menuInner.appendChild(link);
     });
 }
 
-// Call function to set active link
+// Call the function
 setActiveLink();
+
 
 // Append menu inner to the menu container
 menu.appendChild(menuInner);
