@@ -56,6 +56,14 @@ if (window.location.protocol === 'view-source:') {
     
 
 
+
+
+
+
+
+
+
+
 const searchInput = document.getElementById("searchInput");
 
 if (searchInput) {
@@ -83,7 +91,7 @@ if (searchInput) {
     });
 }
 
- 
+
 
 if (window.location.pathname === "/hindi-test-part-01") {
     window.location.replace("/hindi-test/part-01");
@@ -311,46 +319,24 @@ menuInner.className = 'menu-inner';
 
 // Function to set active class based on current page
 function setActiveLink() {
-  const currentPath = window.location.pathname.toLowerCase(); // current path
+    // Get current page path
+    const currentPath = window.location.pathname.split('/').pop(); // Extract current file name
 
-  menuItems.forEach(item => {
-    const link = document.createElement('a');
-    link.href = item.href;
-    link.textContent = item.text;
+    // Loop through each item and create link elements
+    menuItems.forEach(item => {
+        const link = document.createElement('a');
+        link.href = item.href;
+        link.textContent = item.text;
 
-    const itemPath = new URL(item.href).pathname.toLowerCase();
+        // Compare link's href with current path and add active class if they match
+        if (currentPath === item.href) {
+            link.classList.add('active'); // Add active class
+        }
 
-    // ✅ All Formula should be active if URL includes "formula"
-    if (currentPath.includes("formula") && item.text.toLowerCase() === "all formula") {
-      link.classList.add("active");
-    }
-
-    // ✅ GK Quiz, Computer, How to → active even for subpaths like /gk-quiz/topic.html
-    else if (
-      (currentPath.startsWith("/gk-quiz") && item.text.toLowerCase() === "gk quiz") ||
-      (currentPath.startsWith("/computer") && item.text.toLowerCase() === "computer") ||
-      (currentPath.startsWith("/kaise-karen") && item.text.toLowerCase() === "how to") ||
-      (currentPath === itemPath)
-    ) {
-      link.classList.add("active");
-    }
-
-    // ✅ Home active only if currentPath is "/" or "/index.html"
-    else if ((currentPath === "/" || currentPath === "/index.html") && item.text.toLowerCase() === "home") {
-      link.classList.add("active");
-    }
-
-    menuInner.appendChild(link);
-  });
+        // Append each link to the menu inner container
+        menuInner.appendChild(link);
+    });
 }
-
-
-
-
-// Call the function on page load
-document.addEventListener("DOMContentLoaded", ignoreIndexLinks);
-
-
 
 // Call function to set active link
 setActiveLink();
@@ -555,5 +541,3 @@ function myFunction() {
         }       
     }
 }
-
-
