@@ -1,80 +1,88 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AI और कंप्यूटर की पूरी जानकारी हिंदी में - परिभाषा, प्रकार, कार्य, उपयोग और भविष्य।">
-  <meta name="keywords" content="AI in Hindi, Computer in Hindi, Types of Computer, Artificial Intelligence, कंप्यूटर क्या है, एआई क्या है">
-  <meta name="author" content="Your Name">
-  <title>AI और Computer की पूरी जानकारी (Artificial Intelligence & Computer in Hindi)</title>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://yourdomain.com/ai-computer"
-    },
-    "headline": "AI और Computer की पूरी जानकारी",
-    "description": "AI और कंप्यूटर क्या है, उनके प्रकार, कार्य, और भविष्य की जानकारी इस एक ही पेज में।",
-    "about": [
-      { "@type": "Thing", "name": "Artificial Intelligence" },
-      { "@type": "Thing", "name": "Computer" },
-      { "@type": "Thing", "name": "Types of Computer" },
-      { "@type": "Thing", "name": "Types of AI" }
-    ],
-    "author": {
-      "@type": "Person",
-      "name": "Your Name"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Your Website",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://yourdomain.com/logo.png"
-      }
-    },
-    "datePublished": "2025-05-10"
-  }
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="keywords" content="Computer Knowledge, Computer Awareness, General Knowledge, GK in English, Competitive Exams">
+  <meta name="description" content="A new section based on Computer Knowledge is launching soon. Stay connected for updates and useful content.">
+  <meta name="author" content="GK Learn Study">
+  <title>🖥️ Computer Knowledge - Coming Soon!</title>
+  <link rel="canonical" href="https://gklearnstudy.in/computer/computer.html" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+  <link rel="stylesheet" href="https://gklearnstudy.in/css/search.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://gklearnstudy.in/favicon.png" type="image/png" />
+
+  <!-- Scripts -->
+  <script src="https://gklearnstudy.in/js/menu.js" defer></script>
+  <script src="https://gklearnstudy.in/js/search.js" defer></script>
+  <script src="https://gklearnstudy.in/js/favicon.js" defer></script>
+
+  <style>
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background-color: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #1b5e20;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .emoji {
+      font-size: 1.4em;
+      margin-right: 5px;
+    }
+
+    footer {
+      background-color: #f0f0f0;
+      color: #555;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>AI और Computer की पूरी जानकारी</h1>
-  <p>इस लेख में हम कंप्यूटर और आर्टिफिशियल इंटेलिजेंस (AI) की परिभाषा, उनके प्रकार, कार्य और भविष्य के उपयोगों की जानकारी हिंदी में समझेंगे।</p>
 
-  <h2>Table of Contents</h2>
-  <ul>
-    <li><a href="#computer">Computer क्या है?</a></li>
-    <li><a href="#types-of-computer">Types of Computer (कंप्यूटर के प्रकार)</a></li>
-    <li><a href="#ai">AI क्या है? (What is Artificial Intelligence?)</a></li>
-    <li><a href="#types-of-ai">Types of AI (एआई के प्रकार)</a></li>
-    <li><a href="#future">AI और Computer का भविष्य</a></li>
-  </ul>
+  <header>
+    <h1>🖥️ Computer Knowledge - Coming Soon</h1>
+  </header>
 
-  <h2 id="computer">Computer क्या है?</h2>
-  <p>कंप्यूटर एक इलेक्ट्रॉनिक यंत्र है जो डेटा को इनपुट के रूप में लेकर उसे प्रोसेस करता है और आउटपुट देता है। इसका उपयोग गणना, डाटा संग्रहण, सूचना प्रसारण और संचार में होता है।</p>
+  <div class="search-container">
+    <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+    <button class="back-icon" id="backBtn">←</button>
+    <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
+  </div>
+  <ul id="suggestions" class="suggestions"></ul>
+  <div id="results"></div>
 
-  <h2 id="types-of-computer">Types of Computer (कंप्यूटर के प्रकार)</h2>
-  <ul>
-    <li><strong>सुपर कंप्यूटर:</strong> सबसे तेज और शक्तिशाली कंप्यूटर।</li>
-    <li><strong>मेनफ्रेम कंप्यूटर:</strong> बड़े संगठन व बैंक इन्हें उपयोग करते हैं।</li>
-    <li><strong>मिनी कंप्यूटर:</strong> छोटे और मिड-साइज़ संस्थानों के लिए।</li>
-    <li><strong>माइक्रो कंप्यूटर:</strong> व्यक्तिगत उपयोग के लिए — जैसे लैपटॉप, डेस्कटॉप।</li>
-  </ul>
+  <main>
+    <h2>📡 New Computer Knowledge Section Coming Soon!</h2>
+    <p><span class="emoji">💻</span>This section will be dedicated to basic and competitive exam-oriented computer knowledge. It is currently under development and will be available soon.</p>
+    <p><span class="emoji">🔔</span>Meanwhile, you can explore our other study materials and stay tuned for updates.</p>
+    <p><span class="emoji">📅</span>We’ll soon be adding content on computer basics, input-output devices, operating systems, the internet, and more important topics.</p>
+  </main>
 
-  <h2 id="ai">AI क्या है? (What is Artificial Intelligence?)</h2>
-  <p>AI यानी कृत्रिम बुद्धिमत्ता एक ऐसी तकनीक है जिसमें कंप्यूटर इंसानों की तरह सोच सकता है, निर्णय ले सकता है और खुद को सुधार सकता है। उदाहरण: चैटबॉट, वॉइस असिस्टेंट, सेल्फ-ड्राइविंग कार।</p>
-
-  <h2 id="types-of-ai">Types of AI (एआई के प्रकार)</h2>
-  <ul>
-    <li><strong>Narrow AI:</strong> एक विशेष कार्य में कुशल जैसे Google Translate, Alexa।</li>
-    <li><strong>General AI:</strong> इंसान की तरह सोचने की क्षमता (अब तक विकसित नहीं)।</li>
-    <li><strong>Super AI:</strong> इंसानों से भी ज्यादा बुद्धिमान AI (भविष्य में संभव)।</li>
-  </ul>
-
-  <h2 id="future">AI और Computer का भविष्य</h2>
-  <p>भविष्य में कंप्यूटर और AI का उपयोग चिकित्सा, शिक्षा, अंतरिक्ष, ट्रांसपोर्ट और रक्षा क्षेत्रों में तेजी से बढ़ेगा। इसका दायरा जीवन के हर क्षेत्र में विस्तृत होगा।</p>
+  <footer>
+    &copy; 2025 GK Learn Study | All Rights Reserved ✅
+  </footer>
 
 </body>
 </html>
