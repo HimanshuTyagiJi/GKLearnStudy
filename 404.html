@@ -227,6 +227,34 @@
     <p>Sorry, the page you are looking for doesn't exist. It might have been moved or deleted.</p>
     <a href="https://gklearnstudy.in">Go to Homepage</a>
 </div>
-</div></div>
+</div></div><script>(async () => {
+  const originalPath = window.location.pathname;
+  const lowerPath = originalPath.toLowerCase();
+  const upperPath = originalPath.toUpperCase();
+
+  // अगर URL lowercase नहीं है, पहले lowercase check करें
+  if (originalPath !== lowerPath) {
+    try {
+      const res = await fetch(lowerPath, { method: 'HEAD' });
+      if (res.ok) {
+        window.location.replace(lowerPath);
+        return;
+      }
+    } catch (e) {}
+  }
+
+  // अगर lowercase भी नहीं मिला और current capital है, तो upperCase check करें
+  if (originalPath !== upperPath) {
+    try {
+      const res = await fetch(upperPath, { method: 'HEAD' });
+      if (res.ok) {
+        window.location.replace(upperPath);
+        return;
+      }
+    } catch (e) {}
+  }
+
+  // अगर कुछ नहीं मिला, तो 404 दिखने दो
+})();</script>
 </body>
 </html>
