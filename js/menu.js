@@ -447,9 +447,9 @@ function activateLink(link) {
       <a href="/terms" style="color: #ddd; text-decoration: underline;">Terms</a> |
       <a href="/privacy-policy" style="color: #ddd; text-decoration: underline;">Privacy Policy</a> |
       <a href="javascript:void(0);" onclick="goToUrl()" style="color: #ddd; text-decoration: underline;">Contact</a>
-    </div><br>   <div style="text-align: center;">
+    </div><br>   <div style="text-align: center;color: white;">
       &copy; 2025 
-      <a href="https://www.gklearnstudy.in" target="_blank" style="color: #ddd; text-decoration: underline;">GK Learn Study</a> | All right reserved
+      <a href="https://www.gklearnstudy.in" target="_blank" style="color: #ddd; text-decoration: underline;">GK Learn Study</a> All right reserved
     </div>
   `;
 
