@@ -436,12 +436,42 @@ function activateLink(link) {
 
 
 
-
 // Footer function
 function goToUrl() {
     window.location.href = "mailto:contact@gklearnstudy.in";
 }
-document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
+
+// Update footer text
+document.getElementById("my-paragraph").innerHTML = "Copyright All rights reserved.";
+
+// Add page links to footer
+function addPageLinks() {
+    const footer = document.getElementById("footer-links");
+    const links = [
+        { name: "Home", url: "index.html" },
+        { name: "About Us", url: "about.html" },
+        { name: "Services", url: "services.html" },
+        { name: "Contact Us", url: "contact.html" },
+        { name: "Privacy Policy", url: "privacy-policy.html" },
+        { name: "Terms & Conditions", url: "terms-conditions.html" }
+    ];
+
+    let linksHTML = "";
+    links.forEach(link => {
+        linksHTML += `<a href="${link.url}" class="footer-link">${link.name}</a> `;
+    });
+
+    footer.innerHTML = linksHTML;
+}
+
+// Call function to add links
+addPageLinks();
+
+
+
+
+
+
 
 // Social icons
 const svgLinks = [
