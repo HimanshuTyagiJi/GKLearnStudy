@@ -1,0 +1,47 @@
+
+<svg width="200" height="200" viewBox="0 0 300 300" >
+    <!-- Background Circle -->
+    <circle cx="150" cy="150" r="150" fill="white"/>
+
+    <!-- GK Text -->
+    <text x="50%" y="35%" font-size="100" font-weight="bold" fill="red" text-anchor="middle" opacity="0">
+        GK
+        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="2s" fill="freeze"/>
+        <animateTransform attributeName="transform" type="scale" from="0.8" to="1" begin="0.5s" dur="2s" fill="freeze"/>
+    </text>
+
+    <!-- LearnStudy Text -->
+    <text x="50%" y="65%" font-size="55" fill="purple" text-anchor="middle" opacity="0">
+        Learn Study
+        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="2s" fill="freeze"/>
+        <animateTransform attributeName="transform" type="scale" from="0.8" to="1" begin="0.5s" dur="2s" fill="freeze"/>
+    </text>
+
+    <!-- Clipping Path for Waves inside Circle -->
+    <clipPath id="circle-clip">
+        <circle cx="150" cy="150" r="150"/>
+    </clipPath>
+
+    <!-- Water Waves inside Circle -->
+    <g clip-path="url(#circle-clip)">
+        <!-- First Wave (Purple - Smooth Balanced) -->
+        <path fill="#c0a4fb" fill-opacity="1">
+            <animate attributeName="d" dur="6s" repeatCount="indefinite"
+                values="
+                M0 230 Q 75 220, 150 230 T 500 200 L 300 300 L 0 300 Z;
+                M0 220 Q 75 230, 150 220 T 300 230 L 300 300 L 0 300 Z;
+                M0 230 Q 75 220, 150 230 T 300 220 L 300 300 L 0 300 Z"
+            />
+        </path>
+
+        <!-- Second Wave (Blue - Smooth Balanced) -->
+        <path fill="#641ef9" fill-opacity="0.7">
+            <animate attributeName="d" dur="6s" repeatCount="indefinite"
+                values="
+                M0 220 Q 75 235, 150 240 T 300 230 L 300 300 L 0 300 Z;
+                M0 230 Q 75 250, 150 235 T 300 220 L 300 300 L 0 300 Z;
+                M0 220 Q 75 240, 150 215 T 300 250 L 300 300 L 0 300 Z"
+            />
+        </path>
+    </g>
+</svg>
