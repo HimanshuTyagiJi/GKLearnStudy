@@ -436,46 +436,11 @@ function activateLink(link) {
 
 
 
-// Function to handle email redirection
+// Footer function
 function goToUrl() {
     window.location.href = "mailto:contact@gklearnstudy.in";
 }
-
-// Function to update the copyright text
-function updateCopyright() {
-    const paragraph = document.getElementById("my-paragraph");
-    paragraph.innerHTML = "Copyright All rights reserved.";
-}
-
-// Function to generate and add page links to footer
-function generateFooterLinks() {
-    const footerLinksContainer = document.getElementById("footer-links");
-    const pages = [
-        { label: "Home", path: "index.html" },
-        { label: "About Us", path: "about.html" },
-        { label: "Services", path: "services.html" },
-        { label: "Contact Us", path: "contact.html" },
-        { label: "Privacy Policy", path: "privacy-policy.html" },
-        { label: "Terms & Conditions", path: "terms-conditions.html" }
-    ];
-
-    // Generate the HTML for each link
-    let linksHTML = pages.map(page => {
-        return `<a href="${page.path}" class="footer-link">${page.label}</a>`;
-    }).join(' | '); // Join with a separator (|)
-
-    // Insert the generated links into the footer container
-    footerLinksContainer.innerHTML = linksHTML;
-}
-
-// Initialize footer content
-function initFooter() {
-    updateCopyright();
-    generateFooterLinks();
-}
-
-// Call the function to initialize the footer
-initFooter();
+document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
 
 
 
