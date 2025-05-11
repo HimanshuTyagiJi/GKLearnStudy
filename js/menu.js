@@ -434,13 +434,26 @@ function activateLink(link) {
 }
 
 
-
-
-// Footer function
-function goToUrl() {
+// 📌 Contact Function
+  function goToUrl() {
     window.location.href = "mailto:contact@gklearnstudy.in";
-}
-document.getElementById("my-paragraph").innerHTML = "Copyright All right reserved.";
+  }
+
+  // 📌 Footer Paragraph Injection - Link content in next line and center
+  document.getElementById("my-paragraph").innerHTML = `
+ 
+    <div style="text-align: center;">
+      <a href="/about" style="color: #ddd; text-decoration: underline;">About</a> |
+      <a href="/terms" style="color: #ddd; text-decoration: underline;">Terms</a> |
+      <a href="/privacy-policy" style="color: #ddd; text-decoration: underline;">Privacy Policy</a> |
+      <a href="javascript:void(0);" onclick="goToUrl()" style="color: #ddd; text-decoration: underline;">Contact</a>
+    </div><br>   <div style="text-align: center;">
+      &copy; 2025 
+      <a href="https://www.gklearnstudy.in" target="_blank" style="color: #ddd; text-decoration: underline;">GK Learn Study</a> | All right reserved
+    </div>
+  `;
+
+
 
 
 
