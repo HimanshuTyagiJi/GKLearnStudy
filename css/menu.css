@@ -1073,3 +1073,25 @@ table td a:visited:hover {
    
    color:var(--logo);
 }
+.link-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.link-button {
+    color: var(--text);
+    background: var(--body-bg);
+    font-size: 24px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background: green;
+    margin: 20px 0;
+    margin: 0 5px;
+    padding: 5px 10px;
+}
