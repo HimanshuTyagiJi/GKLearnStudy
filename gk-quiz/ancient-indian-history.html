@@ -26,7 +26,7 @@
         <meta property="article:section" content="Education" />
 
         <meta name="theme-color" content="#680085" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+      
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
         <meta name="application-name" content="GK Learn Study" />
@@ -38,14 +38,32 @@
         <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
         <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-        <link id="manifest" rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="favicon.ico" type="images/x-icon" />
+      <!-- Preload Critical CSS Files -->
+<link rel="preload" href="https://gklearnstudy.in/css/menu.css" as="style">
+<link rel="preload" href="https://gklearnstudy.in/css/gkquiz.css" as="style">
+<link rel="preload" href="https://gklearnstudy.in/css/rightside.css" as="style">
 
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-        <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+<!-- Manifest and Favicon -->
+<link id="manifest" rel="manifest" href="/manifest.json" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- Inline Critical CSS (above-the-fold styles) -->
+<style>
+  /* Add critical CSS that is required for page above the fold */
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+  .menu { display: flex; justify-content: space-between; padding: 10px; }
+  /* Add other styles that are critical for initial rendering */
+</style>
+
+<!-- Asynchronously Load Non-Critical CSS Files -->
+<link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" onload="this.onload=null;this.rel='stylesheet'" />
+<link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" onload="this.onload=null;this.rel='stylesheet'" />
+<link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" onload="this.onload=null;this.rel='stylesheet'" />
+
+<!-- Defer Scripts -->
         <script src="https://gklearnstudy.in/js/menu.js" defer></script>
+<script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+
 
         <!-- Structured Data (Schema Markup) -->
         <script type="application/ld+json">
@@ -360,15 +378,13 @@
         
         </ul>
 
-        <div class="search-container">
-            <button class="search-icon" id="searchBtn">
-                <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-            </button>
-            <button class="back-icon" id="backBtn">←</button>
+         <div class="search-container">
+            <button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button>
             <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
         </div>
         <ul id="suggestions" class="suggestions"></ul>
         <div id="results"></div>
+        
         <div class="container">
             <main>
                 <h1>Ancient Indian History</h1>
@@ -744,7 +760,7 @@
             </footer>
         </div>
 
-        <script src="https://gklearnstudy.in/js/search.js"></script>
-        <script src="https://gklearnstudy.in/js/gkquiz.js"></script>
+        <script src="https://gklearnstudy.in/js/search.js" defer></script>
+        <script src="https://gklearnstudy.in/js/gkquiz.js" defer></script>
     </body>
 </html>
