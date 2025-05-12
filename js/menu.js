@@ -1,3 +1,11 @@
+document.querySelectorAll('a').forEach(function(link) {
+    if (link.target === "_blank" && !link.hasAttribute("rel")) {
+        link.setAttribute("rel", "noopener noreferrer");
+    }
+});
+
+
+
 // File: inject-adsense.js
 
 (function () {
