@@ -415,33 +415,37 @@ document.querySelector('.back-arrow').addEventListener('click', () => {
   document.querySelector('.burger').classList.remove('hide'); // Show the burger when the menu is closed
 });
 
-
-// Scroll menu items left and right
 const menuInnerDiv = document.querySelector('.menu-inner');
 const leftArrowDiv = document.querySelector('.menu-arrow.left');
 const rightArrowDiv = document.querySelector('.menu-arrow.right');
 
 const updateArrows = () => {
-  const scrollWidth = menuInnerDiv.scrollWidth;
-  const clientWidth = menuInnerDiv.clientWidth;
-  const scrollLeft = menuInnerDiv.scrollLeft;
+  window.requestAnimationFrame(() => {
+    const scrollWidth = menuInnerDiv.scrollWidth;
+    const clientWidth = menuInnerDiv.clientWidth;
+    const scrollLeft = menuInnerDiv.scrollLeft;
 
-  leftArrowDiv.style.visibility = scrollLeft > 0 ? 'visible' : 'hidden';
-  rightArrowDiv.style.visibility = scrollWidth > clientWidth + scrollLeft ? 'visible' : 'hidden';
+    leftArrowDiv.style.visibility = scrollLeft > 0 ? 'visible' : 'hidden';
+    rightArrowDiv.style.visibility = scrollWidth > clientWidth + scrollLeft ? 'visible' : 'hidden';
+  });
 };
 
 leftArrowDiv.addEventListener('click', () => {
   menuInnerDiv.scrollBy({ left: -200, behavior: 'smooth' });
-  updateArrows(); // Update arrow visibility after scrolling
+  setTimeout(updateArrows, 300);
 });
 
 rightArrowDiv.addEventListener('click', () => {
   menuInnerDiv.scrollBy({ left: 200, behavior: 'smooth' });
-  updateArrows(); // Update arrow visibility after scrolling
+  setTimeout(updateArrows, 300);
 });
 
-// Initial update to set arrow visibility based on initial state
+// Optional: Also update on scroll to catch user drag
+menuInnerDiv.addEventListener('scroll', updateArrows);
+
+// Initial update
 updateArrows();
+
 
 
 
