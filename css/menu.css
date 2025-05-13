@@ -1118,8 +1118,11 @@ table td a:visited:hover {
   font-display: swap;
 }
  summary {
-    display: inline-block;
+     display: inline-flex;
+   
+  
     cursor: pointer;
+    white-space: nowrap; /* Force single line */
   }
   summary::-webkit-details-marker {
     display: none; /* Optional: marker (▶️) हटाने के लिए */
