@@ -463,16 +463,16 @@ function activateLink(link) {
   // 📌 Footer Paragraph Injection - Link content in next line and center
   document.getElementById("my-paragraph").innerHTML = `
  <center>
-    <div>
-      <a href="/about">About</a> |
-      <a href="/terms">Terms</a> |
-      <a href="/privacy-policy">Privacy Policy</a> |
-     
-   <br>
-      &copy; 2025 
-     <a href="https://www.gklearnstudy.in" target="_blank" rel="noopener">GK Learn Study</a>
- All right reserved
-    </div></center>
+  <div class="footer-links">
+    <a href="/about">About</a> |
+    <a href="/terms">Terms</a> |
+    <a href="/privacy-policy">Privacy Policy</a> |
+  
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 
+    <a href="https://www.gklearnstudy.in" target="_blank" rel="noopener">GK Learn Study</a> All rights reserved
+  </div></center>
   `;
 
 
