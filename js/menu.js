@@ -8,6 +8,16 @@ document.querySelectorAll('a').forEach(function(link) {
 
 
 
+// File: inject-adsense.js
+
+(function () {
+  const adsScript = document.createElement("script");
+  adsScript.setAttribute("async", "");
+  adsScript.setAttribute("src", "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503");
+  adsScript.setAttribute("crossorigin", "anonymous");
+
+  document.head.appendChild(adsScript);
+})();
 
 // Prevent right-click context menu
 document.addEventListener("contextmenu", function (e) {
