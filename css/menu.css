@@ -1111,3 +1111,8 @@ table td a:visited:hover {
     margin: 0 5px;
     padding: 5px 10px;
 }
+@font-face {
+  font-family: 'CustomFont';
+  src: url('custom-font.woff2') format('woff2');
+  font-display: swap;
+}
