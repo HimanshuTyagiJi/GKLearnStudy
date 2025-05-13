@@ -1117,3 +1117,10 @@ table td a:visited:hover {
   src: url('custom-font.woff2') format('woff2');
   font-display: swap;
 }
+ summary {
+    display: inline-block;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none; /* Optional: marker (▶️) हटाने के लिए */
+  }
