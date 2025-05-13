@@ -1,9 +1,9 @@
-document.querySelectorAll('a').forEach(function(link) {
-    if (link.target === "_blank" && !link.hasAttribute("rel")) {
-        link.setAttribute("rel", "noopener noreferrer");
-    }
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+  const rel = link.getAttribute('rel') || '';
+  if (!rel.includes('noopener')) {
+    link.setAttribute('rel', (rel + ' noopener noreferrer').trim());
+  }
 });
-
 
 
 
