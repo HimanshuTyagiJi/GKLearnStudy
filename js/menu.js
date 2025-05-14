@@ -572,26 +572,22 @@ svgLinks.forEach(linkInfo => {
 
 document.addEventListener("DOMContentLoaded", function () {
   const nonSelectableTags = [
-    "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h", "p", "b", "th", "td", "tr",
-    "a", "br", "span", ".strong", "div", "button", "input", "textarea", "select",
+    "h1", "h2", "h3", "h4", "h5", "h6", "p", "b", "th", "td", "tr", "a",
+    "br", "span", "div", "button", "input", "textarea", "select",
     "option", "label", "ul", "ol", "li", "dl", "dt", "dd", "em", "i", "code",
     "pre", "blockquote", "address", "dfn", "cite", "kbd", "samp", "var", "small",
-    "sub", "sup", "abbr", "acronym", "q", "ins", "del", "a:hover", "a:active",
-    "a:focus"
+    "sub", "sup", "abbr", "acronym", "q", "ins", "del"
   ];
 
   nonSelectableTags.forEach(tag => {
-    const elements = document.querySelectorAll(tag);
-    elements.forEach(element => {
-      element.style.webkitUserSelect = "none";
-      element.style.webkitTouchCallout = "none";
-      element.style.mozUserSelect = "none";
-      element.style.msUserSelect = "none";
-      element.style.userSelect = "none";
-      element.style.oUserSelect = "none";
+    document.querySelectorAll(tag).forEach(element => {
+      element.classList.add('no-select');
     });
   });
 });
+
+
+
 function myFunction() {
     var input, filter, table, tr, td, i, j, txtValue;
     input = document.getElementById("search");
