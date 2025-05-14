@@ -41,15 +41,22 @@
         <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
         <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-        <!-- Preload Critical CSS Files -->
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
+       <!-- ✅ Preload Critical CSS Files -->
+<link rel="preload" href="https://gklearnstudy.in/css/menu.css" as="style">
+<link rel="preload" href="https://gklearnstudy.in/css/gkquiz.css" as="style">
+<link rel="preload" href="https://gklearnstudy.in/css/rightside.css" as="style">
 
-        <!-- Asynchronously Load Non-Critical CSS Files -->
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" onload="this.onload=null;this.rel='stylesheet'" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" onload="this.onload=null;this.rel='stylesheet'" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" onload="this.onload=null;this.rel='stylesheet'" />
+<!-- ✅ Asynchronously Load Stylesheets -->
+<link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" media="print" onload="this.media='all'">
+
+<!-- ✅ Fallback for users with JavaScript disabled -->
+<noscript>
+  <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
+  <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css">
+  <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
+</noscript>
 
         <!-- Manifest and Favicon -->
         <link id="manifest" rel="manifest" href="/manifest.json" />
