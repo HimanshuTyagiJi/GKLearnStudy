@@ -6,6 +6,12 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
 });
 
 
+document.querySelectorAll('a').forEach(a => {
+  if (!a.hasAttribute('title') && a.textContent.trim().length > 0) {
+    a.setAttribute('title', a.textContent.trim());
+  }
+});
+
 
 
 // File: inject-adsense.js
