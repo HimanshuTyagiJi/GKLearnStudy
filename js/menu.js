@@ -6,12 +6,26 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
 });
 
 
-document.querySelectorAll('a').forEach(a => {
-  if (!a.hasAttribute('title') && a.textContent.trim().length > 0) {
-    a.setAttribute('title', a.textContent.trim());
-  }
-});
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('a');
 
+    links.forEach(link => {
+      // अगर link में title नहीं है
+      if (!link.hasAttribute('title') || link.getAttribute('title').trim() === "") {
+        let titleText = link.textContent.trim();
+
+        // अगर text खाली है तो href को fallback की तरह यूज़ करें
+        if (titleText === "") {
+          const href = link.getAttribute('href');
+          titleText = href ? `Visit: ${href}` : 'Go to link';
+        }
+
+        link.setAttribute('title', titleText);
+      }
+    });
+  });
+</script>
 
 
 // File: inject-adsense.js
