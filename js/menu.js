@@ -1,9 +1,3 @@
-document.querySelectorAll('a[target="_blank"]').forEach(link => {
-  const rel = link.getAttribute('rel') || '';
-  if (!rel.includes('noopener')) {
-    link.setAttribute('rel', (rel + ' noopener noreferrer').trim());
-  }
-});
 
 
 
@@ -168,14 +162,10 @@ const sunIcon = `
     </g>
 </svg>`;
 
-const moonIcon = `
-<svg class="moon-icon" viewBox="0 0 48.00 48.00" fill="#ffffff" stroke="#000000">
-    <path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4
-             .2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25
-             c.5,10.7,9,19.5,19.7,20.4c10.6.9,19.8-6,22.5-15.6
-             .4-1.4-1-2.6-2.3-2c-2.9,1.3-6.1,1.8-9.6,1.5Z">
-    </path>
-</svg>`;
+const moonIcon = 
+<svg id="moonIcon" viewBox="0 0 48.00 48.00" fill="#ffffff" stroke="#000000" style="display: none;" aria-hidden="true">
+    <path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path>
+</svg>;
 
 
 // Set innerHTML for icons
