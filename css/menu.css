@@ -1127,3 +1127,31 @@ table td a:visited:hover {
   summary::-webkit-details-marker {
     display: none; /* Optional: marker (▶️) हटाने के लिए */
   }
+
+
+/* CSS: social-icons.css */
+
+#social-links {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.svg-link svg {
+    width: 25px;
+    height: 100%;
+}
+
+/* Remove inline SVG styles by using these if needed */
+.svg-link svg path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin: round;
+    stroke-miterlimit: 2;
+}
+
+/* Optional: Add hover effects */
+.svg-link a:hover svg path {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
