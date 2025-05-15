@@ -6,7 +6,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
 });
 
 
-<script>
+
   document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll('a');
 
@@ -25,7 +25,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
       }
     });
   });
-</script>
+
 
 
 // File: inject-adsense.js
