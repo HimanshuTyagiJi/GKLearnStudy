@@ -231,14 +231,15 @@ function showSuggestions(event) {
     }
 }
 
+document.getElementById("searchInput").addEventListener("input", function (event) {
+    showSuggestions(event);   // Sirf suggestion har input par
+});
 document.getElementById("searchInput").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        searchTitles(event);
-    } else {
-        showSuggestions(event);
+        searchTitles(event);  // Sirf result Enter par
+        document.getElementById('suggestions').style.display = 'none'; // Suggestion chhupa do
     }
 });
-
 
 
 
