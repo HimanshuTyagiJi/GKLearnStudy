@@ -1,112 +1,51 @@
-let titles = [];
-
-function loadSitemap() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://gklearnstudy.in/searchsitemap.xml', true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
-            const urlElements = xmlDoc.getElementsByTagName('url');
-
-            for (let urlElement of urlElements) {
-                const titleElement = urlElement.getElementsByTagName('title')[0];
-                const locElement = urlElement.getElementsByTagName('loc')[0];
-                const paragraphElement = urlElement.getElementsByTagName('p')[0];
-                const imageElement = urlElement.getElementsByTagName('image')[0];
-                const imageURL = imageElement ? imageElement.getElementsByTagName('loc')[0].textContent : 'https://via.placeholder.com/50';
-
-                if (titleElement && locElement) {
-                    titles.push({
-                        title: titleElement.textContent,
-                        url: locElement.textContent,
-                        paragraph: paragraphElement ? paragraphElement.textContent : '',
-                        image: imageURL,
-                        // Add transliterated fields
-                        transliteratedTitle: transliterateToHindi(titleElement.textContent),
-                        transliteratedParagraph: paragraphElement ? transliterateToHindi(paragraphElement.textContent) : '',
-                    });
-                }
-            }
-
-            fuse = new Fuse(titles, options);
-        } else if (xhr.readyState === 4) {
-            console.error('Error loading sitemap:', xhr.status, xhr.statusText);
-        }
+// Fuse.js CDN लोड करें डायनामिकली (अगर पहले से नहीं है)
+(function loadFuse() {
+  if (!window.Fuse) {
+    let script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js";
+    script.onload = () => {
+      initSearch();
     };
-    xhr.send();
-}
-
-// Transliterating English to Hindi (You can implement this function based on your requirements)
-function transliterateToHindi(englishText) {
-    // Example mapping (implement actual transliteration logic or use a library)
-    const transliterationMap = {
-     
-    "अ": "a",
-    "आ": "aa",
-    "इ": "i",
-    "ई": "ee",
-    "उ": "u",
-    "ऊ": "oo",
-    "ऋ": "ri",
-    "ए": "e",
-    "ऐ": "ai",
-    "ओ": "o",
-    "औ": "au",
-    "अं": "am",
-    "अः": "ah",
-    "क": "ka",
-    "ख": "kha",
-    "ग": "ga",
-    "घ": "gha",
-    "ङ": "nga",
-    "च": "cha",
-    "छ": "chha",
-    "ज": "ja",
-    "झ": "jha",
-    "ञ": "nya",
-    "ट": "ta",
-    "ठ": "tha",
-    "ड": "da",
-    "ढ": "dha",
-    "ण": "na",
-    "त": "ta",
-    "थ": "tha",
-    "द": "da",
-    "ध": "dha",
-    "न": "na",
-    "प": "pa",
-    "फ": "pha",
-    "ब": "ba",
-    "भ": "bha",
-    "म": "ma",
-    "य": "ya",
-    "र": "ra",
-    "ल": "la",
-    "व": "va",
-    "श": "sha",
-    "ष": "sha",
-    "स": "sa",
-    "ह": "ha",
-    "क्ष": "ksha",
-    "ज्ञ": "gya"
-,
-
-        // Add more mappings as needed
-    };
-    return englishText.split(" ").map(word => transliterationMap[word.toLowerCase()] || word).join(" ");
-}
+    document.head.appendChild(script);
+  } else {
+    initSearch();
+  }
+})();
+let titles = [
+    {
+        title: "भारतीय इतिहास",
+        url: "https://gklearnstudy.in/indian-history",
+        paragraph: "भारतीय इतिहास के महत्वपूर्ण अध्याय...",
+        image: "https://gklearnstudy.in/assets/images/indian-history.jpg",
+        transliteratedTitle: transliterateToHindi("भारतीय इतिहास"),
+        transliteratedParagraph: transliterateToHindi("भारतीय इतिहास के महत्वपूर्ण अध्याय...")
+    },
+    {
+        title: "राजनीति विज्ञान",
+        url: "https://gklearnstudy.in/political-science",
+        paragraph: "राजनीति विज्ञान से जुड़ी अवधारणाएँ...",
+        image: "https://gklearnstudy.in/assets/images/political-science.jpg",
+        transliteratedTitle: transliterateToHindi("राजनीति विज्ञान"),
+        transliteratedParagraph: transliterateToHindi("राजनीति विज्ञान से जुड़ी अवधारणाएँ...")
+    },
+    // 🔽 Add more items below in same format
+];
 
 const options = {
     includeScore: true,
     threshold: 0.4,
-    keys: ['title', 'paragraph', 'transliteratedTitle', 'transliteratedParagraph'] // Include transliterated fields
+    keys: ['title', 'paragraph', 'transliteratedTitle', 'transliteratedParagraph']
 };
 
-let fuse;
+let fuse = new Fuse(titles, options);
 
-loadSitemap();
+// Transliterating English to Hindi (Dummy Logic – replace with real logic as needed)
+function transliterateToHindi(englishText) {
+    // Placeholder – replace with real transliteration or remove if not needed
+    return englishText;
+}
 
+// SEARCH BUTTON FUNCTIONALITY
 document.getElementById("searchBtn").addEventListener("click", () => {
     document.querySelector(".search-container").classList.add("active");
     document.getElementById("searchInput").focus();
@@ -121,10 +60,10 @@ function closeSearch() {
         document.querySelector(".search-container").classList.remove("active");
         searchInput.classList.remove("closing");
         searchInput.value = "";
-        document.getElementById('results').innerHTML = ''; // Clear results
-        document.getElementById('suggestions').innerHTML = ''; // Clear suggestions
-        document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
-        document.getElementById('results').style.display = 'none'; // Hide results
+        document.getElementById('results').innerHTML = '';
+        document.getElementById('suggestions').innerHTML = '';
+        document.getElementById('suggestions').style.display = 'none';
+        document.getElementById('results').style.display = 'none';
     }, 300);
 }
 
@@ -134,30 +73,27 @@ function searchTitles(event) {
     const resultsDiv = document.getElementById('results');
     const suggestionsDiv = document.getElementById('suggestions');
 
-    resultsDiv.innerHTML = ''; // Clear previous results
-    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
+    resultsDiv.innerHTML = '';
+    suggestionsDiv.innerHTML = '';
 
     if (query.length > 0) {
-        // Search in both original and transliterated content
         const transliteratedQuery = transliterateToHindi(query);
         const result = fuse.search(query).concat(fuse.search(transliteratedQuery));
-
-        // Remove duplicate results
         const uniqueResults = [...new Set(result.map(item => item.item.title))];
 
         if (uniqueResults.length > 0) {
-            displayResults(uniqueResults, result, 1); // Load first page of results
-            resultsDiv.style.display = 'block'; // Show results
+            displayResults(uniqueResults, result, 1);
+            resultsDiv.style.display = 'block';
         } else {
             resultsDiv.innerHTML = '<div class="no-result">No result found</div>';
-            resultsDiv.style.display = 'block'; // Show no result message
+            resultsDiv.style.display = 'block';
         }
     }
 }
 
 function displayResults(uniqueResults, result, page) {
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = ''; // Clear previous results
+    resultsDiv.innerHTML = '';
 
     const start = (page - 1) * 10;
     const end = start + 10;
@@ -165,8 +101,8 @@ function displayResults(uniqueResults, result, page) {
         const item = result.find(r => r.item.title === title).item;
         const resultItem = document.createElement('div');
         resultItem.classList.add('result-item');
-        resultItem.style.display = 'flex'; // Display as flex for inline layout
-        resultItem.style.alignItems = 'center'; // Center align items
+        resultItem.style.display = 'flex';
+        resultItem.style.alignItems = 'center';
         resultItem.innerHTML = `
             <a href="${item.url}" style="display: flex; align-items: center; width: 100%;">
                 <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; margin-right: 10px;">
@@ -179,7 +115,6 @@ function displayResults(uniqueResults, result, page) {
         resultsDiv.appendChild(resultItem);
     });
 
-    // Create pagination
     const paginationDiv = document.createElement('div');
     paginationDiv.classList.add('pagination');
     const totalPages = Math.ceil(uniqueResults.length / 10);
@@ -189,7 +124,7 @@ function displayResults(uniqueResults, result, page) {
         pageLink.href = '#';
         pageLink.addEventListener('click', (event) => {
             event.preventDefault();
-            displayResults(uniqueResults, result, i); // Load the selected page
+            displayResults(uniqueResults, result, i);
         });
         paginationDiv.appendChild(pageLink);
     }
@@ -199,53 +134,42 @@ function displayResults(uniqueResults, result, page) {
 function showSuggestions(event) {
     const query = document.getElementById('searchInput').value.trim();
     const suggestionsDiv = document.getElementById('suggestions');
-    suggestionsDiv.innerHTML = ''; // Clear previous suggestions
+    suggestionsDiv.innerHTML = '';
 
     if (query.length > 0) {
-        const suggestions = fuse.search(query); // Get all suggestions
-
-        // Remove duplicates from suggestions
+        const suggestions = fuse.search(query);
         const uniqueSuggestions = [...new Set(suggestions.map(item => item.item.title))];
 
         uniqueSuggestions.forEach(title => {
             const item = suggestions.find(s => s.item.title === title).item;
             const suggestionItem = document.createElement('li');
-            suggestionItem.innerHTML = item.title; // No highlight
+            suggestionItem.innerHTML = item.title;
             suggestionItem.onclick = () => {
-                document.getElementById('searchInput').value = item.title; // Fill input with suggestion
-                suggestionsDiv.innerHTML = ''; // Clear suggestions
-                suggestionsDiv.style.display = 'none'; // Hide suggestions
-                document.getElementById('searchInput').focus(); // Keep input active
+                document.getElementById('searchInput').value = item.title;
+                suggestionsDiv.innerHTML = '';
+                suggestionsDiv.style.display = 'none';
+                document.getElementById('searchInput').focus();
             };
             suggestionsDiv.appendChild(suggestionItem);
         });
 
         if (uniqueSuggestions.length > 0) {
-            suggestionsDiv.style.display = 'block'; // Show suggestions
+            suggestionsDiv.style.display = 'block';
         } else {
-            suggestionsDiv.innerHTML = '<li>No result found</li>'; // No suggestions found
-            suggestionsDiv.style.display = 'block'; // Show no result message
+            suggestionsDiv.innerHTML = '<li>No result found</li>';
+            suggestionsDiv.style.display = 'block';
         }
     } else {
-        suggestionsDiv.style.display = 'none'; // Hide suggestions
+        suggestionsDiv.style.display = 'none';
     }
 }
 
 document.getElementById("searchInput").addEventListener("input", function (event) {
-    showSuggestions(event);   // Sirf suggestion har input par
+    showSuggestions(event);
 });
 document.getElementById("searchInput").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        searchTitles(event);  // Sirf result Enter par
-        document.getElementById('suggestions').style.display = 'none'; // Suggestion chhupa do
+        searchTitles(event);
+        document.getElementById('suggestions').style.display = 'none';
     }
 });
-
-
-
-
-
-
-
-
-
