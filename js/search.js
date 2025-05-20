@@ -1,169 +1,190 @@
-   // Sample Data (आप अपना XML या JSON डेटा यहां रख सकते हैं)
-    const data = [
-      {
-        title: "Hindi Grammar",
-        paragraph: "यह पेज हिंदी व्याकरण के मूल सिद्धांत समझाता है।",
-        url: "https://example.com/hindi-grammar",
-        image: "https://via.placeholder.com/50",
-        transliteratedTitle: "Hindi Grammar",
-        transliteratedParagraph: "Yah page Hindi vyaakaran ke mool siddhant samjhata hai."
-      },
-      {
-        title: "English Grammar",
-        paragraph: "Learn about English grammar here.",
-        url: "https://example.com/english-grammar",
-        image: "https://via.placeholder.com/50",
-        transliteratedTitle: "English Grammar",
-        transliteratedParagraph: "Learn about English grammar here."
-      },
-      {
-        title: "Mathematics",
-        paragraph: "Mathematics topics and formulas explained.",
-        url: "https://example.com/math",
-        image: "https://via.placeholder.com/50",
-        transliteratedTitle: "Mathematics",
-        transliteratedParagraph: "Mathematics topics and formulas explained."
+
+// Levenshtein Distance function to calculate similarity between two strings
+function levenshteinDistance(a, b) {
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1,     // insertion
+          matrix[i - 1][j] + 1      // deletion
+        );
       }
-      // अपनी entries यहाँ और जोड़ सकते हैं
-    ];
-
-    // Fuse.js options
-    const options = {
-      includeScore: true,
-      threshold: 0.4,
-      keys: ["title", "paragraph", "transliteratedTitle", "transliteratedParagraph"],
-    };
-
-    // Fuse instance बनाएँ
-    const fuse = new Fuse(data, options);
-
-    // Search बार खोलने के लिए बटन
-    document.getElementById("searchBtn").addEventListener("click", () => {
-      document.querySelector(".search-container").classList.add("active");
-      document.getElementById("searchInput").focus();
-    });
-
-    // Search बार बंद करने के लिए बटन
-    document.getElementById("backBtn").addEventListener("click", () => {
-      document.getElementById("searchInput").value = "";
-      document.querySelector(".search-container").classList.remove("active");
-      document.getElementById("suggestions").style.display = "none";
-      document.getElementById("results").style.display = "none";
-    });
-
-    // Transliterate function (यह साधारण है, जरूरत अनुसार बढ़ा सकते हैं)
-    function transliterateToLatin(text) {
-      // यह example है, आप इसे बेहतर बना सकते हैं
-      return text.normalize('NFD').replace(/[\u0900-\u097F]/g, ''); 
     }
+  }
+  return matrix[b.length][a.length];
+}
 
-    // Suggestions दिखाने वाला फ़ंक्शन
-    function showSuggestions() {
-      const input = document.getElementById("searchInput");
-      const query = input.value.trim();
-      const suggestions = document.getElementById("suggestions");
-      suggestions.innerHTML = "";
+const data = [
+  {
+    "title": "Math Formulas",
+    "url": "https://gklearnstudy.in/math/formulas",
+    "paragraph": "This page contains all important math formulas for 9th to 12th.",
+    "image": "https://gklearnstudy.in/images/math.jpg"
+  },
+  {
+    "title": "Science Formulas",
+    "url": "https://gklearnstudy.in/science/formulas",
+    "paragraph": "Important science formulas and concepts for school students.",
+    "image": "https://gklearnstudy.in/images/science.jpg"
+  },
+  {
+    "title": "English Grammar",
+    "url": "https://gklearnstudy.in/english/grammar",
+    "paragraph": "Complete guide to English grammar with examples.",
+    "image": "https://gklearnstudy.in/images/english.jpg"
+  }
+];
 
-      if (!query) {
-        suggestions.style.display = "none";
-        return;
-      }
+const searchContainer = document.querySelector('.search-container');
+const searchIcon = document.querySelector('.search-icon');
+const backIcon = document.querySelector('.back-icon');
+const searchInput = document.querySelector('.search-input');
+const results = document.getElementById('results');
+const suggestions = document.getElementById('suggestions');
 
-      const transliteratedQuery = transliterateToLatin(query);
+function showResults() {
+  const input = searchInput.value.trim().toLowerCase();
+  results.innerHTML = '';
 
-      // Fuse से सर्च दोनों ओर से करें: जैसे हिंदी, अंग्रेजी दोनों
-      let results = fuse.search(query);
-      let results2 = fuse.search(transliteratedQuery);
+  if (input === '') {
+    results.style.display = 'none';
+    suggestions.style.display = 'none';
+    return;
+  }
 
-      // दोनों results मिलाएं और डुप्लीकेट हटाएं
-      const combined = [...results, ...results2];
-      const uniqueResults = [];
-      const seen = new Set();
-      combined.forEach((result) => {
-        if (!seen.has(result.item.title)) {
-          seen.add(result.item.title);
-          uniqueResults.push(result);
-        }
+  // Split input into words
+  const inputWords = input.split(/\s+/);
+
+  // First: try exact or partial match of all words
+  let filtered = data.filter(item => {
+    const titleLower = item.title.toLowerCase();
+    const paraLower = item.paragraph.toLowerCase();
+
+    // Check if all input words are somewhere included in title or paragraph (partial match)
+    return inputWords.every(word =>
+      titleLower.includes(word) || paraLower.includes(word)
+    );
+  });
+
+  // If no results found, try fuzzy matching for each word
+  if (filtered.length === 0) {
+    // Define max allowed distance based on word length (40% of length or min 2)
+    const maxDistForWord = word => Math.max(2, Math.floor(word.length * 0.4));
+
+    filtered = data.filter(item => {
+      // Get all words from title and paragraph
+      const titleWords = item.title.toLowerCase().split(/\s+/);
+      const paraWords = item.paragraph.toLowerCase().split(/\s+/);
+      const allWords = [...titleWords, ...paraWords];
+
+      // For each input word, check if any word in data is within maxDist fuzzy distance
+      // We will allow partial matching: if at least one input word matches fuzzily in the data item, include it
+      return inputWords.some(inputWord => {
+        const maxDist = maxDistForWord(inputWord);
+        return allWords.some(dataWord =>
+          levenshteinDistance(inputWord, dataWord) <= maxDist
+        );
       });
-
-      if (uniqueResults.length === 0) {
-        suggestions.innerHTML = "<li>No suggestions found</li>";
-        suggestions.style.display = "block";
-        return;
-      }
-
-      uniqueResults.forEach(({ item }) => {
-        const li = document.createElement("li");
-        li.textContent = item.title;
-        li.addEventListener("click", () => {
-          input.value = item.title;
-          suggestions.innerHTML = "";
-          suggestions.style.display = "none";
-          showResults(item.title);
-        });
-        suggestions.appendChild(li);
-      });
-
-      suggestions.style.display = "block";
-    }
-
-    // Search Results दिखाने वाला फ़ंक्शन
-    function showResults(query) {
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "";
-
-      if (!query) {
-        resultsDiv.style.display = "none";
-        return;
-      }
-
-      const transliteratedQuery = transliterateToLatin(query);
-      let results = fuse.search(query);
-      let results2 = fuse.search(transliteratedQuery);
-
-      // दोनों results मिलाएं और डुप्लीकेट हटाएं
-      const combined = [...results, ...results2];
-      const uniqueResults = [];
-      const seen = new Set();
-      combined.forEach((result) => {
-        if (!seen.has(result.item.title)) {
-          seen.add(result.item.title);
-          uniqueResults.push(result);
-        }
-      });
-
-      if (uniqueResults.length === 0) {
-        resultsDiv.innerHTML = "<div>No results found</div>";
-        resultsDiv.style.display = "block";
-        return;
-      }
-
-      uniqueResults.forEach(({ item }) => {
-        const div = document.createElement("div");
-        div.classList.add("result-item");
-        div.innerHTML = `
-          <a href="${item.url}" target="_blank" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
-            <img src="${item.image}" alt="${item.title}" />
-            <div>
-              <div class="result-title">${item.title}</div>
-              <div class="result-paragraph">${item.paragraph}</div>
-            </div>
-          </a>
-        `;
-        resultsDiv.appendChild(div);
-      });
-
-      resultsDiv.style.display = "block";
-    }
-
-    // इनपुट पर showSuggestions चलाएँ
-    document.getElementById("searchInput").addEventListener("input", showSuggestions);
-
-    // Enter दबाने पर results दिखाएँ
-    document.getElementById("searchInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        showResults(document.getElementById("searchInput").value.trim());
-        document.getElementById("suggestions").style.display = "none";
-      }
     });
+  }
+
+  if (filtered.length === 0) {
+    results.style.display = 'block';
+    results.innerHTML = '<p>No results found.</p>';
+    suggestions.style.display = 'none';
+    return;
+  }
+
+  // Show results cards
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.classList.add('result-card');
+
+    const img = document.createElement('img');
+    img.src = item.image;
+    img.alt = item.title;
+    img.classList.add('result-image');
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('result-text');
+
+    const titleLink = document.createElement('a');
+    titleLink.href = item.url;
+    titleLink.textContent = item.title;
+    titleLink.target = '_blank';
+    titleLink.classList.add('result-title');
+
+    const para = document.createElement('p');
+    para.textContent = item.paragraph;
+    para.classList.add('result-paragraph');
+
+    textDiv.appendChild(titleLink);
+    textDiv.appendChild(para);
+
+    card.appendChild(img);
+    card.appendChild(textDiv);
+
+    results.appendChild(card);
+  });
+
+  results.style.display = 'block';
+  suggestions.style.display = 'none';
+}
+
+searchIcon.addEventListener('click', () => {
+  searchContainer.classList.add('active');
+  searchInput.focus();
+  if (searchInput.value.trim() !== '') {
+    showResults();
+  }
+});
+
+backIcon.addEventListener('click', () => {
+  searchContainer.classList.remove('active');
+  searchInput.value = '';
+  results.innerHTML = '';
+  results.style.display = 'none';
+  suggestions.style.display = 'none';
+});
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim();
+  if (query.length > 0) {
+    showResults();
+  } else {
+    suggestions.style.display = 'none';
+    results.style.display = 'none';
+    results.innerHTML = '';
+  }
+});
+
+// Suggestions click handler (optional)
+suggestions.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'li') {
+    searchInput.value = e.target.textContent;
+    suggestions.style.display = 'none';
+    showResults();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const isClickInside = searchContainer.contains(e.target) || results.contains(e.target) || suggestions.contains(e.target);
+  if (!isClickInside) {
+    searchContainer.classList.remove('active');
+    searchInput.value = '';
+    results.innerHTML = '';
+    results.style.display = 'none';
+    suggestions.style.display = 'none';
+  }
+});
+
