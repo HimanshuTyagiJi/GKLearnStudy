@@ -1,138 +1,169 @@
-// Fuse.js के लिए options
-const options = {
-  includeScore: true,
-  threshold: 0.4,
-  keys: ['title', 'paragraph', 'transliteratedTitle', 'transliteratedParagraph']
-};
+   // Sample Data (आप अपना XML या JSON डेटा यहां रख सकते हैं)
+    const data = [
+      {
+        title: "Hindi Grammar",
+        paragraph: "यह पेज हिंदी व्याकरण के मूल सिद्धांत समझाता है।",
+        url: "https://example.com/hindi-grammar",
+        image: "https://via.placeholder.com/50",
+        transliteratedTitle: "Hindi Grammar",
+        transliteratedParagraph: "Yah page Hindi vyaakaran ke mool siddhant samjhata hai."
+      },
+      {
+        title: "English Grammar",
+        paragraph: "Learn about English grammar here.",
+        url: "https://example.com/english-grammar",
+        image: "https://via.placeholder.com/50",
+        transliteratedTitle: "English Grammar",
+        transliteratedParagraph: "Learn about English grammar here."
+      },
+      {
+        title: "Mathematics",
+        paragraph: "Mathematics topics and formulas explained.",
+        url: "https://example.com/math",
+        image: "https://via.placeholder.com/50",
+        transliteratedTitle: "Mathematics",
+        transliteratedParagraph: "Mathematics topics and formulas explained."
+      }
+      // अपनी entries यहाँ और जोड़ सकते हैं
+    ];
 
-let data = [
-  {
-    title: "Hindi Grammar",
-    paragraph: "This page explains Hindi grammar basics.",
-    url: "https://example.com/hindi-grammar",
-    image: "https://via.placeholder.com/50",
-    transliteratedTitle: "हिंदी ग्रामर",
-    transliteratedParagraph: "यह पेज हिंदी ग्रामर बेसिक्स को समझाता है।"
-  },
-  {
-    title: "English Grammar",
-    paragraph: "Learn about English grammar here.",
-    url: "https://example.com/english-grammar",
-    image: "https://via.placeholder.com/50",
-    transliteratedTitle: "इंग्लिश ग्रामर",
-    transliteratedParagraph: "यहाँ इंग्लिश ग्रामर सीखें।"
-  },
-  // अपना data यहां डालें
-];
-
-// Fuse object initialize करें
-const fuse = new Fuse(data, options);
-
-// Hindi transliteration (साधारण फ़ंक्शन, जरूरत अनुसार बढ़ाएं)
-function transliterateToHindi(text) {
-  const map = {
-    "a": "अ", "aa": "आ", "i": "इ", "ee": "ई", "u": "उ", "oo": "ऊ",
-    "e": "ए", "ai": "ऐ", "o": "ओ", "au": "औ"
-  };
-  return text.split(" ").map(w => map[w.toLowerCase()] || w).join(" ");
-}
-
-// Search बार खोलने का बटन
-document.getElementById("searchBtn").addEventListener("click", () => {
-  document.querySelector(".search-container").classList.add("active");
-  document.getElementById("searchInput").focus();
-});
-
-// Search बार बंद करने का बटन
-document.getElementById("backBtn").addEventListener("click", () => {
-  document.getElementById("searchInput").value = "";
-  document.querySelector(".search-container").classList.remove("active");
-  document.getElementById('suggestions').style.display = 'none';
-  document.getElementById('results').style.display = 'none';
-});
-
-// Suggestions दिखाने का फ़ंक्शन
-function showSuggestions() {
-  const query = document.getElementById('searchInput').value.trim();
-  const suggestions = document.getElementById('suggestions');
-  suggestions.innerHTML = '';
-
-  if (!query) {
-    suggestions.style.display = 'none';
-    return;
-  }
-
-  const transliteratedQuery = transliterateToHindi(query);
-  const results = fuse.search(query).concat(fuse.search(transliteratedQuery));
-
-  // Duplicate हटाना
-  const unique = [...new Map(results.map(r => [r.item.title, r])).values()];
-
-  if (unique.length === 0) {
-    suggestions.innerHTML = '<li>No suggestions found</li>';
-    suggestions.style.display = 'block';
-    return;
-  }
-
-  unique.forEach(({item}) => {
-    const li = document.createElement('li');
-    li.textContent = item.title;
-    li.onclick = () => {
-      document.getElementById('searchInput').value = item.title;
-      suggestions.innerHTML = '';
-      suggestions.style.display = 'none';
-      showResults(item.title);
+    // Fuse.js options
+    const options = {
+      includeScore: true,
+      threshold: 0.4,
+      keys: ["title", "paragraph", "transliteratedTitle", "transliteratedParagraph"],
     };
-    suggestions.appendChild(li);
-  });
 
-  suggestions.style.display = 'block';
-}
+    // Fuse instance बनाएँ
+    const fuse = new Fuse(data, options);
 
-// Results दिखाने का फ़ंक्शन
-function showResults(query) {
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';
+    // Search बार खोलने के लिए बटन
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      document.querySelector(".search-container").classList.add("active");
+      document.getElementById("searchInput").focus();
+    });
 
-  const transliteratedQuery = transliterateToHindi(query);
-  const results = fuse.search(query).concat(fuse.search(transliteratedQuery));
+    // Search बार बंद करने के लिए बटन
+    document.getElementById("backBtn").addEventListener("click", () => {
+      document.getElementById("searchInput").value = "";
+      document.querySelector(".search-container").classList.remove("active");
+      document.getElementById("suggestions").style.display = "none";
+      document.getElementById("results").style.display = "none";
+    });
 
-  const unique = [...new Map(results.map(r => [r.item.title, r])).values()];
+    // Transliterate function (यह साधारण है, जरूरत अनुसार बढ़ा सकते हैं)
+    function transliterateToLatin(text) {
+      // यह example है, आप इसे बेहतर बना सकते हैं
+      return text.normalize('NFD').replace(/[\u0900-\u097F]/g, ''); 
+    }
 
-  if (unique.length === 0) {
-    resultsDiv.innerHTML = '<div class="no-result">No results found</div>';
-    resultsDiv.style.display = 'block';
-    return;
-  }
+    // Suggestions दिखाने वाला फ़ंक्शन
+    function showSuggestions() {
+      const input = document.getElementById("searchInput");
+      const query = input.value.trim();
+      const suggestions = document.getElementById("suggestions");
+      suggestions.innerHTML = "";
 
-  unique.forEach(({item}) => {
-    const div = document.createElement('div');
-    div.classList.add('result-item');
-    div.style.display = 'flex';
-    div.style.alignItems = 'center';
-    div.style.marginBottom = '10px';
-    div.innerHTML = `
-      <a href="${item.url}" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
-        <img src="${item.image}" alt="${item.title}" style="width:50px; height:50px; margin-right:10px; object-fit:cover;" />
-        <div>
-          <div class="result-title" style="font-weight:bold;">${item.title}</div>
-          <div class="result-paragraph" style="font-size:0.9em; color:#555;">${item.paragraph}</div>
-        </div>
-      </a>
-    `;
-    resultsDiv.appendChild(div);
-  });
-  resultsDiv.style.display = 'block';
-}
+      if (!query) {
+        suggestions.style.display = "none";
+        return;
+      }
 
-// इनपुट पर showSuggestions कॉल करें
-document.getElementById('searchInput').addEventListener('input', showSuggestions);
+      const transliteratedQuery = transliterateToLatin(query);
 
-// Enter दबाने पर search results दिखाएं
-document.getElementById('searchInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    showResults(document.getElementById('searchInput').value.trim());
-    document.getElementById('suggestions').style.display = 'none';
-  }
-});
+      // Fuse से सर्च दोनों ओर से करें: जैसे हिंदी, अंग्रेजी दोनों
+      let results = fuse.search(query);
+      let results2 = fuse.search(transliteratedQuery);
+
+      // दोनों results मिलाएं और डुप्लीकेट हटाएं
+      const combined = [...results, ...results2];
+      const uniqueResults = [];
+      const seen = new Set();
+      combined.forEach((result) => {
+        if (!seen.has(result.item.title)) {
+          seen.add(result.item.title);
+          uniqueResults.push(result);
+        }
+      });
+
+      if (uniqueResults.length === 0) {
+        suggestions.innerHTML = "<li>No suggestions found</li>";
+        suggestions.style.display = "block";
+        return;
+      }
+
+      uniqueResults.forEach(({ item }) => {
+        const li = document.createElement("li");
+        li.textContent = item.title;
+        li.addEventListener("click", () => {
+          input.value = item.title;
+          suggestions.innerHTML = "";
+          suggestions.style.display = "none";
+          showResults(item.title);
+        });
+        suggestions.appendChild(li);
+      });
+
+      suggestions.style.display = "block";
+    }
+
+    // Search Results दिखाने वाला फ़ंक्शन
+    function showResults(query) {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      if (!query) {
+        resultsDiv.style.display = "none";
+        return;
+      }
+
+      const transliteratedQuery = transliterateToLatin(query);
+      let results = fuse.search(query);
+      let results2 = fuse.search(transliteratedQuery);
+
+      // दोनों results मिलाएं और डुप्लीकेट हटाएं
+      const combined = [...results, ...results2];
+      const uniqueResults = [];
+      const seen = new Set();
+      combined.forEach((result) => {
+        if (!seen.has(result.item.title)) {
+          seen.add(result.item.title);
+          uniqueResults.push(result);
+        }
+      });
+
+      if (uniqueResults.length === 0) {
+        resultsDiv.innerHTML = "<div>No results found</div>";
+        resultsDiv.style.display = "block";
+        return;
+      }
+
+      uniqueResults.forEach(({ item }) => {
+        const div = document.createElement("div");
+        div.classList.add("result-item");
+        div.innerHTML = `
+          <a href="${item.url}" target="_blank" style="display:flex; align-items:center; text-decoration:none; color:inherit;">
+            <img src="${item.image}" alt="${item.title}" />
+            <div>
+              <div class="result-title">${item.title}</div>
+              <div class="result-paragraph">${item.paragraph}</div>
+            </div>
+          </a>
+        `;
+        resultsDiv.appendChild(div);
+      });
+
+      resultsDiv.style.display = "block";
+    }
+
+    // इनपुट पर showSuggestions चलाएँ
+    document.getElementById("searchInput").addEventListener("input", showSuggestions);
+
+    // Enter दबाने पर results दिखाएँ
+    document.getElementById("searchInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        showResults(document.getElementById("searchInput").value.trim());
+        document.getElementById("suggestions").style.display = "none";
+      }
+    });
