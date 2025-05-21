@@ -28,4 +28,19 @@
 .search-container.active .search-input {
   display: inline-block;
  
+}.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/fonts/CustomFont.woff2') format('woff2');
+  font-display: swap;
+}
+
