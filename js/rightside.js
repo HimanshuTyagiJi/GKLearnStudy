@@ -16,9 +16,10 @@ const links = [
 
 function addLinks() {
   links.forEach(link => {
-    linkList.innerHTML += `<li><a href="${link.url}">${link.name}</a></li>`;
+    linkList.innerHTML += `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.name}</a></li>`;
   });
 }
+
 
 addLinks();
 
