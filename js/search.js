@@ -443,3 +443,21 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+ document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('searchContainer');
+    const searchBtn = document.getElementById('searchBtn');
+    const backBtn = document.getElementById('backBtn');
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchBtn && backBtn && searchInput && container) {
+      searchBtn.addEventListener('click', () => {
+        container.classList.add('active');
+        setTimeout(() => searchInput.focus(), 100);
+      });
+
+      backBtn.addEventListener('click', () => {
+        container.classList.remove('active');
+        searchInput.value = '';
+      });
+    }
+  });
