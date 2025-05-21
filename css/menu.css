@@ -44,21 +44,3 @@
   src: url('/fonts/CustomFont.woff2') format('woff2');
   font-display: swap;
 }
-body {
-  overflow-y: scroll;
-}
-
-/* पहले से hidden content को target करें */
-.container {
-  opacity: 1;
-  
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-/* जब body को 25% scroll कर लिया जाए तब दिखे */
-body:has(:nth-child(1):not(:in-viewport)) .container {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
