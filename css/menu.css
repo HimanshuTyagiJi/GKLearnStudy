@@ -21,3 +21,7 @@
   object-fit: cover;
   border-radius: 5px;
 }
+.search-container .search-input {
+  display: none;
+  width: 0;
+ }
