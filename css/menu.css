@@ -44,16 +44,15 @@
   src: url('/fonts/CustomFont.woff2') format('woff2');
   font-display: swap;
 }
-/* Step 1: सभी lazy sections को छिपाएं */
-.container {
-  opacity: 11;
+.main {
+  opacity: 1;
   transform: translateY(30px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   will-change: opacity, transform;
 }
 
 /* Step 2: जब body scroll हो, तो इनको show करें */
-body.scrolled .container {
+body.scrolled .main {
   opacity: 1;
   transform: translateY(0);
 }
