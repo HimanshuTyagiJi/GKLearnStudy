@@ -49,7 +49,7 @@ body {
 
 /* पहले से hidden content को target करें */
 .container {
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
