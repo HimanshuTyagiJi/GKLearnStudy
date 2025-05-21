@@ -1,4 +1,5 @@
 const linkList = document.getElementById('link-list');
+
 const links = [
   {name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas"},
   {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas"},
@@ -11,23 +12,16 @@ const links = [
   {name: "Science & Technology", url: "https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz"},
   {name: "Rivers & Lakes", url: "https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz"},
   {name: "Spacea & Universe", url: "https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz"},
-
 ];
-
 
 function addLinks() {
   links.forEach(link => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = link.url;
-    a.textContent = link.name;
-    li.appendChild(a);
-    linkList.appendChild(li);
+    linkList.innerHTML += `<li><a href="${link.url}">${link.name}</a></li>`;
   });
 }
 
-
 addLinks();
+
 
 
 function toggleMenu() {
