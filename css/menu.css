@@ -1362,3 +1362,23 @@ summary::-webkit-details-marker {
     object-fit: cover;
     border-radius: 5px;
   }
+.result-title {color:black;
+  font-weight: bold;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Description (max 2 lines with ellipsis) */
+.result-paragraph {
+  font-size: 0.95rem;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
