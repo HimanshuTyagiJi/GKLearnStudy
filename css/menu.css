@@ -1349,3 +1349,16 @@ summary::-webkit-details-marker {
     width: 70vw;
   }
 }
+ .result-card {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  .result-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
