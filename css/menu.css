@@ -1349,20 +1349,43 @@ summary::-webkit-details-marker {
     width: 70vw;
   }
 }
- .result-card {
-    display: flex;
-    gap: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
+ #results {
+  width: 60%;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Mobile view ke liye responsive width */
+@media (max-width: 768px) {
+  #results {
+    width: 90%;
   }
-  .result-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-.result-title {color:black;
+}
+
+.result-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.result-card:hover {
+  background: #efefef;
+}
+
+.result-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.result-title {
   font-weight: bold;
   font-size: 1.1rem;
   white-space: nowrap;
@@ -1374,7 +1397,7 @@ summary::-webkit-details-marker {
 /* Description (max 2 lines with ellipsis) */
 .result-paragraph {
   font-size: 0.95rem;
-
+  
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
