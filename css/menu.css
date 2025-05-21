@@ -46,7 +46,7 @@
 }
 /* Step 1: सभी lazy sections को छिपाएं */
 .container {
-  opacity: 0;
+  opacity: 11;
   transform: translateY(30px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   will-change: opacity, transform;
