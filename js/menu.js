@@ -1,4 +1,11 @@
+ window.addEventListener('scroll', function () {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const trigger = window.innerHeight * 0.25; // 25% scroll
 
+    if (scrollY > trigger) {
+      document.body.classList.add('scrolled');
+    }
+  });
 
 
   document.addEventListener("DOMContentLoaded", function () {
