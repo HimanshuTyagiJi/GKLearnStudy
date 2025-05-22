@@ -630,7 +630,6 @@ svgLinks.forEach(linkInfo => {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
   const nonSelectableTags = [
     "h1", "h2", "h3", "h4", "h5", "h6", "p", "b", "th", "td", "tr", "a",
@@ -642,19 +641,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nonSelectableTags.forEach(tag => {
     document.querySelectorAll(tag).forEach(element => {
-      element.style.userSelect = "none";
-      element.style.webkitUserSelect = "none";  // Safari/Chrome
-      element.style.MozUserSelect = "none";     // Firefox
-      element.style.msUserSelect = "none";      // IE/Edge
-      element.style.webkitTouchCallout = "none"; // iOS Safari
+      element.classList.add('no-select');
     });
   });
-  
+
   // Optional: copy event रोकना
   document.addEventListener('copy', function(e) {
     e.preventDefault();
   });
 });
+
 
 
 function myFunction() {
