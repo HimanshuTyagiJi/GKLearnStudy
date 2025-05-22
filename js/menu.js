@@ -8,24 +8,30 @@
   });
 
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll('a');
+ document.addEventListener("DOMContentLoaded", function () {
+  const links = document.querySelectorAll('a');
 
-    links.forEach(link => {
-      // अगर link में title नहीं है
-      if (!link.hasAttribute('title') || link.getAttribute('title').trim() === "") {
-        let titleText = link.textContent.trim();
-
-        // अगर text खाली है तो href को fallback की तरह यूज़ करें
-        if (titleText === "") {
-          const href = link.getAttribute('href');
-          titleText = href ? `Visit: ${href}` : 'Go to link';
-        }
-
-        link.setAttribute('title', titleText);
+  links.forEach(link => {
+    // Add title if not present
+    if (!link.hasAttribute('title') || link.getAttribute('title').trim() === "") {
+      let titleText = link.textContent.trim();
+      if (titleText === "") {
+        const href = link.getAttribute('href');
+        titleText = href ? `Visit: ${href}` : 'Go to link';
       }
-    });
+      link.setAttribute('title', titleText);
+    }
+
+    // SECURITY FIX: Add rel="noopener noreferrer" if target="_blank"
+    if (link.getAttribute('target') === '_blank') {
+      const currentRel = link.getAttribute('rel') || '';
+      if (!currentRel.includes('noopener')) {
+        link.setAttribute('rel', (currentRel + ' noopener noreferrer').trim());
+      }
+    }
   });
+});
+
 
 
 
@@ -430,10 +436,10 @@ document.querySelector('.overlay').addEventListener('click', () => {
 });
 
 // Close menu on back arrow click inside the menu
-document.querySelector('.back-arrow').addEventListener('click', () => {
-  document.querySelector('.menu').classList.remove('is-active');
-  document.querySelector('.overlay').classList.remove('is-active');
-  document.querySelector('.burger').classList.remove('hide'); // Show the burger when the menu is closed
+document.querySelector('.back-arrow')?.addEventListener('click', () => {
+  document.querySelector('.menu')?.classList.remove('is-active');
+  document.querySelector('.overlay')?.classList.remove('is-active');
+  document.querySelector('.burger')?.classList.remove('hide');
 });
 
 const menuInnerDiv = document.querySelector('.menu-inner');
@@ -489,9 +495,9 @@ function activateLink(link) {
  document.getElementById("my-paragraph").innerHTML = `
   <div class="footer-container">
     <div class="footer-links">
-      <a href="/about">About</a> |
-      <a href="/terms">Terms</a> |
-      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="https://www.gklearnstudy.in/about" target="_blank" rel="noopener">About</a> |
+      <a href="https://www.gklearnstudy.in/terms" target="_blank" rel="noopener">Terms</a> |
+      <a href="https://www.gklearnstudy.in/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
     </div>
     <div class="footer-bottom">
       &copy; 2025 
@@ -636,11 +642,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nonSelectableTags.forEach(tag => {
     document.querySelectorAll(tag).forEach(element => {
-      element.classList.add('no-select');
+      element.style.userSelect = "none";
+      element.style.webkitUserSelect = "none";  // Safari/Chrome
+      element.style.MozUserSelect = "none";     // Firefox
+      element.style.msUserSelect = "none";      // IE/Edge
+      element.style.webkitTouchCallout = "none"; // iOS Safari
     });
   });
+  
+  // Optional: copy event रोकना
+  document.addEventListener('copy', function(e) {
+    e.preventDefault();
+  });
 });
-
 
 
 function myFunction() {
