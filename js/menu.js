@@ -393,6 +393,8 @@ function setActiveLink() {
             (currentPath.startsWith("/kaise-karen") && item.text.toLowerCase() === "how to") ||
             (currentPath.startsWith("/education") && item.text.toLowerCase() === "education") ||
             (currentPath.startsWith("/test") && item.text.toLowerCase() === "test")
+            (currentPath.startsWith("/hindi-test") && item.text.toLowerCase() === "test")
+            (currentPath.startsWith("/computer-test") && item.text.toLowerCase() === "test")
         ) {
             link.classList.add("active");
         }
