@@ -1,596 +1,637 @@
-
 <!DOCTYPE html>
 <html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Primary Meta Tags -->
-    <title>Hindi Test Part - 2</title>
-    <meta name="title" content="Hindi Test Part - 2 - GK Learn Study" />
-    <meta name="description" content="यह एक हिंदी टेस्ट पृष्ठ 2 है, जिसमें बहुविकल्पीय प्रश्न (MCQ) दिए गए हैं।" />
-    <meta name="keywords" content="हिंदी टेस्ट, MCQ, बहुविकल्पीय प्रश्न, हिंदी क्विज, ज्ञान परख, ऑनलाइन टेस्ट" />
-    <meta name="author" content="Himanshu" />
-    <meta name="robots" content="index, follow">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gklearnstudy.in/hindi-test/part-01" />
-    <meta property="og:title" content="Hindi Test Part - 2 - GK Learn Study" />
-    <meta property="og:description" content="हमारे हिंदी टेस्ट में भाग लें और विभिन्न बहुविकल्पीय प्रश्नों का उत्तर दें।" />
-    <meta property="og:image" content="https://gklearnstudy.in/images/test.png" />
+        <!-- Primary Meta Tags -->
+        <title>Hindi Test Part - 2 | GK Learn Study</title>
+        <meta name="title" content="Hindi Test Part - 2 | GK Learn Study" />
+        <meta name="description" content="GK Learn Study के इस भाग 2 हिंदी टेस्ट में बहुविकल्पीय प्रश्नों (MCQ) के माध्यम से अपनी तैयारी की जांच करें। सभी प्रतियोगी परीक्षाओं के लिए उपयोगी।" />
+        <meta name="keywords" content="हिंदी टेस्ट, Hindi Test, Hindi MCQ, बहुविकल्पीय प्रश्न, Hindi Quiz, Online Test, प्रतियोगी परीक्षा, GK Learn Study" />
+        <meta name="author" content="GK Learn Study" />
+        <meta name="robots" content="index, follow" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://gklearnstudy.in/hindi-test/part-01" />
-    <meta property="twitter:title" content="Hindi Test Part - 2 - GK Learn Study" />
-    <meta property="twitter:description" content="हमारे हिंदी टेस्ट में भाग लें और विभिन्न बहुविकल्पीय प्रश्नों का उत्तर दें।" />
-    <meta property="twitter:image" content="https://gklearnstudy.in/images/hindi-test-part2.ico" />
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://gklearnstudy.in/hindi-test/part-02" />
 
-    <meta name="theme-color" content="#ffc0cb"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
-    <meta name="application-name" content="GK Learn Study" />
-    <meta name="msapplication-TileColor" content="#4CAF50" />
-    <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
-    <meta name="msapplication-config" content="browserconfig.xml" />
-   
-    <link rel="canonical" href="https://gklearnstudy.in/hindi-test/part-02" />  
-    <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
-    <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-    <link id="manifest" rel="manifest" href="https://gklearnstudy.in//manifest.json" />
-    <link rel="icon" href="https://gklearnstudy.in/favicon.ico" type="images/x-icon" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/test.css">
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="hi_IN" />
+        <meta property="og:url" content="https://gklearnstudy.in/hindi-test/part-02" />
+        <meta property="og:title" content="Hindi Test Part - 2 | GK Learn Study" />
+        <meta property="og:description" content="GK Learn Study के इस हिंदी टेस्ट में भाग लें और महत्वपूर्ण बहुविकल्पीय प्रश्नों के उत्तर दें।" />
+        <meta property="og:image" content="https://gklearnstudy.in/images/hindi-test.png" />
 
-</head>
-<body>
-    <div class="container">
-        <form id="quiz-form" style="display: none;">
-            <h3>Hindi Test Part - 01</h3>
-            <div id="questions-container"></div>
-            <div id="timer">समय: 0:00</div>
-            <button type="submit" class="submit-btn" style="display: none;">सबमिट करें</button>
-        </form>
-        <div id="result"></div>
-        <button id="retry-btn" style="display: none;" onclick="retryQuiz()">फिर से प्रयास करें</button>
-        <div id="startModal" class="modal">
-            <div class="modal-content">
-                <center><h3>इस टेस्ट के कुछ नियम</h3></center>
-                <p>1. इस टेस्ट में 50 प्रश्न होंगे।</p>
-                <p>2. यह टेस्ट सभी प्रश्नों के लिए कुल समय ट्रैक करेगा।</p>
-                <p>3. जब आप अगले प्रश्न पर जाएं या प्रश्न छोड़ें, तो आप पहले के प्रश्नों पर वापस नहीं जा सकते।</p>
-                <p>4. आप टेस्ट को बीच में छोड़ नहीं सकते।</p>
-                <p>5. सही उत्तर देने पर आपको अंक मिलेंगे।</p>
-                <center><button class="start-btn" onclick="startQuiz()">Start</button></center>
-            </div>
-        </div>
-        <div id="resultModal" class="modal">
-            <div class="modal-content">
-                <h3>Result</h3>
-                <div id="resultContent"></div>
-                <button class="review-btn" onclick="reviewQuestions()">View Question</button>
-                <button class="retry-btn" onclick="retryQuiz()">Try Again</button>
-            </div>
-        </div>
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://gklearnstudy.in/hindi-test/part-02" />
+        <meta property="twitter:title" content="Hindi Test Part - 2 | GK Learn Study" />
+        <meta property="twitter:description" content="GK Learn Study द्वारा प्रस्तुत हिंदी टेस्ट भाग 2 - ऑनलाइन परीक्षा के लिए अभ्यास करें।" />
+        <meta property="twitter:image" content="https://gklearnstudy.in/images/hindi-test.png" />
 
-        <div id="review-questions"></div>
-    </div>
+        <!-- Progressive Web App & Theme -->
+        <meta name="theme-color" content="#ffc0cb" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
+        <meta name="application-name" content="GK Learn Study" />
+        <meta name="msapplication-TileColor" content="#4CAF50" />
+        <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <meta name="msapplication-config" content="https://gklearnstudy.in/browserconfig.xml" />
 
-      
+        <!-- Icons and Manifest -->
+        <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
+        <link rel="manifest" href="https://gklearnstudy.in/manifest.json" />
+        <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
 
-    
-    <script src="https://gklearnstudy.in/js/test.js"></script>
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/test.css" />
 
+        <!-- Optional: JSON-LD Schema.org for SEO -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Hindi Test Part - 2",
+                "description": "GK Learn Study के इस भाग 2 हिंदी टेस्ट में बहुविकल्पीय प्रश्नों (MCQ) के माध्यम से अपनी तैयारी की जांच करें।",
+                "author": {
+                    "@type": "Organization",
+                    "name": "GK Learn Study"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "GK Learn Study",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://gklearnstudy.in/GK-Learn-Study.png"
+                    }
+                },
+                "url": "https://gklearnstudy.in/hindi-test/part-02",
+                "mainEntityOfPage": "https://gklearnstudy.in/hindi-test/part-02"
+            }
+        </script>
+    </head>
 
+    <body>
+        <main class="container">
+            <header>
+                <h1 style="text-align: center;">Hindi Test Part - 02</h1>
+            </header>
 
-    <script>
-       var questions = [
-    {
-        "question": "किसे 'हिंदी उपन्यास का पिता' कहा जाता है?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. जयशंकर प्रसाद", "value": "b" },
-            { "text": "C. बंकिम चंद्र चट्टोपाध्याय", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'हिंदी उपन्यास का पिता' प्रेमचंद को कहा जाता है।"
-    },
-    {
-        "question": "किस लेखक ने 'गृहस्थी' नामक उपन्यास लिखा?",
-        "options": [
-            { "text": "A. महादेवी वर्मा", "value": "a" },
-            { "text": "B. यशपाल", "value": "b" },
-            { "text": "C. नरेन्द्र कोहली", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'गृहस्थी' उपन्यास यशपाल द्वारा लिखा गया है।"
-    },
-    {
-        "question": "किसे 'हिंदी कविता का छायावाद' कहा जाता है?",
-        "options": [
-            { "text": "A. सूर्यकांत त्रिपाठी निराला", "value": "a" },
-            { "text": "B. चंद्रकांत देवताले", "value": "b" },
-            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'हिंदी कविता का छायावाद' सुमित्रानंदन पंत को कहा जाता है।"
-    },
-    {
-        "question": "गांधीजी के जीवन पर आधारित पुस्तक का नाम क्या है?",
-        "options": [
-            { "text": "A. सत्य के साथ मेरी प्रयोग", "value": "a" },
-            { "text": "B. महात्मा गांधी", "value": "b" },
-            { "text": "C. बापू की डायरी", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सत्य के साथ मेरी प्रयोग' पुस्तक गांधीजी के जीवन पर आधारित है।"
-    },
-    {
-        "question": "किस लेखक ने 'उपनिवेशवाद' पर आधारित पुस्तक 'भारत में अंग्रेजी साम्राज्यवाद' लिखी?",
-        "options": [
-            { "text": "A. राममनोहर लोहिया", "value": "a" },
-            { "text": "B. जवाहरलाल नेहरू", "value": "b" },
-            { "text": "C. बी. आर. अंबेडकर", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'भारत में अंग्रेजी साम्राज्यवाद' पुस्तक जवाहरलाल नेहरू ने लिखी।"
-    },
-    {
-        "question": "किसे 'हिंदी नाटक का शेक्सपियर' कहा जाता है?",
-        "options": [
-            { "text": "A. शंकर पाटिल", "value": "a" },
-            { "text": "B. रामनाथ वर्मा", "value": "b" },
-            { "text": "C. जयशंकर प्रसाद", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'हिंदी नाटक का शेक्सपियर' जयशंकर प्रसाद को कहा जाता है।"
-    },
-    {
-        "question": "किसने 'गोदान' उपन्यास लिखा?",
-        "options": [
-            { "text": "A. प्रेमचंद", "value": "a" },
-            { "text": "B. बंकिम चंद्र चट्टोपाध्याय", "value": "b" },
-            { "text": "C. सुमित्रानंदन पंत", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'गोदान' उपन्यास प्रेमचंद ने लिखा है।"
-    },
-    {
-        "question": "किसे 'हिंदी साहित्य का आदिकावि' कहा जाता है?",
-        "options": [
-            { "text": "A. बंकिम चंद्र चट्टोपाध्याय", "value": "a" },
-            { "text": "B. महाकवि वाल्मीकि", "value": "b" },
-            { "text": "C. श्रीराम शर्मा आचार्य", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'हिंदी साहित्य का आदिकावि' महाकवि वाल्मीकि को कहा जाता है।"
-    },
-    {
-        "question": "किसने 'मुक्ति' नामक काव्य रचनाएँ लिखी?",
-        "options": [
-            { "text": "A. बच्चन", "value": "a" },
-            { "text": "B. सुमित्रानंदन पंत", "value": "b" },
-            { "text": "C. महादेवी वर्मा", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'मुक्ति' काव्य रचनाएँ महादेवी वर्मा द्वारा लिखी गई हैं।"
-    }
-,
-    {
-        "question": "विपरीत शब्द: 'प्रेम'",
-        "options": [
-            { "text": "A. घृणा", "value": "a" },
-            { "text": "B. द्वार", "value": "b" },
-            { "text": "C. शांति", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'प्रेम' का विपरीत शब्द 'घृणा' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'अच्छा'",
-        "options": [
-            { "text": "A. बुरा", "value": "a" },
-            { "text": "B. सुंदर", "value": "b" },
-            { "text": "C. तेज़", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'अच्छा' का विपरीत शब्द 'बुरा' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'सुख'",
-        "options": [
-            { "text": "A. दुख", "value": "a" },
-            { "text": "B. खुशी", "value": "b" },
-            { "text": "C. शांति", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सुख' का विपरीत शब्द 'दुख' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'मूल'",
-        "options": [
-            { "text": "A. वास", "value": "a" },
-            { "text": "B. खराब", "value": "b" },
-            { "text": "C. कृत्रिम", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'मूल' का विपरीत शब्द 'कृत्रिम' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'सत्य'",
-        "options": [
-            { "text": "A. असत्य", "value": "a" },
-            { "text": "B. महान", "value": "b" },
-            { "text": "C. शांति", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सत्य' का विपरीत शब्द 'असत्य' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'उठना'",
-        "options": [
-            { "text": "A. बैठना", "value": "a" },
-            { "text": "B. चलना", "value": "b" },
-            { "text": "C. दौड़ना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'उठना' का विपरीत शब्द 'बैठना' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'ताजगी'",
-        "options": [
-            { "text": "A. बुढ़ापा", "value": "a" },
-            { "text": "B. शांति", "value": "b" },
-            { "text": "C. नमी", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'ताजगी' का विपरीत शब्द 'बुढ़ापा' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'ध्यान'",
-        "options": [
-            { "text": "A. उबाऊ", "value": "a" },
-            { "text": "B. ध्यानहीन", "value": "b" },
-            { "text": "C. गंभीर", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'ध्यान' का विपरीत शब्द 'ध्यानहीन' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'प्रकाश'",
-        "options": [
-            { "text": "A. अंधकार", "value": "a" },
-            { "text": "B. धुंध", "value": "b" },
-            { "text": "C. सूरज", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'प्रकाश' का विपरीत शब्द 'अंधकार' है।"
-    },
-    {
-        "question": "विपरीत शब्द: 'सर्दी'",
-        "options": [
-            { "text": "A. गर्मी", "value": "a" },
-            { "text": "B. ठंडक", "value": "b" },
-            { "text": "C. शांति", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सर्दी' का विपरीत शब्द 'गर्मी' है।"
-    }
+            <section id="quiz-section">
+                <form id="quiz-form" style="display: none;">
+                    <h2>Hindi Test Part - 02</h2>
+                    <div id="questions-container"></div>
+                    <div id="timer"><strong>समय:</strong> 0:00</div>
+                    <button type="submit" class="submit-btn" style="display: none;">सबमिट करें</button>
+                </form>
+            </section>
 
-, 
-    {
-        "question": "प्रयायवाची शब्द: 'सौंदर्य'",
-        "options": [
-            { "text": "A. रूप", "value": "a" },
-            { "text": "B. सुंदरता", "value": "b" },
-            { "text": "C. छवि", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'सौंदर्य' का प्रयायवाची शब्द 'सुंदरता' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'आनंद'",
-        "options": [
-            { "text": "A. खुशी", "value": "a" },
-            { "text": "B. उल्लास", "value": "b" },
-            { "text": "C. सुख", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'आनंद' का प्रयायवाची शब्द 'खुशी' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'मित्र'",
-        "options": [
-            { "text": "A. साथी", "value": "a" },
-            { "text": "B. दोस्त", "value": "b" },
-            { "text": "C. सहयोगी", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'मित्र' का प्रयायवाची शब्द 'दोस्त' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'वृद्ध'",
-        "options": [
-            { "text": "A. बुजुर्ग", "value": "a" },
-            { "text": "B. बूढ़ा", "value": "b" },
-            { "text": "C. वृद्धावस्था", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'वृद्ध' का प्रयायवाची शब्द 'बुजुर्ग' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'जल्दी'",
-        "options": [
-            { "text": "A. शीघ्र", "value": "a" },
-            { "text": "B. तत्पर", "value": "b" },
-            { "text": "C. चपल", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'जल्दी' का प्रयायवाची शब्द 'शीघ्र' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'भूत'",
-        "options": [
-            { "text": "A. आत्मा", "value": "a" },
-            { "text": "B. प्रेत", "value": "b" },
-            { "text": "C. चित्त", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'भूत' का प्रयायवाची शब्द 'प्रेत' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'सूरज'",
-        "options": [
-            { "text": "A. रवि", "value": "a" },
-            { "text": "B. अग्नि", "value": "b" },
-            { "text": "C. तेज", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'सूरज' का प्रयायवाची शब्द 'रवि' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'शक्ति'",
-        "options": [
-            { "text": "A. बल", "value": "a" },
-            { "text": "B. ताकत", "value": "b" },
-            { "text": "C. उर्जा", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'शक्ति' का प्रयायवाची शब्द 'ताकत' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'मृत्यु'",
-        "options": [
-            { "text": "A. देहांत", "value": "a" },
-            { "text": "B. अंत", "value": "b" },
-            { "text": "C. मृत्यु", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'मृत्यु' का प्रयायवाची शब्द 'देहांत' है।"
-    },
-    {
-        "question": "प्रयायवाची शब्द: 'विजय'",
-        "options": [
-            { "text": "A. सफलता", "value": "a" },
-            { "text": "B. जीत", "value": "b" },
-            { "text": "C. पराजय", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'विजय' का प्रयायवाची शब्द 'जीत' है।"
-    },
-    {
-        "question": "मुहावरा: 'आसमान से गिरे, खजूर में अटके'",
-        "options": [
-            { "text": "A. बुरी स्थिति में फँसना", "value": "a" },
-            { "text": "B. किसी काम में नाकामयाब होना", "value": "b" },
-            { "text": "C. सफलता हासिल करना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'आसमान से गिरे, खजूर में अटके' का मतलब है बुरी स्थिति में फँसना।"
-    },
-    {
-        "question": "मुहावरा: 'नकली फूलों की महक'",
-        "options": [
-            { "text": "A. सच्चाई को छुपाना", "value": "a" },
-            { "text": "B. दिखावा करना", "value": "b" },
-            { "text": "C. सच्चे विचार", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'नकली फूलों की महक' का अर्थ है दिखावा करना।"
-    },
-    {
-        "question": "मुहावरा: 'घर की मुर्गी दाल बराबर'",
-        "options": [
-            { "text": "A. घर की चीज़ों को तुच्छ समझना", "value": "a" },
-            { "text": "B. घर में ही सुखी रहना", "value": "b" },
-            { "text": "C. घर की महत्ता समझना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'घर की मुर्गी दाल बराबर' का मतलब है घर की चीज़ों को तुच्छ समझना।"
-    },
-    {
-        "question": "मुहावरा: 'आँखों का पानी उतरना'",
-        "options": [
-            { "text": "A. आंसू बहाना", "value": "a" },
-            { "text": "B. सम्मान में कमी आना", "value": "b" },
-            { "text": "C. आँखों में नींद आना", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'आँखों का पानी उतरना' का अर्थ है सम्मान में कमी आना।"
-    },
-    {
-        "question": "मुहावरा: 'नाक में दम करना'",
-        "options": [
-            { "text": "A. परेशान करना", "value": "a" },
-            { "text": "B. खुश करना", "value": "b" },
-            { "text": "C. डराना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'नाक में दम करना' का अर्थ है परेशान करना।"
-    },
-    {
-        "question": "मुहावरा: 'मुँह में पानी आना'",
-        "options": [
-            { "text": "A. भूख लगना", "value": "a" },
-            { "text": "B. खुशी की भावना होना", "value": "b" },
-            { "text": "C. गुस्सा आना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'मुँह में पानी आना' का अर्थ है भूख लगना।"
-    },
-    {
-        "question": "मुहावरा: 'ऊँची दुकान, फीका पकवान'",
-        "options": [
-            { "text": "A. दिखावा करना", "value": "a" },
-            { "text": "B. किसी चीज़ में कमी होना", "value": "b" },
-            { "text": "C. सफलता हासिल करना", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'ऊँची दुकान, फीका पकवान' का मतलब है किसी चीज़ में कमी होना।"
-    },
-    {
-        "question": "मुहावरा: 'हाथी के दाँत खाने के और, दिखाने के और'",
-        "options": [
-            { "text": "A. झूठ बोलना", "value": "a" },
-            { "text": "B. असलियत को छुपाना", "value": "b" },
-            { "text": "C. दिखावा और असलियत में अंतर होना", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'हाथी के दाँत खाने के और, दिखाने के और' का अर्थ है दिखावा और असलियत में अंतर होना।"
-    },
-    {
-        "question": "मुहावरा: 'कान में तेल डालना'",
-        "options": [
-            { "text": "A. ध्यान से सुनना", "value": "a" },
-            { "text": "B. किसी का न कहना", "value": "b" },
-            { "text": "C. कुछ नहीं सुनना", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'कान में तेल डालना' का अर्थ है कुछ नहीं सुनना।"
-    },
-    {
-        "question": "मुहावरा: 'जले पर नमक छिड़कना'",
-        "options": [
-            { "text": "A. किसी की तकलीफ बढ़ाना", "value": "a" },
-            { "text": "B. किसी की मदद करना", "value": "b" },
-            { "text": "C. किसी को खुश करना", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'जले पर नमक छिड़कना' का मतलब है किसी की तकलीफ बढ़ाना।"
-    }
-,
-    {
-        "question": "संधि का उदाहरण: 'राजपथ'",
-        "options": [
-            { "text": "A. ग्रह+पति", "value": "a" },
-            { "text": "B. रज+पथ", "value": "b" },
-            { "text": "C. राज+पथ", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'राजपथ' में 'राज' और 'पथ' का संधि रूप है।"
-    },
-    {
-        "question": "अनेकार्थी शब्द का उदाहरण: 'बोल'",
-        "options": [
-            { "text": "A. भाषा", "value": "a" },
-            { "text": "B. आवाज़", "value": "b" },
-            { "text": "C. सभी", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'बोल' का अनेकार्थी शब्द है, जिसका अर्थ 'भाषा' और 'आवाज़' दोनों हो सकते हैं।"
-    },
-    {
-        "question": "Homonym का उदाहरण: 'Bank'",
-        "options": [
-            { "text": "A. नदी का किनारा", "value": "a" },
-            { "text": "B. वित्तीय संस्था", "value": "b" },
-            { "text": "C. दोनों", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'Bank' एक Homonym है, जो 'नदी का किनारा' और 'वित्तीय संस्था' दोनों के रूप में प्रयोग होता है।"
-    },
-    {
-        "question": "उपसर्ग का उदाहरण: 'अप्रिय'",
-        "options": [
-            { "text": "A. प्रिय", "value": "a" },
-            { "text": "B. अप्रिय", "value": "b" },
-            { "text": "C. प्रिय+अ", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'अप्रिय' में 'अ' उपसर्ग है, जो 'प्रिय' के विपरीत अर्थ देता है।"
-    },
-    {
-        "question": "पारस्परिक शब्द का उदाहरण: 'प्रेम'",
-        "options": [
-            { "text": "A. विपरीत", "value": "a" },
-            { "text": "B. समानार्थी", "value": "b" },
-            { "text": "C. विरोधी", "value": "c" }
-        ],
-        "correctOption": "b",
-        "explanation": "'प्रेम' का पारस्परिक शब्द 'घृणा' है, जो इसके विपरीत है।"
-    },
-    {
-        "question": "संधि का उदाहरण: 'मंगलवार'",
-        "options": [
-            { "text": "A. मंगल+वार", "value": "a" },
-            { "text": "B. मंगल+वार्ता", "value": "b" },
-            { "text": "C. मंगल+वाला", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'मंगलवार' में 'मंगल' और 'वार' का संधि रूप है।"
-    },
-    {
-        "question": "अनेकार्थी शब्द का उदाहरण: 'संगठन'",
-        "options": [
-            { "text": "A. एकत्रित होना", "value": "a" },
-            { "text": "B. संगठन करना", "value": "b" },
-            { "text": "C. एक साथ मिलना", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'संगठन' का अनेकार्थी शब्द है, जिसका अर्थ 'एकत्रित होना' और 'संगठन करना' दोनों हो सकता है।"
-    },
-    {
-        "question": "Homonym का उदाहरण: 'Lead'",
-        "options": [
-            { "text": "A. मार्गदर्शन करना", "value": "a" },
-            { "text": "B. धातु", "value": "b" },
-            { "text": "C. दोनों", "value": "c" }
-        ],
-        "correctOption": "c",
-        "explanation": "'Lead' एक Homonym है, जिसका अर्थ 'मार्गदर्शन करना' और 'धातु' दोनों हो सकता है।"
-    },
-    {
-        "question": "उपसर्ग का उदाहरण: 'अत्यधिक'",
-        "options": [
-            { "text": "A. अधिक", "value": "a" },
-            { "text": "B. अतिवादी", "value": "b" },
-            { "text": "C. अत्याचार", "value": "c" }
-        ],
-        "correctOption": "a",
-        "explanation": "'अत्यधिक' में 'अति' उपसर्ग है, जो अधिकता को दर्शाता है।"
-    },{
-    "question": "संधि का उदाहरण: 'दूरदर्शन'",
-    "options": [
-        { "text": "A. दूर+दर्शन", "value": "a" },
-        { "text": "B. दूर+दर्शन करना", "value": "b" },
-        { "text": "C. दूर+दर्शक", "value": "c" }
-    ],
-    "correctOption": "a",
-    "explanation": "'दूरदर्शन' में 'दूर' और 'दर्शन' का संधि रूप है।"
-},{
-    "question": "संधि का उदाहरण: 'दूरदर्शन'",
-    "options": [
-        { "text": "A. दूर+दर्शन", "value": "a" },
-        { "text": "B. दूर+दर्शन करना", "value": "b" },
-        { "text": "C. दूर+दर्शक", "value": "c" }
-    ],
-    "correctOption": "a",
-    "explanation": "'दूरदर्शन' में 'दूर' और 'दर्शन' का संधि रूप है।"
-}
+            <section id="result-section">
+                <div id="result"></div>
+                <button id="retry-btn" style="display: none;" onclick="retryQuiz()">फिर से प्रयास करें</button>
+            </section>
 
+            <!-- Start Modal -->
+            <section id="startModal" class="modal" role="dialog" aria-labelledby="rulesHeading">
+                <div class="modal-content">
+                    <h2 id="rulesHeading">टेस्ट के नियम</h2>
+                    <ul>
+                        <li>इस टेस्ट में कुल 50 प्रश्न होंगे।</li>
+                        <li>टाइमर पूरे टेस्ट का समय ट्रैक करेगा।</li>
+                        <li>एक बार उत्तर सबमिट करने के बाद वापस नहीं जा सकते।</li>
+                        <li>टेस्ट को बीच में नहीं छोड़ा जा सकता।</li>
+                        <li>सही उत्तरों पर अंक मिलेंगे।</li>
+                    </ul>
+                    <center>
+                        <button class="start-btn" onclick="startQuiz()">टेस्ट शुरू करें</button>
+                    </center>
+                </div>
+            </section>
 
-]
-;
-    </script>
-</body>
+            <!-- Result Modal -->
+            <section id="resultModal" class="modal" role="dialog" aria-labelledby="resultHeading">
+                <div class="modal-content">
+                    <h2 id="resultHeading">आपका परिणाम</h2>
+                    <div id="resultContent"></div>
+                    <button class="review-btn" onclick="reviewQuestions()">प्रश्न देखें</button>
+                    <button class="retry-btn" onclick="retryQuiz()">पुनः प्रयास करें</button>
+                </div>
+            </section>
+
+            <!-- Review Section -->
+            <section id="review-questions" aria-label="Review Questions">
+                <!-- सवालों की समीक्षा यहाँ दिखाई जाएगी -->
+            </section>
+        </main>
+
+        <script src="https://gklearnstudy.in/js/test.js"></script>
+
+        <script>
+            var questions = [
+                {
+                    question: "किसे 'हिंदी उपन्यास का पिता' कहा जाता है?",
+                    options: [
+                        { text: "A. प्रेमचंद", value: "a" },
+                        { text: "B. जयशंकर प्रसाद", value: "b" },
+                        { text: "C. बंकिम चंद्र चट्टोपाध्याय", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'हिंदी उपन्यास का पिता' प्रेमचंद को कहा जाता है।",
+                },
+                {
+                    question: "किस लेखक ने 'गृहस्थी' नामक उपन्यास लिखा?",
+                    options: [
+                        { text: "A. महादेवी वर्मा", value: "a" },
+                        { text: "B. यशपाल", value: "b" },
+                        { text: "C. नरेन्द्र कोहली", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'गृहस्थी' उपन्यास यशपाल द्वारा लिखा गया है।",
+                },
+                {
+                    question: "किसे 'हिंदी कविता का छायावाद' कहा जाता है?",
+                    options: [
+                        { text: "A. सूर्यकांत त्रिपाठी निराला", value: "a" },
+                        { text: "B. चंद्रकांत देवताले", value: "b" },
+                        { text: "C. सुमित्रानंदन पंत", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'हिंदी कविता का छायावाद' सुमित्रानंदन पंत को कहा जाता है।",
+                },
+                {
+                    question: "गांधीजी के जीवन पर आधारित पुस्तक का नाम क्या है?",
+                    options: [
+                        { text: "A. सत्य के साथ मेरी प्रयोग", value: "a" },
+                        { text: "B. महात्मा गांधी", value: "b" },
+                        { text: "C. बापू की डायरी", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'सत्य के साथ मेरी प्रयोग' पुस्तक गांधीजी के जीवन पर आधारित है।",
+                },
+                {
+                    question: "किस लेखक ने 'उपनिवेशवाद' पर आधारित पुस्तक 'भारत में अंग्रेजी साम्राज्यवाद' लिखी?",
+                    options: [
+                        { text: "A. राममनोहर लोहिया", value: "a" },
+                        { text: "B. जवाहरलाल नेहरू", value: "b" },
+                        { text: "C. बी. आर. अंबेडकर", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'भारत में अंग्रेजी साम्राज्यवाद' पुस्तक जवाहरलाल नेहरू ने लिखी।",
+                },
+                {
+                    question: "किसे 'हिंदी नाटक का शेक्सपियर' कहा जाता है?",
+                    options: [
+                        { text: "A. शंकर पाटिल", value: "a" },
+                        { text: "B. रामनाथ वर्मा", value: "b" },
+                        { text: "C. जयशंकर प्रसाद", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'हिंदी नाटक का शेक्सपियर' जयशंकर प्रसाद को कहा जाता है।",
+                },
+                {
+                    question: "किसने 'गोदान' उपन्यास लिखा?",
+                    options: [
+                        { text: "A. प्रेमचंद", value: "a" },
+                        { text: "B. बंकिम चंद्र चट्टोपाध्याय", value: "b" },
+                        { text: "C. सुमित्रानंदन पंत", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'गोदान' उपन्यास प्रेमचंद ने लिखा है।",
+                },
+                {
+                    question: "किसे 'हिंदी साहित्य का आदिकावि' कहा जाता है?",
+                    options: [
+                        { text: "A. बंकिम चंद्र चट्टोपाध्याय", value: "a" },
+                        { text: "B. महाकवि वाल्मीकि", value: "b" },
+                        { text: "C. श्रीराम शर्मा आचार्य", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'हिंदी साहित्य का आदिकावि' महाकवि वाल्मीकि को कहा जाता है।",
+                },
+                {
+                    question: "किसने 'मुक्ति' नामक काव्य रचनाएँ लिखी?",
+                    options: [
+                        { text: "A. बच्चन", value: "a" },
+                        { text: "B. सुमित्रानंदन पंत", value: "b" },
+                        { text: "C. महादेवी वर्मा", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'मुक्ति' काव्य रचनाएँ महादेवी वर्मा द्वारा लिखी गई हैं।",
+                },
+                {
+                    question: "विपरीत शब्द: 'प्रेम'",
+                    options: [
+                        { text: "A. घृणा", value: "a" },
+                        { text: "B. द्वार", value: "b" },
+                        { text: "C. शांति", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'प्रेम' का विपरीत शब्द 'घृणा' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'अच्छा'",
+                    options: [
+                        { text: "A. बुरा", value: "a" },
+                        { text: "B. सुंदर", value: "b" },
+                        { text: "C. तेज़", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'अच्छा' का विपरीत शब्द 'बुरा' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'सुख'",
+                    options: [
+                        { text: "A. दुख", value: "a" },
+                        { text: "B. खुशी", value: "b" },
+                        { text: "C. शांति", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'सुख' का विपरीत शब्द 'दुख' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'मूल'",
+                    options: [
+                        { text: "A. वास", value: "a" },
+                        { text: "B. खराब", value: "b" },
+                        { text: "C. कृत्रिम", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'मूल' का विपरीत शब्द 'कृत्रिम' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'सत्य'",
+                    options: [
+                        { text: "A. असत्य", value: "a" },
+                        { text: "B. महान", value: "b" },
+                        { text: "C. शांति", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'सत्य' का विपरीत शब्द 'असत्य' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'उठना'",
+                    options: [
+                        { text: "A. बैठना", value: "a" },
+                        { text: "B. चलना", value: "b" },
+                        { text: "C. दौड़ना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'उठना' का विपरीत शब्द 'बैठना' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'ताजगी'",
+                    options: [
+                        { text: "A. बुढ़ापा", value: "a" },
+                        { text: "B. शांति", value: "b" },
+                        { text: "C. नमी", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'ताजगी' का विपरीत शब्द 'बुढ़ापा' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'ध्यान'",
+                    options: [
+                        { text: "A. उबाऊ", value: "a" },
+                        { text: "B. ध्यानहीन", value: "b" },
+                        { text: "C. गंभीर", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'ध्यान' का विपरीत शब्द 'ध्यानहीन' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'प्रकाश'",
+                    options: [
+                        { text: "A. अंधकार", value: "a" },
+                        { text: "B. धुंध", value: "b" },
+                        { text: "C. सूरज", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'प्रकाश' का विपरीत शब्द 'अंधकार' है।",
+                },
+                {
+                    question: "विपरीत शब्द: 'सर्दी'",
+                    options: [
+                        { text: "A. गर्मी", value: "a" },
+                        { text: "B. ठंडक", value: "b" },
+                        { text: "C. शांति", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'सर्दी' का विपरीत शब्द 'गर्मी' है।",
+                },
+
+                {
+                    question: "प्रयायवाची शब्द: 'सौंदर्य'",
+                    options: [
+                        { text: "A. रूप", value: "a" },
+                        { text: "B. सुंदरता", value: "b" },
+                        { text: "C. छवि", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'सौंदर्य' का प्रयायवाची शब्द 'सुंदरता' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'आनंद'",
+                    options: [
+                        { text: "A. खुशी", value: "a" },
+                        { text: "B. उल्लास", value: "b" },
+                        { text: "C. सुख", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'आनंद' का प्रयायवाची शब्द 'खुशी' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'मित्र'",
+                    options: [
+                        { text: "A. साथी", value: "a" },
+                        { text: "B. दोस्त", value: "b" },
+                        { text: "C. सहयोगी", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'मित्र' का प्रयायवाची शब्द 'दोस्त' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'वृद्ध'",
+                    options: [
+                        { text: "A. बुजुर्ग", value: "a" },
+                        { text: "B. बूढ़ा", value: "b" },
+                        { text: "C. वृद्धावस्था", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'वृद्ध' का प्रयायवाची शब्द 'बुजुर्ग' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'जल्दी'",
+                    options: [
+                        { text: "A. शीघ्र", value: "a" },
+                        { text: "B. तत्पर", value: "b" },
+                        { text: "C. चपल", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'जल्दी' का प्रयायवाची शब्द 'शीघ्र' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'भूत'",
+                    options: [
+                        { text: "A. आत्मा", value: "a" },
+                        { text: "B. प्रेत", value: "b" },
+                        { text: "C. चित्त", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'भूत' का प्रयायवाची शब्द 'प्रेत' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'सूरज'",
+                    options: [
+                        { text: "A. रवि", value: "a" },
+                        { text: "B. अग्नि", value: "b" },
+                        { text: "C. तेज", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'सूरज' का प्रयायवाची शब्द 'रवि' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'शक्ति'",
+                    options: [
+                        { text: "A. बल", value: "a" },
+                        { text: "B. ताकत", value: "b" },
+                        { text: "C. उर्जा", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'शक्ति' का प्रयायवाची शब्द 'ताकत' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'मृत्यु'",
+                    options: [
+                        { text: "A. देहांत", value: "a" },
+                        { text: "B. अंत", value: "b" },
+                        { text: "C. मृत्यु", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'मृत्यु' का प्रयायवाची शब्द 'देहांत' है।",
+                },
+                {
+                    question: "प्रयायवाची शब्द: 'विजय'",
+                    options: [
+                        { text: "A. सफलता", value: "a" },
+                        { text: "B. जीत", value: "b" },
+                        { text: "C. पराजय", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'विजय' का प्रयायवाची शब्द 'जीत' है।",
+                },
+                {
+                    question: "मुहावरा: 'आसमान से गिरे, खजूर में अटके'",
+                    options: [
+                        { text: "A. बुरी स्थिति में फँसना", value: "a" },
+                        { text: "B. किसी काम में नाकामयाब होना", value: "b" },
+                        { text: "C. सफलता हासिल करना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'आसमान से गिरे, खजूर में अटके' का मतलब है बुरी स्थिति में फँसना।",
+                },
+                {
+                    question: "मुहावरा: 'नकली फूलों की महक'",
+                    options: [
+                        { text: "A. सच्चाई को छुपाना", value: "a" },
+                        { text: "B. दिखावा करना", value: "b" },
+                        { text: "C. सच्चे विचार", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'नकली फूलों की महक' का अर्थ है दिखावा करना।",
+                },
+                {
+                    question: "मुहावरा: 'घर की मुर्गी दाल बराबर'",
+                    options: [
+                        { text: "A. घर की चीज़ों को तुच्छ समझना", value: "a" },
+                        { text: "B. घर में ही सुखी रहना", value: "b" },
+                        { text: "C. घर की महत्ता समझना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'घर की मुर्गी दाल बराबर' का मतलब है घर की चीज़ों को तुच्छ समझना।",
+                },
+                {
+                    question: "मुहावरा: 'आँखों का पानी उतरना'",
+                    options: [
+                        { text: "A. आंसू बहाना", value: "a" },
+                        { text: "B. सम्मान में कमी आना", value: "b" },
+                        { text: "C. आँखों में नींद आना", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'आँखों का पानी उतरना' का अर्थ है सम्मान में कमी आना।",
+                },
+                {
+                    question: "मुहावरा: 'नाक में दम करना'",
+                    options: [
+                        { text: "A. परेशान करना", value: "a" },
+                        { text: "B. खुश करना", value: "b" },
+                        { text: "C. डराना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'नाक में दम करना' का अर्थ है परेशान करना।",
+                },
+                {
+                    question: "मुहावरा: 'मुँह में पानी आना'",
+                    options: [
+                        { text: "A. भूख लगना", value: "a" },
+                        { text: "B. खुशी की भावना होना", value: "b" },
+                        { text: "C. गुस्सा आना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'मुँह में पानी आना' का अर्थ है भूख लगना।",
+                },
+                {
+                    question: "मुहावरा: 'ऊँची दुकान, फीका पकवान'",
+                    options: [
+                        { text: "A. दिखावा करना", value: "a" },
+                        { text: "B. किसी चीज़ में कमी होना", value: "b" },
+                        { text: "C. सफलता हासिल करना", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'ऊँची दुकान, फीका पकवान' का मतलब है किसी चीज़ में कमी होना।",
+                },
+                {
+                    question: "मुहावरा: 'हाथी के दाँत खाने के और, दिखाने के और'",
+                    options: [
+                        { text: "A. झूठ बोलना", value: "a" },
+                        { text: "B. असलियत को छुपाना", value: "b" },
+                        { text: "C. दिखावा और असलियत में अंतर होना", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'हाथी के दाँत खाने के और, दिखाने के और' का अर्थ है दिखावा और असलियत में अंतर होना।",
+                },
+                {
+                    question: "मुहावरा: 'कान में तेल डालना'",
+                    options: [
+                        { text: "A. ध्यान से सुनना", value: "a" },
+                        { text: "B. किसी का न कहना", value: "b" },
+                        { text: "C. कुछ नहीं सुनना", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'कान में तेल डालना' का अर्थ है कुछ नहीं सुनना।",
+                },
+                {
+                    question: "मुहावरा: 'जले पर नमक छिड़कना'",
+                    options: [
+                        { text: "A. किसी की तकलीफ बढ़ाना", value: "a" },
+                        { text: "B. किसी की मदद करना", value: "b" },
+                        { text: "C. किसी को खुश करना", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'जले पर नमक छिड़कना' का मतलब है किसी की तकलीफ बढ़ाना।",
+                },
+                {
+                    question: "संधि का उदाहरण: 'राजपथ'",
+                    options: [
+                        { text: "A. ग्रह+पति", value: "a" },
+                        { text: "B. रज+पथ", value: "b" },
+                        { text: "C. राज+पथ", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'राजपथ' में 'राज' और 'पथ' का संधि रूप है।",
+                },
+                {
+                    question: "अनेकार्थी शब्द का उदाहरण: 'बोल'",
+                    options: [
+                        { text: "A. भाषा", value: "a" },
+                        { text: "B. आवाज़", value: "b" },
+                        { text: "C. सभी", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'बोल' का अनेकार्थी शब्द है, जिसका अर्थ 'भाषा' और 'आवाज़' दोनों हो सकते हैं।",
+                },
+                {
+                    question: "Homonym का उदाहरण: 'Bank'",
+                    options: [
+                        { text: "A. नदी का किनारा", value: "a" },
+                        { text: "B. वित्तीय संस्था", value: "b" },
+                        { text: "C. दोनों", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'Bank' एक Homonym है, जो 'नदी का किनारा' और 'वित्तीय संस्था' दोनों के रूप में प्रयोग होता है।",
+                },
+                {
+                    question: "उपसर्ग का उदाहरण: 'अप्रिय'",
+                    options: [
+                        { text: "A. प्रिय", value: "a" },
+                        { text: "B. अप्रिय", value: "b" },
+                        { text: "C. प्रिय+अ", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'अप्रिय' में 'अ' उपसर्ग है, जो 'प्रिय' के विपरीत अर्थ देता है।",
+                },
+                {
+                    question: "पारस्परिक शब्द का उदाहरण: 'प्रेम'",
+                    options: [
+                        { text: "A. विपरीत", value: "a" },
+                        { text: "B. समानार्थी", value: "b" },
+                        { text: "C. विरोधी", value: "c" },
+                    ],
+                    correctOption: "b",
+                    explanation: "'प्रेम' का पारस्परिक शब्द 'घृणा' है, जो इसके विपरीत है।",
+                },
+                {
+                    question: "संधि का उदाहरण: 'मंगलवार'",
+                    options: [
+                        { text: "A. मंगल+वार", value: "a" },
+                        { text: "B. मंगल+वार्ता", value: "b" },
+                        { text: "C. मंगल+वाला", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'मंगलवार' में 'मंगल' और 'वार' का संधि रूप है।",
+                },
+                {
+                    question: "अनेकार्थी शब्द का उदाहरण: 'संगठन'",
+                    options: [
+                        { text: "A. एकत्रित होना", value: "a" },
+                        { text: "B. संगठन करना", value: "b" },
+                        { text: "C. एक साथ मिलना", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'संगठन' का अनेकार्थी शब्द है, जिसका अर्थ 'एकत्रित होना' और 'संगठन करना' दोनों हो सकता है।",
+                },
+                {
+                    question: "Homonym का उदाहरण: 'Lead'",
+                    options: [
+                        { text: "A. मार्गदर्शन करना", value: "a" },
+                        { text: "B. धातु", value: "b" },
+                        { text: "C. दोनों", value: "c" },
+                    ],
+                    correctOption: "c",
+                    explanation: "'Lead' एक Homonym है, जिसका अर्थ 'मार्गदर्शन करना' और 'धातु' दोनों हो सकता है।",
+                },
+                {
+                    question: "उपसर्ग का उदाहरण: 'अत्यधिक'",
+                    options: [
+                        { text: "A. अधिक", value: "a" },
+                        { text: "B. अतिवादी", value: "b" },
+                        { text: "C. अत्याचार", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'अत्यधिक' में 'अति' उपसर्ग है, जो अधिकता को दर्शाता है।",
+                },
+                {
+                    question: "संधि का उदाहरण: 'दूरदर्शन'",
+                    options: [
+                        { text: "A. दूर+दर्शन", value: "a" },
+                        { text: "B. दूर+दर्शन करना", value: "b" },
+                        { text: "C. दूर+दर्शक", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'दूरदर्शन' में 'दूर' और 'दर्शन' का संधि रूप है।",
+                },
+                {
+                    question: "संधि का उदाहरण: 'दूरदर्शन'",
+                    options: [
+                        { text: "A. दूर+दर्शन", value: "a" },
+                        { text: "B. दूर+दर्शन करना", value: "b" },
+                        { text: "C. दूर+दर्शक", value: "c" },
+                    ],
+                    correctOption: "a",
+                    explanation: "'दूरदर्शन' में 'दूर' और 'दर्शन' का संधि रूप है।",
+                },
+            ];
+        </script>
+    </body>
 </html>
