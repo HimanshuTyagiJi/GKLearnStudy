@@ -36,15 +36,27 @@
   <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
   <meta name="msapplication-config" content="browserconfig.xml" />
 
-  <!-- Render-optimized CSS -->
-  <link rel="preload" href="https://gklearnstudy.in/css/menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://gklearnstudy.in/css/rightside.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://gklearnstudy.in/css/button.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/button.css">
-  </noscript>
+ <script>
+  const styles = [
+    "https://gklearnstudy.in/css/menu.css",
+    "https://gklearnstudy.in/css/rightside.css",
+    "https://gklearnstudy.in/css/button.css"
+  ];
+
+  styles.forEach(href => {
+    const preloadLink = document.createElement("link");
+    preloadLink.rel = "preload";
+    preloadLink.href = href;
+    preloadLink.as = "style";
+    preloadLink.onload = function () {
+      this.onload = null;
+      this.rel = "stylesheet";
+    };
+    document.head.appendChild(preloadLink);
+  });
+</script>
+
+
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -112,11 +124,9 @@
   </div>
 
   <!-- JS Scripts: Defer/Async for performance -->
+ 
+     <script src="https://gklearnstudy.in/js/menu.js" defer></script><script src="https://gklearnstudy.in/js/rightside.js" defer></script>
   <script src="https://gklearnstudy.in/js/sw-register.js" defer></script>
-  <script src="https://gklearnstudy.in/js/schema.js" defer></script>
-  <script src="https://gklearnstudy.in/js/favicon.js" defer></script>
-  <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
-  <script src="https://gklearnstudy.in/js/menu.js" defer></script>
   <script src="https://gklearnstudy.in/js/search.js" defer></script>
 </body>
 </html>
