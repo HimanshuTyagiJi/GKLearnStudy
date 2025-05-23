@@ -1,490 +1,4373 @@
+🧰 Sitemap Generator from HTML Code
+Paste your HTML code below (it will extract valid page links only):
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Primary Meta Tags -->
+    <title>Education</title>
+    <meta name="title" content="Education" />
+    <meta
+      name="description"
+      content="Explore GKLearnStudy for in-depth resources on Hindi, English, Physics, Chemistry, Mathematics, Biology, History, Geography, Political Science, Economics, Computer Science, and Physical Education. Perfect for school students and competitive exam aspirants, offering comprehensive study material, simplified notes, and expert guidance to excel in academics and beyond."
+    />
+    <meta name="author" content="GK Learn Study" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gklearnstudy.in/education" />
+    <meta property="og:title" content="Education" />
+    <meta
+      property="og:description"
+      content="Explore GKLearnStudy.in for in-depth resources on Hindi, English, Physics, Chemistry, Mathematics, Biology, History, Geography, Political Science, Economics, Computer Science, and Physical Education. Perfect for school students and competitive exam aspirants, offering comprehensive study material, simplified notes, and expert guidance to excel in academics and beyond."
+    />
+    <meta
+      property="og:images"
+      content="https://gklearnstudy.in/images/education..webp"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_images" />
+    <meta property="twitter:url" content="https://gklearnstudy.in/education" />
+    <meta property="twitter:title" content="Education" />
+    <meta
+      property="twitter:description"
+      content="Explore GKLearnStudy.in for in-depth resources on Hindi, English, Physics, Chemistry, Mathematics, Biology, History, Geography, Political Science, Economics, Computer Science, and Physical Education. Perfect for school students and competitive exam aspirants, offering comprehensive study material, simplified notes, and expert guidance to excel in academics and beyond."
+    />
+    <meta
+      property="twitter:images"
+      content="https://gklearnstudy.in/images/education..webp"
+    />
+
+    <meta property="article:author" content="GK Learn Study" />
+    <meta property="article:section" content="Education" />
+
+    <meta name="theme-color" content="blue" />
+   
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Education" />
+    <meta name="application-name" content="GK Learn Study" />
+    <meta name="msapplication-TileColor" content="#4CAF50" />
+    <meta
+      name="msapplication-Tileimages"
+      content="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+
+    <link rel="canonical" href="https://gklearnstudy.in/education" />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      href="https://gklearnstudy.in/sitemap.xml"
+    />
+    <link
+      rel="icon"
+      type="images/ico"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+    <link id="manifest" rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="favicon.webp" type="images/x-icon" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
+
+    <script src="https://gklearnstudy.in/js/sw-register.js" defer></script>
+    <script src="https://gklearnstudy.in/js/schema.js" defer></script>
+    <script src="https://gklearnstudy.in/js/favicon.js" defer></script>
+
+    <!-- Meta Tags Generated with https://metatags.io -->
+    <style>
+      .logo-item {
+        display: flex;
+        font-size: 22px;
+        user-select: none;
+        justify-content: center;
+      }
+
+      .logo-link img {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        transition: transform 0.3s ease; /* Smooth transition effect */
+      }
+      img {
+        width: 130px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+      a.logo-link:hover {
+        transition: transform 0.3s ease;
+        transform: scale(1.1);
+      }
+
+      a.logo-link:hover {
+        transition: transform 0.3s ease;
+        transform: scale(1.1);
+      }
+
+      /* Animations */
+
+      .video-container {
+        position: relative;
+        width: 98%;
+        max-width: 431px; /* Set the max width of the video */
+        height: auto;
+        aspect-ratio: 16 / 9; /* Maintains the aspect ratio of the video */
+        overflow: hidden;
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Video styling */
+      video {
+        justify-content: center;
+        display: block;
+        align-items: center;
+        width: 98%;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-container">
+      <button class="search-icon" id="searchBtn">
+        <span style="display: inline-block; transform: rotate(270deg)">⌕</span>
+      </button>
+      <button class="back-icon" id="backBtn">←</button>
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search..."
+        required
+        oninput="showSuggestions(event)"
+      />
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+    <div class="container">
+
+     <header><h1 class="color-content1">Education</h1></header>
+      <video
+        src="https://gklearnstudy.in/GK%20Learn%20Study.mp4"
+        autoplay
+        muted
+        loop
+        style="pointer-events: none"
+      ></video>
+<h2><span class="color-content2" style="text-align:left">🔴🟠🟡</span></h2>
+        <h3><span class="color-content3">🟢🔵🟣🟤⚫⚪</span></h3>
+     <main>
+     
+          <p>
+            This educational page offers a variety of topics and interactive
+            features, making learning engaging and effective.
+          </p>
+          <p>
+            Explore specific subjects or diverse interests with a user-friendly
+            experience tailored for all learners.
+          </p>
+          <p>
+            Scroll down to find topics you love and dive into detailed content
+            for a rewarding educational journey.
+          </p>
+     </main>
+
+      <h1 style="text-align: left">Vyakaran Class 5 to 12</h1>
+      <div class="scrollmenu">
+        <a href="vyakaran-language.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/language.webp"
+            alt="परिभाषा - भाषा और व्याकरण"
+          />
+          <span class="logo-item">भाषा और व्याकरण</span>
+        </a>
+        <a href="vyakaran/phonology-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/phonology.webp"
+            alt="परिभाषा - वर्ण-विचार"
+          />
+          <span class="logo-item">वर्ण-विचार</span>
+        </a>
+        <a href="vyakaran/morphology-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/morphology.webp"
+            alt="परिभाषा - शब्द-विचार"
+          />
+          <span class="logo-item">शब्द-विचार</span>
+        </a>
+        <a href="vyakaran/syntax-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/syntax.webp"
+            alt="परिभाषा - वाक्य-विचार"
+          />
+          <span class="logo-item">वाक्य-विचार</span>
+        </a>
+        <a href="vyakaran/noun-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/noun.webp"
+            alt="परिभाषा - संज्ञा"
+          />
+          <span class="logo-item">संज्ञा</span>
+        </a>
+        <a href="vyakaran/number-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/number.webp"
+            alt="परिभाषा - वचन"
+          />
+          <span class="logo-item">वचन</span>
+        </a>
+        <a href="vyakaran/gender-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/gender.webp"
+            alt="परिभाषा - लिंग"
+          />
+          <span class="logo-item">लिंग</span>
+        </a>
+        <a href="vyakaran/case-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/case.webp"
+            alt="परिभाषा - कारक"
+          />
+          <span class="logo-item">कारक</span>
+        </a>
+        <a href="vyakaran/pronoun-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/pronoun.webp"
+            alt="परिभाषा - सर्वनाम"
+          />
+          <span class="logo-item">सर्वनाम</span>
+        </a>
+        <a href="vyakaran/adjective-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/adjective.webp"
+            alt="परिभाषा - विशेषण"
+          />
+          <span class="logo-item">विशेषण</span>
+        </a>
+        <a href="vyakaran/verb-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/verb.webp"
+            alt="परिभाषा - क्रिया"
+          />
+          <span class="logo-item">क्रिया</span>
+        </a>
+        <a href="vyakaran/tense-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/tense.webp"
+            alt="परिभाषा - काल"
+          />
+          <span class="logo-item">काल</span>
+        </a>
+        <a href="vyakaran/indeclinable-words-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/indeclinable.webp"
+            alt="परिभाषा - अव्यय"
+          />
+          <span class="logo-item">अव्यय</span>
+        </a>
+        <a href="vyakaran/particle-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/particle.webp"
+            alt="परिभाषा - निपात"
+          />
+          <span class="logo-item">निपात</span>
+        </a>
+        <a href="vyakaran/voice-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/voice.webp"
+            alt="परिभाषा - वाच्य"
+          />
+          <span class="logo-item">वाच्य</span>
+        </a>
+        <a href="vyakaran/person-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/person.webp"
+            alt="परिभाषा - पुरुष"
+          />
+          <span class="logo-item">पुरुष</span>
+        </a>
+        <a href="vyakaran/punctuation-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/punctuation.webp"
+            alt="परिभाषा - विराम-चिन्ह"
+          />
+          <span class="logo-item">विराम-चिन्ह</span>
+        </a>
+        <a href="vyakaran/prefix-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/prefix.webp"
+            alt="परिभाषा - उपसर्ग"
+          />
+          <span class="logo-item">उपसर्ग</span>
+        </a>
+        <a href="vyakaran/suffix-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/suffix.webp"
+            alt="परिभाषा - प्रत्यय"
+          />
+          <span class="logo-item">प्रत्यय</span>
+        </a>
+        <a href="vyakaran/joining.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/joining.webp"
+            alt="परिभाषा - संधि"
+          />
+          <span class="logo-item">संधि</span>
+        </a>
+        <a href="vyakaran/compound-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/compound.webp"
+            alt="परिभाषा - समास"
+          />
+          <span class="logo-item">समास</span>
+        </a>
+        <a href="vyakaran/tatsam-tadbhav-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/tatsam-tadbhav.webp"
+            alt="परिभाषा - तत्सम-तट्भव"
+          />
+          <span class="logo-item">तत्सम-तट्भव</span>
+        </a>
+        <a href="vyakaran/deshaj-videshaj-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/deshaj-videshaj.webp"
+            alt="परिभाषा - देशज-विदेशज"
+          />
+          <span class="logo-item">देशज-विदेशज</span>
+        </a>
+        <a href="vyakaran/antonyms-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/antonyms.webp"
+            alt="परिभाषा - विलोम-शब्द"
+          />
+          <span class="logo-item">विलोम-शब्द</span>
+        </a>
+        <a href="vyakaran/synonyms-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/synonyms.webp"
+            alt="परिभाषा - पर्यावाची-शब्द"
+          />
+          <span class="logo-item">पर्यावाची-शब्द</span>
+        </a>
+        <a href="vyakaran/idioms-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/idioms.webp"
+            alt="परिभाषा - मुहावरे"
+          />
+          <span class="logo-item">मुहावरे</span>
+        </a>
+        <a href="vyakaran/proverbs-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/proverbs.webp"
+            alt="परिभाषा - लोकोक्तियां"
+          />
+          <span class="logo-item">लोकोक्तियां</span>
+        </a>
+        <a
+          href="vyakaran/one-word-substitution-in-hindi.html"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/one-word.webp"
+            alt="परिभाषा - अनेक शब्दों के लिए एक शब्द"
+          />
+          <span class="logo-item">अनेक शब्दों के लिए एक शब्द</span>
+        </a>
+        <a
+          href="vyakaran/words-of-many-meanings-in-hindi.html"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/many-meanings.webp"
+            alt="परिभाषा - अनेकार्थी-शब्द"
+          />
+          <span class="logo-item">अनेकार्थी-शब्द</span>
+        </a>
+
+        <a
+          href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi.html"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/similar-meanings.webp"
+            alt="परिभाषा - एकार्थक प्रतीत होने वाले शब्द"
+          />
+          <span class="logo-item">एकार्थक प्रतीत होने वाले शब्द</span>
+        </a>
+        <a href="vyakaran/pairs-of-similar-words.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/similar-words.webp"
+            alt="परिभाषा - त्रुटिसम भिन्नार्थक शब्द"
+          />
+          <span class="logo-item">त्रुटिसम भिन्नार्थक शब्द</span>
+        </a>
+        <a href="vyakaran/yugm-shabd.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/yugm-shabd.webp"
+            alt="परिभाषा - युग्म शब्द"
+          />
+          <span class="logo-item">युग्म शब्द</span>
+        </a>
+        <a href="vyakaran/ras-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/ras.webp"
+            alt="परिभाषा - रस"
+          />
+          <span class="logo-item">रस</span>
+        </a>
+        <a href="vyakaran/chhand-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/chhand.webp"
+            alt="परिभाषा - छन्द"
+          />
+          <span class="logo-item">छन्द</span>
+        </a>
+        <a href="vyakaran/alankar-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/alankar.webp"
+            alt="परिभाषा - अलंकार"
+          />
+          <span class="logo-item">अलंकार</span>
+        </a>
+        <a href="vyakaran/paragraph-writing-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/paragraph-writing.webp"
+            alt="परिभाषा - अनुच्छेद-लेखन"
+          />
+          <span class="logo-item">अनुच्छेद-लेखन</span>
+        </a>
+        <a href="vyakaran/unseen-passage-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/unseen-passage.webp"
+            alt="परिभाषा - अपठित-गद्यांश"
+          />
+          <span class="logo-item">अपठित-गद्यांश</span>
+        </a>
+        <a href="vyakaran/letter-writing-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/letter-writing.webp"
+            alt="परिभाषा - पत्र-लेखन"
+          />
+          <span class="logo-item">पत्र-लेखन</span>
+        </a>
+        <a href="vyakaran/essay-in-hindi.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/essay.webp"
+            alt="परिभाषा - निबंध"
+          />
+          <span class="logo-item">निबंध</span>
+        </a>
+        <a href="vyakaran/quiz-for-exam.html" class="logo-link">
+          <img
+            src="https://gklearnstudy.in/images/quiz.webp"
+            alt="परिभाषा - Quiz For Exam"
+          />
+          <span class="logo-item">Quiz For Exam</span>
+        </a>
+      </div>
+      <h1 style="text-align: left">Conversion</h1>
+      <div class="scrollmenu">
+         <a
+          href="https://gklearnstudy.in/conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/conversion.webp"
+            alt="Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/angle-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/angle-unit-conversion.webp"
+            alt="परिभाषा - Angle Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Angle Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/area-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/area-unit-conversion.webp"
+            alt="परिभाषा - Area Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Area Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/length-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/length-unit-conversion.webp"
+            alt="परिभाषा - Length Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Length Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/power-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/power-unit-conversion.webp"
+            alt="परिभाषा - Power Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Power Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/pressure-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/pressure-unit-conversion.webp"
+            alt="परिभाषा - Pressure Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Pressure Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/speed-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/speed-unit-conversion.webp"
+            alt="परिभाषा - Speed Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Speed Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/temperature-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/temperature-unit-conversion.webp"
+            alt="परिभाषा - Temperature Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Temperature Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/time-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/time-unit-conversion.webp"
+            alt="परिभाषा - Time Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Time Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/volume-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/volume-unit-conversion.webp"
+            alt="परिभाषा - Volume Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Volume Conversion</span>
+        </a>
+        <a
+          href="https://gklearnstudy.in/conversion/weight&mass-unit-conversion"
+          class="logo-link"
+        >
+          <img
+            src="https://gklearnstudy.in/images/weight-mass-unit-conversion.webp"
+            alt="define - Weight & Mass Conversion"
+            width="100px"
+            height="100px"
+          />
+          <span class="logo-item">Weight & Mass Conversion</span>
+        </a>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          // सभी एनिमेटेड एलिमेंट्स को सेलेक्ट करें
+          const animatedElements =
+            document.querySelectorAll(".animate-on-scroll");
+
+          // Intersection Observer के लिए विकल्प
+          const observerOptions = {
+            root: null, // व्यूइंग विंडो के सापेक्ष
+            rootMargin: "0px",
+            threshold: 0.1, // 10% एलिमेंट दिखने पर ट्रिगर होगा
+          };
+
+          // Intersection Observer callback
+          const observerCallback = (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // एलिमेंट में .animate क्लास जोड़ें
+                entry.target.classList.add("animate");
+                // एक बार एनिमेशन होने के बाद ऑब्जर्वर को अनऑब्जर्व करें
+                observer.unobserve(entry.target);
+              }
+            });
+          };
+
+          // Intersection Observer बनाएं
+          const observer = new IntersectionObserver(
+            observerCallback,
+            observerOptions,
+          );
+
+          // प्रत्येक एनिमेटेड एलिमेंट को ऑब्जर्व करें
+          animatedElements.forEach((el) => observer.observe(el));
+        });
+      </script>
+
+      <hr />
+
+      <div id="right-sidebar">
+        <strong>Important Links</strong>
+
+        <ul id="link-list"></ul>
+      </div>
+
+      <footer>
+        <div class="custom-row">
+          <div class="custom-column">
+            <b>Follow Us</b>
+            <div id="social-links"></div>
+          </div>
+          <div class="custom-column">
+            <button onclick="goToUrl()">Contact</button>
+          </div>
+          <div class="custom-column">
+            <p id="my-paragraph"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const images = document.querySelectorAll("img");
+
+      images.forEach(img => {
+        img.onerror = () => {
+          const name = img.src.split("/").pop().split(".")[0];
+          const placeholder = document.createElement("div");
+          placeholder.className = "placeholder";
+          placeholder.innerHTML = `
+            <div class="emoji">📘</div>
+            <div>${name.charAt(0).toUpperCase() + name.slice(1)}</div>
+          `;
+          img.replaceWith(placeholder);
+        };
+      });
+    });
+      
+      // Disable right-click globally
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault(); // Prevent the context menu
+      });
+
+      // Additional security to disable keyboard shortcuts for saving content
+      document.addEventListener("keydown", function (e) {
+        if (
+          (e.ctrlKey && e.key === "s") || // Disable Ctrl+S
+          (e.ctrlKey && e.key === "u") || // Disable Ctrl+U
+          (e.ctrlKey && e.key === "c") || // Disable Ctrl+C
+          (e.ctrlKey && e.key === "p")
+        ) {
+          // Disable Ctrl+P
+          e.preventDefault();
+        }
+      });
+    </script>
+
+
+    <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+    <script src="https://gklearnstudy.in/js/menu.js"></script>
+    <script src="https://gklearnstudy.in/js/search.js"></script>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।"
+    />
+    <meta
+      name="keywords"
+      content="विशेषण, Adjective in Hindi, विशेषण के प्रकार, हिंदी व्याकरण, हिंदी भाषा, Adjective Examples, Adjective Types, विशेषण के उदाहरण, विशेषण के उपयोग, विशेषण की परिभाषा"
+    />
+    <meta name="author" content="Himanshu" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="विशेषण - हिंदी व्याकरण" />
+    <meta
+      property="og:description"
+      content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।"
+    />
+    <meta
+      property="og:image"
+      content="https://gklearnstudy.in/images/adjective.webp"
+    />
+    <meta
+      property="og:url"
+      content="https://gklearnstudy.in/vyakaran/adjective-in-hindi"
+    />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="विशेषण - हिंदी व्याकरण" />
+    <meta
+      name="twitter:description"
+      content="विशेषण (Adjective) के बारे में विस्तृत जानकारी। हिंदी भाषा में विशेषण के प्रकार, उदाहरण और उपयोग।"
+    />
+    <meta
+      name="twitter:image"
+      content="https://gklearnstudy.in/images/adjective.webp"
+    />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/image.css" />
+    <title>विशेषण - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
+  </head>
+
+  <body>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran-language.html"
+          >भाषा और व्याकरण</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/phonology-in-hindi.html"
+          >वर्ण-विचार</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/morphology-in-hindi.html"
+          >शब्द-विचार</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/syntax-in-hindi.html"
+          >वाक्य-विचार</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/noun-in-hindi.html">संज्ञा</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/number-in-hindi.html">वचन</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/gender-in-hindi.html">लिंग</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/case-in-hindi.html">कारक</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi.html"
+          >सर्वनाम</a
+        >
+      </li>
+      <li><a class="active" href="adjective-in-hindi.html">विशेषण</a></li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/verb-in-hindi.html">क्रिया</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/tense-in-hindi.html">काल</a>
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi.html"
+          >अव्यय</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/particle-in-hindi.html"
+          >निपात</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/voice-in-hindi.html">वाच्य</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/person-in-hindi.html"
+          >पुरुष</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi.html"
+          >विराम-चिन्ह</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/prefix-in-hindi.html"
+          >उपसर्ग</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/suffix-in-hindi.html"
+          >प्रत्यय</a
+        >
+      </li>
+      <li><a href="https://gklearnstudy.in/vyakaran/joining.html">संधि</a></li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/compound-in-hindi.html"
+          >समास</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi.html"
+          >तत्सम-तट्भव</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi.html"
+          >देशज-विदेशज</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi.html"
+          >विलोम-शब्द</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi.html"
+          >पर्यावाची-शब्द</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/idioms-in-hindi.html"
+          >मुहावरे</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi.html"
+          >लोकोक्तियां</a
+        >
+      </li>
+      <li>
+        <a href="one-word-substitution-in-hindi.html"
+          >अनेक शब्दों के लिए एक शब्द</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi.html"
+          >एकार्थक शब्द</a
+        >
+      </li>
+      <li>
+        <a href="words-apparently-similar-in-meanings-in-hindi.html"
+          >एकार्थक प्रतीत होने वाले शब्द</a
+        >
+      </li>
+      <li>
+        <a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/yugm-shabd.html"
+          >युग्म शब्द</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/ras-in-hindi.html">रस</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/chhand-in-hindi.html">छन्द</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/alankar-in-hindi.html"
+          >अलंकार</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi.html"
+          >अनुच्छेद-लेखन</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi.html"
+          >अपठित-गद्यांश</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/letter-writing-in-hindi.html"
+          >पत्र-लेखन</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/essay-in-hindi.html">निबंध</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/vyakaran/quiz-for-exam.html"
+          >Quiz For Exam</a
+        >
+      </li>
+    </ul>
+
+    <div class="search-container">
+      <button class="search-icon" id="searchBtn">
+        <span class="rotated-icon">⌕</span></button
+      ><button class="back-icon" id="backBtn">←</button>
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search..."
+        required
+        oninput="showSuggestions(event)"
+      />
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+
+    <div class="container">
+      <h1 id="विशेषण– परिभाषा, भेद और उदाहरण">
+        विशेषण – परिभाषा, भेद और उदाहरण
+      </h1>
+      <div class="custom-container">
+        <div class="custom-row">
+          <div class="custom-column">
+            <section class="content" id="विशेषण">
+              <h2>विशेषण <i>(Adjective)</i> :</h2>
+              <p>
+                किसी संज्ञा या सर्वनाम की विशेषता बताने वाले शब्द
+                <b>विशेषण</b> कहलाते हैं।
+              </p>
+
+              <p>
+                एक वन में जानवरों की सभा हुई। वहाँ
+                <b>बड़ा</b> हाथी,
+                <b>लंबी</b> गर्दन वाला जिराफ,
+                <b>छोटा</b> खरगोश,
+                <b>चतुर</b> लोमड़ी,
+                <b>शरारती</b> बंदर,
+                <b>मोटा</b> सुअर,
+                <b>सफेद</b> गाय और
+                <b>वफादार</b> कुत्ता उपस्थित थे। लोमड़ी
+                बोली, "हमारा जंगल कितना <b>हरा-भरा</b> और
+                <b>सुंदर</b> है। हमें प्रेमपूर्वक रहना
+                चाहिए।" इतने में एक <b>भयानक</b> शेर
+                दहाड़ता हुआ आया और सब जानवर भाग खड़े हुए।
+              </p>
+              <p>
+                ऊपर दी गई पंक्तियों में जिन रंगीन शब्दों ने संज्ञाओं की
+                विशेषताएँ बताई हैं, वे
+                <b>विशेषण</b> कहलाते हैं।
+              </p>
+            </section>
+          </div>
+
+          <div class="custom-column">
+            <h2>Contents</h2>
+            <ul id="myUL">
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#विशेषण">1. विशेषण</a>
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#विशेष्य"
+                  >2. विशेष्य</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#प्रविशेषण"
+                  >3. प्रविशेषण</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#गुणवाचक-विशेषण"
+                  >4. गुणवाचक विशेषण</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#संख्यावाचक-विशेषण"
+                  >5. संख्यावाचक विशेषण</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#परिमाणवाचक-विशेषण"
+                  >6. परिमाणवाचक विशेषण</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#सार्वनामिक-विशेषण"
+                  >7. सार्वनामिक विशेषण</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#मूलावस्था"
+                  >8. मूलावस्था</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#उत्तरावस्था"
+                  >9. उत्तरावस्था</a
+                >
+              </li>
+              <li>
+                <a href="https://gklearnstudy.in/vyakaran/#उत्तमावस्था"
+                  >10. उत्तमावस्था</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pink-background">
+        <p>
+          <b>परिभाषा –</b> संज्ञा या सर्वनाम की विशेषता (जैसे – गुण, संख्या,
+          परिमाण आदि) बताने वाले शब्द
+          <b>विशेषण</b> कहलाते हैं।
+          <b class="color-content2">उदाहरण –</b> लंबा, सुंदर, नीला, एक, दयालु
+          आदि।
+        </p>
+      </div>
+
+      <h2>▌महत्वपूर्ण बिंदु ▌</h2>
+
+      <div class="pink-background">
+        <p>
+          जो शब्द वाक्य में संज्ञा या सर्वनाम की विशेषता बताएँ, वे
+          <b>विशेषण</b> कहलाते हैं।
+          <b class="color-content2">उदाहरण –</b> काला कुत्ता। 'काला' यहाँ विशेषण
+          है।
+        </p>
+      </div>
+
+      <div class="blue1-background">
+        <p>
+          जिस शब्द की विशेषता बताई जाती है, वह
+          <b>विशेष्य</b> कहलाता है। ऊपर के उदाहरण में
+          'कुत्ता' विशेष्य है।
+        </p>
+      </div>
+
+      <div class="green-background">
+        <p>
+          संज्ञा की व्याप्ति सीमित करने वाले विकारी शब्दों को भी
+          <b>विशेषण</b> कहते हैं।
+          <b class="color-content2">उदाहरण –</b> मेहनती विद्यार्थी, स्वच्छ नगर,
+          पीला आम, अच्छा आदमी।
+        </p>
+      </div>
+
+      <div class="yellow-background">
+        <p>
+          विशेषण जिस शब्द की विशेषता बताता है, वह
+          <b>विशेष्य</b> होता है। जैसे – 'विद्यार्थी',
+          'नगर', 'आदमी' आदि।
+        </p>
+      </div>
+
+      <p>विशेषण, सार्थक शब्दों का एक भेद है और यह एक विकारी शब्द होता है।</p>
+
+      <div class="custom-container">
+        <div class="custom-row">
+          <div class="custom-column">
+            <div class="content" id="विशेष्य">
+              <h3>विशेष्य :</h3>
+              <p>
+                <span>
+                  जिस संज्ञा या सर्वनाम की विशेषता बताई जाती है वह
+                  <b><span class="color-content1">विशेष्य</span></b> कहलाता है।
+                </span>
+              </p>
+              <ul>
+                <li>
+                  बाग में <span class="color-content1">सुंदर फूल</span> खिले हैं
+                  – 'सुंदर' विशेषण है और 'फूल' विशेष्य।
+                </li>
+                <li>
+                  <b class="color-content2">विशेषण पहले:</b>
+                  <span class="color-content1">मेहनती व्यक्ति</span> सभी को पसंद
+                  आते हैं।
+                </li>
+                <li>
+                  <span class="color-content1">एक मीटर</span> कपड़ा ले आना।
+                </li>
+                <li>
+                  <b class="color-content2">विशेषण बाद में:</b> यह
+                  <span class="color-content1">रास्ता लंबा</span> है।
+                </li>
+                <li>यह <span class="color-content1">आम मीठा</span> है।</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="custom-column">
+            <div class="content" id="प्रविशेषण">
+              <h3>प्रविशेषण :</h3>
+              <p>
+                <b
+                  >जो शब्द किसी विशेषण की विशेषता बताए, वह
+                  <span class="color-content1">प्रविशेषण</span> कहलाता है।</b
+                >
+              </p>
+              <p>
+                <b class="color-content2">उदाहरण –</b> यह केला
+                <b class="color-content2">बहुत खराब</b> है। यहाँ 'बहुत' शब्द
+                'खराब' (विशेषण) की विशेषता बता रहा है, इसलिए यह प्रविशेषण है।
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+
+      <section>
+        <h2>विशेषण के प्रकार-</h2>
+
+        <p><span>विशेषण के चार प्रकार हैं-</span></p>
+
+        <ol>
+          <li>गुणवाचक विशेषण</li>
+          <li>परिमाणवाचक विशेषण</li>
+          <li>संख्यावाचक विशेषण</li>
+          <li>सार्वनामिक विशेषण</li>
+        </ol>
+
+        <div class="custom-container">
+          <div class="custom-row">
+            <div class="custom-column">
+              <div class="content" id="गुणवाचक-विशेषण">
+                <h2>1. गुणवाचक विशेषण</h2
+                ><i> (Adjective of Quality)</i>
+                <p>
+                  जिस शब्द से संज्ञा या सर्वनाम के गुण अथवा दोष (आकार, समय, रंग,
+                  रूप आदि) का बोध होता है, उसे
+                  <b><span class="color-content1">गुणवाचक विशेषण</span></b> कहते
+                  हैं।
+                </p>
+                <p><b class="color-content2">जैसे–</b></p>
+                <p>
+                  <b class="color-content2">गुण–</b> ईमानदार, चतुर, परोपकारी,
+                  सच्चा आदि। <b class="color-content2">दोष–</b> अपवित्र, घिनौना,
+                  शैतान, कठोर आदि। <b class="color-content2">रंग-रूप–</b> गोरा,
+                  कोमल, सुनहरा, गुलाबी आदि।
+                  <b class="color-content2">अवस्था–</b> बूढ़ा, गरीब, रोगी, बलवान
+                  आदि। <b class="color-content2">स्वाद–</b> कड़वा, मीठा, तीखा,
+                  फीका आदि। <b class="color-content2">समय संबंधी–</b> नया,
+                  पुराना, ताजा, वर्तमान, भूत, भविष्य, अगला, पिछला आदि।
+                  <b class="color-content2">स्थान–</b> लंबा, चौड़ा, ऊँचा, नीचा,
+                  सीधा, बाहरी, भीतरी आदि।
+                  <b class="color-content2">आकार–</b> गोल, चौकोर, सुडौल, पोला,
+                  सुंदर आदि। <b class="color-content2">दशा संबंधी–</b> दुबला,
+                  पतला, मोटा, भारी, गाढ़ा, गीला, गरीब, पालतू आदि।
+                  <b class="color-content2">वर्ण संबंधी–</b> लाल, पीला, नीला,
+                  हरा, काला, बैंगनी, सुनहरी आदि।
+                  <b class="color-content2">संज्ञा–</b> मुंबईया, बनारसी, लखनवी
+                  आदि।
+                </p>
+              </div>
+            </div>
+            <div class="custom-column">
+              <div class="content" id="परिमाणवाचक-विशेषण">
+                <at
+                  ><h2>2. परिमाणवाचक विशेषण</h2
+                  ><i> (Adjective of Quantity)</i></at
+                >
+                <p>
+                  जिस विशेषण से किसी वस्तु की नाप-तौल का बोध होता है, उसे
+                  <b><span class="color-content1">परिमाण-बोधक विशेषण</span></b>
+                  कहते हैं।
+                </p>
+                <p><b class="color-content2">जैसे–</b></p>
+                <ul>
+                  <li>
+                    मेरे पास <span class="color-content1">दो मीटर</span> कपड़ा
+                    है।
+                  </li>
+                  <li>
+                    उसे <span class="color-content1">एक किलो</span> बेसन चाहिए।
+                  </li>
+                  <li>
+                    <span class="color-content1">एक लीटर</span> पानी चाहिए।
+                  </li>
+                </ul>
+                <p>
+                  उपर्युक्त रंगीन शब्दों में "दो मीटर", "एक किलो" और "एक लीटर"
+                  जैसे शब्द
+                  <b><span class="color-content1">परिमाण-बोधक विशेषण</span></b>
+                  हैं।
+                </p>
+
+                <p>
+                  <b class="color-content2"
+                    >परिमाणवाचक विशेषण के दो प्रकार हैं–</b
+                  >
+                </p>
+                <p>
+                  <b class="color-content2">1. निश्चित परिमाणवाचक विशेषण :</b>
+                  जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध कराते हैं,
+                  उन्हें
+                  <b
+                    ><span class="color-content1"
+                      >निश्चित परिमाणवाचक विशेषण</span
+                    ></b
+                  >
+                  कहते हैं; जैसे– पाँच मीटर कपड़ा, एक लीटर दूध आदि।
+                </p>
+                <p>
+                  <b class="color-content2">2. अनिश्चित परिमाणवाचक विशेषण :</b>
+                  जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध नहीं कराते
+                  हैं, उन्हें
+                  <b
+                    ><span class="color-content1"
+                      >अनिश्चित परिमाणवाचक विशेषण</span
+                    ></b
+                  >
+                  कहते हैं; जैसे– थोड़ा पानी, अधिक काम, कुछ परिश्रम आदि।
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="custom-row">
+            <div class="custom-column">
+              <div class="content" id="संख्यावाचक-विशेषण">
+                <at
+                  ><h2>3. संख्यावाचक विशेषण</h2
+                  ><i> (Adjective of Number)</i></at
+                >
+                <p>
+                  जो विशेषण संज्ञा या सर्वनाम की संख्या का बोध कराता है, उसे
+                  <b><span class="color-content1">संख्यावाचक विशेषण</span></b>
+                  कहते हैं।
+                </p>
+                <p>
+                  <b class="color-content2">जैसे–</b> कुछ व्यक्ति, 5 रुपये, 3
+                  दिन आदि।
+                </p>
+                <p>संख्यावाचक विशेषण के भी दो प्रकार होते हैं–</p>
+                <ol>
+                  <li>निश्चित संख्यावाचक विशेषण</li>
+                  <li>अनिश्चित संख्यावाचक विशेषण</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <b
+            ><span class="color-content1">
+              (क) निश्चित संख्यावाचक विशेषण-
+            </span></b
+          >
+          <p>
+            जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध कराते है, उन्हें
+            <b
+              ><span class="color-content1">
+                निश्चित संख्यावाचक विशेषण
+              </span></b
+            >कहते हैं;
+          </p>
+          <p><b class="color-content2">जैसे-</b>एक लीटर, दस मीटर आदि।</p>
+
+          <p>निश्चित संख्यावाचक विशेषण के 6 भेद हैं-</p>
+          <b class="color-content2">1. पूर्णांक बोधक विशेषण&nbsp;</b>
+          <div>
+            <b class="color-content2">जैसे-</b>
+            <ul>
+              <li>एक, दस, सौ, हजार, लाख आदि।</li>
+            </ul>
+            <p>
+              <b class="color-content2">2. अपूर्णांक बोधक विशेषण</b>
+              <b class="color-content2">जैसे-</b>
+            </p>
+            <ul>
+              <li>पौना, सवा, डेढ, ढाई आदि।</li>
+            </ul>
+
+            <b class="color-content2">3. क्रमवाचक विशेषण&nbsp;</b>
+          </div>
+
+          <b class="color-content2">जैसे-</b>
+          <ul>
+            <li>दूसरा, चौथा, ग्यारहवाँ, पचासवाँ आदि।</li>
+          </ul>
+
+          <b>
+            <p><b class="color-content2">4. आवृत्तिवाचक विशेषण&nbsp;</b></p>
+            <p><b class="color-content2">&nbsp;जैसे-</b></p>
+          </b>
+          <ul>
+            <li>दुगुना, तिगुना, दसगुना आदि।</li>
+          </ul>
+          <p>
+            <b class="color-content2">5. समूहवाचक विशेषण&nbsp;</b>
+          </p>
+          <p><b class="color-content2">जैसे-</b><b></b></p>
+          <ul>
+            <li>तीनों, पाँचों, आठों आदि।</li>
+          </ul>
+          <p>
+            <b class="color-content2">6. प्रत्येक बोधक विशेषण&nbsp;</b>
+          </p>
+          <p><b class="color-content2">जैसे-</b></p>
+          <ul>
+            <li>प्रति, प्रत्येक, हरेक, एक-एक आदि।</li>
+          </ul>
+          <p>
+            <b
+              ><span class="color-content1">
+                (ख) अनिश्चित संख्यावाचक विशेषण-
+              </span></b
+            >
+          </p>
+          <p>
+            जो शब्द संज्ञा या सर्वनाम की निश्चित माप-तौल का बोध नहीं कराते हैं,
+            उन्हें
+            <b
+              ><span class="color-content1">
+                अनिश्चित संख्यावाचक विशेषण
+              </span></b
+            >कहते हैं;
+          </p>
+          <ul>
+            <b class="color-content2">जैसे-</b>
+            <b>&nbsp;</b>
+            कुछ लड़के,थोड़ा-सा मीठा आदि।
+          </ul>
+        </div>
+
+        <div class="content" id="सार्वनामिक-विशेषण">
+          <at
+            ><h2>4. सार्वनामिक विशेषण</h2
+            ><i>(Demonstrative of Adjective)</i></at
+          >
+          <p>
+            जो सर्वनाम शब्द संकेत द्वारा किसी संज्ञा की विशेषता बताये, उसे<b
+              ><span class="color-content1"> संकेतवाचक </span></b
+            >या
+            <b>
+              <span class="color-content1">
+                सार्वनामिक विशेषण <span></span
+              ></span>
+            </b>
+            कहते हैं।<b>&nbsp;</b><b class="color-content2">जैसे-</b>
+          </p>
+          <ul>
+            <li>यह किताब</li>
+            <li>ऐसी कहानी</li>
+          </ul>
+
+          <p></p>
+          <p>व्युत्पत्ति की दृष्टि से सार्वनामिक विशेषण के दो प्रकार हैं-</p>
+
+          <b class="color-content2">1. मूल सार्वनामिक विशेषण,&nbsp;</b>
+
+          <b class="color-content2">2. यौगिक सार्वनामिक विशेषण</b>
+
+          <ul>
+            <b
+              ><span class="color-content1"> 1. मूल सार्वनामिक विशेषणः</span></b
+            >
+            <p>
+              जो सर्वनाम बिना किसी रूपांतर के विशेषण के रूप में प्रयुक्त होता है
+              उसे
+              <b><span class="color-content1"> मूल सार्वनामिक विशेषण </span></b
+              >कहते हैं।
+              <b class="color-content2">जैसे-</b>
+            </p>
+            <li>वह लड़की विद्यालय जा रही है।</li>
+            <li>कोई लड़का मेरा काम कर दे।</li>
+            <li>कुछ विद्यार्थी अनुपस्थित हैं।</li>
+            <p>
+              उपयुक्त वाक्यों में वह,कोई और कुछ शब्द<b>&nbsp;</b
+              ><b class="color-content2">मूल सार्वनामिक विशेषण हैं।</b>
+            </p>
+
+            <b
+              ><span class="color-content1">
+                2. यौगिक सार्वनामिक विशेषणः</span
+              ></b
+            >
+            <p>
+              जो सर्वनाम मूल सर्वनाम में प्रत्यय आदि जुड़ जाने से विशेषण के रूप
+              में प्रयुक्त होता है उसे
+              <b
+                ><span class="color-content1">
+                  यौगिक सार्वनामिक विशेषण
+                </span></b
+              >कहते हैं।
+            </p>
+            <b class="color-content2">जैसे-</b>
+
+            <li>ऐसा आदमी कहाँ मिलेगा?</li>
+            <li>कितने रूपये तुम्हें चाहिए?</li>
+            <li>मुझसे इतना बोझ उठाया नहीं जाता।</li>
+
+            उपर्युक्त वाक्यों में ऐसा, कितने और इतना शब्द&nbsp;
+            <b class="color-content2">यौगिक सार्वनामिक विशेषण</b>
+            <b>&nbsp;</b>
+            हैं।
+
+            <p>
+              यौगिक सार्वनामिक विशेषण निम्नलिखित सार्वनामिक विशेषणों से बनते
+              हैं-
+            </p>
+            <li>
+              <b class="color-content2">यह से-</b><b>&nbsp;</b>इतना, इतने, इतनी,
+              ऐसा, ऐसी, ऐसे।
+            </li>
+            <li>
+              <b class="color-content2">वह से-</b>&nbsp;उतना, उतने, उतनी, वैसा,
+              वैसी, वैसे।
+            </li>
+            <li>
+              <b class="color-content2">जो से–</b>&nbsp;जितना, जितनी, जितने,
+              जैसा, जैसी, जैसे।
+            </li>
+            <li>
+              <b class="color-content2">कौन से–</b>&nbsp;कितना, कितनी, कितने,
+              कैसा, कैसी, कैसे।
+            </li>
+
+            <p>
+              संकेतवाचक विशेषण जो सर्वनाम संकेत द्वारा संज्ञा या सर्वनाम की
+              विशेषता बतलाते हैं वे
+              <b><span class="color-content1">संकेतवाचक विशेषण </span></b>कहलाते
+              हैं।
+            </p>
+
+            <b class="color-content2">विशेष –</b>
+
+            <p>
+              क्योंकि संकेतवाचक विशेषण सर्वनाम शब्दों से बनते हैं, अतः ये
+              <b><span class="color-content1">सार्वनामिक विशेषण</span></b>
+              कहलाते हैं। इन्हें<b
+                ><span class="color-content1"> निर्देशक </span></b
+              >भी कहते हैं।
+            </p>
+          </ul>
+        </div>
+      </section>
+      <h2>
+        <span class="color-content2"
+          >परिमाणवाचक और संख्यावाचक विशेषण में अंतर</span
+        >
+      </h2>
+      <p>
+        जिन वस्तुओं की नाप-तोल की जा सके उनके वाचक शब्द परिमाणवाचक विशेषण कहलाते
+        हैं। जैसे-‘कुछ दूध लाओ’। इसमें ‘कुछ’ शब्द तोल के लिए आया है। इसलिए यह
+        परिमाणवाचक विशेषण है।
+      </p>
+      <p>
+        जिन वस्तुओं की गिनती की जा सके उनके वाचक शब्द संख्यावाचक विशेषण कहलाते
+        हैं। जैसे-कुछ बच्चे इधर आओ। यहाँ पर ‘कुछ’ बच्चों की गिनती के लिए आया है।
+        इसलिए यह संख्यावाचक विशेषण है।
+      </p>
+      <p>
+        परिमाणवाचक विशेषणों के बाद द्रव्य अथवा पदार्थवाचक संज्ञाएँ आएँगी जबकि
+        संख्यावाचक विशेषणों के बाद जातिवाचक संज्ञाएँ आती हैं।
+      </p>
+
+      <h2>
+        <span class="color-content2"
+          >सर्वनाम और सार्वनामिक विशेषण में अंतर</span
+        >
+      </h2>
+      <p>
+        जिस शब्द का प्रयोग संज्ञा शब्द के स्थान पर हो उसे सर्वनाम कहते हैं।
+        जैसे-वह मुंबई गया। इस वाक्य में वह सर्वनाम है।
+      </p>
+      <p>
+        जिस शब्द का प्रयोग संज्ञा से पूर्व अथवा बाद में विशेषण के रूप में किया
+        गया हो उसे सार्वनामिक विशेषण कहते हैं। जैसे-वह रथ आ रहा है। इसमें वह
+        शब्द रथ का विशेषण है। अतः यह सार्वनामिक विशेषण है।
+      </p>
+
+      <p><b class="color-content2">विशेषण की अवस्थाएँ</b></p>
+      <p>
+        <span>
+          विशेषण शब्द किसी संज्ञा या सर्वनाम की विशेषता बतलाते हैं। विशेषता बताई
+          जाने वाली वस्तुओं के गुण-दोष कम-ज़्यादा होते हैं। गुण-दोषों के इस
+          कम-ज़्यादा होने को तुलनात्मक ढंग से ही जाना जा सकता है। तुलना की
+          दृष्टि से विशेषणों की निम्नलिखित तीन अवस्थाएँ होती हैं-
+        </span>
+      </p>
+
+      <ol>
+        <li>मूलावस्था</li>
+        <li>उत्तरावस्था</li>
+        <li>उत्तमावस्था</li>
+      </ol>
+
+      <div class="content" id="मूलावस्था"></div>
+
+      <div class="green-background">
+        <b><span class="color-content1">मूलावस्था</span></b
+        ><i> (Positive Degree)</i>
+        <p>
+          मूलावस्था में विशेषण का तुलनात्मक रूप नहीं होता है। वह केवल सामान्य
+          विशेषता ही प्रकट करता है।&nbsp;<b class="color-content2">जैसे-</b>
+        </p>
+        <ul>
+          <li>मोनिका एक सुंदर लड़की है।</li>
+          <li>राम एक मोटा लड़का है।</li>
+        </ul>
+      </div>
+
+      <div class="content" id="उत्तरावस्था"></div>
+
+      <div class="blue1-background">
+        <b><span class="color-content1">उत्तरावस्था</span></b
+        ><i> (Comparative Degree)</i>
+        <p>
+          जब दो व्यक्तियों या वस्तुओं के गुण-दोषों की तुलना की जाती है तब विशेषण
+          उत्तरावस्था में प्रयुक्त होता है।<b>&nbsp;</b
+          ><b class="color-content2">जैसे-</b>
+        </p>
+        <ul>
+          <li>मोनिका, नेहा से अधिक सुंदर है।</li>
+          <li>राम, रोहन से मोटा है।</li>
+        </ul>
+      </div>
+
+      <div class="pink-background">
+        <div class="content" id="उत्तमावस्था"></div>
+        <b><span class="color-content1">उत्तमावस्था</span></b
+        ><i> (Superlative Degree)</i>
+        <p>
+          उत्तमावस्था में दो से अधिक व्यक्तियों एवं वस्तुओं की तुलना करके किसी
+          एक को सबसे अधिक अथवा सबसे कम बताया गया है।<b>&nbsp;</b>
+        </p>
+        <b class="color-content2">जैसे-</b>
+        <ul>
+          <li>मोनिका सबसे सुंदर है।</li>
+          <li>राम सबसे मोटा है।</li>
+        </ul>
+      </div>
+
+      <b><span class="color-content1">विशेष-</span></b>
+      <p>
+        केवल गुणवाचक एवं अनिश्चित संख्यावाचक तथा निश्चित परिमाणवाचक विशेषणों की
+        ही ये तुलनात्मक अवस्थाएँ होती हैं, अन्य विशेषणों की नहीं।
+      </p>
+      <p><b class="color-content2">विशेषण की अवस्थाओं के रूप</b></p>
+      <p>
+        अधिक और सबसे अधिक शब्दों का प्रयोग करके उत्तरावस्था और उत्तमावस्था के
+        रूप बनाए जा सकते हैं।
+      </p>
+      <b class="color-content2">जैसे-</b>
+
+      <table id="myTable">
+        <thead>
+          <tr>
+            <th>मूलावस्था</th>
+            <th>उत्तरावस्था</th>
+            <th>उत्तमावस्था</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>अच्छी</td>
+            <td>अधिक अच्छी</td>
+            <td>सबसे अच्छी</td>
+          </tr>
+          <tr>
+            <td>चतुर</td>
+            <td>अधिक चतुर</td>
+            <td>सबसे अधिक चतुर</td>
+          </tr>
+          <tr>
+            <td>बुद्धिमान</td>
+            <td>अधिक बुद्धिमान</td>
+            <td>सबसे अधिक बुद्धिमान</td>
+          </tr>
+          <tr>
+            <td>बलवान</td>
+            <td>अधिक बलवान</td>
+            <td>सबसे अधिक बलवान</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        इसी प्रकार दूसरे विशेषण शब्दों के रूप भी बनाए जा सकते हैं। तत्सम शब्दों
+        में मूलावस्था में विशेषण का मूल रूप, उत्तरावस्था में ‘तर’ और उत्तमावस्था
+        में ‘तम’ का प्रयोग होता है।
+        <b class="color-content2">जैसे-</b>
+      </p>
+
+      <table id="myTable">
+        <thead>
+          <tr>
+            <th>मूलावस्था</th>
+            <th>उत्तरावस्था</th>
+            <th>उत्तमावस्था</th>
+          </tr>
+          <tr>
+            <td>लघु</td>
+            <td>लघुतर</td>
+            <td>लघुतम</td>
+          </tr>
+          <tr>
+            <td>तीव्र</td>
+            <td>तीव्रतर</td>
+            <td>तीव्रतम</td>
+          </tr>
+          <tr>
+            <td>उच्च</td>
+            <td>उच्चतर</td>
+            <td>उच्चतम</td>
+          </tr>
+          <tr>
+            <td>कठोर</td>
+            <td>कठोरतर</td>
+            <td>कठोरतम</td>
+          </tr>
+          <tr>
+            <td>गुरु</td>
+            <td>गुरुतर</td>
+            <td>गुरुतम</td>
+          </tr>
+          <tr>
+            <td>महान</td>
+            <td>महानतर,महत्तर</td>
+            <td>महानतम,महत्तम</td>
+          </tr>
+          <tr>
+            <td>न्यून</td>
+            <td>न्यूनतर</td>
+            <td>न्यनूतम</td>
+          </tr>
+          <tr>
+            <td>विशाल</td>
+            <td>विशालतर</td>
+            <td>विशालतम</td>
+          </tr>
+          <tr>
+            <td>सुंदर</td>
+            <td>सुंदरतर</td>
+            <td>सुंदरतम</td>
+          </tr>
+          <tr>
+            <td>मधुर</td>
+            <td>मधुरतर</td>
+            <td>मधुतरतम</td>
+          </tr>
+        </thead>
+      </table>
+      <b class="color-content2">विशेषणों शब्दों की रचना</b>
+      <p>
+        कुछ शब्द मूलरूप से विशेषण होते हैं, उदाहरण - नीचा, काला, मोटा, अच्छा,
+        बुरा आदि। किन्तु कुछ विशेषण शब्दों की रचना संज्ञा, सर्वनाम एवं क्रिया
+        शब्दों से की जाती है-
+      </p>
+      <p><b class="color-content2">संज्ञा शब्दों से :</b></p>
+
+      <table id="myTable">
+        <thead>
+          <tr>
+            <th>प्रत्यय</th>
+            <th>संज्ञा</th>
+            <th>विशेषण</th>
+          </tr>
+          <tr>
+            <td>क</td>
+            <td>अंश</td>
+            <td>आंशिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>धर्म</td>
+            <td>धार्मिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>अलंकार</td>
+            <td>आलंकारिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>नीति</td>
+            <td>नैतिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>अर्थ</td>
+            <td>आर्थिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>दिन</td>
+            <td>दैनिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>इतिहास</td>
+            <td>ऐतिहासिक</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>देव</td>
+            <td>दैविक</td>
+          </tr>
+          <tr>
+            <td>इत</td>
+            <td>अंक</td>
+            <td>अंकित</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>कुसुम</td>
+            <td>कुसुमित</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>सुरभि</td>
+            <td>सुरभित</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>ध्वनि</td>
+            <td>ध्वनित</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>क्षुधा</td>
+            <td>क्षुधित</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>तरंग</td>
+            <td>तरंगित</td>
+          </tr>
+          <tr>
+            <td>इल</td>
+            <td>जटा</td>
+            <td>जटिल</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>पंक</td>
+            <td>पंकिल</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>फेन</td>
+            <td>फेनिल</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>उर्मि</td>
+            <td>उर्मिल</td>
+          </tr>
+          <tr>
+            <td>इम</td>
+            <td>स्वर्ण</td>
+            <td>स्वर्णिम</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>रक्त</td>
+            <td>रक्तिम</td>
+          </tr>
+          <tr>
+            <td>ई</td>
+            <td>रोग</td>
+            <td>रोगी</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>भोग</td>
+            <td>भोगी</td>
+          </tr>
+          <tr>
+            <td>ईन</td>
+            <td>कुल</td>
+            <td>कुलीन</td>
+          </tr>
+          <tr>
+            <td>ईण</td>
+            <td>ग्राम</td>
+            <td>ग्रामीण</td>
+          </tr>
+          <tr>
+            <td>ईय</td>
+            <td>आत्मा</td>
+            <td>आत्मीय</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>जाति</td>
+            <td>जातीय</td>
+          </tr>
+          <tr>
+            <td>आलु</td>
+            <td>श्रद्धा</td>
+            <td>श्रद्धालु</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>ईर्ष्या</td>
+            <td>ईर्ष्यालु</td>
+          </tr>
+          <tr>
+            <td>वी</td>
+            <td>मनस</td>
+            <td>मनस्वी</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>तपस</td>
+            <td>तपस्वी</td>
+          </tr>
+          <tr>
+            <td>मय</td>
+            <td>सुख</td>
+            <td>सुखमय</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>दुख</td>
+            <td>दुखमय</td>
+          </tr>
+          <tr>
+            <td>वान</td>
+            <td>रूप</td>
+            <td>रूपवान</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>गुण</td>
+            <td>गुणवान</td>
+          </tr>
+          <tr>
+            <td>वती(स्त्री)</td>
+            <td>गुण</td>
+            <td>गुणवती</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>पुत्र</td>
+            <td>पुत्रवती</td>
+          </tr>
+          <tr>
+            <td>मान</td>
+            <td>बुद्धि</td>
+            <td>बुद्धिमान</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>श्री</td>
+            <td>श्रीमान</td>
+          </tr>
+          <tr>
+            <td>मती (स्त्री)</td>
+            <td>श्री</td>
+            <td>श्रीमती</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>बुद्धि</td>
+            <td>बुद्धिमती</td>
+          </tr>
+          <tr>
+            <td>रत</td>
+            <td>धर्म</td>
+            <td>धर्मरत</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>कर्म</td>
+            <td>कर्मरत</td>
+          </tr>
+          <tr>
+            <td>स्थ</td>
+            <td>समीप</td>
+            <td>समीपस्थ</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>देह</td>
+            <td>देहस्थ</td>
+          </tr>
+          <tr>
+            <td>निष्ठ</td>
+            <td>धर्म</td>
+            <td>धर्मनिष्ठ</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>कर्म</td>
+            <td>कर्मनिष्ठ</td>
+          </tr>
+        </thead>
+      </table>
+
+      <h5>पढ़ें सम्पूर्ण हिंदी व्याकरण</h5>
+      <table id="Table" style="border-collapse: collapse; width: 100%">
+        <tbody>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran-language.html"
+                >भाषा और व्याकरण</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/phonology-in-hindi"
+                >वर्ण-विचार</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/morphology-in-hindi"
+                >शब्द-विचार</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/syntax-in-hindi"
+                >वाक्य-विचार</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/noun-in-hindi"
+                >संज्ञा</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/number-in-hindi">वचन</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/gender-in-hindi"
+                >लिंग</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/case-in-hindi">कारक</a>
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi"
+                >सर्वनाम</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/adjective-in-hindi"
+                >विशेषण</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/verb-in-hindi"
+                >क्रिया</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/tense-in-hindi">काल</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi"
+                >अव्यय</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/particle-in-hindi"
+                >निपात</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/voice-in-hindi"
+                >वाच्य</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/person-in-hindi"
+                >पुरुष</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi"
+                >विराम-चिन्ह</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/prefix-in-hindi"
+                >उपसर्ग</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/suffix-in-hindi"
+                >प्रत्यय</a
+              >
+            </td>
+            <td><a href="https://gklearnstudy.in/vyakaran/joining">संधि</a></td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/compound-in-hindi"
+                >समास</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi"
+                >तत्सम-तट्भव</a
+              >
+            </td>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi"
+                >देशज-विदेशज</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi"
+                >विलोम-शब्द</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi"
+                >पर्यावाची-शब्द</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/idioms-in-hindi"
+                >मुहावरे</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi"
+                >लोकोक्तियां</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi"
+                >अनेक शब्दों के लिए एक शब्द</a
+              >
+            </td>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi"
+                >एकार्थक शब्द</a
+              >
+            </td>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi"
+                >एकार्थक प्रतीत होने वाले शब्द</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/pairs-of-similar-words"
+                >त्रुटिसम भिन्नार्थक शब्द</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/yugm-shabd"
+                >युग्म शब्द</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/ras-in-hindi">रस</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/chhand-in-hindi"
+                >छन्द</a
+              >
+            </td>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/alankar-in-hindi"
+                >अलंकार</a
+              >
+            </td>
+            <td>
+              <a
+                href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi"
+                >अनुच्छेद-लेखन</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi"
+                >अपठित-गद्यांश</a
+              >
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr />
+      <div id="right-sidebar">
+        <strong>Important Links</strong>
+        <ul id="link-list"></ul>
+      </div>
+      <footer>
+        <div class="custom-row">
+          <div class="custom-column">
+            <b>Follow Us</b>
+            <div id="social-links"></div>
+          </div>
+          <div class="custom-column">
+            <button onclick="goToUrl()">Contact</button>
+          </div>
+          <div class="custom-column"><p id="my-paragraph"></p></div>
+        </div>
+      </footer>
+
+      <script src="https://gklearnstudy.in/js/menu.js" defer="defer"></script>
+      <script
+        src="https://gklearnstudy.in/js/rightside.js"
+        defer="defer"
+      ></script>
+      <script src="https://gklearnstudy.in/js/search.js" defer="defer"></script>
+    </div>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ancient Indian History - GK Learn Study</title>
+    <meta
+      name="description"
+      content="Examine the Indus Valley, the Vedic Age, the Mauryan and Gupta Empires, significant events, society, and culture in this Q&A on ancient Indian history."
+    />
+    <meta
+      name="keywords"
+      content="Ancient Indian History - GK Learn Study, Examine Indus Valley, Vedic Age, Mauryan Gupta Empires, significant events, society, culture Q&A ancient Indian history, Ancient Indian History Q&A,following known 'Cradle Indian Civilization', founder Maurya Empire, empire known trade networks cultural exchange, ancient Indian text considered first comprehensive grammar, known 'Napoleon India', ruler converted Buddhism spread teachings, oldest known civilization India, dynasty known contributions art architecture, especially construction temples, Indian king famous his rock edicts, capital Maurya Empire, text considered earliest work Indian literature, last ruler Maurya Empire, ancient university located India, ruler known golden age Indian history, composed famous text 'Kamasutra', empire succeeded Maurya Empire India, ruler associated spread Buddhism India, primary language Vedic texts, known 'Father Indian History', ancient text known 'Book Dead' Hindu tradition, dynasty famous bronze iron metallurgy, wrote epic 'Mahabharata', ruler associated spread Jainism India, ancient Indian text famous treatise architecture, ancient city known advanced drainage system, king known his patronage art literature during Gupta period, ancient Indian ruler credited construction famous Iron Pillar Delhi, ancient Indian festival celebrates harvest related agrarian cycle, main feature Indus Valley Civilization's urban planning, epic primarily focused Kurukshetra War"
+    />
+    <meta name="author" content="Himanshu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:type_name" content="GK Learn Study" />
+    <meta
+      property="og:url"
+      content="https://gklearnstudy.in/gk-quiz/ancient-indian-history"
+    />
+    <meta property="og:title" content="Ancient Indian History" />
+    <meta
+      property="og:description"
+      content="Important information based on Ancient Indian History, from the Indus Valley Civilization to the Gupta Empire."
+    />
+    <meta
+      property="og:image"
+      content="https://gklearnstudy.in/images/ancient-history-thumbnail.webp"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://gklearnstudy.in/gk-quiz/ancient-indian-history"
+    />
+    <meta property="twitter:title" content="Ancient Indian History" />
+    <meta
+      property="twitter:description"
+      content="Important information based on Ancient Indian History, from the Indus Valley Civilization to the Gupta Empire."
+    />
+    <meta
+      property="twitter:image"
+      content="https://gklearnstudy.in/images/ancient-history-thumbnail.webp"
+    />
+
+    <meta property="article:author" content="GK Learn Study" />
+    <meta property="article:section" content="Education" />
+
+    <meta name="theme-color" content="#680085" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
+    <meta name="application-name" content="GK Learn Study" />
+    <meta name="msapplication-TileColor" content="#680085" />
+    <meta
+      name="msapplication-TileImage"
+      content="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+
+    <link
+      rel="canonical"
+      href="https://gklearnstudy.in/gk-quiz/ancient-indian-history"
+    />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      href="https://gklearnstudy.in/sitemap.xml"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://gklearnstudy.in/GK-Learn-Study.png"
+    />
+
+    <!-- Preload Critical CSS Files -->
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/gkquiz.css" />
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
+
+    <!-- Asynchronously Load Non-Critical CSS Files -->
+    <link
+      rel="stylesheet"
+      href="https://gklearnstudy.in/css/menu.css"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://gklearnstudy.in/css/gkquiz.css"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://gklearnstudy.in/css/rightside.css"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+
+    <!-- Manifest and Favicon -->
+    <link id="manifest" rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <!-- Structured Data (Schema Markup) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://gklearnstudy.in/gk-quiz/ancient-indian-history"
+        },
+        "headline": "Ancient Indian History",
+        "description": "Important information based on Ancient Indian History, including the Indus Valley Civilization, Vedic Period, Maurya Empire, Gupta Empire.",
+        "image": "https://gklearnstudy.in/gk-quiz/images/ancient-history-thumbnail.webp",
+        "author": {
+          "@type": "Person",
+          "name": "Himanshu"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "GK Learn Study",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://gklearnstudy.in/gk-quiz/ancient-history-thumbnail.webp"
+          }
+        },
+        "datePublished": "2025-05-06",
+        "dateModified": "2025-05-06"
+      }
+    </script>
+
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      href="https://gklearnstudy.in/gk-quiz/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://gklearnstudy.in/gk-quiz/favicon.ico"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which site of the Harappan civilization yielded the statue of a dancing girl?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mohenjo-Daro"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who built the 'Taj Mahal'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Shah Jahan"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who founded the 'Indian National Congress'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A.O. Hume"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which saint worked for social reform through poetry?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Surdas"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who edited the 'Mahabharata'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vyasa"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who is known as the 'Father of the Indian Constitution'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Dr. B.R. Ambedkar"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who composed the 'Upanishads'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Vyasa"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who initiated the 'Gorkha Movement'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Rani Chenamma"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which Mughal emperor constructed 'Fatehpur Sikri'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Akbar"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who held the title 'Acharya'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Chanakya"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which freedom fighter graduated from 'Trinity College'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mahatma Gandhi"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who founded the 'Arya Samaj'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Swami Dayanand Saraswati"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who defined 'selfless service'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mahatma Gandhi"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who conferred the title 'Father of the Nation' to Gandhi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Subhas Chandra Bose"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the capital city of the Maurya Empire?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pataliputra"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which ancient text contains the principles of 'Niti'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Arthashastra"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who is credited with the establishment of Buddhism?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Gautama Buddha"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which empire was founded by Chandragupta Maurya?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Maurya Empire"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What was the major trading route in ancient India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Silk Route"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who was the first ruler of the Gupta Empire?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sri Gupta"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which Indian king is known for his rock edicts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ashoka"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which dynasty is known for the construction of Khajuraho temples?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Chandela Dynasty"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who composed the epic 'Ramayana'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Valmiki"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which famous ruler was known as 'Samrat'?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ashoka"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who was the last ruler of the Maurya Dynasty?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Brihadratha"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which was the first metal used by humans in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Copper"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who is regarded as the father of Indian architecture?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Harshavardhana"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which king was known for his patronage of art and literature during the Gupta period?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Samudragupta"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who was the first woman ruler of India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Rani Durgavati"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
+    <ul class="menu-list" id="menuList">
+      <li>
+        <a
+          class="active"
+          href="https://gklearnstudy.in/gk-quiz/ancient-indian-history"
+          >Ancient Indian History</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history"
+          >Medieval Indian History</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/modern-indian-history"
+          >Modern Indian History</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz"
+          >Indian Geography</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz"
+          >World Geography</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz"
+          >Rivers and Lakes</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/physics-mcq-quiz">Physics</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz"
+          >Chemistry</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/biology-mcq-quiz">Biology</a>
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz"
+          >Science and Technology</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz">Sanskrit</a>
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz"
+          >Books and Authors</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz"
+          >Indian Art and Culture</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz"
+          >Festivals and Traditions</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz"
+          >Famous Monuments</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz"
+          >Indian Constitution</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz"
+          >Indian Defense</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz"
+          >International Relations</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz"
+          >Indian Economy</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz"
+          >Famous Personalities</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz"
+          >Awards and Honors</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz"
+          >Technology and Inventions</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz"
+          >Space and Universe</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz"
+          >Environment and Biodiversity</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz"
+          >Wildlife and National Parks</a
+        >
+      </li>
+
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz"
+          >Mathematics</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/computer-mcq-quiz">Computer</a>
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz"
+          >Sports GK</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/world-history"
+          >World History</a
+        >
+      </li>
+      <li>
+        <a href="https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz"
+          >World Organizations</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz"
+          >Important Dates & Events</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz"
+          >Disasters and Accidents</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz"
+          >Transport and Communication</a
+        >
+      </li>
+    </ul>
+
+    <div class="search-container">
+      <button class="search-icon" id="searchBtn">
+        <span class="rotated-icon">⌕</span></button
+      ><button class="back-icon" id="backBtn">←</button>
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search..."
+        required
+        oninput="showSuggestions(event)"
+      />
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
+
+    <div class="container">
+      <main>
+        <!-- Introduction Section -->
+        <section>
+          <h1>Ancient Indian History Q&A</h1>
+          <p>
+            <strong>Ancient Indian history</strong> is the branch of history
+            that studies the early civilizations, social structures, political
+            systems, economic frameworks, cultural heritage, religious
+            traditions, and scientific achievements of India. It covers events,
+            empires, rulers, and the evolution of society from the Stone Age to
+            the beginning of the medieval period.
+          </p>
+
+          <p>
+            It includes the <strong>Indus Valley Civilization</strong>, the
+            <strong>Vedic Age</strong>, <strong>Mahajanapadas</strong>, the rise
+            and fall of dynasties like the
+            <strong>Maurya and Gupta Empires</strong>, the emergence of
+            <strong>Buddhism and Jainism</strong>, the development of
+            <strong>art and literature</strong>, and advancements in ancient
+            Indian <strong>science and technology</strong>.
+          </p>
+        </section>
+
+        <!-- External Link Section -->
+        <section>
+          <div class="link-container">
+            <a
+              href="https://gklearnstudy.in/gk-quiz/prachin-bhartiya-itihas"
+              class="link-button"
+            >
+              🌐 हिन्दी
+            </a>
+          </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section>
+          <h2>Read the Questions</h2>
+
+          <article class="questions">
+            <h3>
+              Which of the following is known as the 'Cradle of Indian
+              Civilization'?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Indus Valley</li>
+              <li data-correct="true">Harrapan Civilization</li>
+              <li data-correct="false">Vedic Period</li>
+              <li data-correct="false">Mauryan Empire</li>
+            </ul>
+            <p class="explanation">
+              The Harrapan Civilization is often referred to as the 'Cradle of
+              Indian Civilization' due to its early development in the Indus
+              Valley.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who was the founder of the Maurya Empire?</h3>
+            <ul class="options">
+              <li data-correct="true">Chandragupta Maurya</li>
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="false">Bindusara</li>
+              <li data-correct="false">Samudragupta</li>
+            </ul>
+            <p class="explanation">
+              Chandragupta Maurya founded the Maurya Empire in ancient India
+              around 321 BCE.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which empire is known for its extensive trade networks and
+              cultural exchange?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Gupta Empire</li>
+              <li data-correct="false">Mughal Empire</li>
+              <li data-correct="true">Maurya Empire</li>
+              <li data-correct="false">Chola Dynasty</li>
+            </ul>
+            <p class="explanation">
+              The Maurya Empire is known for its extensive trade networks and
+              cultural exchange with other regions.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient Indian text is considered the first comprehensive
+              grammar?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Vedas</li>
+              <li data-correct="true">Ashtadhyayi</li>
+              <li data-correct="false">Mahabharata</li>
+              <li data-correct="false">Puranas</li>
+            </ul>
+            <p class="explanation">
+              Ashtadhyayi, written by Panini, is considered the first
+              comprehensive grammar of Sanskrit.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who was known as the 'Napoleon of India'?</h3>
+            <ul class="options">
+              <li data-correct="false">Akbar</li>
+              <li data-correct="true">Samudragupta</li>
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="false">Chandragupta II</li>
+            </ul>
+            <p class="explanation">
+              Samudragupta is often referred to as the 'Napoleon of India' for
+              his military conquests and empire expansion.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which ruler converted to Buddhism and spread its teachings?</h3>
+            <ul class="options">
+              <li data-correct="false">Chandragupta Maurya</li>
+              <li data-correct="false">Harsha</li>
+              <li data-correct="true">Ashoka</li>
+              <li data-correct="false">Kanishka</li>
+            </ul>
+            <p class="explanation">
+              Ashoka, after the Kalinga War, converted to Buddhism and worked to
+              spread its teachings across Asia.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>What is the oldest known civilization in India?</h3>
+            <ul class="options">
+              <li data-correct="false">Aryan Civilization</li>
+              <li data-correct="true">Indus Valley Civilization</li>
+              <li data-correct="false">Gupta Civilization</li>
+              <li data-correct="false">Mughal Civilization</li>
+            </ul>
+            <p class="explanation">
+              The Indus Valley Civilization is recognized as the oldest known
+              civilization in India.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which dynasty is known for its contributions to art and
+              architecture, especially the construction of temples?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Maurya Dynasty</li>
+              <li data-correct="false">Gupta Dynasty</li>
+              <li data-correct="true">Chola Dynasty</li>
+              <li data-correct="false">Mughal Dynasty</li>
+            </ul>
+            <p class="explanation">
+              The Chola Dynasty is renowned for its significant contributions to
+              art and architecture, especially temple construction.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which Indian king is famous for his rock edicts?</h3>
+            <ul class="options">
+              <li data-correct="false">Chandragupta I</li>
+              <li data-correct="false">Harsha</li>
+              <li data-correct="true">Ashoka</li>
+              <li data-correct="false">Kanishka</li>
+            </ul>
+            <p class="explanation">
+              Ashoka is well-known for his rock edicts, which were inscriptions
+              that conveyed his policies and philosophies.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>What was the capital of the Maurya Empire?</h3>
+            <ul class="options">
+              <li data-correct="true">Pataliputra</li>
+              <li data-correct="false">Taxila</li>
+              <li data-correct="false">Ujjain</li>
+              <li data-correct="false">Kannauj</li>
+            </ul>
+            <p class="explanation">
+              Pataliputra served as the capital of the Maurya Empire and was an
+              important political and cultural center.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which text is considered the earliest work of Indian literature?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Mahabharata</li>
+              <li data-correct="true">Rigveda</li>
+              <li data-correct="false">Ramayana</li>
+              <li data-correct="false">Upanishads</li>
+            </ul>
+            <p class="explanation">
+              The Rigveda is considered the earliest work of Indian literature,
+              composed around 1500 BCE.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who was the last ruler of the Maurya Empire?</h3>
+            <ul class="options">
+              <li data-correct="false">Chandragupta II</li>
+              <li data-correct="true">Brihadratha</li>
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="false">Bindusara</li>
+            </ul>
+            <p class="explanation">
+              Brihadratha was the last ruler of the Maurya Empire, eventually
+              assassinated by his general Pushyamitra Shunga.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which ancient university was located in India?</h3>
+            <ul class="options">
+              <li data-correct="true">Nalanda University</li>
+              <li data-correct="false">Takshashila</li>
+              <li data-correct="false">Kashi Vidyapeeth</li>
+              <li data-correct="false">Aligarh Muslim University</li>
+            </ul>
+            <p class="explanation">
+              Nalanda University was a renowned ancient university in India,
+              attracting students from various countries.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which ruler is known for the golden age of Indian history?</h3>
+            <ul class="options">
+              <li data-correct="true">Chandragupta II</li>
+              <li data-correct="false">Harsha</li>
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="false">Kanishka</li>
+            </ul>
+            <p class="explanation">
+              Chandragupta II is known for the golden age of Indian history
+              during the Gupta period, marked by advancements in arts and
+              sciences.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who composed the famous text 'Kamasutra'?</h3>
+            <ul class="options">
+              <li data-correct="false">Valmiki</li>
+              <li data-correct="true">Vatsyayana</li>
+              <li data-correct="false">Kalidasa</li>
+              <li data-correct="false">Panini</li>
+            </ul>
+            <p class="explanation">
+              Vatsyayana is credited with composing the famous text 'Kamasutra',
+              which explores various aspects of love and relationships.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which empire succeeded the Maurya Empire in India?</h3>
+            <ul class="options">
+              <li data-correct="false">Gupta Empire</li>
+              <li data-correct="true">Shunga Dynasty</li>
+              <li data-correct="false">Chola Dynasty</li>
+              <li data-correct="false">Mughal Empire</li>
+            </ul>
+            <p class="explanation">
+              The Shunga Dynasty succeeded the Maurya Empire after its decline,
+              ruling parts of northern India.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ruler is associated with the spread of Buddhism in India?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Harsha</li>
+              <li data-correct="false">Chandragupta II</li>
+              <li data-correct="true">Ashoka</li>
+              <li data-correct="false">Kanishka</li>
+            </ul>
+            <p class="explanation">
+              Ashoka is known for his efforts in promoting Buddhism and
+              establishing its presence across Asia.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>What was the primary language of the Vedic texts?</h3>
+            <ul class="options">
+              <li data-correct="false">Pali</li>
+              <li data-correct="true">Sanskrit</li>
+              <li data-correct="false">Tamil</li>
+              <li data-correct="false">Prakrit</li>
+            </ul>
+            <p class="explanation">
+              Sanskrit was the primary language of the Vedic texts, which form
+              the foundation of Hindu literature.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who is known as the 'Father of Indian History'?</h3>
+            <ul class="options">
+              <li data-correct="true">Herodotus</li>
+              <li data-correct="false">Megasthenes</li>
+              <li data-correct="false">Fa-Hien</li>
+              <li data-correct="false">Hiuen Tsang</li>
+            </ul>
+            <p class="explanation">
+              Herodotus, while not Indian, is often referred to as the 'Father
+              of History' for his work on ancient civilizations, including those
+              in India.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient text is known as the 'Book of the Dead' in Hindu
+              tradition?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Bhagavad Gita</li>
+              <li data-correct="true">Garuda Purana</li>
+              <li data-correct="false">Upanishads</li>
+              <li data-correct="false">Ramayana</li>
+            </ul>
+            <p class="explanation">
+              The Garuda Purana is often referred to as the 'Book of the Dead'
+              in Hindu tradition, detailing rituals related to death and the
+              afterlife.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which dynasty is famous for its bronze and iron metallurgy?</h3>
+            <ul class="options">
+              <li data-correct="false">Maurya Dynasty</li>
+              <li data-correct="false">Gupta Dynasty</li>
+              <li data-correct="true">Chola Dynasty</li>
+              <li data-correct="false">Mughal Dynasty</li>
+            </ul>
+            <p class="explanation">
+              The Chola Dynasty is famous for its advancements in bronze and
+              iron metallurgy, particularly in creating intricate bronze
+              sculptures.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Who wrote the epic 'Mahabharata'?</h3>
+            <ul class="options">
+              <li data-correct="true">Vyasa</li>
+              <li data-correct="false">Valmiki</li>
+              <li data-correct="false">Kalidasa</li>
+              <li data-correct="false">Panini</li>
+            </ul>
+            <p class="explanation">
+              Vyasa is traditionally credited with composing the epic
+              'Mahabharata', one of the longest poems in world literature.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ruler is associated with the spread of Jainism in India?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="true">Mahavira</li>
+              <li data-correct="false">Gautama Buddha</li>
+              <li data-correct="false">Chandragupta Maurya</li>
+            </ul>
+            <p class="explanation">
+              Mahavira is known as the 24th Tirthankara and is associated with
+              the propagation of Jainism in ancient India.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient Indian text is a famous treatise on architecture?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Kamasutra</li>
+              <li data-correct="false">Arthashastra</li>
+              <li data-correct="true">Vastu Shastra</li>
+              <li data-correct="false">Natyashastra</li>
+            </ul>
+            <p class="explanation">
+              Vastu Shastra is an ancient Indian text that serves as a treatise
+              on architecture and design.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient city is known for its advanced drainage system?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Taxila</li>
+              <li data-correct="false">Pataliputra</li>
+              <li data-correct="true">Mohenjo-Daro</li>
+              <li data-correct="false">Lothal</li>
+            </ul>
+            <p class="explanation">
+              Mohenjo-Daro is famous for its advanced drainage system,
+              reflecting the engineering skills of the Indus Valley
+              Civilization.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which king is known for his patronage of art and literature during
+              the Gupta period?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Harsha</li>
+              <li data-correct="true">Chandragupta II</li>
+              <li data-correct="false">Samudragupta</li>
+              <li data-correct="false">Ashoka</li>
+            </ul>
+            <p class="explanation">
+              Chandragupta II is known for his patronage of art and literature,
+              leading to a flourishing of cultural activities during the Gupta
+              period.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient Indian ruler is credited with the construction of
+              the famous Iron Pillar of Delhi?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Ashoka</li>
+              <li data-correct="false">Samudragupta</li>
+              <li data-correct="true">Chandragupta II</li>
+              <li data-correct="false">Kanishka</li>
+            </ul>
+            <p class="explanation">
+              The Iron Pillar of Delhi, known for its rust-resistant
+              composition, is attributed to the reign of Chandragupta II.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              Which ancient Indian festival celebrates the harvest and is
+              related to the agrarian cycle?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Holi</li>
+              <li data-correct="false">Diwali</li>
+              <li data-correct="true">Pongal</li>
+              <li data-correct="false">Makar Sankranti</li>
+            </ul>
+            <p class="explanation">
+              Pongal is a harvest festival celebrated primarily in Tamil Nadu,
+              marking the end of the winter solstice.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>
+              What was the main feature of the Indus Valley Civilization's urban
+              planning?
+            </h3>
+            <ul class="options">
+              <li data-correct="false">Grand palaces</li>
+              <li data-correct="true">Grid layout and drainage systems</li>
+              <li data-correct="false">Large temples</li>
+              <li data-correct="false">Fortified walls</li>
+            </ul>
+            <p class="explanation">
+              The Indus Valley Civilization is noted for its grid layout and
+              sophisticated drainage systems in urban planning.
+            </p>
+          </article>
+
+          <article class="questions">
+            <h3>Which epic is primarily focused on the Kurukshetra War?</h3>
+            <ul class="options">
+              <li data-correct="false">Ramayana</li>
+              <li data-correct="true">Mahabharata</li>
+              <li data-correct="false">Puranas</li>
+              <li data-correct="false">Vedas</li>
+            </ul>
+            <p class="explanation">
+              The Mahabharata primarily narrates the events of the Kurukshetra
+              War between the Pandavas and Kauravas.
+            </p>
+          </article>
+        </section>
+
+        <!-- Optional: Pagination (currently commented out) -->
+        <!--
+  <section>
+    <div class="pagination">
+      <a class="active" href="https://gklearnstudy.in/gk-quiz/gk-quiz/ancient-indian-history/page1">1</a>
+    </div>
+  </section>
+  -->
+
+        <!-- Section: Sidebar -->
+        <aside id="right-sidebar">
+          <strong>Important Links</strong>
+          <ul id="link-list"></ul>
+        </aside>
+
+        <!-- Footer Section -->
+        <footer>
+          <div class="custom-row">
+            <div class="custom-column">
+              <strong>Follow Us</strong>
+              <div id="social-links"></div>
+            </div>
+            <div class="custom-column">
+              <button onclick="goToUrl()">Contact</button>
+            </div>
+            <div class="custom-column">
+              <p id="my-paragraph"></p>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+    <script src="https://gklearnstudy.in/js/menu.js" defer></script>
+    <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+    <script src="https://gklearnstudy.in/js/search.js" defer></script>
+    <script src="https://gklearnstudy.in/js/gkquiz.js" defer></script>
+  </body>
+</html>
+
+
+
+Generate Sitemap
+📄 Sitemap Output:
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-    <url>
-        <loc>https://gklearnstudy.in/</loc>
-        <lastmod>2025-01-10</lastmod>
-        <priority>1</priority>
-        <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/" />
-        <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/" />
-    </url>
   <url>
-    <loc>https://gklearnstudy.in/video</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/video" />
-</url>
-        <url>
-    <loc>https://gklearnstudy.in/videos</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/videos" />
-</url>
-        <url>
-    <loc>https://gklearnstudy.in/test</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/test" />
-                 <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/test" />
-</url>
-        
- <url>
-    <loc>https://gklearnstudy.in/gk-quiz</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz" />
-<xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz" />
-</url>
+    <loc>https://gklearnstudy.in/education</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/education" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/education" />
+  </url>
 
-        <url>
-    <loc>https://gklearnstudy.in/computer</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/computer" />
-<xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/computer" />
-</url>
-
-        
-         <url>
-    <loc>https://gklearnstudy.in/gk-quiz/Ancient-Indian-History</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/Ancient-Indian-History" />
-</url>
-          <url>
-    <loc>https://gklearnstudy.in/gk-quiz/Ancient-Indian-History/page1</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/Ancient-Indian-History/page1" />
-</url>
-          <url>
-    <loc>https://gklearnstudy.in/gk-quiz/Ancient-Indian-History/page2</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/Ancient-Indian-History/page2" />
-</url>
-         <url>
-    <loc>https://gklearnstudy.in/gk-quiz/prachin-bharatiya-itihas</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/prachin-bharatiya-itihas" />
-</url>
-       
   <url>
-    <loc>https://gklearnstudy.in/gk-quiz/prachin-bharatiya-itihas/page1</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/prachin-bharatiya-itihas/page1" />
-</url>
-       
- <url>
-    <loc>https://gklearnstudy.in/hindi-test</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/hindi-test" />
-</url>
+    <loc>https://gklearnstudy.in/GK%20Learn%20Study.mp4</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/GK%20Learn%20Study.mp4" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/GK%20Learn%20Study.mp4" />
+  </url>
 
-         <url>
-    <loc>https://gklearnstudy.in/hindi-test/part-01</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/hindi-test/part-01" />
-</url>
-          <url>
-    <loc>https://gklearnstudy.in/hindi-test/part-02</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/hindi-test/part-02" />
-</url>
-          <url>
-    <loc>https://gklearnstudy.in/hindi-test/part-03</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/hindi-test/part-03" />
-</url>
-        
- <url>
-    <loc>https://gklearnstudy.in/all-formulas/periodic-table</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/all-formulas/periodic-table" />
-<xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/all-formulas/periodic-table" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/all-formulas/element-of-name</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/all-formulas/element-of-name" />
-        <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/all-formulas/element-of-name" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/all-formulas/all-chemical-formulas</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/all-formulas/all-chemical-formulas" />
- <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/all-formulas/all-chemical-formulas" />
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi.html" />
+  </url>
 
-</url>
-<url>
-    <loc>https://gklearnstudy.in/all-formulas/reaction-in-chemistry</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/all-formulas/reaction-in-chemistry" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/all-formulas/reaction-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/all-formulas/reaction-in-hindi" />
-</url>
-
- <url>
-    <loc>https://gklearnstudy.in/vyakaran/proverbs-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/pairs-of-similar-words</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/pairs-of-similar-words" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/yugm-shabd</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/yugm-shabd" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/ras-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/ras-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/chhand-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/chhand-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/alankar-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/alankar-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-        <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/letter-writing-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/letter-writing-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/essay-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/essay-in-hindi" />
-</url>
-
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/quiz-for-exam</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/quiz-for-exam" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/gender-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/gender-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/case-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/case-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/pronoun-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/adjective-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/adjective-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/verb-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/verb-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/tense-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tense-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/particle-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/particle-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/voice-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/voice-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/person-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/person-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/punctuation-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi" />
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/prefix-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-          <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/prefix-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/suffix-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/suffix-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/joining</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/joining" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/compound-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/compound-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/antonyms-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi" />
-
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran/synonyms-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi" />
-
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/angle-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/angle-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/angle-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/angle-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/area-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/area-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/area-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/area-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/length-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/length-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/length-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/length-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/power-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/power-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/power-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/power-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/pressure-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/pressure-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/pressure-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/pressure-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/speed-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/speed-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/speed-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/speed-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/temperature-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/temperature-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/temperature-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/temperature-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/time-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/time-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/time-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/time-unit-conversion" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/conversion/volume-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/volume-unit-conversion" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/volume-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/volume-unit-conversion" />
+  </url>
 
-</url>
-<url>
-    <loc>https://gklearnstudy.in/conversion/weight&amp;mass-unit-conversion</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/weight&amp;mass-unit-conversion" />
+  <url>
+    <loc>https://gklearnstudy.in/conversion/weight&mass-unit-conversion</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/conversion/weight&mass-unit-conversion" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/conversion/weight&mass-unit-conversion" />
+  </url>
 
-</url>
-<url>
-    <loc>https://gklearnstudy.in/vyakaran-language</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran-language" />
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran-language.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran-language.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran-language.html" />
+  </url>
 
-</url>
-<url>
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/phonology-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/phonology-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/phonology-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/morphology-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/morphology-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/morphology-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/syntax-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/syntax-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/syntax-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/noun-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/noun-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/noun-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/number-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/number-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/number-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/gender-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/gender-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/gender-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/case-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/case-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/case-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/pronoun-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/verb-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/verb-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/verb-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/tense-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/tense-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tense-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/particle-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/particle-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/particle-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/voice-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/voice-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/voice-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/person-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/person-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/person-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/punctuation-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/prefix-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/prefix-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/prefix-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/suffix-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/suffix-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/suffix-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/joining.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/joining.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/joining.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/compound-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/compound-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/compound-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/antonyms-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/synonyms-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/idioms-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/idioms-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/idioms-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/proverbs-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/yugm-shabd.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/yugm-shabd.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/yugm-shabd.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/ras-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/ras-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/ras-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/chhand-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/chhand-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/chhand-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/alankar-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/alankar-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/alankar-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/letter-writing-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/letter-writing-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/letter-writing-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/essay-in-hindi.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/essay-in-hindi.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/essay-in-hindi.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/quiz-for-exam.html</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/quiz-for-exam.html" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/quiz-for-exam.html" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#विशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#विशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#विशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#विशेष्य</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#विशेष्य" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#विशेष्य" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#प्रविशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#प्रविशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#प्रविशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#गुणवाचक-विशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#गुणवाचक-विशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#गुणवाचक-विशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#संख्यावाचक-विशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#संख्यावाचक-विशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#संख्यावाचक-विशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#परिमाणवाचक-विशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#परिमाणवाचक-विशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#परिमाणवाचक-विशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#सार्वनामिक-विशेषण</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#सार्वनामिक-विशेषण" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#सार्वनामिक-विशेषण" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#मूलावस्था</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#मूलावस्था" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#मूलावस्था" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#उत्तरावस्था</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#उत्तरावस्था" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#उत्तरावस्था" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/#उत्तमावस्था</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/#उत्तमावस्था" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/#उत्तमावस्था" />
+  </url>
+
+  <url>
     <loc>https://gklearnstudy.in/vyakaran/phonology-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/phonology-in-hindi" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/phonology-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/phonology-in-hindi" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/vyakaran/morphology-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/morphology-in-hindi" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/morphology-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/morphology-in-hindi" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/vyakaran/syntax-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/syntax-in-hindi" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/syntax-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/syntax-in-hindi" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/vyakaran/noun-in-hindi</loc>
-    <lastmod>2025-03-29</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/noun-in-hindi" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/noun-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/noun-in-hindi" />
+  </url>
 
-</url>
-<url>
+  <url>
     <loc>https://gklearnstudy.in/vyakaran/number-in-hindi</loc>
-    <lastmod>2025-01-10</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/number-in-hindi" />
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/number-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/number-in-hindi" />
+  </url>
 
-</url>
-        
-        <url>
-    <loc>https://gklearnstudy.in/kaise-karen</loc>
-    <lastmod>2025-03-29</lastmod>
-    <priority>1</priority>
-         <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/kaise-karen" />
-</url>
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/gender-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/gender-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/gender-in-hindi" />
+  </url>
 
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/case-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/case-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/case-in-hindi" />
+  </url>
 
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/pronoun-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/adjective-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/adjective-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/adjective-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/verb-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/verb-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/verb-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/tense-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/tense-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tense-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/particle-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/particle-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/particle-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/voice-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/voice-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/voice-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/person-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/person-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/person-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/punctuation-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/prefix-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/prefix-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/prefix-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/suffix-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/suffix-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/suffix-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/joining</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/joining" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/joining" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/compound-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/compound-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/compound-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/antonyms-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/synonyms-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/idioms-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/idioms-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/idioms-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/proverbs-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/pairs-of-similar-words</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/pairs-of-similar-words" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/pairs-of-similar-words" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/yugm-shabd</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/yugm-shabd" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/yugm-shabd" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/ras-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/ras-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/ras-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/chhand-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/chhand-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/chhand-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/alankar-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/alankar-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/alankar-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/ancient-indian-history</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/ancient-indian-history" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/ancient-indian-history" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/medieval-indian-history</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/medieval-indian-history" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/medieval-indian-history" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/modern-indian-history</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/modern-indian-history" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/modern-indian-history" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/physics-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/physics-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/physics-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/biology-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/biology-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/biology-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/computer-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/computer-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/computer-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/world-history</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/world-history" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/world-history" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz" />
+  </url>
+
+  <url>
+    <loc>https://gklearnstudy.in/gk-quiz/prachin-bhartiya-itihas</loc>
+    <lastmod>2025-05-23</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gklearnstudy.in/gk-quiz/prachin-bhartiya-itihas" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gklearnstudy.in/gk-quiz/prachin-bhartiya-itihas" />
+  </url>
 
 </urlset>
