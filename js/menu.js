@@ -1,4 +1,19 @@
 
+(function() {
+  const existingFavicon = document.querySelector('link[rel="icon"]');
+  if (!existingFavicon) {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = 'https://gklearnstudy.in/favicon.ico';
+    link.type = 'image/x-icon';
+    document.head.appendChild(link);
+    console.log("Favicon added dynamically.");
+  } else {
+    console.log("Favicon already exists. Skipping addition.");
+  }
+})();
+
+
 
 
 
