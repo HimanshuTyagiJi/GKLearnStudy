@@ -49,3 +49,28 @@ function closeMenuOnClickOutside(event) {
     document.removeEventListener('click', closeMenuOnClickOutside);
   }
 }
+
+const rowsPerPage = 50;
+let currentIndex = 0;
+
+function showRows() {
+  const rows = document.querySelectorAll("#myTable tbody tr");
+  for (let i = currentIndex; i < currentIndex + rowsPerPage && i < rows.length; i++) {
+    rows[i].style.display = "";
+  }
+  currentIndex += rowsPerPage;
+  if (currentIndex >= rows.length) {
+    document.getElementById("loadMoreBtn").style.display = "none";
+  }
+}
+
+function initRows() {
+  const rows = document.querySelectorAll("#myTable tbody tr");
+  rows.forEach(row => row.style.display = "none");
+  currentIndex = 0;
+  showRows();
+}
+
+document.getElementById("loadMoreBtn").addEventListener("click", showRows);
+window.addEventListener("DOMContentLoaded", initRows);
+
