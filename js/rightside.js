@@ -49,7 +49,6 @@ function closeMenuOnClickOutside(event) {
     document.removeEventListener('click', closeMenuOnClickOutside);
   }
 }
-
 const rowsPerPage = 50;
 let currentIndex = 0;
 
@@ -60,7 +59,8 @@ function showRows() {
   }
   currentIndex += rowsPerPage;
   if (currentIndex >= rows.length) {
-    document.getElementById("loadMoreBtn").style.display = "none";
+    const btn = document.getElementById("loadMoreBtn");
+    if (btn) btn.style.display = "none";
   }
 }
 
@@ -71,6 +71,14 @@ function initRows() {
   showRows();
 }
 
-document.getElementById("loadMoreBtn").addEventListener("click", showRows);
-window.addEventListener("DOMContentLoaded", initRows);
+document.addEventListener("DOMContentLoaded", function () {
+  const loadMoreBtn = document.getElementById("loadMoreBtn");
+  const table = document.getElementById("myTable");
+
+  // ✅ Check if both table and button exist
+  if (loadMoreBtn && table) {
+    loadMoreBtn.addEventListener("click", showRows);
+    initRows();
+  }
+});
 
