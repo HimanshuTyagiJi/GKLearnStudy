@@ -6,7 +6,7 @@
         <meta name="description" content="Math Formulae for Class 12th - Comprehensive list of all important mathematical formulas to help students prepare for exams." />
         <meta name="keywords" content="Class 12th, Math Formulae, Mathematics, Exam Preparation, Important Math Formulas" />
         <meta name="author" content="Himanshu Tyagi" />
-        <meta name="robots" content="index, follow" />
+        <meta name="google-adsense-account" content="ca-pub-7067722696020503"><meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://gklearnstudy.in/class-12th/mathsformula" />
         <title>Math Formulae - Class 12th</title>
         <meta name="author" content="GK Learn Study" />
@@ -29,15 +29,26 @@
     </head>
     <body>
         <div class="search-container">
-            <button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button>
-            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
-        </div>
-        <ul id="suggestions" class="suggestions"></ul>
-        <div id="results"></div>
+      <button class="search-icon" id="searchBtn">
+        <span class="rotated-icon">⌕</span>
+      </button>
+      <button class="back-icon" id="backBtn">←</button>
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        autocomplete="off"
+        placeholder="Search..."
+        required
+        oninput="showSuggestions(event)"
+      />
+    </div>
+    <ul id="suggestions" class="suggestions"></ul>
+    <div id="results"></div>
 
         <button class="menu-toggle" onclick="toggleMenu()">➤</button>
         <ul class="menu-list" id="menuList">
-            <span style="color: var(--purple);"> Class : 12th</span>
+            <li class="purple-text">Class:12th</li>
             <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Relations-Functions">1. संबंध और फलन</a></li>
             <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Vector-Algebra">2. सदिश बीजगणित</a></li>
             <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Determinants">3. सारणिक</a></li>
@@ -51,7 +62,7 @@
             <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Statistics">12. सांख्यिकी</a></li>
             <li><a href="https://gklearnstudy.in/class-12th/mathsformula#Probability">13. प्रायिकता</a></li>
 
-            <li style="color: var(--purple);">Class : 11th</li>
+            <li class="purple-text">Class:11th</li>
 
             <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Sets">1. समुच्चय</a></li>
             <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Relations-Functions">2. संबंध और फलन</a></li>
@@ -70,7 +81,7 @@
             <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Statistics">15. सांख्यिकी</a></li>
             <li><a href="https://gklearnstudy.in/class-11th/mathsformula#Probability">16. प्रायिकता</a></li>
 
-            <li><span style="color: var(--purple);"> Class : 9th</span></li>
+          <li class="purple-text">Class:9th</li>
             <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Number-System">1. संख्या पद्धति</a></li>
 
             <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Polynomials">2. बहुपद</a></li>
@@ -94,7 +105,7 @@
             <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Probability">11. प्रायिकता</a></li>
 
             <li><a href="https://gklearnstudy.in/class-9th/mathsformula#Surface-Volume">12. पृष्ठ क्षेत्रफल और आयतन</a></li>
-            <li style="color: var(--purple);">Class : 10th</li>
+           <li class="purple-text">Class:10th</li>
             <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Real-Number">1. वास्तविक संख्याएँ</a></li>
             <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Polynomials">2. बहुपद</a></li>
             <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Pairs-Linear_Equations">3. दो चर वाले रैखिक समीकरण</a></li>
@@ -107,7 +118,7 @@
             <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Statistics">10. सांख्यिकी</a></li>
             <li><a href="https://gklearnstudy.in/class-10th/mathsformula#Probability">11. प्रायिकता</a></li>
 
-            <li style="color: var(--purple);">6th-10th + Competitive</li>
+           <li class="purple-text">6th-10th + Competitive</li>
             <li><a href="https://gklearnstudy.in/competitive/mathsformula#Percentage">1. प्रतिशत</a></li>
 
             <li><a href="https://gklearnstudy.in/competitive/mathsformula#SimpleInterest">2. साधारण ब्याज</a></li>
@@ -3122,16 +3133,16 @@
 
                 <p id="Mean (Average):"><b>7. Mean (Average):</b></p>
 
-                <center>
+                <div class="scrollmenu-container">
                     Mean = <span class="frac">∑x<span class="bottom">n</span></span>
-                </center>
+                </div>
                 यहाँ, 𝑥 डेटा आइटम हैं और 𝑛 उनकी संख्या है।<br />
                 <br />
                 <b>Example:</b>&nbsp;एक कक्षा में छात्रों के गणित टेस्ट के अंक निम्नलिखित हैं: 80, 75, 90, 85, 95। इन अंकों का औसत मान (Mean) क्या है?<br />
                 <br style="font-weight: 700; text-align: justify;" />
-                <center>
+                <div class="scrollmenu-container">
                     Mean =&nbsp;&nbsp;<span class="frac">80 + 75 + 90 + 85 + 95<span class="bottom">5</span></span>&nbsp;= <span class="frac">425<span class="bottom">5</span></span>&nbsp;= 85
-                </center>
+                </div>
                 <span style="font-family: 'Times New Roman'; font-size: medium;">इसलिए, इन छात्रों के गणित टेस्ट के औसत अंक 85 हैं।</span><br />
                 <br />
 
@@ -3217,9 +3228,9 @@
                 <p><b>उदाहरण:</b>&nbsp;एक गाँव में पाँच किसानों की फसल उत्पादन (क्विंटल में) निम्नलिखित है: 50, 45, 55, 60, 52। इन उत्पादन का वेरियंस (Variance) क्या है?</p>
                 <p>सबसे पहले, औसत (Mean) निकालें:</p>
 
-                <center>
+                <div class="scrollmenu-container">
                     Mean =&nbsp;&nbsp;<span class="frac">50 + 45 + 55 + 60 + 52<span class="bottom">5</span></span>&nbsp; =&nbsp;<span class="frac">262<span class="bottom">5</span></span>&nbsp;= 52.4
-                </center>
+                </div>
                 <br />
                 <span>अब वेरियंस (Variance) निकालें:</span>
 
@@ -3259,19 +3270,19 @@
                     </b>
                 </p>
 
-                <center>
+                <div class="scrollmenu-container">
                     <b>Standard Deviation</b> = <span class="sqrts"><span class="overline">Variance</span></span>
-                </center>
+                </div>
 
                 <b><span> </span></b><b>विचलन (Variance) का सूत्र:</b>
-                <center>
+                <div class="scrollmenu-container">
                     <b>Variance</b> (<i>s<sup>2</sup></i>) =
                     <span class="frac">
                         <span>∑ (x<sub>i</sub> - x̅)<sup>2</sup></span>
 
                         <span class="bottom">n</span>
                     </span>
-                </center>
+                </div>
 
                 <p><b>जहाँ:</b><br /></p>
                 <ul>
@@ -3284,7 +3295,7 @@
                     <li><b>n</b> = डेटा बिंदुओं की संख्या</li>
                 </ul>
 
-                <center>
+                <div class="scrollmenu-container">
                     <p id="मानक विचलन (Standard Deviation) का सूत्र:"><b>मानक विचलन (Standard Deviation) का सूत्र:</b></p>
                     <b style="background-color: var(--background-color);">Standard Deviation (σ)2&nbsp;</b>=
                     <span class="frac">
@@ -3292,7 +3303,7 @@
 
                         <span class="bottom">n</span>
                     </span>
-                </center>
+                </div>
                 <b>Example</b><br />
 
                 <p>
@@ -3313,7 +3324,7 @@
                     <b>Step 2:</b> Calculate the squared differences from the mean for each data point. <br />
                     प्रत्येक डेटा पॉइंट के लिए माध्य से वर्गीकृत अंतर की गणना करें।
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1">
                         <tbody>
                             <tr>
@@ -3348,7 +3359,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
                 <p>
                     <b>Step 3:</b> Find the average of these squared differences. <br />
                     इन वर्गीकृत अंतर का औसत निकालें।
@@ -3385,7 +3396,7 @@
                     <br />
                     <b>12. Correlation Coefficient (Pearson's r)</b>
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <b>r</b> =
                     <span class="frac">
                         ∑(xi − x̄)(yi − ȳ)
@@ -3395,24 +3406,24 @@
                             </span>
                         </span>
                     </span>
-                </center>
+                </div>
 
                 यहाँ,&nbsp;<b>xi</b> और <b>yi</b> डेटा आइटम हैं,&nbsp;<b>x̄</b> और <b>ȳ</b> उनके औसत हैं।
 
                 <b>Example:&nbsp;</b><span></span><span style="font-family: 'Times New Roman'; font-size: medium;">मान लीजिए हमारे पास निम्नलिखित डेटा सेट है:</span>
-                <center>
+                <div class="scrollmenu-container">
                     X = [2, 4, 6, 8]<br />
                     Y = [5, 10, 15, 20]
-                </center>
+                </div>
 
                 <p><b>औसत (Mean) निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <b>x̄</b> = <span class="frac">2 + 4 + 6 + 8<span class="bottom">4</span></span> = 5<br />
                     <b>ȳ</b> = <span class="frac">5 + 10 + 15 + 20<span class="bottom">4</span></span> = 12.5
-                </center>
+                </div>
 
                 <p><b>प्रत्येक xi और yi के औसत के बीच का अंतर निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <thead>
                             <tr>
@@ -3459,7 +3470,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p>
                     <b>
@@ -3467,7 +3478,7 @@
                         इन अंतर के गुणनफल का योग निकालें:
                     </b>
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <thead>
                             <tr>
@@ -3503,7 +3514,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p>
                     <b>
@@ -3511,7 +3522,7 @@
                         xi के अंतर का वर्ग का योग निकालें:
                     </b>
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <thead>
                             <tr>
@@ -3542,7 +3553,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p>
                     <b>
@@ -3550,7 +3561,7 @@
                         yi के अंतर का वर्ग का योग निकालें:
                     </b>
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <thead>
                             <tr>
@@ -3581,7 +3592,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p>
                     <b>
@@ -3589,7 +3600,7 @@
                         Pearson's r निकालें:
                     </b>
                 </p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <tbody>
                             <tr>
@@ -3606,7 +3617,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p id="Coefficient-Of-Variation">
                     <br />
@@ -3635,7 +3646,7 @@
                     </b>
                 </p>
 
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <thead>
                             <tr>
@@ -3687,10 +3698,10 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p><b>इन वर्गों का योग निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <tbody>
                             <tr>
@@ -3698,10 +3709,10 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p><b>वेरियंस (Variance) निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <tbody>
                             <tr>
@@ -3711,10 +3722,10 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p><b>मानक विचलन (Standard Deviation) निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <tbody>
                             <tr>
@@ -3724,10 +3735,10 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p><b>Coefficient of Variation (CV) निकालें:</b></p>
-                <center>
+                <div class="scrollmenu-container">
                     <table border="1" cellpadding="10" cellspacing="2" style="width: 100%;">
                         <tbody>
                             <tr>
@@ -3737,7 +3748,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </center>
+                </div>
 
                 <p><strong>उत्तर:</strong> Coefficient&nbsp;of&nbsp;Variation<mo stretchy="false">(</mo><mi>𝐶</mi><mi>𝑉</mi><mo stretchy="false">)</mo><mo>≈</mo><mn>27.22</mn><mi mathvariant="normal">%</mi></p>
 
@@ -3753,9 +3764,9 @@
                 <ul>
                     <li><span style="text-align: justify;">अंदरूनी क्षेत्र की क्षमता:</span></li>
 
-                    <center>
+                    <div class="scrollmenu-container">
                         <b>P(a ≤ X ≤ b)</b> = Φ(<span class="frac">b − μ<span class="bottom">σ</span></span>) − Φ(<span class="frac">a − μ<span class="bottom">σ</span></span>)
-                    </center>
+                    </div>
                     <p>
                         यहाँ, Φ गणितीय फ़ंक्शन है और μ और σ मान हैं।
                     </p>
@@ -3891,11 +3902,11 @@
 
                 नमूना सांद्रता का अंदाज़ा करने के लिए निम्नलिखित सूत्र का उपयोग किया जाता है:
 
-                <center>
+                <div class="scrollmenu-container">
                     <b>
                         𝑥̄ = <span class="frac">∑𝑥<span class="bottom">𝑛</span></span>
                     </b>
-                </center>
+                </div>
                 यहाँ,
 
                 <ul>
