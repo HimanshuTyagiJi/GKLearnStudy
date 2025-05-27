@@ -1,3 +1,42 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Get all heading elements from h1 to h6
+  const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+
+  // Keep track of the last heading level
+  let lastLevel = 0;
+
+  headings.forEach((heading, index) => {
+    const currentLevel = parseInt(heading.tagName.charAt(1));
+    if (index === 0) {
+      // Set lastLevel for first heading
+      lastLevel = currentLevel;
+      return;
+    }
+
+    // Check if current heading level jumps beyond lastLevel + 1
+    if (currentLevel > lastLevel + 1) {
+      const missingHeadings = [];
+
+      // Insert all missing headings between lastLevel and currentLevel
+      for (let i = lastLevel + 1; i < currentLevel; i++) {
+        const emptyHeading = document.createElement("h" + i);
+        emptyHeading.innerHTML = ""; // Blank content
+        missingHeadings.push(emptyHeading);
+      }
+
+      // Insert missing headings before current heading
+      const parent = heading.parentNode;
+      missingHeadings.forEach(mh => {
+        parent.insertBefore(mh, heading);
+      });
+    }
+
+    // Update lastLevel to current
+    lastLevel = currentLevel;
+  });
+});
+
+
 
 (function() {
   const existingFavicon = document.querySelector('link[rel="icon"]');
