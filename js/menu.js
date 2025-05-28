@@ -1,3 +1,53 @@
+
+document.addEventListener("DOMContentLoaded", function () {
+    let deferredPrompt;
+    
+    // Install Button Create or Select
+    let installBtn = document.createElement('button');
+    installBtn.id = 'installBtn';
+    installBtn.innerText = 'Install GK Learn App';
+    installBtn.style.display = 'none';
+    installBtn.style.position = 'fixed';
+    installBtn.style.bottom = '20px';
+    installBtn.style.right = '20px';
+    installBtn.style.zIndex = '9999';
+    installBtn.style.padding = '10px 15px';
+    installBtn.style.backgroundColor = '#641ef9';
+    installBtn.style.color = '#fff';
+    installBtn.style.border = 'none';
+    installBtn.style.borderRadius = '8px';
+    installBtn.style.cursor = 'pointer';
+    document.body.appendChild(installBtn);
+
+    // Listen for the install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); // Default prompt रोकें
+        deferredPrompt = e;
+
+        // Show the install button
+        installBtn.style.display = 'block';
+
+        installBtn.addEventListener('click', () => {
+            deferredPrompt.prompt();
+
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            });
+        });
+    });
+
+    // अगर पहले से installed हो तो बटन hide रखें
+    window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get all heading elements from h1 to h6
   const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
