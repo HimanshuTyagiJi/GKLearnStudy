@@ -78,6 +78,46 @@
     <p><span class="emoji">🔔</span>Meanwhile, you can explore our other study materials and stay tuned for updates.</p>
     <p><span class="emoji">📅</span>We’ll soon be adding content on computer basics, input-output devices, operating systems, the internet, and more important topics.</p>
   </main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>50 YouTube Auto-Play Embeds</title>
+  <style>
+    .video-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    iframe {
+      width: 360px;
+      height: 640px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📺 50 Auto-Play YouTube Embeds</h2>
+  <div class="video-grid" id="videoContainer"></div>
+
+  <script>
+    const container = document.getElementById("videoContainer");
+    const videoId = "6LupQidV370"; // Your YouTube Shorts video ID
+    const totalVideos = 50;
+
+    for (let i = 1; i <= totalVideos; i++) {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&modestbranding=1&rel=0&playsinline=1`;
+      iframe.title = `YouTube video ${i}`;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.allowFullscreen = true;
+      container.appendChild(iframe);
+    }
+  </script>
+
+</body>
+</html>
 
  <div id="right-sidebar">
                 <strong>Important Links</strong>
