@@ -462,13 +462,13 @@ document.querySelectorAll('.logo-container1, .menu-inner, .burger-line').forEach
 });
 // Define menu items
 const menuItems = [
-  { text: "Home", href: "/" },
-  { text: "Education", href: "education.html" },
-  { text: "All Formula", href: "all-formulas.html" },
-  { text: "Computer", href: "computer.html" },
-  { text: "How to", href: "kaise-karen.html" },
-  { text: "GK Quiz", href: "gk-quiz.html" },
-  { text: "Test", href: "test.html" },
+  { text: "Home", href: "https://gklearnstudy.in" },
+  { text: "Education", href: "https://gklearnstudy.in/education.html" },
+  { text: "All Formula", href: "https://gklearnstudy.in/all-formulas.html" },
+  { text: "Computer", href: "https://gklearnstudy.in/computer.html" },
+  { text: "How to", href: "https://gklearnstudy.in/kaise-karen.html" },
+  { text: "GK Quiz", href: "https://gklearnstudy.in/gk-quiz.html" },
+  { text: "Test", href: "https://gklearnstudy.in/test.html" },
 ];
 
 // Create the menu inner container
