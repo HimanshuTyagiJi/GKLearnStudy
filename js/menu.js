@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!existingFavicon) {
     const link = document.createElement('link');
     link.rel = 'icon';
-    link.href = 'favicon.ico';
+    link.href = 'https://gklearnstudy.in/favicon.ico';
     link.type = 'image/x-icon';
     document.head.appendChild(link);
     console.log("Favicon added dynamically.");
