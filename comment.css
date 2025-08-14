@@ -1,0 +1,270 @@
+
+
+/* Global variables for easy theming */
+:root {
+    --primary-color: #0054B3;
+    --primary-hover-color: #0056b3;
+    --background-color: #f4f5f7;
+    --container-bg-color: #ffffff;
+    --text-color: #333;
+    --light-text-color: #666;
+    --border-color: #e0e0e0;
+    --error-color: #dc3545;
+    --warning-bg: #fffbe6;
+    --warning-border: #ffc107;
+    --warning-text: #664d03;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+/* Scoped styles for the widget container */
+.firebase-comments-widget {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+}
+
+.firebase-comments-widget .container {
+    width: 100%;
+    max-width: 700px;
+    background-color: var(--container-bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    box-sizing: border-box;
+    margin: 2rem auto; /* Provide some default margin */
+}
+
+.firebase-comments-widget header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.firebase-comments-widget header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.firebase-comments-widget header p {
+    margin: 5px 0 0;
+    color: var(--light-text-color);
+    font-size: 1rem;
+}
+
+.firebase-comments-widget .comment-form-section {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.firebase-comments-widget .form-group {
+    margin-bottom: 20px;
+}
+
+.firebase-comments-widget .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.firebase-comments-widget .form-group input,
+.firebase-comments-widget .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.firebase-comments-widget .form-group input:focus,
+.firebase-comments-widget .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.firebase-comments-widget textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.firebase-comments-widget .char-counter-wrapper {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--light-text-color);
+    margin-top: 5px;
+}
+
+.firebase-comments-widget button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.firebase-comments-widget button[type="submit"]:hover:not(:disabled) {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+}
+
+.firebase-comments-widget button[type="submit"]:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.firebase-comments-widget hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 40px 0;
+}
+
+.firebase-comments-widget .comments-section {
+    overflow-x: hidden; /* Prevent horizontal scrollbars from appearing */
+}
+
+.firebase-comments-widget .comments-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.firebase-comments-widget #comments-list .error-message,
+.firebase-comments-widget #comments-list .no-comments {
+    text-align: center;
+    color: var(--light-text-color);
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: var(--border-radius);
+}
+
+.firebase-comments-widget #comments-list .error-message {
+    color: var(--error-color);
+    background-color: #fdd;
+}
+
+.firebase-comments-widget .config-error {
+    background-color: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    border-left-width: 5px;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: left;
+}
+.firebase-comments-widget .config-error .emoji {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.firebase-comments-widget .config-error h3 {
+    margin-top: 0;
+    color: var(--warning-text);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+.firebase-comments-widget .config-error h4 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+.firebase-comments-widget .config-error p { margin-bottom: 10px; line-height: 1.6; }
+.firebase-comments-widget .config-error code { background-color: #e9ecef; padding: 3px 6px; border-radius: 4px; font-family: monospace; }
+.firebase-comments-widget .config-error pre { white-space: pre-wrap; word-break: break-all; background: #e9ecef; padding: 10px; border-radius: 4px; }
+.firebase-comments-widget .config-error ol { padding-left: 20px; }
+.firebase-comments-widget .config-error .final-note { margin-top: 20px; font-weight: 500; color: var(--text-color); }
+.firebase-comments-widget .config-error a { color: var(--primary-color); text-decoration: none; }
+.firebase-comments-widget .config-error a:hover { text-decoration: underline; }
+
+
+.firebase-comments-widget .comment-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary-color);
+    animation: fadeIn 0.5s ease-in-out;
+    overflow-wrap: break-word;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.firebase-comments-widget .comment-item .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.firebase-comments-widget .comment-item .comment-author { font-weight: 700; color: var(--primary-color); }
+.firebase-comments-widget .comment-item .comment-date { font-size: 0.8rem; color: var(--light-text-color); }
+.firebase-comments-widget .comment-item .comment-body { margin: 0; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+
+.firebase-comments-widget .spinner-container { display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 40px; color: var(--light-text-color); }
+.firebase-comments-widget .spinner { width: 40px; height: 40px; border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 10px; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.firebase-comments-widget .comment-actions { display: flex; gap: 15px; margin-top: 10px; align-items: center; }
+.firebase-comments-widget .action-btn { background: none; border: none; color: var(--light-text-color); cursor: pointer; font-size: 0.85rem; font-weight: 500; padding: 2px 4px; border-radius: 4px; transition: background-color 0.2s, color 0.2s; }
+.firebase-comments-widget .action-btn:hover { color: var(--primary-color); background-color: #e9ecef; }
+.firebase-comments-widget .reply-form-container { padding-top: 15px; animation: fadeIn 0.3s ease; }
+.firebase-comments-widget .reply-form { display: flex; flex-direction: column; }
+.firebase-comments-widget .reply-form .form-group { margin-bottom: 10px; }
+.firebase-comments-widget .reply-form input, .firebase-comments-widget .reply-form textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius); font-size: 0.9rem; font-family: 'Roboto', sans-serif; box-sizing: border-box; transition: border-color 0.3s, box-shadow 0.3s; }
+.firebase-comments-widget .reply-form input:focus, .firebase-comments-widget .reply-form textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); }
+.firebase-comments-widget .reply-form textarea { min-height: 50px; }
+.firebase-comments-widget .reply-form-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.firebase-comments-widget .reply-form-actions button { padding: 8px 16px; border-radius: var(--border-radius); border: none; cursor: pointer; font-weight: 500; }
+.firebase-comments-widget .reply-form-actions button[type="submit"] { background-color: var(--primary-color); color: white; }
+.firebase-comments-widget .reply-form-actions button[type="submit"]:hover { background-color: var(--primary-hover-color); }
+.firebase-comments-widget .reply-form-actions .cancel-reply-btn { background-color: #e0e0e0; color: var(--text-color); }
+.firebase-comments-widget .reply-form-actions .cancel-reply-btn:hover { background-color: #ccc; }
+
+/* === NESTED REPLY STYLES === */
+
+/* Default container for all replies. This creates the first level of indentation. */
+.firebase-comments-widget .replies-container {
+    margin-top: 15px;
+    padding-left: 20px; /* A consistent indentation for replies */
+    border-left: 2px solid var(--border-color);
+}
+
+/* A reply item itself. We remove any extra margin to rely solely on the container's padding. */
+.firebase-comments-widget .reply-item {
+    background-color: var(--container-bg-color); /* Lighter background for replies */
+    border-left-color: #6c757d; /* Different border color to distinguish from top-level comments */
+}
+
+/* We cap the indentation to prevent comments from becoming too narrow.
+   This targets containers that are nested 3 levels deep. */
+.firebase-comments-widget .replies-container .replies-container .replies-container {
+    padding-left: 10px; /* Further reduce padding for deep threads */
+    border-left-style: dotted; /* Change the border style to indicate a deep thread */
+}
+
+/* Any nesting beyond this level will NOT be indented further, preserving the width.
+   This targets containers 4 levels deep or more. */
+.firebase-comments-widget .replies-container .replies-container .replies-container .replies-container {
+    padding-left: 0;
+    border-left: none;
+
+}
