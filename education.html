@@ -102,8 +102,42 @@
 
             </div>
         </main>
-        
-        <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+         <div class="comments-wrapper">
+                        <hr>
+                         <h3>Leave a Comment</h3>
+                        <div id="custom-comment-section">
+                            <div class="firebase-comments-widget">
+                                <div class="container">
+                                    <section class="comment-form-section" hidden>
+                                        <form id="comment-form">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" placeholder="Your name" required aria-label="Name" maxlength="50">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Comment</label>
+                                                <textarea id="comment" rows="4" placeholder="Write your comment..." required aria-label="Comment" maxlength="1000"></textarea>
+                                                <div class="char-counter-wrapper">
+                                                    <span id="char-counter">0 / 1000</span>
+                                                </div>
+                                            </div>
+                                            <button type="submit" id="submit-button">Submit</button>
+                                        </form>
+                                    </section>
+                                    <hr>
+                                    <section class="comments-section">
+                                        <div id="comments-list">
+                                            <!-- Dynamic content is loaded here -->
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+             <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
         <footer class="app-footer">
              <div class="footer-content">
