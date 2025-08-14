@@ -81,9 +81,7 @@ body {
 h1 {
   color: var(--red);
 }
-h1 {
-  font-size: 21px;
-}
+
 h3 {
   color: var(--green);
 }
@@ -620,11 +618,7 @@ h4 {
 h6 {
   color: var(--blue);
 }
-@media (min-width: 720px) {
-  h1 {
-    font-size: 30px;
-  }
-}
+
 .red-link {
   color: red;
 }
@@ -1076,7 +1070,7 @@ summary::-webkit-details-marker {
 
 .education-header h1 {
   font-family: "Lora", serif;
-  font-size: 3rem;
+ 
   color: var(--accent-color);
   margin: 0 0 1rem 0;
 }
@@ -1187,10 +1181,7 @@ summary::-webkit-details-marker {
   margin: 0;
 }
 
-@media (max-width: 768px) {
-  .education-header h1 {
-    font-size: 2.5rem;
-  }
+
   .subject-section h2 {
     font-size: 1.8rem;
   }
@@ -1200,9 +1191,7 @@ summary::-webkit-details-marker {
 }
 
 @media (max-width: 480px) {
-  .education-header h1 {
-    font-size: 2rem;
-  }
+  
   .education-header .education-description {
     font-size: 1rem;
   }
