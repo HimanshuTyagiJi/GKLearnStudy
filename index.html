@@ -11,17 +11,14 @@
     <meta name="copyright" content="© 2024 GK Learn Study" />
     <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
 
-    <!-- Canonical & Language -->
     <link rel="canonical" href="https://gklearnstudy.in/" />
     <link rel="alternate" hreflang="en-IN" href="https://gklearnstudy.in/" />
 
-    <!-- Favicons & Manifest -->
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="https://gklearnstudy.in/favicon.ico">
     <link rel="manifest" href="manifest.json">
 
-    <!-- Open Graph (Facebook / LinkedIn) -->
     <meta property="og:title" content="GK Learn Study: Daily General Knowledge, Quizzes, and Educational Articles" />
     <meta property="og:description" content="Your daily source for general knowledge (GK), fun quizzes, and insightful articles on education, computer science, and how-to guides." />
     <meta property="og:image" content="https://gklearnstudy.in/GK-Learn-Study.png" />
@@ -33,7 +30,6 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GK Learn Study: Daily General Knowledge, Quizzes, and Educational Articles" />
     <meta name="twitter:description" content="Your daily source for general knowledge (GK), fun quizzes, and insightful articles on education, computer science, and how-to guides." />
@@ -42,7 +38,6 @@
     <meta name="twitter:creator" content="" />
     <meta name="twitter:image:alt" content="GK Learn Study - Your gateway to daily knowledge" />
 
-    <!-- PWA & Mobile Specific -->
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -52,23 +47,13 @@
     <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
     
-   
-    <!-- Stylesheets -->
-    <!-- Critical CSS: Loaded synchronously -->
-   <link rel="stylesheet" href="index.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="index.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="index.css"></noscript>
-    
-    <!-- Non-critical CSS: Loaded asynchronously -->
     <link rel="stylesheet" href="post.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="post.css"></noscript>
-    
     <link rel="stylesheet" href="comment.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="comment.css"></noscript>
-    
-    <link rel="stylesheet" href="comment2.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="comment2.css"></noscript>
 
-    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -77,7 +62,7 @@
         "url": "https://gklearnstudy.in/",
         "logo": "https://gklearnstudy.in/GK-Learn-Study.png",
         "sameAs": [
-            "https://www.youtube.com/@GKLearnStudy",
+            "https://www.youtube.com/@GKLearnStudy"
         ]
     }
     </script>
@@ -121,7 +106,6 @@
                     
                     <h1 class="app-title">GK Learn Study - Latest articles</h1>
 
-                    <!-- Featured Post for Mobile View -->
                     <div class="sidebar-widget featured-post-widget featured-post-mobile">
                         <h2>Featured Post</h2>
                          <div class="coming-soon-placeholder">
@@ -133,14 +117,11 @@
                                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                                     </linearGradient>
                                 </defs>
-                                <!-- Globe -->
                                 <circle class="cs-globe" cx="100" cy="75" r="55"/>
                                 <path class="cs-land" d="M70,90 C80,60 120,60 130,90 C120,120 80,120 70,90 Z"/>
                                 <path class="cs-land" d="M85,45 C90,55 110,55 115,45" />
                                 <path class="cs-land" d="M100,30 C95,38 105,38 100,30" />
                                 <circle class="cs-globe-shine" cx="100" cy="75" r="55"/>
-                                
-                                <!-- Ticker -->
                                 <rect class="cs-ticker-bg" y="120" width="200" height="25" />
                                 <svg width="200" height="25" y="120">
                                     <text class="cs-ticker-text" y="17">
@@ -151,22 +132,18 @@
                             <h3 class="featured-post-title">Current Affairs Section</h3>
                             <p>Get ready for the latest updates!</p>
                         </div>
-                
                     </div>
 
                     <div class="post-filter-container">
                         <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles">
                     </div>
                     
-                    <div id="posts-container" class="post-list">
-                        <!-- Posts will be rendered here by index.js -->
-                    </div>
+                    <div id="posts-container" class="post-list"></div>
                     <div id="load-more-container">
                         <button id="load-more-btn">Load More</button>
                     </div>
                 </div>
                 <aside class="sidebar">
-                    <!-- Featured Post for Desktop View -->
                     <div class="sidebar-widget featured-post-widget featured-post-desktop">
                         <h2>Featured Post</h2>
                          <div class="coming-soon-placeholder">
@@ -178,14 +155,11 @@
                                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                                     </linearGradient>
                                 </defs>
-                                <!-- Globe -->
                                 <circle class="cs-globe" cx="100" cy="75" r="55"/>
                                 <path class="cs-land" d="M70,90 C80,60 120,60 130,90 C120,120 80,120 70,90 Z"/>
                                 <path class="cs-land" d="M85,45 C90,55 110,55 115,45" />
                                 <path class="cs-land" d="M100,30 C95,38 105,38 100,30" />
                                 <circle class="cs-globe-shine" cx="100" cy="75" r="55"/>
-                                
-                                <!-- Ticker -->
                                 <rect class="cs-ticker-bg" y="120" width="200" height="25" />
                                 <svg width="200" height="25" y="120">
                                     <text class="cs-ticker-text" y="17">
@@ -196,7 +170,6 @@
                             <h3 class="featured-post-title">Current Affairs Section</h3>
                             <p>Get ready for the latest updates!</p>
                         </div>
-                
                     </div>
                     <div class="sidebar-widget">
                         <h2>Categories</h2>
@@ -232,9 +205,7 @@
                                     </section>
                                     <hr>
                                     <section class="comments-section">
-                                        <div id="comments-list">
-                                            <!-- Dynamic content is loaded here -->
-                                        </div>
+                                        <div id="comments-list"></div>
                                     </section>
                                 </div>
                             </div>
@@ -274,7 +245,7 @@
             </div>
             <div class="footer-section">
                 <h2>Science & GK</h2>
-                    <ul>
+                <ul>
                     <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
                     <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
                     <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
@@ -284,9 +255,7 @@
             </div>
             <div class="footer-section">
                 <h2>Follow Us</h2>
-                <ul class="footer-socials">
-                    <!-- Social media links are dynamically injected by index.js for easy management -->
-                </ul>
+                <ul class="footer-socials"></ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -297,9 +266,7 @@
     <button id="back-to-top-btn" title="Go to top">↑</button>
 
     <script src="search.js" defer></script>
-    
     <script src="header-menu.js" defer></script>
     <script type="module" src="comment.js"></script>
-    
 </body>
 </html>
