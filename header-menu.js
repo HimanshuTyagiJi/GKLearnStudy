@@ -6,20 +6,20 @@
 // --- Start of Core UI Initialization ---
 function initHeader() {
   const menuLinks = [
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public", text: "Home" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/education.html", text: "Education" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/all-formulas.html", text: "All Formula" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/computer.html", text: "Computer" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/kaise-karen.html", text: "How to" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/gk-quiz.html", text: "GK Quiz" },
-    { href: "https://himanshutyagiji.github.io/gklearnstudys/public/test.html", text: "Test" },
+    { href: "https://gklearnstudy.in", text: "Home" },
+    { href: "https://gklearnstudy.in/education.html", text: "Education" },
+    { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
+    { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
+    { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
+    { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
+    { href: "https://gklearnstudy.in/test.html", text: "Test" },
   ];
 
   const headerHTML = `
         <div id="reading-progress-bar"></div>
         <header class="header" id="header">
             <nav class="navbar container1">
-                <a href="https://himanshutyagiji.github.io/gklearnstudys/public" class="brand" aria-label="GK Learn Study">
+                <a href="https://gklearnstudy.in" class="brand" aria-label="GK Learn Study">
                     <div class="logo-container1">
                         <div class="demo2">
                              <svg width="40" height="40" viewBox="0 0 300 300">
@@ -76,43 +76,9 @@ function initHeader() {
             <button class="back-icon" id="backBtn">←</button>
             <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
         </div>
-        <button id="themeToggle" aria-label="Switch theme">
-            <span id="themeIcon">
-                <svg id="sunIcon" fill="yellow" viewBox="-87.6 -87.6 1051.20 1051.20" stroke="red" stroke-width="20.00876" aria-hidden="true"><g><circle cx="438" cy="438" r="246"></circle><path d="M420.5,163h35c11.046,0,20-8.954,20-20V20c0-11.046-8.954-20-20-20h-35c-11.046,0-20,8.954-20,20v123C400.5,154.046,409.454,163,420.5,163z"></path><path d="M713,420.5v35c0,11.046,8.954,20,20,20h123c11.046,0,20-8.954,20-20v-35c0-11.046-8.954-20-20-20H733C721.954,400.5,713,409.454,713,420.5z"></path><path d="M455.5,876c11.046,0,20-8.954,20-20V733c0-11.046-8.954-20-20-20h-35c-11.046,0-20,8.954-20,20v123c0,11.046,8.954,20,20,20H455.5z"></path><path d="M20,475.5h123c11.046,0,20-8.954,20-20v-35c0-11.046-8.954-20-20-20H20c-11.046,0-20,8.954-20,20v35C0,466.546,8.954,475.5,20,475.5z"></path><path d="M644.829,255.92c7.811,7.81,20.474,7.811,28.284,0l86.975-86.974c7.811-7.812,7.811-20.474,0-28.284l-24.749-24.749c-7.811-7.811-20.474-7.811-28.284,0l-86.975,86.974c-7.812,7.81-7.812,20.474,0,28.284L644.829,255.92z"></path><path d="M735.338,760.087l24.749-24.749c7.811-7.81,7.811-20.474,0-28.284l-86.975-86.974c-7.812-7.811-20.475-7.811-28.284,0l-24.749,24.749c-7.812,7.811-7.812,20.474,0,28.284l86.975,86.974C714.865,767.898,727.528,767.898,735.338,760.087z"></path><path d="M168.946,760.087l86.975-86.974c7.812-7.811,7.812-20.475,0-28.284l-24.749-24.749c-7.811-7.811-20.474-7.811-28.284,0l-86.975,86.974c-7.811,7.812-7.811,20.475,0,28.284l24.749,24.749C148.472,767.898,161.135,767.898,168.946,760.087z"></path><path d="M202.887,255.92c7.811,7.811,20.474,7.81,28.284,0l24.749-24.749c7.812-7.81,7.812-20.474,0-28.284l-86.975-86.974c-7.811-7.811-20.474-7.811-28.284,0l-24.749,24.749c-7.811,7.81-7.811,20.474,0,28.284L202.887,255.92z"></path></g></svg>
-                <svg id="moonIcon" viewBox="0 0 48.00 48.00" fill="#ffffff" stroke="#000000" style="display: none;" aria-hidden="true"><path d="m32.8,29.3c-8.9-.8-16.2-7.8-17.5-16.6-.3-1.8-.3-3.7,0-5.4.2-1.4-1.4-2.3-2.5-1.6C6.3,9.7,2.1,16.9,2.5,25c.5,10.7,9,19.5,19.7,20.4,10.6.9,19.8-6,22.5-15.6.4-1.4-1-2.6-2.3-2-2.9,1.3-6.1,1.8-9.6,1.5Z"></path></svg>
-            </span>
-        </button>
+      
     `;
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
-}
-
-function initTheme() {
-  const themeToggle = document.getElementById("themeToggle");
-  const sunIcon = document.getElementById("sunIcon");
-  const moonIcon = document.getElementById("moonIcon");
-
-  if (!themeToggle || !sunIcon || !moonIcon) return;
-
-  const applyTheme = (theme) => {
-    if (theme === "dark") {
-      document.documentElement.setAttribute("data-theme", "dark");
-      sunIcon.style.display = "none";
-      moonIcon.style.display = "block";
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-      sunIcon.style.display = "block";
-      moonIcon.style.display = "none";
-    }
-  };
-
-  themeToggle.addEventListener("click", () => {
-    let currentTheme =
-      localStorage.getItem("theme") === "dark" ? "light" : "dark";
-    localStorage.setItem("theme", currentTheme);
-    applyTheme(currentTheme);
-  });
-
-  applyTheme(localStorage.getItem("theme") || "light");
 }
 
 function initNavigation() {
@@ -252,7 +218,7 @@ function initSocialLinks() {
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Build the static UI parts
   initHeader();
-  initTheme();
+  
   initNavigation();
   initImagePlaceholders();
   initLinkAttributes();
