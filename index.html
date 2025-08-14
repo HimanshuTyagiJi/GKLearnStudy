@@ -1,9 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <title>GK Learn Study – Quizzes, General Knowledge & Learning</title>
     <meta name="description" content="Your daily source for general knowledge (GK), fun quizzes, and insightful articles on education, computer science, and how-to guides. Join GK Learn Study to explore a world of learning." />
@@ -56,7 +53,7 @@
     <meta name="msapplication-config" content="/browserconfig.xml" />
     
    
-       <!-- Stylesheets -->
+    <!-- Stylesheets -->
     <!-- Critical CSS: Loaded synchronously -->
     <link rel="stylesheet" href="index.css">
     
@@ -69,6 +66,63 @@
     
     <link rel="stylesheet" href="comment2.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="comment2.css"></noscript>
+
+    <style>
+        /* General layout styles from inline attributes */
+        .app-title {
+            text-align: left;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        #suggestions-list {
+            display: none;
+        }
+
+        /* Featured Post Widget styles */
+        .coming-soon-placeholder {
+            text-align: center;
+        }
+
+        .coming-soon-placeholder p {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .featured-post-image {
+            background-color: #e9f5ff;
+            border-radius: 8px;
+            padding: 5px;
+            max-height: 150px;
+            width: 100%;
+        }
+
+        .featured-post-title {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Styles from within the Featured Post SVG */
+        .cs-globe { fill: #3b82f6; }
+        .cs-land { fill: #2563eb; }
+        .cs-ticker-bg { fill: #1d2c3d; }
+        .cs-ticker-text {
+            font: 600 10px 'Roboto', sans-serif;
+            fill: #f1c40f;
+            animation: scroll-cs 15s linear infinite;
+        }
+        .cs-globe-shine {
+            fill: url(#globe-gradient-cs);
+        }
+        @keyframes scroll-cs {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-150%); }
+        }
+    </style>
+
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {
@@ -140,26 +194,9 @@
                     <!-- Featured Post for Mobile View -->
                     <div class="sidebar-widget featured-post-widget featured-post-mobile">
                         <h3>Featured Post</h3>
-                         <div class="coming-soon-placeholder" style="text-align: center;">
-                            <svg viewBox="0 0 200 150" class="featured-post-image" role="img" aria-labelledby="ca-title-svg" style="background-color: #e9f5ff; border-radius: 8px; padding: 5px; max-height: 150px; width: 100%;">
-                                <title id="ca-title-svg">Current Affairs Coming Soon</title>
-                                <style>
-                                    .cs-globe { fill: #3b82f6; }
-                                    .cs-land { fill: #2563eb; }
-                                    .cs-ticker-bg { fill: #1d2c3d; }
-                                    .cs-ticker-text {
-                                        font: 600 10px 'Roboto', sans-serif;
-                                        fill: #f1c40f;
-                                        animation: scroll-cs 15s linear infinite;
-                                    }
-                                    .cs-globe-shine {
-                                        fill: url(#globe-gradient-cs);
-                                    }
-                                    @keyframes scroll-cs {
-                                        from { transform: translateX(100%); }
-                                        to { transform: translateX(-150%); }
-                                    }
-                                </style>
+                         <div class="coming-soon-placeholder">
+                            <svg viewBox="0 0 200 150" class="featured-post-image" role="img" aria-labelledby="ca-title-svg-mobile">
+                                <title id="ca-title-svg-mobile">Current Affairs Coming Soon</title>
                                 <defs>
                                      <linearGradient id="globe-gradient-cs" x1="0%" y1="0%" x2="100%" y2="50%">
                                         <stop offset="0%" stop-color="white" stop-opacity="0.4"/>
@@ -181,13 +218,13 @@
                                     </text>
                                 </svg>
                             </svg>
-                            <h4 class="featured-post-title" style="text-align:center; margin-top: 1rem;">Current Affairs Section</h4>
-                            <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.4;">Get ready for the latest updates!</p>
+                            <h4 class="featured-post-title">Current Affairs Section</h4>
+                            <p>Get ready for the latest updates!</p>
                         </div>
                 
                     </div>
 
-                    <h1 class="app-title" style="text-align: left; font-size: 2.5rem; color: var(--text-primary);">Latest Articles</h1>
+                    <h1 class="app-title">Latest Articles</h1>
 
                     <div class="post-filter-container">
                         <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles">
@@ -204,28 +241,11 @@
                     <!-- Featured Post for Desktop View -->
                     <div class="sidebar-widget featured-post-widget featured-post-desktop">
                         <h3>Featured Post</h3>
-                         <div class="coming-soon-placeholder" style="text-align: center;">
-                            <svg viewBox="0 0 200 150" class="featured-post-image" role="img" aria-labelledby="ca-title-svg" style="background-color: #e9f5ff; border-radius: 8px; padding: 5px; max-height: 150px; width: 100%;">
-                                <title id="ca-title-svg">Current Affairs Coming Soon</title>
-                                <style>
-                                    .cs-globe { fill: #3b82f6; }
-                                    .cs-land { fill: #2563eb; }
-                                    .cs-ticker-bg { fill: #1d2c3d; }
-                                    .cs-ticker-text {
-                                        font: 600 10px 'Roboto', sans-serif;
-                                        fill: #f1c40f;
-                                        animation: scroll-cs 15s linear infinite;
-                                    }
-                                    .cs-globe-shine {
-                                        fill: url(#globe-gradient-cs);
-                                    }
-                                    @keyframes scroll-cs {
-                                        from { transform: translateX(100%); }
-                                        to { transform: translateX(-150%); }
-                                    }
-                                </style>
+                         <div class="coming-soon-placeholder">
+                            <svg viewBox="0 0 200 150" class="featured-post-image" role="img" aria-labelledby="ca-title-svg-desktop">
+                                <title id="ca-title-svg-desktop">Current Affairs Coming Soon</title>
                                 <defs>
-                                     <linearGradient id="globe-gradient-cs" x1="0%" y1="0%" x2="100%" y2="50%">
+                                     <linearGradient id="globe-gradient-cs-desktop" x1="0%" y1="0%" x2="100%" y2="50%">
                                         <stop offset="0%" stop-color="white" stop-opacity="0.4"/>
                                         <stop offset="100%" stop-color="white" stop-opacity="0"/>
                                     </linearGradient>
@@ -245,8 +265,8 @@
                                     </text>
                                 </svg>
                             </svg>
-                            <h4 class="featured-post-title" style="text-align:center; margin-top: 1rem;">Current Affairs Section</h4>
-                            <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.4;">Get ready for the latest updates!</p>
+                            <h4 class="featured-post-title">Current Affairs Section</h4>
+                            <p>Get ready for the latest updates!</p>
                         </div>
                 
                     </div>
@@ -297,7 +317,7 @@
         </div>
     </main>
     
-    <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+    <ul id="suggestions-list" class="suggestions"></ul>
 
     <footer class="app-footer">
         <div class="footer-content">
