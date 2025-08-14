@@ -108,7 +108,12 @@ h4, h6 { color: var(--brown); }
 .suggestions li:hover { color: #fff; }
 
 
+body {
+  margin: 0;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
+}
 
 body {
   font-size: 18px;
@@ -897,15 +902,7 @@ summary::-webkit-details-marker {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background-color: var(--primary-bg);
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+
 
 #root {
   max-width: 1200px;
