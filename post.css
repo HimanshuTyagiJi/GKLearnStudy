@@ -1,5 +1,3 @@
-/* Styles related to blog posts and layout */
-
 /* Blog Layout */
 .blog-layout {
   display: grid;
@@ -118,7 +116,7 @@
   box-shadow: 0 4px 12px var(--shadow-color);
 }
 
-.sidebar-widget h3 {
+.sidebar-widget h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
@@ -127,12 +125,6 @@
   color: var(--green);
   text-align: left;
   border-bottom: 2px solid var(--green);
-}
-
-.sidebar-widget:last-child h3 {
-  /* remove border on last widget's title */
-  border-bottom: none;
-  padding-bottom: 0;
 }
 
 .featured-post-link {
@@ -247,7 +239,7 @@
     margin: 0 auto; /* Center horizontally */
   }
   .post-card-image,
-  .post-card-svg-container svg {
+  .post-card-svg-container {
     height: 250px;
   }
 }
@@ -261,17 +253,16 @@
     border-radius: 8px;
   }
   .post-card-image,
-  .post-card-svg-container svg {
-    width:250px;
+  .post-card-svg-container {
+    width: 100%;
     height: 250px;
   }
 }
 
 .post-card-image,
-.post-card-svg-container svg {
-
+.post-card-svg-container {
+  height: 220px;
   max-height: 220px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,16 +270,12 @@
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
   transition: transform 0.3s ease;
+  overflow: hidden;
 }
 
-.post-card-svg-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #e9f5ff;
-  padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
-  transition: transform 0.3s ease;
+.post-card-svg-container svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* Optional: Container to center cards vertically & horizontally */
