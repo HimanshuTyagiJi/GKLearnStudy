@@ -1,5 +1,6 @@
 
 
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -1055,10 +1056,16 @@ summary::-webkit-details-marker {
   max-width: 100%;
 }
 
-/* CLS Fix for Sidebar Featured Post */
+/* CLS Fix for Featured Post Widgets */
 .sidebar .featured-post-widget {
-  min-height: 280px;
+  min-height: 300px; /* Increased to better reserve space */
 }
+
+/* Also reserve space for mobile featured post to prevent CLS */
+.main-content .featured-post-widget {
+  min-height: 320px;
+}
+
 
 /* Education Page Specific Styles */
 
