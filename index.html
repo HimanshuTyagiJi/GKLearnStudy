@@ -433,32 +433,16 @@
                         </div>
                         <div class="sidebar-widget">
                             <h2>Comments</h2>
-                            <div id="custom-comment-section">
-                                <div class="firebase-comments-widget">
-                                    <div class="container">
-                                        <section class="comment-form-section" hidden>
-                                            <form id="comment-form">
-                                                <div class="form-group">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" id="name" placeholder="Your name" required aria-label="Name" maxlength="50" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="comment">Comment</label>
-                                                    <textarea id="comment" rows="4" placeholder="Write your comment..." required aria-label="Comment" maxlength="1000"></textarea>
-                                                    <div class="char-counter-wrapper">
-                                                        <span id="char-counter">0 / 1000</span>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" id="submit-button">Submit</button>
-                                            </form>
-                                        </section>
-                                        <hr />
-                                        <section class="comments-section">
-                                            <div id="comments-list"></div>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
+                           <div class="firebase-comments-widget" id="custom-comment-section">
+  <!-- Top form slot; reply form will move here when not replying -->
+  <div id="top-form-slot" class="comment-form-shell"></div>
+
+  <!-- Comments go here -->
+  <div id="comments-list">
+    <div class="spinner"></div>
+    <p class="muted">Loading comments…</p>
+  </div>
+</div>
                         </div>
                     </aside>
                 </div>
