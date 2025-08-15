@@ -266,5 +266,29 @@
 .firebase-comments-widget .replies-container .replies-container .replies-container .replies-container {
     padding-left: 0;
     border-left: none;
+}
 
+/* Button to load comments on demand */
+.firebase-comments-widget .load-comments-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--primary-color);
+    background-color: var(--container-bg-color);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.firebase-comments-widget .load-comments-button:hover,
+.firebase-comments-widget .load-comments-button:focus {
+    background-color: var(--primary-color);
+    color: var(--container-bg-color);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+    outline: none;
 }
