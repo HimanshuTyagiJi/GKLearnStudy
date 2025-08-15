@@ -433,9 +433,23 @@
                         </div>
                         <div class="sidebar-widget">
                             <h2>Comments</h2>
-                           <div class="firebase-comments-widget" id="custom-comment-section">
-  <!-- Top form slot; reply form will move here when not replying -->
-  <div id="top-form-slot" class="comment-form-shell"></div>
+                          <div class="firebase-comments-widget" id="custom-comment-section">
+  <!-- Form is now static HTML -->
+  <div class="comment-form-shell" id="comment-form-shell">
+    <form class="comment-form" id="comment-form">
+      <div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div>
+      <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
+      <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+      <input type="hidden" id="parent-id" value="">
+      <div class="form-footer">
+        <div id="char-counter">0 / 1000</div>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="submit-button">Submit</button>
+          <button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <!-- Comments go here -->
   <div id="comments-list">
@@ -443,6 +457,7 @@
     <p class="muted">Loading comments…</p>
   </div>
 </div>
+
                         </div>
                     </aside>
                 </div>
