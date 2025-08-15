@@ -1,4 +1,19 @@
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    loadFirebaseScripts();
+  });
+} else {
+  // Fallback for browsers without requestIdleCallback
+  setTimeout(loadFirebaseScripts, 2000);
+}
 
+function loadFirebaseScripts() {
+  import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js").then(async ({ initializeApp }) => {
+    const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
+    // Yahan tum apna pura Firebase init code chala sakte ho
+    console.log("Firebase loaded in background");
+  });
+}
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
@@ -228,4 +243,5 @@ observer.observe(commentSection);
 
 // Agar user bina scroll kare submit kare
 form.addEventListener('focusin', initCommentsIfNeeded);
+
 
