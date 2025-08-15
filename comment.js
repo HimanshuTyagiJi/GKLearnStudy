@@ -117,6 +117,7 @@ async function lazyLoadAndInitFirebase() {
     commentsList.innerHTML = `<div class="spinner-container"><div class="spinner"></div><p>Loading comments...</p></div>`;
     
     let db;
+    let connectionTimeout;
     
     const safeToDate = (timestamp) => (timestamp && typeof timestamp.toDate === 'function') ? timestamp.toDate() : new Date();
 
@@ -294,6 +295,7 @@ async function lazyLoadAndInitFirebase() {
     };
     
     const displayComments = (snapshot, collectionPath) => {
+        if (connectionTimeout) clearTimeout(connectionTimeout);
         commentsList.innerHTML = '';
         if (snapshot.empty) {
             commentsList.innerHTML = `<div class="no-comments"><p><strong>No comments yet.</strong></p><p>Be the first to post a comment!</p></div>`;
@@ -332,10 +334,25 @@ async function lazyLoadAndInitFirebase() {
         onSnapshot(commentsQuery, 
             (snapshot) => displayComments(snapshot, commentsCollectionPath),
             (error) => {
+                if (connectionTimeout) clearTimeout(connectionTimeout);
                 console.error("Firestore snapshot error:", error.code, error.message);
                 showConnectionError(error);
             }
         );
+        
+        connectionTimeout = setTimeout(() => {
+            const commentsListElement = document.getElementById('comments-list');
+            // Only show timeout error if the spinner is still visible
+            if (commentsListElement && commentsListElement.querySelector('.spinner-container')) {
+                commentsListElement.innerHTML = `
+                    <div class="no-comments">
+                        <p><strong>Comments are taking a while to load.</strong></p>
+                        <p>This might be due to a slow network connection. Please try refreshing the page.</p>
+                    </div>
+                `;
+            }
+        }, 15000); // 15-second timeout
+
         updateCharCounter();
 
     } catch (error) {
