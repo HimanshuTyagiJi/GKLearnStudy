@@ -1,3 +1,15 @@
+// Firestore वाले errors console में छुपाने के लिए
+(function() {
+    const originalError = console.error;
+    console.error = function(...args) {
+        const text = args.join(" ");
+        // अगर error में Firestore endpoint या timeout है तो skip कर दो
+        if (/firestore\.googleapis\.com/i.test(text) || /ERR_TIMED_OUT/i.test(text)) {
+            return;
+        }
+        originalError.apply(console, args);
+    };
+})();
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -402,3 +414,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     observer.observe(commentSectionContainer);
 });
+
