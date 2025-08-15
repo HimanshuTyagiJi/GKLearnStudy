@@ -1,71 +1,9 @@
-// ================== Fake Firestore Listen Stream (No Errors) ==================
-(function() {
-  // Patch fetch
-  const origFetch = window.fetch;
-  window.fetch = function(url, opts) {
-    if (typeof url === "string" &&
-        url.includes("firestore.googleapis.com") &&
-        url.includes("/Listen/channel")) {
-      console.warn("[SilentBlock] Firestore listen request intercepted:", url);
-      // Return a fake infinite stream-like response
-      const stream = new ReadableStream({
-        start(controller) {
-          // Send empty chunk initially
-          controller.enqueue(new TextEncoder().encode(" "));
-          // Keep connection alive every 25s so Firebase thinks it's fine
-          setInterval(() => {
-            controller.enqueue(new TextEncoder().encode(" "));
-          }, 25000);
-        }
-      });
-      return Promise.resolve(new Response(stream, {
-        status: 200,
-        headers: { "Content-Type": "text/plain" }
-      }));
-    }
-    return origFetch.apply(this, arguments);
-  };
-
-  // Patch XHR
-  const origOpen = XMLHttpRequest.prototype.open;
-  const origSend = XMLHttpRequest.prototype.send;
-  XMLHttpRequest.prototype.open = function(method, url) {
-    this.__isListenBlocked = (
-      typeof url === "string" &&
-      url.includes("firestore.googleapis.com") &&
-      url.includes("/Listen/channel")
-    );
-    if (this.__isListenBlocked) {
-      console.warn("[SilentBlock] Firestore listen XHR intercepted:", url);
-    }
-    return origOpen.apply(this, arguments);
-  };
-  XMLHttpRequest.prototype.send = function(body) {
-    if (this.__isListenBlocked) {
-      // Simulate async open + streaming
-      setTimeout(() => {
-        if (this.onreadystatechange) {
-          this.readyState = 3; // LOADING
-          this.status = 200;
-          this.onreadystatechange();
-        }
-      }, 0);
-      setInterval(() => {
-        if (this.onprogress) this.onprogress({ lengthComputable: false });
-      }, 25000);
-      return;
-    }
-    return origSend.apply(this, arguments);
-  };
-})();
-
-
-
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js");
-  const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
+  // Use the 'lite' version of Firestore to avoid real-time listeners and associated network issues.
+  const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
   db=f.getFirestore(initializeApp({
     apiKey:"AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
     authDomain:"appcomment.firebaseapp.com",
@@ -79,18 +17,6 @@ async function initFirebase(){
   serverTimestampFn=f.serverTimestamp; docFn=f.doc;
   return db;
 }
-
-// ====== Block Failed Firestore Requests ======
-(function(){
-  const origFetch = window.fetch;
-  window.fetch = async function(...args){
-    if (typeof args[0] === 'string' && args[0].includes("firestore.googleapis.com") && args[0].includes("/Listen/channel")) {
-      console.warn("Blocked Firestore Listen request:", args[0]);
-      return new Response("", {status: 204});
-    }
-    return origFetch.apply(this, args);
-  };
-})();
 
 // ====== Helpers ======
 const escapeHTML = s => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
@@ -288,11 +214,5 @@ const observer = new IntersectionObserver(entries => {
 }, { rootMargin: "200px" });
 observer.observe(commentSection);
 
-// Agar user bina scroll kare submit kare
+// Initialize comments if user interacts with form before scrolling
 form.addEventListener('focusin', initCommentsIfNeeded);
-
-
-
-
-
-
