@@ -56,29 +56,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 /* ========= DOM refs ========= */
-const topFormSlot = document.getElementById('top-form-slot');
 const commentsList = document.getElementById('comments-list');
-
-/* ========= Build a single reusable form (will move inline on reply) ========= */
-const formShell = document.createElement('div');
-formShell.className = 'comment-form-shell';
-const form = document.createElement('form');
-form.className = 'comment-form';
-form.innerHTML = `
-  <div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div>
-  <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-  <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-  <input type="hidden" id="parent-id" value="">
-  <div class="form-footer">
-    <div id="char-counter">0 / 1000</div>
-    <div class="actions">
-      <button type="submit" class="btn primary" id="submit-button">Post</button>
-      <button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button>
-    </div>
-  </div>
-`;
-formShell.appendChild(form);
-topFormSlot.replaceWith(formShell); // ensure it's in the top slot initially
+const formShell = document.getElementById('comment-form-shell');
+const form = document.getElementById('comment-form');
 
 /* ========= Form elements ========= */
 const nameInput = form.querySelector('#name');
