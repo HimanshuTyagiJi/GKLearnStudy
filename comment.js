@@ -1,24 +1,45 @@
-// ================== Block Firestore Listen Errors ==================
+// ================== Fully Block Firestore Listen Requests ==================
 (function() {
-  // Block fetch() listen requests
+  // Patch fetch()
   const origFetch = window.fetch;
   window.fetch = function(url, opts) {
     if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
-      console.warn("Blocked Firestore listen request (fetch):", url);
-      return Promise.resolve(new Response(null, { status: 204 }));
+      console.warn("Firestore listen request blocked (fetch):", url);
+      // Return a fake successful empty response
+      return Promise.resolve(new Response("{}", { status: 200, headers: { "Content-Type": "application/json" } }));
     }
     return origFetch.apply(this, arguments);
   };
 
-  // Block XMLHttpRequest listen requests
+  // Patch XHR open + send
   const origOpen = XMLHttpRequest.prototype.open;
+  const origSend = XMLHttpRequest.prototype.send;
+  let blockNext = false;
+
   XMLHttpRequest.prototype.open = function(method, url) {
     if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
-      console.warn("Blocked Firestore listen request (XHR):", url);
-      this.abort(); // Cancel request before it even sends
-      return; // Stop here
+      console.warn("Firestore listen request blocked (XHR):", url);
+      blockNext = true;
+      this.__isBlocked = true;
     }
     return origOpen.apply(this, arguments);
+  };
+
+  XMLHttpRequest.prototype.send = function(body) {
+    if (this.__isBlocked) {
+      // Simulate async success so no error is logged
+      setTimeout(() => {
+        if (this.onload) this.onload();
+        if (this.onreadystatechange) {
+          this.readyState = 4; // DONE
+          this.status = 200;
+          this.responseText = "{}";
+          this.onreadystatechange();
+        }
+      }, 0);
+      return;
+    }
+    return origSend.apply(this, arguments);
   };
 })();
 
@@ -251,6 +272,7 @@ observer.observe(commentSection);
 
 // Agar user bina scroll kare submit kare
 form.addEventListener('focusin', initCommentsIfNeeded);
+
 
 
 
