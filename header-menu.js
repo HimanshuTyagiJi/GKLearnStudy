@@ -6,20 +6,20 @@
 // --- Start of Core UI Initialization ---
 function initHeader() {
   const menuLinks = [
-    { href: "https://gklearnstudy.in", text: "Home" },
-    { href: "https://gklearnstudy.in/education.html", text: "Education" },
-    { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
-    { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
-    { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
-    { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
-    { href: "https://gklearnstudy.in/test.html", text: "Test" },
+    { href: "index.html", text: "Home" },
+    { href: "education.html", text: "Education" },
+    { href: "all-formulas.html", text: "All Formula" },
+    { href: "computer.html", text: "Computer" },
+    { href: "kaise-karen.html", text: "How to" },
+    { href: "gk-quiz.html", text: "GK Quiz" },
+    { href: "test.html", text: "Test" },
   ];
 
   const headerHTML = `
         <div id="reading-progress-bar"></div>
         <header class="header" id="header">
             <nav class="navbar container1">
-                <a href="https://gklearnstudy.in" class="brand" aria-label="GK Learn Study">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
                     <div class="logo-container1">
                         <div class="demo2">
                              <svg width="40" height="40" viewBox="0 0 300 300">
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 3. Setup Blog Post rendering and filtering logic (On-page filter)
-  const POSTS_PER_PAGE = 6;
+  const POSTS_PER_PAGE = 25;
   const postsContainer = document.getElementById("posts-container");
   const postFilterInput = document.getElementById("post-filter-input");
   const categoryLinks = document.querySelectorAll(".category-list a");
