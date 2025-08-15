@@ -337,7 +337,69 @@
                             <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
                         </div>
 
-                        <div id="posts-container" class="post-list"></div>
+                        <div id="posts-container" class="post-list">
+                            <!-- Skeleton Loaders for Initial View to prevent CLS -->
+                            <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                             <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                             <div class="skeleton-post-card">
+                                <div class="skeleton-image"></div>
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line title"></div>
+                                    <div class="skeleton-line meta"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                    <div class="skeleton-line text"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="load-more-container">
                             <button id="load-more-btn">Load More</button>
                         </div>
@@ -486,9 +548,8 @@
 
         <button id="back-to-top-btn" title="Go to top">↑</button>
 
-       
+        <script src="search.js" defer></script>
         <script src="header-menu.js" defer></script>
-         <script src="search.js" defer></script>
         <script type="module" src="comment.js"></script>
     </body>
 </html>
