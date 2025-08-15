@@ -1,32 +1,7 @@
+ 
 <!DOCTYPE html>
 <html lang="en">
-    <head><script>
-// ====== Block Firestore Listen Requests Globally ======
-(function() {
-  const blockUrls = [
-    "Listen/channel",
-    "googleapis.com/google.firestore.v1.Firestore/Listen"
-  ];
-  const origFetch = window.fetch;
-  window.fetch = function(url, opts) {
-    if (typeof url === "string" && blockUrls.some(b => url.includes(b))) {
-      console.warn("🔥 Firestore Listen Blocked:", url);
-      return Promise.resolve(new Response(null, { status: 204 }));
-    }
-    return origFetch.apply(this, arguments);
-  };
-
-  const origXhrOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function(method, url) {
-    if (typeof url === "string" && blockUrls.some(b => url.includes(b))) {
-      console.warn("🔥 Firestore Listen Blocked (XHR):", url);
-      return; // request kabhi open hi nahi hoga
-    }
-    return origXhrOpen.apply(this, arguments);
-  };
-})();
-</script>
-
+    <head>
         <meta charset="UTF-8" />
         <title>GK Learn Study – Latest GK, Quizzes & Learning</title>
         <meta name="description" content="Your daily source for general knowledge (GK), fun quizzes, and insightful articles on education, computer science, and how-to guides. Join GK Learn Study to explore a world of learning." />
