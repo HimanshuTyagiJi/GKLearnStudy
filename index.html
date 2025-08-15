@@ -46,10 +46,17 @@
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
-        <link rel="stylesheet" href="index.css" />
-        <link rel="stylesheet" href="post.css" />
-        <link rel="stylesheet" href="comment.css" media="print" onload="this.media='all'" />
-        <noscript><link rel="stylesheet" href="comment.css" /></noscript>
+        <!-- Asynchronous CSS Loading -->
+        <link rel="stylesheet" href="index.css" media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="post.css" media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="comment.css" media="print" onload="this.media='all'">
+        
+        <!-- Fallback for no-JS browsers -->
+        <noscript>
+            <link rel="stylesheet" href="index.css">
+            <link rel="stylesheet" href="post.css">
+            <link rel="stylesheet" href="comment.css">
+        </noscript>
      
         <script type="application/ld+json">
             {
