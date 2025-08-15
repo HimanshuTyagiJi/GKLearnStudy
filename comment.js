@@ -1,4 +1,17 @@
+// ================== Block Firestore Listen Errors ==================
+(function() {
+  const origFetch = window.fetch;
+  window.fetch = function(url, opts) {
+    if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
+      console.warn("Blocked Firestore listen request:", url);
+      // 204 No Content return kar rahe hain, taaki error na aaye
+      return Promise.resolve(new Response(null, { status: 204 }));
+    }
+    return origFetch.apply(this, arguments);
+  };
+})();
 
+// ================== Firebase Vars ==================
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
@@ -18,6 +31,7 @@ async function initFirebase(){
   serverTimestampFn=f.serverTimestamp; docFn=f.doc;
   return db;
 }
+
 
 // ================== Helpers ==================
 const escapeHTML=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
@@ -102,3 +116,4 @@ function resetFormToTop(){parentIdInput.value=''; replyingToEl.style.display='no
 // ================== Init ==================
 updateCharCounter();
 loadComments();
+
