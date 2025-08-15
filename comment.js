@@ -1,19 +1,27 @@
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(() => {
-    loadFirebaseScripts();
-  });
-} else {
-  // Fallback for browsers without requestIdleCallback
-  setTimeout(loadFirebaseScripts, 2000);
-}
+// ================== Block Firestore Listen Errors ==================
+(function() {
+  // Block fetch() listen requests
+  const origFetch = window.fetch;
+  window.fetch = function(url, opts) {
+    if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
+      console.warn("Blocked Firestore listen request (fetch):", url);
+      return Promise.resolve(new Response(null, { status: 204 }));
+    }
+    return origFetch.apply(this, arguments);
+  };
 
-function loadFirebaseScripts() {
-  import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js").then(async ({ initializeApp }) => {
-    const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
-    // Yahan tum apna pura Firebase init code chala sakte ho
-    console.log("Firebase loaded in background");
-  });
-}
+  // Block XMLHttpRequest listen requests
+  const origOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method, url) {
+    if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
+      console.warn("Blocked Firestore listen request (XHR):", url);
+      this.abort(); // Cancel request before it even sends
+      return; // Stop here
+    }
+    return origOpen.apply(this, arguments);
+  };
+})();
+
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
@@ -243,5 +251,6 @@ observer.observe(commentSection);
 
 // Agar user bina scroll kare submit kare
 form.addEventListener('focusin', initCommentsIfNeeded);
+
 
 
