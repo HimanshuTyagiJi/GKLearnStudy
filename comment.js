@@ -368,25 +368,37 @@ async function lazyLoadAndInitFirebase() {
 
 // --- DOMContentLoaded listener: Sets up the lazy loading ---
 document.addEventListener('DOMContentLoaded', () => {
-    const loadButton = document.getElementById('load-comments-btn');
+    const commentSectionContainer = document.getElementById('custom-comment-section');
 
-    if (!loadButton) {
-        return; // No button found, so no lazy loading.
+    if (!commentSectionContainer) {
+        return; // No comment section on this page
     }
 
-    // Add event listener to the button to load Firebase on click
-    loadButton.addEventListener('click', async () => {
-        try {
-            // The lazyLoadAndInitFirebase function will automatically replace
-            // the button inside 'comments-list' with a loading spinner.
-            await lazyLoadAndInitFirebase();
-        } catch(e) {
-            console.error("Failed to lazy-load Firebase comments widget:", e);
-            const commentsList = document.getElementById('comments-list');
-            if(commentsList) {
-                // Display a generic error if something goes wrong during the dynamic import or setup
-                commentsList.innerHTML = `<div class="config-error"><h3><span class="emoji">⚠️</span> Error</h3><p>Could not load comments. Please check your connection and try again.</p></div>`;
+    const commentsList = commentSectionContainer.querySelector('#comments-list');
+    if (commentsList) {
+        commentsList.innerHTML = `<div class="spinner-container"><div class="spinner"></div><p>Scroll down to see comments...</p></div>`;
+    }
+
+    const observer = new IntersectionObserver(async (entries, observer) => {
+        for (const entry of entries) {
+            if (entry.isIntersecting) {
+                try {
+                    // Dynamically load and initialize Firebase
+                    await lazyLoadAndInitFirebase();
+                } catch(e) {
+                    console.error("Failed to lazy-load Firebase comments widget:", e);
+                    if(commentsList) {
+                        commentsList.innerHTML = `<div class="config-error"><h3><span class="emoji">⚠️</span> Error</h3><p>Could not load comments. Please check your connection and try again.</p></div>`;
+                    }
+                }
+                // We only need to do this once.
+                observer.unobserve(commentSectionContainer);
             }
         }
-    }, { once: true }); // Use { once: true } to ensure it only runs once.
+    }, {
+        rootMargin: '300px 0px', // Start loading when the user is 300px away
+        threshold: 0.01
+    });
+
+    observer.observe(commentSectionContainer);
 });
