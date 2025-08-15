@@ -1,37 +1,49 @@
-// ================== Fully Block Firestore Listen Requests ==================
-(function() {
-  // Patch fetch()
+// ==== Fully Block Firestore Listen Requests (No Console Error) ====
+(function () {
+  // Suppress console.error for Firestore listen timeouts
+  const origConsoleError = console.error;
+  console.error = function (...args) {
+    if (args[0] && typeof args[0] === "string" && args[0].includes("Listen/channel")) {
+      return; // skip error
+    }
+    return origConsoleError.apply(console, args);
+  };
+
+  // Block fetch calls
   const origFetch = window.fetch;
-  window.fetch = function(url, opts) {
+  window.fetch = function (url, opts) {
     if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
-      console.warn("Firestore listen request blocked (fetch):", url);
-      // Return a fake successful empty response
-      return Promise.resolve(new Response("{}", { status: 200, headers: { "Content-Type": "application/json" } }));
+      console.warn("Blocked Firestore Listen request (fetch):", url);
+      return Promise.resolve(new Response("{}", {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      }));
     }
     return origFetch.apply(this, arguments);
   };
 
-  // Patch XHR open + send
+  // Block XHR calls
   const origOpen = XMLHttpRequest.prototype.open;
   const origSend = XMLHttpRequest.prototype.send;
-  let blockNext = false;
 
-  XMLHttpRequest.prototype.open = function(method, url) {
-    if (typeof url === "string" && url.includes("firestore.googleapis.com") && url.includes("Listen/channel")) {
-      console.warn("Firestore listen request blocked (XHR):", url);
-      blockNext = true;
-      this.__isBlocked = true;
+  XMLHttpRequest.prototype.open = function (method, url) {
+    this.__blockFirestore = (
+      typeof url === "string" &&
+      url.includes("firestore.googleapis.com") &&
+      url.includes("Listen/channel")
+    );
+    if (this.__blockFirestore) {
+      console.warn("Blocked Firestore Listen request (XHR):", url);
     }
     return origOpen.apply(this, arguments);
   };
 
-  XMLHttpRequest.prototype.send = function(body) {
-    if (this.__isBlocked) {
-      // Simulate async success so no error is logged
+  XMLHttpRequest.prototype.send = function (body) {
+    if (this.__blockFirestore) {
       setTimeout(() => {
         if (this.onload) this.onload();
         if (this.onreadystatechange) {
-          this.readyState = 4; // DONE
+          this.readyState = 4;
           this.status = 200;
           this.responseText = "{}";
           this.onreadystatechange();
@@ -42,6 +54,7 @@
     return origSend.apply(this, arguments);
   };
 })();
+
 
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
@@ -272,6 +285,7 @@ observer.observe(commentSection);
 
 // Agar user bina scroll kare submit kare
 form.addEventListener('focusin', initCommentsIfNeeded);
+
 
 
 
