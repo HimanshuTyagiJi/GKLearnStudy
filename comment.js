@@ -1,15 +1,4 @@
-// ================== Console Error Suppression ==================
-(function(){
-  const orig = console.error;
-  console.error = (...args)=> {
-    for(const a of args){
-      if(typeof a==='string' && (/firestore\.googleapis\.com.*Listen\/channel/i.test(a)||/ERR_TIMED_OUT/i.test(a)||/\b404\b/.test(a))) return;
-    }
-    orig.apply(console,args);
-  };
-})();
 
-// ================== Firebase Lazy Init ==================
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
@@ -113,3 +102,4 @@ function resetFormToTop(){parentIdInput.value=''; replyingToEl.style.display='no
 // ================== Init ==================
 updateCharCounter();
 loadComments();
+
