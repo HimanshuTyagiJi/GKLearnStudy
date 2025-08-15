@@ -46,10 +46,8 @@
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
 
-        <link rel="stylesheet" href="index.css" media="print" onload="this.media='all'" />
-        <noscript><link rel="stylesheet" href="index.css" /></noscript>
-        <link rel="stylesheet" href="post.css" media="print" onload="this.media='all'" />
-        <noscript><link rel="stylesheet" href="post.css" /></noscript>
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="post.css" />
         <link rel="stylesheet" href="comment.css" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="comment.css" /></noscript>
      
@@ -99,6 +97,8 @@
                 padding: 5px;
                 max-height: 150px;
                 width: 100%;
+                height: auto;
+                aspect-ratio: 200 / 150;
             }
 
             .featured-post-title {
@@ -134,6 +134,14 @@
             }
 
             /* Welcome banner SVG styles */
+            .welcome-banner-svg {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1000 / 400;
+                display: block;
+                max-width: 800px;
+                margin: 0 auto;
+            }
             .bulb-glow {
                 fill: #ffd700;
                 opacity: 0.5;
