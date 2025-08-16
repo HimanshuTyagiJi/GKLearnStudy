@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -1059,17 +1060,6 @@ summary::-webkit-details-marker {
     min-height: 450px;
 }
 
-/* CLS Fix for Featured Post Widgets */
-.sidebar .featured-post-widget {
-  min-height: 350px; /* Adjusted for more accurate space reservation */
-}
-
-/* Also reserve space for mobile featured post to prevent CLS */
-.main-content .featured-post-widget {
-  min-height: 410px; /* Adjusted for more accurate space reservation */
-}
-
-
 /* Education Page Specific Styles */
 
 .education-header {
@@ -1480,13 +1470,19 @@ summary::-webkit-details-marker {
   transform: scale(1.03);
 }
 
+/* Definitive CLS fix for Featured Post SVG/Image */
 .featured-post-image {
   display: block;
-  height: 150px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 200 / 150; /* This is the key: reserves space before load */
   max-width: 100%;
   object-fit: cover;
   border-radius: 8px;
   margin: 0 auto 1rem auto;
+  background-color: #e9f5ff;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .featured-post-title {
