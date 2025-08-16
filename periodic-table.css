@@ -5,6 +5,7 @@
   padding: 5px;
   border-radius: 12px;
 
+  box-shadow: 0 4px 12px var(--shadow-color);
   margin-top: 2rem;
 }
 
@@ -306,9 +307,7 @@
   align-items: start;
 }
 
-@media (min-width: 900px) {.app-footer {
-  margin-left: 15%;
-}
+@media (min-width: 900px) {
   .details-layout-adv {
     grid-template-columns: 3fr 1.5fr;
     grid-template-areas: "prose sidebar";
@@ -669,7 +668,6 @@
   .details-sidebar-adv {
     position: static;
   }
-  
 }
 :root {
   --primary-bg: #f4f8fa;
@@ -679,4 +677,7 @@
   --accent-color: #007aff;
   --border-color: #898989 !important;
   --shadow-color: rgba(29, 44, 61, 0.1);
+}
+.app-footer {
+  margin-left: 15%;
 }
