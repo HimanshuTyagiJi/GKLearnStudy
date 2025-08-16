@@ -1,0 +1,248 @@
+
+/* Main layout for the converters page */
+.converters-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile-first: one column */
+    gap: 2.5rem; /* Increased gap for better spacing */
+    margin-top: 2rem;
+}
+
+/* Two-column layout for desktop */
+@media (min-width: 992px) {
+    .converters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* Styling for each individual converter card */
+.converter-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.converter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.converter-card h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    color: var(--accent-color);
+    text-align: left;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.75rem;
+}
+
+/* Two-column layout for cards with many inputs */
+.card-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 1rem;
+}
+
+/* Input group styling */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    box-sizing: border-box;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.input-group input[type="number"]::-webkit-outer-spin-button,
+.input-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+
+/* New styles for info section */
+.converter-tool {
+    flex-shrink: 0;
+}
+
+.converter-info {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-header {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.info-svg-container {
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    background-color: #e9f5ff;
+    border-radius: 8px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.info-svg-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+.info-header h4 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.converter-info h4 {
+    margin: 1.5rem 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.converter-info p, .converter-info ul {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+}
+
+.converter-info ul {
+    padding-left: 20px;
+}
+
+.converter-info li {
+    margin-bottom: 0.5rem;
+}
+
+.example-problem {
+    background-color: var(--primary-bg);
+    border-left: 4px solid var(--accent-color);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.example-problem p, .example-problem ol {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+}
+.example-problem p:last-child {
+    margin-bottom: 0;
+}
+
+
+.example-problem ol {
+    padding-left: 20px;
+}
+
+.example-problem li {
+    margin-bottom: 0.5rem;
+}
+
+.example-problem strong {
+    color: var(--text-primary);
+}
+
+.example-problem code {
+    background-color: var(--card-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: monospace;
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    display: block;
+    margin-top: 0.5rem;
+    white-space: pre-wrap;
+}
+
+.read-more-btn {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    margin-top: auto; /* Pushes the button to the bottom */
+    align-self: flex-start; /* Aligns button to the left */
+}
+
+.read-more-btn:hover {
+    background-color: #0056b3;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.comments-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.comments-wrapper h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .converters-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .converter-card {
+        padding: 1rem;
+    }
+    .card-column-layout {
+        grid-template-columns: 1fr;
+    }
+     .info-header {
+        flex-direction: column;
+    }
+}
