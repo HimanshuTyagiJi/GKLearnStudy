@@ -15,13 +15,13 @@ function initMenuItems() {
 
   // Central array for all navigation links
   const menuItems = [
-    { href: "index.html", text: "Home" },
-    { href: "education.html", text: "Education" },
-    { href: "all-formulas.html", text: "All Formula" },
-    { href: "computer.html", text: "Computer" },
-    { href: "kaise-karen.html", text: "How to" },
-    { href: "gk-quiz.html", text: "GK Quiz" },
-    { href: "test.html", text: "Test" },
+    { href: "https://gklearnstudy.in/index.html", text: "Home" },
+    { href: "https://gklearnstudy.in/education.html", text: "Education" },
+    { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
+    { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
+    { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
+    { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
+    { href: "https://gklearnstudy.in/test.html", text: "Test" },
   ];
 
   // Generate the HTML for the links and inject it into the menu container
@@ -400,42 +400,3 @@ document.addEventListener("DOMContentLoaded", () => {
 // To avoid polluting the global scope, we'll attach our data and functions to a single object.
 window.GKApp = window.GKApp || {};
 
-// NOTE: The primary search data and fuzzy search function are now loaded from search.js
-// This prevents data duplication and ensures the full dataset is used.
-document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById("topic-sidebar");
-    const sidebarToggle = document.getElementById("topic-sidebar-toggle");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
-    const sidebarNav = document.getElementById("topic-nav");
-
-    function closeMobileSidebar() {
-        if (sidebar) sidebar.classList.remove("is-open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
-    }
-
-    if (sidebarToggle && sidebar && sidebarOverlay) {
-        sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("is-open");
-            sidebarOverlay.classList.toggle("is-open");
-        });
-
-        sidebarOverlay.addEventListener("click", closeMobileSidebar);
-    }
-
-    if (sidebarNav) {
-        sidebarNav.addEventListener("click", (e) => {
-            if (e.target.tagName === "A") {
-                const currentActive = sidebarNav.querySelector("a.active");
-                if (currentActive) {
-                    currentActive.classList.remove("active");
-                }
-                e.target.classList.add("active");
-
-                // Close sidebar on mobile after selection
-                if (window.innerWidth <= 991) {
-                    closeMobileSidebar();
-                }
-            }
-        });
-    }
-});
