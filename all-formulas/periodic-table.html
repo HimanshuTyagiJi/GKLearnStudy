@@ -43,10 +43,7 @@
         <meta name="msapplication-TileColor" content="#ffccff" />
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/images/periodic-table.png" />
         <meta name="msapplication-config" content="browserconfig.xml" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-        <script src="https://gklearnstudy.in/js/menu.js" defer></script>
-        <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
+        
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -1519,299 +1516,24 @@
             }
         </script>
 
-        <style>
-            .element {
-                background: #ccc;
-            }
-
-            .category-filters {
-                margin-bottom: 20px;
-            }
-
-            .category-filters button {
-                cursor: pointer;
-            }
-
-            .periodic-table {
-                display: grid;
-                grid-template-columns: repeat(18, 60px);
-                grid-auto-rows: 60px;
-                gap: 5px;
-                margin-bottom: 40px;
-            }
-
-            .element {
-                color: black;
-                border: 1px solid #333;
-                padding: 5px;
-                text-align: center;
-                font-size: 12px;
-                border-radius: 5px;
-                cursor: pointer;
-                position: relative;
-                transition: 0.2s;
-            }
-
-            .element .number {
-                font-weight: bold;
-                font-size: 10px;
-            }
-
-            .element .symbol {
-                font-size: 16px;
-                font-weight: bold;
-            }
-
-            .element .name {
-                font-size: 10px;
-            }
-
-            .element:hover .tooltip {
-                display: block;
-            }
-
-            .tooltip {
-                display: none;
-                position: absolute;
-                bottom: 65px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #333;
-                color: #fff;
-                padding: 5px 8px;
-                font-size: 12px;
-                border-radius: 4px;
-                white-space: nowrap;
-            }
-
-            .details-section {
-                display: none;
-                padding: 20px;
-
-                border: 1px solid #ccc;
-                border-radius: 8px;
-            }
-
-            .details-section.show {
-                display: block;
-            }
-
-            .element {
-                transition: opacity 0.3s ease; /* Smooth transition for opacity changes */
-            }
-
-            .halogen {
-                background-color: #ffccff;
-            }
-
-            [data-theme="dark"] .metals {
-                color: pink;
-            }
-            .metals {
-                color: rgb(45, 119, 96);
-            }
-            .metal {
-                border: 2px solid rgb(51, 110, 101);
-                background-color: rgb(221, 250, 243);
-            }
-
-            [data-theme="dark"] .metalloids {
-                color: yellow;
-            }
-            .metalloids {
-                color: rgb(109, 110, 51);
-            }
-            .metalloid {
-                border: 2px solid rgb(109, 110, 51);
-                background-color: rgb(255, 254, 216);
-            }
-            .nonmetal {
-                border: 2px solid rgb(98, 114, 255);
-                background-color: rgb(237, 238, 247);
-            }
-            .non-metal {
-                color: rgb(98, 114, 255);
-            }
-            .post-transition-metal {
-                background-color: #f8dddd;
-            }
-            .lanthanide {
-                background-color: #ddfcad;
-            }
-            .alkaline-earth-metal {
-                background-color: #ffd699;
-            }
-            .alkali-metal {
-                background-color: rgb(251, 200, 200);
-            }
-            .transition-metal {
-                background-color: #e9e7ff;
-            }
-            .noble-gas {
-                background-color: #add8e6;
-            }
-            .actinide {
-                background-color: #f0e68c;
-            }
-
-            .element.s-blocks {
-                border: 2px dashed #388e3c; /* Dark Green */
-            }
-            .element.p-blocks {
-                border: 2px dashed #8e24aa; /* Deep Purple */
-            }
-            .element.d-block {
-                border: 2px dashed #ff5722; /* Deep Orange */
-            }
-            .element.f-blocks {
-                border: 2px dashed #3949ab; /* Blue */
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            .grid-wrapper {
-                display: flex;
-                gap: 20px;
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-            [data-theme="dark"] .grid {
-                border: 2px solid white;
-            }
-            .grid {
-                flex-shrink: 0;
-                border: 2px solid #333;
-                border-radius: 10px;
-                justify-content: center;
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .btn-row {
-                display: flex;
-                gap: 12px;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .btn-wrap {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                flex-wrap: wrap;
-                cursor: pointer;
-                justify-content: center;
-            }
-
-            [data-theme="dark"] .tick-box {
-                border: 2px solid white;
-            }
-            .tick-box {
-                width: 18px;
-                height: 18px;
-                border: 2px solid #000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 14px;
-                border-radius: 3px;
-                position: relative;
-            }
-
-            .btn-wrap.active .tick-box {
-                background-color: #4caf50;
-                color: #fff;
-            }
-
-            .btn-wrap.active .tick-box::after {
-                content: "✔";
-                font-size: 14px;
-                position: absolute;
-            }
-            [data-theme="dark"] button {
-                color: white;
-            }
-            button {
-                background-color: unset;
-                cursor: pointer;
-                border: none;
-                text-align: left;
-            }
-
-            .grid-2-layout {
-                display: grid;
-                grid-template-columns: 1fr 2px 2fr;
-                align-items: center;
-                width: 100%;
-            }
-
-            .left-col {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            [data-theme="dark"] .divider {
-                background-color: white;
-            }
-            .divider {
-                background-color: black;
-                width: 1.6px;
-                height: 145%;
-            }
-            .divider1 {
-                background-color: black;
-                width: 100%;
-                height: 1px;
-            }
-            .right-col {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                padding-left: 12px;
-                justify-content: center;
-            }
-
-            .right-col .btn-row {
-                justify-content: flex-start;
-            }
-            .all-button {
-                padding: 12px 25px;
-                border: 2px solid green;
-                border-radius: 6px;
-                cursor: pointer;
-                margin-bottom: 20px;
-                font-size: 16px;
-                font-weight: bold;
-            }
-            .periodic-table {
-                overflow-x: auto; /* horizontal scroll ke liye */
-                overflow-y: auto; /* vertical scroll ke liye (agar zarurat ho) */
-                white-space: nowrap; /* elements ko ek line me rakhne ke liye */
-                border: 0px solid #ccc; /* optional border for clarity */
-                padding: 10px;
-            }
-            .element {
-                line-height: 1.4;
-            }
-        </style>
+       
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="topicmenu.css" />
+        <link rel="stylesheet" href="periodic-table.css" />
+        <link rel="stylesheet" href="comment.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     </head>
-
     <body>
-        <div class="search-container">
-            <button class="search-icon" id="searchBtn"><span class="rotated-icon">⌕</span></button><button class="back-icon" id="backBtn">←</button>
-            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
-        </div>
-        <ul id="suggestions" class="suggestions"></ul>
-        <div id="results"></div>
-        <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-        <ul class="menu-list" id="menuList">
-            <li>
+
+         
+        <div id="sidebar-overlay"></div>
+        <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+        
+        <aside id="topic-sidebar">
+            <h3>Chemistry Topics</h3>
+            <nav id="topic-nav">
+                <ul>
+                    <li>
                 <a class="active" href="periodic-table.html">Periodic Table</a>
             </li>
             <li>
@@ -1826,212 +1548,397 @@
             <li>
                 <a href="reaction-in-hindi.html">Reaction in Hindi</a>
             </li>
-        </ul>
-        <div class="container">
-            <br />
-            <h1>Periodic Table of Elements</h1>
-            <div class="scrollmenu-container">
-                <div class="scrollmenu">
-                    <a href="https://gklearnstudy.in/physics-all-formulas.html"><h2>Physics Formulas</h2></a><a href="https://gklearnstudy.in/mathematics-all-formulas.html"><h2>Mathematics Formulas</h2></a>
-                </div>
-            </div>
-            <h2>Explore Element Details</h2>
-            <h3>Comprehensive Guide for Students and Enthusiasts</h3>
-            <p>Explore all chemical elements, including their symbols, atomic numbers, and key properties in this interactive periodic table.</p>
-            <div class="scrollmenu-container"><input type="text" id="search" placeholder="Search by name or symbol..." /></div>
-            <div class="category-filters">
-                <div class="scrollmenu-container"><button class="all-button" onclick="filterCategory('all')">All</button></div>
-                <div class="grid-wrapper">
-                    <!-- Metals Grid -->
-                    <div class="grid">
-                        <div class="btn-wrap heading" onclick="filterCategory('metal')">
-                            <div class="tick-box"></div>
-                            <button class="metals">Metals</button>
-                        </div>
-                        <div class="divider1"></div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('alkali-metal')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Alkali Metal</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('actinide')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Actinide</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('transition-metal')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Transition Metals</button>
-                            </div>
-                        </div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('alkaline-earth-metal')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Alkaline Earth</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('lanthanide')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Lanthanide</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('post-transition-metal')">
-                                <div class="tick-box"></div>
-                                <button class="metals">Post-Transition Metal</button>
-                            </div>
+                </ul>
+            </nav>
+        </aside>
+
+
+
+
+        <div id="reading-progress-bar"></div>
+        <header class="header" id="header">
+            <nav class="navbar container1">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
+                    <div class="logo-container1">
+                        <div class="demo2">
+                            <svg width="40" height="40" viewBox="0 0 300 300">
+                                <circle cx="150" cy="150" r="150" fill="white" />
+                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                    GK
+                                    <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" />
+                                    <animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
+                                    <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
+                                </text>
+                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                    Learn Study
+                                    <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
+                                    <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
+                                </text>
+                                <clipPath id="circle-clip">
+                                    <circle cx="150" cy="150" r="150" />
+                                </clipPath>
+                                <g clip-path="url(#circle-clip)">
+                                    <path fill="#c0a4fb" fill-opacity="1">
+                                        <animate
+                                            attributeName="d"
+                                            dur="8s"
+                                            repeatCount="indefinite"
+                                            values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                    <path fill="#641ef9" fill-opacity="0.7">
+                                        <animate
+                                            attributeName="d"
+                                            dur="7s"
+                                            repeatCount="indefinite"
+                                            values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                </g>
+                            </svg>
                         </div>
                     </div>
-                    <!-- Metalloids & Nonmetals -->
-                    <div class="grid">
-                        <div class="grid-2-layout">
-                            <div class="left-col">
-                                <div class="btn-wrap" onclick="filterCategory('metalloid')">
-                                    <div class="tick-box"></div>
-                                    <button class="metalloids">Metalloids</button>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="right-col">
-                                <div class="btn-wrap heading" onclick="filterCategory('nonmetal')">
-                                    <div class="tick-box"></div>
-                                    <button class="non-metal">Nonmetals</button>
-                                </div>
-                                <div class="divider1"></div>
-                                <div class="btn-row">
-                                    <div class="btn-wrap" onclick="filterCategory('noble-gas')">
-                                        <div class="tick-box"></div>
-                                        <button class="non-metal">Noble Gases</button>
-                                    </div>
-                                </div>
-                                <div class="btn-row">
-                                    <div class="btn-wrap" onclick="filterCategory('reactive-nonmetals')">
-                                        <div class="tick-box"></div>
-                                        <button class="non-metal">Reactive Nonmetals</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Block Grid -->
-                    <div class="grid">
-                        <div class="btn-wrap heading" onclick="filterCategory('all')">
-                            <div class="tick-box"></div>
-                            <button class="heading">Block</button>
-                        </div>
-                        <div class="divider1"></div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('s-blocks')">
-                                <div class="tick-box"></div>
-                                <button class="block">s-blocks</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('p-blocks')">
-                                <div class="tick-box"></div>
-                                <button class="block">p-blocks</button>
-                            </div>
-                        </div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('d-block')">
-                                <div class="tick-box"></div>
-                                <button class="block">d-blocks</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('f-blocks')">
-                                <div class="tick-box"></div>
-                                <button class="block">f-blocks</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- States of Matter Grid -->
-                    <div class="grid">
-                        <div class="btn-wrap heading" onclick="filterCategory('all')">
-                            <div class="tick-box"></div>
-                            <button class="heading">States of Matter</button>
-                        </div>
-                        <div class="divider1"></div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('solid')">
-                                <div class="tick-box"></div>
-                                <button class="state">Solid</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('liquid')">
-                                <div class="tick-box"></div>
-                                <button class="state">Liquid</button>
-                            </div>
-                        </div>
-                        <div class="btn-row">
-                            <div class="btn-wrap" onclick="filterCategory('gas')">
-                                <div class="tick-box"></div>
-                                <button class="state">Gas</button>
-                            </div>
-                            <div class="btn-wrap" onclick="filterCategory('unknown')">
-                                <div class="tick-box"></div>
-                                <button class="state">Unknown</button>
-                            </div>
-                        </div>
+                </a>
+                <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div>
+                <span class="overlay"></span>
+                <div class="menu" id="menu">
+                    <span class="back-arrow">×</span>
+                    <a href="/" class="menu-brand">GK</a>
+                    <div class="menu-arrow left">&#8249;</div>
+                    <div class="menu-arrow right">&#8250;</div>
+                    <div class="menu-inner">
+                        <!-- Menu items will be injected here by index.js -->
                     </div>
                 </div>
-            </div>
-            <div class="periodic-table" id="table"><button onclick="openFullPreview()">🔍 Full Preview</button></div>
-            <div id="element-details" class="details-section">
-                <h2 id="el-name">Element Name</h2>
-                <p><strong>Symbol</strong><small>(प्रतीक)</small> ⟶ <span id="el-symbol"></span></p>
-                <p><strong>Atomic Number</strong><small>(परमाणु क्रमांक)</small> ⟶ <span id="el-number"></span></p>
-                <p><strong>Atomic Mass</strong><small>(परमाणु द्रव्यमान)</small> ⟶ <span id="el-mass"></span></p>
-                <br />
-                <p><strong>Category</strong><small>(श्रेणी)</small> ⟶ <span id="el-category"></span></p>
-                <p><strong>Specific Name</strong><small>(विशिष्ट नाम)</small> ⟶ <span id="el-specific"></span></p>
-                <p><strong>Physical State</strong><small>(भौतिक अवस्था)</small> ⟶ <span id="el-physical"></span></p>
-                <br />
-                <p><strong>Group</strong><small>(समूह)</small> ⟶ <span id="el-group"></span></p>
-                <p><strong>Period</strong><small>(आवृत्ति)</small> ⟶ <span id="el-period"></span></p>
-                <p><strong>Block</strong><small>(ब्लॉक)</small> ⟶ <span id="el-block"></span></p>
-                <br />
-                <p><strong>Electronic Configuration</strong><small>(इलेक्ट्रॉन विन्यास)</small> ⟶ <span id="el-electronic-configuration"></span></p>
-                <p><strong>Oxidation States</strong><small>(ऑक्सीकरण अवस्थाएँ)</small> ⟶ <span id="el-oxidation"></span></p>
-                <p><strong>Electronegativity</strong><small>(विद्युत ऋणात्मकता)</small> ⟶ <span id="el-electronegativity"></span></p>
-                <br />
-                <p><strong>Atomic Radius</strong><small>(परमाणु त्रिज्या)</small> ⟶ <span id="el-radius"></span></p>
-                <p><strong>Density</strong><small>(घनत्व)</small> ⟶ <span id="el-density"></span></p>
-                <br />
-                <p><strong>Melting Point</strong><small>(गलनांक)</small> ⟶ <span id="el-melting"></span></p>
-                <p><strong>Boiling Point</strong><small>(कतानांक)</small> ⟶ <span id="el-boiling"></span></p>
-                <p><strong>Ionization Energy</strong><small>(आयनन ऊर्जा)</small> ⟶ <span id="el-ionization-energy"></span></p>
-                <br />
-                <p><strong>Discovery Year</strong><small>(खोज वर्ष)</small> ⟶ <span id="el-discovered"></span></p>
-                <p><strong>Discoverer</strong><small>(खोजकर्ता)</small> ⟶ <span id="el-discoverer"></span></p>
-                <br />
-                <p><strong>Explain</strong> ⟶ <span id="el-explain-en"></span></p>
-                <p><strong>व्याख्या</strong> ⟶ <span id="el-explain-hi"></span></p>
-            </div>
-            <div class="scrollmenu-container"><img src="https://gklearnstudy.in/images/periodic-table.png" alt="periodic-table in chemistry" /></div>
-            <div id="fullPreviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; overflow: auto; padding: 20px;">
-                <button onclick="closeFullPreview()" style="position: absolute; top: 10px; right: 20px; background: red; color: white; border: none; padding: 10px 15px; font-size: 16px; border-radius: 4px;">✖ Close</button>
-                <div class="periodic-table" id="fullPreviewTable"></div>
-            </div>
-            <script>
-                function openFullPreview() {
-                    const mainTable = document.getElementById("table");
-                    const fullPreview = document.getElementById("fullPreviewTable");
-                    fullPreview.innerHTML = mainTable.innerHTML;
-                    document.getElementById("fullPreviewModal").style.display = "block";
-                }
-                function closeFullPreview() {
-                    document.getElementById("fullPreviewModal").style.display = "none";
-                }
-            </script>
-            <hr />
-            <div id="right-sidebar">
-                <strong>Important Links</strong>
-                <ul id="link-list"></ul>
-            </div>
-            <footer>
-                <div class="custom-row">
-                    <div class="custom-column">
-                        <b>Follow Us</b>
-                        <div id="social-links"></div>
-                    </div>
-                    <div class="custom-column"><button onclick="goToUrl()" style="color: white;">Contact</button></div>
-                    <div class="custom-column"><p id="my-paragraph"></p></div>
-                </div>
-            </footer>
-            <script src="https://gklearnstudy.in/js/search.js" defer></script>
-            <script src="https://gklearnstudy.in/js/periodictable.js" defer></script>
+            </nav>
+        </header>
+        <div class="search-container">
+            <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+            <button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
         </div>
+
+        
+        <div class="main-content-wrapper">
+            <main class="container">
+                <div id="root">
+      <style>
+   .education-header {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile default */
+    gap: 20px;
+    align-items: center;
+    background: #0a0f1f;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background pattern */
+.education-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg width="220" height="220" xmlns="http://www.w3.org/2000/svg" opacity="0.05"><polygon points="110,10 210,60 210,160 110,210 10,160 10,60" stroke="white" stroke-width="2" fill="none"/><circle cx="110" cy="110" r="30" stroke="white" stroke-width="2" fill="none"/></svg>') repeat;
+    z-index: 0;
+}
+
+.logo {
+    flex-shrink: 0;
+    z-index: 1;
+    text-align: center;
+}
+
+.education-title {
+    font-size: 2.5rem;
+    margin: 0;
+    animation: fadeScale 1.5s ease-in-out forwards;
+    z-index: 1;
+}
+
+.underline {
+    height: 4px;
+    background: linear-gradient(90deg, green, blue, yellow, red, green);
+    background-size: 300% 100%;
+    animation: gradientMove 3s linear infinite;
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+.education-description {color:white;
+    margin: 10px 0 0 0;
+    max-width: 600px;
+    line-height: 1.5;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+/* Animations */
+@keyframes fadeScale {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* Desktop: 2 columns */
+@media (min-width: 769px) {
+    .education-header {
+        grid-template-columns: auto 1fr; /* Logo - Content */
+        text-align: left;
+    }
+    .logo {
+        text-align: left;
+    }
+}
+.education-header .education-description {color:white !important;
+                                      }.education-header h1 {
+        color: #ffe9e9;
+        font-size: 2.5rem;
+    }
+}
+</style>
+
+<header class="education-header">
+    <!-- Animated SVG Logo -->
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="200" height="200" role="img" aria-labelledby="atomTitle atomDesc">
+            <title id="atomTitle">Animated Atom</title>
+            <desc id="atomDesc">A glowing animated atomic model with rotating electron orbits using colorful gradients.</desc>
+
+            <!-- Gradient definition -->
+            <defs>
+                <linearGradient id="gAtom" x1="0" x2="1">
+                    <stop offset="0" stop-color="#34d399"/>
+                    <stop offset="0.5" stop-color="#60a5fa"/>
+                    <stop offset="1" stop-color="#fbbf24"/>
+                </linearGradient>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- Nucleus -->
+            <circle cx="150" cy="150" r="20" fill="url(#gAtom)" stroke="#fff" stroke-width="2" filter="url(#glow)"/>
+
+            <!-- Orbit paths -->
+            <g stroke="url(#gAtom)" stroke-width="2" fill="none" opacity="0.85">
+                <ellipse cx="150" cy="150" rx="80" ry="40">
+                    <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="6s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="150" cy="150" rx="40" ry="80">
+                    <animateTransform attributeName="transform" type="rotate" from="360 150 150" to="0 150 150" dur="7s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="150" cy="150" rx="100" ry="100" transform="rotate(45 150 150)">
+                    <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="10s" repeatCount="indefinite"/>
+                </ellipse>
+            </g>
+
+            <!-- Electrons -->
+            <circle cx="230" cy="150" r="6" fill="#fff">
+                <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="6s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="150" cy="230" r="6" fill="#fff">
+                <animateTransform attributeName="transform" type="rotate" from="360 150 150" to="0 150 150" dur="7s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="220" cy="220" r="6" fill="#fff">
+                <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="10s" repeatCount="indefinite"/>
+            </circle>
+        </svg>
+    </div>
+
+    <!-- Text Content -->
+    <div>
+        <h1 class="education-title">Chemistry Hub</h1>
+        <div class="underline"></div>
+        <p class="education-description">
+            Welcome to <strong>Chemistry Hub</strong> — your ultimate space for exploring the microscopic world of atoms and molecules.  
+            Our goal is to make chemistry not only understandable but truly fascinating. Through interactive visuals, animated models, and easy explanations, 
+            you’ll see how atoms combine, react, and form everything around us — from the air you breathe to the devices you use daily.  
+            Dive into the periodic table, learn how chemical bonds work, and discover the real-life applications of science. Whether you're a student preparing for exams 
+            or simply curious about how matter behaves, this is the perfect place to spark your scientific curiosity.
+        </p>
+    </div>
+</header>
+
+
+
+
+                    <div class="periodic-table-container">
+                        <div class="controls-wrapper">
+                            <div class="top-controls">
+                               <input type="text" id="element-search" placeholder="Search by name or symbol..." aria-label="Search for an element" />
+                               <button id="fullscreen-btn" aria-label="View table in fullscreen">Full View</button>
+                            </div>
+                            
+                            <div class="filter-controls">
+                                <button class="all-button" data-filter-group="all" data-filter-value="all">Show All</button>
+                                <div class="controls-wrapper-scrollable">
+                                    <div class="filter-grid-wrapper">
+                                        <div class="filter-grid">
+                                            <h4>Metals</h4>
+                                            <div class="filter-buttons-container">
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="metal"><div class="tick-box"></div><button>All Metals</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="alkali-metal"><div class="tick-box"></div><button>Alkali</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="alkaline-earth-metal"><div class="tick-box"></div><button>Alkaline Earth</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="lanthanide"><div class="tick-box"></div><button>Lanthanide</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="actinide"><div class="tick-box"></div><button>Actinide</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="transition-metal"><div class="tick-box"></div><button>Transition</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="post-transition-metal"><div class="tick-box"></div><button>Post-Transition</button></div>
+                                            </div>
+                                        </div>
+                                        <div class="filter-grid">
+                                            <h4>Nonmetals</h4>
+                                            <div class="filter-buttons-container">
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="nonmetal-group"><div class="tick-box"></div><button>All Nonmetals</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="nonmetal"><div class="tick-box"></div><button>Reactive</button></div>
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="noble-gas"><div class="tick-box"></div><button>Noble Gas</button></div>
+                                            </div>
+                                             <h4>Metalloids</h4>
+                                            <div class="filter-buttons-container">
+                                                <div class="btn-wrap" data-filter-group="category" data-filter-value="metalloid"><div class="tick-box"></div><button>Metalloid</button></div>
+                                            </div>
+                                        </div>
+                                        <div class="filter-grid">
+                                            <h4>Block</h4>
+                                            <div class="filter-buttons-container">
+                                                <div class="btn-wrap" data-filter-group="block" data-filter-value="s-block"><div class="tick-box"></div><button>s-block</button></div>
+                                                <div class="btn-wrap" data-filter-group="block" data-filter-value="p-block"><div class="tick-box"></div><button>p-block</button></div>
+                                                <div class="btn-wrap" data-filter-group="block" data-filter-value="d-block"><div class="tick-box"></div><button>d-block</button></div>
+                                                <div class="btn-wrap" data-filter-group="block" data-filter-value="f-block"><div class="tick-box"></div><button>f-block</button></div>
+                                            </div>
+                                        </div>
+                                        <div class="filter-grid">
+                                            <h4>State of Matter</h4>
+                                             <div class="filter-buttons-container">
+                                                <div class="btn-wrap" data-filter-group="state" data-filter-value="solid"><div class="tick-box"></div><button>Solid</button></div>
+                                                <div class="btn-wrap" data-filter-group="state" data-filter-value="liquid"><div class="tick-box"></div><button>Liquid</button></div>
+                                                <div class="btn-wrap" data-filter-group="state" data-filter-value="gas"><div class="tick-box"></div><button>Gas</button></div>
+                                                <div class="btn-wrap" data-filter-group="state" data-filter-value="unknown"><div class="tick-box"></div><button>Unknown</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="periodic-table-wrapper" id="periodic-table-wrapper">
+                            <div class="periodic-table-grid" id="periodic-table-grid">
+                                <div class="spinner-container"><div class="spinner"></div><p>Loading Elements...</p></div>
+                            </div>
+                        </div>
+                        
+                        <div id="element-details" class="details-section" hidden>
+                            <!-- Element details will be populated here by JavaScript -->
+                        </div>
+                    </div>
+                     <!-- Comments Section -->
+                    <div class="comments-wrapper">
+                        <hr>
+                         <h3>Leave a Comment</h3>
+                        <div id="custom-comment-section">
+                            <div class="firebase-comments-widget">
+                                <div class="container">
+                                    <section class="comment-form-section" hidden>
+                                        <form id="comment-form">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" id="name" placeholder="Your name" required aria-label="Name" maxlength="50">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comment">Comment</label>
+                                                <textarea id="comment" rows="4" placeholder="Write your comment..." required aria-label="Comment" maxlength="1000"></textarea>
+                                                <div class="char-counter-wrapper">
+                                                    <span id="char-counter">0 / 1000</span>
+                                                </div>
+                                            </div>
+                                            <button type="submit" id="submit-button">Submit</button>
+                                        </form>
+                                    </section>
+                                    <hr>
+                                    <section class="comments-section">
+                                        <div id="comments-list">
+                                            <!-- Dynamic content is loaded here -->
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section footer-about">
+                        <h3>About GK Learn Study</h3>
+                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="/about.html">About Us</a></li>
+                            <li><a href="/contact.html">Contact Us</a></li>
+                            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Conversions & Measurements</h3>
+                        <ul>
+                            <li><a href="/conversion.html">Unit Conversion</a></li>
+                            <li><a href="/conversion/angle-unit-conversion">Angle Conversion</a></li>
+                            <li><a href="/conversion/temperature-conversion">Temperature Conversion</a></li>
+                            <li><a href="/conversion/measurement-systems">Measurement Systems</a></li>
+                            <li><a href="/conversion/area-volume-measurement">Area & Volume</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Science & GK</h3>
+                        <ul>
+                            <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
+                            <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
+                            <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
+                            <li><a href="/gk/ancient-wonders">Ancient Wonders</a></li>
+                            <li><a href="/gk/solar-system-tour">Solar System Tour</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Follow Us</h3>
+                        <ul class="footer-socials"></ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+            </footer>
+
+            <button id="back-to-top-btn" title="Go to top">↑</button>
+        </div>
+
+        
+        <script src="header-menu.js" defer></script>
+      
+        <script src="topic-menu.js" defer></script>  <script type="module" src="comment.js"></script>
+        <script src="periodic-table.js" defer></script>
+      <script src="search.js" defer></script>
     </body>
 </html>
+
+        
+
+
+        
+       
