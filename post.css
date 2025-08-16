@@ -1,3 +1,5 @@
+/* Styles related to blog posts and layout */
+
 /* Blog Layout */
 .blog-layout {
   display: grid;
@@ -138,13 +140,19 @@
   transform: scale(1.03);
 }
 
+/* Definitive CLS fix for Featured Post SVG/Image */
 .featured-post-image {
   display: block;
-  height: 150px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 200 / 150; /* This is the key: reserves space before load */
   max-width: 100%;
   object-fit: cover;
   border-radius: 8px;
   margin: 0 auto 1rem auto;
+  background-color: #e9f5ff;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .featured-post-title {
