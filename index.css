@@ -1,6 +1,8 @@
 
 
 
+
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -1056,14 +1058,20 @@ summary::-webkit-details-marker {
   max-width: 100%;
 }
 
+/* CLS Fix for Comments Widget */
+/* Reserves a block of space for the comments section before it loads */
+.sidebar-widget:has(#custom-comment-section) {
+    min-height: 450px;
+}
+
 /* CLS Fix for Featured Post Widgets */
 .sidebar .featured-post-widget {
-  min-height: 300px; /* Increased to better reserve space */
+  min-height: 320px; /* Increased to better reserve space */
 }
 
 /* Also reserve space for mobile featured post to prevent CLS */
 .main-content .featured-post-widget {
-  min-height: 320px;
+  min-height: 340px;
 }
 
 
@@ -1334,3 +1342,6 @@ summary::-webkit-details-marker {
     font-size: 1.1rem;
   }
 }
+
+/* Styles related to blog posts and layout */
+
