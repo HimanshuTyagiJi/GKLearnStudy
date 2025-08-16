@@ -1,8 +1,3 @@
-
-
-
-
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -619,7 +614,7 @@ h5 {
   font-size: 18px;
 }
 h4 {
-  color: var(--text);
+  color: white;
 }
 h6 {
   color: var(--blue);
@@ -1066,12 +1061,12 @@ summary::-webkit-details-marker {
 
 /* CLS Fix for Featured Post Widgets */
 .sidebar .featured-post-widget {
-  min-height: 320px; /* Increased to better reserve space */
+  min-height: 350px; /* Adjusted for more accurate space reservation */
 }
 
 /* Also reserve space for mobile featured post to prevent CLS */
 .main-content .featured-post-widget {
-  min-height: 340px;
+  min-height: 410px; /* Adjusted for more accurate space reservation */
 }
 
 
