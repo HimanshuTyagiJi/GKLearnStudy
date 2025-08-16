@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const elementsData = [
     {
@@ -793,7 +792,6 @@ document.addEventListener("DOMContentLoaded", () => {
       row: 2,
       col: 17,
     },
-
     {
       name: "Neon",
       symbol: "Ne",
@@ -806,64 +804,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "noble-gas",
       specific: "noble-gas",
       physical: "Gas",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Ne | <strong>Atomic number:</strong> 10 | <strong>Electronic configuration:</strong> [He] 2s² 2p⁶</p>
-        <p>Neon is a noble gas discovered in 1898. It is colorless, odorless and chemically inert under normal conditions due to its closed-shell configuration. Neon is far less abundant on Earth than helium, but its unique emission spectrum makes it famous: electrical excitation in low-pressure neon tubes produces a vivid reddish-orange glow used for signage.</p>
-      </section>
-
-      <section>
-        <h2>2. Occurrence & Isotopes</h2>
-        <p>Neon is produced in stars by nuclear fusion and is present at low concentration (~18 ppm) in the universe; on Earth it is rare in the atmosphere (~1.8 ppm by volume). Stable isotopes include ²⁰Ne, ²¹Ne and ²²Ne; ²⁰Ne is predominant.</p>
-      </section>
-
-      <section>
-        <h2>3. Physical & Chemical Properties</h2>
-        <ul>
-          <li>Monoatomic noble gas at STP; extremely low chemical reactivity.</li>
-          <li>Boiling point ≈ 27.1 K and melting point ≈ 24.6 K — liquid neon is a cryogen but less used than helium.</li>
-          <li>Emits characteristic bright reddish-orange spectral lines when electrically excited — basis of neon lighting.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>4. Uses — How & Why</h2>
-        <ol>
-          <li><strong>Signage & lighting:</strong> Low-pressure neon tubes produce vibrant colors; sealed neon with phosphors or other gases yields different hues.</li>
-          <li><strong>Lasers:</strong> The He–Ne laser (helium–neon) produces stable red light (632.8 nm) used in optics labs and alignment tools.</li>
-          <li><strong>Cryogenics & scientific:</strong> Liquid neon is used as a cryogen where its boiling point is suitable; neon is also used in high-voltage indicators and plasma applications.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>5. Safety & Supply</h2>
-        <p>Neon is non-toxic and non-flammable. Because atmospheric abundance is small, commercial neon is recovered from liquefied air during cryogenic fractional distillation. Its supply is tied to natural gas and air-separation industries.</p>
-      </section>
-
-      <section>
-        <h2>6. Interesting Notes</h2>
-        <p>Neon signs are iconic not only because of color but for longevity and distinctive glow. Unlike neon, many "neon signs" use other noble gases or colored phosphors to achieve a wider color palette.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-neon">
-      <title id="t-neon">Neon sign animation</title>
-      <rect width="240" height="120" rx="10" fill="#090909"/>
-      <g transform="translate(24,24)" fill="none" stroke="#ff5722" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 40 Q24 8 56 40 T120 40" id="neon-path" stroke="#ff5722" />
-        <text x="12" y="76" font-family="Arial, sans-serif" font-size="28" fill="#ff7043" stroke="#ff7043" stroke-width="0.6">NEON</text>
-        <animate xlink:href="#neon-path" attributeName="stroke-opacity" values="0.2;1;0.2" dur="1.6s" repeatCount="indefinite"/>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="4" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <use href="#neon-path" stroke="#ffab91" stroke-opacity="0.6" filter="url(#glow)"/>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Ne | <strong>Atomic number:</strong> 10 | <strong>Electronic configuration:</strong> [He] 2s² 2p⁶</p><p>Discovered in 1898, Neon is a noble gas known for being colorless, odorless, and largely inert. It is famous for its brilliant reddish-orange glow in vacuum tubes.</p></section><section><h2>2. Uses & Importance</h2><p>Its primary use is in iconic 'neon' signs. It is also used in some lasers (Helium-Neon lasers), television tubes, and as a cryogenic refrigerant in certain specialized applications.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.sign-text{font-family:cursive;font-size:30px;fill:#FF5722;stroke:#E64A19;stroke-width:1;animation:glow 1.5s infinite alternate}@keyframes glow{from{text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 15px #FF5722}to{text-shadow:0 0 10px #fff,0 0 20px #FF5722,0 0 30px #FF5722}}</style><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' class='sign-text'>Neon</text></svg>",
       row: 2,
       col: 18,
     },
-
     {
       name: "Sodium",
       symbol: "Na",
@@ -876,65 +822,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "alkali-metal",
       specific: "alkali-metal",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Na | <strong>Atomic number:</strong> 11 | <strong>Electronic configuration:</strong> [Ne] 3s¹</p>
-        <p>Sodium is a soft, silvery alkali metal discovered in 1807. It has a single valence electron that makes it highly reactive — especially with water — and gives it characteristic ionic chemistry (Na⁺ salts). On Earth sodium is abundant in minerals and in seawater (as dissolved NaCl).</p>
-      </section>
-
-      <section>
-        <h2>2. Physical & Chemical Properties</h2>
-        <ul>
-          <li>Soft metal, low density, low melting point relative to transition metals.</li>
-          <li>Reacts vigorously with water producing sodium hydroxide and hydrogen: <code>2 Na + 2 H₂O → 2 NaOH + H₂↑</code>.</li>
-          <li>Forms many stable ionic salts (NaCl, Na₂CO₃, NaHCO₃) with widespread industrial importance.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>3. Uses — How & Why</h2>
-        <ol>
-          <li><strong>Table salt (NaCl):</strong> Essential for life, food preservation and seasoning.</li>
-          <li><strong>Industrial chemistry:</strong> Sodium compounds (NaOH, Na₂CO₃) are fundamental in paper, soap, glass and chemical manufacturing.</li>
-          <li><strong>Metallic sodium:</strong> Used as a coolant in some fast-breeder nuclear reactors due to high thermal conductivity and liquid range.</li>
-          <li><strong>Lighting:</strong> High-pressure sodium lamps produce efficient yellow light used in street lighting.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>4. Extraction & Safety</h2>
-        <p>Metallic sodium is produced by the electrolysis of molten sodium chloride (Downs cell). Sodium must be handled under inert atmosphere or oil to prevent violent reactions; sodium fires react with CO₂ and water — special extinguishing techniques are required.</p>
-      </section>
-
-      <section>
-        <h2>5. Interesting Facts</h2>
-        <p>The chemical symbol Na comes from Latin 'natrium'. Sodium ions are essential in biology for nerve impulses and cellular fluid balance (Na⁺/K⁺ pumps).</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-na">
-      <title id="t-na">Sodium salt shaker animation</title>
-      <rect width="240" height="120" rx="10" fill="#fffdf6"/>
-      <g transform="translate(40,16)">
-        <rect x="0" y="8" width="64" height="80" rx="8" fill="#eceff1" stroke="#b0bec5"/>
-        <rect x="0" y="0" width="64" height="18" rx="6" fill="#cfd8dc"/>
-        <g id="salt-particles" fill="#90a4ae">
-          <circle cx="18" cy="28" r="2" opacity="0.9">
-            <animate attributeName="cy" values="28;4;-12" dur="1.2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="1;0.8;0" dur="1.2s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="34" cy="28" r="2" opacity="0.9" begin="0.2s">
-            <animate attributeName="cy" values="28;6;-10" dur="1.3s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="1;0.8;0" dur="1.3s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-        <text x="82" y="52" font-family="Arial" font-size="24" fill="#ef6c00">Na</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Na | <strong>Atomic number:</strong> 11 | <strong>Electronic configuration:</strong> [Ne] 3s¹</p><p>First isolated in 1807, Sodium is a soft, silvery-white, highly reactive alkali metal. Its symbol, Na, comes from the Latin 'natrium'. It is essential for animal life, playing a key role in nerve function.</p></section><section><h2>2. Uses & Importance</h2><p>Its most common compound is sodium chloride (<code>NaCl</code>), or table salt. Sodium is also used in streetlights (sodium-vapor lamps), as a heat transfer agent in some nuclear reactors, and in the manufacturing of soaps and detergents.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.salt-shaker{fill:#ECEFF1;stroke:#78909C;stroke-width:2}.cap{fill:#90A4AE}.hole{fill:#546E7A}.salt{fill:#455A64;opacity:0;animation:shake 1s infinite}@keyframes shake{0%{transform:translate(0,0);opacity:0}20%{transform:translate(2px,-10px);opacity:1}40%{transform:translate(-2px,-20px);opacity:1}60%{transform:translate(2px,-30px);opacity:1}100%{transform:translate(0,-50px);opacity:0}}</style><path class='salt-shaker' d='M30,90 L30,40 Q30,20 50,20 Q70,20 70,40 L70,90 Z'/><rect class='cap' x='30' y='20' width='40' height='10'/><circle class='hole' cx='40' cy='25' r='2'/><circle class='hole' cx='50' cy='25' r='2'/><circle class='hole' cx='60' cy='25' r='2'/><circle class='salt' cx='45' cy='20' r='1.5' style='animation-delay:-.2s'/><circle class='salt' cx='50' cy='20' r='1.5'/><circle class='salt' cx='55' cy='20' r='1.5' style='animation-delay:-.4s'/></svg>",
       row: 3,
       col: 1,
     },
-
     {
       name: "Magnesium",
       symbol: "Mg",
@@ -947,57 +840,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "alkaline-earth-metal",
       specific: "alkaline-earth-metal",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Mg | <strong>Atomic number:</strong> 12 | <strong>Electronic configuration:</strong> [Ne] 3s²</p>
-        <p>Magnesium is a lightweight, moderately strong metal used extensively in alloys. It is the eighth-most-abundant element in Earth's crust and plays essential roles in biology (chlorophyll) and industry.</p>
-      </section>
-
-      <section>
-        <h2>2. Properties</h2>
-        <ul>
-          <li>Light, silvery metal with good strength-to-weight ratio.</li>
-          <li>Burns with a bright white flame; reacts slowly with water but more readily with acids.</li>
-          <li>Forms stable compounds like MgO, Mg(OH)₂ and soluble salts used as antacids (Mg(OH)₂) and fertilizers.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>3. Uses & Applications</h2>
-        <ol>
-          <li><strong>Alloys:</strong> Mg is alloyed with Al and other metals to make lightweight components for aerospace and automotive industries.</li>
-          <li><strong>Electronics & structural parts:</strong> Magnesium alloys are used where weight saving is crucial.</li>
-          <li><strong>Pyrotechnics & flares:</strong> The bright white flame is used in lighting flares and fireworks.</li>
-          <li><strong>Biological:</strong> Magnesium ions are vital for enzymes, DNA stability, and plant chlorophyll.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>4. Safety & Handling</h2>
-        <p>Finely divided magnesium is a fire risk (burns at high temperatures). Magnesium fires cannot be extinguished with water; use dry powder extinguishers and appropriate safety procedures.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-mg">
-      <title id="t-mg">Magnesium spark animation</title>
-      <rect width="240" height="120" rx="10" fill="#f9fafb"/>
-      <g transform="translate(36,20)">
-        <text x="8" y="36" font-family="Arial" font-size="36" fill="#37474f">Mg</text>
-        <g transform="translate(70,6)">
-          <circle cx="20" cy="40" r="6" fill="#fff176">
-            <animate attributeName="r" values="3;9;3" dur="0.8s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite"/>
-          </circle>
-          <path d="M8 48 L32 24" stroke="#ffca28" stroke-width="3">
-            <animate attributeName="stroke-opacity" values="0.2;1;0.2" dur="1s" repeatCount="indefinite"/>
-          </path>
-        </g>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Mg | <strong>Atomic number:</strong> 12 | <strong>Electronic configuration:</strong> [Ne] 3s²</p><p>Recognized as an element in 1755, Magnesium is a shiny gray solid and the eighth-most-abundant element in the Earth's crust. The metal is strong but lightweight.</p></section><section><h2>2. Uses & Importance</h2><p>Its low density makes it highly valuable for creating strong, light alloys used in cars, planes, and electronics. It burns with a famously bright white light, making it useful in fireworks, flares, and sparklers. In biology, magnesium is an essential mineral for all living cells.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.spark{fill:#fff;position:absolute;animation:explode 0.7s ease-out infinite;transform-origin:center}@keyframes explode{from{transform:scale(0);opacity:1}to{transform:scale(1.5);opacity:0}}</style><circle class='spark' cx='50' cy='50' r='5' style='animation-delay:-.1s'/><circle class='spark' cx='50' cy='50' r='5' style='animation-delay:-.2s'/><circle class='spark' cx='50' cy='50' r='5' style='animation-delay:-.3s'/><circle class='spark' cx='50' cy='50' r='5' style='animation-delay:-.4s'/><circle class='spark' cx='50' cy='50' r='5' style='animation-delay:-.5s'/></svg>",
       row: 3,
       col: 2,
     },
-
     {
       name: "Aluminium",
       symbol: "Al",
@@ -1010,47 +858,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "post-transition-metal",
       specific: "post-transition-metal",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Al | <strong>Atomic number:</strong> 13 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p¹</p>
-        <p>Aluminium is a lightweight, corrosion-resistant metal that forms a protective oxide layer. It is the most abundant metal in Earth's crust and is widely used because of its malleability, conductivity and recyclability.</p>
-      </section>
-
-      <section>
-        <h2>2. Properties & Production</h2>
-        <p>Pure aluminium is produced industrially by electrolytic reduction of alumina (Hall–Héroult process). It has good electrical and thermal conductivity and forms strong, lightweight alloys with copper, magnesium and silicon.</p>
-      </section>
-
-      <section>
-        <h2>3. Uses & Why</h2>
-        <ol>
-          <li><strong>Transport & aerospace:</strong> Used in aircraft frames, automobile parts and bicycles for weight savings.</li>
-          <li><strong>Packaging:</strong> Cans, foil and containers due to impermeability and low weight.</li>
-          <li><strong>Construction:</strong> Window frames, cladding and structural components.</li>
-          <li><strong>Electrical:</strong> Power transmission lines where low weight compensates lower conductivity than copper.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>4. Recycling & Sustainability</h2>
-        <p>Aluminium is highly recyclable with large energy savings compared to primary production; recycling reduces environmental footprint significantly.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-al">
-      <title id="t-al">Aluminium can animation</title>
-      <rect width="240" height="120" rx="10" fill="#fbfbfb"/>
-      <g transform="translate(36,16)">
-        <rect x="0" y="4" width="72" height="88" rx="10" fill="#cfd8dc" stroke="#9ea7ad"/>
-        <ellipse cx="36" cy="6" rx="28" ry="6" fill="#b0bec5"/>
-        <text x="96" y="64" font-family="Arial" font-size="30" fill="#546e7a">Al</text>
-        <animateTransform attributeName="transform" attributeType="XML" type="translate" values="36,16;36,10;36,16" dur="2.5s" repeatCount="indefinite"/>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Al | <strong>Atomic number:</strong> 13 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p¹</p><p>First produced in 1825, Aluminium is a silvery-white, lightweight post-transition metal. It is the most abundant metal in the Earth's crust and resists corrosion due to a passive oxide layer.</p></section><section><h2>2. Uses & Importance</h2><p>Its properties make it essential in transportation (aircraft, cars), packaging (cans, foil), and construction (window frames). It is an excellent conductor of electricity and is often used in power lines.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.can-body{fill:#B0BEC5;stroke:#607D8B;stroke-width:1.5}.can-top{fill:#78909C}.tab{fill:#546E7A;animation:pull-tab 2s ease-in-out infinite alternate}@keyframes pull-tab{from{transform:rotate(0deg)}to{transform:rotate(-45deg)}}</style><rect class='can-body' x='30' y='20' width='40' height='70' rx='5'/><ellipse class='can-top' cx='50' cy='20' rx='20' ry='5'/><g class='tab' style='transform-origin:50px 20px;'><rect x='45' y='12' width='10' height='16' rx='3'/><circle cx='50' cy='20' r='3'/></g></svg>",
       row: 3,
       col: 13,
     },
-
     {
       name: "Silicon",
       symbol: "Si",
@@ -1063,50 +876,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "metalloid",
       specific: "metalloid",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Si | <strong>Atomic number:</strong> 14 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p²</p>
-        <p>Silicon is a hard, brittle crystalline metalloid that is the backbone of modern electronics. It forms strong covalent bonds and an oxide (SiO₂) that is the main constituent of sand and glass. Its semiconductor properties enable controlled conductivity using doping.</p>
-      </section>
-
-      <section>
-        <h2>2. Production & Purity</h2>
-        <p>Metallurgical silicon is produced by reducing silica with carbon; high-purity electronic-grade silicon is obtained through further chemical purification (Siemens process) and crystal growth (Czochralski method).</p>
-      </section>
-
-      <section>
-        <h2>3. Uses & Importance</h2>
-        <ol>
-          <li><strong>Semiconductors:</strong> Silicon wafers form the substrate for microchips and solar cells; doping with B, P, As controls electronic properties.</li>
-          <li><strong>Materials:</strong> Silicones, glass, ceramics and concrete rely on silicon chemistry.</li>
-          <li><strong>Solar energy:</strong> Crystalline and thin-film silicon photovoltaic cells convert sunlight to electricity.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>4. Safety & Notes</h2>
-        <p>Fine silicon dust is a respiratory hazard (silicosis risk); industrial hygiene and dust control are necessary in manufacturing environments.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-si">
-      <title id="t-si">Silicon chip animation</title>
-      <rect width="240" height="120" rx="10" fill="#ffffff"/>
-      <g transform="translate(28,20)">
-        <rect x="0" y="0" width="84" height="84" rx="8" fill="#263238"/>
-        <g stroke="#ffca28" stroke-width="2" fill="none">
-          <path d="M12 12 L72 12 L72 72 L12 72 Z" stroke-dasharray="120" stroke-dashoffset="120">
-            <animate attributeName="stroke-dashoffset" from="120" to="0" dur="2s" repeatCount="indefinite"/>
-          </path>
-          <circle cx="42" cy="42" r="6" fill="#ffca28"/>
-        </g>
-        <text x="116" y="52" font-family="Arial" font-size="28" fill="#37474f">Si</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Si | <strong>Atomic number:</strong> 14 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p²</p><p>Isolated in 1824, Silicon is a hard, brittle crystalline metalloid with a blue-grey metallic lustre. It is the second most abundant element in the Earth's crust.</p></section><section><h2>2. Uses & Importance</h2><p>The modern world is built on silicon. As a semiconductor, it is the fundamental component of computer chips, transistors, and solar cells. It is also the basis of silicones, and its oxide (silica) is the primary constituent of glass, cement, and ceramics.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.chip{fill:#424242;stroke:#757575;stroke-width:1}.path{stroke:#FFC107;stroke-width:2;stroke-dasharray:100;animation:pulse-path 2s linear infinite}@keyframes pulse-path{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}</style><rect class='chip' x='10' y='10' width='80' height='80' rx='5'/><path class='path' d='M20 20 L 20 80 L 80 80 L 80 50 L 50 50 L 50 20 Z'/><path class='path' d='M30 30 L 70 30 L 70 70 L 30 70 Z' style='animation-direction:reverse;animation-delay:-1s'/></svg>",
       row: 3,
       col: 14,
     },
-
     {
       name: "Phosphorus",
       symbol: "P",
@@ -1119,48 +894,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "nonmetal",
       specific: "nonmetal",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> P | <strong>Atomic number:</strong> 15 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p³</p>
-        <p>Phosphorus exists in several allotropes; white phosphorus is waxy and highly reactive (and toxic), while red and black phosphorus are more stable and used in industry. Phosphorus is essential to life — it forms part of DNA, RNA and ATP (energy carrier).</p>
-      </section>
-
-      <section>
-        <h2>2. Uses & Applications</h2>
-        <ol>
-          <li><strong>Fertilizers:</strong> Phosphate rock is processed to produce phosphoric acid and phosphate fertilizers — critical for global agriculture.</li>
-          <li><strong>Matches & Pyrotechnics:</strong> Red phosphorus is used on matchbox striking surfaces; certain allotropes are used in safety applications and smoke formulations.</li>
-          <li><strong>Industrial chemicals:</strong> Phosphorus compounds are used in flame retardants, detergents, and metal treatments.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>3. Safety</h2>
-        <p>White phosphorus is highly toxic and can spontaneously ignite in air; it must be stored under water. Industrial handling requires strict controls and protective measures.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-p">
-      <title id="t-p">Phosphorus match animation</title>
-      <rect width="240" height="120" rx="10" fill="#fff8e1"/>
-      <g transform="translate(24,20)">
-        <rect x="0" y="12" width="120" height="14" rx="4" fill="#6d4c41"/>
-        <rect x="6" y="6" width="12" height="36" rx="2" fill="#bdbdbd"/>
-        <g transform="translate(28,6)">
-          <rect x="0" y="0" width="12" height="36" rx="2" fill="#c62828">
-            <animate attributeName="opacity" values="1;0.4;1" dur="1s" repeatCount="indefinite"/>
-          </rect>
-          <path d="M6 36 C4 46 20 46 18 36 Z" fill="#ff8a65">
-            <animate attributeName="d" dur="0.6s" values="M6 36 C4 46 20 46 18 36 Z;M6 36 C2 52 22 52 18 36 Z;M6 36 C4 46 20 46 18 36 Z" repeatCount="indefinite"/>
-          </path>
-        </g>
-        <text x="150" y="26" font-family="Arial" font-size="28" fill="#6d4c41">P</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> P | <strong>Atomic number:</strong> 15 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p³</p><p>Discovered in 1669, Phosphorus is a highly reactive nonmetal. It exists in several forms, including white phosphorus (waxy, poisonous, glows in the dark) and red phosphorus (less reactive, used on matchboxes).</p></section><section><h2>2. Uses & Importance</h2><p>Phosphorus is essential for life, forming the backbone of DNA and RNA. Its primary commercial use is in phosphate fertilizers. It is also used in safety matches, pyrotechnics, and certain steel alloys.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.match-stick{fill:#A1887F}.match-head{fill:#C62828;animation:strike 2s ease-out infinite}@keyframes strike{0%{opacity:1}50%{opacity:1;transform:translate(0,-5px) scale(1.5)}100%{opacity:0}}</style><rect class='match-stick' x='48' y='20' width='4' height='70'/><circle class='match-head' cx='50' cy='20' r='10'/></svg>",
       row: 3,
       col: 15,
     },
-
     {
       name: "Sulfur",
       symbol: "S",
@@ -1173,45 +912,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "nonmetal",
       specific: "nonmetal",
       physical: "Solid",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> S | <strong>Atomic number:</strong> 16 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁴</p>
-        <p>Sulfur is a yellow, brittle nonmetal known since antiquity. It occurs in elemental form near volcanic areas and as sulfide and sulfate minerals. Sulfur has multiple oxidation states (−2 to +6), enabling diverse chemistry.</p>
-      </section>
-
-      <section>
-        <h2>2. Uses & Industrial Importance</h2>
-        <ol>
-          <li><strong>Sulfuric acid:</strong> The majority of produced sulfur is converted to H₂SO₄ — the “workhorse” chemical used in fertilizer manufacture, mineral processing, and chemical synthesis.</li>
-          <li><strong>Vulcanization & materials:</strong> Sulfur is used in rubber vulcanization and production of certain sulfur-containing chemicals.</li>
-          <li><strong>Agriculture & others:</strong> Used as fungicide and soil amendment in some settings.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>3. Safety & Environmental Notes</h2>
-        <p>Sulfur compounds like SO₂ and H₂S are toxic and have strong odors; emissions control and scrubbing technologies are important in industrial settings.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-s">
-      <title id="t-s">Sulfur volcano animation</title>
-      <rect width="240" height="120" rx="10" fill="#fffde7"/>
-      <g transform="translate(30,18)">
-        <path d="M10 78 L30 28 H60 L80 78 Z" fill="#efebe9" stroke="#bdbdbd"/>
-        <path d="M30 28 C38 18 52 18 60 28 L60 40 L30 40 Z" fill="#fff59d">
-          <animate attributeName="fill" values="#fff59d;#fff176;#fff59d" dur="2s" repeatCount="indefinite"/>
-        </path>
-        <circle cx="48" cy="28" r="6" fill="#ffd54f">
-          <animate attributeName="r" values="4;8;4" dur="1.2s" repeatCount="indefinite"/>
-        </circle>
-        <text x="110" y="58" font-family="Arial" font-size="30" fill="#f57f17">S</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> S | <strong>Atomic number:</strong> 16 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁴</p><p>Sulfur, known in ancient times, is a bright yellow, brittle nonmetal. It is infamous for the smell of its compounds, like hydrogen sulfide (rotten eggs).</p></section><section><h2>2. Uses & Importance</h2><p>The vast majority of sulfur is used to make sulfuric acid (<code>H₂SO₄</code>), a key industrial chemical used in fertilizers and pigments. Sulfur is also used in the vulcanization of rubber and as a fungicide in agriculture.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.volcano{fill:#795548}.lava{fill:#FFEB3B;animation:erupt 4s ease-out infinite}.smoke{fill:#BDBDBD;opacity:0.7;animation:rise 4s infinite}@keyframes erupt{0%{transform:translateY(0)}50%{transform:translateY(-20px)}100%{transform:translateY(0)}}@keyframes rise{from{transform:translateY(0) scale(1);opacity:0.7}to{transform:translateY(-40px) scale(1.5);opacity:0}}</style><path class='volcano' d='M10,90 L40,30 H60 L90,90 Z'/><path class='lava' d='M40,30 H60 V40 H40 Z'/><circle class='smoke' cx='50' cy='25' r='10' style='animation-delay:0s'/><circle class='smoke' cx='45' cy='20' r='8' style='animation-delay:-1s'/><circle class='smoke' cx='55' cy='18' r='9' style='animation-delay:-2s'/></svg>",
       row: 3,
       col: 16,
     },
-
     {
       name: "Chlorine",
       symbol: "Cl",
@@ -1224,42 +930,12 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "nonmetal",
       specific: "nonmetal",
       physical: "Gas",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Cl | <strong>Atomic number:</strong> 17 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁵</p>
-        <p>Chlorine is a highly reactive, greenish-yellow halogen gas. It exists as diatomic molecules (Cl₂) and is a strong oxidant. Discovered in the 18th century, it revolutionized disinfecting and bleaching technologies.</p>
-      </section>
-
-      <section>
-        <h2>2. Production & Chemistry</h2>
-        <p>Industrial chlorine is produced by electrolysis of brine (chlor-alkali process), yielding Cl₂, H₂ and NaOH. Chlorine forms many compounds (chlorides, chlorinated organics) and reacts readily with metals and nonmetals.</p>
-      </section>
-
-      <section>
-        <h2>3. Uses & Safety</h2>
-        <ol>
-          <li><strong>Water treatment & disinfection:</strong> Chlorine kills bacteria and pathogens and is widely used to sanitize drinking water and pools.</li>
-          <li><strong>Chemical industry:</strong> Precursor to PVC, solvents and many intermediates.</li>
-          <li><strong>Safety:</strong> Chlorine gas is toxic and can be lethal at high concentrations; industrial use requires containment, gas monitoring and emergency protocols.</li>
-        </ol>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-cl">
-      <title id="t-cl">Chlorine drop animation</title>
-      <rect width="240" height="120" rx="10" fill="#f1f8e9"/>
-      <g transform="translate(36,16)">
-        <path d="M24 10 C14 10 10 28 24 40 C38 28 34 10 24 10 Z" fill="#c8e6c9"/>
-        <circle cx="24" cy="34" r="6" fill="#a5d6a7">
-          <animate attributeName="r" values="4;8;4" dur="1.4s" repeatCount="indefinite"/>
-        </circle>
-        <text x="96" y="60" font-family="Arial" font-size="32" fill="#2e7d32">Cl</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Cl | <strong>Atomic number:</strong> 17 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁵</p><p>Discovered in 1774, Chlorine is a yellow-green gas at room temperature. It is a halogen and a powerful oxidizing agent with a sharp, choking smell.</p></section><section><h2>2. Uses & Importance</h2><p>Its most widespread use is for disinfecting drinking water and swimming pools. It is a key ingredient in bleach (sodium hypochlorite) and is used to manufacture PVC plastic, solvents, and pharmaceuticals.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.drop{fill:#81D4FA;animation:drip 2s ease-in infinite;transform-origin:50px 10px}.germ{fill:#8BC34A;stroke:#33691E;stroke-width:2;animation:fade-out 2s infinite}@keyframes drip{0%{transform:scale(0)}50%{transform:scale(1)}100%{opacity:0}}@keyframes fade-out{50%{opacity:1}100%{opacity:0;transform:scale(0.5)}}</style><path class='drop' d='M50,10 C40,30 40,50 50,50 C60,50 60,30 50,10 Z'/><path class='germ' d='M50,70 m -10,0 a 10,10 0 1,0 20,0 a 10,10 0 1,0 -20,0'/></svg>",
       row: 3,
       col: 17,
     },
-
     {
       name: "Argon",
       symbol: "Ar",
@@ -1272,45 +948,9 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "noble-gas",
       specific: "noble-gas",
       physical: "Gas",
-      description: `
-      <section>
-        <h2>1. Introduction</h2>
-        <p><strong>Symbol:</strong> Ar | <strong>Atomic number:</strong> 18 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁶</p>
-        <p>Argon is a noble gas comprising about 0.93% of Earth's atmosphere. Chemically inert and monoatomic, argon is widely available and inexpensive compared with other noble gases, which has driven its many industrial applications.</p>
-      </section>
-
-      <section>
-        <h2>2. Properties & Sources</h2>
-        <p>Argon is extracted from air by fractional distillation of liquid air. It is colorless, odorless and non-reactive under ordinary conditions. Stable isotopes include ³⁶Ar, ³⁸Ar and ⁴⁰Ar (40Ar is useful in geochronology).</p>
-      </section>
-
-      <section>
-        <h2>3. Uses & Why</h2>
-        <ol>
-          <li><strong>Welding & metallurgy:</strong> Argon provides an inert shielding atmosphere for welding to prevent oxidation of molten metal.</li>
-          <li><strong>Lighting:</strong> Used to fill incandescent bulbs and gas-discharge tubes; argon prolongs filament life by reducing evaporation.</li>
-          <li><strong>Scientific:</strong> Used in gas chromatography, mass spectrometry and as a protective atmosphere in high-temperature processes.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>4. Safety</h2>
-        <p>Argon is non-toxic but as an asphyxiant can displace oxygen in confined spaces. Proper ventilation and gas detection are required in industrial environments.</p>
-      </section>
-    `,
-      svg: `<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-ar">
-      <title id="t-ar">Argon bulb animation</title>
-      <rect width="240" height="120" rx="10" fill="#f3f6ff"/>
-      <g transform="translate(34,14)">
-        <ellipse cx="48" cy="40" rx="40" ry="28" fill="#e8f1ff" stroke="#90a4ae"/>
-        <g transform="translate(12,10)">
-          <circle cx="24" cy="18" r="6" fill="#90caf9">
-            <animate attributeName="r" values="4;8;4" dur="1.6s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-        <text x="126" y="60" font-family="Arial" font-size="30" fill="#1976d2">Ar</text>
-      </g>
-    </svg>`,
+      description:
+        "<section><h2>1. Introduction</h2><p><strong>Symbol:</strong> Ar | <strong>Atomic number:</strong> 18 | <strong>Electronic configuration:</strong> [Ne] 3s² 3p⁶</p><p>Discovered in 1894, Argon is the third most abundant gas in Earth's atmosphere (~0.94%). As a noble gas, it is colorless, odorless, and extremely unreactive.</p></section><section><h2>2. Uses & Importance</h2><p>Its inertness is valuable. Argon is used in welding to provide an unreactive atmosphere, to fill incandescent light bulbs to protect the filament, and as the gas in certain types of lasers.</p></section>",
+      svg: "<svg viewBox='0 0 100 100'><style>.bulb-glass{fill:rgba(224,242,241,0.3);stroke:#4DB6AC;stroke-width:2}.filament{stroke:#FFB74D;stroke-width:3;animation:light-up 2s infinite alternate}@keyframes light-up{from{opacity:0.3}to{opacity:1;filter:drop-shadow(0 0 5px #FFE082)}}</style><path class='bulb-glass' d='M50,10 C30,10 30,40 50,60 C70,40 70,10 50,10 Z M40,60 H60 V90 H40 Z'/><path class='filament' d='M45,50 C48,45 52,45 55,50'/></svg>",
       row: 3,
       col: 18,
     },
@@ -3116,175 +2756,185 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  const grid = document.getElementById("periodic-table-grid");
-  const detailsSection = document.getElementById("element-details");
+  const tableGrid = document.getElementById("periodic-table-grid");
   const searchInput = document.getElementById("element-search");
+  const detailsSection = document.getElementById("element-details");
+  const filterButtons = document.querySelectorAll(".btn-wrap");
+  const allButton = document.querySelector(".all-button");
   const fullscreenBtn = document.getElementById("fullscreen-btn");
   const tableWrapper = document.getElementById("periodic-table-wrapper");
-  const filterControls = document.querySelector(".filter-controls");
+  const sidebar = document.getElementById("topic-sidebar");
+  const sidebarToggle = document.getElementById("topic-sidebar-toggle");
+  const sidebarOverlay = document.getElementById("sidebar-overlay");
+  const sidebarNav = document.getElementById("topic-nav");
 
-  if (!grid) {
-    // If the periodic table is not on this page, do nothing further.
-    // This prevents errors on pages that include this script for other functionalities.
-    return;
-  }
+  let activeFilters = { category: [], block: [], state: [] };
 
-  let currentFilters = {
-    category: new Set(),
-    block: new Set(),
-    state: new Set(),
-  };
-
-  const populateGrid = () => {
-    grid.innerHTML =
+  function populateTable() {
+    if (!tableGrid) return;
+    tableGrid.innerHTML =
       '<div class="spinner-container"><div class="spinner"></div><p>Loading Elements...</p></div>';
 
-    // Add Period and Group labels
-    for (let i = 1; i <= 7; i++) {
-      const periodLabel = document.createElement("div");
-      periodLabel.className = "grid-label";
-      periodLabel.textContent = i;
-      periodLabel.style.gridRow = i + 1;
-      periodLabel.style.gridColumn = 1;
-      grid.appendChild(periodLabel);
-    }
+    // Add Group Labels (1-18)
     for (let i = 1; i <= 18; i++) {
-      const groupLabel = document.createElement("div");
-      groupLabel.className = "grid-label";
-      groupLabel.textContent = i;
-      groupLabel.style.gridRow = 1;
-      groupLabel.style.gridColumn = i + 1;
-      grid.appendChild(groupLabel);
+      const label = document.createElement("div");
+      label.className = "grid-label";
+      label.textContent = i;
+      label.style.gridColumn = i + 1;
+      label.style.gridRow = 1;
+      tableGrid.appendChild(label);
     }
 
-    // Add Lanthanide and Actinide series labels
+    // Add Period Labels (1-7)
+    for (let i = 1; i <= 7; i++) {
+      const label = document.createElement("div");
+      label.className = "grid-label";
+      label.textContent = i;
+      label.style.gridColumn = 1;
+      label.style.gridRow = i + 1;
+      tableGrid.appendChild(label);
+    }
+
+    // Add Lanthanide/Actinide placeholders
+    const lanthanidePlaceholder = document.createElement("div");
+    lanthanidePlaceholder.className = "series-label-placeholder";
+    lanthanidePlaceholder.textContent = "57-71";
+    lanthanidePlaceholder.style.gridRow = "7"; // Row for period 6
+    lanthanidePlaceholder.style.gridColumn = "4";
+    tableGrid.appendChild(lanthanidePlaceholder);
+
+    const actinidePlaceholder = document.createElement("div");
+    actinidePlaceholder.className = "series-label-placeholder";
+    actinidePlaceholder.textContent = "89-103";
+    actinidePlaceholder.style.gridRow = "8"; // Row for period 7
+    actinidePlaceholder.style.gridColumn = "4";
+    tableGrid.appendChild(actinidePlaceholder);
+
+    // Add series labels for Lanthanides and Actinides
     const lanthanideLabel = document.createElement("div");
     lanthanideLabel.className = "series-label";
     lanthanideLabel.textContent = "Lanthanides";
-    lanthanideLabel.style.gridRow = "9";
-    lanthanideLabel.style.gridColumn = "2 / span 2";
-    grid.appendChild(lanthanideLabel);
+    lanthanideLabel.style.gridRow = "10";
+    lanthanideLabel.style.gridColumn = "3";
+    tableGrid.appendChild(lanthanideLabel);
 
     const actinideLabel = document.createElement("div");
     actinideLabel.className = "series-label";
     actinideLabel.textContent = "Actinides";
-    actinideLabel.style.gridRow = "10";
-    actinideLabel.style.gridColumn = "2 / span 2";
-    grid.appendChild(actinideLabel);
+    actinideLabel.style.gridRow = "11";
+    actinideLabel.style.gridColumn = "3";
+    tableGrid.appendChild(actinideLabel);
 
-    // Placeholder for Lanthanum/Actinium in main table
-    const lanthanumPlaceholder = document.createElement("div");
-    lanthanumPlaceholder.className = "series-label-placeholder";
-    lanthanumPlaceholder.textContent = "57-71";
-    lanthanumPlaceholder.style.gridRow = "7";
-    lanthanumPlaceholder.style.gridColumn = "4";
-    grid.appendChild(lanthanumPlaceholder);
-
-    const actiniumPlaceholder = document.createElement("div");
-    actiniumPlaceholder.className = "series-label-placeholder";
-    actiniumPlaceholder.textContent = "89-103";
-    actiniumPlaceholder.style.gridRow = "8";
-    actiniumPlaceholder.style.gridColumn = "4";
-    grid.appendChild(actiniumPlaceholder);
-
-    // Use a DocumentFragment for performance
-    const fragment = document.createDocumentFragment();
-    elementsData.forEach((element) => {
+    elementsData.forEach((el) => {
       const cell = document.createElement("div");
-      cell.className = "element-cell " + element.specific;
-      cell.style.gridRow = element.row + 1;
-      cell.style.gridColumn = element.col + 1;
-      cell.dataset.atomicNumber = element.atomicNumber;
-      cell.setAttribute("role", "button");
-      cell.setAttribute("tabindex", "0");
-      cell.setAttribute("aria-label", `Element: ${element.name}`);
+      cell.className = `element-cell ${el.type}`;
+      cell.style.gridRow = el.row + 1;
+      cell.style.gridColumn = el.col + 1;
+      cell.dataset.name = el.name.toLowerCase();
+      cell.dataset.symbol = el.symbol.toLowerCase();
+      cell.dataset.category = el.type;
+      cell.dataset.block = el.block;
+      cell.dataset.state = el.physical.toLowerCase();
 
       cell.innerHTML = `
-                <div class="cell-number">${element.atomicNumber}</div>
-                <div class="cell-symbol">${element.symbol}</div>
-                <div class="cell-name">${element.name}</div>
-                <div class="cell-mass">${element.atomicMass}</div>
+                <div class="cell-number">${el.atomicNumber}</div>
+                <div class="cell-symbol">${el.symbol}</div>
+                <div class="cell-name">${el.name}</div>
+                <div class="cell-mass">${el.atomicMass}</div>
             `;
-      fragment.appendChild(cell);
+      cell.addEventListener("click", () => {
+        displayElementDetails(el);
+        document
+          .querySelectorAll(".element-cell")
+          .forEach((c) => c.classList.remove("selected"));
+        cell.classList.add("selected");
+      });
+      tableGrid.appendChild(cell);
     });
 
-    grid.innerHTML = ""; // Clear spinner
-    grid.appendChild(fragment);
-    applyFilters();
-  };
+    tableGrid.querySelector(".spinner-container")?.remove();
+  }
 
-  const showElementDetails = (atomicNumber) => {
-    const element = elementsData.find((el) => el.atomicNumber == atomicNumber);
-    if (!element) return;
+  function displayElementDetails(element, shouldScroll = true) {
+    if (!detailsSection) return;
 
-    // Highlight selected cell
-    document.querySelectorAll(".element-cell.selected").forEach((cell) => {
-      cell.classList.remove("selected");
-    });
-    const cell = grid.querySelector(`[data-atomic-number="${atomicNumber}"]`);
-    if (cell) cell.classList.add("selected");
+    const sidebarHTML = `
+            <aside class="details-sidebar-adv">
+                <div class="sidebar-card">
+                    <h3>${element.name} (${element.symbol})</h3>
+                    <div class="details-svg-container ${element.type}">
+                        ${element.svg || "<p>No image available</p>"}
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <h3>Key Properties</h3>
+                    <ul class="details-key-properties">
+                        <li><strong>Atomic Number:</strong> <span>${
+                          element.atomicNumber
+                        }</span></li>
+                        <li><strong>Atomic Mass:</strong> <span>${
+                          element.atomicMass
+                        }</span></li>
+                        <li><strong>Group:</strong> <span>${
+                          element.group || "N/A"
+                        }</span></li>
+                        <li><strong>Period:</strong> <span>${
+                          element.period
+                        }</span></li>
+                        <li><strong>Block:</strong> <span>${
+                          element.block
+                        }</span></li>
+                        <li><strong>State at STP:</strong> <span>${
+                          element.physical
+                        }</span></li>
+                        <li><strong>Config:</strong> <span>${
+                          element.electronic
+                        }</span></li>
+                    </ul>
+                </div>
+            </aside>
+        `;
+
+    const proseHTML = `
+            <article class="details-prose-adv">
+                ${
+                  element.description ||
+                  "<p>Detailed information is not available.</p>"
+                }
+            </article>
+        `;
 
     detailsSection.innerHTML = `
-      <div class="details-layout-adv">
-        <div class="details-prose-adv">
-          ${element.description}
-        </div>
-        <aside class="details-sidebar-adv">
-          <div class="sidebar-card">
-              <h3>${element.name} (${element.symbol})</h3>
-              <div class="details-svg-container">${element.svg}</div>
-          </div>
-          <div class="sidebar-card">
-              <h3>Key Properties</h3>
-              <ul class="details-key-properties">
-                  <li><strong>Atomic Number:</strong> <span>${element.atomicNumber}</span></li>
-                  <li><strong>Atomic Mass:</strong> <span>${element.atomicMass}</span></li>
-                  <li><strong>Group, Period:</strong> <span>${element.group}, ${element.period}</span></li>
-                  <li><strong>Block:</strong> <span>${element.block}</span></li>
-                  <li><strong>State at STP:</strong> <span>${element.physical}</span></li>
-                  <li><strong>Configuration:</strong> <span>${element.electronic}</span></li>
-              </ul>
-          </div>
-        </aside>
-      </div>`;
+            <div class="details-layout-adv">
+                ${sidebarHTML}
+                ${proseHTML}
+            </div>
+        `;
     detailsSection.hidden = false;
-    detailsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
-  const applyFilters = () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const hasActiveFilter = Object.values(currentFilters).some(
-      (set) => set.size > 0
-    );
+    if (shouldScroll) {
+      detailsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
 
-    grid.querySelectorAll(".element-cell").forEach((cell) => {
-      const element = elementsData.find(
-        (el) => el.atomicNumber == cell.dataset.atomicNumber
-      );
-      if (!element) return;
+  function applyAllFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+    const allCells = document.querySelectorAll(".element-cell");
 
-      const searchMatch =
-        !searchTerm ||
-        element.name.toLowerCase().includes(searchTerm) ||
-        element.symbol.toLowerCase().includes(searchTerm) ||
-        String(element.atomicNumber).includes(searchTerm);
+    allCells.forEach((cell) => {
+      const nameMatch = cell.dataset.name.includes(query);
+      const symbolMatch = cell.dataset.symbol.includes(query);
+      const searchMatch = !query || nameMatch || symbolMatch;
 
       const categoryMatch =
-        !currentFilters.category.size ||
-        currentFilters.category.has(element.specific) ||
-        (currentFilters.category.has("metal") &&
-          (element.type.includes("metal") ||
-            element.type.includes("lanthanide") ||
-            element.type.includes("actinide"))) ||
-        (currentFilters.category.has("nonmetal-group") &&
-          (element.type === "nonmetal" || element.type === "noble-gas"));
-
+        activeFilters.category.length === 0 ||
+        activeFilters.category.includes(cell.dataset.category);
       const blockMatch =
-        !currentFilters.block.size || currentFilters.block.has(element.block);
-
+        activeFilters.block.length === 0 ||
+        activeFilters.block.includes(cell.dataset.block);
       const stateMatch =
-        !currentFilters.state.size ||
-        currentFilters.state.has(element.physical.toLowerCase());
+        activeFilters.state.length === 0 ||
+        activeFilters.state.includes(cell.dataset.state);
 
       if (searchMatch && categoryMatch && blockMatch && stateMatch) {
         cell.classList.remove("filtered-out");
@@ -3292,70 +2942,137 @@ document.addEventListener("DOMContentLoaded", () => {
         cell.classList.add("filtered-out");
       }
     });
-  };
+  }
 
-  // Event Listeners
-  grid.addEventListener("click", (e) => {
-    const cell = e.target.closest(".element-cell");
-    if (cell) {
-      showElementDetails(cell.dataset.atomicNumber);
-    }
-  });
-  grid.addEventListener("keydown", (e) => {
-    const cell = e.target.closest(".element-cell");
-    if (cell && (e.key === "Enter" || e.key === " ")) {
-      e.preventDefault();
-      showElementDetails(cell.dataset.atomicNumber);
-    }
-  });
+  function handleFilterClick(button) {
+    const group = button.dataset.filterGroup;
+    const value = button.dataset.filterValue;
 
-  searchInput.addEventListener("input", applyFilters);
+    // Special handling for broad metal/nonmetal categories
+    const metalSubcats = [
+      "alkali-metal",
+      "alkaline-earth-metal",
+      "lanthanide",
+      "actinide",
+      "transition-metal",
+      "post-transition-metal",
+    ];
+    const nonmetalSubcats = ["nonmetal", "noble-gas"];
 
-  fullscreenBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      tableWrapper
-        .requestFullscreen()
-        .catch((err) =>
-          alert(`Error attempting to enable full-screen mode: ${err.message}`)
-        );
+    if (value === "metal") {
+      activeFilters.category = [
+        ...new Set([...activeFilters.category, ...metalSubcats]),
+      ];
+    } else if (value === "nonmetal-group") {
+      activeFilters.category = [
+        ...new Set([...activeFilters.category, ...nonmetalSubcats]),
+      ];
     } else {
-      document.exitFullscreen();
-    }
-  });
-
-  if (filterControls) {
-    filterControls.addEventListener("click", (e) => {
-      const btnWrap = e.target.closest(".btn-wrap");
-      const allBtn = e.target.closest(".all-button");
-
-      if (allBtn) {
-        // Reset all filters
-        currentFilters.category.clear();
-        currentFilters.block.clear();
-        currentFilters.state.clear();
-        document
-          .querySelectorAll(".btn-wrap.active")
-          .forEach((b) => b.classList.remove("active"));
-      } else if (btnWrap) {
-        const group = btnWrap.dataset.filterGroup;
-        const value = btnWrap.dataset.filterValue;
-
-        // Toggle active state for button UI
-        btnWrap.classList.toggle("active");
-
-        // Update filter set
-        if (currentFilters[group].has(value)) {
-          currentFilters[group].delete(value);
-        } else {
-          currentFilters[group].add(value);
-        }
+      const index = activeFilters[group].indexOf(value);
+      if (index > -1) {
+        activeFilters[group].splice(index, 1);
+      } else {
+        activeFilters[group].push(value);
       }
+    }
 
-      applyFilters();
+    // Update button states
+    updateFilterButtons();
+    applyAllFilters();
+  }
+
+  function updateFilterButtons() {
+    filterButtons.forEach((button) => {
+      const group = button.dataset.filterGroup;
+      const value = button.dataset.filterValue;
+      if (activeFilters[group].includes(value)) {
+        button.classList.add("active");
+      } else {
+        button.classList.remove("active");
+      }
     });
   }
 
-  populateGrid();
-  // Show details for Hydrogen by default
-  showElementDetails(1);
+  function closeMobileSidebar() {
+    if (sidebar) sidebar.classList.remove("is-open");
+    if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
+  }
+
+  searchInput.addEventListener("input", applyAllFilters);
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      handleFilterClick(button);
+      tableWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+
+  if (allButton) {
+    allButton.addEventListener("click", () => {
+      activeFilters = { category: [], block: [], state: [] };
+      updateFilterButtons();
+      applyAllFilters();
+      tableWrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }
+
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        tableWrapper.requestFullscreen().catch((err) => {
+          alert(
+            `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+          );
+        });
+        fullscreenBtn.textContent = "Exit Full View";
+      } else {
+        document.exitFullscreen();
+        fullscreenBtn.textContent = "Full View";
+      }
+    });
+  }
+
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+      fullscreenBtn.textContent = "Full View";
+    }
+  });
+
+  // --- Sidebar Logic ---
+  if (sidebarToggle && sidebar && sidebarOverlay) {
+    sidebarToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("is-open");
+      sidebarOverlay.classList.toggle("is-open");
+    });
+
+    sidebarOverlay.addEventListener("click", closeMobileSidebar);
+  }
+
+  if (sidebarNav) {
+    sidebarNav.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        const currentActive = sidebarNav.querySelector("a.active");
+        if (currentActive) {
+          currentActive.classList.remove("active");
+        }
+        e.target.classList.add("active");
+
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 991) {
+          closeMobileSidebar();
+        }
+      }
+    });
+  }
+
+  populateTable();
+
+  // Default Element Display on Load
+  const defaultElement = elementsData.find((el) => el.atomicNumber === 1);
+  const defaultCell = tableGrid.querySelector('.element-cell[data-symbol="h"]');
+
+  if (defaultElement && defaultCell) {
+    displayElementDetails(defaultElement, false); // Do not scroll on initial load
+    defaultCell.classList.add("selected");
+  }
 });
