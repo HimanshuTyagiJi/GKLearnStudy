@@ -1,475 +1,228 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Temperature Unit Conversion</title>
-    <meta
-      name="description"
-      content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples."
-    />
-    <meta
-      name="keywords"
-      content="temperature conversion, unit conversion, Celsius to Fahrenheit, Kelvin conversion, temperature scales, conversion examples, online tools, temperature measurement, practical examples, Celsius to Kelvin, Fahrenheit to Celsius"
-    />
-    <meta name="author" content="Mr. Himanshu Tyagi" />
-    <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="copyright" content="© 2024 GK Learn Study" />
-    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
-    <link
-      rel="canonical"
-      href="https://gklearnstudy.in/conversion/temperature-unit-conversion"
-    />
-
-    <!-- Open Graph Meta Tags for Facebook -->
-    <meta
-      property="og:title"
-      content="Temperature Unit Conversion - Learn How to Convert Temperature Scales"
-    />
-    <meta
-      property="og:description"
-      content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples."
-    />
-    <meta
-      property="og:image"
-      content="https://gklearnstudy.in/images/temperature-unit-conversion.webp"
-    />
-    <meta
-      property="og:url"
-      content="https://gklearnstudy.in/conversion/temperature-unit-conversion"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="GK Learn Study" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Temperature Unit Conversion - Learn How to Convert Temperature Scales"
-    />
-    <meta
-      name="twitter:description"
-      content="Discover temperature unit conversion and learn how to convert between different temperature scales. Understand conversions for Celsius, Fahrenheit, Kelvin, and more with practical examples."
-    />
-    <meta
-      name="twitter:image"
-      content="https://gklearnstudy.in/images/temperature-unit-conversion.webp"
-    />
-    <meta name="twitter:site" content="" />
-    <meta name="twitter:creator" content="" />
-    <meta name="twitter:image:alt" content="Temperature Conversion Tools" />
-
-    <!-- Additional Meta Tags -->
-    <meta property="article:author" content="Mr. Himanshu Tyagi" />
-    <meta property="article:section" content="Education" />
-    <meta
-      property="article:tag"
-      content="Temperature Conversion, Measurement, Tools, Online Conversion"
-    />
-    <meta name="theme-color" content="#90EE90" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta
-      name="apple-mobile-web-app-title"
-      content="Temperature Unit Conversion"
-    />
-    <meta name="application-name" content="Temperature Unit Conversion" />
-    <meta name="msapplication-TileColor" content="#90EE90" />
-    <meta
-      name="msapplication-TileImage"
-      content="https://gklearnstudy.in/images/temperature-unit-conversion.webp"
-    />
-    <meta name="msapplication-config" content="browserconfig.xml" />
-
-    <!-- Social Media Meta Tags -->
-    
-    
-
-    <script src="https://gklearnstudy.in/js/menu.js" defer></script>
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/maths.css" />
-
-    <!-- Defer JavaScript Files -->
-
-    <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
-    <script src="https://gklearnstudy.in/js/maths.js" defer></script>
-    <script src="https://gklearnstudy.in/js/convert.js" defer></script>
-    <script src="https://gklearnstudy.in/js/search.js" defer></script>
-  </head>
-
-  <body>
-    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-    <ul class="menu-list" id="menuList">
-      <li><a href="angle-unit-conversion.html">Angle Conversion</a></li>
-      <li><a href="area-unit-conversion.html">Area Conversion</a></li>
-      <li><a href="length-unit-conversion.html">Length Conversion</a></li>
-      <li><a href="power-unit-conversion.html">Power Conversion</a></li>
-      <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
-      <li><a href="speed-unit-conversion.html">Speed Conversion</a></li>
-      <li>
-        <a class="active" href="temperature-unit-conversion.html"
-          >Temperature Conversion</a
-        >
-      </li>
-      <li><a href="time-unit-conversion.html">Time Conversion</a></li>
-      <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
-      <li>
-        <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a>
-      </li>
-    </ul>
-    <div class="search-container">
-      <button class="search-icon" id="searchBtn">
-        <span class="rotated-icon">⌕</span>
-      </button>
-      <button class="back-icon" id="backBtn">←</button>
-      <input
-        type="text"
-        class="search-input"
-        id="searchInput"
-        autocomplete="off"
-        placeholder="Search..."
-        required
-        oninput="showSuggestions(event)"
-      />
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-<div class="container">
-      <h1>Temperature Unit Conversion - Definition, Types, Importance</h1>
-
-      <div class="custom-container">
-        <div class="custom-row">
-          <div class="custom-column">
-            <div class="content" id="Temperature"></div>
-
-            <h2>Temperature Conversion</h2>
-
-            <table id="myTable">
-              <tr>
-                <td>Fahrenheit</td>
-                <td>
-                  <input
-                    id="inputFahrenheit"
-                    class="w3-input w3-border"
-                    min="-459.66999999999996"
-                    placeholder="Fahrenheit"
-                    oninput="temperatureConverter(this.id,this.value)"
-                    onchange="temperatureConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Celsius</td>
-                <td>
-                  <input
-                    id="inputCelsius"
-                    class="w3-input w3-border"
-                    min="-273.15"
-                    placeholder="Celsius"
-                    oninput="temperatureConverter(this.id,this.value)"
-                    onchange="temperatureConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Kelvin</td>
-                <td>
-                  <input
-                    id="inputKelvin"
-                    class="w3-input w3-border"
-                    min="0"
-                    placeholder="Kelvin"
-                    oninput="temperatureConverter(this.id,this.value)"
-                    onchange="temperatureConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="custom-column">
-            <h2>Temperature Unit Conversion</h2>
-
-            <table id="myTable">
-              <tr>
-                <td>1 Celsius</td>
-                <td>=</td>
-                <td>33.8 f</td>
-              </tr>
-              <tr>
-                <td>1 Fahrenheit</td>
-                <td>=</td>
-                <td>-17.22 c</td>
-              </tr>
-              <tr>
-                <td>1 Kelvin</td>
-                <td>=</td>
-                <td>-272.15 c</td>
-              </tr>
-            </table>
-            <br />
-          </div>
+    <head>
+        <title>Temperature Conversion Tool & Guide | Celsius, Fahrenheit, Kelvin | GK Learn Study</title>
+        <meta name="description" content="An interactive tool and comprehensive guide for temperature unit conversion. Easily convert between Celsius, Fahrenheit, and Kelvin. Learn the formulas, history, and practical applications in science, cooking, and weather." />
+        <meta name="keywords" content="temperature conversion, convert celsius to fahrenheit, convert fahrenheit to celsius, kelvin, temperature converter, science, cooking, unit conversion tool" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Mr. Himanshu Tyagi" />
+        <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+        <meta name="robots" content="index, follow" />
+        <meta name="copyright" content="© 2024 GK Learn Study" />
+        <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+        <link rel="canonical" href="https://gklearnstudy.in/conversion/temperature-unit-conversion.html" />
+        <meta property="og:title" content="Temperature Conversion Tool & Guide | Celsius, Fahrenheit, Kelvin" />
+        <meta property="og:description" content="A complete guide and tool for converting temperature units like Celsius, Fahrenheit, and Kelvin. Includes formulas, detailed examples, and practical uses." />
+        <meta property="og:image" content="https://gklearnstudy.in/images/temperature-unit-conversion.webp" />
+        <meta property="og:url" content="https://gklearnstudy.in/conversion/temperature-unit-conversion.html" />
+        <meta property="og:type" content="website" />
+        <link rel="stylesheet" href="../index.css">
+        <link rel="stylesheet" href="../conversion.css">
+        <link rel="stylesheet" href="../topicmenu.css">
+        <link rel="stylesheet" href="../comment.css">
+    </head>
+    <body>
+        <div id="reading-progress-bar"></div>
+       <header class="header" id="header">
+            <nav class="navbar container1">
+                <a href="../index.html" class="brand" aria-label="GK Learn Study">
+                    <div class="logo-container1">
+                        <div class="demo2">
+                            <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white" /><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">GK<animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" /><animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" /><animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" /></text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center;" opacity="0">Learn Study<animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" /><animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" /></text><clipPath id="circle-clip"><circle cx="150" cy="150" r="150" /></clipPath><g clip-path="url(#circle-clip)"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" /></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" /></path></g></svg>
+                        </div>
+                    </div>
+                </a>
+                <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div>
+                <span class="overlay"></span>
+                <div class="menu" id="menu">
+                    <span class="back-arrow">×</span><a href="/" class="menu-brand">GK</a>
+                    <div class="menu-arrow left">&#8249;</div><div class="menu-arrow right">&#8250;</div>
+                    <div class="menu-inner"></div>
+                </div>
+            </nav>
+        </header>
+        <div class="search-container">
+            <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+            <button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
         </div>
-      </div>
 
-      <b>Definition - </b>
-      <p>
-        Temperature unit conversion involves converting measurements of
-        temperature from one unit to another. Temperature is a measure of the
-        average kinetic energy of particles in a substance. It's a fundamental
-        concept in physics, chemistry, meteorology, and many other fields.
-        Different units of temperature are used in different parts of the world
-        and for various applications, and conversion helps ensure accurate
-        communication and calculations.
-      </p>
-      <p>
-        तापमान इकाई रूपांतरण का अर्थ है तापमान की माप को एक इकाई से दूसरी इकाई
-        में बदलना। तापमान किसी पदार्थ में कणों की औसत गतिज ऊर्जा का माप होता है।
-        यह भौतिकी, रसायन विज्ञान, मौसम विज्ञान तथा कई अन्य क्षेत्रों में एक
-        मौलिक अवधारणा है। तापमान की विभिन्न इकाइयाँ दुनिया के अलग-अलग हिस्सों
-        में और विभिन्न उपयोगों के लिए प्रयोग की जाती हैं, और रूपांतरण सटीक संचार
-        और गणनाओं को सुनिश्चित करने में मदद करता है।
-      </p>
-
-      <h2>
-        <svg
-          fill="#ea1010"
-          width="200px"
-          height="200px"
-          alt="Temperature Unit Conversion"
-          viewBox="0 0 32 32"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#ea1010"
-          stroke-width="0.00032"
-        >
-          <path
-            d="M21.25 6.008c0-6.904-10.5-6.904-10.5 0v13.048c-1.238 1.298-2.001 3.061-2.001 5.001 0 4.004 3.246 7.25 7.25 7.25s7.25-3.246 7.25-7.25c0-1.94-0.762-3.702-2.003-5.003l0.003 0.003zM16 28.75c-2.623 0-4.75-2.127-4.75-4.75 0-1.405 0.61-2.667 1.58-3.537l0.004-0.004c0.009-0.008 0.013-0.020 0.022-0.029 0.059-0.063 0.112-0.133 0.157-0.208l0.003-0.006c0.043-0.053 0.084-0.113 0.119-0.175l0.003-0.006c0.020-0.055 0.037-0.122 0.049-0.19l0.001-0.007c0.027-0.081 0.047-0.175 0.056-0.272l0-0.005 0.007-0.033v-13.52c-0.001-0.031-0.002-0.068-0.002-0.105 0-1.52 1.232-2.752 2.752-2.752s2.752 1.232 2.752 2.752c0 0.037-0.001 0.074-0.002 0.11l0-0.005v13.52c0 0.012 0.007 0.023 0.007 0.035 0.009 0.098 0.028 0.188 0.056 0.274l-0.002-0.009c0.013 0.079 0.031 0.149 0.055 0.217l-0.003-0.009c0.038 0.068 0.079 0.127 0.123 0.182l-0.002-0.002c0.048 0.081 0.101 0.151 0.16 0.215l-0.001-0.001c0.009 0.009 0.012 0.021 0.022 0.029 0.974 0.874 1.584 2.136 1.584 3.541 0 2.623-2.127 4.75-4.75 4.75v0zM17.25 21.001v-3.399c0-0.69-0.56-1.25-1.25-1.25s-1.25 0.56-1.25 1.25v0 3.399c-1.184 0.503-2 1.656-2 3 0 1.795 1.455 3.25 3.25 3.25s3.25-1.455 3.25-3.25c0-1.344-0.816-2.497-1.979-2.992l-0.021-0.008zM26.5 1.75c-2.071 0-3.75 1.679-3.75 3.75s1.679 3.75 3.75 3.75c2.071 0 3.75-1.679 3.75-3.75v0c-0.002-2.070-1.68-3.748-3.75-3.75h-0zM26.5 6.75c-0.69 0-1.25-0.56-1.25-1.25s0.56-1.25 1.25-1.25c0.69 0 1.25 0.56 1.25 1.25v0c-0.001 0.69-0.56 1.249-1.25 1.25h-0z"
-          />
-        </svg>
-      </h2>
-
-      <h2>🌡️ Types of Temperature Units (तापमान की इकाइयों के प्रकार)</h2>
-
-      <h3>1️⃣ Celsius (°C)</h3>
-      <p>
-        🌍 <b>English:</b> Celsius is a metric unit of temperature commonly used
-        in most countries around the world. Water freezes at 0°C and boils at
-        100°C under normal conditions.
-      </p>
-      <p>
-        🇮🇳 <b>हिन्दी:</b> सेल्सियस तापमान की मीट्रिक इकाई है जो दुनिया के
-        अधिकांश देशों में प्रयोग की जाती है। सामान्य स्थितियों में पानी 0°C पर
-        जमता है और 100°C पर उबलता है।
-      </p>
-      <p>📊 <b>Example:</b> Room temperature is usually around 25°C.</p>
-
-      <h3>2️⃣ Fahrenheit (°F)</h3>
-      <p>
-        🇺🇸 <b>English:</b> Fahrenheit is mainly used in the United States. In
-        this scale, water freezes at 32°F and boils at 212°F.
-      </p>
-      <p>
-        🇮🇳 <b>हिन्दी:</b> फ़ॉरेनहाइट इकाई मुख्यतः अमेरिका में प्रयोग होती है।
-        इसमें पानी 32°F पर जमता है और 212°F पर उबलता है।
-      </p>
-      <p>📊 <b>Example:</b> A hot summer day may reach 95°F.</p>
-
-      <h3>3️⃣ Kelvin (K)</h3>
-      <p>
-        🔬 <b>English:</b> Kelvin is the SI unit of temperature used mainly in
-        science and engineering. 0 K is called absolute zero, the point where
-        all molecular motion stops.
-      </p>
-      <p>
-        🇮🇳 <b>हिन्दी:</b> केल्विन तापमान की SI इकाई है जो विज्ञान और अभियंत्रण
-        में प्रयोग की जाती है। 0 K को पूर्ण शून्य कहा जाता है, जहाँ अणुओं की
-        सारी गति रुक जाती है।
-      </p>
-      <p>📊 <b>Example:</b> The freezing point of water is 273.15 K.</p>
-
-      <h3>4️⃣ Rankine (°R or °Ra)</h3>
-      <p>
-        ⚙️ <b>English:</b> Rankine is a temperature scale used in some
-        engineering fields, especially in thermodynamics. It uses Fahrenheit
-        degrees but starts at absolute zero.
-      </p>
-      <p>
-        🇮🇳 <b>हिन्दी:</b> रैंकिन तापमान पैमाना कुछ इंजीनियरिंग क्षेत्रों में,
-        विशेषकर ऊष्मागतिकी में प्रयोग किया जाता है। यह फ़ॉरेनहाइट की इकाई का
-        उपयोग करता है लेकिन इसकी शुरुआत पूर्ण शून्य से होती है।
-      </p>
-      <p>📊 <b>Example:</b> 0°R = -459.67°F</p>
-
-      <div class="faq-section">
-        <h4>1️⃣ Convert 100°C to Fahrenheit</h4>
-        <ul>
-          <li>🌡️ Step 1: Use the formula: <b>°F = (°C × 9/5) + 32</b></li>
-          <li>🧮 Step 2: Apply values: <b>(100 × 9/5) + 32 = 212°F</b></li>
-          <li>✅ <b>Answer:</b> 212°F</li>
-        </ul>
-
-        <h4>2️⃣ Convert 0°C to Fahrenheit</h4>
-        <ul>
-          <li>🌡️ Step 1: °F = (°C × 9/5) + 32</li>
-          <li>🧮 Step 2: (0 × 9/5) + 32 = 32°F</li>
-          <li>✅ <b>Answer:</b> 32°F</li>
-        </ul>
-
-        <h4>3️⃣ Convert 212°F to Celsius</h4>
-        <ul>
-          <li>🌡️ Step 1: Use the formula: <b>°C = (°F − 32) × 5/9</b></li>
-          <li>🧮 Step 2: (212 − 32) × 5/9 = 100°C</li>
-          <li>✅ <b>Answer:</b> 100°C</li>
-        </ul>
-
-        <h4>4️⃣ Convert 98.6°F to Celsius</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = (98.6 − 32) × 5/9</li>
-          <li>🧮 Step 2: 66.6 × 5/9 ≈ 37°C</li>
-          <li>✅ <b>Answer:</b> 37°C</li>
-        </ul>
-
-        <h4>5️⃣ Convert 25°C to Kelvin</h4>
-        <ul>
-          <li>🌡️ Step 1: Use formula: <b>K = °C + 273.15</b></li>
-          <li>🧮 Step 2: 25 + 273.15 = 298.15 K</li>
-          <li>✅ <b>Answer:</b> 298.15 K</li>
-        </ul>
-
-        <h4>6️⃣ Convert 0°C to Kelvin</h4>
-        <ul>
-          <li>🌡️ Step 1: K = 0 + 273.15</li>
-          <li>✅ <b>Answer:</b> 273.15 K</li>
-        </ul>
-
-        <h4>7️⃣ Convert 300 K to Celsius</h4>
-        <ul>
-          <li>🌡️ Step 1: Use formula: <b>°C = K − 273.15</b></li>
-          <li>🧮 Step 2: 300 − 273.15 = 26.85°C</li>
-          <li>✅ <b>Answer:</b> 26.85°C</li>
-        </ul>
-
-        <h4>8️⃣ Convert 400 K to Fahrenheit</h4>
-        <ul>
-          <li>🌡️ Step 1: °F = (K − 273.15) × 9/5 + 32</li>
-          <li>🧮 Step 2: (400 − 273.15) × 9/5 + 32 ≈ 260.33°F</li>
-          <li>✅ <b>Answer:</b> 260.33°F</li>
-        </ul>
-
-        <h4>9️⃣ Convert 0 K to Celsius</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = 0 − 273.15</li>
-          <li>✅ <b>Answer:</b> −273.15°C (Absolute Zero)</li>
-        </ul>
-
-        <h4>🔟 Convert 32°F to Kelvin</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = (32 − 32) × 5/9 = 0°C</li>
-          <li>🧮 Step 2: K = 0 + 273.15 = 273.15 K</li>
-          <li>✅ <b>Answer:</b> 273.15 K</li>
-        </ul>
-
-        <h4>1️⃣1️⃣ Convert -40°C to Fahrenheit</h4>
-        <ul>
-          <li>🌡️ Step 1: °F = (-40 × 9/5) + 32</li>
-          <li>🧮 Step 2: -72 + 32 = -40°F</li>
-          <li>✅ <b>Answer:</b> -40°F</li>
-        </ul>
-
-        <h4>1️⃣2️⃣ Convert -40°F to Celsius</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = (-40 − 32) × 5/9</li>
-          <li>🧮 Step 2: -72 × 5/9 = -40°C</li>
-          <li>✅ <b>Answer:</b> -40°C</li>
-        </ul>
-
-        <h4>1️⃣3️⃣ Convert 500 K to Fahrenheit</h4>
-        <ul>
-          <li>🌡️ Step 1: °F = (500 − 273.15) × 9/5 + 32</li>
-          <li>🧮 Step 2: 226.85 × 9/5 + 32 = 440.33°F</li>
-          <li>✅ <b>Answer:</b> 440.33°F</li>
-        </ul>
-
-        <h4>1️⃣4️⃣ Convert 150°F to Kelvin</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = (150 − 32) × 5/9 = 65.56°C</li>
-          <li>🧮 Step 2: K = 65.56 + 273.15 = 338.71 K</li>
-          <li>✅ <b>Answer:</b> 338.71 K</li>
-        </ul>
-
-        <h4>1️⃣5️⃣ Convert 40°C to Rankine</h4>
-        <ul>
-          <li>🌡️ Step 1: °R = (°C + 273.15) × 9/5</li>
-          <li>🧮 Step 2: (40 + 273.15) × 9/5 = 563.67°R</li>
-          <li>✅ <b>Answer:</b> 563.67°R</li>
-        </ul>
-
-        <h4>1️⃣6️⃣ Convert 459.67°F to Rankine</h4>
-        <ul>
-          <li>🌡️ Step 1: °R = °F + 459.67</li>
-          <li>✅ <b>Answer:</b> 919.34°R</li>
-        </ul>
-
-        <h4>1️⃣7️⃣ Convert 500°R to Kelvin</h4>
-        <ul>
-          <li>🌡️ Step 1: K = °R × 5/9</li>
-          <li>🧮 Step 2: 500 × 5/9 = 277.78 K</li>
-          <li>✅ <b>Answer:</b> 277.78 K</li>
-        </ul>
-
-        <h4>1️⃣8️⃣ Convert 273.15 K to Rankine</h4>
-        <ul>
-          <li>🌡️ Step 1: °R = K × 9/5</li>
-          <li>🧮 Step 2: 273.15 × 9/5 = 491.67°R</li>
-          <li>✅ <b>Answer:</b> 491.67°R</li>
-        </ul>
-
-        <h4>1️⃣9️⃣ Convert 600 K to °C</h4>
-        <ul>
-          <li>🌡️ Step 1: °C = 600 − 273.15</li>
-          <li>✅ <b>Answer:</b> 326.85°C</li>
-        </ul>
-
-        <h4>2️⃣0️⃣ Convert 75°F to Rankine</h4>
-        <ul>
-          <li>🌡️ Step 1: °R = 75 + 459.67 = 534.67°R</li>
-          <li>✅ <b>Answer:</b> 534.67°R</li>
-        </ul>
-      </div>
-
-      <hr />
-
-      <div id="right-sidebar">
-        <strong>Important Links</strong>
-
-        <ul id="link-list"></ul>
-      </div>
-
-      <footer>
-        <div class="custom-row">
-          <div class="custom-column">
-            <b>Follow Us</b>
-            <div id="social-links"></div>
-          </div>
-          <div class="custom-column">
-            <button onclick="goToUrl()">Contact</button>
-          </div>
-          <div class="custom-column">
-            <p id="my-paragraph"></p>
-          </div>
+        <div id="sidebar-overlay"></div>
+        <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+        <aside id="topic-sidebar">
+            <p class="sidebar-title">Conversion Topics</p>
+            <nav id="topic-nav">
+                <ul>
+                    <li><a href="../conversion.html">All Conversions</a></li>
+                    <li><a href="../conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+                    <li><a class="active" href="../conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+                    <li><a href="../conversion/power-unit-conversion.html">Power Conversion</a></li>
+                    <li><a href="../conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+                    <li><a href="../conversion/length-unit-conversion.html">Length Conversion</a></li>
+                    <li><a href="../conversion/weight&mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+                    <li><a href="../conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+                    <li><a href="../conversion/time-unit-conversion.html">Time Conversion</a></li>
+                    <li><a href="../conversion/area-unit-conversion.html">Area Conversion</a></li>
+                    <li><a href="../conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+                </ul>
+            </nav>
+        </aside>
+      
+        <div class="main-content-wrapper">
+            <main class="container">
+                <div id="root">
+                    <header class="education-header">
+                        <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                            <svg viewBox="0 0 200 200" role="img" aria-labelledby="tempTitle">
+                                <title id="tempTitle">Animated Temperature Conversion Icon</title>
+                                <style>
+                                    .thermo-glass { fill: #e0f2fe; stroke: #38bdf8; stroke-width: 6; }
+                                    .mercury-fill { fill: #ef4444; }
+                                    #mercury-column { animation: rise 4s ease-in-out infinite alternate; }
+                                    .tick { stroke: #0ea5e9; stroke-width: 3; stroke-linecap: round; }
+                                    .sun { fill: #facc15; animation: spin 10s linear infinite; transform-origin: 160px 40px; }
+                                    .snowflake { fill: #a5f3fc; animation: spin 10s linear infinite reverse; transform-origin: 40px 160px; }
+                                    @keyframes rise { from { y: 140; height: 10; } to { y: 40; height: 110; } }
+                                    @keyframes spin { to { transform: rotate(360deg); } }
+                                </style>
+                                <g class="sun">
+                                    <circle cx="160" cy="40" r="20" />
+                                    <line x1="160" y1="10" x2="160" y2="20" stroke="#facc15" stroke-width="4" />
+                                    <line x1="160" y1="60" x2="160" y2="70" stroke="#facc15" stroke-width="4" />
+                                    <line x1="130" y1="40" x2="140" y2="40" stroke="#facc15" stroke-width="4" />
+                                    <line x1="180" y1="40" x2="190" y2="40" stroke="#facc15" stroke-width="4" />
+                                </g>
+                                <g class="snowflake">
+                                    <path d="M40 150 L40 170 M30 160 L50 160 M33 153 L47 167 M33 167 L47 153" stroke="#a5f3fc" stroke-width="4" stroke-linecap="round"/>
+                                </g>
+                                <path class="thermo-glass" d="M100 150 V 30 A 20 20 0 0 1 100 30 H 100 A 20 20 0 0 1 100 30" />
+                                <rect x="90" y="30" width="20" height="120" rx="10" class="thermo-glass" />
+                                <circle cx="100" cy="150" r="30" class="thermo-glass" />
+                                <rect id="mercury-column" x="92" y="140" width="16" height="10" rx="8" class="mercury-fill" />
+                                <circle cx="100" cy="150" r="22" class="mercury-fill" />
+                                <line class="tick" x1="115" y1="130" x2="125" y2="130"/>
+                                <line class="tick" x1="115" y1="80" x2="125" y2="80"/>
+                                <line class="tick" x1="115" y1="30" x2="125" y2="30"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1>Temperature Unit Conversion</h1>
+                            <p class="education-description"><strong>Temperature conversion</strong> is the process of changing a temperature value from one scale to another, like from <strong>Celsius (°C)</strong> to <strong>Fahrenheit (°F)</strong>, or to <strong>Kelvin (K)</strong>. Each scale has different reference points for measurements like the freezing and boiling points of water. Understanding how to convert between them is essential for science, cooking, weather forecasting, and international communication, ensuring that temperature values are understood correctly everywhere.</p>
+                        </div>
+                    </header>
+                    
+                    <div class="conversion-tool-container">
+                        <div class="conversion-tool-grid">
+                            <div class="converter-widget">
+                                <h2>Temperature Converter Tool</h2>
+                                <table class="converter-table">
+                                    <tr>
+                                        <td>Celsius (°C)</td>
+                                        <td><input type="number" id="inputCelsius" oninput="temperatureConverter(this.id, this.value)" placeholder="e.g., 20" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fahrenheit (°F)</td>
+                                        <td><input type="number" id="inputFahrenheit" oninput="temperatureConverter(this.id, this.value)" placeholder="e.g., 68" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kelvin (K)</td>
+                                        <td><input type="number" id="inputKelvin" oninput="temperatureConverter(this.id, this.value)" placeholder="e.g., 293.15" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="converter-widget">
+                                <h2>Quick Formulas</h2>
+                                <div class="quick-formulas-grid">
+                                    <div class="example-formula">°F = (°C &times; 9/5) + 32</div>
+                                    <div class="example-formula">°C = (°F - 32) &times; 5/9</div>
+                                    <div class="example-formula">K = °C + 273.15</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <article class="article-content"> <h2>Understanding Temperature Scales</h2> <p>Temperature is one of the most fundamental physical quantities that influences nearly every aspect of our daily lives and scientific understanding. At its core, temperature expresses the degree of hotness or coldness of a substance, but scientifically, it reflects the average kinetic energy of the atoms or molecules within a system. When particles move faster, the temperature increases, and when they move slower, the temperature decreases. This concept is central not only in physics and chemistry but also in biology, meteorology, medicine, and engineering. Although the idea of temperature feels intuitive—such as feeling warm in the sun or cold in the snow—the act of measuring it has been carefully standardized through several scales. These scales, developed in different historical and cultural contexts, provide universal references that allow scientists, industries, and everyday people to communicate temperature accurately.</p> <h3>The Primary Units of Temperature Measurement</h3> <h4>1. Celsius (°C)</h4> <p>The Celsius scale is one of the most widely used temperature measurement systems in the world. Developed by Swedish astronomer <strong>Anders Celsius</strong> in 1742, it was originally designed as a “centigrade” scale because it divides the temperature interval between the freezing and boiling points of water into 100 equal parts. This metric-based system makes it both logical and practical, especially for scientific work and daily use across most countries.</p> <ul> <li><b>0°C:</b> The freezing point of water at standard atmospheric pressure.</li> <li><b>100°C:</b> The boiling point of water at standard atmospheric pressure.</li> </ul> <p>The Celsius scale’s alignment with the physical properties of water is no coincidence. Water plays such a vital role in human survival and natural processes that it became a natural choice for calibration. For example, weather forecasts in most of the world use Celsius, cooking temperatures in recipes are often written in Celsius, and scientific laboratories universally rely on this scale when reporting results. Its simplicity ensures that temperature differences and conversions can be easily understood and applied in both everyday life and scientific research.</p> <h4>2. Fahrenheit (°F)</h4> <p>The <strong>Fahrenheit scale</strong> was proposed by German physicist <strong>Daniel Gabriel Fahrenheit</strong> in 1724. It is primarily used in the United States and a few Caribbean nations, where it has become deeply integrated into daily life. Unlike Celsius, Fahrenheit’s reference points are less intuitive, but they were practical in the context of 18th-century experimentation.</p> <ul> <li><b>0°F:</b> Originally defined as the freezing point of a brine solution of salt and water.</li> <li><b>32°F:</b> The freezing point of pure water.</li> <li><b>212°F:</b> The boiling point of pure water.</li> </ul> <p>Between the freezing and boiling points of water, the Fahrenheit scale contains 180 divisions, compared to 100 in Celsius. As a result, each Fahrenheit degree represents a smaller interval than a Celsius degree, allowing for more precise temperature descriptions in some everyday contexts. For instance, a weather forecast reporting 70°F might feel more relatable to an American audience than the equivalent 21°C. However, for scientific work, Fahrenheit is less convenient because it lacks the metric system’s decimal alignment.</p> <h4>3. Kelvin (K)</h4> <p>The <strong>Kelvin scale</strong> is the foundation of modern scientific temperature measurement. Proposed by <strong>William Thomson, Lord Kelvin</strong>, in 1848, it is unique in being an <strong>absolute scale</strong>. Its zero point, 0 K, is known as <strong>absolute zero</strong>, the theoretical temperature at which all molecular motion ceases. This makes Kelvin indispensable for physics, chemistry, astronomy, and engineering, where extremely low and high temperatures must be measured with precision.</p> <p>One of the most important features of the Kelvin scale is that the size of one Kelvin is identical to one degree Celsius. This means temperature differences are measured the same way on both scales. For example, a temperature increase of 10°C is exactly the same as an increase of 10 K. However, Kelvin values never use the degree symbol and never drop below zero, since negative values are not possible in this absolute system.</p> <div class="example-formula">0 K = -273.15 °C = -459.67 °F</div> <p>Kelvin is particularly critical in fields such as thermodynamics, quantum mechanics, and space science. Astronomers, for example, describe the surface temperature of stars in Kelvins, while material scientists use Kelvin to understand superconductivity at extremely low temperatures.</p> <h3>Why Temperature Conversion is Important</h3> <p>In our interconnected world, temperature conversion is not just an academic exercise but a practical necessity. Different regions and industries continue to rely on different scales, and without conversion, communication and accuracy would suffer. For instance, a scientist in the United States reading a European research paper must convert Celsius to Fahrenheit or Kelvin to correctly interpret experimental data. Similarly, a baker in Europe using an American recipe must convert Fahrenheit oven settings into Celsius to avoid overcooking or undercooking food.</p> <p>Global industries highlight the importance of standardized conversions even more. In <strong>aviation</strong>, temperature readings are critical for engine performance, air density calculations, and weather assessments, making consistency a matter of safety. In <strong>manufacturing</strong>, processes such as metal forging or chemical reactions often operate within specific temperature ranges, requiring precise conversions between scales when working across international teams. Even in <strong>medicine</strong>, accurate conversion is vital—whether interpreting a patient’s fever from Celsius to Fahrenheit or calibrating sensitive laboratory instruments in Kelvin.</p> <h3>Conclusion</h3> <p>Temperature scales are more than just numbers; they are tools that bridge history, science, and daily life. The <strong>Celsius scale</strong> offers simplicity and global practicality, the <strong>Fahrenheit scale</strong> provides familiarity and fine detail for those accustomed to it, and the <strong>Kelvin scale</strong> anchors scientific precision with its absolute foundation. Understanding these systems, and knowing how to convert between them, ensures clarity in research, safety in industry, and convenience in everyday living. As technology continues to bring the world closer together, the ability to move seamlessly between temperature scales will remain an essential skill for scientists, engineers, professionals, and ordinary people alike.</p> </article>
+                    <section class="solved-examples-section">
+                        <h2>Solved Examples: Step-by-Step Temperature Conversions</h2>
+                        <div class="examples-grid">
+                            <div class="example-item"><h3>1. Convert 25°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 9/5) + 32</code></p><p><b>Calculation:</b> <code>(25 × 1.8) + 32 = 45 + 32 = 77</code></p><p class="example-answer"><b>Answer:</b> 77°F</p></div></div>
+                            <div class="example-item"><h3>2. Convert 68°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(68 - 32) × 5/9 = 36 × 0.555... = 20</code></p><p class="example-answer"><b>Answer:</b> 20°C</p></div></div>
+                            <div class="example-item"><h3>3. Convert 100°C to Kelvin</h3><div class="example-solution"><p><b>Formula:</b> <code>K = °C + 273.15</code></p><p><b>Calculation:</b> <code>100 + 273.15 = 373.15</code></p><p class="example-answer"><b>Answer:</b> 373.15 K</p></div></div>
+                            <div class="example-item"><h3>4. Convert 0 K to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = K - 273.15</code></p><p><b>Calculation:</b> <code>0 - 273.15 = -273.15</code></p><p class="example-answer"><b>Answer:</b> -273.15°C</p></div></div>
+                            <div class="example-item"><h3>5. Convert 37°C (Body Temp) to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 9/5) + 32</code></p><p><b>Calculation:</b> <code>(37 × 1.8) + 32 = 66.6 + 32 = 98.6</code></p><p class="example-answer"><b>Answer:</b> 98.6°F</p></div></div>
+                            <div class="example-item"><h3>6. Convert 98.6°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(98.6 - 32) × 5/9 = 66.6 × 5/9 = 37</code></p><p class="example-answer"><b>Answer:</b> 37°C</p></div></div>
+                            <div class="example-item"><h3>7. Convert 0°C (Freezing) to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (0 × 9/5) + 32</code></p><p><b>Calculation:</b> <code>0 + 32 = 32</code></p><p class="example-answer"><b>Answer:</b> 32°F</p></div></div>
+                            <div class="example-item"><h3>8. Convert 212°F (Boiling) to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (212 - 32) × 5/9</code></p><p><b>Calculation:</b> <code>180 × 5/9 = 100</code></p><p class="example-answer"><b>Answer:</b> 100°C</p></div></div>
+                            <div class="example-item"><h3>9. Convert -40°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (-40 × 9/5) + 32</code></p><p><b>Calculation:</b> <code>-72 + 32 = -40</code></p><p class="example-answer"><b>Answer:</b> -40°F (The crossover point)</p></div></div>
+                            <div class="example-item"><h3>10. Convert 300 K to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = K - 273.15</code></p><p><b>Calculation:</b> <code>300 - 273.15 = 26.85</code></p><p class="example-answer"><b>Answer:</b> 26.85°C</p></div></div>
+                            <div class="example-item"><h3>11. Convert 50°F to Kelvin</h3><div class="example-solution"><p><b>Step 1 (°F to °C):</b> <code>(50 - 32) × 5/9 = 10°C</code></p><p><b>Step 2 (°C to K):</b> <code>10 + 273.15 = 283.15</code></p><p class="example-answer"><b>Answer:</b> 283.15 K</p></div></div>
+                            <div class="example-item"><h3>12. Convert 10 K to Fahrenheit</h3><div class="example-solution"><p><b>Step 1 (K to °C):</b> <code>10 - 273.15 = -263.15°C</code></p><p><b>Step 2 (°C to °F):</b> <code>(-263.15 × 1.8) + 32 = -473.67 + 32 = -441.67</code></p><p class="example-answer"><b>Answer:</b> -441.67°F</p></div></div>
+                             <div class="example-item"><h3>13. Convert 180°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p><p><b>Calculation:</b> <code>(180 × 1.8) + 32 = 324 + 32 = 356</code></p><p class="example-answer"><b>Answer:</b> 356°F</p></div></div>
+                            <div class="example-item"><h3>14. Convert 450°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(450 - 32) × 5/9 = 418 × 0.555... = 232.22</code></p><p class="example-answer"><b>Answer:</b> &approx; 232.2°C</p></div></div>
+                            <div class="example-item"><h3>15. Convert -10°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p><p><b>Calculation:</b> <code>(-10 × 1.8) + 32 = -18 + 32 = 14</code></p><p class="example-answer"><b>Answer:</b> 14°F</p></div></div>
+                            <div class="example-item"><h3>16. Convert 10°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(10 - 32) × 5/9 = -22 × 5/9 = -12.22</code></p><p class="example-answer"><b>Answer:</b> &approx; -12.2°C</p></div></div>
+                            <div class="example-item"><h3>17. Convert 250 K to Fahrenheit</h3><div class="example-solution"><p><b>Step 1 (K to °C):</b> <code>250 - 273.15 = -23.15°C</code></p><p><b>Step 2 (°C to °F):</b> <code>(-23.15 × 1.8) + 32 = -41.67 + 32 = -9.67</code></p><p class="example-answer"><b>Answer:</b> -9.67°F</p></div></div>
+                            <div class="example-item"><h3>18. Convert 500°F to Kelvin</h3><div class="example-solution"><p><b>Step 1 (°F to °C):</b> <code>(500 - 32) × 5/9 = 260°C</code></p><p><b>Step 2 (°C to K):</b> <code>260 + 273.15 = 533.15</code></p><p class="example-answer"><b>Answer:</b> 533.15 K</p></div></div>
+                            <div class="example-item"><h3>19. Convert 40°C to Kelvin</h3><div class="example-solution"><p><b>Formula:</b> <code>K = °C + 273.15</code></p><p><b>Calculation:</b> <code>40 + 273.15 = 313.15</code></p><p class="example-answer"><b>Answer:</b> 313.15 K</p></div></div>
+                            <div class="example-item"><h3>20. Convert 100°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(100 - 32) × 5/9 = 68 × 5/9 = 37.77</code></p><p class="example-answer"><b>Answer:</b> &approx; 37.8°C</p></div></div>
+                            <div class="example-item"><h3>21. Convert 20°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p><p><b>Calculation:</b> <code>(20 × 1.8) + 32 = 36 + 32 = 68</code></p><p class="example-answer"><b>Answer:</b> 68°F</p></div></div>
+                            <div class="example-item"><h3>22. Convert 77 K (Liquid Nitrogen) to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = K - 273.15</code></p><p><b>Calculation:</b> <code>77 - 273.15 = -196.15</code></p><p class="example-answer"><b>Answer:</b> &approx; -196°C</p></div></div>
+                            <div class="example-item"><h3>23. Convert 0°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(0 - 32) × 5/9 = -32 × 5/9 = -17.77</code></p><p class="example-answer"><b>Answer:</b> &approx; -17.8°C</p></div></div>
+                            <div class="example-item"><h3>24. Convert 295 K to Fahrenheit</h3><div class="example-solution"><p><b>Step 1 (K to °C):</b> <code>295 - 273.15 = 21.85°C</code></p><p><b>Step 2 (°C to °F):</b> <code>(21.85 × 1.8) + 32 = 39.33 + 32 = 71.33</code></p><p class="example-answer"><b>Answer:</b> &approx; 71.3°F</p></div></div>
+                            <div class="example-item"><h3>25. Convert 350°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p><p><b>Calculation:</b> <code>(350 × 1.8) + 32 = 630 + 32 = 662</code></p><p class="example-answer"><b>Answer:</b> 662°F</p></div></div>
+                            <div class="example-item"><h3>26. Convert 1000°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(1000 - 32) × 5/9 = 968 × 5/9 = 537.77</code></p><p class="example-answer"><b>Answer:</b> &approx; 537.8°C</p></div></div>
+                            <div class="example-item"><h3>27. Convert -273.15°C (Absolute Zero) to K</h3><div class="example-solution"><p><b>Formula:</b> <code>K = °C + 273.15</code></p><p><b>Calculation:</b> <code>-273.15 + 273.15 = 0</code></p><p class="example-answer"><b>Answer:</b> 0 K</p></div></div>
+                            <div class="example-item"><h3>28. Convert 15°C to Fahrenheit</h3><div class="example-solution"><p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p><p><b>Calculation:</b> <code>(15 × 1.8) + 32 = 27 + 32 = 59</code></p><p class="example-answer"><b>Answer:</b> 59°F</p></div></div>
+                            <div class="example-item"><h3>29. Convert 5°F to Celsius</h3><div class="example-solution"><p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p><p><b>Calculation:</b> <code>(5 - 32) × 5/9 = -27 × 5/9 = -15</code></p><p class="example-answer"><b>Answer:</b> -15°C</p></div></div>
+                            <div class="example-item"><h3>30. Convert 4 K (Liquid Helium) to °F</h3><div class="example-solution"><p><b>Step 1 (K to °C):</b> <code>4 - 273.15 = -269.15°C</code></p><p><b>Step 2 (°C to °F):</b> <code>(-269.15 × 1.8) + 32 = -484.47 + 32 = -452.47</code></p><p class="example-answer"><b>Answer:</b> &approx; -452.5°F</p></div></div>
+                        </div>
+                    </section>
+                    
+                    <div class="comments-wrapper">
+                        <hr>
+                        <div class="firebase-comments-widget" id="custom-comment-section">
+                            <h2>Comments</h2>
+                            <div class="comment-form-shell" id="comment-form-shell">
+                              <form class="comment-form" id="comment-form">
+                                <div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div>
+                                <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
+                                <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+                                <input type="hidden" id="parent-id" value="">
+                                <div class="form-footer">
+                                  <div id="char-counter">0 / 1000</div>
+                                  <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                            <div id="comments-list">
+                              <div class="spinner"></div>
+                              <p class="muted">Loading comments…</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section footer-about"><h3>About GK Learn Study</h3><p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p></div>
+                    <div class="footer-section"><h4>About Us</h4><ul><li><a href="../about.html">About Us</a></li><li><a href="../contact.html">Contact Us</a></li><li><a href="../privacy-policy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></div>
+                    <div class="footer-section"><h4>For you</h4><ul><li><a href="../gk-quiz/ancient-indian-history">Ancient Indian History</a></li><li><a href="../gk-quiz/medieval-indian-history">Medieval Indian History</a></li><li><a href="../gk-quiz/modern-indian-history">Modern Indian History</a></li><li><a href="../gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li></ul></div>
+                    <div class="footer-section"><h4>Science & Computer</h4><ul><li><a href="../conversion.html">Conversion</a></li><li><a href="../all-formulas.html">All formulas</a></li></ul></div>
+                    <div class="footer-section"><h4>Follow Us</h4><ul class="footer-socials"></ul></div>
+                </div>
+                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+            </footer>
+            <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
-      </footer>
-    </div>
-  </body>
+        <script src="../header-menu.js" defer></script>
+        <script src="../topic-menu.js" defer></script>
+        <script src="../convert.js" defer></script>
+        <script src="../search.js" defer></script>
+        <script type="module" src="../comment.js" defer></script>
+    </body>
 </html>
