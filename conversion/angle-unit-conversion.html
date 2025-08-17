@@ -78,13 +78,13 @@
         </script>
     </head>
     <body>
-        <div id="reading-progress-bar"></div>
-        <header class="header" id="header">
+   <div id="reading-progress-bar"></div>
+       <header class="header" id="header">
             <nav class="navbar container1">
-                <a href="../index.html" class="brand" aria-label="GK Learn Study">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
                     <div class="logo-container1">
                         <div class="demo2">
-                           <svg width="40" height="40" viewBox="0 0 300 300">
+                            <svg width="40" height="40" viewBox="0 0 300 300">
                                 <circle cx="150" cy="150" r="150" fill="white" />
                                 <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">
                                     GK
@@ -97,6 +97,27 @@
                                     <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
                                     <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
                                 </text>
+                                <clipPath id="circle-clip">
+                                    <circle cx="150" cy="150" r="150" />
+                                </clipPath>
+                                <g clip-path="url(#circle-clip)">
+                                    <path fill="#c0a4fb" fill-opacity="1">
+                                        <animate
+                                            attributeName="d"
+                                            dur="8s"
+                                            repeatCount="indefinite"
+                                            values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                    <path fill="#641ef9" fill-opacity="0.7">
+                                        <animate
+                                            attributeName="d"
+                                            dur="7s"
+                                            repeatCount="indefinite"
+                                            values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                </g>
                             </svg>
                         </div>
                     </div>
@@ -106,7 +127,11 @@
                 <div class="menu" id="menu">
                     <span class="back-arrow">×</span>
                     <a href="/" class="menu-brand">GK</a>
-                    <div class="menu-inner"></div>
+                    <div class="menu-arrow left">&#8249;</div>
+                    <div class="menu-arrow right">&#8250;</div>
+                    <div class="menu-inner">
+                        <!-- Menu items will be injected here by index.js -->
+                    </div>
                 </div>
             </nav>
         </header>
@@ -115,6 +140,7 @@
             <button class="back-icon" id="backBtn">←</button>
             <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
         </div>
+
 
         <div id="sidebar-overlay"></div>
         <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
@@ -470,6 +496,7 @@
         <script type="module" src="../comment.js" defer></script>
     </body>
 </html>
+
 
 
 
