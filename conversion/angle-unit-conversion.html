@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Angle Unit Conversion - Degrees & Radians</title>
-    <meta
-      name="description"
-      content="Discover how to convert angles between degrees, radians, and other units with step-by-step examples and tools. Perfect for students and professionals."
-    />
-    <meta
-      name="keywords"
-      content="angle conversion, degrees to radians, radians to degrees, trigonometry, angle units, unit converter, geometry tools, math conversions"
-    />
-    <meta name="author" content="Mr. Himanshu Tyagi" />
+    <title>Angle Conversion Tool & Guide | Degrees, Radians, Gradians | GK Learn Study</title>
+        <meta name="description" content="An interactive tool and comprehensive guide to angle unit conversion. Easily convert between degrees, radians, and gradians. Learn the formulas, history, and practical applications in math, science, and engineering." />
+        <meta name="keywords" content="angle conversion, convert degrees to radians, convert radians to degrees, angle converter, gradians, angle formulas, trigonometry, geometry, unit conversion tool" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <meta
+     <meta name="author" content="Mr. Himanshu Tyagi" />
     <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
@@ -88,817 +81,535 @@
     />
     <meta name="msapplication-config" content="browserconfig.xml" />
 
-    <!-- Social Media Meta Tags -->
+   
+
+
+
+
+       
+ 
     
+
+    <link rel="stylesheet" href="../index.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href=../index.css"></noscript>
     
+    <link rel="stylesheet" href="../conversion-tool.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../conversion.css"></noscript>
+    
+    <link rel="stylesheet" href="../topicmenu.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../topicmenu.css"></noscript>
 
-    <!-- External Stylesheets and Scripts -->
+<link rel="stylesheet" href="../comment.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../comment.css"></noscript>
 
-    <script src="https://gklearnstudy.in/js/menu.js" defer></script>
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/maths.css" />
+        
+        <!-- FAQ Schema -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "Why do mathematicians and physicists prefer radians over degrees?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Radians are preferred in higher mathematics and physics because they are a 'natural' unit derived from the geometry of the circle (the ratio of arc length to radius). This direct relationship simplifies many important formulas in calculus, particularly the derivatives and integrals of trigonometric functions. For example, the derivative of sin(x) is cos(x) only when x is in radians. Using degrees would introduce a cumbersome conversion factor (π/180) into these calculations."
+            }
+          },{
+            "@type": "Question",
+            "name": "Is a gradian the same as a gradient?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, they are different concepts. A gradian (or gon) is a unit of angle measurement where a full circle is 400 gradians. A gradient, on the other hand, is a mathematical term from vector calculus that represents the rate and direction of the steepest ascent of a function. It is also used more generally to describe a slope or incline."
+            }
+          },{
+            "@type": "Question",
+            "name": "When are degrees more useful than radians?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Degrees are often more intuitive and practical for everyday applications and fields outside of pure mathematics. Because 360 is a highly composite number with many divisors (2, 3, 4, 5, 6, 8, 9, 10, 12, etc.), it's very easy to work with common fractions of a circle like 90° (a quarter turn) or 60° (a sixth of a turn). This makes degrees ideal for fields like construction, architecture, geography (latitude/longitude), and general design."
+            }
+          }]
+        }
+        </script>
 
-    <!-- Defer JavaScript Files -->
-
-    <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
-   <link rel="stylesheet" href="https://gklearnstudy.in/css/maths.css" />
-    <script src="https://gklearnstudy.in/js/convert.js" defer></script>
-    <script src="https://gklearnstudy.in/js/search.js" defer></script>
-  </head>
-
-  <body>
-    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-    <ul class="menu-list" id="menuList">
-      <li>
-        <a class="active" href="angle-unit-conversion.html">Angle Conversion</a>
-      </li>
-      <li><a href="area-unit-conversion.html">Area Conversion</a></li>
-      <li><a href="length-unit-conversion.html">Length Conversion</a></li>
-      <li><a href="power-unit-conversion.html">Power Conversion</a></li>
-      <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
-      <li><a href="speed-unit-conversion.html">Speed Conversion</a></li>
-      <li>
-        <a href="temperature-unit-conversion.html">Temperature Conversion</a>
-      </li>
-      <li><a href="time-unit-conversion.html">Time Conversion</a></li>
-      <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
-      <li>
-        <a href="weight&mass-unit-conversion.html">Weight & Mass Conversion</a>
-      </li>
-    </ul>
-
-    <div class="search-container">
-      <button class="search-icon" id="searchBtn">
-        <span class="rotated-icon">⌕</span>
-      </button>
-      <button class="back-icon" id="backBtn">←</button>
-      <input
-        type="text"
-        class="search-input"
-        id="searchInput"
-        autocomplete="off"
-        placeholder="Search..."
-        required
-        oninput="showSuggestions(event)"
-      />
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
- <div class="container">
-      <h1>Angle Conversion - Definition, Types, Importance, Formulas</h1>
-
-      <div class="custom-container">
-        <div class="custom-row">
-          <div class="custom-column">
-            <h2>Angle Conversion</h2>
-
-            <br />
-
-            <table id="myTable">
-              <tr>
-                <td>Degrees</td>
-                <td>
-                  <input
-                    id="inputDegrees"
-                    placeholder="Degrees"
-                    oninput="AngleConverter(this.id,this.value)"
-                    onchange="AngleConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <td>Radians</td>
-
-                <td>
-                  <input
-                    id="inputRadians"
-                    placeholder="Radians"
-                    oninput="AngleConverter(this.id,this.value)"
-                    onchange="AngleConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Gradians</td>
-                <td>
-                  <input
-                    id="inputGradians"
-                    placeholder="Gradians"
-                    oninput="AngleConverter(this.id,this.value)"
-                    onchange="AngleConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="custom-column">
-            <h2>Angle Unit Conversion</h2>
-            <br />
-            <table id="myTable">
-              <tr>
-                <td>Degrees×(π/180)</td>
-                <td>=</td>
-                <td>Radians</td>
-              </tr>
-              <tr>
-                <td>Radians(180/π)</td>
-                <td>=</td>
-                <td>Degrees</td>
-              </tr>
-              <tr>
-                <td>180 Degrees</td>
-                <td>=</td>
-                <td>πRadians</td>
-              </tr>
-            </table>
-            <br />
-          </div>
+    </head>
+    <body>  <div id="reading-progress-bar"></div>
+       <header class="header" id="header">
+            <nav class="navbar container1">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
+                    <div class="logo-container1">
+                        <div class="demo2">
+                            <svg width="40" height="40" viewBox="0 0 300 300">
+                                <circle cx="150" cy="150" r="150" fill="white" />
+                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                    GK
+                                    <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" />
+                                    <animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
+                                    <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
+                                </text>
+                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                    Learn Study
+                                    <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
+                                    <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
+                                </text>
+                                <clipPath id="circle-clip">
+                                    <circle cx="150" cy="150" r="150" />
+                                </clipPath>
+                                <g clip-path="url(#circle-clip)">
+                                    <path fill="#c0a4fb" fill-opacity="1">
+                                        <animate
+                                            attributeName="d"
+                                            dur="8s"
+                                            repeatCount="indefinite"
+                                            values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                    <path fill="#641ef9" fill-opacity="0.7">
+                                        <animate
+                                            attributeName="d"
+                                            dur="7s"
+                                            repeatCount="indefinite"
+                                            values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+                <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div>
+                <span class="overlay"></span>
+                <div class="menu" id="menu">
+                    <span class="back-arrow">×</span>
+                    <a href="/" class="menu-brand">GK</a>
+                    <div class="menu-arrow left">&#8249;</div>
+                    <div class="menu-arrow right">&#8250;</div>
+                    <div class="menu-inner">
+                        <!-- Menu items will be injected here by index.js -->
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="search-container">
+            <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button>
+            <button class="back-icon" id="backBtn">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
         </div>
-      </div>
+       <div id="sidebar-overlay"></div>
+        <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+         <aside id="topic-sidebar">
+            <p class="sidebar-title">Conversion Topics</p>
+            <nav id="topic-nav">
+              <ul>
+  <li><a  href="/conversion/angle-unit-conversion">Conversion</a></li>
+  <li><a class="active" href="/conversion/angle-unit-conversion">Angle Conversion</a></li>
+  <li><a href="/conversion/temperature-unit-conversion">Temperature Conversion</a></li>
+  <li><a href="/conversion/power-unit-conversion">Power Conversion</a></li>
+  <li><a href="/conversion/speed-unit-conversion">Speed Conversion</a></li>
+  <li><a href="/conversion/length-unit-conversion">Length Conversion</a></li>
+  <li><a href="/conversion/weight&mass-unit-conversion">Weight & Mass Conversion</a></li>
+  <li><a href="/conversion/pressure-unit-conversion">Pressure Conversion</a></li>
+  <li><a href="/conversion/time-unit-conversion">Time Conversion</a></li>
+  <li><a href="/conversion/area-unit-conversion">Area Conversion</a></li>
+  <li><a href="/conversion/volume-unit-conversion">Volume Conversion</a></li>
+</ul>
 
-      <p>
-        <b>Definition - </b>
-        <span>
-          Angle unit conversion refers to the process of converting angles from
-          one unit of measurement to another. Angles are typically measured in
-          degrees, but there are several other units used to measure angles,
-          such as radians, grads (or gradians), and turns. The most common angle
-          unit conversions involve converting between degrees and radians, as
-          radians are often used in advanced mathematical calculations and
-          trigonometry.
-        </span>
-      </p>
+            </nav>
+        </aside>
+      
 
-      <p>
-        <b>परिभाषा - </b>
-        <span>
-          कोण इकाई रूपांतरण से तात्पर्य कोणों को माप की एक इकाई से दूसरी इकाई
-          में परिवर्तित करने की प्रक्रिया से है। कोणों को आमतौर पर डिग्री में
-          मापा जाता है, लेकिन कोणों को मापने के लिए कई अन्य इकाइयाँ भी उपयोग की
-          जाती हैं, जैसे रेडियन, ग्रेड (या ग्रेडियन), और टर्न। सबसे आम कोण इकाई
-          रूपांतरण में डिग्री और रेडियन के बीच रूपांतरण शामिल है, क्योंकि रेडियन
-          का उपयोग अक्सर उन्नत गणितीय गणना और त्रिकोणमिति में किया जाता है।
-        </span>
-      </p>
+        <div class="main-content-wrapper">
+            <main class="container">
+                <div id="root">
+                    <header class="education-header">
+                        <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                           <svg viewBox="0 0 200 200" role="img" aria-labelledby="angleTitle">
+                                <title id="angleTitle">Animated Angle Conversion Icon</title>
+                                <style>
+                                    .dial-base { fill: #eef2ff; }
+                                    .dial-marks { stroke: #a5b4fc; stroke-width: 2; }
+                                    .dial-needle { stroke: #f97316; stroke-width: 4; stroke-linecap: round; transform-origin: 100px 100px; }
+                                    .dial-text { font-family: 'Roboto', sans-serif; font-weight: 600; fill: #4f46e5; }
+                                </style>
+                                <g class="dial-1" transform="translate(0, 20)">
+                                    <circle class="dial-base" cx="100" cy="100" r="80" />
+                                    <path class="dial-marks" d="M20 100 A 80 80 0 0 1 180 100" />
+                                    <line class="dial-needle" x1="100" y1="100" x2="100" y2="30">
+                                        <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="8s" repeatCount="indefinite" />
+                                    </line>
+                                    <circle cx="100" cy="100" r="6" fill="#f97316" />
+                                    <text class="dial-text" x="100" y="150" text-anchor="middle" font-size="16">Degrees</text>
+                                </g>
+                                <g class="dial-2" transform="translate(60, 20) scale(0.6)">
+                                    <circle class="dial-base" cx="100" cy="100" r="80" />
+                                    <path class="dial-marks" d="M20 100 A 80 80 0 0 1 180 100" />
+                                    <line class="dial-needle" x1="100" y1="100" x2="100" y2="30" stroke="#10b981">
+                                         <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="6s" repeatCount="indefinite" />
+                                    </line>
+                                    <circle cx="100" cy="100" r="6" fill="#10b981" />
+                                    <text class="dial-text" x="100" y="150" text-anchor="middle" font-size="24">Radians</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1>Angle Unit Conversion</h1>
+                            <p class="education-description"><strong>Angle unit conversion</strong> means changing the value of an angle from one type of unit to another.</p>
 
-      <svg
-        height="200px"
-        width="200px"
-        alt="Angle Unit Conversion"
-        version="1.1"
-        id="Layer_1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-        xml:space="preserve"
-        fill="#ffffff"
-        stroke="#ffffff"
-      >
-        <path
-          style="fill: #507c5c"
-          d="M363.716,511.999H41.574C18.65,511.999,0,493.351,0,470.427V41.575 C0,18.651,18.65,0.001,41.574,0.001h8.581c22.924,0,41.574,18.65,41.574,41.574v145.542c0,7.87-6.381,14.252-14.252,14.252 s-14.252-6.382-14.252-14.252V41.575c0-7.207-5.863-13.07-13.07-13.07h-8.581c-7.207,0-13.07,5.865-13.07,13.07v428.852 c0,7.207,5.863,13.07,13.07,13.07h322.141c7.871,0,14.252,6.382,14.252,14.252C377.967,505.619,371.588,511.999,363.716,511.999z"
-        />
-        <path
-          style="fill: #507c5c"
-          d="M470.426,511.999h-29.825c-7.871,0-14.252-6.382-14.252-14.252c0-7.87,6.381-14.252,14.252-14.252 h29.825c7.207,0,13.07-5.863,13.07-13.07v-8.581c0-7.209-5.863-13.073-13.07-13.073H249.555c-7.871,0-14.252-6.382-14.252-14.252 c0-7.87,6.381-14.252,14.252-14.252h220.871c22.924,0,41.574,18.651,41.574,41.577v8.581 C512,493.351,493.35,511.999,470.426,511.999z"
-        />
-        <path
-          style="fill: #507c5c"
-          d="M228.309,186.884v-1.33c0-25.435,15.822-34.9,36.228-34.9c20.407,0,36.378,9.463,36.378,34.9v39.186 c0,25.435-16.415,34.9-37.709,34.9c-24.991,0-34.897-15.527-34.897-27.801c0-7.099,3.4-9.316,10.794-9.316 c6.358,0,11.977,1.626,11.977,8.429c0,5.619,5.916,8.575,12.865,8.575c8.725,0,13.9-4.582,13.9-14.788V211.43 c-4.732,5.176-11.386,6.506-18.483,6.506C242.506,217.938,228.309,210.544,228.309,186.884z M277.847,183.928 c0-10.204-5.028-14.64-13.308-14.64s-13.16,4.435-13.16,14.64v1.33c0,10.796,4.88,14.936,13.31,14.936 c7.985,0,13.16-3.847,13.16-13.605v-2.661H277.847z"
-        />
-        <path
-          style="fill: #507c5c"
-          d="M312.447,224.74v-39.186c0-25.435,15.822-34.9,36.23-34.9c20.406,0,36.376,9.463,36.376,34.9v39.186 c0,25.435-15.971,34.9-36.376,34.9C328.269,259.64,312.447,250.175,312.447,224.74z M361.983,185.554 c0-10.204-5.028-14.788-13.308-14.788c-8.282,0-13.16,4.582-13.16,14.788v39.186c0,10.204,4.88,14.788,13.16,14.788 s13.308-4.582,13.308-14.788V185.554z"
-        />
-        <circle style="fill: #507c5c" cx="420.858" cy="167.66" r="21.728" />
-        <path
-          style="fill: #cff09e"
-          d="M245.094,406.014c-21.6-65.617-73.491-117.505-139.108-139.105 c-9.245-3.044-18.764-5.481-28.507-7.277v174.89h174.89C250.574,424.778,248.135,415.26,245.094,406.014z"
-        />
-        <path
-          style="fill: #507c5c"
-          d="M252.369,448.772H77.479c-7.871,0-14.252-6.382-14.252-14.252V259.63 c0-4.233,1.881-8.246,5.134-10.954c3.254-2.708,7.544-3.827,11.702-3.061c10.29,1.897,20.511,4.506,30.379,7.756 c69.81,22.98,125.208,78.377,148.19,148.187c3.251,9.881,5.859,20.101,7.754,30.379c0.767,4.162-0.355,8.45-3.063,11.702 S256.602,448.772,252.369,448.772z M91.731,420.268h142.775c-0.902-3.299-1.887-6.572-2.949-9.801 c-20.164-61.252-68.772-109.858-130.027-130.021c-3.227-1.063-6.497-2.048-9.798-2.95v142.772H91.731z"
-        />
-      </svg>
+    <p>Sometimes an angle is measured in <strong>degrees</strong>, sometimes in <strong>radians</strong>, and sometimes in <strong>gradians</strong>.</p>
 
-      <h2>Types of Angle Units</h2>
+    <p>Each unit divides a full circle differently: degrees use <strong>360 parts</strong>, radians use <strong>2π</strong>, and gradians use <strong>400 parts</strong>.</p>
 
-      <p><b>English Explanation -</b></p>
-      <p>
-        There are different units used to measure angles. Each unit has a
-        specific purpose and application. Here are the main angle units along
-        with examples:
-      </p>
-      <ul>
-        <li>
-          <p>
-            <b>1. Degrees (°):</b> The most commonly used unit in everyday life
-            and school-level geometry. A full circle has 360 degrees.<br />
-            <b>Example:</b> A right angle is 90°; a straight angle is 180°.
-          </p>
-        </li>
+    <p>By multiplying or dividing with the right numbers, we can switch an angle from one unit to another.</p>
 
-        <li>
-          <p>
-            <b>2. Radians (rad):</b> Mainly used in higher mathematics,
-            calculus, and trigonometry. One full circle equals 2π radians.<br />
-            <b>Example:</b> 90° = π/2 radians; 180° = π radians.
-          </p>
-        </li>
+    <p>This makes it easy to use the same angle in different <strong>calculations, subjects,</strong> or <strong>measurement systems</strong> without confusion.</p>
 
-        <li>
-          <p>
-            <b>3. Gradians (grad or gon):</b> Mostly used in engineering and
-            surveying. A full circle has 400 gradians.<br />
-            <b>Example:</b> 100 grad = right angle; 200 grad = straight angle.
-          </p>
-        </li>
 
-        <li>
-          <p>
-            <b>4. Turns:</b> Used in rotation-based systems and engineering. One
-            turn is a complete rotation.<br />
-            <b>Example:</b> 1 turn = 360° = 2π radians.
-          </p>
-        </li>
+                        </div>
+                    </header>
+                    
+                    <div class="conversion-tool-container">
+                        <div class="conversion-tool-grid">
+                            <div class="converter-widget">
+                                <h2>Angle Converter Tool</h2>
+                                <table id="angleConverterTable" class="converter-table">
+                                  <tr>
+                                    <td>Degrees (°)</td>
+                                    <td><input type="number" id="inputDegrees" placeholder="e.g., 90" /></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Radians (rad)</td>
+                                    <td><input type="number" id="inputRadians" placeholder="e.g., 1.5708" /></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Gradians (grad)</td>
+                                    <td><input type="number" id="inputGradians" placeholder="e.g., 100" /></td>
+                                  </tr>
+                                </table>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="250" height="250" role="img" aria-labelledby="title desc" style="display:block; margin:auto;">
+  <title id="title">Degrees Conversion - Animated Icon</title>
+  <desc id="desc">Animated degrees icon with rotating pointer</desc>
+  <style>
+    .circle-bg {
+      fill: #3b82f6;
+      filter: drop-shadow(0 6px 8px rgba(59, 130, 246, 0.4));
+    }
+    .outer-ring {
+      fill: none;
+      stroke: #93c5fd;
+      stroke-width: 8;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: dash 3s forwards ease-out;
+    }
+    .pointer {
+      fill: #f97316;
+      transform-origin: 110px 110px;
+      animation: swing 4s ease-in-out infinite;
+    }
+    .center-circle {
+      fill: #f97316;
+    }
+    .label {
+      fill: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      text-anchor: middle;
+      user-select: none;
+    }
+    @keyframes swing {
+      0%, 100% { transform: rotate(-15deg); }
+      50% { transform: rotate(15deg); }
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
 
-        <li>
-          <p>
-            <b>5. Minutes and Seconds:</b> These are subdivisions of degrees,
-            useful in astronomy and navigation.<br />
-            <b>Example:</b> 1° = 60′ (minutes); 1′ = 60″ (seconds); 30°15′ = 30
-            degrees and 15 minutes.
-          </p>
-        </li>
-      </ul>
+  <g>
+    <!-- Background circle -->
+    <circle cx="110" cy="110" r="100" class="circle-bg" />
+    
+    <!-- Outer ring with dash animation -->
+    <circle cx="110" cy="110" r="90" class="outer-ring" />
+    
+    <!-- Pointer (like a protractor needle) -->
+    <rect x="108" y="30" width="4" height="80" rx="2" ry="2" class="pointer" />
+    
+    <!-- Center circle -->
+    <circle cx="110" cy="110" r="12" class="center-circle" />
 
-      <p><b>हिंदी में व्याख्या -</b></p>
-      <p>
-        कोण को मापने के लिए विभिन्न इकाइयों का उपयोग किया जाता है। प्रत्येक इकाई
-        का अपना विशेष प्रयोग और उद्देश्य होता है। नीचे प्रमुख कोण इकाइयाँ और
-        उनके उदाहरण दिए गए हैं:
-      </p>
-      <ul>
-        <li>
-          <p>
-            <b>1. डिग्री (°):</b> यह सबसे सामान्य इकाई है, जो दैनिक जीवन और
-            स्कूली गणित में प्रयोग होती है। एक पूरा वृत्त 360 डिग्री का होता
-            है।<br />
-            <b>उदाहरण:</b> समकोण = 90°; समरेख कोण = 180°
-          </p>
-        </li>
+    <!-- Label -->
+    <text x="110" y="190" class="label">Degrees (°)</text>
+  </g>
+</svg>
 
-        <li>
-          <p>
-            <b>2. रेडियन (rad):</b> यह उच्च गणित और त्रिकोणमिति में उपयोग की
-            जाती है। एक पूरा वृत्त 2π रेडियन का होता है।<br />
-            <b>उदाहरण:</b> 90° = π/2 रेडियन; 180° = π रेडियन
-          </p>
-        </li>
+                            </div>
+                            <div class="converter-widget">
+                                <h2>Quick Formulas</h2>
+                                <div class="quick-formulas-grid">
+                                    <div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div>
+                                    <div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div>
+                                    <div class="example-formula">Gradians = Degrees &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div>
+                                    <div class="example-formula">Degrees = Gradians &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <article class="article-content">
+                        <h2>Understanding Angle Measurements</h2>
+                        <p>An angle is a fundamental concept in geometry, representing the figure formed by two rays, called the sides of the angle, sharing a common endpoint, called the vertex. The measurement of an angle quantifies the amount of rotation between these two rays. While we often think of angles in everyday terms like "a sharp turn" or "a wide corner," precise fields like mathematics, physics, and engineering require standardized units of measurement. Understanding how to convert between these units is a critical skill for accuracy and collaboration across different disciplines.</p>
 
-        <li>
-          <p>
-            <b>3. ग्रेडियन (grad या gon):</b> इसका उपयोग इंजीनियरिंग और
-            सर्वेक्षण में अधिक होता है। एक पूर्ण वृत्त 400 ग्रेडियन का होता
-            है।<br />
-            <b>उदाहरण:</b> समकोण = 100 grad; समरेख कोण = 200 grad
-          </p>
-        </li>
+                        <h3>The Primary Units of Angle Measurement</h3>
+                        <p>There are three primary systems for measuring angles, each with its own history and area of application.</p>
+                        
+                        <h4>1. Degrees (°)</h4>
+                        <p>The degree is the most familiar unit of angle measurement. A full circle is divided into 360 degrees. This system dates back to ancient Babylonia, where their base-60 numeral system made 360 a highly convenient number for division. A degree is often subdivided for higher precision:</p>
+                        <ul>
+                            <li><b>Arcminute ('):</b> One degree is equal to 60 arcminutes.</li>
+                            <li><b>Arcsecond ("):</b> One arcminute is equal to 60 arcseconds.</li>
+                        </ul>
+                        <p>This system is prevalent in geography (latitude and longitude), astronomy, and everyday applications like construction and design.</p>
+                        <div class="example-formula">1 full circle = 360°&nbsp;&nbsp;|&nbsp;&nbsp;1° = 60'&nbsp;&nbsp;|&nbsp;&nbsp;1' = 60"</div>
 
-        <li>
-          <p>
-            <b>4. टर्न (Turn):</b> यह इकाई घूर्णन आधारित प्रणालियों और
-            इंजीनियरिंग में प्रयोग होती है। एक टर्न का अर्थ है पूरा घूर्णन।<br />
-            <b>उदाहरण:</b> 1 टर्न = 360° = 2π रेडियन
-          </p>
-        </li>
+                        <h4>2. Radians (rad)</h4>
+                        <p>In higher mathematics and physics, the radian is the standard unit of angular measure. It is defined by the geometry of a circle itself. One radian is the angle subtended at the center of a circle by an arc that is equal in length to the circle's radius. Since the circumference of a circle is <code>2πr</code>, a full circle contains <code>2π</code> radians. Radians are preferred in calculus because they simplify many important formulas, particularly those involving trigonometric functions and their derivatives.</p>
+                        <div class="example-formula">1 full circle = 2π radians ≈ 6.283 rad</div>
+                        
+                        <h4>3. Gradians (grad or gon)</h4>
+                        <p>The gradian is a less common unit that is part of the metric system. It divides a right angle into 100 parts, meaning a full circle contains 400 gradians. Its main advantage is its compatibility with the decimal system, which can simplify some calculations in fields like surveying and civil engineering. However, it has not gained widespread adoption compared to degrees and radians.</p>
+                        <div class="example-formula">1 full circle = 400 grad</div>
 
-        <li>
-          <p>
-            <b>5. मिनट और सेकंड:</b> ये डिग्री के उप-भाग होते हैं, और
-            खगोलशास्त्र एवं नेविगेशन में इनका उपयोग होता है।<br />
-            <b>उदाहरण:</b> 1° = 60′ (मिनट); 1′ = 60″ (सेकंड); 30°15′ = 30 डिग्री
-            15 मिनट
-          </p>
-        </li>
-      </ul>
+                        <h3>The 'Why' Behind Conversion Formulas</h3>
+                        <p>Conversion formulas are not arbitrary; they are derived from the fundamental relationship that a full circle is the same amount of rotation regardless of the unit. This gives us a powerful equivalence:</p>
+                        <div class="example-formula">360° = 2π rad = 400 grad</div>
+                        <p>From this core identity, we can derive any conversion factor. For example, to find the relationship between degrees and radians, we use:</p>
+                        <div class="example-formula">360° = 2π rad</div>
+                        <p>Dividing both sides by 360 gives us the value of one degree:</p>
+                        <div class="example-formula">1° = <span class="frac"><span>2&pi;</span><span class="bottom">360</span></span> rad = <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> rad</div>
+                        <p>This is why we multiply by <b>π/180</b> to convert from degrees to radians. Similarly, dividing both sides by 2π gives us the value of one radian:</p>
+                        <div class="example-formula">1 rad = <span class="frac"><span>360</span><span class="bottom">2&pi;</span></span> ° = <span class="frac"><span>180</span><span class="bottom">&pi;</span></span> °</div>
+                        <p>This is why we multiply by <b>180/π</b> to convert from radians to degrees. The same logic applies to all other conversion pairs.</p>
 
-      <div class="faq-section">
-        <h3>1. Convert 60° to radians</h3>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to radians:
-            <b>
-              <span class="bracket">(</span
-              ><span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Radians = 60 × <span class="bracket">(</span
-              ><span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>60π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 4: Reduce the fraction:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>π</span><span class="bottom">3</span></span
-              >
-            </b>
-          </li>
-          <li>
-            <b>Answer:</b>
-            <span class="frac"
-              ><span>π</span><span class="bottom">3</span></span
-            >
-            radians
-          </li>
-        </ul>
+                        <h3>Common Angle Conversion Table</h3>
+                        <p>Here is a quick reference table for some of the most commonly used angles:</p>
+                        <div class="common-angles-table-wrapper">
+                            <table class="common-angles-table">
+                                <thead>
+                                    <tr>
+                                        <th>Angle Name</th>
+                                        <th>Degrees</th>
+                                        <th>Radians (Exact)</th>
+                                        <th>Radians (Decimal)</th>
+                                        <th>Gradians</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Zero Angle</td>
+                                        <td>0°</td>
+                                        <td>0</td>
+                                        <td>0.0</td>
+                                        <td>0 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>30°</td>
+                                        <td>π/6</td>
+                                        <td>~0.524</td>
+                                        <td>~33.33 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>45°</td>
+                                        <td>π/4</td>
+                                        <td>~0.785</td>
+                                        <td>50 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>60°</td>
+                                        <td>π/3</td>
+                                        <td>~1.047</td>
+                                        <td>~66.67 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Right Angle</td>
+                                        <td>90°</td>
+                                        <td>π/2</td>
+                                        <td>~1.571</td>
+                                        <td>100 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Straight Angle</td>
+                                        <td>180°</td>
+                                        <td>π</td>
+                                        <td>~3.142</td>
+                                        <td>200 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reflex Angle</td>
+                                        <td>270°</td>
+                                        <td>3π/2</td>
+                                        <td>~4.712</td>
+                                        <td>300 grad</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Full Circle</td>
+                                        <td>360°</td>
+                                        <td>2π</td>
+                                        <td>~6.283</td>
+                                        <td>400 grad</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-        <h4>2. Convert 1 radian to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert radians to degrees:
-            <b>
-              <span class="bracket">(</span
-              ><span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = 1 × <span class="bracket">(</span
-              ><span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Degrees =
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>Step 4: Approximate the value: <b>Degrees ≈ 57.296°</b></li>
-          <li><b>Answer:</b> 57.296°</li>
-        </ul>
+                        <h2>Practical Applications in Detail</h2>
+                        <p>The choice of angle unit often depends on the context of the problem.</p>
+                        <ul>
+                            <li><b>Engineering & Physics:</b> Radians are essential for describing rotational motion, angular velocity, and oscillations (like in simple harmonic motion). Formulas for torque, rotational energy, and wave mechanics are expressed most elegantly using radians.</li>
+                            <li><b>Computer Graphics & Robotics:</b> Both degrees and radians are used. Degrees can be more intuitive for artists and designers setting initial rotations, while radians are used internally by the graphics processing unit (GPU) for the complex matrix calculations that perform rotations, scaling, and transformations in 3D space.</li>
+                            <li><b>Navigation & Astronomy:</b> Degrees, arcminutes, and arcseconds are the standard for specifying celestial coordinates (right ascension and declination) and geographical locations (latitude and longitude). This system provides the precision needed to pinpoint locations on Earth and in the vastness of space.</li>
+                        </ul>
 
-        <h4>3. Convert 100° to gradians</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to gradians:
-            <b>
-              <span class="bracket">(</span
-              ><span class="frac"
-                ><span>10</span><span class="bottom">9</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Gradians = 100 × <span class="bracket">(</span
-              ><span class="frac"
-                ><span>10</span><span class="bottom">9</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Gradians =
-              <span class="frac"
-                ><span>1000</span><span class="bottom">9</span></span
-              >
-            </b>
-          </li>
-          <li>Step 4: Simplify the fraction: <b>Gradians ≈ 111.11 grad</b></li>
-          <li><b>Answer:</b> 111.11 gradians</li>
-        </ul>
+                        <div class="faq-section">
+                            <h2>Frequently Asked Questions (FAQ)</h2>
+                            <details>
+                                <summary>Why do mathematicians and physicists prefer radians over degrees?</summary>
+                                <p>Radians are preferred in higher mathematics and physics because they are a 'natural' unit derived from the geometry of the circle (the ratio of arc length to radius). This direct relationship simplifies many important formulas in calculus, particularly the derivatives and integrals of trigonometric functions. For example, the derivative of sin(x) is cos(x) only when x is in radians. Using degrees would introduce a cumbersome conversion factor (π/180) into these calculations.</p>
+                            </details>
+                            <details>
+                                <summary>Is a gradian the same as a gradient?</summary>
+                                <p>No, they are different concepts. A <b>gradian</b> (or gon) is a unit of angle measurement where a full circle is 400 gradians. A <b>gradient</b>, on the other hand, is a mathematical term from vector calculus that represents the rate and direction of the steepest ascent of a function. It is also used more generally to describe a slope or incline.</p>
+                            </details>
+                            <details>
+                                <summary>When are degrees more useful than radians?</summary>
+                                <p>Degrees are often more intuitive and practical for everyday applications and fields outside of pure mathematics. Because 360 is a highly composite number with many divisors (2, 3, 4, 5, 6, 8, 9, 10, 12, etc.), it's very easy to work with common fractions of a circle like 90° (a quarter turn) or 60° (a sixth of a turn). This makes degrees ideal for fields like construction, architecture, geography (latitude/longitude), and general design.</p>
+                            </details>
+                        </div>
+                    </article>
 
-        <h4>4. Convert 200 gradians to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert gradians to degrees:
-            <b>
-              <span class="bracket">(</span
-              ><span class="frac"
-                ><span>9</span><span class="bottom">10</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = 200 × <span class="bracket">(</span
-              ><span class="frac"
-                ><span>9</span><span class="bottom">10</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 180°</b></li>
-          <li><b>Answer:</b> 180°</li>
-        </ul>
+                    <section class="solved-examples-section">
+                        <h2>Solved Examples: Step-by-Step Angle Conversions</h2>
+                        <div class="examples-grid">
+                            <div class="example-item"><h3>1. Convert 60° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 60 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute and Calculate.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 60 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> = <span class="frac"><span>60&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide both the numerator and denominator by 60.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">3</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>2. Convert 1 Radian to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 1 Radian to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = 1 &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Calculate the Value.</b> Degrees &approx; 180 / 3.14159.</p><p class="example-answer"><b>Answer:</b> &approx; 57.296°</p></div></div>
+                            <div class="example-item"><h3>3. Convert 100° to Gradians</h3><div class="example-solution"><p><b>Goal:</b> Convert 100 Degrees to Gradians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Gradians = Degrees &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Gradians = 100 &times; <span class="frac"><span>200</span><span class="bottom">180</span></span> = <span class="frac"><span>20000</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> The fraction 200/180 simplifies to 10/9. So, 100 &times; (10/9) = 1000/9.</p><p class="example-answer"><b>Answer:</b> &approx; 111.11 grad</p></div></div>
+                            <div class="example-item"><h3>4. Convert 200 Gradians to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 200 Gradians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Gradians &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the gradian value into the formula.</p><div class="example-formula">Degrees = 200 &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 3: Calculate.</b> The '200' terms cancel out.</p><p class="example-answer"><b>Answer:</b> 180°</p></div></div>
+                            <div class="example-item"><h3>5. Convert 30° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 30 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 30 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> = <span class="frac"><span>30&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide the numerator and denominator by 30.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">6</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>6. Convert 45° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 45 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 45 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> = <span class="frac"><span>45&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide the numerator and denominator by 45.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">4</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>7. Convert 90° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 90 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 90 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> = <span class="frac"><span>90&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide the numerator and denominator by 90.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">2</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>8. Convert 180° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 180 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 180 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> The '180' terms cancel out.</p><p class="example-answer"><b>Answer:</b> &pi; rad</p></div></div>
+                            <div class="example-item"><h3>9. Convert 270° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 270 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 270 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span> = <span class="frac"><span>270&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide numerator and denominator by their greatest common divisor, 90.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>3&pi;</span><span class="bottom">2</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>10. Convert 360° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 360 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 360 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> 360 divided by 180 is 2.</p><p class="example-answer"><b>Answer:</b> 2&pi; rad</p></div></div>
+                            <div class="example-item"><h3>11. Convert &pi;/6 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert &pi;/6 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>&pi;</span><span class="bottom">6</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving 180/6.</p><p class="example-answer"><b>Answer:</b> 30°</p></div></div>
+                            <div class="example-item"><h3>12. Convert &pi;/4 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert &pi;/4 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>&pi;</span><span class="bottom">4</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving 180/4.</p><p class="example-answer"><b>Answer:</b> 45°</p></div></div>
+                            <div class="example-item"><h3>13. Convert &pi;/2 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert &pi;/2 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>&pi;</span><span class="bottom">2</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving 180/2.</p><p class="example-answer"><b>Answer:</b> 90°</p></div></div>
+                            <div class="example-item"><h3>14. Convert 3&pi;/2 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 3&pi;/2 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>3&pi;</span><span class="bottom">2</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving (3 &times; 180) / 2 = 540 / 2.</p><p class="example-answer"><b>Answer:</b> 270°</p></div></div>
+                            <div class="example-item"><h3>15. Convert 2&pi; rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 2&pi; Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = 2&pi; &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving 2 &times; 180.</p><p class="example-answer"><b>Answer:</b> 360°</p></div></div>
+                            <div class="example-item"><h3>16. Convert 90° to Gradians</h3><div class="example-solution"><p><b>Goal:</b> Convert 90 Degrees to Gradians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Gradians = Degrees &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Gradians = 90 &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> 90/180 is 1/2. So, (1/2) &times; 200.</p><p class="example-answer"><b>Answer:</b> 100 grad</p></div></div>
+                            <div class="example-item"><h3>17. Convert 180° to Gradians</h3><div class="example-solution"><p><b>Goal:</b> Convert 180 Degrees to Gradians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Gradians = Degrees &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute the Value.</b> Insert the degree value into the formula.</p><div class="example-formula">Gradians = 180 &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> The '180' terms cancel.</p><p class="example-answer"><b>Answer:</b> 200 grad</p></div></div>
+                            <div class="example-item"><h3>18. Convert 270° to Gradians</h3><div class="example-solution"><p><b>Goal:</b> Convert 270 Degrees to Gradians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Gradians = Degrees &times; <span class="frac"><span>200</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute and simplify fraction.</b> Insert the degree value into the formula.</p><div class="example-formula">Gradians = 270 &times; <span class="frac"><span>10</span><span class="bottom">9</span></span></div><p><b>Step 3: Calculate.</b> (270 / 9) &times; 10 = 30 &times; 10.</p><p class="example-answer"><b>Answer:</b> 300 grad</p></div></div>
+                            <div class="example-item"><h3>19. Convert 50 grad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 50 Gradians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Gradians &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute and simplify fraction.</b> Insert the gradian value into the formula.</p><div class="example-formula">Degrees = 50 &times; <span class="frac"><span>9</span><span class="bottom">10</span></span></div><p><b>Step 3: Calculate.</b> (50 / 10) &times; 9 = 5 &times; 9.</p><p class="example-answer"><b>Answer:</b> 45°</p></div></div>
+                            <div class="example-item"><h3>20. Convert 150 grad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 150 Gradians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Gradians &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute.</b> Insert the gradian value into the formula.</p><div class="example-formula">Degrees = 150 &times; <span class="frac"><span>180</span><span class="bottom">200</span></span> = 150 &times; 0.9</div><p><b>Step 3: Calculate.</b> 150 times 0.9 is 135.</p><p class="example-answer"><b>Answer:</b> 135°</p></div></div>
+                            <div class="example-item"><h3>21. Convert 100 grad to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 100 Gradians to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Gradians &times; <span class="frac"><span>&pi;</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute.</b> Insert the gradian value into the formula.</p><div class="example-formula">Radians = 100 &times; <span class="frac"><span>&pi;</span><span class="bottom">200</span></span> = <span class="frac"><span>100&pi;</span><span class="bottom">200</span></span></div><p><b>Step 3: Simplify.</b> Divide the numerator and denominator by 100.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">2</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>22. Convert 200 grad to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 200 Gradians to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Gradians &times; <span class="frac"><span>&pi;</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute.</b> Insert the gradian value into the formula.</p><div class="example-formula">Radians = 200 &times; <span class="frac"><span>&pi;</span><span class="bottom">200</span></span></div><p><b>Step 3: Simplify.</b> The '200' terms cancel out.</p><p class="example-answer"><b>Answer:</b> &pi; rad</p></div></div>
+                            <div class="example-item"><h3>23. Convert &pi; rad to Gradians</h3><div class="example-solution"><p><b>Goal:</b> Convert &pi; Radians to Gradians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Gradians = Radians &times; <span class="frac"><span>200</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute.</b> Insert the radian value into the formula.</p><div class="example-formula">Gradians = &pi; &times; <span class="frac"><span>200</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel out.</p><p class="example-answer"><b>Answer:</b> 200 grad</p></div></div>
+                            <div class="example-item"><h3>24. Convert 1.5 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 1.5 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = 1.5 &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span> = <span class="frac"><span>270</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Calculate value.</b> 270 / 3.14159...</p><p class="example-answer"><b>Answer:</b> &approx; 85.94°</p></div></div>
+                            <div class="example-item"><h3>25. Convert 120° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 120 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 120 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide numerator and denominator by 60.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>2&pi;</span><span class="bottom">3</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>26. Convert 135° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 135 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 135 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Divide numerator and denominator by 45.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>3&pi;</span><span class="bottom">4</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>27. Convert 5&pi;/6 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 5&pi;/6 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>5&pi;</span><span class="bottom">6</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π's cancel, leaving (5 &times; 180) / 6 = 5 &times; 30.</p><p class="example-answer"><b>Answer:</b> 150°</p></div></div>
+                            <div class="example-item"><h3>28. Convert 400 grad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert 400 Gradians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Gradians &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 2: Substitute.</b> Insert the gradian value into the formula.</p><div class="example-formula">Degrees = 400 &times; <span class="frac"><span>180</span><span class="bottom">200</span></span></div><p><b>Step 3: Calculate.</b> 400/200 is 2. So, 2 &times; 180.</p><p class="example-answer"><b>Answer:</b> 360°</p></div></div>
+                            <div class="example-item"><h3>29. Convert 22.5° to Radians</h3><div class="example-solution"><p><b>Goal:</b> Convert 22.5 Degrees to Radians.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Radians = Degrees &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 2: Substitute.</b> Insert the degree value into the formula.</p><div class="example-formula">Radians = 22.5 &times; <span class="frac"><span>&pi;</span><span class="bottom">180</span></span></div><p><b>Step 3: Simplify.</b> Note that 22.5 is 1/8th of 180. So the fraction simplifies.</p><p class="example-answer"><b>Answer:</b> <span class="frac"><span>&pi;</span><span class="bottom">8</span></span> rad</p></div></div>
+                            <div class="example-item"><h3>30. Convert &pi;/12 rad to Degrees</h3><div class="example-solution"><p><b>Goal:</b> Convert &pi;/12 Radians to Degrees.</p><p><b>Step 1: Use the Formula.</b></p><div class="example-formula">Degrees = Radians &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 2: Substitute.</b> Insert the radian value into the formula.</p><div class="example-formula">Degrees = <span class="frac"><span>&pi;</span><span class="bottom">12</span></span> &times; <span class="frac"><span>180</span><span class="bottom">&pi;</span></span></div><p><b>Step 3: Simplify.</b> The 'π' terms cancel, leaving 180/12.</p><p class="example-answer"><b>Answer:</b> 15°</p></div></div>
+                        </div>
+                    </section>
+                    
+                  <!-- Comments Section -->
+                <div class="comments-wrapper">
+                    <hr>
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2>Comments</h2>
+                        <div class="comment-form-shell" id="comment-form-shell">
+                          <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div>
+                            <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
+                            <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+                            <input type="hidden" id="parent-id" value="">
+                            <div class="form-footer">
+                              <div id="char-counter">0 / 1000</div>
+                              <div class="actions">
+                                <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                <button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div id="comments-list">
+                          <div class="spinner"></div>
+                          <p class="muted">Loading comments…</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
-        <h4>5. Convert 1 full turn to degrees</h4>
-        <ul>
-          <li>Step 1: 1 full turn is equal to 360° by definition.</li>
-          <li><b>Answer:</b> 360°</li>
-        </ul>
+             <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section footer-about">
+                        <h3>About GK Learn Study</h3>
+                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="/about.html">About Us</a></li>
+                            <li><a href="/contact.html">Contact Us</a></li>
+                            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Conversions & Measurements</h3>
+                        <ul>
+                            <li><a href="/conversion.html">Unit Conversion</a></li>
+                            <li><a href="/conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+                            <li><a href="/conversion/temperature-conversion.html">Temperature Conversion</a></li>
+                            <li><a href="/conversion/measurement-systems.html">Measurement Systems</a></li>
+                            <li><a href="/conversion/area-volume-measurement.html">Area & Volume</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Science & GK</h3>
+                        <ul>
+                            <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
+                            <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
+                            <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
+                            <li><a href="/gk/ancient-wonders">Ancient Wonders</a></li>
+                            <li><a href="/gk/solar-system-tour">Solar System Tour</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Follow Us</h3>
+                        <ul class="footer-socials"></ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+            </footer>
 
-        <h4>6. Convert 0.5 turn to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert turns to degrees:
-            <b>Degrees = Turns × 360°</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Degrees = 0.5 × 360°</b></li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 180°</b></li>
-          <li><b>Answer:</b> 180°</li>
-        </ul>
-
-        <h4>7. Convert 90° to turns</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to turns:
-            <b>Turns = Degrees / 360°</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Turns = 90 / 360</b></li>
-          <li>Step 3: Simplify the expression: <b>Turns = 1/4</b></li>
-          <li><b>Answer:</b> 1/4 turn</li>
-        </ul>
-
-        <h4>8. Convert 1 radian to turns</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert radians to turns:
-            <b>Turns = Radians / 2π</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Turns = 1 / 2π</b></li>
-          <li>Step 3: Simplify the expression: <b>Turns ≈ 0.159 turn</b></li>
-          <li><b>Answer:</b> ≈ 0.159 turn</li>
-        </ul>
-
-        <h4>9. Convert 1 gradian to radians</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert gradians to radians:
-            <b>
-              Radians = Gradians ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">200</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Radians = 1 ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">200</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>π</span><span class="bottom">200</span></span
-              >
-            </b>
-          </li>
-          <li>
-            <b>Answer:</b>
-            <span class="frac"
-              ><span>π</span><span class="bottom">200</span></span
-            >
-            radians
-          </li>
-        </ul>
-
-        <h4>10. Convert 1 turn to radians</h4>
-        <ul>
-          <li>Step 1: 1 turn is equal to 2π radians by definition.</li>
-          <li><b>Answer:</b> 2π radians</li>
-        </ul>
-
-        <h4>11. Convert 30° to radians</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to radians:
-            <b>
-              <span class="bracket">(</span
-              ><span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Radians = 30 × <span class="bracket">(</span
-              ><span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              ><span class="bracket">)</span>
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>30π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 4: Reduce the fraction:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>π</span><span class="bottom">6</span></span
-              >
-            </b>
-          </li>
-          <li>
-            <b>Answer:</b>
-            <span class="frac"
-              ><span>π</span><span class="bottom">6</span></span
-            >
-            radians
-          </li>
-        </ul>
-
-        <h4>12. Convert 1/4 turn to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert turns to degrees:
-            <b>Degrees = Turns × 360°</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Degrees = 1/4 × 360°</b></li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 90°</b></li>
-          <li><b>Answer:</b> 90°</li>
-        </ul>
-
-        <h4>13. Convert 2π radians to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert radians to degrees:
-            <b>
-              Degrees = Radians ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = 2π ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 360°</b></li>
-          <li><b>Answer:</b> 360°</li>
-        </ul>
-
-        <h4>14. Convert 100 gradians to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert gradians to degrees:
-            <b>
-              Degrees = Gradians ×
-              <span class="frac"
-                ><span>9</span><span class="bottom">10</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = 100 ×
-              <span class="frac"
-                ><span>9</span><span class="bottom">10</span></span
-              >
-            </b>
-          </li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 90°</b></li>
-          <li><b>Answer:</b> 90°</li>
-        </ul>
-
-        <h4>15. Convert 90° to radians</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to radians:
-            <b>
-              Radians = Degrees ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Radians = 90 ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>90π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 4: Reduce the fraction:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>π</span><span class="bottom">2</span></span
-              >
-            </b>
-          </li>
-          <li>
-            <b>Answer:</b>
-            <span class="frac"
-              ><span>π</span><span class="bottom">2</span></span
-            >
-            radians
-          </li>
-        </ul>
-
-        <h4>16. Convert 45° to radians</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert degrees to radians:
-            <b>
-              Radians = Degrees ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Radians = 45 ×
-              <span class="frac"
-                ><span>π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 3: Simplify the expression:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>45π</span><span class="bottom">180</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 4: Reduce the fraction:
-            <b>
-              Radians =
-              <span class="frac"
-                ><span>π</span><span class="bottom">4</span></span
-              >
-            </b>
-          </li>
-          <li>
-            <b>Answer:</b>
-            <span class="frac"
-              ><span>π</span><span class="bottom">4</span></span
-            >
-            radians
-          </li>
-        </ul>
-
-        <h4>17. Convert 2π/3 radians to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert radians to degrees:
-            <b>
-              Degrees = Radians ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = (2π/3) ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 120°</b></li>
-          <li><b>Answer:</b> 120°</li>
-        </ul>
-
-        <h4>18. Convert 1.5 turns to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert turns to degrees:
-            <b>Degrees = Turns × 360°</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Degrees = 1.5 × 360°</b></li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 540°</b></li>
-          <li><b>Answer:</b> 540°</li>
-        </ul>
-
-        <h4>19. Convert 5π/4 radians to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert radians to degrees:
-            <b>
-              Degrees = Radians ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>
-            Step 2: Apply the values:
-            <b>
-              Degrees = (5π/4) ×
-              <span class="frac"
-                ><span>180</span><span class="bottom">π</span></span
-              >
-            </b>
-          </li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 225°</b></li>
-          <li><b>Answer:</b> 225°</li>
-        </ul>
-
-        <h4>20. Convert 1/8 turn to degrees</h4>
-        <ul>
-          <li>
-            Step 1: Use the formula to convert turns to degrees:
-            <b>Degrees = Turns × 360°</b>
-          </li>
-          <li>Step 2: Apply the values: <b>Degrees = 1/8 × 360°</b></li>
-          <li>Step 3: Simplify the expression: <b>Degrees = 45°</b></li>
-          <li><b>Answer:</b> 45°</li>
-        </ul>
-      </div>
-
-      <hr />
-
-      <div id="right-sidebar">
-        <strong>Important Links</strong>
-
-        <ul id="link-list"></ul>
-      </div>
-
-      <footer>
-        <div class="custom-row">
-          <div class="custom-column">
-            <b>Follow Us</b>
-            <div id="social-links"></div>
-          </div>
-          <div class="custom-column">
-            <button onclick="goToUrl()">Contact</button>
-          </div>
-          <div class="custom-column">
-            <p id="my-paragraph"></p>
-          </div>
+            <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
-      </footer>
-    </div>
-  </body>
+<script src="../header-menu.js" defer></script>
+        
+        
+        
+        <script src="../topic-menu.js" defer></script>
+        <script src="../convert.js" defer></script>
+     <script src="../search.js" defer></script><script type="module" src="../comment.js" defer></script>
+    </body>
 </html>
+
+
