@@ -342,7 +342,7 @@ a:link:hover {
     flex-direction: row;
     align-items: center;
     height: 60px !important;
-  }
+  }.app-footer {margin-left:15%;}
   .container {
     max-width: 72%;
     margin-top: 60px;
@@ -850,7 +850,7 @@ summary::-webkit-details-marker {
 }
 
 /* Footer */
-.app-footer {margin-left:15%;
+.app-footer {
   color: #c5d4e4;
   background-color: #1d2c3d;
   padding: 3rem 2rem;
