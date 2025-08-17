@@ -1,694 +1,147 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Speed Unit Conversion</title>
-    <meta
-      name="description"
-      content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples."
-    />
-    <meta
-      name="keywords"
-      content="speed conversion, unit conversion, speed units, kilometers per hour, meters per second, miles per hour, speed measurement, conversion tools, online conversion, speed unit conversion guide, practical examples, speed measurement conversion"
-    />
-    <meta name="author" content="Mr. Himanshu Tyagi" />
-    <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="copyright" content="© 2024 GK Learn Study" />
-    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
-
-    <!-- Open Graph Meta Tags for Facebook -->
-    <meta
-      property="og:title"
-      content="Speed Unit Conversion - Learn How to Convert Speed Measurements"
-    />
-    <meta
-      property="og:description"
-      content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples."
-    />
-    <link
-      rel="canonical"
-      href="https://gklearnstudy.in/conversion/speed-unit-conversion"
-    />
-
-    <meta
-      property="og:image"
-      content="https://gklearnstudy.in/images/speed-unit-conversion.webp"
-    />
-    <meta
-      property="og:url"
-      content="https://gklearnstudy.in/conversion/speed-unit-conversion"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="GK Learn Study" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Speed Unit Conversion - Learn How to Convert Speed Measurements"
-    />
-    <meta
-      name="twitter:description"
-      content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples."
-    />
-    <meta
-      name="twitter:image"
-      content="https://gklearnstudy.in/images/speed-unit-conversion.webp"
-    />
-    <meta name="twitter:site" content="" />
-    <meta name="twitter:creator" content="" />
-    <meta name="twitter:image:alt" content="Speed Conversion Tools" />
-
-    <!-- Additional Meta Tags -->
-    <meta property="article:author" content="Mr. Himanshu Tyagi" />
-    <meta property="article:section" content="Education" />
-    <meta
-      property="article:tag"
-      content="Speed Conversion, Measurement, Tools, Online Conversion"
-    />
-    <meta name="theme-color" content="#90EE90" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="apple-mobile-web-app-title" content="Speed Unit Conversion" />
-    <meta name="application-name" content="Speed Unit Conversion" />
-    <meta name="msapplication-TileColor" content="#90EE90" />
-    <meta
-      name="msapplication-TileImage"
-      content="https://gklearnstudy.in/images/speed-unit-conversion.webp"
-    />
-    <meta name="msapplication-config" content="browserconfig.xml" />
-
-    <!-- Social Media Meta Tags -->
-    
-    
-
-    <!-- Favicon and Stylesheets -->
-    <script src="https://gklearnstudy.in/js/menu.js" defer></script>
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-    <link rel="stylesheet" href="https://gklearnstudy.in/css/maths.css" />
-
-    <!-- Defer JavaScript Files -->
-
-    <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
-    <script src="https://gklearnstudy.in/js/maths.js" defer></script>
-    <script src="https://gklearnstudy.in/js/convert.js" defer></script>
-    <script src="https://gklearnstudy.in/js/search.js" defer></script>
-  </head>
-
-  <body>
-    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-    <ul class="menu-list" id="menuList">
-      <li><a href="angle-unit-conversion.html">Angle Conversion</a></li>
-      <li><a href="area-unit-conversion.html">Area Conversion</a></li>
-      <li><a href="length-unit-conversion.html">Length Conversion</a></li>
-      <li><a href="power-unit-conversion.html">Power Conversion</a></li>
-      <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
-      <li>
-        <a class="active" href="conversion/speed-unit-conversion"
-          >Speed Conversion</a
-        >
-      </li>
-      <li>
-        <a href="temperature-unit-conversion.html">Temperature Conversion</a>
-      </li>
-      <li><a href="time-unit-conversion.html">Time Conversion</a></li>
-      <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
-      <li>
-        <a href="weight&mass-unit-conversion.html">Weight&Mass Conversion</a>
-      </li>
-    </ul>
-
-    <div class="search-container">
-      <button class="search-icon" id="searchBtn">
-        <span class="rotated-icon">⌕</span>
-      </button>
-      <button class="back-icon" id="backBtn">←</button>
-      <input
-        type="text"
-        class="search-input"
-        id="searchInput"
-        autocomplete="off"
-        placeholder="Search..."
-        required
-        oninput="showSuggestions(event)"
-      />
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
-
-      <div class="container">
-      <h1>Speed Unit Conversion - Definition, Types, Importance</h1>
-
-      <div class="custom-container">
-        <div class="custom-row">
-          <div class="custom-column">
-            <div class="content" id="Speed"></div>
-
-            <h2>Speed Conversion</h2>
-
-            <table id="myTable">
-              <tr>
-                <td>Centimetres per second</td>
-                <td>
-                  <input
-                    id="inputCPS"
-                    placeholder="CPS"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Metres per second</td>
-                <td>
-                  <input
-                    id="inputMPS"
-                    placeholder="MPS"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Kilometres per second</td>
-                <td>
-                  <input
-                    id="inputKPH"
-                    placeholder="KPH"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Feet per second</td>
-                <td>
-                  <input
-                    id="inputFPS"
-                    placeholder="FPS"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Miles per hour</td>
-                <td>
-                  <input
-                    id="inputMPH"
-                    placeholder="MPH"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Knots</td>
-                <td>
-                  <input
-                    id="inputKnots"
-                    placeholder="Knots"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Mach</td>
-                <td>
-                  <input
-                    id="inputMach"
-                    placeholder="Mach"
-                    oninput="speedConverter(this.id,this.value)"
-                    onchange="speedConverter(this.id,this.value)"
-                  />
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="custom-column">
-            <h2>Speed Unit Converter</h2>
-
-            <table id="myTable">
-              <tr>
-                <td>cm/s</td>
-                <td>=</td>
-                <td>0.01 m/s</td>
-              </tr>
-              <tr>
-                <td>km/s</td>
-                <td>=</td>
-                <td>0.278 m/s</td>
-              </tr>
-              <tr>
-                <td>Ft/s</td>
-                <td>=</td>
-                <td>0.3048 m/s</td>
-              </tr>
-              <tr>
-                <td>Mi/hr</td>
-                <td>=</td>
-                <td>0.447 m/s</td>
-              </tr>
-              <tr>
-                <td>Knots</td>
-                <td>=</td>
-                <td>0.5144 m/s</td>
-              </tr>
-              <tr>
-                <td>Mach</td>
-                <td>=</td>
-                <td>340.3 m/s</td>
-              </tr>
-            </table>
-          </div>
+    <head>
+        <title>Speed Unit Conversion</title>
+        <meta name="description" content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples." />
+        <meta name="keywords" content="speed conversion, unit conversion, speed units, kilometers per hour, meters per second, miles per hour, speed measurement, conversion tools, online conversion, speed unit conversion guide, practical examples, speed measurement conversion" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Mr. Himanshu Tyagi" />
+        <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="bingbot" content="index, follow" />
+        <meta name="copyright" content="© 2024 GK Learn Study" />
+        <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+        <meta property="og:title" content="Speed Unit Conversion - Learn How to Convert Speed Measurements" />
+        <meta property="og:description" content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples." />
+        <link rel="canonical" href="https://gklearnstudy.in/conversion/speed-unit-conversion" />
+        <meta property="og:image" content="https://gklearnstudy.in/images/speed-unit-conversion.webp" />
+        <meta property="og:url" content="https://gklearnstudy.in/conversion/speed-unit-conversion" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GK Learn Study" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Speed Unit Conversion - Learn How to Convert Speed Measurements" />
+        <meta name="twitter:description" content="Explore speed unit conversion and learn how to convert between various units of speed measurement. Understand conversions for kilometers per hour, meters per second, miles per hour, and more with practical examples." />
+        <meta name="twitter:image" content="https://gklearnstudy.in/images/speed-unit-conversion.webp" />
+        <meta name="twitter:image:alt" content="Speed Conversion Tools" />
+        <meta property="article:author" content="Mr. Himanshu Tyagi" />
+        <meta property="article:section" content="Education" />
+        <meta property="article:tag" content="Speed Conversion, Measurement, Tools, Online Conversion" />
+        <meta name="theme-color" content="#90EE90" />
+        
+        <link rel="stylesheet" href="../index.css">
+        <link rel="stylesheet" href="../conversion.css">
+        <link rel="stylesheet" href="../topicmenu.css">
+        <link rel="stylesheet" href="../comment.css">
+    </head>
+    <body>
+        <div id="reading-progress-bar"></div>
+        <header class="header" id="header">
+            <nav class="navbar container1">
+                <a href="../index.html" class="brand" aria-label="GK Learn Study"><div class="logo-container1"><div class="demo2"><svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white" /><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">GK<animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" /><animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" /><animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" /></text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center;" opacity="0">Learn Study<animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" /><animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" /></text><clipPath id="circle-clip"><circle cx="150" cy="150" r="150" /></clipPath><g clip-path="url(#circle-clip)"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" /></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" /></path></g></svg></div></div></a>
+                <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div><span class="overlay"></span>
+                <div class="menu" id="menu"><span class="back-arrow">×</span><a href="/" class="menu-brand">GK</a><div class="menu-arrow left">&#8249;</div><div class="menu-arrow right">&#8250;</div><div class="menu-inner"></div></div>
+            </nav>
+        </header>
+        <div class="search-container"><button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg);">⌕</span></button><button class="back-icon" id="backBtn">←</button><input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required /></div>
+        <div id="sidebar-overlay"></div>
+        <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+        <aside id="topic-sidebar">
+            <p class="sidebar-title">Conversion Topics</p>
+            <nav id="topic-nav">
+                <ul>
+                    <li><a href="../conversion.html">All Conversions</a></li>
+                    <li><a href="../conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+                    <li><a href="../conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+                    <li><a href="../conversion/power-unit-conversion.html">Power Conversion</a></li>
+                    <li><a class="active" href="../conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+                    <li><a href="../conversion/length-unit-conversion.html">Length Conversion</a></li>
+                    <li><a href="../conversion/weight&mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+                    <li><a href="../conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+                    <li><a href="../conversion/time-unit-conversion.html">Time Conversion</a></li>
+                    <li><a href="../conversion/area-unit-conversion.html">Area Conversion</a></li>
+                    <li><a href="../conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content-wrapper">
+            <main class="container">
+                <div id="root">
+                    <header class="education-header">
+                        <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                           <svg viewBox="0 0 200 200" role="img" aria-labelledby="speedTitle"><title id="speedTitle">Animated Speedometer</title><g><circle cx="100" cy="100" r="90" fill="#f1f5f9" stroke="#94a3b8" stroke-width="8"/><path d="M40 130 A 70 70 0 0 1 160 130" fill="none" stroke="#cbd5e1" stroke-width="20"/><path id="speed-arc" d="M40 130 A 70 70 0 0 1 160 130" fill="none" stroke="url(#grad-speed)" stroke-width="20" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="220"><animate attributeName="stroke-dashoffset" from="220" to="0" dur="2s" begin="0.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/></path><path d="M100 100 L 40 130" stroke="#1e293b" stroke-width="6" stroke-linecap="round" transform-origin="100px 100px"><animateTransform attributeName="transform" type="rotate" from="-60" to="60" dur="2s" begin="0.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/></path><circle cx="100" cy="100" r="10" fill="#1e293b"/><defs><linearGradient id="grad-speed" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22c55e"/><stop offset="50%" stop-color="#facc15"/><stop offset="100%" stop-color="#ef4444"/></linearGradient></defs></g></svg>
+                        </div>
+                        <div>
+                            <h1>Speed Unit Conversion</h1>
+                            <p class="education-description"><strong>Speed unit conversion</strong> is changing a speed measurement from one unit to another, like from <strong>kilometers per hour (km/h)</strong> to <strong>miles per hour (mph)</strong>. Speed is the rate at which an object covers distance. Different units are used globally for travel (km/h, mph), science (m/s), and aviation/maritime (knots). Converting between these is essential for accurate calculations in physics, travel planning, and engineering.</p>
+                        </div>
+                    </header>
+                    <div class="conversion-tool-container">
+                        <div class="converter-widget">
+                            <h2>Speed Converter Tool</h2>
+                            <div class="card-column-layout">
+                                <div class="input-group"><label>Centimetres/second (cm/s)</label><input type="number" id="inputCPS" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Metres/second (m/s)</label><input type="number" id="inputMPS" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Kilometres/hour (km/h)</label><input type="number" id="inputKPH" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Feet/second (ft/s)</label><input type="number" id="inputFPS" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Miles/hour (mph)</label><input type="number" id="inputMPH" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Knots</label><input type="number" id="inputKnots" oninput="speedConverter(this.id, this.value)"></div>
+                                <div class="input-group"><label>Mach</label><input type="number" id="inputMach" oninput="speedConverter(this.id, this.value)"></div>
+                            </div>
+                        </div>
+                    </div>
+                 <article class="article-content"> <h2>Understanding Speed Unit Conversion</h2> <p>Speed is a fundamental concept in physics and everyday life. It describes how fast an object covers a distance in a given amount of time. From cars moving on highways to airplanes soaring across continents and ships sailing in oceans, speed is one of the most common measurements we encounter. However, speed is expressed in different units depending on the field, region, or context. This is where <strong>speed unit conversion</strong> becomes important. Converting between units ensures accuracy in scientific research, engineering applications, transportation, and daily activities. Whether converting kilometers per hour into meters per second for a physics exam, or miles per hour into kilometers per hour to compare car performance internationally, unit conversion makes communication clear and calculations correct.</p> <h3>Types of Speed Units</h3> <h4>🚗 1. Meters per Second (m/s)</h4> <p>The <strong>meter per second</strong> is the official SI (International System of Units) measurement for speed. It tells us how many meters an object travels in one second. This unit is common in physics problems and engineering calculations because it directly connects distance (meters) with time (seconds).</p> <p><b>Example:</b> If a car covers 20 meters in 4 seconds, then speed = 20 ÷ 4 = 5 m/s.</p> <h4>🚴‍♂️ 2. Kilometers per Hour (km/h)</h4> <p>Kilometers per hour is the most familiar unit for everyday life, especially for measuring vehicle speed. Most countries use km/h on road signs and speedometers. It expresses how many kilometers are covered in one hour.</p> <p><b>Example:</b> A bus travels 180 kilometers in 3 hours. Speed = 180 ÷ 3 = 60 km/h.</p> <h4>🛩️ 3. Miles per Hour (mph)</h4> <p>The <strong>mile per hour</strong> is commonly used in the United States and the United Kingdom. Road signs, car dashboards, and even aircraft speeds are often expressed in mph in these regions. Since a mile is longer than a kilometer, mph values are numerically smaller than their km/h equivalents for the same speed.</p> <p><b>Example:</b> A jet flying at 600 mph is traveling extremely fast, equivalent to around 965 km/h.</p> <h4>⛵ 4. Knots (nautical miles per hour)</h4> <p>A <strong>knot</strong> is a specialized unit used mainly in maritime and aviation industries. One knot equals one nautical mile per hour. Nautical miles are based on the Earth’s circumference, making knots convenient for navigation across seas and skies. Pilots, sailors, and meteorologists use knots to describe wind speed, ship speed, and aircraft cruising speed.</p> <p><b>Example:</b> A ship sailing at 20 knots covers 20 nautical miles per hour, which equals about 37 km/h.</p> <h4>🏃‍♀️ 5. Feet per Second (ft/s)</h4> <p>Feet per second is less common globally but still appears in physics, ballistics, and engineering calculations, especially in the United States. Since the foot is a smaller unit than the meter, ft/s values tend to be larger numerically compared to m/s.</p> <p><b>Example:</b> An object in free fall on Earth accelerates at roughly 32.2 ft/s², which corresponds to 9.8 m/s².</p> <h3>Important Points in Speed Unit Conversion</h3> <ul> <li>🧭 <b>Definition of Speed:</b> Speed is the distance traveled divided by the time taken. <div class="example-formula">Speed = Distance ÷ Time</div></li> <li>🔁 <b>Common Units of Speed:</b> m/s, km/h, mph, knots, ft/s</li> <li>🔄 <b>Conversion Factors:</b> <ul> <li>1 km/h = 5/18 m/s</li> <li>1 m/s = 18/5 km/h</li> <li>1 mph ≈ 1.609 km/h</li> <li>1 knot ≈ 1.852 km/h</li> <li>1 m/s ≈ 3.281 ft/s</li> </ul></li> <li>📌 <b>SI Unit of Speed:</b> The standard unit in scientific work is <strong>meters per second (m/s)</strong>.</li> <li>🧪 <b>Speed is a scalar quantity:</b> It has only magnitude but no direction, unlike velocity, which is a vector quantity that includes both magnitude and direction.</li> </ul> <h3>Why Speed Conversion is Necessary</h3> <p>Speed conversion is not just a theoretical topic; it has real-world importance. Consider these scenarios:</p> <ul> <li><strong>Transportation:</strong> A traveler renting a car in Europe sees the dashboard in km/h, while they are accustomed to mph. Conversion helps them understand their driving speed safely.</li> <li><strong>Aviation:</strong> Pilots often switch between knots, mph, and km/h depending on the type of flight data. Conversions are vital for navigation and international aviation standards.</li> <li><strong>Sports:</strong> Runners may record their pace in m/s or km/h, while in the U.S., speed might be expressed in mph. Conversions allow fair comparisons in international competitions.</li> <li><strong>Science and Engineering:</strong> Researchers often need to convert between SI units and customary units for accurate experiments, publications, or cross-border projects.</li> </ul> <h3>Examples of Conversions</h3> <ul> <li>A car moving at 90 km/h is traveling at 90 × (5/18) = 25 m/s.</li> <li>A plane flying at 500 mph is flying at about 805 km/h.</li> <li>A ship at 30 knots is moving at 30 × 1.852 ≈ 55.6 km/h.</li> </ul> <h3>Conclusion</h3> <p>Speed is a universal concept, but the way it is measured varies widely across regions and disciplines. The <strong>SI unit m/s</strong> is most common in scientific contexts, <strong>km/h</strong> dominates in everyday road usage, <strong>mph</strong> remains popular in the U.S. and U.K., while <strong>knots</strong> are essential in maritime and aviation. Understanding these different units and being able to convert between them ensures accuracy, safety, and clarity. Whether calculating physics problems, comparing cars, planning international travel, or analyzing scientific data, speed unit conversion is a practical skill with real-world value. As our world becomes increasingly interconnected, mastering these conversions becomes even more essential for communication and collaboration across industries and nations.</p> </article>
+                    <section class="solved-examples-section">
+                        <h2>Solved Examples: Step-by-Step Speed Conversions</h2>
+                        <div class="examples-grid">
+                            <div class="example-item"><h3>1. Convert 36 km/h to m/s</h3><p><b>Formula:</b> m/s = km/h × (5/18)</p><p><b>Calculation:</b> 36 × 5 / 18 = 10</p><p class="example-answer"><b>Answer:</b> 10 m/s</p></div>
+                            <div class="example-item"><h3>2. Convert 10 m/s to km/h</h3><p><b>Formula:</b> km/h = m/s × 3.6</p><p><b>Calculation:</b> 10 × 3.6 = 36</p><p class="example-answer"><b>Answer:</b> 36 km/h</p></div>
+                            <div class="example-item"><h3>3. Convert 60 mph to km/h</h3><p><b>Formula:</b> km/h ≈ mph × 1.609</p><p><b>Calculation:</b> 60 × 1.609 = 96.54</p><p class="example-answer"><b>Answer:</b> 96.54 km/h</p></div>
+                            <div class="example-item"><h3>4. Convert 100 km/h to mph</h3><p><b>Formula:</b> mph ≈ km/h / 1.609</p><p><b>Calculation:</b> 100 / 1.609 ≈ 62.14</p><p class="example-answer"><b>Answer:</b> 62.14 mph</p></div>
+                            <div class="example-item"><h3>5. Convert 15 m/s to ft/s</h3><p><b>Formula:</b> ft/s ≈ m/s × 3.281</p><p><b>Calculation:</b> 15 × 3.281 = 49.215</p><p class="example-answer"><b>Answer:</b> 49.215 ft/s</p></div>
+                            <div class="example-item"><h3>6. Convert 1 knot to km/h</h3><p><b>Formula:</b> km/h ≈ knot × 1.852</p><p><b>Calculation:</b> 1 × 1.852 = 1.852</p><p class="example-answer"><b>Answer:</b> 1.852 km/h</p></div>
+                            <div class="example-item"><h3>7. Convert 5 knots to mph</h3><p><b>Formula:</b> mph ≈ knots × 1.151</p><p><b>Calculation:</b> 5 × 1.151 = 5.755</p><p class="example-answer"><b>Answer:</b> 5.755 mph</p></div>
+                            <div class="example-item"><h3>8. Convert 72 km/h to m/s</h3><p><b>Formula:</b> m/s = km/h / 3.6</p><p><b>Calculation:</b> 72 / 3.6 = 20</p><p class="example-answer"><b>Answer:</b> 20 m/s</p></div>
+                            <div class="example-item"><h3>9. Convert 100 m/s to km/h</h3><p><b>Formula:</b> km/h = m/s × 3.6</p><p><b>Calculation:</b> 100 × 3.6 = 360</p><p class="example-answer"><b>Answer:</b> 360 km/h</p></div>
+                            <div class="example-item"><h3>10. Convert 90 mph to m/s</h3><p><b>Formula:</b> m/s ≈ mph × 0.44704</p><p><b>Calculation:</b> 90 × 0.44704 ≈ 40.23</p><p class="example-answer"><b>Answer:</b> 40.23 m/s</p></div>
+                            <div class="example-item"><h3>11. Convert 30 m/s to mph</h3><p><b>Formula:</b> mph ≈ m/s × 2.237</p><p><b>Calculation:</b> 30 × 2.237 = 67.11</p><p class="example-answer"><b>Answer:</b> 67.11 mph</p></div>
+                            <div class="example-item"><h3>12. Convert 50 ft/s to m/s</h3><p><b>Formula:</b> m/s ≈ ft/s × 0.3048</p><p><b>Calculation:</b> 50 × 0.3048 = 15.24</p><p class="example-answer"><b>Answer:</b> 15.24 m/s</p></div>
+                            <div class="example-item"><h3>13. Convert 100 km/h to ft/s</h3><p><b>Step 1:</b> 100 km/h ≈ 27.78 m/s</p><p><b>Step 2:</b> 27.78 m/s × 3.281 ≈ 91.14 ft/s</p><p class="example-answer"><b>Answer:</b> &approx; 91.14 ft/s</p></div>
+                            <div class="example-item"><h3>14. Convert 45 knots to km/h</h3><p><b>Formula:</b> km/h ≈ knots × 1.852</p><p><b>Calculation:</b> 45 × 1.852 = 83.34</p><p class="example-answer"><b>Answer:</b> 83.34 km/h</p></div>
+                            <div class="example-item"><h3>15. Convert 10 m/s to knots</h3><p><b>Formula:</b> knots ≈ m/s / 0.5144</p><p><b>Calculation:</b> 10 / 0.5144 ≈ 19.44</p><p class="example-answer"><b>Answer:</b> 19.44 knots</p></div>
+                            <div class="example-item"><h3>16. Convert 200 km/h to knots</h3><p><b>Formula:</b> knots ≈ km/h / 1.852</p><p><b>Calculation:</b> 200 / 1.852 ≈ 108.0</p><p class="example-answer"><b>Answer:</b> 108.0 knots</p></div>
+                            <div class="example-item"><h3>17. Convert 5 mph to m/s</h3><p><b>Formula:</b> m/s ≈ mph × 0.44704</p><p><b>Calculation:</b> 5 × 0.44704 = 2.2352</p><p class="example-answer"><b>Answer:</b> &approx; 2.24 m/s</p></div>
+                            <div class="example-item"><h3>18. Convert 2 m/s to km/min</h3><p><b>Step 1 (m to km):</b> 2 m = 0.002 km</p><p><b>Step 2 (s to min):</b> 1 s = 1/60 min</p><p><b>Calculation:</b> 0.002 km / (1/60 min) = 0.12</p><p class="example-answer"><b>Answer:</b> 0.12 km/min</p></div>
+                            <div class="example-item"><h3>19. Convert 1 km/min to m/s</h3><p><b>Step 1 (km to m):</b> 1 km = 1000 m</p><p><b>Step 2 (min to s):</b> 1 min = 60 s</p><p><b>Calculation:</b> 1000 m / 60 s ≈ 16.67</p><p class="example-answer"><b>Answer:</b> 16.67 m/s</p></div>
+                            <div class="example-item"><h3>20. Convert Mach 1 to km/h</h3><p><b>Info:</b> Mach 1 ≈ 343 m/s at sea level.</p><p><b>Calculation:</b> 343 m/s × 3.6 = 1234.8</p><p class="example-answer"><b>Answer:</b> &approx; 1235 km/h</p></div>
+                            <div class="example-item"><h3>21. A cheetah's speed (120 km/h) to ft/s</h3><p><b>Step 1 (km/h to m/s):</b> 120 / 3.6 ≈ 33.33 m/s</p><p><b>Step 2 (m/s to ft/s):</b> 33.33 × 3.281 ≈ 109.36</p><p class="example-answer"><b>Answer:</b> &approx; 109.4 ft/s</p></div>
+                            <div class="example-item"><h3>22. A snail's speed (0.048 km/h) to cm/s</h3><p><b>Step 1 (km/h to m/s):</b> 0.048 / 3.6 ≈ 0.0133 m/s</p><p><b>Step 2 (m/s to cm/s):</b> 0.0133 × 100 ≈ 1.33</p><p class="example-answer"><b>Answer:</b> &approx; 1.33 cm/s</p></div>
+                            <div class="example-item"><h3>23. Bullet train (320 km/h) to mph</h3><p><b>Formula:</b> mph ≈ km/h × 0.6214</p><p><b>Calculation:</b> 320 × 0.6214 ≈ 198.85</p><p class="example-answer"><b>Answer:</b> &approx; 198.9 mph</p></div>
+                            <div class="example-item"><h3>24. 100 ft/s to mph</h3><p><b>Formula:</b> mph ≈ ft/s × 0.6818</p><p><b>Calculation:</b> 100 × 0.6818 = 68.18</p><p class="example-answer"><b>Answer:</b> 68.18 mph</p></div>
+                            <div class="example-item"><h3>25. Mach 2 to mph</h3><p><b>Info:</b> Mach 1 ≈ 761 mph at sea level.</p><p><b>Calculation:</b> 2 × 761 = 1522</p><p class="example-answer"><b>Answer:</b> 1522 mph</p></div>
+                            <div class="example-item"><h3>26. Car travels 1 km in 1 min. Find speed in km/h.</h3><p><b>Info:</b> 1 minute = 1/60 hour.</p><p><b>Calculation:</b> Speed = 1 km / (1/60 hr) = 60</p><p class="example-answer"><b>Answer:</b> 60 km/h</p></div>
+                            <div class="example-item"><h3>27. 40 knots to ft/s</h3><p><b>Formula:</b> ft/s ≈ knots × 1.688</p><p><b>Calculation:</b> 40 × 1.688 = 67.52</p><p class="example-answer"><b>Answer:</b> &approx; 67.5 ft/s</p></div>
+                            <div class="example-item"><h3>28. 150 mph to knots</h3><p><b>Formula:</b> knots ≈ mph × 0.869</p><p><b>Calculation:</b> 150 × 0.869 = 130.35</p><p class="example-answer"><b>Answer:</b> &approx; 130.4 knots</p></div>
+                            <div class="example-item"><h3>29. 55 mph to ft/s</h3><p><b>Formula:</b> ft/s ≈ mph × 1.467</p><p><b>Calculation:</b> 55 × 1.467 = 80.685</p><p class="example-answer"><b>Answer:</b> &approx; 80.7 ft/s</p></div>
+                            <div class="example-item"><h3>30. 200 m/s to mph</h3><p><b>Formula:</b> mph ≈ m/s × 2.237</p><p><b>Calculation:</b> 200 × 2.237 = 447.4</p><p class="example-answer"><b>Answer:</b> 447.4 mph</p></div>
+                        </div>
+                    </section>
+                    <div class="comments-wrapper"><hr><div class="firebase-comments-widget" id="custom-comment-section"><h2>Comments</h2><div class="comment-form-shell" id="comment-form-shell"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div><input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" /><textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea><input type="hidden" id="parent-id" value=""><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button></div></div></form></div><div id="comments-list"><div class="spinner"></div><p class="muted">Loading comments…</p></div></div></div>
+                </div>
+            </main>
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+            <footer class="app-footer"><div class="footer-content"><div class="footer-section footer-about"><h3>About GK Learn Study</h3><p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p></div><div class="footer-section"><h4>About Us</h4><ul><li><a href="../about.html">About Us</a></li><li><a href="../contact.html">Contact Us</a></li><li><a href="../privacy-policy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></div><div class="footer-section"><h4>For you</h4><ul><li><a href="../gk-quiz/ancient-indian-history">Ancient Indian History</a></li><li><a href="../gk-quiz/medieval-indian-history">Medieval Indian History</a></li><li><a href="../gk-quiz/modern-indian-history">Modern Indian History</a></li><li><a href="../gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li></ul></div><div class="footer-section"><h4>Science & Computer</h4><ul><li><a href="../conversion.html">Conversion</a></li><li><a href="../all-formulas.html">All formulas</a></li></ul></div><div class="footer-section"><h4>Follow Us</h4><ul class="footer-socials"></ul></div></div><div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div></footer>
+            <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
-      </div>
-
-      <h2>
-        <svg
-          height="200px"
-          width="200px"
-          alt="Speed Unit Conversion"
-          version="1.1"
-          id="Capa_1"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 511.74 511.74"
-          xml:space="preserve"
-          fill="#000000"
-          stroke="#000000"
-          stroke-width="0.00511737"
-        >
-          <path
-            style="fill: #74d24f"
-            d="M255.868,39.868c-138.961,0-251.351,108.738-255.859,247.558 c-0.141,4.316,1.453,8.414,4.484,11.539c3.016,3.113,7.234,4.902,11.562,4.902h63.82c4.422,0,8-3.582,8-8h336c0,4.418,3.578,8,8,8 h63.812c4.336,0,8.555-1.789,11.57-4.91c3.023-3.129,4.617-7.23,4.469-11.539C507.227,148.607,394.837,39.868,255.868,39.868z"
-          />
-
-          <g>
-            <path
-              style="fill: #ffd200"
-              d="M255.868,39.868c-0.042,0-0.083,0.003-0.125,0.003v255.997L384.496,74.128 C346.74,52.325,302.834,39.868,255.868,39.868z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #ff1a47"
-              d="M431.876,303.868h63.812c4.336,0,8.555-1.789,11.57-4.91c3.023-3.129,4.617-7.23,4.469-11.539 c-2.979-91.895-53.266-170.574-127.221-213.286L255.871,295.868h168.004C423.876,300.286,427.454,303.868,431.876,303.868z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #ff9600"
-              d="M384.506,74.133L255.871,295.868l222.045-127.907C455.557,128.984,423.347,96.565,384.506,74.133z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #9e1f69"
-              d="M255.868,111.868c-101.461,0-184,82.543-184,184c0,58.359,28.125,113.848,75.242,148.43 c1.375,1.008,3.031,1.551,4.734,1.551l208.023,0.02c1.703,0,3.359-0.543,4.734-1.551c47.125-34.57,75.266-90.062,75.266-148.449 C439.868,194.411,357.329,111.868,255.868,111.868z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #fff5f5"
-              d="M413.524,138.212c-2.828-2.836-7.328-3.129-10.516-0.699l-144,110.117 c-1.836,1.402-2.969,3.523-3.125,5.824c-0.148,2.301,0.695,4.559,2.328,6.188l33.883,33.883c1.508,1.504,3.539,2.344,5.656,2.344 c0.172,0,0.352-0.004,0.531-0.02c2.297-0.152,4.422-1.289,5.82-3.121l110.117-144C416.657,145.544,416.36,141.048,413.524,138.212 z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #fff5f5"
-              d="M357.871,463.868h-204c-1.105,0-2-0.895-2-2v-60c0-1.105,0.895-2,2-2h204c1.105,0,2,0.895,2,2v60 C359.871,462.973,358.976,463.868,357.871,463.868z"
-            />
-          </g>
-          <g>
-            <path
-              style="fill: #5c546a"
-              d="M343.868,471.868h-176c-13.234,0-24-10.766-24-24v-32c0-13.234,10.766-24,24-24h176 c13.234,0,24,10.766,24,24v32C367.868,461.103,357.102,471.868,343.868,471.868z M167.868,407.868c-4.414,0-8,3.59-8,8v32 c0,4.41,3.586,8,8,8h176c4.414,0,8-3.59,8-8v-32c0-4.41-3.586-8-8-8H167.868z"
-            />
-          </g>
-          <g>
-            <circle style="fill: #5c546a" cx="255.871" cy="295.868" r="48" />
-          </g>
-          <g>
-            <circle style="fill: #b9bbc1" cx="255.871" cy="295.868" r="24" />
-          </g>
-          <g>
-            <g>
-              <path
-                style="fill: #5c546a"
-                d="M143.876,109.88c1.359,0,2.734-0.344,3.992-1.07c3.828-2.211,5.141-7.102,2.93-10.93 L134.69,69.976c-4.717,2.518-9.32,5.212-13.853,8.011l16.101,27.894C138.423,108.446,141.11,109.88,143.876,109.88z"
-              />
-            </g>
-            <g>
-              <path
-                style="fill: #5c546a"
-                d="M255.868,79.868c4.422,0,8-3.582,8-8V40.064c-2.663-0.081-5.317-0.195-8-0.195 c-2.683,0-5.337,0.115-8,0.195v31.805C247.868,76.286,251.446,79.868,255.868,79.868z"
-              />
-            </g>
-            <g>
-              <path
-                style="fill: #5c546a"
-                d="M61.876,191.868c2.766,0,5.453-1.434,6.937-4c2.211-3.828,0.898-8.719-2.93-10.93l-27.909-16.113 c-2.797,4.531-5.442,9.165-7.959,13.883l27.869,16.089C59.141,191.525,60.516,191.868,61.876,191.868z"
-              />
-            </g>
-            <g>
-              <path
-                style="fill: #5c546a"
-                d="M377.049,69.975L360.938,97.88c-2.211,3.828-0.898,8.719,2.93,10.93 c1.258,0.727,2.633,1.07,3.992,1.07c2.766,0,5.453-1.434,6.938-4l16.105-27.895C386.37,75.187,381.766,72.492,377.049,69.975z"
-              />
-            </g>
-            <g>
-              <path
-                style="fill: #5c546a"
-                d="M473.768,160.826l-27.908,16.112c-3.828,2.211-5.141,7.102-2.93,10.93 c1.484,2.566,4.172,4,6.938,4c1.359,0,2.734-0.344,3.992-1.07l27.868-16.089C479.211,169.991,476.565,165.358,473.768,160.826z"
-              />
-            </g>
-          </g>
-        </svg>
-      </h2>
-
-      <b>Definition - </b>
-      <p>
-        Speed unit conversion involves converting measurements of speed or
-        velocity from one unit to another. Speed refers to the rate at which an
-        object covers a certain distance in a given amount of time. It's a
-        fundamental concept in physics, engineering, and various practical
-        applications. Different units of speed are used for different contexts,
-        and conversion ensures accurate communication and calculations.
-      </p>
-
-      <b>परिभाषा - </b>
-
-      <p>
-        गति इकाई रूपांतरण (Speed Unit Conversion) का अर्थ है गति या वेग को एक
-        इकाई से दूसरी इकाई में बदलना। गति उस दर को दर्शाती है, जिससे कोई वस्तु
-        एक निश्चित समय में एक निश्चित दूरी तय करती है। यह भौतिकी, अभियांत्रिकी
-        और विभिन्न व्यावहारिक कार्यों में एक मूलभूत अवधारणा है। विभिन्न संदर्भों
-        में गति की विभिन्न इकाइयों का उपयोग किया जाता है, और इकाई रूपांतरण से
-        सही संप्रेषण और सटीक गणना सुनिश्चित होती है।
-      </p>
-
-      <h2>Types of Speed Units</h2>
-      <h3>🚗 1. Meters per Second (m/s)</h3>
-      <p>
-        <b>English:</b> This is the SI unit of speed. It indicates how many
-        meters an object travels in one second.
-      </p>
-      <p>
-        <b>हिंदी:</b> यह गति की एसआई (SI) इकाई है। यह दर्शाती है कि कोई वस्तु एक
-        सेकंड में कितने मीटर की दूरी तय करती है।
-      </p>
-      <p>
-        🧮 <b>Example:</b> If a car moves 20 meters in 4 seconds, then speed =
-        20 ÷ 4 = 5 m/s.
-      </p>
-      <h3>🚴‍♂️ 2. Kilometers per Hour (km/h)</h3>
-      <p>
-        <b>English:</b> Commonly used for measuring vehicle speed. It shows how
-        many kilometers are covered in one hour.
-      </p>
-      <p>
-        <b>हिंदी:</b> यह वाहन की गति मापने के लिए सामान्यतः उपयोग की जाती है। यह
-        दर्शाती है कि एक घंटे में कितने किलोमीटर तय किए गए।
-      </p>
-      <p>
-        🧮 <b>Example:</b> A bus travels 180 km in 3 hours. Speed = 180 ÷ 3 = 60
-        km/h.
-      </p>
-      <h3>🛩️ 3. Miles per Hour (mph)</h3>
-      <p>
-        <b>English:</b> Mostly used in the US and UK to measure speed,
-        especially for cars and airplanes.
-      </p>
-      <p>
-        <b>हिंदी:</b> यह मुख्यतः अमेरिका और इंग्लैंड में गति मापने के लिए उपयोग
-        होती है, खासकर कार और हवाई जहाजों की।
-      </p>
-      <p>🧮 <b>Example:</b> A jet flying at 600 mph is very fast!</p>
-      <h3>⛵ 4. Knots (nautical miles per hour)</h3>
-      <p>
-        <b>English:</b> Used in maritime and aviation sectors, 1 knot = 1
-        nautical mile per hour.
-      </p>
-      <p>
-        <b>हिंदी:</b> समुद्री और विमानन क्षेत्रों में प्रयुक्त, 1 नॉट = 1
-        समुद्री मील प्रति घंटा।
-      </p>
-      <p>
-        🧮 <b>Example:</b> A ship sailing at 20 knots is covering 20 nautical
-        miles per hour.
-      </p>
-      <h3>🏃‍♀️ 5. Feet per Second (ft/s)</h3>
-      <p>
-        <b>English:</b> Used in some physics and engineering contexts,
-        especially in the U.S.
-      </p>
-      <p>
-        <b>हिंदी:</b> कुछ भौतिकी और इंजीनियरिंग संदर्भों में, विशेष रूप से
-        अमेरिका में उपयोग होती है।
-      </p>
-      <p>
-        🧮 <b>Example:</b> An object falling from a height may accelerate at
-        ~32.2 ft/s².
-      </p>
-      <h3>
-        🚀 Important Points - Speed Unit Conversion (स्पीड यूनिट रूपांतरण के
-        महत्वपूर्ण बिंदु)
-      </h3>
-      <ul>
-        <li>
-          🧭 <b>Speed</b> refers to the distance covered in a specific time.<br />
-          <b>स्पीड</b> वह दर है जिस पर कोई वस्तु किसी दूरी को किसी निश्चित समय
-          में तय करती है।<br />
-          👉 <b>Formula:</b> Speed = Distance ÷ Time (गति = दूरी ÷ समय)
-        </li>
-        <li>
-          🔁 <b>Common Units of Speed:</b> km/h, m/s, mph, knots, ft/s<br />
-          <b>स्पीड की सामान्य इकाइयाँ:</b> किलोमीटर/घंटा, मीटर/सेकंड, मील/घंटा,
-          नॉट्स, फीट/सेकंड
-        </li>
-        <li>
-          🔄 <b>Conversion Factors:</b><br />
-          <ul>
-            <li>
-              1 km/h =
-              <span class="frac"
-                ><span>5</span><span class="symbol">/</span
-                ><span class="bottom">18</span></span
-              >
-              m/s
-            </li>
-            <li>
-              1 m/s =
-              <span class="frac"
-                ><span>18</span><span class="symbol">/</span
-                ><span class="bottom">5</span></span
-              >
-              km/h
-            </li>
-            <li>1 mph = 1.609 km/h</li>
-            <li>1 knot = 1.852 km/h</li>
-            <li>1 m/s = 3.281 ft/s</li>
-          </ul>
-        </li>
-        <li>📌 <b>SI Unit of Speed:</b> m/s (मीटर प्रति सेकंड)</li>
-        <li>
-          🧪 <b>Speed is a scalar quantity.</b><br />
-          स्पीड एक स्केलर राशि होती है जिसमें केवल परिमाण होता है, दिशा नहीं।
-        </li>
-        <li>
-          🧮
-          <b
-            >Conversion allows accurate comparison across different unit
-            systems.</b
-          ><br />
-          यूनिट रूपांतरण विभिन्न मापन प्रणालियों के बीच सटीक तुलना को संभव बनाता
-          है।
-        </li>
-        <li>
-          📘 <b>Used in Relative & Average Speed Calculations.</b><br />
-          सापेक्ष स्पीड और औसत स्पीड की गणना में भी इसका प्रयोग होता है।
-        </li>
-        <li>
-          🧾 <b>Examples from Daily Life:</b><br />
-          <ul>
-            <li>गाड़ियों की स्पीड: km/h</li>
-            <li>धावकों की स्पीड: m/s</li>
-            <li>हवा या समुद्री जहाज़ की स्पीड: knots</li>
-          </ul>
-        </li>
-        <li>
-          🌍
-          <b
-            >Widely used in physics, transportation, and navigation
-            industries.</b
-          ><br />
-          यह भौतिकी, परिवहन, और नौवहन उद्योगों में व्यापक रूप से उपयोग की जाती
-          है।
-        </li>
-      </ul>
-
-      <div class="faq-section">
-        <h4>1️⃣ Convert 36 km/h to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>m/s = (km/h × 1000) ÷ 3600</b></li>
-          <li>🧪 Step 2: Apply values: <b>m/s = (36 × 1000) ÷ 3600</b></li>
-          <li>📐 Step 3: Simplify: <b>m/s = 10</b></li>
-          <li>✅ <b>Answer:</b> 10 m/s</li>
-        </ul>
-        <h4>2️⃣ Convert 10 m/s to km/h</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>km/h = m/s × 3.6</b></li>
-          <li>🧪 Step 2: Apply values: <b>km/h = 10 × 3.6</b></li>
-          <li>📐 Step 3: Calculate: <b>km/h = 36</b></li>
-          <li>✅ <b>Answer:</b> 36 km/h</li>
-        </ul>
-        <h4>3️⃣ Convert 60 mph to km/h</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>km/h = mph × 1.609</b></li>
-          <li>🧪 Step 2: Apply values: <b>km/h = 60 × 1.609</b></li>
-          <li>📐 Step 3: Calculate: <b>km/h = 96.54</b></li>
-          <li>✅ <b>Answer:</b> 96.54 km/h</li>
-        </ul>
-        <h4>4️⃣ Convert 100 km/h to mph</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>mph = km/h ÷ 1.609</b></li>
-          <li>🧪 Step 2: Apply values: <b>mph = 100 ÷ 1.609</b></li>
-          <li>📐 Step 3: Calculate: <b>mph = 62.14</b></li>
-          <li>✅ <b>Answer:</b> 62.14 mph</li>
-        </ul>
-        <h4>5️⃣ Convert 15 m/s to ft/s</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>ft/s = m/s × 3.281</b></li>
-          <li>🧪 Step 2: Apply values: <b>ft/s = 15 × 3.281</b></li>
-          <li>📐 Step 3: Calculate: <b>ft/s = 49.215</b></li>
-          <li>✅ <b>Answer:</b> 49.215 ft/s</li>
-        </ul>
-        <h4>6️⃣ Convert 1 knot to km/h</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>km/h = knot × 1.852</b></li>
-          <li>🧪 Step 2: Apply: <b>km/h = 1 × 1.852</b></li>
-          <li>✅ <b>Answer:</b> 1.852 km/h</li>
-        </ul>
-        <h4>7️⃣ Convert 5 knots to mph</h4>
-        <ul>
-          <li>🧮 Step 1: Use the formula: <b>mph = knots × 1.151</b></li>
-          <li>🧪 Step 2: Apply values: <b>mph = 5 × 1.151</b></li>
-          <li>✅ <b>Answer:</b> 5.755 mph</li>
-        </ul>
-        <h4>8️⃣ Convert 72 km/h to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: m/s = (72 × 1000) ÷ 3600</li>
-          <li>📐 Step 2: = 72000 ÷ 3600</li>
-          <li>✅ <b>Answer:</b> 20 m/s</li>
-        </ul>
-        <h4>9️⃣ Convert 100 m/s to km/h</h4>
-        <ul>
-          <li>🧮 Step 1: km/h = m/s × 3.6</li>
-          <li>📐 Step 2: = 100 × 3.6</li>
-          <li>✅ <b>Answer:</b> 360 km/h</li>
-        </ul>
-        <h4>🔟 Convert 90 mph to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: Use formula: <b>m/s = mph × 0.44704</b></li>
-          <li>🧪 Step 2: Apply: <b>90 × 0.44704 = 40.23</b></li>
-          <li>✅ <b>Answer:</b> 40.23 m/s</li>
-        </ul>
-        <!-- Continue from 11 to 20 -->
-        <h4>1️⃣1️⃣ Convert 30 m/s to mph</h4>
-        <ul>
-          <li>🧮 Step 1: mph = m/s × 2.237</li>
-          <li>📐 Step 2: 30 × 2.237 = 67.11</li>
-          <li>✅ <b>Answer:</b> 67.11 mph</li>
-        </ul>
-        <h4>1️⃣2️⃣ Convert 50 ft/s to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: m/s = ft/s × 0.3048</li>
-          <li>📐 Step 2: 50 × 0.3048 = 15.24</li>
-          <li>✅ <b>Answer:</b> 15.24 m/s</li>
-        </ul>
-        <h4>1️⃣3️⃣ Convert 100 km/h to ft/s</h4>
-        <ul>
-          <li>🧮 Step 1: ft/s = (km/h × 1000 ÷ 3600) × 3.281</li>
-          <li>📐 Step 2: (100 × 1000 ÷ 3600) × 3.281 = 91.13</li>
-          <li>✅ <b>Answer:</b> 91.13 ft/s</li>
-        </ul>
-        <h4>1️⃣4️⃣ Convert 45 knots to km/h</h4>
-        <ul>
-          <li>🧮 Step 1: km/h = 45 × 1.852 = 83.34</li>
-          <li>✅ <b>Answer:</b> 83.34 km/h</li>
-        </ul>
-        <h4>1️⃣5️⃣ Convert 10 m/s to knots</h4>
-        <ul>
-          <li>🧮 Step 1: knots = m/s ÷ 0.51444</li>
-          <li>📐 Step 2: 10 ÷ 0.51444 ≈ 19.44</li>
-          <li>✅ <b>Answer:</b> 19.44 knots</li>
-        </ul>
-        <h4>1️⃣6️⃣ Convert 200 km/h to knots</h4>
-        <ul>
-          <li>🧮 Step 1: knots = km/h ÷ 1.852 = 200 ÷ 1.852 = 108.02</li>
-          <li>✅ <b>Answer:</b> 108.02 knots</li>
-        </ul>
-        <h4>1️⃣7️⃣ Convert 5 mph to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: m/s = 5 × 0.44704 = 2.24</li>
-          <li>✅ <b>Answer:</b> 2.24 m/s</li>
-        </ul>
-        <h4>1️⃣8️⃣ Convert 2 m/s to km/min</h4>
-        <ul>
-          <li>🧮 Step 1: km/min = (m/s × 60) ÷ 1000</li>
-          <li>📐 Step 2: = (2 × 60) ÷ 1000 = 0.12</li>
-          <li>✅ <b>Answer:</b> 0.12 km/min</li>
-        </ul>
-        <h4>1️⃣9️⃣ Convert 1 km/min to m/s</h4>
-        <ul>
-          <li>🧮 Step 1: m/s = (1 × 1000) ÷ 60 = 16.67</li>
-          <li>✅ <b>Answer:</b> 16.67 m/s</li>
-        </ul>
-        <h4>
-          2️⃣0️⃣ Convert 1 revolution per second (rps) to degrees per second
-        </h4>
-        <ul>
-          <li>🧮 Step 1: 1 rps = 360° per second</li>
-          <li>✅ <b>Answer:</b> 360°/s</li>
-        </ul>
-      </div>
-
-      <hr />
-
-      <div id="right-sidebar">
-        <strong>Important Links</strong>
-
-        <ul id="link-list"></ul>
-      </div>
-
-      <footer>
-        <div class="custom-row">
-          <div class="custom-column">
-            <b>Follow Us</b>
-            <div id="social-links"></div>
-          </div>
-          <div class="custom-column">
-            <button onclick="goToUrl()">Contact</button>
-          </div>
-          <div class="custom-column">
-            <p id="my-paragraph"></p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  </body>
+        <script src="../header-menu.js" defer></script>
+        <script src="../topic-menu.js" defer></script>
+        <script src="../convert.js" defer></script>
+        <script src="../search.js" defer></script>
+        <script type="module" src="../comment.js" defer></script>
+    </body>
 </html>
