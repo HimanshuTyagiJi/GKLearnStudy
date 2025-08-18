@@ -111,32 +111,13 @@
                 <div id="root">
                     <header class="education-header">
                         <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
-                            <svg viewBox="0 0 200 200" role="img" aria-labelledby="pressureTitle">
-                                <title id="pressureTitle">Animated Pressure Gauge Icon</title>
-                                <style>
-                                    .gauge-body {
-                                        fill: #e0f2fe;
-                                        stroke: #0ea5e9;
-                                        stroke-width: 6;
-                                    }
-                                    .gauge-needle {
-                                        fill: #ef4444;
-                                        transform-origin: 100px 100px;
-                                        animation: gauge-sweep 3s ease-in-out infinite alternate;
-                                    }
-                                    @keyframes gauge-sweep {
-                                        from {
-                                            transform: rotate(-120deg);
-                                        }
-                                        to {
-                                            transform: rotate(120deg);
-                                        }
-                                    }
-                                </style>
-                                <circle class="gauge-body" cx="100" cy="100" r="80" />
-                                <path class="gauge-needle" d="M100 100 L 105 30 Q 100 20 95 30 Z" />
-                                <circle cx="100" cy="100" r="10" fill="#0284c7" />
-                            </svg>
+                           <svg viewBox="0 0 100 100">
+                                            <style>.piston{fill:#a5b4fc;animation:compress 2s ease-in-out infinite alternate}.arrow{fill:#4338ca}@keyframes compress{from{y:35;height:20}to{y:25;height:30}}</style>
+                                            <rect fill="#e0e7ff" stroke="#4338ca" stroke-width="2" x="25" y="20" width="50" height="60" rx="3"></rect>
+                                            <rect class="piston" x="28" y="35" width="44" height="20"></rect>
+                                            <path class="arrow" d="M45 65 L 55 65 L 55 75 L 65 70 L 55 65 Z" transform="rotate(90 55 70)"></path>
+                                            <path class="arrow" d="M45 35 L 55 35 L 55 25 L 65 30 L 55 35 Z" transform="rotate(-90 55 30)"></path>
+                                        </svg>
                         </div>
                         <div>
                             <h1>Pressure Unit Conversion</h1>
@@ -635,3 +616,4 @@
         <script type="module" src="../comment.js" defer></script>
     </body>
 </html>
+
