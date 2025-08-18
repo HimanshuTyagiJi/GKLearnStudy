@@ -189,19 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
             url: "/conversion/pressure-unit-conversion",
             description: "Convert between pressure units like Pascal (Pa), atmospheres (atm), and pounds per square inch (psi). Important for engineering, meteorology, and physics.",
             svg: `<svg viewBox="0 0 100 100">
-                    <style>
-                        .gauge-box { fill: #e0e7ff; stroke: #4338ca; stroke-width: 2; }
-                        .piston { fill: #a5b4fc; animation: compress 2s ease-in-out infinite alternate; }
-                        .arrow { fill: #4338ca; }
-                        @keyframes compress { from { y: 35; height: 20; } to { y: 25; height: 30; } }
-                        .title { font: bold 12px sans-serif; fill: #312e81; text-anchor: middle; }
-                    </style>
-                    <text x="50" y="15" class="title" textLength="95" lengthAdjust="spacingAndGlyphs">Pressure</text>
-                    <rect class="gauge-box" x="25" y="20" width="50" height="60" rx="3" />
-                    <rect class="piston" x="28" y="35" width="44" height="20" />
-                    <path class="arrow" d="M45 65 L 55 65 L 55 75 L 65 70 L 55 65 Z" transform="rotate(90 55 70)"/>
-                    <path class="arrow" d="M45 35 L 55 35 L 55 25 L 65 30 L 55 35 Z" transform="rotate(-90 55 30)"/>
-                </svg>`
+                                            <style>.piston{fill:#a5b4fc;animation:compress 2s ease-in-out infinite alternate}.arrow{fill:#4338ca}@keyframes compress{from{y:35;height:20}to{y:25;height:30}}</style>
+                                            <rect fill="#e0e7ff" stroke="#4338ca" stroke-width="2" x="25" y="20" width="50" height="60" rx="3"></rect>
+                                            <rect class="piston" x="28" y="35" width="44" height="20"></rect>
+                                            <path class="arrow" d="M45 65 L 55 65 L 55 75 L 65 70 L 55 65 Z" transform="rotate(90 55 70)"></path>
+                                            <path class="arrow" d="M45 35 L 55 35 L 55 25 L 65 30 L 55 35 Z" transform="rotate(-90 55 30)"></path>
+                                        </svg>`
         },
         {
             title: "Speed Unit Conversion",
@@ -282,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             title: "Weight & Mass Unit Conversion",
-            url: "/conversion/weight&mass-unit-conversion",
+            url: "/conversion/weight-mass-unit-conversion",
             description: "Convert between various units of weight and mass, such as kilograms (kg), grams (g), pounds (lb), and ounces (oz). An essential tool for science, cooking, and daily life.",
             svg: `<svg viewBox="0 0 100 100">
                     <style>
