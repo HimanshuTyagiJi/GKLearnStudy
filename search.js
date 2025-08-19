@@ -5,7 +5,7 @@ window.GKApp.searchData = [
   // --- Conversion Topics (English) ---
   {
     title: "Weight & Mass Unit Conversion",
-    url: "/conversion/weight&mass-unit-conversion",
+    url: "/conversion/weight-mass-unit-conversion",
     paragraph: "Convert between various units of weight and mass, such as kilograms (kg), grams (g), pounds (lb), and ounces (oz). An essential tool for science, cooking, and daily life.",
     svg: `<svg viewBox="0 0 100 100">
                     <style>
