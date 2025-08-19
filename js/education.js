@@ -99,20 +99,100 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Unit Conversion",
             url: "/conversion",
             description: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
-            svg: `<svg viewBox="0 0 100 100">
-                    <style>
-                        .box { fill: #e2e8f0; stroke: #475569; stroke-width: 2; }
-                        .arrow { fill: #0ea5e9; animation: swap-arrows 2s ease-in-out infinite; }
-                        .arrow-2 { animation-delay: -1s; }
-                        @keyframes swap-arrows { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
-                        .title { font: bold 12px sans-serif; fill: #1e293b; text-anchor: middle; }
-                    </style>
-                    <text x="50" y="20" class="title" textLength="95" lengthAdjust="spacingAndGlyphs">All Conversions</text>
-                    <rect class="box" x="10" y="40" width="30" height="20" rx="3" />
-                    <rect class="box" x="60" y="40" width="30" height="20" rx="3" />
-                    <path class="arrow" d="M42 45 h 15 l -5 -5 m 5 5 l -5 5" stroke="#0ea5e9" stroke-width="2" fill="none"/>
-                    <path class="arrow arrow-2" d="M58 55 h -15 l 5 -5 m -5 5 l 5 5" stroke="#0ea5e9" stroke-width="2" fill="none"/>
-                </svg>`
+            svg: `<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Unit Converter – Infinity Loop">
+  <title>Unit Converter – Infinity Loop</title>
+  <defs>
+    <linearGradient id="infGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    :root { --speed: 6s; --font: 600 14px/1.2 Inter, system-ui, sans-serif; }
+    text { font: var(--font); fill:#0f172a }
+
+    /* moving dash around the infinity path */
+    .trace {
+      stroke-dasharray: 12 10;
+      animation: dash var(--speed) linear infinite;
+      filter:url(#soft);
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: -440; }
+    }
+
+    /* two chips orbit along each lobe */
+    .chipL, .chipR { transform-origin: 180px 90px; }
+    .chipL { animation: orbitL var(--speed) linear infinite; }
+    .chipR { animation: orbitR var(--speed) linear infinite reverse; }
+
+    /* keyframes approximate parametric path rotation */
+    @keyframes orbitL {
+      0%   { transform: translate(-90px, -30px) }
+      25%  { transform: translate(-120px,  20px) }
+      50%  { transform: translate(-90px,  40px) }
+      75%  { transform: translate(-60px,   0px) }
+      100% { transform: translate(-90px, -30px) }
+    }
+    @keyframes orbitR {
+      0%   { transform: translate( 90px, -30px) }
+      25%  { transform: translate(120px,  20px) }
+      50%  { transform: translate( 90px,  40px) }
+      75%  { transform: translate( 60px,   0px) }
+      100% { transform: translate( 90px, -30px) }
+    }
+
+    /* center badge pulse */
+    .core { animation: pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1) } 50% { transform: scale(1.07) } }
+  </style>
+
+  <!-- faint backdrop -->
+  <ellipse cx="180" cy="90" rx="150" ry="62" fill="url(#infGrad)" opacity=".08"/>
+
+  <!-- infinity loop path (two bezier lobes) -->
+  <path d="M60,90
+           C90,40 150,40 180,90
+           C210,140 270,140 300,90
+           C270,40 210,40 180,90
+           C150,140 90,140 60,90Z"
+        fill="none" stroke="url(#infGrad)" stroke-width="14" stroke-opacity=".28"/>
+
+  <!-- animated dash trace on top -->
+  <path d="M60,90
+           C90,40 150,40 180,90
+           C210,140 270,140 300,90
+           C270,40 210,40 180,90
+           C150,140 90,140 60,90Z"
+        fill="none" stroke="url(#infGrad)" stroke-width="6" class="trace"/>
+
+  <!-- moving unit chips -->
+  <g class="chipL">
+    <rect x="160" y="80" width="64" height="28" rx="10" fill="#fff" opacity=".95" stroke="url(#infGrad)"/>
+    <text x="192" y="98" text-anchor="middle">cm ↔ in</text>
+  </g>
+
+  <g class="chipR">
+    <rect x="160" y="80" width="64" height="28" rx="10" fill="#fff" opacity=".95" stroke="url(#infGrad)"/>
+    <text x="192" y="98" text-anchor="middle">kg ↔ lb</text>
+  </g>
+
+  <!-- center badge -->
+  <g class="core">
+    <circle cx="180" cy="90" r="22" fill="url(#infGrad)"/>
+    <circle cx="180" cy="90" r="22" fill="#fff" opacity=".22"/>
+    <text x="180" y="95" text-anchor="middle" font-weight="700">∞</text>
+  </g>
+
+  <!-- caption -->
+  <text x="180" y="168" text-anchor="middle" fill="#334155" font-size="13">Unit Converter</text>
+</svg>
+`
         },
         {
             title: "Angle Unit Conversion",
