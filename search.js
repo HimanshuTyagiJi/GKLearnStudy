@@ -220,20 +220,91 @@ window.GKApp.searchData = [
     title: "Unit Conversion",
     url: "/conversion",
     paragraph: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
-    svg: `<svg viewBox="0 0 100 100">
-                    <style>
-                        .box { fill: #e2e8f0; stroke: #475569; stroke-width: 2; }
-                        .arrow { fill: #0ea5e9; animation: swap-arrows 2s ease-in-out infinite; }
-                        .arrow-2 { animation-delay: -1s; }
-                        @keyframes swap-arrows { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
-                        .title { font: bold 12px sans-serif; fill: #1e293b; text-anchor: middle; }
-                    </style>
-                    <text x="50" y="20" class="title" textLength="95" lengthAdjust="spacingAndGlyphs">All Conversions</text>
-                    <rect class="box" x="10" y="40" width="30" height="20" rx="3" />
-                    <rect class="box" x="60" y="40" width="30" height="20" rx="3" />
-                    <path class="arrow" d="M42 45 h 15 l -5 -5 m 5 5 l -5 5" stroke="#0ea5e9" stroke-width="2" fill="none"/>
-                    <path class="arrow arrow-2" d="M58 55 h -15 l 5 -5 m -5 5 l 5 5" stroke="#0ea5e9" stroke-width="2" fill="none"/>
-                </svg>`,
+    svg: `<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Unit Converter – Swap Cards">
+  <title>Unit Converter</title>
+  <defs>
+    <linearGradient id="uGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="s" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity=".25"/>
+    </filter>
+  </defs>
+
+  <style>
+    :root { --t: 4.5s; --font: 600 16px/1.2 Inter, system-ui, sans-serif; }
+    .stage { isolation:isolate }
+    .card { filter:url(#s); }
+    .a, .b { animation: swap var(--t) ease-in-out infinite; transform-origin: 180px 90px; }
+    .b { animation-delay: calc(var(--t)/2); }
+
+    .arrowRing { animation: spin var(--t) linear infinite; transform-origin: 180px 90px; }
+    .chev { animation: nudge 1.6s ease-in-out infinite; }
+
+    .label { font: var(--font); fill:#0f172a }
+    .muted { opacity:.7 }
+
+    @keyframes swap {
+      0%   { transform: translateY(0) scale(1); opacity:1 }
+      20%  { transform: translateY(-14px) scale(1.02) }
+      50%  { transform: translateY(0) scale(1); opacity:1 }
+      70%  { transform: translateY(14px)  }
+      100% { transform: translateY(0); opacity:1 }
+    }
+    @keyframes spin { to { transform: rotate(360deg) } }
+    @keyframes nudge {
+      0%,100% { transform: translateX(0) }
+      50%     { transform: translateX(4px) }
+    }
+  </style>
+
+  <!-- background soft ring -->
+  <circle cx="180" cy="90" r="74" fill="none" stroke="url(#uGrad)" stroke-opacity=".25" stroke-width="10"/>
+
+  <g class="stage">
+
+    <!-- left card -->
+    <g class="card a">
+      <rect x="48" y="50" width="112" height="80" rx="16" fill="white" />
+      <rect x="48" y="50" width="112" height="80" rx="16" fill="url(#uGrad)" opacity=".12"/>
+      <text x="104" y="88" text-anchor="middle" class="label">cm</text>
+      <text x="104" y="110" text-anchor="middle" class="label muted">↔ in</text>
+    </g>
+
+    <!-- right card -->
+    <g class="card b">
+      <rect x="200" y="50" width="112" height="80" rx="16" fill="white" />
+      <rect x="200" y="50" width="112" height="80" rx="16" fill="url(#uGrad)" opacity=".12"/>
+      <text x="256" y="88" text-anchor="middle" class="label">kg</text>
+      <text x="256" y="110" text-anchor="middle" class="label muted">↔ lb</text>
+    </g>
+
+    <!-- spinning arrows ring in middle -->
+    <g class="arrowRing" stroke="url(#uGrad)" stroke-width="8" fill="none">
+      <path d="M180,42 a48,48 0 0 1 45,32" stroke-linecap="round"/>
+      <path d="M225,130 a48,48 0 0 1 -90,0" stroke-linecap="round"/>
+      <path d="M135,74 a48,48 0 0 1 45,-32" stroke-linecap="round"/>
+    </g>
+
+    <!-- chevrons over the ring -->
+    <g class="chev">
+      <polygon points="180,86 172,90 180,94" fill="url(#uGrad)"/>
+      <polygon points="190,86 182,90 190,94" fill="url(#uGrad)"/>
+    </g>
+
+    <!-- center badge -->
+    <g>
+      <circle cx="180" cy="90" r="22" fill="url(#uGrad)"/>
+      <circle cx="180" cy="90" r="22" fill="#fff" opacity=".2"/>
+      <text x="180" y="95" text-anchor="middle" class="label" style="font-weight:700">1↔1</text>
+    </g>
+  </g>
+
+  <!-- bottom tagline -->
+  <text x="180" y="170" text-anchor="middle" class="label muted">Unit Converter</text>
+</svg>
+`,
     date: "February 14, 2025",
     author: "Owner",
     category: "Conversion",
