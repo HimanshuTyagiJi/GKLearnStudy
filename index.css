@@ -1335,3 +1335,178 @@ summary::-webkit-details-marker {
   text-align: left;
 }
 /* Wrapper for all content that is not the sidebar */
+
+
+
+
+
+
+/* ---------- Base (CSS Variables) ---------- */
+:root{
+  --tbl-bg: #ffffff;
+  --tbl-text: #1f2937;        /* gray-800 */
+  --tbl-muted: #6b7280;       /* gray-500 */
+  --tbl-border: #e5e7eb;      /* gray-200 */
+  --tbl-head-bg: #f3f4f6;     /* gray-100 */
+  --tbl-head-text: #111827;   /* gray-900 */
+  --tbl-hover: #f9fafb;       /* gray-50 */
+  --tbl-accent: #2563eb;      /* blue-600 */
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+/* Optional: Dark mode */
+@media (prefers-color-scheme: dark){
+  :root{
+    --tbl-bg: #0b1220;
+    --tbl-text: #e5e7eb;
+    --tbl-muted: #9ca3af;
+    --tbl-border: #1f2937;
+    --tbl-head-bg: #111827;
+    --tbl-head-text: #f9fafb;
+    --tbl-hover: #0f172a;
+  }
+}
+
+/* ---------- Wrapper: scrolling + card look ---------- */
+.common-angles-table-wrapper{
+  background: var(--tbl-bg);
+  border: 1px solid var(--tbl-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0;
+  overflow: hidden;           /* rounded corners work with sticky header */
+}
+
+/* enable horizontal scroll on small screens */
+.common-angles-table-wrapper:has(table){
+  overflow-x: auto;
+}
+
+/* ---------- Table ---------- */
+.common-angles-table{
+  width: 100%;
+  border-collapse: separate;  /* for gaps + rounded corners */
+  border-spacing: 0;
+  color: var(--tbl-text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Devanagari", "Noto Sans", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-width: 640px;           /* allow scroll on mobile instead of squishing */
+}
+
+/* Head */
+.common-angles-table thead th{
+  position: sticky;
+  top: 0;
+  background: var(--tbl-head-bg);
+  color: var(--tbl-head-text);
+  text-align: left;
+  font-weight: 700;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--tbl-border);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* Cells */
+.common-angles-table td{
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--tbl-border);
+  vertical-align: top;
+}
+
+/* Zebra rows */
+.common-angles-table tbody tr:nth-child(odd){
+  background: transparent;
+}
+.common-angles-table tbody tr:nth-child(even){
+  background: var(--tbl-hover);
+}
+
+/* Row hover */
+.common-angles-table tbody tr:hover{
+  background: color-mix(in srgb, var(--tbl-hover) 70%, transparent);
+}
+
+/* First & last cell rounded on first/last rows (visual polish) */
+.common-angles-table thead th:first-child{
+  border-top-left-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table thead th:last-child{
+  border-top-right-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table tbody tr:last-child td:first-child{
+  border-bottom-left-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table tbody tr:last-child td:last-child{
+  border-bottom-right-radius: calc(var(--radius) - 2px);
+}
+
+/* Emphasis inside cells */
+.common-angles-table td strong{
+  color: var(--tbl-head-text);
+  font-weight: 700;
+}
+
+/* Small helper: compact text in parentheses */
+.common-angles-table td em,
+.common-angles-table th em{
+  color: var(--tbl-muted);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ---------- Mobile “stacked” option (opt-in) ----------
+   अगर कार्ड जैसा mobile layout चाहिए तो wrapper पर
+   .stacked-on-mobile class जोड़ दो */
+@media (max-width: 640px){
+  .stacked-on-mobile .common-angles-table{
+    min-width: 0;
+    border-collapse: collapse;
+  }
+  .stacked-on-mobile .common-angles-table thead{
+    display: none;
+  }
+  .stacked-on-mobile .common-angles-table tr{
+    display: block;
+    border: 1px solid var(--tbl-border);
+    border-radius: 12px;
+    margin: 10px 12px;
+    padding: 6px 0;
+    background: var(--tbl-bg);
+  }
+  .stacked-on-mobile .common-angles-table td{
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px;
+    padding: 10px 12px;
+    border: none;
+    border-bottom: 1px dashed var(--tbl-border);
+  }
+  .stacked-on-mobile .common-angles-table td:last-child{
+    border-bottom: 0;
+  }
+  /* labels from header via data-label attr (add data-label="" in HTML for best results) */
+  .stacked-on-mobile .common-angles-table td::before{
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--tbl-muted);
+  }
+}
+
+/* ---------- Empty state (जब rows न हों) ----------
+   wrapper पर .is-empty class लगा दो */
+.common-angles-table-wrapper.is-empty{
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+}
+.common-angles-table-wrapper.is-empty::after{
+  content: "अभी कोई डेटा उपलब्ध नहीं है";
+  color: var(--tbl-muted);
+  font-size: 15px;
+  padding: 18px 22px;
+  border: 1px dashed var(--tbl-border);
+  border-radius: 12px;
+}
