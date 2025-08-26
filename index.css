@@ -294,14 +294,21 @@ summary::-webkit-details-marker {
    ========================================================================== */
 
 /* --- 4.1 Navigation & Menu --- */
-.menu {
-  text-align: center !important;
-  font-size: 22px;
-  height: auto;
-  box-shadow: none;
-  width: auto;
-  position: relative;
-}
+  .menu {
+    text-align: center !important;
+    margin-top: -10px;
+    font-size: 22px;
+    height: auto;
+    box-shadow: none;
+    align-items: center;
+
+    width: auto;
+    max-width: 68%;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
 
 .menu.is-active {
   top: 0;
