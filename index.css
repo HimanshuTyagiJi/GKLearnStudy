@@ -244,15 +244,17 @@ summary::-webkit-details-marker {
   gap: 1.25rem;
 }
 
-.footer-social img {
+.footer-social svg {
   width: 28px;
   height: 28px;
-  transition: opacity 0.2s ease;
+  fill: #c5d4e4;
+  transition: fill 0.2s ease;
 }
 
-.footer-social a:hover img {
-  opacity: 0.8;
+.footer-social a:hover svg {
+  fill: var(--accent-color);
 }
+
 
 .blog-layout {
   display: grid;
@@ -1421,7 +1423,7 @@ button {
     max-width: 68%;
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 50%;
     transform: translate(-50%, -50%);
   }
   .menu a {
