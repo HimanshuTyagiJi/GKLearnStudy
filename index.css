@@ -119,8 +119,9 @@ a:hover {
 }
 
 img {
-  width: 300px;
-  height: 300px;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 
 summary {
@@ -235,6 +236,22 @@ summary::-webkit-details-marker {
   padding-top: 2rem;
   border-top: 1px solid #3a4a5b;
   font-size: 0.9rem;
+}
+
+.footer-social .social-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer-social img {
+  width: 28px;
+  height: 28px;
+  transition: opacity 0.2s ease;
+}
+
+.footer-social a:hover img {
+  opacity: 0.8;
 }
 
 .blog-layout {
