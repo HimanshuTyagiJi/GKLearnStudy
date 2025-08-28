@@ -242,7 +242,7 @@ details[open] > .faq-answer {
 .main-content .comments-wrapper { max-width: 100%; margin: 3rem 0 0 0; padding: 0; }
 
 /* Scroll Animation */
-
+[data-animate] { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
 [data-animate].visible { opacity: 1; transform: translateY(0); }
 
 /* --- SVG ANIMATIONS --- */
