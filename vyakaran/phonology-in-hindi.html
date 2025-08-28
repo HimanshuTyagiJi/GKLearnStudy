@@ -621,55 +621,235 @@
                                     <p class="invocation">।। शुभमस्तु ।।</p>
                                 </div>
                             </section>
-
-                            <!-- Comments Section -->
-                            <div class="comments-wrapper">
-                                <hr>
-                                <h3>Leave a Comment</h3>
-                                <div id="custom-comment-section">
-                                    <div class="firebase-comments-widget">
-                                        <div class="container">
-                                            <section class="comment-form-section" hidden>
-                                                <form id="comment-form">
-                                                    <div class="form-group">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" id="name" placeholder="Your name" required aria-label="Name" maxlength="50">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="comment">Comment</label>
-                                                        <textarea id="comment" rows="4" placeholder="Write your comment..." required aria-label="Comment" maxlength="1000"></textarea>
-                                                        <div class="char-counter-wrapper">
-                                                            <span id="char-counter">0 / 1000</span>
-                                                        </div>
-                                                    </div>
-                                                    <button type="submit" id="submit-button">Submit</button>
-                                                </form>
-                                            </section>
-                                            <hr>
-                                            <section class="comments-section">
-                                                <div id="comments-list">
-                                                    <!-- Dynamic content is loaded here -->
+  <div class="comments-wrapper">
+                                <hr />
+                                <div class="firebase-comments-widget" id="custom-comment-section">
+                                    <h2>टिप्पणियाँ (Comments)</h2>
+                                    <div class="comment-form-shell" id="comment-form-shell">
+                                        <form class="comment-form" id="comment-form">
+                                            <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                                            <input type="text" id="name" placeholder="आपका नाम" maxlength="50" required aria-label="Your name" />
+                                            <textarea id="comment" placeholder="आपकी टिप्पणी" maxlength="1000" required aria-label="Your comment"></textarea>
+                                            <input type="hidden" id="parent-id" value="" />
+                                            <div class="form-footer">
+                                                <div id="char-counter">0 / 1000</div>
+                                                <div class="actions">
+                                                    <button type="submit" class="btn primary" id="submit-button">
+                                                        Submit
+                                                    </button>
+                                                    <button type="button" class="btn" id="cancel-reply" style="display: none;">
+                                                        Cancel
+                                                    </button>
                                                 </div>
-                                            </section>
-                                        </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="comments-list">
+                                        <div class="spinner"></div>
+                                        <p class="muted">टिप्पणियाँ लोड हो रही हैं...</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <aside class="sidebar">
-                           <div class="sidebar-widget">
-                                <h3>अगला अध्याय</h3>
-                                <p>वर्णों के इस गहन अध्ययन के बाद, हमारा अगला अध्याय <strong>'शब्द-विचार'</strong> पर होगा, जहाँ हम जानेंगे कि ये वर्ण मिलकर कैसे सार्थक शब्दों का निर्माण करते हैं।</p>
-                           </div>
-                           <div class="sidebar-widget">
-                                <h3>Popular Posts</h3>
+                            <div class="sidebar-widget">
+                                <h2>अगला अध्याय</h2>
+                                <p>
+                                    भाषा के इन मूल सिद्धांतों को समझने के बाद, हमारा अगला अध्याय
+                                    <strong>'वर्ण-विचार'</strong> पर होगा, जहाँ हम स्वर और व्यंजनों की दुनिया में और गहराई से उतरेंगे।
+                                </p>
+                            </div>
+                            <div class="sidebar-widget">
+                                <h2>Popular Posts</h2>
                                 <ul class="sidebar-link-list">
-                                    <li><a href="../vyakaran/compound-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>समास: परिभाषा और भेद</span></div></a></li>
-                                    <li><a href="../vyakaran/alankar-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>अलंकार: परिभाषा और भेद</span></div></a></li>
-                                    <li><a href="../vyakaran/sandhi-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>संधि: प्रकार और उदाहरण</span></div></a></li>
+                                    <li>
+                                        <a href="vyakaran/compound-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>समास: परिभाषा और भेद</span>
+                                                <small class="post-date">January 26, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/alankar-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>अलंकार: परिभाषा और भेद</span>
+                                                <small class="post-date">February 9, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/sandhi-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>संधि: प्रकार और उदाहरण</span>
+                                                <small class="post-date">February 18, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/viram-chinh-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>विराम चिन्ह: महत्व और प्रयोग</span>
+                                                <small class="post-date">February 22, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/ling-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>लिंग: प्रकार और नियम</span>
+                                                <small class="post-date">March 1, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/vachan-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>वचन: एकवचन और बहुवचन</span>
+                                                <small class="post-date">March 8, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
-                           </div>
+                            </div>
+                            <div class="sidebar-widget">
+                                <h2>Recently Updated</h2>
+                                <ul class="sidebar-link-list">
+                                    <li>
+                                        <a href="vyakaran/alankar-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>अलंकार: परिभाषा और भेद</span>
+                                                <small class="post-date">Updated: March 1, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/sandhi-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>संधि: प्रकार और उदाहरण</span>
+                                                <small class="post-date">Updated: February 28, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/ling-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>वचन: एकवचन और बहुवचन</span>
+                                                <small class="post-date">Updated: February 25, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/compound-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>समास: परिभाषा और भेद</span>
+                                                <small class="post-date">Updated: February 20, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/chhand-in-hindi.html">
+                                            <span class="link-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                            <div class="link-text">
+                                                <span>छंद: प्रकार और उदाहरण</span>
+                                                <small class="post-date">Updated: February 15, 2025</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sidebar-widget">
+                                <h2>Suggestion Pages</h2>
+                                <ul class="sidebar-link-list">
+                                    <li>
+                                        <a href="vyakaran/alankar-in-hindi.html" class="page-button">सम्पूर्ण अलंकार</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/sandhi-in-hindi.html" class="page-button">संधि और उसके नियम</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/ling-in-hindi.html" class="page-button">हिंदी लिंग: पुरुष, स्त्री, नपुंसक</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/compound-in-hindi.html" class="page-button">समास के प्रकार</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/chhand-in-hindi.html" class="page-button">छंद और मीटर</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="vyakaran/vachan-in-hindi.html" class="page-button">वचन: एकवचन और बहुवचन</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </aside>
                     </div>
                 </div>
@@ -677,56 +857,78 @@
 
             <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
-             <footer class="app-footer">
+            <footer class="app-footer">
                 <div class="footer-content">
                     <div class="footer-section footer-about">
                         <h3>About GK Learn Study</h3>
-                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+                        <p>
+                            Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.
+                        </p>
                     </div>
                     <div class="footer-section">
-                        <h3>Company</h3>
+                        <h4>About Us</h4>
                         <ul>
                             <li><a href="/about.html">About Us</a></li>
                             <li><a href="/contact.html">Contact Us</a></li>
                             <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                            <li><a href="/terms.html">Terms of Service</a></li>
                         </ul>
                     </div>
                     <div class="footer-section">
-                        <h3>Conversions & Measurements</h3>
+                        <h4>For you</h4>
                         <ul>
-                            <li><a href="/conversion.html">Unit Conversion</a></li>
-                            <li><a href="/conversion/angle-unit-conversion">Angle Conversion</a></li>
-                            <li><a href="/conversion/temperature-conversion">Temperature Conversion</a></li>
-                            <li><a href="/conversion/measurement-systems">Measurement Systems</a></li>
-                            <li><a href="/conversion/area-volume-measurement">Area & Volume</a></li>
+                            <li>
+                                <a href="/gk-quiz/ancient-indian-history">Ancient Indian History</a>
+                            </li>
+                            <li>
+                                <a href="/gk-quiz/medieval-indian-history">Medieval Indian History</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="footer-section">
-                        <h3>Science & GK</h3>
+                        <h4>Science & Computer</h4>
                         <ul>
-                            <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
-                            <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
-                            <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
-                            <li><a href="/gk/ancient-wonders">Ancient Wonders</a></li>
-                            <li><a href="/gk/solar-system-tour">Solar System Tour</a></li>
+                            <li><a href="conversion.html">Conversion</a></li>
+                            <li><a href="all-formulas.html">All formulas</a></li>
                         </ul>
                     </div>
                     <div class="footer-section">
-                        <h3>Follow Us</h3>
+                        <h4>Follow Us</h4>
                         <ul class="footer-socials"></ul>
                     </div>
                 </div>
-                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+                <div class="footer-bottom">
+                    &copy; 2024 GK Learn Study | All Rights Reserved
+                </div>
             </footer>
 
             <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
 
-        <script src="../search.js"></script>
-        <script src="../index.js" defer></script>
-        <script type="module" src="../comment.js"></script>
+        <script src="../header-menu.js" defer></script>
         <script src="../topic-menu.js" defer></script>
-        <script type="module" src="/index.tsx"></script>
+        <script src="../search.js" defer></script>
+        <script type="module" src="../comment.js" defer></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const animatedSections = document.querySelectorAll("[data-animate]");
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("visible");
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                    }
+                );
+                animatedSections.forEach((section) => {
+                    observer.observe(section);
+                });
+            });
+        </script>
     </body>
 </html>
