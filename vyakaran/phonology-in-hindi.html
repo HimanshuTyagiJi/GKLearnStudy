@@ -37,1177 +37,634 @@
     />
 
     <title>वर्ण-विचार - परिभाषा, भेद और उदाहरण : हिंदी व्याकरण</title>
-  </head>
 
-  <body>
-    <div class="search-container">
-      <button class="search-icon" id="searchBtn">
-        <span class="rotated-icon">⌕</span>
-      </button>
-      <button class="back-icon" id="backBtn">←</button>
-      <input
-        type="text"
-        class="search-input"
-        id="searchInput"
-        autocomplete="off"
-        placeholder="Search..."
-        required
-        oninput="showSuggestions(event)"
-      />
-    </div>
-    <ul id="suggestions" class="suggestions"></ul>
-    <div id="results"></div>
+        <link rel="stylesheet" href="../index.css" />
+      
+        <link rel="stylesheet" href="../topicmenu.css" />
+        <link rel="stylesheet" href="../vyakaran-page.css" />
 
-    <button class="menu-toggle" onclick="toggleMenu()">➤</button>
-    <ul class="menu-list" id="menuList">
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran-language.html"
-          >भाषा और व्याकरण</a
-        >
-      </li>
-      <li><a class="active" href="phonology-in-hindi.html">वर्ण-विचार</a></li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/morphology-in-hindi.html"
-          >शब्द-विचार</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/syntax-in-hindi.html"
-          >वाक्य-विचार</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/noun-in-hindi.html">संज्ञा</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/number-in-hindi.html">वचन</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/gender-in-hindi.html">लिंग</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/case-in-hindi.html">कारक</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi.html"
-          >सर्वनाम</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/adjective-in-hindi.html"
-          >विशेषण</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/verb-in-hindi.html">क्रिया</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/tense-in-hindi.html">काल</a>
-      </li>
-      <li>
-        <a
-          href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi.html"
-          >अव्यय</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/particle-in-hindi.html"
-          >निपात</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/voice-in-hindi.html">वाच्य</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/person-in-hindi.html"
-          >पुरुष</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi.html"
-          >विराम-चिन्ह</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/prefix-in-hindi.html"
-          >उपसर्ग</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/suffix-in-hindi.html"
-          >प्रत्यय</a
-        >
-      </li>
-      <li><a href="https://gklearnstudy.in/vyakaran/joining.html">संधि</a></li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/compound-in-hindi.html"
-          >समास</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi.html"
-          >तत्सम-तट्भव</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi.html"
-          >देशज-विदेशज</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi.html"
-          >विलोम-शब्द</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi.html"
-          >पर्यावाची-शब्द</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/idioms-in-hindi.html"
-          >मुहावरे</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi.html"
-          >लोकोक्तियां</a
-        >
-      </li>
-      <li>
-        <a href="one-word-substitution-in-hindi.html"
-          >अनेक शब्दों के लिए एक शब्द</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi.html"
-          >एकार्थक शब्द</a
-        >
-      </li>
-      <li>
-        <a href="words-apparently-similar-in-meanings-in-hindi.html"
-          >एकार्थक प्रतीत होने वाले शब्द</a
-        >
-      </li>
-      <li>
-        <a href="pairs-of-similar-words.html">त्रुटिसम भिन्नार्थक शब्द</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/yugm-shabd.html"
-          >युग्म शब्द</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/ras-in-hindi.html">रस</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/chhand-in-hindi.html">छन्द</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/alankar-in-hindi.html"
-          >अलंकार</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi.html"
-          >अनुच्छेद-लेखन</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi.html"
-          >अपठित-गद्यांश</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/letter-writing-in-hindi.html"
-          >पत्र-लेखन</a
-        >
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/essay-in-hindi.html">निबंध</a>
-      </li>
-      <li>
-        <a href="https://gklearnstudy.in/vyakaran/quiz-for-exam.html"
-          >Quiz For Exam</a
-        >
-      </li>
-      <br />
-      <br />
-    </ul>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://gklearnstudy.in/vyakaran/phonology-in-hindi.html"
+                },
+                "headline": "वर्ण-विचार: स्वर, व्यंजन और उच्चारण का संपूर्ण विश्लेषण",
+                "description": "भाषा की सबसे छोटी इकाई 'वर्ण' का विस्तृत अध्ययन। स्वरों और व्यंजनों के भेद, उनके उच्चारण स्थान, और वर्तनी के नियमों की गहन जानकारी।",
+                "author": {
+                    "@type": "Person",
+                    "name": "Mr. Himanshu Tyagi"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "GK Learn Study",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://gklearnstudy.in/GK-Learn-Study.png"
+                    }
+                }
+            }
+        </script>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "'ऋ' स्वर क्यों है, जबकि इसका उच्चारण 'रि' जैसा लगता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "'ऋ' को स्वर मानने के पीछे ऐतिहासिक और व्याकरणिक कारण हैं। ऐतिहासिक रूप से यह संस्कृत में एक शुद्ध स्वर था। व्याकरणिक रूप से, यह व्यंजनों के साथ मात्रा ( ृ ) के रूप में जुड़ता है, जो केवल स्वरों का गुण है। कोई भी व्यंजन किसी दूसरे व्यंजन से मात्रा के रूप में नहीं जुड़ता।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "'ज्ञ' का सही उच्चारण क्या है - 'ग्य' या 'ज्य'?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "'ज्ञ' की बनावट 'ज् + ञ' है, इसलिए इसका शुद्ध शास्त्रीय उच्चारण 'ज्यँ' (Jyan) जैसा होना चाहिए। हालाँकि, हिंदी भाषी क्षेत्रों में इसका उच्चारण 'ग्य' (Gya) के रूप में प्रचलित और मानक हो चुका है। इसलिए, व्यवहार में 'ग्य' (जैसे 'ज्ञान' को 'ग्यान' बोलना) ही सही माना जाता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "अनुस्वार (ं) कब 'न्', 'म्', 'ण्', 'ञ्', 'ङ्' की ध्वनि देता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "पंचमाक्षर के नियम के अनुसार, अनुस्वार (ं) के बाद जिस वर्ग का व्यंजन आता है, अनुस्वार उसी वर्ग के पाँचवें अक्षर (पंचमाक्षर) की ध्वनि देता है। जैसे गंगा (गङ्गा), चंचल (चञ्चल), पंडित (पण्डित), संतोष (सन्तोष), कंपन (कम्पन)।"
+                        }
+                    }
+                ]
+            }
+        </script>
+    </head>
+    <body class="vyakaran-body">
+        <div id="sidebar-overlay"></div>
+        <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">
+            ☰ विषय
+        </button>
+        <aside id="topic-sidebar">
+            <h3 class="sidebar-title">हिन्दी व्याकरण</h3>
+            <nav id="topic-nav">
+                 <ul>
+                    <li><a href="../vyakaran-language.html">भाषा और व्याकरण</a></li>
+                    <li><a class="active" href="phonology-in-hindi.html">वर्ण-विचार</a></li>
+                    <li><a href="morphology-in-hindi.html">शब्द-विचार</a></li>
+                    <li><a href="syntax-in-hindi.html">वाक्य-विचार</a></li>
+                    <li><a href="noun-in-hindi.html">संज्ञा</a></li>
+                    <li><a href="number-in-hindi.html">वचन</a></li>
+                    <li><a href="gender-in-hindi.html">लिंग</a></li>
+                    <li><a href="case-in-hindi.html">कारक</a></li>
+                    <li><a href="pronoun-in-hindi.html">सर्वनाम</a></li>
+                    <li><a href="adjective-in-hindi.html">विशेषण</a></li>
+                    <li><a href="verb-in-hindi.html">क्रिया</a></li>
+                    <li><a href="tense-in-hindi.html">काल</a></li>
+                    <li><a href="indeclinable-words-in-hindi.html">अव्यय</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <div class="container">
-      <div class="content" id="वर्ण_और_वर्णमाला_(Letter_&amp;_Alphabet)"></div>
-      <h1 class="color-content2">वर्ण-विचार - परिभाषा, भेद और उदाहरण</h1>
+        <div class="main-content-wrapper">
+             <main class="container">
+                <div id="root">
+                    <div class="blog-layout">
+                        <div class="main-content">
+                            <p class="invocation">।। श्री गणेशाय नमः ।।</p>
+                            <header class="vyakaran-header" data-animate>
+                                <h1>हिंदी व्याकरण का महा-अध्याय: वर्ण-विचार</h1>
+                                <p>कक्षा 1 से 12 एवं प्रतियोगी परीक्षाओं हेतु एक চূড়ান্ত मार्गदर्शिका</p>
+                            </header>
 
-      <div class="content" id="वर्ण_(Letter)"></div>
-      <p>
-        <b class="color-content3">वर्ण (Letter): </b>भाषा की सबसे छोटी इकाई
-        <b>"वर्ण"</b> कहलाती है। वर्ण उन ध्वनियों को कहते हैं जो बोलते समय
-        स्पष्ट सुनाई देती हैं और जिनसे मिलकर शब्द बनते हैं। हिंदी भाषा में कुल
-        चवालीस (44) वर्ण होते हैं। ये वर्ण एक निश्चित क्रम में व्यवस्थित होते
-        हैं और हर एक वर्ण का अपना विशेष महत्व होता है। शब्द इन्हीं वर्णों से
-        मिलकर बनते हैं, और इन्हीं वर्णों के सही उच्चारण से भाषा की सुंदरता और
-        स्पष्टता बनी रहती है।
-      </p>
-      <br />
+                            <section id="prastavna" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>प्रस्तावना: भाषा के DNA की खोज</h2>
+                                    <p>कल्पना कीजिए कि आप एक विशाल और सुंदर महल के सामने खड़े हैं। यह महल 'भाषा' है। आप इसके अंदर जाना चाहते हैं, इसके रहस्यों को समझना चाहते हैं। लेकिन इसका ताला बंद है। इस ताले की चाबी क्या है? वह चाबी है 'व्याकरण'। और इस चाबी का सबसे पहला और सबसे महत्वपूर्ण हिस्सा, जो ताले के अंदर जाकर उसे खोलता है, वह है 'वर्ण-विचार'।</p>
+                                    <p>वर्ण भाषा के DNA की तरह हैं। जैसे DNA किसी जीव की पूरी संरचना तय करता है, वैसे ही वर्ण किसी भाषा की पूरी संरचना, उसके शब्दों और उसके उच्चारण को तय करते हैं। यदि आप वर्णों को समझ गए, तो आप भाषा की आत्मा को समझ गए। यह अध्याय आपको भाषा के इसी DNA से परिचित कराएगा। हम यहाँ सिर्फ नियम नहीं रटेंगे, बल्कि हर नियम के पीछे का विज्ञान और तर्क समझेंगे। तो चलिए, हिंदी भाषा के इस अद्भुत महल में प्रवेश करने के लिए 'वर्ण-विचार' की इस सुनहरी चाबी को बनाते हैं।</p>
+                                </div>
+                            </section>
+                            
+                            <section id="part1" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 1: आधारशिला (The Foundation)</h2>
+                                    
+                                    <h3>1. भाषा: विचारों का पुल, और व्याकरण: इस पुल का नक्शा</h3>
+                                    <p><strong>भाषा क्या है?</strong> सीधे शब्दों में, भाषा एक पुल है। यह आपके मन के विचारों को दूसरे व्यक्ति के मन तक पहुँचाने का काम करती है। यह पुल शब्दों से बना है। हम इस पुल का उपयोग बोलकर, सुनकर, लिखकर और पढ़कर करते हैं। इसके बिना हम सब अपनी-अपनी दुनिया में अकेले होते।</p>
+                                    <p><strong>व्याकरण क्यों ज़रूरी है?</strong> अब सोचिए, अगर पुल बनाने का कोई नियम, कोई नक्शा न हो, तो क्या होगा? कोई ईंट कहीं लगाएगा, कोई कहीं, और पुल ढह जाएगा। व्याकरण वही नक्शा (Blueprint) या 'नियमों की किताब' है जो भाषा के पुल को मज़बूत, सुंदर और भरोसेमंद बनाता है। यह हमें सिखाता है कि शब्दों को सही क्रम में कैसे रखना है, उनका सही उच्चारण कैसे करना है, ताकि बात का गलत मतलब न निकले।</p>
+                                    <blockquote>
+                                      <p>"खाना राम है खाता।" - यह वाक्य व्याकरण के बिना है, इसलिए अटपटा और समझने में मुश्किल है।</p>
+                                      <p>"राम खाना खाता है।" - यह वाक्य व्याकरण के नियमों के अनुसार है, इसलिए स्पष्ट और सही है।</p>
+                                    </blockquote>
+                                    
+                                    <h3>2. वर्ण: भाषा की अविभाज्य आत्मा (The Indivisible Soul of Language)</h3>
+                                    <p><strong>परिभाषा:</strong> जब हम कुछ बोलते हैं, तो हमारे मुँह से कई ध्वनियाँ (आवाज़ें) निकलती हैं। भाषा की उस सबसे छोटी ध्वनि को 'वर्ण' कहते हैं, जिसके और टुकड़े नहीं किए जा सकते। यह भाषा की सबसे छोटी, अविभाज्य इकाई है। इसे 'अक्षर' (जिसका क्षर या नाश न हो) भी कहते हैं।</p>
+                                    <p><strong>गहराई से समझिए:</strong> आइए 'किताब' शब्द को लेते हैं। जब हम इसे बोलते हैं, तो हमें तीन ध्वनियाँ सुनाई देती हैं: 'कि', 'ता', 'ब'। लेकिन क्या ये सबसे छोटी ध्वनियाँ हैं? नहीं। इन्हें और तोड़ा जा सकता है:</p>
+                                    <ul>
+                                        <li>'कि' = क् + इ</li>
+                                        <li>'ता' = त् + आ</li>
+                                        <li>'ब' = ब् + अ</li>
+                                    </ul>
+                                    <p>तो, 'किताब' शब्द इन मूल ध्वनियों से बना है: <strong>क्, इ, त्, आ, ब्, अ</strong>। अब कोशिश कीजिए, क्या आप 'क्' या 'इ' को और तोड़ सकते हैं? नहीं। यही अविभाज्य ध्वनियाँ 'वर्ण' हैं।</p>
+                                    
+                                    <h3>3. वर्णमाला: वर्णों का अनुशासित परिवार (The Disciplined Family of Letters)</h3>
+                                    <p><strong>परिभाषा:</strong> जब सभी वर्णों को एक निश्चित और व्यवस्थित क्रम में एक साथ रखा जाता है, तो उस समूह को 'वर्णमाला' कहते हैं।</p>
+                                    <p><strong>गहराई से समझिए:</strong> यह वर्णों का एक अनुशासित परिवार है। ऐसा नहीं है कि 'क' के बाद 'च' या 'प' आ जाएगा। इसका एक वैज्ञानिक क्रम है, जो उच्चारण स्थानों के आधार पर तय किया गया है (जैसे 'क' वर्ग की सभी ध्वनियाँ गले से निकलती हैं)। यह क्रम भाषा को सीखने और समझने में मदद करता है।</p>
+                                    <h4>हिंदी की मानक वर्णमाला:</h4>
+                                    <ul>
+                                        <li><strong>स्वर (11):</strong> अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ</li>
+                                        <li><strong>अयोगवाह (2):</strong> अं, अः</li>
+                                        <li><strong>व्यंजन (33):</strong>
+                                            <ul>
+                                                <li><strong>क वर्ग:</strong> क, ख, ग, घ, ङ</li>
+                                                <li><strong>च वर्ग:</strong> च, छ, ज, झ, ञ</li>
+                                                <li><strong>ट वर्ग:</strong> ट, ठ, ड, ढ, ण</li>
+                                                <li><strong>त वर्ग:</strong> त, थ, द, ध, न</li>
+                                                <li><strong>प वर्ग:</strong> प, फ, ब, भ, म</li>
+                                                <li><strong>अंतःस्थ:</strong> य, र, ल, व</li>
+                                                <li><strong>ऊष्म:</strong> श, ष, स, ह</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>संयुक्त व्यंजन (4):</strong> क्ष, त्र, ज्ञ, श्र</li>
+                                        <li><strong>उत्क्षिप्त/द्विगुण व्यंजन (2):</strong> ड़, ढ़</li>
+                                    </ul>
+                                    
+                                    <h3>4. वर्णों के दो कुल: स्वर (स्वतंत्र) और व्यंजन (आश्रित)</h3>
+                                    <p><strong>स्वर (Vowels):</strong><br>
+                                    <strong>परिभाषा:</strong> वे वर्ण जिनका उच्चारण बिना किसी दूसरे वर्ण की सहायता के, स्वतंत्र रूप से होता है, 'स्वर' कहलाते हैं। इनके उच्चारण में हवा फेफड़ों से उठकर बिना किसी रुकावट के मुँह से बाहर निकलती है।<br>
+                                    <strong>व्याख्या:</strong> ये वर्णमाला के "राजा" हैं। इन्हें किसी की ज़रूरत नहीं। आप 'अ', 'आ', 'ई', 'ओ' को बिना किसी मदद के देर तक बोल सकते हैं। ये 11 हैं: <strong>अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ।</strong></p>
+                                    <p><strong>व्यंजन (Consonants):</strong><br>
+                                    <strong>परिभाषा:</strong> वे वर्ण जिनका उच्चारण स्वरों की सहायता से होता है, 'व्यंजन' कहलाते हैं। इनके उच्चारण में हवा मुँह के किसी-न-किसी भाग (जैसे- कंठ, तालु, दाँत) से टकराकर बाहर निकलती है।<br>
+                                    <strong>व्याख्या:</strong> ये वर्णमाला के "सैनिक" हैं, जिन्हें राजा (स्वर) की ज़रूरत पड़ती है। आप 'क्' (बिना 'अ' के) बोलने की कोशिश करें, यह बस एक झटके की आवाज़ है। इसे पूरी तरह बोलने के लिए आपको 'अ' जोड़ना ही पड़ेगा, तब यह 'क' बनेगा। (<strong>क् + अ = क</strong>)</p>
+                                    
+                                    <h3>5. स्वरों की शक्ति: मात्राएँ (The Power of Vowels: Matras)</h3>
+                                    <p><strong>परिभाषा:</strong> जब स्वर किसी व्यंजन के साथ जुड़ते हैं, तो वे अपने मूल रूप में नहीं लिखे जाते, बल्कि एक विशेष चिह्न (Symbol) का रूप ले लेते हैं। स्वरों के इन्हीं चिह्नों को 'मात्रा' कहते हैं।</p>
+                                    <p><strong>व्याख्यात्मक तालिका:</strong> 'अ' स्वर की कोई मात्रा नहीं होती, वह अदृश्य रूप से हर व्यंजन में समाहित रहता है।</p>
+                                    <div class="vyakaran-table-wrapper">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>स्वर</th>
+                                                    <th>मात्रा चिह्न</th>
+                                                    <th>व्याख्या और उदाहरण</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>अ</td><td>(कोई नहीं)</td><td>यह हर व्यंजन को पूरा करता है। <strong>क् + अ = क</strong> (कलम)।</td></tr>
+                                                <tr><td>आ</td><td>ा</td><td>यह व्यंजन के बाद लगकर 'आ' की ध्वनि जोड़ता है। <strong>क् + आ = का</strong> (कान)।</td></tr>
+                                                <tr><td>इ</td><td>ि</td><td>यह व्यंजन से पहले लगकर छोटी 'इ' की ध्वनि जोड़ता है। <strong>क् + इ = कि</strong> (किसान)।</td></tr>
+                                                <tr><td>ई</td><td>ी</td><td>यह व्यंजन के बाद लगकर लम्बी 'ई' की ध्वनि जोड़ता है। <strong>क् + ई = की</strong> (कील)।</td></tr>
+                                                <tr><td>उ</td><td>ु</td><td>यह व्यंजन के नीचे लगकर छोटी 'उ' की ध्वनि जोड़ता है। <strong>क् + उ = कु</strong> (कुछ)।</td></tr>
+                                                <tr><td>ऊ</td><td>ू</td><td>यह व्यंजन के नीचे लगकर लम्बी 'ऊ' की ध्वनि जोड़ता है। <strong>क् + ऊ = कू</strong> (कूदना)।</td></tr>
+                                                <tr><td>ऋ</td><td>ृ</td><td>यह व्यंजन के नीचे लगकर 'रि' की ध्वनि जोड़ता है। <strong>क् + ऋ = कृ</strong> (कृपा)।</td></tr>
+                                                <tr><td>ए</td><td>े</td><td>यह व्यंजन के ऊपर एक चोटी के रूप में लगता है। <strong>क् + ए = के</strong> (केला)।</td></tr>
+                                                <tr><td>ऐ</td><td>ै</td><td>यह व्यंजन के ऊपर दो चोटियों के रूप में लगता है। <strong>क् + ऐ = कै</strong> (कैसा)।</td></tr>
+                                                <tr><td>ओ</td><td>ो</td><td>यह व्यंजन के बाद एक डंडे और एक चोटी के रूप में लगता है। <strong>क् + ओ = को</strong> (कोयल)।</td></tr>
+                                                <tr><td>औ</td><td>ौ</td><td>यह व्यंजन के बाद एक डंडे और दो चोटियों के रूप में लगता है। <strong>क् + औ = कौ</strong> (कौआ)।</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p><strong>विशेष नोट:</strong> 'र' के साथ 'उ' और 'ऊ' की मात्रा नीचे न लगकर उसके पेट में लगती है: <strong>र् + उ = रु (रुपया)</strong>, <strong>र् + ऊ = रू (अमरूद)</strong>।</p>
+                                    
+                                    <h3>6. व्यंजनों का शुद्ध रूप: हलंत का रहस्य (The Pure Form of Consonants: The Secret of Halant)</h3>
+                                    <p><strong>परिभाषा:</strong> जब किसी व्यंजन को बिना स्वर के (यानी उसके आधे रूप में) लिखना होता है, तो उसके नीचे एक तिरछी रेखा (्) लगाई जाती है, जिसे 'हलंत' कहते हैं। हलंत यह दर्शाता है कि व्यंजन में 'अ' स्वर शामिल नहीं है।</p>
+                                    <p><strong>गहराई से समझिए:</strong> 'क' एक अक्षर है, लेकिन यह एक शुद्ध व्यंजन नहीं है। यह <strong>'क्' (शुद्ध व्यंजन) + 'अ' (स्वर)</strong> का मिश्रण है। हलंत (्) एक फ़िल्टर की तरह है जो व्यंजन में से स्वर को निकाल देता है और उसे उसके शुद्ध, आधे रूप में दिखाता है।</p>
+                                    <ul>
+                                        <li><strong>उदाहरण:</strong> 'पक्का' शब्द में पहला 'क' आधा है, इसलिए इसे हम वर्ण-विच्छेद में 'क्' लिखेंगे: <strong>प् + अ + क् + क् + आ</strong>।</li>
+                                        <li>'विद्यालय' में 'द्' आधा है: <strong>व् + इ + द् + य् + आ + ल् + अ + य् + अ</strong>।</li>
+                                    </ul>
+                                </div>
+                            </section>
 
-      <div class="content" id="वर्णमाला_(Alphabet)"></div>
-      <p>
-        <b class="color-content3">वर्णमाला (Alphabet): </b> सभी भाषाओं का अपना
-        एक वर्ण-समूह होता है, जिसे वर्णमाला कहते हैं। वर्णमाला में वर्ण एक
-        निश्चित क्रम में व्यवस्थित होते हैं, जिससे भाषा को सीखना और सिखाना आसान
-        हो जाता है। हिंदी भाषा की वर्णमाला में 44 वर्ण होते हैं। वर्णमाला का
-        ज्ञान भाषा की नींव है और इसे जानना हर भाषा सीखने वाले के लिए आवश्यक होता
-        है। वर्णमाला से ही भाषा के मूलभूत संरचना की समझ विकसित होती है।
-      </p>
+                            <section id="part2" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 2: संरचना और भेद (Structure and Classification)</h2>
 
-      <div class="content" id="वर्णों_के_भेद_(Kinds_of_Letters)"></div>
-      <h2 class="color-content1">वर्णों के भेद (Kinds of Letters):</h2>
+                                    <h3>7. स्वरों का सूक्ष्म वर्गीकरण (Micro-Classification of Vowels)</h3>
+                                    <h4>(क) उच्चारण-काल (मात्रा) के आधार पर:</h4>
+                                    <ul>
+                                        <li><strong>ह्रस्व स्वर (Short Vowels):</strong><br>
+                                            <strong>व्याख्या:</strong> 'ह्रस्व' का अर्थ है 'छोटा'। इनके उच्चारण में सबसे कम समय (एक मात्रा का समय) लगता है। ये हिंदी के मूल स्वर हैं, इन्हीं से दूसरे स्वर बने हैं।<br>
+                                            <strong>ये 4 हैं:</strong> अ, इ, उ, ऋ<br>
+                                            <strong>उदाहरण:</strong> <strong>अ</strong>ब, <strong>इ</strong>धर, <strong>उ</strong>धर, <strong>कृ</strong>पा।</li>
+                                        <li><strong>दीर्घ स्वर (Long Vowels):</strong><br>
+                                            <strong>व्याख्या:</strong> 'दीर्घ' का अर्थ है 'बड़ा'। इनके उच्चारण में ह्रस्व स्वरों से दोगुना समय (दो मात्रा का समय) लगता है। ये दो मूल स्वरों के जुड़ने से बनते हैं।<br>
+                                            <strong>ये 7 हैं:</strong> आ (अ + अ), ई (इ + इ), ऊ (उ + उ) - ये <strong>सजातीय दीर्घ स्वर</strong> हैं। ए (अ + इ), ऐ (अ + ए), ओ (अ + उ), औ (अ + ओ) - ये <strong>विजातीय (संयुक्त) स्वर</strong> हैं।<br>
+                                            <strong>उदाहरण:</strong> <strong>आ</strong>म, <strong>ई</strong>ख, <strong>ऊ</strong>न, <strong>ए</strong>क, <strong>ऐ</strong>नक, <strong>ओ</strong>र, <strong>औ</strong>रत।</li>
+                                        <li><strong>प्लुत स्वर (Prolonged Vowels):</strong><br>
+                                            <strong>व्याख्या:</strong> 'प्लुत' का अर्थ है 'उछलता हुआ'। इनके उच्चारण में दीर्घ स्वरों से भी अधिक (तीन मात्रा का) समय लगता है। इसका प्रयोग किसी को दूर से पुकारने, नाटक के संवादों या मंत्रोच्चार में होता है। इसे दिखाने के लिए स्वर के आगे हिंदी अंक ३ या 'ऽ' का चिह्न लगाया जाता है।<br>
+                                            <strong>उदाहरण:</strong> राऽऽऽम! (राम को खींचकर पुकारना), ओ३म्।</li>
+                                    </ul>
 
-      <p class="color-content1">
-        उच्चारण की प्रक्रिया के आधार पर वर्ण के दो प्रमुख भेद होते हैं:
-      </p>
-      <br />
-      1. स्वर (Vowels)<br />
-      2. व्यंजन (Consnants) <br />
-      <br />
-      <div class="content" id="स्वर (Vowels)"></div>
-      <b class="color-content2">स्वर (Vowels) </b>
+                                    <h4>(ख) जिह्वा (जीभ) के प्रयोग के आधार पर:</h4>
+                                    <ul>
+                                        <li><strong>अग्र स्वर (Front Vowels):</strong><br><strong>व्याख्या:</strong> इनके उच्चारण में जीभ का अगला (नोक वाला) हिस्सा सक्रिय होता है।<br><strong>ये 4 हैं:</strong> इ, ई, ए, ऐ। (बोलकर महसूस करें, जीभ आगे की ओर हरकत करेगी)।</li>
+                                        <li><strong>मध्य स्वर (Central Vowels):</strong><br><strong>व्याख्या:</strong> इसके उच्चारण में जीभ का मध्य भाग थोड़ा-सा ऊपर उठता है।<br><strong>यह केवल 1 है:</strong> अ। (यह सबसे सहज स्वर है, जीभ शांत रहती है)।</li>
+                                        <li><strong>पश्च स्वर (Back Vowels):</strong><br><strong>व्याख्या:</strong> इनके उच्चारण में जीभ का पिछला हिस्सा सक्रिय होता है।<br><strong>ये 5 हैं:</strong> आ, उ, ऊ, ओ, औ। (बोलकर महसूस करें, जीभ का पिछला हिस्सा हरकत करेगा)।</li>
+                                    </ul>
 
-      <p>
-        स्वरों का उच्चारण स्वतंत्र रूप से किया जाता है और इन्हें बोलते समय मुख
-        से हवा बिना किसी रुकावट के निकलती है। हिन्दी भाषा में इनकी संख्या 11
-        होती है। ये स्वर दो प्रकार से लिखे जाते हैं:
-      </p>
-      <p>
-        अपने मूल रूप में और मात्रा के रूप में किसी व्यंजन के साथ मिलाकर। उदाहरण
-        के लिए, 'अ' और 'आ' अपने मूल रूप में हैं, जबकि 'कि' और 'का' व्यंजन के साथ
-        मिलकर बने स्वर हैं। इस प्रकार, स्वर भाषा में महत्वपूर्ण भूमिका निभाते
-        हैं।
-      </p>
-      <br />
+                                    <h4>(ग) मुख-द्वार (मुख-विवर) के खुलने के आधार पर:</h4>
+                                    <ul>
+                                        <li><strong>विवृत (Open):</strong><br><strong>व्याख्या:</strong> 'विवृत' का अर्थ है 'खुला हुआ'। इसके उच्चारण में मुँह सबसे ज़्यादा खुलता है।<br><strong>यह 1 है:</strong> आ। (जैसे डॉक्टर मुँह खोलने को कहते हैं: "बोलो आ...")।</li>
+                                        <li><strong>अर्ध-विवृत (Half-Open):</strong><br><strong>व्याख्या:</strong> इनके उच्चारण में मुँह विवृत की तुलना में आधा खुलता है।<br><strong>ये 3 हैं:</strong> अ, ऐ, औ।</li>
+                                        <li><strong>अर्ध-संवृत (Half-Close):</strong><br><strong>व्याख्या:</strong> इनके उच्चारण में मुँह संवृत की तुलना में आधा खुला रहता है (यानी आधा बंद)।<br><strong>ये 2 हैं:</strong> ए, ओ।</li>
+                                        <li><strong>संवृत (Close):</strong><br><strong>व्याख्या:</strong> 'संवृत' का अर्थ है 'बंद'। इनके उच्चारण में मुँह लगभग बंद रहता है।<br><strong>ये 4 हैं:</strong> इ, ई, उ, ऊ। (बोलकर देखें, होंठ लगभग सटे रहते हैं)।</li>
+                                    </ul>
 
-      <div class="content" id="स्वर के भेद (Kinds of Vowels)"></div>
-      <h2 class="color-content1">स्वर के भेद (Kinds of Vowels)</h2>
+                                    <h4>(घ) ओष्ठों (होंठ) की स्थिति के आधार पर:</h4>
+                                    <ul>
+                                        <li><strong>वृत्तमुखी (Rounded):</strong><br><strong>व्याख्या:</strong> 'वृत्त' का अर्थ है 'गोला'। इनके उच्चारण में होंठ गोल हो जाते हैं।<br><strong>ये 4 हैं:</strong> उ, ऊ, ओ, औ। (बोलकर देखें, आपके होंठ एक गोले का आकार लेंगे)।</li>
+                                        <li><strong>अवृत्तमुखी (Unrounded):</strong><br><strong>व्याख्या:</strong> इनके उच्चारण में होंठ गोल न होकर सामान्य रूप से फैले रहते हैं।<br><strong>ये 7 हैं:</strong> अ, आ, इ, ई, ऋ, ए, ऐ।</li>
+                                    </ul>
 
-      <p>स्वरों के तीन भेद होते हैं:</p>
-      <br />
-      1. ह्रस्व स्वर (Short Vowels)<br />
-      2. दीर्घ स्वर (LOng Vowels) <br />
-      3. प्लुत स्वर (Longer Vowels)<br />
+                                    <h3>8. अयोगवाह: वे जो किसी के नहीं, फिर भी सबके हैं (Anusvara & Visarga)</h3>
+                                    <p><strong>व्याख्या:</strong> 'अयोगवाह' का शाब्दिक अर्थ है - 'अ' (नहीं) + 'योग' (जुड़ना) + 'वाह' (वहन करना), यानी जो वर्ण न तो पूरी तरह स्वरों से जुड़ते हैं और न ही व्यंजनों से, फिर भी अर्थ का वहन करते हैं। ये हमेशा स्वरों के बाद आते हैं और व्यंजनों की तरह इन्हें भी बोलने के लिए स्वर का सहारा चाहिए (जैसे 'अं' में 'अ' का)।</p>
+                                    <p><strong>ये 2 हैं:</strong></p>
+                                    <ul>
+                                        <li><strong>अनुस्वार (अं):</strong> चिह्न (ं)। यह एक नासिक्य ध्वनि है, जिसका उच्चारण केवल नाक से होता है। यह पंचम वर्णों (ङ, ञ, ण, न, म) का प्रतिनिधित्व करता है।<br><strong>उदाहरण:</strong> गंगा (यहाँ 'ं' का उच्चारण 'ङ्' जैसा है), चंचल (यहाँ 'ं' का उच्चारण 'ञ्' जैसा है), अंडा (यहाँ 'ं' का उच्चारण 'ण्' जैसा है), गंदा (यहाँ 'ं' का उच्चारण 'न्' जैसा है), कंपन (यहाँ 'ं' का उच्चारण 'म्' जैसा है)।</li>
+                                        <li><strong>विसर्ग (अः):</strong> चिह्न (ः)। इसका उच्चारण आधे 'ह' जैसा होता है और यह मुख्यतः संस्कृत के तत्सम शब्दों में प्रयोग होता है।<br><strong>उदाहरण:</strong> प्रातः, नमः, अतः, दुःख।</li>
+                                    </ul>
+                                    
+                                    <h3>9. व्यंजनों का विस्तृत वर्गीकरण (Detailed Classification of Consonants)</h3>
+                                    <h4>(क) स्पर्श व्यंजन (Plosives/Stops):</h4>
+                                    <p><strong>व्याख्या:</strong> 'स्पर्श' का अर्थ है 'छूना'। इन व्यंजनों के उच्चारण में जिह्वा (जीभ) मुँह के अंदर के विभिन्न भागों (कंठ, तालु, मूर्धा, दंत, ओष्ठ) को स्पर्श करती है, जिससे हवा कुछ क्षण के लिए रुकती है और फिर झटके से बाहर निकलती है। ये 'क' से लेकर 'म' तक कुल 25 हैं और इन्हें 5 वर्गों में बाँटा गया है।</p>
+                                    <ul>
+                                        <li><strong>क-वर्ग (कंठ्य):</strong> क, ख, ग, घ, ङ (जीभ का पिछला हिस्सा कोमल तालु को छूता है)।</li>
+                                        <li><strong>च-वर्ग (तालव्य):</strong> च, छ, ज, झ, ञ (जीभ का मध्य भाग कठोर तालु को छूता है)।</li>
+                                        <li><strong>ट-वर्ग (मूर्धन्य):</strong> ट, ठ, ड, ढ, ण (जीभ की नोक मुड़कर कठोर तालु के अगले भाग को छूती है)।</li>
+                                        <li><strong>त-वर्ग (दंत्य):</strong> त, थ, द, ध, न (जीभ की नोक ऊपरी दाँतों को छूती है)।</li>
+                                        <li><strong>प-वर्ग (ओष्ठ्य):</strong> प, फ, ब, भ, म (दोनों होंठ आपस में मिलते हैं)।</li>
+                                    </ul>
 
-      <div class="content" id="ह्रस्व स्वर ( Short Vowels)"></div>
-      <br />
-      <p>
-        <b class="color-content2">ह्रस्व स्वर (Short Vowels) : </b>ह्रस्व स्वर
-        का उच्चारण करते समय सबसे कम समय लगता है, ये चार होते हैं - अ, इ, उ, ऋ।
-      </p>
+                                    <h4>(ख) अंतःस्थ व्यंजन (Approximants/Semi-vowels):</h4>
+                                    <p><strong>व्याख्या:</strong> 'अंतःस्थ' का अर्थ है 'बीच में स्थित'। इन व्यंजनों का उच्चारण पारंपरिक स्वरों और व्यंजनों के बीच का होता है। इनमें जिह्वा मुँह के किसी भाग को पूरी तरह स्पर्श नहीं करती।<br><strong>ये 4 हैं:</strong> य, र, ल, व।</p>
+                                    <ul>
+                                        <li><strong>य, व:</strong> इन्हें 'अर्ध-स्वर' भी कहते हैं क्योंकि इनके उच्चारण में बहुत कम बाधा होती है।</li>
+                                        <li><strong>र:</strong> इसे 'लुंठित' (Trilled) व्यंजन कहते हैं, क्योंकि इसके उच्चारण में जीभ में कंपन होता है।</li>
+                                        <li><strong>ल:</strong> इसे 'पार्श्विक' (Lateral) व्यंजन कहते हैं, क्योंकि हवा जीभ के दोनों बगल (पार्श्व) से निकल जाती है।</li>
+                                    </ul>
 
-      <div class="content" id="दीर्घ स्वर ( Long Vowels)"></div>
-      <br />
-      <p>
-        <b class="color-content2">दीर्घ स्वर (Long Vowels) : </b>दीर्घ स्वर का
-        उच्चारण करते समय ह्रस्व स्वरों से दोगुणा समय लगता है, ये सात होते हैं -
-        आ, ई, ऊ, ए, ऐ, ओ, औ।
-      </p>
+                                    <h4>(ग) ऊष्म / संघर्षी व्यंजन (Fricatives/Sibilants):</h4>
+                                    <p><strong>व्याख्या:</strong> 'ऊष्म' का अर्थ है 'गर्म'। इन व्यंजनों के उच्चारण में हवा मुँह के किसी संकरे स्थान से रगड़ खाकर (संघर्ष करके) बाहर निकलती है, जिससे एक गर्मी पैदा होती है। (आप हथेली मुँह के पास रखकर 'श' बोलें, आपको गर्म हवा महसूस होगी)।<br><strong>ये 4 हैं:</strong> श, ष, स, ह।</p>
+                                    
+                                    <h3>10. विशेष व्यंजन: संयुक्त, द्वित्व, उत्क्षिप्त और आगत ध्वनियाँ</h3>
+                                    <ul>
+                                        <li><strong>संयुक्त व्यंजन (Conjunct Consonants):</strong><br><strong>व्याख्या:</strong> जब दो अलग-अलग व्यंजन आपस में मिलते हैं और एक नया रूप ले लेते हैं, तो उसे संयुक्त व्यंजन कहते हैं।<br><strong>ये 4 हैं:</strong>
+                                            <ul>
+                                                <li><strong>क्ष = क् + ष</strong> (उदाहरण: कक्षा, क्षमा)</li>
+                                                <li><strong>त्र = त् + र</strong> (उदाहरण: पत्र, त्रिशूल)</li>
+                                                <li><strong>ज्ञ = ज् + ञ</strong> (उदाहरण: ज्ञान, यज्ञ)</li>
+                                                <li><strong>श्र = श् + र</strong> (उदाहरण: श्रम, श्रीमान)</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>द्वित्व व्यंजन (Geminate Consonants):</strong><br><strong>व्याख्या:</strong> जब एक ही व्यंजन दो बार एक साथ आता है, जिसमें पहला व्यंजन स्वर-रहित (आधा) और दूसरा स्वर-सहित (पूरा) होता है, तो उसे द्वित्व व्यंजन कहते हैं।<br><strong>उदाहरण:</strong> पक्का (क्+क), बच्चा (च्+च), लड्डू (ड्+ड), दिल्ली (ल्+ल), सम्मान (म्+म)।</li>
+                                        <li><strong>उत्क्षिप्त/द्विगुण व्यंजन (Flap Consonants):</strong><br><strong>व्याख्या:</strong> 'उत्क्षिप्त' का अर्थ है 'ऊपर फेंका हुआ'। इनके उच्चारण में जीभ पहले ऊपर उठकर मूर्धा को छूती है और फिर झटके से नीचे गिरती है। ये हिंदी के अपने विकसित व्यंजन हैं। ये कभी भी किसी शब्द के शुरू में नहीं आते।<br><strong>ये 2 हैं:</strong> <strong>ड़</strong> (सड़क), <strong>ढ़</strong> (पढ़ना)।</li>
+                                        <li><strong>आगत/गृहीत ध्वनियाँ (Borrowed Sounds):</strong><br><strong>व्याख्या:</strong> ये ध्वनियाँ हिंदी में दूसरी भाषाओं (अरबी, फ़ारसी, अंग्रेज़ी) के शब्दों के सही उच्चारण के लिए अपनाई गई हैं। इनके नीचे एक बिंदी लगाई जाती है जिसे 'नुक़्ता' कहते हैं।<br><strong>अरबी-फ़ारसी:</strong> क़, ख़, ग़, ज़, ਫ਼। (उदाहरण: क़लम, ख़त, ग़ज़ल, ज़मीन, फ़र्ज़)।<br><strong>अंग्रेज़ी:</strong> <strong>ऑ</strong> (आ और ओ के बीच की ध्वनि)। (उदाहरण: डॉक्टर, बॉल, कॉफ़ी, ऑफिस)।</li>
+                                    </ul>
+                                </div>
+                            </section>
 
-      <div class="content" id="प्लुत स्वर ( Longer Vowels)"></div>
-      <br />
-      <p>
-        <b class="color-content2">प्लुत स्वर (longer Vowels):</b> प्लुत स्वर का
-        उच्चारण करते समय ह्रस्व और दीर्घ स्वरों से तिगुणा समय लगता है, और इसका
-        एकमात्र उदाहरण 'ओम्' है। इन भेदों के माध्यम से स्वरों के उच्चारण की
-        विविधता और समय का अंतर स्पष्ट होता है।
-      </p>
-      <br />
+                             <section id="part3" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 3: उच्चारण का विज्ञान (The Science of Pronunciation)</h2>
+                                    <h3>11. श्वास-वायु का खेल: अल्पप्राण और महाप्राण (Aspirated vs. Unaspirated)</h3>
+                                    <p>'प्राण' का अर्थ है 'श्वास-वायु'। व्यंजनों को बोलते समय मुँह से कितनी हवा निकलती है, इस आधार पर ये दो प्रकार के होते हैं।</p>
+                                    <ul>
+                                        <li><strong>अल्पप्राण (Unaspirated):</strong><br><strong>व्याख्या:</strong> 'अल्प' का अर्थ है 'कम'। जिन व्यंजनों के उच्चारण में मुँह से कम श्वास-वायु निकलती है, वे अल्पप्राण कहलाते हैं।<br><strong>कौन-कौन से हैं?</strong> प्रत्येक स्पर्श व्यंजन वर्ग का <strong>पहला, तीसरा और पाँचवाँ</strong> वर्ण (क, ग, ङ; आदि), तथा सभी <strong>अंतःस्थ</strong> व्यंजन (य, र, ल, व)।</li>
+                                        <li><strong>महाप्राण (Aspirated):</strong><br><strong>व्याख्या:</strong> 'महा' का अर्थ है 'अधिक'। जिन व्यंजनों के उच्चारण में मुँह से अधिक श्वास-वायु निकलती है और 'ह' (h-like) जैसी ध्वनि सुनाई देती है, वे महाप्राण कहलाते हैं।<br><strong>कौन-कौन से हैं?</strong> प्रत्येक स्पर्श व्यंजन वर्ग का <strong>दूसरा और चौथा</strong> वर्ण (ख, घ; आदि), तथा सभी <strong>ऊष्म</strong> व्यंजन (श, ष, स, ह)।</li>
+                                    </ul>
 
-      <div class="content" id="मात्राएँ (Moras)"></div>
-      <h2 class="color-content1">मात्राएँ (Moras)</h2>
-      <br />
+                                    <h3>12. स्वर-तंत्रियों में कंपन: अघोष और सघोष (Voiced vs. Voiceless)</h3>
+                                    <p>हमारे गले में स्वर-तंत्रियाँ (Vocal Cords) होती हैं। कुछ वर्णों को बोलते समय इनमें कंपन (Vibration) होता है और कुछ में नहीं।</p>
+                                    <ul>
+                                        <li><strong>अघोष (Voiceless):</strong><br><strong>व्याख्या:</strong> 'अ' का अर्थ है 'नहीं' और 'घोष' का अर्थ है 'नाद/कंपन'। जिन वर्णों के उच्चारण में स्वर-तंत्रियों में कंपन नहीं होता, वे अघोष कहलाते हैं।<br><strong>कौन-कौन से हैं?</strong> प्रत्येक स्पर्श व्यंजन वर्ग का <strong>पहला और दूसरा</strong> वर्ण (क, ख; आदि), तथा तीनों ऊष्म व्यंजन <strong>श, ष, स</strong>।</li>
+                                        <li><strong>सघोष / घोष (Voiced):</strong><br><strong>व्याख्या:</strong> 'स' का अर्थ है 'सहित' और 'घोष' का अर्थ है 'कंपन'। जिन वर्णों के उच्चारण में स्वर-तंत्रियों में कंपन होता है, वे सघोष कहलाते हैं।<br><strong>कौन-कौन से हैं?</strong> प्रत्येक स्पर्श व्यंजन वर्ग का <strong>तीसरा, चौथा और पाँचवाँ</strong> वर्ण (ग, घ, ङ; आदि), सभी <strong>अंतःस्थ</strong> व्यंजन (य, र, ल, व), ऊष्म व्यंजन <strong>'ह'</strong>, तथा <strong>सभी 11 स्वर</strong>।</li>
+                                    </ul>
 
-      <p>
-        स्वरों के लिए निर्धारित चिह्न
-        <b> मात्राएँ </b>कहलाती हैं। भाषाओं में वाणी की ध्वनि के तालमेल को मापने
-        के लिए मात्राएँ प्रयोग की जाती हैं। हिंदी में 11 मात्राएँ हैं, जो
-        विभिन्न वर्णों के साथ मिलकर शब्दों का निर्माण करती हैं।
-      </p>
-      <br />
+                                    <h3>13. मुख की उच्चारण-फैक्ट्री: वर्णों का उच्चारण स्थान (विस्तृत तालिका और व्याख्या)</h3>
+                                    <div class="vyakaran-table-wrapper">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>क्र.</th>
+                                                    <th>उच्चारण स्थान का नाम</th>
+                                                    <th>मुख का भाग</th>
+                                                    <th>उच्चारित होने वाले वर्ण (वर्णों का परिवार)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>1.</td><td>कंठ्य (Velar)</td><td>कंठ (गले का भीतरी भाग)</td><td>अ, आ,   क, ख, ग, घ, ङ,   ह,   अः (विसर्ग)</td></tr>
+                                                <tr><td>2.</td><td>तालव्य (Palatal)</td><td>कठोर तालु (जीभ के ऊपर का छत)</td><td>इ, ई,   च, छ, ज, झ, ञ,   य, श</td></tr>
+                                                <tr><td>3.</td><td>मूर्धन्य (Retroflex)</td><td>मूर्धा (कठोर तालु का अगला भाग)</td><td>ऋ,   ट, ठ, ड, ढ, ण, (ड़, ढ़),   र, ष</td></tr>
+                                                <tr><td>4.</td><td>दंत्य (Dental)</td><td>ऊपरी दाँत</td><td>त, थ, द, ध, न,   ल, स</td></tr>
+                                                <tr><td>5.</td><td>ओष्ठ्य (Labial)</td><td>दोनों होंठ</td><td>उ, ऊ,   प, फ, ब, भ, म</td></tr>
+                                                <tr><td>6.</td><td>नासिक्य (Nasal)</td><td>नाक (Nose)</td><td>ङ, ञ, ण, न, म,   अं (अनुस्वार)</td></tr>
+                                                <tr><td>7.</td><td>कंठ-तालव्य (Velo-Palatal)</td><td>कंठ और तालु दोनों</td><td>ए, ऐ (क्योंकि 'ए' = अ (कंठ्य) + इ (तालव्य))</td></tr>
+                                                <tr><td>8.</td><td>कंठोष्ठ्य (Velo-Labial)</td><td>कंठ और होंठ दोनों</td><td>ओ, औ (क्योंकि 'ओ' = अ (कंठ्य) + उ (ओष्ठ्य))</td></tr>
+                                                <tr><td>9.</td><td>दंतोष्ठ्य (Denti-Labial)</td><td>निचले होंठ और ऊपरी दाँत</td><td>व</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <section id="part4" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 4: व्यावहारिक प्रयोग और सामान्य अशुद्धियाँ (Practical Application & Common Errors)</h2>
+                                    <h3>14. शब्दों की चीर-फाड़: वर्ण-विच्छेद (Mastering Phonetic Splitting)</h3>
+                                    <p><strong>व्याख्या:</strong> किसी शब्द में प्रयुक्त सभी वर्णों को (स्वर और व्यंजन को उनके शुद्ध रूप में) क्रम से अलग-अलग करना वर्ण-विच्छेद कहलाता है। यह शब्दों की संरचना को समझने के लिए एक एक्स-रे की तरह है।</p>
+                                    <h4>उदाहरणों का विश्लेषण:</h4>
+                                    <ul>
+                                        <li><strong>धर्म</strong> = ध् + अ + र् + म् + अ<br><strong>विश्लेषण:</strong> यहाँ 'र्' (रेफ) आधा है और उसका उच्चारण 'म' से पहले हो रहा है, इसलिए वर्ण-विच्छेद में वह 'म्' से पहले आया है।</li>
+                                        <li><strong>प्रकाश</strong> = प् + र् + अ + क् + आ + श् + अ<br><strong>विश्लेषण:</strong> 'प्र' एक संयुक्ताक्षर है जिसमें 'प' आधा (प्) और 'र' (पदेन) पूरा (र्+अ) है।</li>
+                                        <li><strong>ट्रक</strong> = ट् + र् + अ + क् + अ<br><strong>विश्लेषण:</strong> 'ट्र' में 'ट' आधा (ट्) और 'र' पूरा (र्+अ) है।</li>
+                                        <li><strong>शृंगार</strong> = श् + ऋ + ं + ग् + आ + र् + अ<br><strong>विश्लेषण:</strong> 'शृ' में 'श' के साथ 'ऋ' स्वर की मात्रा है। अनुस्वार (ं) 'ऋ' के बाद आया है।</li>
+                                        <li><strong>उज्ज्वल</strong> = उ + ज् + ज् + व् + अ + ल् + अ<br><strong>विश्लेषण:</strong> इसमें दो आधे 'ज्' हैं और 'व्' भी आधा है, लेकिन 'व्' के बाद 'अ' है क्योंकि 'व' पूरा बोला जा रहा है।</li>
+                                        <li><strong>आशीर्वाद</strong> = आ + श् + ई + र् + व् + आ + द् + अ<br><strong>विश्लेषण:</strong> 'शी' में 'श्' के साथ 'ई' की मात्रा है। 'र्' (रेफ) का उच्चारण 'वा' से पहले है, इसलिए वह 'व्' से पहले आया है।</li>
+                                    </ul>
 
-      <table border="1" id="myTable">
-        <thead>
-          <tr>
-            <th>स्वर</th>
-            <th>मात्रा/चिन्ह</th>
-            <th>प्रयोग का तरीका</th>
-            <th>मात्रा युक्त व्यंजन</th>
-            <th>उदाहरण</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>अ</td>
-            <td>–</td>
-            <td>क् + अ</td>
-            <td>क</td>
-            <td>अमरूद, अगरबत्ती, कमल, कर</td>
-          </tr>
-          <tr>
-            <td>आ</td>
-            <td>T</td>
-            <td>क् + आ</td>
-            <td>का</td>
-            <td>काला, कपड़ा, आम, आग</td>
-          </tr>
-          <tr>
-            <td>इ</td>
-            <td>ि</td>
-            <td>क् + इ</td>
-            <td>कि</td>
-            <td>मिठाई, मिठास, इमली, इत्र</td>
-          </tr>
-          <tr>
-            <td>ई</td>
-            <td>◌ी</td>
-            <td>क् + ई</td>
-            <td>की</td>
-            <td>सूई, सीता, सीमा, ईख, ईश्वर</td>
-          </tr>
-          <tr>
-            <td>उ</td>
-            <td>◌ु</td>
-            <td>क् + उ</td>
-            <td>कु</td>
-            <td>कुली, कुम्हार, उल्लू, उपदेश</td>
-          </tr>
-          <tr>
-            <td>ऊ</td>
-            <td>◌ू</td>
-            <td>क् + ऊ</td>
-            <td>कू</td>
-            <td>ऊन, ऊँट, चूना, चूरमा</td>
-          </tr>
-          <tr>
-            <td>ऋ</td>
-            <td>◌ृ</td>
-            <td>क् + ऋ</td>
-            <td>कृ</td>
-            <td>कृषि, कृष्ण, ऋषि, ऋण</td>
-          </tr>
-          <tr>
-            <td>ए</td>
-            <td>◌े</td>
-            <td>क् + ए</td>
-            <td>के</td>
-            <td>केला, केक, एड़ी, एकता</td>
-          </tr>
-          <tr>
-            <td>ऐ</td>
-            <td>◌ै</td>
-            <td>क् + ऐ</td>
-            <td>कै</td>
-            <td>मैला, मैच, ऐनक, ऐरावत</td>
-          </tr>
-          <tr>
-            <td>ओ</td>
-            <td>◌ो</td>
-            <td>क् + ओ</td>
-            <td>को</td>
-            <td>गोरा, गोदाम, ओखली, ओणम</td>
-          </tr>
-          <tr>
-            <td>औ</td>
-            <td>◌ौ</td>
-            <td>क् + औ</td>
-            <td>कौ</td>
-            <td>कौतूहल, कौन, औरत, औजार</td>
-          </tr>
-          <tr>
-            <td>अं</td>
-            <td>◌ं</td>
-            <td>क् + अं</td>
-            <td>कं</td>
-            <td>अंगूर, अंगारा, रंग</td>
-          </tr>
-          <tr>
-            <td>अ:</td>
-            <td>:</td>
-            <td>क् + अ:</td>
-            <td>कः</td>
-            <td>अच्छा, कः</td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <br />
+                                    <h3>15. 'र' के बहुरूप: रेफ, पदेन और 'ऋ' से इसका अंतर</h3>
+                                    <h4>(क) रेफ (र्):</h4>
+                                    <p><strong>पहचान:</strong> यह वर्ण के ऊपर (र्) लगता है।<br><strong>नियम:</strong> यह 'र' का <strong>स्वर-रहित (आधा)</strong> रूप है। यह जिस वर्ण के ऊपर लगता है, उसका उच्चारण <strong>उससे पहले</strong> होता है।<br><strong>उदाहरण:</strong> कर्म (उच्चारण: क-र्-म), वर्षा (व-र्-षा), आशीर्वाद (आशी-र्-वाद)।</p>
+                                    <h4>(ख) पदेन ( ):</h4>
+                                    <p><strong>पहचान:</strong> यह वर्ण के नीचे ( ) या (^) के रूप में लगता है।<br><strong>नियम:</strong> यह 'र' का <strong>स्वर-सहित (पूरा)</strong> रूप है। यह हमेशा अपने से <strong>पहले</strong> आए <strong>आधे व्यंजन</strong> के पैरों में लगता है।<br><strong>उदाहरण:</strong> क्रम (क्+र+म), प्रकाश (प्+र+काश), नम्र (म्+र), ट्रक (ट्+र+क), ड्रम (ड्+र+म)।</p>
 
-      <div class="content" id="व्यंजन (Consonants)"></div>
-      <br />
+                                    <h4>'र' और 'ऋ' का निर्णायक अंतर:</h4>
+                                    <div class="vyakaran-table-wrapper">
+                                        <table class="data-table comparison-table">
+                                            <thead><tr><th>आधार</th><th>र</th><th>ऋ</th></tr></thead>
+                                            <tbody>
+                                                <tr><td><strong>प्रकृति</strong></td><td>यह एक व्यंजन है।</td><td>यह एक स्वर है।</td></tr>
+                                                <tr><td><strong>रूप</strong></td><td>यह पूरा (राम) या आधा (कर्म, क्रम) होता है।</td><td>यह हमेशा स्वर के रूप में प्रयोग होता है (ऋषि)।</td></tr>
+                                                <tr><td><strong>मात्रा</strong></td><td>इसकी कोई मात्रा नहीं होती, यह खुद लगता है।</td><td>इसकी मात्रा ( ृ ) होती है जो व्यंजन के नीचे लगती है।</td></tr>
+                                                <tr><td><strong>उदाहरण</strong></td><td>क्रम (क् + र)</td><td>कृपा (क् + ऋ)</td></tr>
+                                                <tr><td><strong>उच्चारण</strong></td><td>'र' (ra)</td><td>'रि' (ri)</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-      <h2 class="color-content1">व्यंजन (Consonants)</h2>
+                                    <h3>16. बिंदी (ं) और चाँद (ँ) का निर्णायक युद्ध: अनुस्वार बनाम अनुनासिक</h3>
+                                    <ul>
+                                        <li><strong>अनुनासिक (चंद्रबिंदु - ँ):</strong><br><strong>प्रकृति:</strong> यह स्वरों का एक गुण है, कोई अलग वर्ण नहीं।<br><strong>उच्चारण:</strong> ध्वनि <strong>मुँह और नाक दोनों</strong> से एक साथ निकलती है। (जैसे: गाँव, माँ, चाँद, हँसना)।</li>
+                                        <li><strong>अनुस्वार (बिंदी - ं):</strong><br><strong>प्रकृति:</strong> यह एक नासिक्य व्यंजन ध्वनि है।<br><strong>उच्चारण:</strong> ध्वनि <strong>केवल नाक</strong> से निकलती है। (जैसे: गंगा, चंचल, संबंध)।</li>
+                                    </ul>
+                                    
+                                    <h3>17. वर्तनी की सामान्य अशुद्धियाँ: क्यों, कैसे और उनका सुधार</h3>
+                                    <div class="vyakaran-table-wrapper">
+                                        <table class="data-table">
+                                            <thead><tr><th>अशुद्ध शब्द</th><th>शुद्ध शब्द</th><th>विश्लेषण और सुधार का कारण</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>आर्शीवाद</td><td>आशीर्वाद</td><td><strong>नियम:</strong> 'रेफ' (र्) का उच्चारण जिस वर्ण से पहले होता है, वह उसके अगले वर्ण पर लगता है। यहाँ 'शी' के बाद 'र्' बोला जा रहा है, तो वह अगले वर्ण 'वा' पर लगेगा।</td></tr>
+                                                <tr><td>श्रृंगार</td><td>शृंगार</td><td><strong>नियम:</strong> 'श' के साथ 'र' और 'ऋ' एक साथ नहीं आ सकते। 'शृंगार' में 'श' के साथ 'ऋ' की मात्रा ( ृ ) लगती है। 'श्रृ' कोई वर्ण ही नहीं है।</td></tr>
+                                                <tr><td>ग्रहणी</td><td>गृहिणी</td><td><strong>नियम:</strong> 'ग्रह' (Planet) में 'र' पदेन है। 'गृह' (Home) में 'ऋ' की मात्रा है। घर में रहने वाली स्त्री 'गृहिणी' होती है, 'ग्रहणी' नहीं।</td></tr>
+                                                <tr><td>उज्वल</td><td>उज्ज्वल</td><td><strong>नियम:</strong> यह 'उत् + ज्वल' की संधि से बना है। संधि के नियम के अनुसार 'त्', 'ज्' में बदल जाता है, इसलिए दो आधे 'ज्' आते हैं।</td></tr>
+                                                <tr><td>कवियत्री</td><td>कवयित्री</td><td><strong>नियम:</strong> यह एक रूढ़ शब्द है जिसकी सही वर्तनी 'कवयित्री' ही है। 'कवि' का स्त्रीलिंग बनाते समय 'व' पर मात्रा नहीं लगती।</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
 
-      <p>
-        व्यंजन वर्ण हैं जिन्हें उच्चारण करते समय हमें स्वरों की मदद लेनी पड़ती
-        है। हिंदी में इनकी संख्या 33 है और ये वर्ण भाषा के विभिन्न पहलुओं को
-        व्यक्त करने में महत्वपूर्ण भूमिका निभाते हैं।
-      </p>
-      <br />
+                            <section id="part5" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 5: उन्नत अवधारणाएँ (Advanced Concepts for Competitive Exams)</h2>
+                                    <h3>18. बलाघात (Stress), अनुतान (Intonation), और संगम (Juncture)</h3>
+                                    <ul>
+                                        <li><strong>बलाघात (Stress/Accent):</strong><br><strong>व्याख्या:</strong> किसी शब्द का उच्चारण करते समय जब किसी एक अक्षर (Syllable) पर अन्य अक्षरों की तुलना में अधिक बल दिया जाता है, तो उसे बलाघात कहते हैं।<br><strong>उदाहरण:</strong> 'अच्छा' (सामान्य), '<strong>अ</strong>च्छा!' (आश्चर्य)।</li>
+                                        <li><strong>अनुतान (Intonation):</strong><br><strong>व्याख्या:</strong> वाक्य बोलते समय हमारी आवाज़ के सुर में जो उतार-चढ़ाव आता है, उसे अनुतान कहते हैं।<br><strong>उदाहरण:</strong> तुम जाओगे। (सूचना), तुम जाओगे? (प्रश्न), तुम जाओगे! (आश्चर्य)।</li>
+                                        <li><strong>संगम (Juncture):</strong><br><strong>व्याख्या:</strong> शब्दों का उच्चारण करते समय एक ध्वनि से दूसरी ध्वनि पर जाते हुए जो सूक्ष्म विराम होता है, उसे संगम कहते हैं।<br><strong>उदाहरण:</strong> 'तुम्हारे' (yours) vs 'तुम हारे' (you lost)।</li>
+                                    </ul>
+                                </div>
+                            </section>
+                            
+                            <section id="faq-part" class="faq-section" data-animate>
+                                <h2>भाग 6: अक्सर पूछे जाने वाले प्रश्न (Frequently Asked Questions - FAQ)</h2>
+                                <details>
+                                    <summary><strong>प्रश्न 1:</strong> 'ऋ' स्वर क्यों है, जबकि इसका उच्चारण 'रि' (व्यंजन+स्वर) जैसा लगता है?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> 'ऋ' को स्वर मानने के पीछे ऐतिहासिक और व्याकरणिक कारण हैं।<br><strong>ऐतिहासिक कारण:</strong> संस्कृत में 'ऋ' एक शुद्ध स्वर था। हिंदी ने वर्णमाला संस्कृत से विरासत में ली है।<br><strong>व्याकरणिक कारण:</strong> 'ऋ' का व्यवहार स्वरों जैसा है। यह व्यंजनों के साथ मात्रा ( ृ ) के रूप में जुड़ता है (जैसे क्+ऋ=कृ), जो केवल स्वरों का गुण है।</p></div>
+                                </details>
+                                <details>
+                                    <summary><strong>प्रश्न 2:</strong> 'ज्ञ' का सही उच्चारण क्या है - 'ग्य' या 'ज्य'?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> 'ज्ञ' की बनावट <strong>'ज् + ञ'</strong> है, इसलिए इसका शुद्ध शास्त्रीय उच्चारण 'ज्यँ' (Jyan) जैसा होना चाहिए। हालाँकि, हिंदी भाषी क्षेत्रों में इसका उच्चारण <strong>'ग्य' (Gya)</strong> के रूप में प्रचलित और मानक हो चुका है। इसलिए, व्यवहार में 'ग्य' ही सही माना जाता है।</p></div>
+                                </details>
+                                <details>
+                                    <summary><strong>प्रश्न 3:</strong> 'शृंगार' और 'श्रृंखला' में 'श' के नीचे कौन-सी मात्रा है?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> 'श' के साथ या तो 'र' (पदेन) जुड़कर 'श्र' बनता है या 'ऋ' (मात्रा) जुड़कर 'शृ' बनता है। <strong>'श', 'र' और 'ऋ' तीनों कभी एक साथ नहीं आ सकते।</strong><br><strong>सही रूप:</strong> <strong>शृंगार (श् + ऋ)</strong>। इसमें 'श' के साथ 'ऋ' की मात्रा है।<br><strong>गलत रूप:</strong> श्रृंगार।</p></div>
+                                </details>
+                                <details>
+                                    <summary><strong>प्रश्न 4:</strong> अनुस्वार (ं) कब 'न्', 'म्', 'ण्', 'ञ्', 'ङ्' की ध्वनि देता है?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> यह 'पंचमाक्षर का नियम' है। अनुस्वार (ं) के बाद जिस वर्ग का व्यंजन आता है, अनुस्वार उसी वर्ग के पाँचवें अक्षर (पंचमाक्षर) की ध्वनि देता है।<br><strong>क-वर्ग से पहले 'ङ्':</strong> गंगा (गङ्गा)<br><strong>च-वर्ग से पहले 'ञ्':</strong> चंचल (चञ्चल)<br><strong>ट-वर्ग से पहले 'ण्':</strong> ठंडा (ठण्डा)<br><strong>त-वर्ग से पहले 'न्':</strong> गंदा (गन्दा)<br><strong>प-वर्ग से पहले 'म्':</strong> कंपन (कम्पन)</p></div>
+                                </details>
+                                <details>
+                                    <summary><strong>प्रश्न 5:</strong> 'ड़' और 'ढ़' का प्रयोग कब और क्यों होता है?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> 'ड़' और 'ढ़' को उत्क्षिप्त व्यंजन कहते हैं। ये दोनों वर्ण <strong>कभी भी किसी शब्द के शुरू में नहीं आते</strong>। ये हमेशा शब्द के बीच में या अंत में आते हैं (जैसे: सड़क, पढ़ना, गढ़)।</p></div>
+                                </details>
+                                 <details>
+                                    <summary><strong>प्रश्न 6:</strong> 'क्ष' को संयुक्त व्यंजन क्यों कहते हैं?</summary>
+                                    <div class="faq-answer"><p><strong>उत्तर:</strong> 'संयुक्त' का अर्थ है 'जुड़ा हुआ'। 'क्ष' को संयुक्त व्यंजन इसलिए कहते हैं क्योंकि यह दो व्यंजनों, <strong>'क्' और 'ष'</strong> के मिलने से बना है। जब हम 'रक्षा' शब्द बोलते हैं, तो उसमें 'क्' और 'ष' दोनों की मिली-जुली ध्वनि आती है (रक्-षा)।</p></div>
+                                </details>
+                            </section>
 
-      <div class="content" id="व्यंजन के भेद (Kinds of Consonants)"></div>
-      <br />
+                            <section id="part7" class="topic-section questionnaire-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>भाग 7: ज्ञान-परीक्षा (Comprehensive Practice Questionnaire)</h2>
+                                    
+                                    <h4>(क) बहुविकल्पीय प्रश्न (MCQs)</h4>
+                                    <div class="question-block">
+                                        <p>1. 'व' वर्ण का उच्चारण स्थान क्या है?</p>
+                                        <ol type="a" class="mcq-options">
+                                            <li>(अ) कंठ्य</li> <li>(ब) ओष्ठ्य</li> <li>(स) दंत्य</li> <li>(द) दंतोष्ठ्य</li>
+                                        </ol>
+                                        <p>2. इनमें से कौन-सा वर्ण सघोष महाप्राण है?</p>
+                                        <ol type="a" class="mcq-options">
+                                            <li>(अ) ख</li> <li>(ब) ग</li> <li>(स) घ</li> <li>(द) क</li>
+                                        </ol>
+                                        <p>3. 'कृपा' शब्द में कौन-सा 'र' का रूप है?</p>
+                                        <ol type="a" class="mcq-options">
+                                            <li>(अ) रेफ</li> <li>(ब) पदेन</li> <li>(स) सामान्य रूप</li> <li>(द) इनमें से कोई नहीं</li>
+                                        </ol>
+                                        <p>4. 'मैं' शब्द में लगी बिंदी (अनुस्वार) वास्तव में क्या है?</p>
+                                        <ol type="a" class="mcq-options">
+                                            <li>(अ) शुद्ध अनुस्वार</li> <li>(ब) अनुनासिक (चंद्रबिंदु)</li> <li>(स) पंचमाक्षर</li> <li>(द) हलंत</li>
+                                        </ol>
+                                        <p>5. किस शब्द में द्वित्व व्यंजन का प्रयोग हुआ है?</p>
+                                        <ol type="a" class="mcq-options">
+                                            <li>(अ) सस्ता</li> <li>(ब) सच्चा</li> <li>(स) श्याम</li> <li>(द) क्या</li>
+                                        </ol>
+                                    </div>
+                                    
+                                    <h4>(ख) रिक्त स्थान भरें</h4>
+                                    <div class="question-block">
+                                        <p>1. 'ए' और 'ऐ' स्वर __________ कहलाते हैं क्योंकि वे कंठ और तालु से बोले जाते हैं।</p>
+                                        <p>2. 'ढ़' एक __________ व्यंजन है।</p>
+                                        <p>3. 'त्र' संयुक्त व्यंजन __________ और __________ के मेल से बना है।</p>
+                                        <p>4. प्रत्येक वर्ग का पहला और दूसरा वर्ण __________ होता है।</p>
+                                        <p>5. जिन स्वरों के उच्चारण में होंठ गोल हो जाते हैं, वे __________ कहलाते हैं।</p>
+                                    </div>
 
-      <h2 class="color-content1">व्यंजन के भेद (Kinds of Consonants)</h2>
-      <br />
+                                    <h4>(ग) सही (✓) या गलत (✗) बताएँ</h4>
+                                    <div class="question-block">
+                                        <p>1. सभी स्वर अल्पप्राण होते हैं। ( )</p>
+                                        <p>2. 'ह' एक सघोष महाप्राण व्यंजन है। ( )</p>
+                                        <p>3. 'अ' स्वर की मात्रा ( ा ) होती है। ( )</p>
+                                        <p>4. 'चंपक' शब्द में अनुस्वार का उच्चारण 'म्' जैसा है। ( )</p>
+                                        <p>5. 'राष्ट्र' शब्द में 'र' रेफ रूप में है। ( )</p>
+                                    </div>
+                                    
+                                    <h4>(घ) स्तंभों का मिलान करें</h4>
+                                    <div class="vyakaran-table-wrapper">
+                                        <table class="data-table comparison-table">
+                                            <thead><tr><th>स्तंभ 'अ'</th><th>स्तंभ 'ब'</th></tr></thead>
+                                            <tbody>
+                                                <tr><td>1. ष</td><td>(क) अंतःस्थ</td></tr>
+                                                <tr><td>2. य</td><td>(ख) स्पर्श</td></tr>
+                                                <tr><td>3. ग</td><td>(ग) ऊष्म</td></tr>
+                                                <tr><td>4. क्ष</td><td>(घ) अयोगवाह</td></tr>
+                                                <tr><td>5. अः</td><td>(ङ) संयुक्त व्यंजन</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <h4>(ङ) वर्ण-विच्छेद और वर्ण-संयोजन करें</h4>
+                                    <div class="question-block">
+                                        <p><strong>वर्ण-विच्छेद करें:</strong></p>
+                                        <ol><li>प्रकृति</li> <li>अध्यक्ष</li> <li>आध्यात्मिक</li></ol>
+                                        <p><strong>वर्ण-संयोजन करें:</strong></p>
+                                        <ol><li>क् + ऋ + ष् + अ + क् + अ = ?</li> <li>स् + व् + आ + स् + थ् + य् + अ = ?</li></ol>
+                                    </div>
 
-      <div class="content" id=" स्पर्श व्यंजन (Mutes)"></div>
-      <br />
-      <p>
-        <b class="color-content2"> 1. स्पर्श व्यंजन (Mutes):</b> क से लेकर म तक
-        के सभी व्यंजन <b class="color-content2"> स्पर्श व्यंजन </b> कहलाते हैं।
-        इन्हें बोलते समय जीभ को कंठ, तालु, मूर्धा, दाँत या होंठ को स्पर्श करना
-        पड़ता है।
-      </p>
-      <p>
-        इन्हें पाँच भागों में बाँटा गया है और हर वर्ण का नाम उसके पहले वर्ण के
-        आधार पर रखा गया है:
-      </p>
+                                    <h4>(च) अशुद्ध शब्दों को शुद्ध करें</h4>
+                                    <div class="question-block">
+                                        <ol><li>अतिथी</li> <li>उज्जवल</li> <li>श्रृंगार</li></ol>
+                                    </div>
+                                    
+                                    <details class="answer-key">
+                                        <summary>उत्तरमाला (Answer Key)</summary>
+                                        <div class="answer-content">
+                                            <p><strong>(क) बहुविकल्पीय प्रश्न:</strong> 1. (द), 2. (स), 3. (द), 4. (ब), 5. (ब)</p>
+                                            <p><strong>(ख) रिक्त स्थान:</strong> 1. कंठ-तालव्य, 2. उत्क्षिप्त / द्विगुण, 3. त्, र, 4. अघोष, 5. वृत्तमुखी</p>
+                                            <p><strong>(ग) सही/गलत:</strong> 1. ✓, 2. ✓, 3. ✗, 4. ✓, 5. ✗</p>
+                                            <p><strong>(घ) स्तंभों का मिलान:</strong> 1→ग, 2→क, 3→ख, 4→ङ, 5→घ</p>
+                                            <p><strong>(ङ) वर्ण-विच्छेद:</strong> 1. प्+र्+अ+क्+ऋ+त्+इ, 2. अ+ध्+य्+अ+क्+ष्+अ, 3. आ+ध्+य्+आ+त्+म्+इ+क्+अ<br><strong>वर्ण-संयोजन:</strong> 1. कृषक, 2. स्वास्थ्य</p>
+                                            <p><strong>(च) शुद्ध शब्द:</strong> 1. अतिथि, 2. उज्ज्वल, 3. शृंगार</p>
+                                        </div>
+                                    </details>
+                                </div>
+                            </section>
 
-      <table border="1" id="myTable">
-        <tbody>
-          <tr>
-            <td><b class="color-content5">क वर्ग</b></td>
-            <td>क</td>
-            <td>ख</td>
-            <td>ग</td>
-            <td>घ</td>
-            <td>ङ</td>
-          </tr>
-          <tr>
-            <td><b class="color-content5">च वर्ग</b></td>
-            <td>च</td>
-            <td>छ</td>
-            <td>ज</td>
-            <td>झ</td>
-            <td>ञ</td>
-          </tr>
-          <tr>
-            <td><b class="color-content5">ट वर्ग</b></td>
-            <td>ट</td>
-            <td>ठ</td>
-            <td>ड</td>
-            <td>ढ</td>
-            <td>ण</td>
-          </tr>
-          <tr>
-            <td><b class="color-content5">त वर्ग</b></td>
-            <td>त</td>
-            <td>थ</td>
-            <td>द</td>
-            <td>ध</td>
-            <td>न</td>
-          </tr>
-          <tr>
-            <td><b class="color-content5">प वर्ग</b></td>
-            <td>प</td>
-            <td>फ</td>
-            <td>ब</td>
-            <td>भ</td>
-            <td>म</td>
-          </tr>
-        </tbody>
-      </table>
+                            <section id="conclusion" class="topic-section" data-animate>
+                                <div class="topic-content">
+                                    <h2>निष्कर्ष: वर्ण-ज्ञान से भाषा-सिद्धि तक</h2>
+                                    <p>वर्ण-विचार केवल व्याकरण की परीक्षा पास करने का एक अध्याय नहीं, बल्कि भाषा के साथ एक गहरा रिश्ता बनाने की पहली सीढ़ी है। जिस प्रकार एक संगीतकार सातों सुरों को साधकर महान संगीत की रचना करता है, उसी प्रकार एक भाषा का साधक इन वर्णों के विज्ञान को समझकर शुद्ध, प्रभावशाली और सुंदर भाषा का निर्माण करता है। इस अध्याय में हमने वर्णों की बनावट, उनके उच्चारण के पीछे के विज्ञान और उनके व्यावहारिक प्रयोग को गहराई से समझा है। यह ज्ञान आपकी लेखन-शैली को निखारेगा, आपके उच्चारण को सुधारेगा और हिंदी भाषा के प्रति आपकी समझ को एक नई ऊँचाई देगा।</p>
+                                    <p class="invocation">।। शुभमस्तु ।।</p>
+                                </div>
+                            </section>
 
-      <br />
-      <div class="content" id="अन्तःस्थ व्यंजन (Semi Vowels)"></div>
-      <p>
-        <b class="color-content2">अन्तःस्थ व्यंजन (Semi Vowels):</b> य, र, ल, व
-      </p>
-      <p>
-        अन्तःस्थ व्यंजनों का उच्चारण करते समय जीभ को किसी अन्य अंग के साथ विशेष
-        संपर्क में नहीं लाना पड़ता। हालांकि, इनका उच्चारण स्वर और व्यंजन के बीच
-        एक मध्यवर्ती स्थिति में होता है।
-      </p>
-      <ul>
-        <li>
-          <b>य</b>: यह ध्वनि शब्दों के मध्य में एक संयोजक की तरह काम करती है,
-          <b class="color-content6">जैसे - </b> "यात्रा", "योग", "याद"।
-        </li>
-        <li>
-          <b>र</b>: यह व्यंजन ध्वनि गले और तालू के मिलन से उत्पन्न होती है,
-          <b class="color-content6">जैसे - </b>"रात", "रिश्ता", "रसोई"।
-        </li>
-        <li>
-          <b>ल</b>: इस व्यंजन का उपयोग लचीले शब्दों के लिए किया जाता है,
-          <b class="color-content6">जैसे - </b>"लड़का", "लाल", "लौंग"।
-        </li>
-        <li>
-          <b>व</b>: यह ध्वनि शब्दों को एक वक्रता प्रदान करती है,
-          <b class="color-content6">जैसे - </b>"वर्षा", "वन", "विमान"।
-        </li>
-      </ul>
-      <br />
-      <div class="content" id="ऊष्म व्यंजन (Sibilants)"></div>
-      <p><b class="color-content2">ऊष्म व्यंजन (Sibilants):</b> श, ष, स, ह</p>
-      <p>
-        ऊष्म व्यंजनों का उच्चारण करते समय मुंह से हवा का भारी प्रवाह और ध्वनि का
-        उपयोग होता है। यह व्यंजन वाक्यों में गंभीरता और गहराई जोड़ते हैं, और
-        इनका उपयोग अक्सर मजबूत और स्पष्ट भावनाओं को व्यक्त करने के लिए किया जाता
-        है।
-      </p>
-      <ul>
-        <li>
-          <b>श</b>: यह व्यंजन तालू के स्पर्श से उत्पन्न होता है,
-          <b class="color-content6">जैसे - </b>"शक्ति", "शिक्षा", "शब्द"।
-        </li>
-        <li>
-          <b>ष</b>: यह ध्वनि तालू और मूर्धा के संयोजन से बनती है,
-          <b class="color-content6">जैसे - </b>"षट्कोण", "षड्यंत्र", "षष्ठी"।
-        </li>
-        <li>
-          <b>स</b>: यह व्यंजन दांत और जीभ के मिलन से उत्पन्न होता है,
-          <b class="color-content6">जैसे - </b>"सत्य", "संगीत", "समान"।
-        </li>
-        <li>
-          <b>ह</b>: यह ध्वनि गले से उत्पन्न होती है और सांस के साथ बाहर आती है,
-          <b class="color-content6">जैसे - </b>"हवा", "हाथी", "हर्ष"।
-        </li>
-      </ul>
-      <br />
+                            <!-- Comments Section -->
+                            <div class="comments-wrapper">
+                                <hr>
+                                <h3>Leave a Comment</h3>
+                                <div id="custom-comment-section">
+                                    <div class="firebase-comments-widget">
+                                        <div class="container">
+                                            <section class="comment-form-section" hidden>
+                                                <form id="comment-form">
+                                                    <div class="form-group">
+                                                        <label for="name">Name</label>
+                                                        <input type="text" id="name" placeholder="Your name" required aria-label="Name" maxlength="50">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="comment">Comment</label>
+                                                        <textarea id="comment" rows="4" placeholder="Write your comment..." required aria-label="Comment" maxlength="1000"></textarea>
+                                                        <div class="char-counter-wrapper">
+                                                            <span id="char-counter">0 / 1000</span>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" id="submit-button">Submit</button>
+                                                </form>
+                                            </section>
+                                            <hr>
+                                            <section class="comments-section">
+                                                <div id="comments-list">
+                                                    <!-- Dynamic content is loaded here -->
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-      <div class="content" id="संयुक्त व्यंजन (Conjunct Consonants)"></div>
+                        <aside class="sidebar">
+                           <div class="sidebar-widget">
+                                <h3>अगला अध्याय</h3>
+                                <p>वर्णों के इस गहन अध्ययन के बाद, हमारा अगला अध्याय <strong>'शब्द-विचार'</strong> पर होगा, जहाँ हम जानेंगे कि ये वर्ण मिलकर कैसे सार्थक शब्दों का निर्माण करते हैं।</p>
+                           </div>
+                           <div class="sidebar-widget">
+                                <h3>Popular Posts</h3>
+                                <ul class="sidebar-link-list">
+                                    <li><a href="../vyakaran/compound-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>समास: परिभाषा और भेद</span></div></a></li>
+                                    <li><a href="../vyakaran/alankar-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>अलंकार: परिभाषा और भेद</span></div></a></li>
+                                    <li><a href="../vyakaran/sandhi-in-hindi.html"><span class="link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg></span><div class="link-text"><span>संधि: प्रकार और उदाहरण</span></div></a></li>
+                                </ul>
+                           </div>
+                        </aside>
+                    </div>
+                </div>
+            </main>
 
-      <h2 class="color-content1">संयुक्त व्यंजन (Conjunct Consonants)</h2>
-      <br />
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
-      <p>
-        जब दो या दो से अधिक व्यंजन एक साथ मिलकर एक ध्वनि का उच्चारण करते हैं, तो
-        उसे <b class="color-content2">संयुक्त व्यंजन</b> कहते हैं। इनका प्रयोग
-        हिंदी भाषा में विशेष रूप से शब्दों के निर्माण में होता है।
-      </p>
-      <br />
-      <b class="color-content6">जैसे - </b>
-      <table id="myTable">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td>क् + ष</td>
-            <td>क्ष</td>
+             <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="footer-section footer-about">
+                        <h3>About GK Learn Study</h3>
+                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="/about.html">About Us</a></li>
+                            <li><a href="/contact.html">Contact Us</a></li>
+                            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Conversions & Measurements</h3>
+                        <ul>
+                            <li><a href="/conversion.html">Unit Conversion</a></li>
+                            <li><a href="/conversion/angle-unit-conversion">Angle Conversion</a></li>
+                            <li><a href="/conversion/temperature-conversion">Temperature Conversion</a></li>
+                            <li><a href="/conversion/measurement-systems">Measurement Systems</a></li>
+                            <li><a href="/conversion/area-volume-measurement">Area & Volume</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Science & GK</h3>
+                        <ul>
+                            <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
+                            <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
+                            <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
+                            <li><a href="/gk/ancient-wonders">Ancient Wonders</a></li>
+                            <li><a href="/gk/solar-system-tour">Solar System Tour</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Follow Us</h3>
+                        <ul class="footer-socials"></ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+            </footer>
 
-            <td>क्षत्रिय, शिक्षा, दक्ष</td>
-          </tr>
-          <tr>
-            <td>त् + र</td>
-            <td>त्र</td>
-
-            <td>त्रिभुज, त्रिमूर्ति, मात्रा</td>
-          </tr>
-          <tr>
-            <td>ज् + ञ</td>
-            <td>ज्ञ</td>
-
-            <td>ज्ञान, विज्ञापन, यज्ञ</td>
-          </tr>
-          <tr>
-            <td>श् + र</td>
-            <td>श्र</td>
-
-            <td>श्रद्धा, श्रम, श्रोत</td>
-          </tr>
-          <tr>
-            <td>छ् + य</td>
-            <td>छ्य</td>
-
-            <td>छ्यादित, आच्छादित</td>
-          </tr>
-          <tr>
-            <td>द् + म</td>
-            <td>द्म</td>
-
-            <td>विद्मा, युद्म</td>
-          </tr>
-          <tr>
-            <td>द् + ग</td>
-            <td>द्ग</td>
-
-            <td>द्गश, द्गम</td>
-          </tr>
-          <tr>
-            <td>द् + घ</td>
-            <td>द्घ</td>
-
-            <td>द्घान, द्घार</td>
-          </tr>
-          <tr>
-            <td>प् + त</td>
-            <td>प्त</td>
-
-            <td>स्वप्न, सप्त, अप्त</td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <br />
-
-      <div class="content" id="द्वित्व व्यंजन (Double Consonants)"></div>
-      <h2 class="color-content1">द्वित्व व्यंजन (Double Consonants)</h2>
-      <br />
-      <p>
-        जब किसी शब्द में एक ही व्यंजन का दो बार प्रयोग होता है और दोनों व्यंजनों
-        का स्पष्ट उच्चारण होता है, तो उसे<b class="color-content2">
-          द्वित्व व्यंजन </b
-        >कहते हैं।
-      </p>
-      <br />
-      <b class="color-content6">जैसे - </b>
-      <table id="myTable">
-        <tbody>
-          <tr>
-            <td>क् + क</td>
-            <td>क्क</td>
-
-            <td>अक्कड़, पक्का</td>
-          </tr>
-          <tr>
-            <td>ट् + ट</td>
-            <td>ट्ट</td>
-
-            <td>चट्टान, हट्टा</td>
-          </tr>
-          <tr>
-            <td>ड् + ड</td>
-            <td>ड्ड</td>
-
-            <td>गड्डा, सड्ड</td>
-          </tr>
-          <tr>
-            <td>त् + त</td>
-            <td>त्त</td>
-
-            <td>मत्ता, सत्य</td>
-          </tr>
-          <tr>
-            <td>द् + द</td>
-            <td>द्द</td>
-
-            <td>बुद्ध, प्रद्द</td>
-          </tr>
-          <tr>
-            <td>प् + प</td>
-            <td>प्प</td>
-
-            <td>पप्पू, झप्पी</td>
-          </tr>
-          <tr>
-            <td>ब् + ब</td>
-            <td>ब्ब</td>
-
-            <td>सब्ब, बब्बू</td>
-          </tr>
-          <tr>
-            <td>म् + म</td>
-            <td>म्म</td>
-
-            <td>गम्म, लम्मा</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <br />
-      <div class="content" id="द्वित्व व्यंजन (Double Consonants)"></div>
-      <h2 class="color-content1">संयुक्तच्छर (Conjunct Vowels)</h2>
-      <p>
-        जब दो या दो से अधिक स्वर एक साथ मिलकर एक ही वर्ण का उच्चारण करते हैं, तो
-        उसे <b class="color-content2">संयुक्तच्छर </b>कहते हैं। इनका प्रयोग
-        विशेष रूप से संस्कृत और विशेषतः पुरातन हिंदी के विशिष्ट शब्दों में होता
-        है।
-      </p>
-      <b class="color-content6">उदाहरण - </b>
-      <table id="myTable">
-        <tbody>
-          <tr>
-            <td>ऐ</td>
-            <td>ऐनक, ऐरावत</td>
-          </tr>
-          <tr>
-            <td>औ</td>
-            <td>औरत, औकात</td>
-          </tr>
-          <tr>
-            <td>आइ</td>
-            <td>पाइली, पाइलोट</td>
-          </tr>
-          <tr>
-            <td>ऊँ</td>
-            <td>बूँद, रूँधी</td>
-          </tr>
-          <tr>
-            <td>अउ</td>
-            <td>सउदागर, सउदान</td>
-          </tr>
-          <tr>
-            <td>एइ</td>
-            <td>स्वेइटर, रेइडर</td>
-          </tr>
-          <tr>
-            <td>अइ</td>
-            <td>प्रअइती, डांडी</td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <div class="content" id="अं और अः (अनुस्वार और विसर्ग)"></div>
-      <h2 class="color-content1">अं और अः (अनुस्वार और विसर्ग)</h2>
-
-      <p>
-        अं और अः को हिंदी वर्णमाला में स्वरों के साथ लिखा जाता है, किंतु ये न तो
-        स्वर होते हैं और न ही व्यंजन। व्याकरण में इन्हें अयोगवाह कहा जाता है।
-      </p>
-      <div class="content" id="अनुस्वार (Nasal)"></div>
-      <b class="color-content5">अनुस्वार (Nasal)</b>
-      <p>अनुस्वार का उच्चारण नाक से होता है और इसका चिह्न (ँ) होता है।</p>
-      <ul>
-        <li><b>उदाहरण:</b> चाँद, माँ, हँसना</li>
-      </ul>
-      <br />
-      <div class="content" id="अनुनासिक (Semi Nasal)"></div>
-      <b class="color-content5">अनुनासिक (Semi Nasal)</b>
-      <p>
-        अनुनासिक का उच्चारण नाक और गले दोनों से होता है। इसका चिह्न (ं) होता है।
-      </p>
-      <ul>
-        <li><b>उदाहरण:</b> माँ, चाँद, पंख</li>
-      </ul>
-      <br />
-      <div class="content" id="विसर्ग (Colon)"></div>
-      <b class="color-content5">विसर्ग (Colon)</b>
-      <p>
-        विसर्ग का उच्चारण 'ह' ध्वनि के समान होता है और इसका चिह्न (:) होता है।
-      </p>
-      <ul>
-        <li><b>उदाहरण:</b> प्रातः, अहः, दुःख</li>
-      </ul>
-      <br />
-      <p>
-        इन अयोगवाह वर्णों का विशेष महत्व है क्योंकि ये उच्चारण में विभिन्नता और
-        गहराई प्रदान करते हैं। इनके सही प्रयोग से शब्दों का अर्थ और उनकी ध्वनि
-        अधिक स्पष्ट और प्रभावी हो जाती है।
-      </p>
-      <br />
-      <table id="myTable">
-        <thead>
-          <tr>
-            <th>अयोगवाह</th>
-            <th>चिह्न</th>
-            <th>वर्णमाला में उपयोग</th>
-            <th>उदाहरण</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>अं (Anusvara)</td>
-            <td>ँ</td>
-            <td>स्वर के साथ</td>
-            <td>चाँद, श्रीवास्तव, विश्व</td>
-          </tr>
-          <tr>
-            <td>अः (Visarga)</td>
-            <td>:</td>
-            <td>स्वर के साथ</td>
-            <td>प्रातः, विश्व, दुःख</td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <h2 id="अभ्यास प्रश्न">अभ्यास प्रश्न</h2>
-      <b class="color-content5">
-        <ol>
-          <li><strong>स्वर और व्यंजन के भेद को स्पष्ट कीजिए।</strong></li>
-          <li>
-            <strong>निम्नलिखित शब्दों में से स्वरों की पहचान कीजिए:</strong>
-            <ul>
-              <li>पुस्तक</li>
-              <li>विद्यालय</li>
-              <li>अध्यापक</li>
-            </ul>
-          </li>
-          <li>
-            <strong>निम्नलिखित शब्दों में से व्यंजनों की पहचान कीजिए:</strong>
-            <ul>
-              <li>किसान</li>
-              <li>अध्याय</li>
-              <li>कविता</li>
-            </ul>
-          </li>
-          <li>
-            <strong>वर्ण-विचार का महत्व क्यों है? इसका वर्णन कीजिए।</strong>
-          </li>
-          <li>
-            <strong
-              >हिंदी वर्णमाला के कितने वर्ण हैं और उन्हें किस प्रकार वर्गीकृत
-              किया गया है?</strong
-            >
-          </li>
-          <li>
-            <strong
-              >स्वरों के उच्चारण में वायु का किस प्रकार प्रवाह होता है? उदाहरण
-              सहित स्पष्ट कीजिए।</strong
-            >
-          </li>
-        </ol>
-      </b>
-      <h4>उत्तर:</h4>
-      <ol>
-        <li>
-          <p><b class="color-content9">स्वर और व्यंजन के भेद:</b><br /></p>
-          <ul>
-            <li>
-              स्वर: स्वर वर्ण वे होते हैं जिनके उच्चारण में मुख के भीतर कहीं भी
-              अवरोध नहीं होता है।&nbsp;<b class="color-content9"
-                >उदाहरण:&nbsp;</b
-              >अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः
-            </li>
-            <li>
-              व्यंजन: व्यंजन वर्ण वे होते हैं जिनके उच्चारण में मुख के भीतर किसी
-              न किसी रूप में अवरोध होता है।&nbsp;<b class="color-content9"
-                >उदाहरण:&nbsp;</b
-              >क, ख, ग, घ, ङ, च, छ, ज, झ, ञ, ट, ठ, ड, ढ, ण, त, थ, द, ध, न, प, फ,
-              ब, भ, म, य, र, ल, व, श, ष, स, ह
-            </li>
-          </ul>
-        </li>
-        <li>
-          <p><b class="color-content9">स्वरों की पहचान:</b><br /></p>
-          <ul>
-            <li>पुस्तक: उ, अ</li>
-            <li>विद्यालय: इ, आ</li>
-            <li>अध्यापक: अ, आ</li>
-          </ul>
-        </li>
-        <li>
-          <p><b class="color-content9">व्यंजनों की पहचान:</b><br /></p>
-          <ul>
-            <li>किसान: क, स, न</li>
-            <li>अध्याय: ध, य</li>
-            <li>कविता: क, व, त</li>
-          </ul>
-        </li>
-        <li>
-          <p>
-            <b
-              class="color-content9"
-              style="background-color: var(--background-color)"
-              >वर्ण-विचार का महत्व:</b
-            >&nbsp;वर्ण-विचार का महत्व भाषा के मौलिक तत्वों को समझने में है।
-            इससे भाषा की संरचना, उच्चारण और लेखन के नियमों को समझने में सहायता
-            मिलती है। यह भाषा सीखने और सिखाने की प्रक्रिया को सरल और व्यवस्थित
-            बनाता है।
-          </p>
-        </li>
-        <li>
-          <p>
-            <b
-              class="color-content9"
-              style="background-color: var(--background-color)"
-              >हिंदी वर्णमाला के वर्ण और उनकी वर्गीकरण:&nbsp;</b
-            >हिंदी वर्णमाला में कुल 46 वर्ण होते हैं, जिनमें 13 स्वर और 33
-            व्यंजन होते हैं। उन्हें निम्नलिखित प्रकार से वर्गीकृत किया जाता है:
-          </p>
-          <ul>
-            <li>
-              <b
-                class="color-content6"
-                style="background-color: var(--background-color)"
-                >स्वर:</b
-              >अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ, अं, अः
-            </li>
-            <li>
-              <b
-                class="color-content6"
-                style="background-color: var(--background-color)"
-                >व्यंजन:</b
-              >&nbsp;क, ख, ग, घ, ङ, च, छ, ज, झ, ञ, ट, ठ, ड, ढ, ण, त, थ, द, ध, न,
-              प, फ, ब, भ, म, य, र, ल, व, श, ष, स, ह
-            </li>
-          </ul>
-        </li>
-        <li>
-          <p>
-            <b
-              class="color-content9"
-              style="background-color: var(--background-color)"
-              >स्वरों के उच्चारण में वायु का प्रवाह:</b
-            >&nbsp;स्वरों के उच्चारण में वायु का प्रवाह बिना किसी अवरोध के होता
-            है।&nbsp;
-            <b
-              class="color-content9"
-              style="background-color: var(--background-color)"
-              >उदाहरण के लिए:</b
-            >
-          </p>
-          <ul>
-            <li>
-              <b
-                class="color-content6"
-                style="background-color: var(--background-color)"
-                >अ:</b
-              >&nbsp;मुख को खुला रखकर उच्चारित होता है।
-            </li>
-            <li>
-              <b
-                class="color-content6"
-                style="background-color: var(--background-color)"
-                >ई:</b
-              >मुख को चपटा और होंठों को फैलाकर उच्चारित होता है।
-            </li>
-            <li>
-              <b
-                class="color-content6"
-                style="background-color: var(--background-color)"
-                >ऊ:</b
-              >&nbsp;होंठों को गोलाकार बनाकर उच्चारित होता है।
-            </li>
-          </ul>
-        </li>
-      </ol>
-      <br />
-      <h5>पढ़ें सम्पूर्ण हिंदी व्याकरण</h5>
-
-      <table id="Table" style="border-collapse: collapse; width: 100%">
-        <tbody>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran-language.html"
-                >भाषा और व्याकरण</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/phonology-in-hindi"
-                >वर्ण-विचार</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/morphology-in-hindi"
-                >शब्द-विचार</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/syntax-in-hindi"
-                >वाक्य-विचार</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/noun-in-hindi"
-                >संज्ञा</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/number-in-hindi">वचन</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/gender-in-hindi"
-                >लिंग</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/case-in-hindi">कारक</a>
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/pronoun-in-hindi"
-                >सर्वनाम</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/adjective-in-hindi"
-                >विशेषण</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/verb-in-hindi"
-                >क्रिया</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/tense-in-hindi">काल</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/indeclinable-words-in-hindi"
-                >अव्यय</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/particle-in-hindi"
-                >निपात</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/voice-in-hindi"
-                >वाच्य</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/person-in-hindi"
-                >पुरुष</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/punctuation-in-hindi"
-                >विराम-चिन्ह</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/prefix-in-hindi"
-                >उपसर्ग</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/suffix-in-hindi"
-                >प्रत्यय</a
-              >
-            </td>
-            <td><a href="https://gklearnstudy.in/vyakaran/joining">संधि</a></td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/compound-in-hindi"
-                >समास</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/tatsam-tadbhav-in-hindi"
-                >तत्सम-तट्भव</a
-              >
-            </td>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/deshaj-videshaj-in-hindi"
-                >देशज-विदेशज</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/antonyms-in-hindi"
-                >विलोम-शब्द</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/synonyms-in-hindi"
-                >पर्यावाची-शब्द</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/idioms-in-hindi"
-                >मुहावरे</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/proverbs-in-hindi"
-                >लोकोक्तियां</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/one-word-substitution-in-hindi"
-                >अनेक शब्दों के लिए एक शब्द</a
-              >
-            </td>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/words-of-many-meanings-in-hindi"
-                >एकार्थक शब्द</a
-              >
-            </td>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/words-apparently-similar-in-meanings-in-hindi"
-                >एकार्थक प्रतीत होने वाले शब्द</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/pairs-of-similar-words"
-                >त्रुटिसम भिन्नार्थक शब्द</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/yugm-shabd"
-                >युग्म शब्द</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/ras-in-hindi">रस</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/chhand-in-hindi"
-                >छन्द</a
-              >
-            </td>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/alankar-in-hindi"
-                >अलंकार</a
-              >
-            </td>
-            <td>
-              <a
-                href="https://gklearnstudy.in/vyakaran/paragraph-writing-in-hindi"
-                >अनुच्छेद-लेखन</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://gklearnstudy.in/vyakaran/unseen-passage-in-hindi"
-                >अपठित-गद्यांश</a
-              >
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <hr />
-      <div id="right-sidebar">
-        <strong>Important Links</strong>
-        <ul id="link-list"></ul>
-      </div>
-      <footer>
-        <div class="custom-row">
-          <div class="custom-column">
-            <b>Follow Us</b>
-            <div id="social-links"></div>
-          </div>
-          <div class="custom-column">
-            <button onclick="goToUrl()">Contact</button>
-          </div>
-          <div class="custom-column"><p id="my-paragraph"></p></div>
+            <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
-      </footer>
-    </div>
-    <script src="https://gklearnstudy.in/js/menu.js" defer="defer"></script>
-    <script
-      src="https://gklearnstudy.in/js/rightside.js"
-      defer="defer"
-    ></script>
-    <script src="https://gklearnstudy.in/js/search.js" defer="defer"></script>
-  </body>
+
+        <script src="../search.js"></script>
+        <script src="../index.js" defer></script>
+        <script type="module" src="../comment.js"></script>
+        <script src="../topic-menu.js" defer></script>
+        <script type="module" src="/index.tsx"></script>
+    </body>
 </html>
