@@ -31,11 +31,11 @@
 
   /* Text */
   --text-primary: var(--color-gray-800);
-  --text-secondary: var(--color-gray-600);
+  --text-secondary: var(--color-gray-500);
   --text-muted: var(--color-gray-500);
   --text-inverse: var(--color-white);
-  --text-link: var(--color-black);
-  --text-link-hover: var(--color-primary);
+  --text-link: var(--color-primary);
+  --text-link-hover: var(--color-primary-hover);
   --text-link-active: var(--color-purple);
   --text-heading: var(--color-danger);
 
@@ -111,7 +111,7 @@ h3 {
   color: var(--color-secondary);
 }
 h4 {
-  color: var(--text-inverse);
+  color: var(--text-primary);
 }
 h5 {
   font-size: 18px;
@@ -127,25 +127,27 @@ h6 {
   top: 0;
   left: 0;
 }
-.menu-inner a, a:link, a:visited {
+a {
   text-decoration: none;
 }
 .suggestions li:hover {
   color: var(--text-inverse);
+  background-color: var(--color-primary);
 }
 .menu-link {
   font-size: 18px;
 }
 .search-icon,
-a:link,
-a:visited,
 p {
   color: var(--text-primary);
+}
+a:link, a:visited {
+  color: var(--text-link);
 }
 p {
   font-size: 16px;
 }
-a:link:hover {
+a:hover {
   color: var(--text-link-hover);
 }
 .header {
