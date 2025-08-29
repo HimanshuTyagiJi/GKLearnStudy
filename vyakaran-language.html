@@ -970,28 +970,10 @@
                         </div>
 
                         <aside class="sidebar">
-                            <div class="sidebar-widget">
-                               <h2>अगला अध्याय</h2>
-                                <ul class="sidebar-link-list" id="next-chapters-list">
-                                    <!-- Dynamically populated -->
-                                </ul>
-                            </div>
-                            <div class="sidebar-widget">
-                                <h2>Popular Posts</h2>
-                                <ul class="sidebar-link-list" id="popular-posts-list">
-                                    <!-- Dynamically populated -->
-                                </ul>
-                            </div>
-                            <div class="sidebar-widget">
-                                <h2>Suggestion Pages</h2>
-                                <ul class="sidebar-link-list" id="suggestion-pages-list">
-                                   <!-- Dynamically populated -->
-                                </ul>
-                            </div>
-                            <div class="sidebar-widget" id="recently-updated-widget">
+                             <div class="sidebar-widget">
                                 <h2>Recently Updated</h2>
                                 <ul class="sidebar-link-list">
-                                    <li>
+                                     <li>
                                         <a href="vyakaran/essay-in-hindi.html" title="निबंध: परिभाषा, भेद, उदाहरण">
                                             <span class="link-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path></svg>
@@ -1013,28 +995,24 @@
                                             </div>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="vyakaran/compound-in-hindi.html" title="समास: परिभाषा, भेद, उदाहरण">
-                                            <span class="link-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path></svg>
-                                            </span>
-                                            <div class="link-text">
-                                                <span>समास: परिभाषा, भेद, उदाहरण</span>
-                                                <small class="post-date">दो या दो से अधिक शब्दों को मिलाकर नया शब्द बनाने की प्रक्रिया।</small>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="vyakaran/letter-writing-in-hindi.html" title="पत्र-लेखन: परिभाषा, भेद, उदाहरण">
-                                            <span class="link-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path></svg>
-                                            </span>
-                                            <div class="link-text">
-                                                <span>पत्र-लेखन: परिभाषा, भेद, उदाहरण</span>
-                                                <small class="post-date">पत्र-लेखन संचार का एक महत्वपूर्ण माध्यम है।</small>
-                                            </div>
-                                        </a>
-                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sidebar-widget">
+                               <h2>अगला अध्याय</h2>
+                                <ul class="sidebar-link-list" id="next-chapters-list">
+                                    <!-- Dynamically populated by sidebar-suggestions.js -->
+                                </ul>
+                            </div>
+                            <div class="sidebar-widget">
+                                <h2>Popular Posts</h2>
+                                <ul class="sidebar-link-list" id="popular-posts-list">
+                                    <!-- Dynamically populated by sidebar-suggestions.js -->
+                                </ul>
+                            </div>
+                            <div class="sidebar-widget">
+                                <h2>Suggestion Pages</h2>
+                                <ul class="sidebar-link-list" id="suggestion-pages-list">
+                                   <!-- Dynamically populated by sidebar-suggestions.js -->
                                 </ul>
                             </div>
                         </aside>
@@ -1095,7 +1073,7 @@
         <script src="header-menu.js" defer></script>
         <script src="topic-menu.js" defer></script>
         <script src="search.js" defer></script>
-        <script type="module" src="comment.js" defer></script>
+        <script src="sidebar-suggestions.js" defer></script>
         <script>document.addEventListener("DOMContentLoaded", () => {
     // This script makes sidebar sections dynamic by using the global searchData
     // to find rich content for links listed in the page's topic navigation.
@@ -1111,30 +1089,40 @@
 
     /**
      * Normalizes a URL path for consistent matching.
-     * - Ensures path starts with '/'
-     * - Removes 'index.html'
-     * - Removes trailing slashes
+     * This robust version handles leading/trailing slashes and .html extensions.
      * @param {string} path - The URL path to normalize.
      * @returns {string} - The normalized path.
      */
     function normalizePath(path) {
         if (!path) return '';
-        // Ensure path starts with a slash
-        let normalized = path.startsWith('/') ? path : '/' + path;
         
-        // Handle root index.html specifically
-        if (normalized === '/index.html') return '/';
+        let normalized = path;
 
-        // Remove /index.html from the end of other paths
-        if (normalized.endsWith('/index.html')) {
-            normalized = normalized.slice(0, -11); // e.g. /about/index.html -> /about
+        // 1. Ensure it starts with a slash
+        if (!normalized.startsWith('/')) {
+            normalized = '/' + normalized;
         }
 
-        // Remove trailing slash if it's not the root path
+        // 2. Remove 'index.html' from the end
+        if (normalized.endsWith('/index.html')) {
+            normalized = normalized.slice(0, -11); // length of '/index.html'
+        }
+        
+        // 3. Remove '.html' from the end
+        if (normalized.endsWith('.html')) {
+            normalized = normalized.slice(0, -5); // length of '.html'
+        }
+
+        // 4. Remove trailing slash if it's not the root path
         if (normalized.length > 1 && normalized.endsWith('/')) {
             normalized = normalized.slice(0, -1);
         }
         
+        // 5. Handle the case where the path became empty (was originally "/" or "/index.html")
+        if (normalized === '') {
+            return '/';
+        }
+
         return normalized;
     }
 
@@ -1179,7 +1167,7 @@
         }
         
         // Use a root-relative path for robustness across different page depths.
-        const postUrl = normalizePath(post.url);
+        const postUrl = new URL(post.url, window.location.origin).pathname;
 
         return `
             <li>
