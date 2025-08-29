@@ -1047,7 +1047,117 @@
         <script src="topic-menu.js" defer></script>
         <script src="search.js" defer></script>
         <script type="module" src="comment.js" defer></script>
-        <script src="sidebar-suggestions.js" defer></script>
+        <script>document.addEventListener("DOMContentLoaded", () => {
+    // This script makes sidebar sections (next chapters, popular posts) dynamic.
+    // It reads the navigation from the topic-sidebar on the page.
+
+    const topicNav = document.getElementById("topic-nav");
+    if (!topicNav) {
+        // If there's no topic nav on the page, do nothing.
+        return;
+    }
+
+    // --- Data Gathering ---
+    // Get all links and their data from the topic menu
+    const allLinks = Array.from(topicNav.querySelectorAll("a")).map(link => ({
+        href: link.getAttribute('href'), // Use getAttribute for relative paths
+        text: link.textContent.trim(),
+        isActive: link.classList.contains("active")
+    }));
+
+    if (allLinks.length === 0) return;
+
+    const activeLinkIndex = allLinks.findIndex(link => link.isActive);
+
+    // --- Helper Functions ---
+    /**
+     * Creates the HTML for a link item in the sidebar list.
+     * @param {string} href The URL.
+     * @param {string} text The link text.
+     * @param {string} subtitle A short description or date.
+     * @returns {string} The HTML string.
+     */
+    function createLinkHTML(href, text, subtitle) {
+        // This function creates a consistent list item style for all widgets.
+        return `
+            <li>
+                <a href="${href}">
+                    <span class="link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                    </span>
+                    <div class="link-text">
+                        <span>${text}</span>
+                        ${subtitle ? `<small class="post-date">${subtitle}</small>` : ''}
+                    </div>
+                </a>
+            </li>
+        `;
+    }
+    
+    /**
+     * Shuffles an array and returns a slice of it.
+     * @param {Array} array The array to get items from.
+     * @param {number} numItems The number of items to return.
+     * @returns {Array} A new array containing random items.
+     */
+    function getRandomLinks(array, numItems) {
+        const shuffled = [...array].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, numItems);
+    }
+
+    // --- 1. Populate "अगला अध्याय" (Next Chapters) ---
+    const nextChaptersList = document.getElementById("next-chapters-list");
+    if (nextChaptersList) {
+        if (activeLinkIndex !== -1 && allLinks.length > 1) {
+            const nextLinksData = [];
+            // Get up to 2 next links, wrapping around if there aren't enough at the end.
+            const nextIndex1 = (activeLinkIndex + 1) % allLinks.length;
+            nextLinksData.push(allLinks[nextIndex1]);
+            
+            if (allLinks.length > 2) {
+                const nextIndex2 = (activeLinkIndex + 2) % allLinks.length;
+                if (nextIndex2 !== nextIndex1) {
+                     nextLinksData.push(allLinks[nextIndex2]);
+                }
+            }
+            nextChaptersList.innerHTML = nextLinksData.map(link => createLinkHTML(link.href, link.text, "अगला अध्याय")).join('');
+        } else {
+             // If no active link or not enough links, hide the widget.
+            const widget = nextChaptersList.closest('.sidebar-widget');
+            if (widget) widget.style.display = 'none';
+        }
+    }
+
+    // --- 2. Populate "Popular Posts" ---
+    const popularPostsList = document.getElementById("popular-posts-list");
+    if (popularPostsList) {
+        // Create a pool of links to pick from (all except the active one)
+        const linkPool = activeLinkIndex !== -1 ? allLinks.filter((_, index) => index !== activeLinkIndex) : allLinks;
+        
+        if (linkPool.length > 0) {
+            const popularLinks = getRandomLinks(linkPool, 6); // Get up to 6 random links
+            popularPostsList.innerHTML = popularLinks.map(link => createLinkHTML(link.href, link.text, "लोकप्रिय पोस्ट")).join('');
+        } else {
+            const widget = popularPostsList.closest('.sidebar-widget');
+            if (widget) widget.style.display = 'none';
+        }
+    }
+
+    // --- 3. Populate "Suggestion Pages" ---
+    const suggestionPagesList = document.getElementById("suggestion-pages-list");
+    if (suggestionPagesList) {
+        const linkPool = activeLinkIndex !== -1 ? allLinks.filter((_, index) => index !== activeLinkIndex) : allLinks;
+
+        if (linkPool.length > 0) {
+             const suggestionLinks = getRandomLinks(linkPool, 6); // Get another 6 random links
+             suggestionPagesList.innerHTML = suggestionLinks.map(link => createLinkHTML(link.href, link.text, "सुझाव")).join('');
+        } else {
+            const widget = suggestionPagesList.closest('.sidebar-widget');
+            if (widget) widget.style.display = 'none';
+        }
+    }
+});
+</script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const animatedSections = document.querySelectorAll("[data-animate]");
@@ -1071,3 +1181,4 @@
         </script>
     </body>
 </html>
+
