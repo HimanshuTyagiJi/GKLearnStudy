@@ -1078,7 +1078,7 @@
     // Find the index of the currently active page within our filtered list.
     const currentPagePath = window.location.pathname;
     const activeLinkIndex = allLinks.findIndex(link => {
-        const itemPath = link.url.startsWith('/') ? `/${link.url}` : `/${link.url}`;
+        const itemPath = link.url.startsWith('/') ? link.url : `/${link.url}`;
         return itemPath === currentPagePath;
     });
 
@@ -1098,7 +1098,7 @@
             // Create a short, descriptive subtitle from the main paragraph.
             const maxLength = 50;
             subtitle = post.paragraph.length > maxLength 
-                ? post.paragraph.substring(0, maxLength) + '...' 
+                ? post.paragraph.substring(0, maxLength).trim() + '...' 
                 : post.paragraph;
         }
         
@@ -1183,6 +1183,7 @@
         }
     }
 });
+
 </script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -1207,5 +1208,6 @@
         </script>
     </body>
 </html>
+
 
 
