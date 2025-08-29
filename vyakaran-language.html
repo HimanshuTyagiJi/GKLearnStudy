@@ -1048,45 +1048,71 @@
         <script src="search.js" defer></script>
         <script type="module" src="comment.js" defer></script>
         <script>document.addEventListener("DOMContentLoaded", () => {
-    // This script makes sidebar sections (next chapters, popular posts) dynamic.
-    // It reads the navigation from the topic-sidebar on the page.
+    // This script makes sidebar sections dynamic by using the global searchData
+    // to find rich content for links listed in the page's topic navigation.
 
     const topicNav = document.getElementById("topic-nav");
-    if (!topicNav) {
-        // If there's no topic nav on the page, do nothing.
-        return;
+    const searchData = window.GKApp?.searchData;
+
+    if (!topicNav || !searchData) {
+        return; // Exit if necessary elements or data are not found.
     }
 
-    // --- Data Gathering ---
-    // Get all links and their data from the topic menu
-    const allLinks = Array.from(topicNav.querySelectorAll("a")).map(link => ({
-        href: link.getAttribute('href'), // Use getAttribute for relative paths
-        text: link.textContent.trim(),
-        isActive: link.classList.contains("active")
-    }));
+    // --- Data Preparation ---
+
+    // Create a Set of normalized pathnames from the topic navigation for efficient lookup.
+    const navLinksHrefs = new Set(
+        Array.from(topicNav.querySelectorAll("a")).map(link => 
+            new URL(link.href, window.location.origin).pathname
+        )
+    );
+    
+    // Filter the global search data to get only the posts relevant to the current topic navigation.
+    const allLinks = searchData.filter(item => {
+        const itemPath = item.url.startsWith('/') ? item.url : `/${item.url}`;
+        return navLinksHrefs.has(itemPath);
+    });
 
     if (allLinks.length === 0) return;
 
-    const activeLinkIndex = allLinks.findIndex(link => link.isActive);
+    // Find the index of the currently active page within our filtered list.
+    const currentPagePath = window.location.pathname;
+    const activeLinkIndex = allLinks.findIndex(link => {
+        const itemPath = link.url.startsWith('/') ? `/${link.url}` : `/${link.url}`;
+        return itemPath === currentPagePath;
+    });
 
     // --- Helper Functions ---
+
     /**
-     * Creates the HTML for a link item in the sidebar list.
-     * @param {string} href The URL.
-     * @param {string} text The link text.
-     * @param {string} subtitle A short description or date.
-     * @returns {string} The HTML string.
+     * Creates the HTML for a single link item in a sidebar widget.
+     * @param {object} post - The post object from searchData.
+     * @param {string} subtitleType - Determines the subtitle ('date' or 'paragraph').
+     * @returns {string} - The generated HTML string for one list item.
      */
-    function createLinkHTML(href, text, subtitle) {
-        // This function creates a consistent list item style for all widgets.
+    function createLinkHTML(post, subtitleType) {
+        let subtitle = '';
+        if (subtitleType === 'date' && post.date) {
+            subtitle = post.date;
+        } else if (subtitleType === 'paragraph' && post.paragraph) {
+            // Create a short, descriptive subtitle from the main paragraph.
+            const maxLength = 50;
+            subtitle = post.paragraph.length > maxLength 
+                ? post.paragraph.substring(0, maxLength) + '...' 
+                : post.paragraph;
+        }
+        
+        // Use a root-relative path for robustness across different page depths.
+        const postUrl = post.url.startsWith('/') ? post.url : `/${post.url}`;
+
         return `
             <li>
-                <a href="${href}">
+                <a href="${postUrl}" title="${post.title}">
                     <span class="link-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
                     </span>
                     <div class="link-text">
-                        <span>${text}</span>
+                        <span>${post.title}</span>
                         ${subtitle ? `<small class="post-date">${subtitle}</small>` : ''}
                     </div>
                 </a>
@@ -1095,62 +1121,62 @@
     }
     
     /**
-     * Shuffles an array and returns a slice of it.
-     * @param {Array} array The array to get items from.
-     * @param {number} numItems The number of items to return.
-     * @returns {Array} A new array containing random items.
+     * Gets a specified number of random items from an array, excluding a given index.
+     * @param {Array} array - The source array.
+     * @param {number} numItems - The number of random items to return.
+     * @param {number} excludeIndex - The index of the item to exclude from the selection.
+     * @returns {Array} - A new array of random items.
      */
-    function getRandomLinks(array, numItems) {
-        const shuffled = [...array].sort(() => 0.5 - Math.random());
+    function getRandomLinks(array, numItems, excludeIndex) {
+        const pool = array.filter((_, index) => index !== excludeIndex);
+        const shuffled = pool.sort(() => 0.5 - Math.random());
         return shuffled.slice(0, numItems);
     }
 
-    // --- 1. Populate "अगला अध्याय" (Next Chapters) ---
+    // --- Widget Population Logic ---
+
+    // 1. Populate "अगला अध्याय" (Next Chapters)
     const nextChaptersList = document.getElementById("next-chapters-list");
     if (nextChaptersList) {
         if (activeLinkIndex !== -1 && allLinks.length > 1) {
             const nextLinksData = [];
-            // Get up to 2 next links, wrapping around if there aren't enough at the end.
             const nextIndex1 = (activeLinkIndex + 1) % allLinks.length;
             nextLinksData.push(allLinks[nextIndex1]);
             
             if (allLinks.length > 2) {
                 const nextIndex2 = (activeLinkIndex + 2) % allLinks.length;
-                if (nextIndex2 !== nextIndex1) {
+                if (nextIndex2 !== activeLinkIndex && nextIndex2 !== nextIndex1) {
                      nextLinksData.push(allLinks[nextIndex2]);
                 }
             }
-            nextChaptersList.innerHTML = nextLinksData.map(link => createLinkHTML(link.href, link.text, "अगला अध्याय")).join('');
+            // Use the post's descriptive paragraph for "Next Chapter" links.
+            nextChaptersList.innerHTML = nextLinksData.map(post => createLinkHTML(post, 'paragraph')).join('');
         } else {
-             // If no active link or not enough links, hide the widget.
             const widget = nextChaptersList.closest('.sidebar-widget');
             if (widget) widget.style.display = 'none';
         }
     }
 
-    // --- 2. Populate "Popular Posts" ---
+    // 2. Populate "Popular Posts"
     const popularPostsList = document.getElementById("popular-posts-list");
     if (popularPostsList) {
-        // Create a pool of links to pick from (all except the active one)
-        const linkPool = activeLinkIndex !== -1 ? allLinks.filter((_, index) => index !== activeLinkIndex) : allLinks;
-        
-        if (linkPool.length > 0) {
-            const popularLinks = getRandomLinks(linkPool, 6); // Get up to 6 random links
-            popularPostsList.innerHTML = popularLinks.map(link => createLinkHTML(link.href, link.text, "लोकप्रिय पोस्ट")).join('');
+        if (allLinks.length > 0) {
+            const popularLinks = getRandomLinks(allLinks, 6, activeLinkIndex);
+            // Use the post's date for "Popular Posts" links, as requested.
+            popularPostsList.innerHTML = popularLinks.map(post => createLinkHTML(post, 'date')).join('');
         } else {
             const widget = popularPostsList.closest('.sidebar-widget');
             if (widget) widget.style.display = 'none';
         }
     }
 
-    // --- 3. Populate "Suggestion Pages" ---
+    // 3. Populate "Suggestion Pages"
     const suggestionPagesList = document.getElementById("suggestion-pages-list");
     if (suggestionPagesList) {
-        const linkPool = activeLinkIndex !== -1 ? allLinks.filter((_, index) => index !== activeLinkIndex) : allLinks;
-
-        if (linkPool.length > 0) {
-             const suggestionLinks = getRandomLinks(linkPool, 6); // Get another 6 random links
-             suggestionPagesList.innerHTML = suggestionLinks.map(link => createLinkHTML(link.href, link.text, "सुझाव")).join('');
+        if (allLinks.length > 0) {
+             const suggestionLinks = getRandomLinks(allLinks, 6, activeLinkIndex);
+             // Use the post's descriptive paragraph for "Suggestion Pages".
+             suggestionPagesList.innerHTML = suggestionLinks.map(post => createLinkHTML(post, 'paragraph')).join('');
         } else {
             const widget = suggestionPagesList.closest('.sidebar-widget');
             if (widget) widget.style.display = 'none';
@@ -1181,4 +1207,5 @@
         </script>
     </body>
 </html>
+
 
