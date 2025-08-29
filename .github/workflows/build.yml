@@ -1,0 +1,51 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Randomize CSS/JS and Auto Inject
+        run: |
+          csslinks=""
+          jslinks=""
+
+          # CSS files randomize
+          for f in css/*.css; do
+            [ -e "$f" ] || continue
+            rand=$(tr -dc 'a-z' < /dev/urandom | head -c 8)
+            newfile="css/${rand}.css"
+            mv "$f" "$newfile"
+            csslinks="${csslinks}\n<link rel=\"stylesheet\" href=\"${newfile}\" />"
+          done
+
+          # JS files randomize
+          for f in js/*.js; do
+            [ -e "$f" ] || continue
+            rand=$(tr -dc 'a-z' < /dev/urandom | head -c 8)
+            newfile="js/${rand}.js"
+            mv "$f" "$newfile"
+            jslinks="${jslinks}\n<script src=\"${newfile}\"></script>"
+          done
+
+          # Inject links into HTML (preserve Google AdSense)
+          for h in *.html; do
+            sed -i "/<!-- AUTOINJECT:CSS -->/c ${csslinks}" "$h"
+            sed -i "/<!-- AUTOINJECT:JS -->/c ${jslinks}" "$h"
+          done
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: your-project-name
+          directory: .
