@@ -21,10 +21,10 @@
 
         <link rel="canonical" href="https://gklearnstudy.in/vyakaran-language.html" />
 
-        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/index.css" />
        
-        <link rel="stylesheet" href="topicmenu.css" />
-        <link rel="stylesheet" href="css/vyakaran-page.css" />
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/topic-menu.css" />
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/vyakaran-page.css" />
 
         <script type="application/ld+json">
             {
@@ -970,10 +970,10 @@
                         </div>
 
                         <aside class="sidebar">
-                          <div class="sidebar-widget">
+                            <div class="sidebar-widget">
                                <h2>अगला अध्याय</h2>
                                 <ul class="sidebar-link-list" id="next-chapters-list">
-                                    <!-- Dynamically populated by sidebar-suggestions.js -->
+                                    <div class="spinner-container" style="padding: 20px 0;"><div class="spinner"></div></div>
                                 </ul>
                             </div>
                              <div class="sidebar-widget">
@@ -1003,17 +1003,16 @@
                                     </li>
                                 </ul>
                             </div>
-                           
                             <div class="sidebar-widget">
                                 <h2>Popular Posts</h2>
                                 <ul class="sidebar-link-list" id="popular-posts-list">
-                                    <!-- Dynamically populated by sidebar-suggestions.js -->
+                                    <div class="spinner-container" style="padding: 20px 0;"><div class="spinner"></div></div>
                                 </ul>
                             </div>
                             <div class="sidebar-widget">
                                 <h2>Suggestion Pages</h2>
                                 <ul class="sidebar-link-list" id="suggestion-pages-list">
-                                   <!-- Dynamically populated by sidebar-suggestions.js -->
+                                   <div class="spinner-container" style="padding: 20px 0;"><div class="spinner"></div></div>
                                 </ul>
                             </div>
                         </aside>
@@ -1071,11 +1070,168 @@
             <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
 
-        <script src="js/header-menu.js" defer></script>
-        <script src="js/topic-menu.js" defer></script>
-        <script src="js/search.js" defer></script>
-        <script src="js/sidebar-suggestions.js" defer></script>
-        <script type="module" src="js/comment.js" defer></script>
+        <script src="https://gklearnstudy.in/js/header-menu.js" defer></script>
+        <script src="https://gklearnstudy.in/js/topic-menu.js" defer></script>
+        <script src="https://gklearnstudy.in/js/search.js" defer></script>
+        <script>document.addEventListener("DOMContentLoaded", () => {
+    // This script makes sidebar sections dynamic by using the global searchData
+    // to find rich content for links listed in the page's topic navigation.
+
+    const topicNav = document.getElementById("topic-nav");
+    const searchData = window.GKApp?.searchData;
+
+    function hideAllWidgets() {
+        ['#next-chapters-list', '#popular-posts-list', '#suggestion-pages-list'].forEach(selector => {
+            const list = document.querySelector(selector);
+            if (list) {
+                const widget = list.closest('.sidebar-widget');
+                if (widget) widget.style.display = 'none';
+            }
+        });
+    }
+
+    if (!topicNav || !searchData) {
+        hideAllWidgets();
+        console.error("Sidebar suggestions: Topic navigation or search data not found.");
+        return; 
+    }
+
+    // --- Data Preparation ---
+
+    /**
+     * Normalizes a URL path for consistent matching.
+     * @param {string} path - The URL path to normalize.
+     * @returns {string} - The normalized path.
+     */
+    function normalizePath(path) {
+        if (!path) return '';
+        try {
+            // Use URL constructor for robust parsing
+            const url = new URL(path, window.location.origin);
+            let pathname = url.pathname;
+
+            if (pathname.endsWith('/index.html')) {
+                pathname = pathname.slice(0, -10); // keep leading slash
+            }
+            if (pathname.endsWith('.html')) {
+                pathname = pathname.slice(0, -5);
+            }
+            if (pathname.length > 1 && pathname.endsWith('/')) {
+                pathname = pathname.slice(0, -1);
+            }
+            return pathname === '' ? '/' : pathname;
+        } catch (e) {
+            console.error("Could not normalize path:", path, e);
+            return path;
+        }
+    }
+
+    const navLinksFromDOM = Array.from(topicNav.querySelectorAll("a"));
+    const allLinksInOrder = navLinksFromDOM.map(link => {
+        const href = normalizePath(link.href);
+        // Find corresponding full data from searchData
+        return searchData.find(item => normalizePath(item.url) === href);
+    }).filter(Boolean); // Filter out any links not found in searchData
+
+    if (allLinksInOrder.length === 0) {
+        hideAllWidgets();
+        return;
+    }
+
+    // Find the currently active page. Prioritize the link with the 'active' class.
+    const activeNavLink = topicNav.querySelector("a.active");
+    const currentPagePath = activeNavLink 
+        ? normalizePath(activeNavLink.href) 
+        : normalizePath(window.location.pathname); // Fallback
+
+    const activeLinkIndex = allLinksInOrder.findIndex(link => normalizePath(link.url) === currentPagePath);
+
+    // --- Helper Functions ---
+
+    /**
+     * Creates the HTML for a single link item in a sidebar widget.
+     * @param {object} post - The post object from searchData.
+     * @param {string} subtitleType - Determines the subtitle ('date' or 'paragraph').
+     * @returns {string} - The generated HTML string for one list item.
+     */
+    function createLinkHTML(post, subtitleType) {
+        let subtitle = '';
+        if (subtitleType === 'date' && post.date) {
+            subtitle = post.date;
+        } else if (subtitleType === 'paragraph' && post.paragraph) {
+            const maxLength = 50;
+            subtitle = post.paragraph.length > maxLength 
+                ? post.paragraph.substring(0, maxLength).trim() + '...' 
+                : post.paragraph;
+        }
+        
+        const postUrl = new URL(post.url, window.location.origin).pathname;
+
+        return `
+            <li>
+                <a href="${postUrl}" title="${post.title}">
+                    <span class="link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                    </span>
+                    <div class="link-text">
+                        <span>${post.title}</span>
+                        ${subtitle ? `<small class="post-date">${subtitle}</small>` : ''}
+                    </div>
+                </a>
+            </li>
+        `;
+    }
+    
+    /**
+     * Gets a specified number of random items from an array, excluding a given index.
+     * @param {Array} array - The source array.
+     * @param {number} numItems - The number of random items to return.
+     * @param {number} excludeIndex - The index of the item to exclude.
+     * @returns {Array} - A new array of random items.
+     */
+    function getRandomLinks(array, numItems, excludeIndex) {
+        const pool = array.filter((_, index) => index !== excludeIndex);
+        const shuffled = pool.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, numItems);
+    }
+
+    // --- Widget Population Logic ---
+    function populateWidget(listId, subtitleType, numLinks, getNext = false) {
+        const listElement = document.getElementById(listId);
+        if (!listElement) return;
+
+        let linksData = [];
+        const widget = listElement.closest('.sidebar-widget');
+
+        if (getNext) {
+            if (activeLinkIndex !== -1 && allLinksInOrder.length > 1) {
+                const nextIndex1 = (activeLinkIndex + 1) % allLinksInOrder.length;
+                linksData.push(allLinksInOrder[nextIndex1]);
+                
+                if (allLinksInOrder.length > 2) {
+                    const nextIndex2 = (activeLinkIndex + 2) % allLinksInOrder.length;
+                    if (nextIndex2 !== activeLinkIndex && nextIndex2 !== nextIndex1) {
+                         linksData.push(allLinksInOrder[nextIndex2]);
+                    }
+                }
+            }
+        } else {
+            linksData = getRandomLinks(allLinksInOrder, numLinks, activeLinkIndex);
+        }
+
+        if (linksData.length > 0) {
+            listElement.innerHTML = linksData.map(post => createLinkHTML(post, subtitleType)).join('');
+            if (widget) widget.style.display = 'block';
+        } else {
+            if (widget) widget.style.display = 'none';
+        }
+    }
+
+    // Populate all widgets
+    populateWidget("next-chapters-list", 'paragraph', 2, true);
+    populateWidget("popular-posts-list", 'date', 6, false);
+    populateWidget("suggestion-pages-list", 'paragraph', 6, false);
+});</script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
                 const animatedSections = document.querySelectorAll("[data-animate]");
@@ -1099,7 +1255,3 @@
         </script>
     </body>
 </html>
-
-
-
-
