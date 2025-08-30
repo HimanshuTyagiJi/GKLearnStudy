@@ -1,4 +1,3 @@
-
 function initMenuItems() {
   const menuInner = document.querySelector(".menu-inner");
   if (!menuInner) return;
@@ -280,8 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
       postElement.className = "post-card-link";
       postElement.setAttribute("title", post.title);
 
-      const words = post.paragraph.split(/\s+/).length;
-      const readingTime = Math.ceil(words / 225);
+      const readingTime = post.readingTime || "5 min read"; // Use the manual time, with a fallback.
 
       let imageOrSvgHtml = "";
       if (post.svg) {
@@ -301,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span class="post-author">By ${post.author}</span>
                              <span class="post-reading-time">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v6h6v-2h-4V7z"></path></svg>
-                                ${readingTime} min read
+                                ${readingTime}
                             </span>
                             <span class="post-date">${post.date}</span>
                         </div>
@@ -392,43 +390,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // To avoid polluting the global scope, we'll attach our data and functions to a single object.
 window.GKApp = window.GKApp || {};
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById("topic-sidebar");
-    const sidebarToggle = document.getElementById("topic-sidebar-toggle");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
-    const sidebarNav = document.getElementById("topic-nav");
-
-    function closeMobileSidebar() {
-        if (sidebar) sidebar.classList.remove("is-open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
-    }
-
-    if (sidebarToggle && sidebar && sidebarOverlay) {
-        sidebarToggle.addEventListener("click", () => {
-            sidebar.classList.toggle("is-open");
-            sidebarOverlay.classList.toggle("is-open");
-        });
-
-        sidebarOverlay.addEventListener("click", closeMobileSidebar);
-    }
-
-    if (sidebarNav) {
-        sidebarNav.addEventListener("click", (e) => {
-            if (e.target.tagName === "A") {
-                const currentActive = sidebarNav.querySelector("a.active");
-                if (currentActive) {
-                    currentActive.classList.remove("active");
-                }
-                e.target.classList.add("active");
-
-                // Close sidebar on mobile after selection
-                if (window.innerWidth <= 991) {
-                    closeMobileSidebar();
-                }
-            }
-        });
-    }
-});
