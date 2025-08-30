@@ -243,7 +243,7 @@ window.GKApp.searchData = [
   </defs>
 
   <style>
-    :root { --t: 4.5s; --font: 600 16px/1.2 Inter, system-ui, sans-serif; }
+    :root { --t: 4.5s;}
     .stage { isolation:isolate }
     .card { filter:url(#s); }
     .a, .b { animation: swap var(--t) ease-in-out infinite; transform-origin: 180px 90px; }
@@ -1258,3 +1258,4 @@ window.GKApp.fuzzySearch = function (query, items) {
   // This ensures each post appears only once in the results.
   return [...new Map(results.map((item) => [item.url, item])).values()];
 };
+
