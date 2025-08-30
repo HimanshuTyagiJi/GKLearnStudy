@@ -252,7 +252,7 @@ window.GKApp.searchData = [
     .arrowRing { animation: spin var(--t) linear infinite; transform-origin: 180px 90px; }
     .chev { animation: nudge 1.6s ease-in-out infinite; }
 
-    .label { font: var(--font); fill:#0f172a }
+    .label {  fill:#0f172a }
     .muted { opacity:.7 }
 
     @keyframes swap {
@@ -1258,4 +1258,5 @@ window.GKApp.fuzzySearch = function (query, items) {
   // This ensures each post appears only once in the results.
   return [...new Map(results.map((item) => [item.url, item])).values()];
 };
+
 
