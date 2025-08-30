@@ -34,7 +34,6 @@
 
         <link rel="stylesheet" href="css/topic-menu.css" />
         <link rel="stylesheet" href="css/conversion.css" />
-        
     </head>
     <body>
         <div id="reading-progress-bar"></div>
@@ -106,17 +105,17 @@
             <p class="sidebar-title">Conversion Topics</p>
             <nav id="topic-nav">
                 <ul>
-                    <li><a class="active" href="../conversion.html">All Conversions</a></li>
-                    <li><a href="angle-unit-conversion.html">Angle Conversion</a></li>
-                    <li><a href="area-unit-conversion.html">Area Conversion</a></li>
-                    <li><a href="length-unit-conversion.html">Length Conversion</a></li>
-                    <li><a href="power-unit-conversion.html">Power Conversion</a></li>
-                    <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
-                    <li><a href="speed-unit-conversion.html">Speed Conversion</a></li>
-                    <li><a href="temperature-unit-conversion.html">Temperature Conversion</a></li>
-                    <li><a href="time-unit-conversion.html">Time Conversion</a></li>
-                    <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
-                    <li><a href="weight-mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+                    <li><a class="active" href="conversion.html">All Conversions</a></li>
+                    <li><a href="conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+                    <li><a href="conversion/area-unit-conversion.html">Area Conversion</a></li>
+                    <li><a href="conversion/length-unit-conversion.html">Length Conversion</a></li>
+                    <li><a href="conversion/power-unit-conversion.html">Power Conversion</a></li>
+                    <li><a href="conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+                    <li><a href="conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+                    <li><a href="conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+                    <li><a href="conversion/time-unit-conversion.html">Time Conversion</a></li>
+                    <li><a href="conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+                    <li><a href="conversion/weight-mass-unit-conversion.html">Weight & Mass Conversion</a></li>
                 </ul>
             </nav>
         </aside>
@@ -124,81 +123,86 @@
         <div class="main-content-wrapper">
             <main class="container">
                 <div id="root">
-                  <header class="education-header">
-  <!-- Background SVG Animation -->
-  <div class="bg-animation">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <g>
-        <!-- Circle Base -->
-        <circle cx="100" cy="100" r="80" stroke="#ffffff55" stroke-width="6" fill="none"/>
-        
-        <!-- Arrow 1 -->
-        <path d="M100 20 A80 80 0 0 1 180 100" 
-              stroke="#00f2fe" stroke-width="5" fill="none" stroke-linecap="round"/>
-        <polygon points="175,95 185,100 175,105" fill="#00f2fe"/>
-        
-        <!-- Arrow 2 -->
-        <path d="M100 180 A80 80 0 0 1 20 100" 
-              stroke="#4facfe" stroke-width="5" fill="none" stroke-linecap="round"/>
-        <polygon points="25,95 15,100 25,105" fill="#4facfe"/>
+                    <header class="education-header">
+                        <!-- Background SVG Animation -->
+                        <div class="bg-animation">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <g>
+                                    <!-- Circle Base -->
+                                    <circle cx="100" cy="100" r="80" stroke="#ffffff55" stroke-width="6" fill="none" />
 
-        <!-- Animate Rotation -->
-        <animateTransform attributeName="transform" 
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 100 100"
-                          to="360 100 100"
-                          dur="10s"
-                          repeatCount="indefinite"/>
-      </g>
-    </svg>
-  </div>
+                                    <!-- Arrow 1 -->
+                                    <path d="M100 20 A80 80 0 0 1 180 100" stroke="#00f2fe" stroke-width="5" fill="none" stroke-linecap="round" />
+                                    <polygon points="175,95 185,100 175,105" fill="#00f2fe" />
 
-  <!-- Main Text -->
-  <h1 class="animate-title">Unit Conversion Tools</h1>
-  <p class="education-description animate-text">
-    Welcome to our comprehensive unit conversion hub! Here, you’ll find a wide variety of simple yet powerful converters designed to help you quickly switch between different measurement systems. 
-    Whether you’re calculating length, weight, temperature, time, or even more advanced scientific units, our tools make the process fast, accurate, and effortless. 
-    Each converter is paired with clear explanations, practical examples, and instant results so you can both learn and apply without confusion. 
-    Just enter a value in any field and watch it seamlessly convert into all related units in real time.
-  </p>
-</header>
+                                    <!-- Arrow 2 -->
+                                    <path d="M100 180 A80 80 0 0 1 20 100" stroke="#4facfe" stroke-width="5" fill="none" stroke-linecap="round" />
+                                    <polygon points="25,95 15,100 25,105" fill="#4facfe" />
 
-<style>
+                                    <!-- Animate Rotation -->
+                                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 100 100" to="360 100 100" dur="10s" repeatCount="indefinite" />
+                                </g>
+                            </svg>
+                        </div>
 
-.education-header {
-  position: relative;
-  text-align: center;
-  padding: 80px 20px;
- 
-  border-radius: 20px;
-  overflow: hidden;
-}
+                        <!-- Main Text -->
+                        <h1 class="animate-title">Unit Conversion Tools</h1>
+                        <p class="education-description animate-text">
+                            Welcome to our comprehensive unit conversion hub! Here, you’ll find a wide variety of simple yet powerful converters designed to help you quickly switch between different measurement systems. Whether you’re
+                            calculating length, weight, temperature, time, or even more advanced scientific units, our tools make the process fast, accurate, and effortless. Each converter is paired with clear explanations, practical
+                            examples, and instant results so you can both learn and apply without confusion. Just enter a value in any field and watch it seamlessly convert into all related units in real time.
+                        </p>
+                    </header>
 
-.bg-animation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 320px;
-  height: 320px;
-  transform: translate(-50%, -50%);
-  opacity: 0.15;
-  pointer-events: none; /* clicks won't block */
-}
+                    <style>
+                        .education-header {
+                            position: relative;
+                            text-align: center;
+                            padding: 80px 20px;
 
-/* Fade Animations */
-@keyframes fadeSlideDown {
-  0% { opacity: 0; transform: translateY(-30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeSlideUp {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.animate-title { animation: fadeSlideDown 1s ease-in-out forwards; }
-.animate-text { animation: fadeSlideUp 1.3s ease-in-out forwards; }
-</style>
+                            border-radius: 20px;
+                            overflow: hidden;
+                        }
 
+                        .bg-animation {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            width: 320px;
+                            height: 320px;
+                            transform: translate(-50%, -50%);
+                            opacity: 0.15;
+                            pointer-events: none; /* clicks won't block */
+                        }
+
+                        /* Fade Animations */
+                        @keyframes fadeSlideDown {
+                            0% {
+                                opacity: 0;
+                                transform: translateY(-30px);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                        @keyframes fadeSlideUp {
+                            0% {
+                                opacity: 0;
+                                transform: translateY(30px);
+                            }
+                            100% {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                        .animate-title {
+                            animation: fadeSlideDown 1s ease-in-out forwards;
+                        }
+                        .animate-text {
+                            animation: fadeSlideUp 1.3s ease-in-out forwards;
+                        }
+                    </style>
 
                     <div class="converters-grid">
                         <div id="Angle" class="converter-card">
@@ -290,7 +294,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The angle is π/3 radians, or approximately 1.047 radians.</p>
                                 </div>
-                                <a href="/conversion/angle-unit-conversion" class="read-more-btn">Read More about Angle Unit Conversion</a>
+                                <a href="conversion/angle-unit-conversion" class="read-more-btn">Read More about Angle Unit Conversion</a>
                             </div>
                         </div>
 
@@ -371,7 +375,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The oven temperature in Fahrenheit is 356°F.</p>
                                 </div>
-                                <a href="/conversion/temperature-unit-conversion" class="read-more-btn">Read More about Temperature Unit Conversion</a>
+                                <a href="conversion/temperature-unit-conversion" class="read-more-btn">Read More about Temperature Unit Conversion</a>
                             </div>
                         </div>
 
@@ -451,7 +455,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The engine produces approximately 3.73 kW of power.</p>
                                 </div>
-                                <a href="/conversion/power-unit-conversion" class="read-more-btn">Read More about Power Unit Conversion</a>
+                                <a href="conversion/power-unit-conversion" class="read-more-btn">Read More about Power Unit Conversion</a>
                             </div>
                         </div>
 
@@ -538,7 +542,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The train's speed is approximately 128.75 km/h.</p>
                                 </div>
-                                <a href="/conversion/speed-unit-conversion" class="read-more-btn">Read More about Speed Unit Conversion</a>
+                                <a href="conversion/speed-unit-conversion" class="read-more-btn">Read More about Speed Unit Conversion</a>
                             </div>
                         </div>
 
@@ -637,7 +641,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The running track is approximately 1312.34 feet long.</p>
                                 </div>
-                                <a href="/conversion/length-unit-conversion" class="read-more-btn">Read More about Length Unit Conversion</a>
+                                <a href="conversion/length-unit-conversion" class="read-more-btn">Read More about Length Unit Conversion</a>
                             </div>
                         </div>
 
@@ -738,7 +742,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The suitcase weighs approximately 22.68 kilograms.</p>
                                 </div>
-                                <a href="/conversion/weight&mass-unit-conversion" class="read-more-btn"> Read More about Weight & Mass Unit Conversion</a>
+                                <a href="conversion/weight&mass-unit-conversion" class="read-more-btn"> Read More about Weight & Mass Unit Conversion</a>
                             </div>
                         </div>
 
@@ -819,7 +823,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> Standard atmospheric pressure is approximately 14.7 PSI.</p>
                                 </div>
-                                <a href="/conversion/pressure-unit-conversion" class="read-more-btn">Read More about Pressure Unit Conversion</a>
+                                <a href="conversion/pressure-unit-conversion" class="read-more-btn">Read More about Pressure Unit Conversion</a>
                             </div>
                         </div>
 
@@ -900,7 +904,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The athlete took 12,600 seconds to run the marathon.</p>
                                 </div>
-                                <a href="/conversion/time-unit-conversion" class="read-more-btn">Read More about Time Unit Conversion</a>
+                                <a href="conversion/time-unit-conversion" class="read-more-btn">Read More about Time Unit Conversion</a>
                             </div>
                         </div>
 
@@ -985,7 +989,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The plot of land is approximately 10,117.15 square meters.</p>
                                 </div>
-                                <a href="/conversion/area-unit-conversion" class="read-more-btn"> Read More about Area Unit Conversion</a>
+                                <a href="conversion/area-unit-conversion" class="read-more-btn"> Read More about Area Unit Conversion</a>
                             </div>
                         </div>
                         <div id="Volume" class="converter-card">
@@ -1088,7 +1092,7 @@
                                     </ol>
                                     <p><strong>Answer:</strong> The fuel tank has a capacity of approximately 56.78 liters.</p>
                                 </div>
-                                <a href="/conversion/volume-unit-conversion" class="read-more-btn">Read More about Volume Unit Conversion</a>
+                                <a href="conversion/volume-unit-conversion" class="read-more-btn">Read More about Volume Unit Conversion</a>
                             </div>
                         </div>
                     </div>
@@ -1121,195 +1125,186 @@
                     </div>
                 </div>
 
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h2>Next Conversions</h2>
+                        <ul class="sidebar-link-list">
+                            <li>
+                                <a href="angle-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Angle Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
 
-
-           <aside class="sidebar">
-
-    <div class="sidebar-widget">
-        <h2>Next Conversions</h2>
-        <ul class="sidebar-link-list">
-            <li>
-                <a href="angle-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Angle Conversion</span>
-                       
+                            <li>
+                                <a href="area-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Area Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <p>
+                            After this chapter, you can continue to explore these conversions to learn how to convert different units accurately.
+                        </p>
                     </div>
-                </a>
-            </li>
 
-            <li>
-                <a href="area-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Area Conversion</span>
-                       
+                    <div class="sidebar-widget">
+                        <h2>Popular Conversions</h2>
+                        <ul class="sidebar-link-list">
+                            <li>
+                                <a href="length-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Length Conversion</span>
+                                        <small class="post-date">March 3, 2025</small>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="power-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Power Conversion</span>
+                                        <small class="post-date">March 4, 2025</small>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="pressure-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Pressure Conversion</span>
+                                        <small class="post-date">March 5, 2025</small>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="speed-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Speed Conversion</span>
+                                        <small class="post-date">March 6, 2025</small>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="temperature-unit-conversion.html">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Temperature Conversion</span>
+                                        <small class="post-date">March 7, 2025</small>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </a>
-            </li>
-        </ul>
-        <p>
-            After this chapter, you can continue to explore these conversions to learn how to convert different units accurately.
-        </p>
-    </div>
 
-    <div class="sidebar-widget">
-        <h2>Popular Conversions</h2>
-        <ul class="sidebar-link-list">
-            <li>
-                <a href="length-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Length Conversion</span>
-                        <small class="post-date">March 3, 2025</small>
+                    <div class="sidebar-widget">
+                        <h2>Suggestion Pages</h2>
+                        <ul class="sidebar-link-list">
+                            <li>
+                                <a href="length-unit-conversion.html" class="page-button">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Length Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="weight-mass-unit-conversion.html" class="page-button">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Weight & Mass Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="volume-unit-conversion.html" class="page-button">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Volume Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="temperature-unit-conversion.html" class="page-button">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Temperature Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="speed-unit-conversion.html" class="page-button">
+                                    <span class="link-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <div class="link-text">
+                                        <span>Speed Conversion</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="power-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Power Conversion</span>
-                        <small class="post-date">March 4, 2025</small>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="pressure-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Pressure Conversion</span>
-                        <small class="post-date">March 5, 2025</small>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="speed-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Speed Conversion</span>
-                        <small class="post-date">March 6, 2025</small>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="temperature-unit-conversion.html">
-                    <span class="link-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    <div class="link-text">
-                        <span>Temperature Conversion</span>
-                        <small class="post-date">March 7, 2025</small>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="sidebar-widget">
-        <h2>Suggestion Pages</h2>
-       <ul class="sidebar-link-list">
-    <li>
-        <a href="length-unit-conversion.html" class="page-button">
-            <span class="link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <div class="link-text">
-                <span>Length Conversion</span>
-            </div>
-        </a>
-    </li>
-
-    <li>
-        <a href="weight-mass-unit-conversion.html" class="page-button">
-            <span class="link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <div class="link-text">
-                <span>Weight & Mass Conversion</span>
-            </div>
-        </a>
-    </li>
-
-    <li>
-        <a href="volume-unit-conversion.html" class="page-button">
-            <span class="link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <div class="link-text">
-                <span>Volume Conversion</span>
-            </div>
-        </a>
-    </li>
-
-    <li>
-        <a href="temperature-unit-conversion.html" class="page-button">
-            <span class="link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <div class="link-text">
-                <span>Temperature Conversion</span>
-            </div>
-        </a>
-    </li>
-
-    <li>
-        <a href="speed-unit-conversion.html" class="page-button">
-            <span class="link-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-                </svg>
-            </span>
-            <div class="link-text">
-                <span>Speed Conversion</span>
-            </div>
-        </a>
-    </li>
-</ul>
-
-    </div>
-
-</aside>
-
-
+                </aside>
             </main>
 
             <ul id="suggestions-list" class="suggestions"></ul>
@@ -1367,11 +1362,3 @@
         <script type="module" src="js/comment.js" defer></script>
     </body>
 </html>
-
-
-
-
-
-
-
-
