@@ -50,12 +50,12 @@
         <link rel="icon" type="image/x-icon" href="https://gklearnstudy.in/favicon.webp" />
         <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link id="manifest" rel="manifest" href="/manifest.json" />
-        
-        <link rel="stylesheet" href="index.css">
-      <link rel="stylesheet" href="comment.css" />
-       
-          </head>
-    <body> <div id="reading-progress-bar"></div>
+
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/comment.css" />
+    </head>
+    <body>
+        <div id="reading-progress-bar"></div>
         <header class="header" id="header">
             <nav class="navbar container1">
                 <a href="index.html" class="brand" aria-label="GK Learn Study">
@@ -119,30 +119,40 @@
         </div>
         <main class="container">
             <div id="root">
-        
                 <header class="education-header">
                     <h1>Education Hub</h1>
-                    <p class="education-description">Your gateway to understanding complex subjects through interactive and animated chapter guides. We break down difficult topics into simple, digestible lessons. Start your learning journey with us today!</p>
+                    <p class="education-description">
+                        Your gateway to understanding complex subjects through interactive and animated chapter guides. We break down difficult topics into simple, digestible lessons. Start your learning journey with us today!
+                    </p>
                 </header>
 
                 <section class="subject-section">
                     <h2>All Formulas</h2>
                     <div id="formulas-chapters-container" class="chapters-container">
-                        <div class="spinner-container"><div class="spinner"></div><p>Loading Chapters...</p></div>
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <p>Loading Chapters...</p>
+                        </div>
                     </div>
                 </section>
 
                 <section class="subject-section">
                     <h2>Conversion Tools</h2>
                     <div id="conversion-chapters-container" class="chapters-container">
-                        <div class="spinner-container"><div class="spinner"></div><p>Loading Chapters...</p></div>
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <p>Loading Chapters...</p>
+                        </div>
                     </div>
                 </section>
-                
+
                 <section class="subject-section">
                     <h2>हिन्दी व्याकरण (Hindi Grammar)</h2>
                     <div id="vyakaran-chapters-container" class="chapters-container">
-                        <div class="spinner-container"><div class="spinner"></div><p>Loading Chapters...</p></div>
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <p>Loading Chapters...</p>
+                        </div>
                     </div>
                 </section>
 
@@ -150,61 +160,57 @@
                     <h2>Mathematics</h2>
                     <div id="maths-chapters-container" class="chapters-container">
                         <!-- Chapter Cards for Maths will be dynamically injected by education.js -->
-                        <div class="spinner-container"><div class="spinner"></div><p>Loading Chapters...</p></div>
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <p>Loading Chapters...</p>
+                        </div>
                     </div>
                 </section>
 
                 <section class="subject-section">
                     <h2>Physics</h2>
                     <div id="physics-chapters-container" class="chapters-container">
-                         <!-- Chapter Cards for Physics will be dynamically injected by education.js -->
-                         <div class="spinner-container"><div class="spinner"></div><p>Loading Chapters...</p></div>
+                        <!-- Chapter Cards for Physics will be dynamically injected by education.js -->
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <p>Loading Chapters...</p>
+                        </div>
                     </div>
                 </section>
-
             </div>
         </main>
-         <div class="comments-wrapper">
-                     
-                           
-                          <div class="firebase-comments-widget" id="custom-comment-section">
-  <!-- Form is now static HTML --> <h2>Comments</h2>
-  <div class="comment-form-shell" id="comment-form-shell">
-    <form class="comment-form" id="comment-form">
-      <div class="replying-to" id="replying-to" style="display:none;" aria-live="polite"></div>
-      <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-      <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-      <input type="hidden" id="parent-id" value="">
-      <div class="form-footer">
-        <div id="char-counter">0 / 1000</div>
-        <div class="actions">
-          <button type="submit" class="btn primary" id="submit-button">Submit</button>
-          <button type="button" class="btn" id="cancel-reply" style="display:none;">Cancel</button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- Comments go here -->
-  <div id="comments-list">
-    <div class="spinner"></div>
-    <p class="muted">Loading comments…</p>
-  </div>
-</div>
-
-                        </div>
-                                    </section>
-                                </div>
+        <div class="comments-wrapper">
+            <div class="firebase-comments-widget" id="custom-comment-section">
+                <!-- Form is now static HTML -->
+                <h2>Comments</h2>
+                <div class="comment-form-shell" id="comment-form-shell">
+                    <form class="comment-form" id="comment-form">
+                        <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                        <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
+                        <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+                        <input type="hidden" id="parent-id" value="" />
+                        <div class="form-footer">
+                            <div id="char-counter">0 / 1000</div>
+                            <div class="actions">
+                                <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </main>
 
-             <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+                <!-- Comments go here -->
+                <div id="comments-list">
+                    <div class="spinner"></div>
+                    <p class="muted">Loading comments…</p>
+                </div>
+            </div>
+        </div>
+
+        <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
         <footer class="app-footer">
-             <div class="footer-content">
+            <div class="footer-content">
                 <div class="footer-section footer-about">
                     <h3>About GK Learn Study</h3>
                     <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
@@ -230,7 +236,7 @@
                 </div>
                 <div class="footer-section">
                     <h3>Science & GK</h3>
-                     <ul>
+                    <ul>
                         <li><a href="/computer/what-is-algorithm">What is an Algorithm?</a></li>
                         <li><a href="/computer/what-is-cloud-computing">Cloud Computing Guide</a></li>
                         <li><a href="/gk/why-is-sky-blue">Why is the Sky Blue?</a></li>
@@ -252,8 +258,9 @@
 
         <button id="back-to-top-btn" title="Go to top">↑</button>
 
-        <script src="search.js"></script>
-        <script src="header-menu.js" defer></script>
+        <script src="js/header-menu.js" defer></script>
         <script src="./js/education.js" defer></script>
-        <script type="module" src="comment.js"></script>
+        <script type="module" src="js/comment.js"></script>
+        <script src="js/search.js"></script>
+    </body>
 </html>
