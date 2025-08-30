@@ -212,41 +212,80 @@
                 <div id="root">
                     <div class="blog-layout">
                         <div class="main-content">
-                            <header class="vyakaran-header" data-animate>
-                                <svg class="vyakaran-header-bg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 300" aria-labelledby="header-title-main">
-                                     <title id="header-title-main">भाषा, लिपि और व्याकरण का एनिमेटेड बैनर</title>
-                                    <defs>
-                                        <filter id="glow-vyakaran">
-                                            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                                            <feMerge>
-                                                <feMergeNode in="coloredBlur" />
-                                                <feMergeNode in="SourceGraphic" />
-                                            </feMerge>
-                                        </filter>
-                                        <path id="curve-path" d="M100,200 C300,100 900,100 1100,200" />
-                                    </defs>
-                                    <g class="header-bg-chars">
-                                        <text x="10%" y="80%">अ</text>
-                                        <text x="80%" y="10%">क</text>
-                                        <text x="50%" y="15%">ग</text>
-                                        <text x="25%" y="15%">च</text>
-                                        <text x="90%" y="70%">ज्ञ</text>
-                                        <text x="5%" y="20%">इ</text>
-                                        <text x="65%" y="85%">प</text>
-                                    </g>
-                                    
-                                    <text class="header-animated-text" fill="#fff" font-size="40" font-weight="bold" letter-spacing="5">
-                                        <textPath href="#curve-path" startOffset="50%" text-anchor="middle">
-                                            भाषा से ज्ञान तक
-                                            <animate attributeName="startOffset" from="50%" to="50%" values="100%; 50%; 0%; 50%; 100%" keyTimes="0; 0.25; 0.5; 0.75; 1" dur="10s" repeatCount="indefinite"/>
-                                        </textPath>
-                                    </text>
-                                </svg>
-                                <h1>भाषा, लिपि और व्याकरण</h1>
-                                <p>
-                                    भाषा की दुनिया में आपका स्वागत है! इस गहन गाइड में हम भाषा की परिभाषा, उसकी प्रकृति, विभिन्न प्रकार, लिपि के विकास, और व्याकरण के उन सभी नियमों को गहराई से समझेंगे जो भाषा को एक अनुशासित और सशक्त माध्यम बनाते हैं।
-                                </p>
-                            </header>
+                           <header class="vyakaran-header" data-animate>
+    <svg class="vyakaran-header-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" aria-labelledby="header-title-main">
+        <title id="header-title-main">भाषा, लिपि और व्याकरण का एनिमेटेड बैनर</title>
+
+        <defs>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blurred"/>
+                <feMerge>
+                    <feMergeNode in="blurred"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+
+            <!-- Define a wavy path for letters to follow -->
+            <path id="wave-path" d="M0 150 Q300 100 600 150 T1200 150"/>
+        </defs>
+
+        <!-- Wavy background lines -->
+        <path d="M0 150 Q300 100 600 150 T1200 150" stroke="#c0a4fb" stroke-width="3" fill="none">
+            <animate attributeName="d" dur="6s" repeatCount="indefinite"
+                values="M0 150 Q300 100 600 150 T1200 150;
+                        M0 150 Q300 200 600 150 T1200 150;
+                        M0 150 Q300 100 600 150 T1200 150"/>
+        </path>
+        <path d="M0 160 Q300 110 600 160 T1200 160" stroke="#641ef9" stroke-width="2" fill="none" opacity="0.6">
+            <animate attributeName="d" dur="5s" repeatCount="indefinite"
+                values="M0 160 Q300 110 600 160 T1200 160;
+                        M0 160 Q300 210 600 160 T1200 160;
+                        M0 160 Q300 110 600 160 T1200 160"/>
+        </path>
+
+        <!-- Animated letters along wave -->
+        <text font-size="40" font-weight="bold" fill="#fff" filter="url(#glow)">
+            <textPath href="#wave-path" startOffset="0%">
+                अ
+                <animate attributeName="startOffset" from="0%" to="100%" dur="6s" repeatCount="indefinite"/>
+            </textPath>
+        </text>
+
+        <text font-size="40" font-weight="bold" fill="#ffeb3b" filter="url(#glow)">
+            <textPath href="#wave-path" startOffset="20%">
+                क
+                <animate attributeName="startOffset" from="20%" to="120%" dur="6s" repeatCount="indefinite"/>
+            </textPath>
+        </text>
+
+        <text font-size="40" font-weight="bold" fill="#00e676" filter="url(#glow)">
+            <textPath href="#wave-path" startOffset="40%">
+                ग
+                <animate attributeName="startOffset" from="40%" to="140%" dur="6s" repeatCount="indefinite"/>
+            </textPath>
+        </text>
+
+        <text font-size="40" font-weight="bold" fill="#ff3d00" filter="url(#glow)">
+            <textPath href="#wave-path" startOffset="60%">
+                च
+                <animate attributeName="startOffset" from="60%" to="160%" dur="6s" repeatCount="indefinite"/>
+            </textPath>
+        </text>
+
+        <text font-size="40" font-weight="bold" fill="#c0a4fb" filter="url(#glow)">
+            <textPath href="#wave-path" startOffset="80%">
+                ज्ञ
+                <animate attributeName="startOffset" from="80%" to="180%" dur="6s" repeatCount="indefinite"/>
+            </textPath>
+        </text>
+    </svg>
+
+    <h1>भाषा, लिपि और व्याकरण</h1>
+    <p>
+        भाषा की दुनिया में आपका स्वागत है! इस गहन गाइड में हम भाषा की परिभाषा, उसकी प्रकृति, विभिन्न प्रकार, लिपि के विकास, और व्याकरण के उन सभी नियमों को गहराई से समझेंगे जो भाषा को एक अनुशासित और सशक्त माध्यम बनाते हैं।
+    </p>
+</header>
+
 
                             <!-- Article Sections -->
                             <section id="bhasha" class="topic-section" data-animate>
@@ -1250,5 +1289,6 @@
         </script>
     </body>
 </html>
+
 
 
