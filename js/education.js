@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <style>
     :root { --speed: 6s; }
-    text { font: var(--font); fill:#0f172a }
+    text { fill:#0f172a }
 
     /* moving dash around the infinity path */
     .trace {
