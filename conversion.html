@@ -165,7 +165,26 @@
 
 <style>
 
+.education-header {
+  position: relative;
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+  color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+}
 
+.bg-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  pointer-events: none; /* clicks won't block */
+}
 
 /* Fade Animations */
 @keyframes fadeSlideDown {
@@ -1210,3 +1229,4 @@
         <script type="module" src="js/comment.js" defer></script>
     </body>
 </html>
+
