@@ -226,11 +226,11 @@ window.GKApp.searchData = [
     category: "Conversion",
     readingTime: "8 min read",
   },
-  {
-    title: "Unit Conversion",
-    url: "/conversion",
-    paragraph: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
-    svg: `<svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Unit Converter – Swap Cards">
+ {
+  title: "Unit Conversion",
+  url: "/conversion",
+  paragraph: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
+  svg: `<svg class="unit-converter" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Unit Converter – Swap Cards">
   <title>Unit Converter</title>
   <defs>
     <linearGradient id="uGrad" x1="0" y1="0" x2="1" y2="1">
@@ -243,23 +243,29 @@ window.GKApp.searchData = [
   </defs>
 
   <style>
-    :root { --t: 4.5s;}
-    .stage { isolation:isolate }
-    .card { filter:url(#s); }
-    .a, .b { animation: swap var(--t) ease-in-out infinite; transform-origin: 180px 90px; }
-    .b { animation-delay: calc(var(--t)/2); }
+    svg.unit-converter { --t: 4.5s; }
+    svg.unit-converter .stage { isolation:isolate }
+    svg.unit-converter .card { filter:url(#s); }
+    svg.unit-converter .a, svg.unit-converter .b { 
+      animation: swap var(--t) ease-in-out infinite; 
+      transform-origin: 180px 90px; 
+    }
+    svg.unit-converter .b { animation-delay: calc(var(--t)/2); }
 
-    .arrowRing { animation: spin var(--t) linear infinite; transform-origin: 180px 90px; }
-    .chev { animation: nudge 1.6s ease-in-out infinite; }
+    svg.unit-converter .arrowRing { 
+      animation: spin var(--t) linear infinite; 
+      transform-origin: 180px 90px; 
+    }
+    svg.unit-converter .chev { animation: nudge 1.6s ease-in-out infinite; }
 
-    .label {  fill:#0f172a }
-    .muted { opacity:.7 }
+    svg.unit-converter .label { fill:#0f172a }
+    svg.unit-converter .muted { opacity:.7 }
 
     @keyframes swap {
       0%   { transform: translateY(0) scale(1); opacity:1 }
       20%  { transform: translateY(-14px) scale(1.02) }
       50%  { transform: translateY(0) scale(1); opacity:1 }
-      70%  { transform: translateY(14px)  }
+      70%  { transform: translateY(14px) }
       100% { transform: translateY(0); opacity:1 }
     }
     @keyframes spin { to { transform: rotate(360deg) } }
@@ -315,11 +321,12 @@ window.GKApp.searchData = [
   <text x="180" y="170" text-anchor="middle" class="label muted">Unit Converter</text>
 </svg>
 `,
-    date: "February 14, 2025",
-    author: "Owner",
-    category: "Conversion",
-    readingTime: "15 min read",
-  },
+  date: "February 14, 2025",
+  author: "Owner",
+  category: "Conversion",
+  readingTime: "15 min read",
+}
+,
 
   // --- Vyakaran Topics (Hindi) ---
   {
@@ -1258,5 +1265,6 @@ window.GKApp.fuzzySearch = function (query, items) {
   // This ensures each post appears only once in the results.
   return [...new Map(results.map((item) => [item.url, item])).values()];
 };
+
 
 
