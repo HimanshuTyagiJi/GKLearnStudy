@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </defs>
 
   <style>
-    :root { --speed: 6s; --font: 600 14px/1.2 Inter, system-ui, sans-serif; }
+    :root { --speed: 6s; }
     text { font: var(--font); fill:#0f172a }
 
     /* moving dash around the infinity path */
