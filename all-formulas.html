@@ -364,76 +364,22 @@
 
                 <div class="formula-page-container">
                     <section class="formula-section">
-                        <h2 class="formula-category-title"><svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
-                        <style>
-                            .formula-text {
-                                font-family: "Georgia", serif;
-                                font-weight: bold;
-                                fill: #0058ad;
-                            }
-                            .atom-core {
-                                fill: #ad0000;
-                            }
-                            .electron {
-                                fill: #0039ad;
-                            }
-                            .beaker-glass {
-                                fill: #e9f5ff;
-                                stroke: #a2a2a2;
-                                stroke-width: 2;
-                            }
-                            .beaker-liquid {
-                                fill: #641ef9;
-                                fill-opacity: 0.7;
-                            }
-                            .bubble {
-                                fill: #c0a4fb;
-                            }
-                        </style>
-                        <!-- Physics Atom -->
-                        <g transform="translate(80, 75)">
-                            <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" stroke-dasharray="3 3">
-                                <animateTransform attributeName="transform" type="rotate" from="20" to="380" dur="8s" repeatCount="indefinite" />
-                            </ellipse>
-                            <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" transform="rotate(-60)">
-                                <animateTransform attributeName="transform" type="rotate" from="-40" to="320" dur="8s" repeatCount="indefinite" />
-                            </ellipse>
-                            <circle class="atom-core" cx="0" cy="0" r="10" />
-                            <circle class="electron" r="5">
-                                <animateMotion dur="4s" repeatCount="indefinite" path="M-60,0 a60,20 0 1,0 120,0 a60,20 0 1,0 -120,0" />
-                            </circle>
-                        </g>
-                        <!-- Math Symbols -->
-                        <g transform="translate(200, 75)">
-                            <text class="formula-text" font-size="30" x="0" y="-20" text-anchor="middle">E=mc²</text>
-                            <text class="formula-text" font-size="45" x="0" y="30" text-anchor="middle" dominant-baseline="middle">
-                                π ≈ 3.14
-                                <animate attributeName="opacity" values="0.5;1;0.5" dur="4s" repeatCount="indefinite" />
-                            </text>
-                        </g>
-                        <!-- Chemistry Beaker -->
-                        <g transform="translate(320, 50)">
-                            <path class="beaker-glass" d="M0,0 h60 v90 a5,5 0 0,1 -5,5 h-50 a5,5 0 0,1 -5,-5 v-90 Z" />
-                            <path class="beaker-liquid" d="M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z">
-                                <animate
-                                    attributeName="d"
-                                    dur="5s"
-                                    repeatCount="indefinite"
-                                    values="M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z;
-                                         M5,50 h50 v40 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-40 Z;
-                                         M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z"
-                                />
-                            </path>
-                            <circle class="bubble" cx="20" cy="75" r="3">
-                                <animate attributeName="cy" from="75" to="20" dur="3s" repeatCount="indefinite" begin="0s" />
-                                <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite" begin="0s" />
-                            </circle>
-                            <circle class="bubble" cx="40" cy="75" r="4">
-                                <animate attributeName="cy" from="75" to="15" dur="2.5s" repeatCount="indefinite" begin="0.5s" />
-                                <animate attributeName="opacity" from="1" to="0" dur="2.5s" repeatCount="indefinite" begin="0.5s" />
-                            </circle>
-                        </g>
-                    </svg>Mathematics Formulas</h2>
+                        <h2 class="formula-category-title"><svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <defs>
+                                            <linearGradient id="math-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style="stop-color: #6e8efb; stop-opacity: 1;"></stop>
+                                                <stop offset="100%" style="stop-color: #a777e3; stop-opacity: 1;"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <rect width="200" height="150" rx="10" fill="url(#math-grad)"></rect>
+                                        <path d="M 20 130 L 180 130 L 180 30" fill="none" stroke="white" stroke-width="3" stroke-dasharray="5,5" opacity="0.5"></path>
+                                        <path d="M 20 130 C 60 20, 140 100, 180 50" fill="none" stroke="white" stroke-width="4"></path>
+                                        <circle cx="80" cy="80" r="5" fill="white"></circle>
+                                        <circle cx="150" cy="65" r="5" fill="white"></circle>
+                                        <text x="30" y="40" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="bold">∫</text>
+                                        <text x="165" y="120" font-family="Arial, sans-serif" font-size="20" fill="white" font-weight="bold">π</text>
+                                        <text x="70" y="125" font-family="Arial, sans-serif" font-size="18" fill="white">a²+b²=c²</text>
+                                    </svg>Mathematics Formulas</h2>
                         <p>
                             Mathematics is the language of the universe. From simple arithmetic to complex calculus, formulas are the tools that help us describe relationships, solve problems, and understand patterns. Below is a selection
                             of fundamental formulas from various branches of mathematics.
