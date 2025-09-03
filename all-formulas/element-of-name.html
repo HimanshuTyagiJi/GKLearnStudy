@@ -182,27 +182,69 @@
                     <header class="education-header">
                         <div class="header-content">
                             <div class="header-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="atom-title">
-                                    <title id="atom-title">Animated Atom</title>
-                                    <defs>
-                                        <linearGradient id="atom-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#8b5cf6" />
-                                            <stop offset="100%" stop-color="#3b82f6" />
-                                        </linearGradient>
-                                        <filter id="atom-glow"><feGaussianBlur stdDeviation="3.5" result="coloredBlur" /><feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-                                    </defs>
-                                    <g filter="url(#atom-glow)">
-                                        <circle cx="100" cy="100" r="15" fill="url(#atom-grad)" />
-                                        <ellipse cx="100" cy="100" rx="70" ry="25" stroke="#a78bfa" stroke-width="3" fill="none" transform="rotate(45 100 100)">
-                                            <animateTransform attributeName="transform" type="rotate" from="45 100 100" to="405 100 100" dur="8s" repeatCount="indefinite" />
-                                        </ellipse>
-                                        <ellipse cx="100" cy="100" rx="70" ry="25" stroke="#a78bfa" stroke-width="3" fill="none" transform="rotate(-45 100 100)">
-                                            <animateTransform attributeName="transform" type="rotate" from="-45 100 100" to="315 100 100" dur="8s" repeatCount="indefinite" />
-                                        </ellipse>
-                                        <circle fill="#fff" r="5"><animateMotion dur="4s" repeatCount="indefinite" path="M170,100 A70,25 0 1,1 30,100 A70,25 0 1,1 170,100" /></circle>
-                                        <circle fill="#fff" r="5"><animateMotion dur="4s" repeatCount="indefinite" path="M100,30 A25,70 0 1,1 100,170 A25,70 0 1,1 100,30" begin="-2s" /></circle>
-                                    </g>
-                                </svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" style="width:150px"mrole="img" aria-labelledby="atom-title">
+  <title id="atom-title">Animated Atom</title>
+
+  <defs>
+    <!-- nucleus gradient -->
+    <radialGradient id="nucleus-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </radialGradient>
+
+    <!-- glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#glow)">
+    <!-- nucleus -->
+    <circle cx="110" cy="110" r="18" fill="url(#nucleus-grad)" />
+
+    <!-- orbit 1 -->
+    <ellipse cx="110" cy="110" rx="80" ry="30" stroke="#a78bfa" stroke-width="2.5" fill="none">
+      <animateTransform attributeName="transform" type="rotate"
+                        from="0 110 110" to="360 110 110"
+                        dur="10s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- orbit 2 -->
+    <ellipse cx="110" cy="110" rx="80" ry="30" stroke="#60a5fa" stroke-width="2.5" fill="none" transform="rotate(60 110 110)">
+      <animateTransform attributeName="transform" type="rotate"
+                        from="60 110 110" to="420 110 110"
+                        dur="12s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- orbit 3 -->
+    <ellipse cx="110" cy="110" rx="80" ry="30" stroke="#9333ea" stroke-width="2.5" fill="none" transform="rotate(-60 110 110)">
+      <animateTransform attributeName="transform" type="rotate"
+                        from="-60 110 110" to="300 110 110"
+                        dur="14s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- electrons -->
+    <circle r="5" fill="#fff">
+      <animateMotion dur="6s" repeatCount="indefinite" rotate="auto"
+        path="M190,110 A80,30 0 1,1 30,110 A80,30 0 1,1 190,110" />
+    </circle>
+
+    <circle r="5" fill="#fff">
+      <animateMotion dur="7s" begin="-2s" repeatCount="indefinite" rotate="auto"
+        path="M110,30 A30,80 0 1,1 110,190 A30,80 0 1,1 110,30" />
+    </circle>
+
+    <circle r="5" fill="#fff">
+      <animateMotion dur="8s" begin="-4s" repeatCount="indefinite" rotate="auto"
+        path="M170,40 A70,60 0 1,1 50,180 A70,60 0 1,1 170,40" />
+    </circle>
+  </g>
+</svg>
+
                             </div>
                             <div class="header-text">
                                 <h1>Chemical Elements with Atomic Mass</h1>
