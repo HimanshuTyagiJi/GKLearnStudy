@@ -30,7 +30,7 @@
 
         <link rel="stylesheet" href="../css/index.css" />
         <link rel="stylesheet" href="../css/topic-menu.css" />
-      
+       
 
         <script type="application/ld+json">
             {
@@ -50,6 +50,49 @@
                 ]
             }
         </script>
+        <style>
+            
+/* Styles for Chemical Formulas page table search and load more */
+#table-search-wrapper {
+  margin: 2rem 0 1rem 0;
+}
+
+#table-search-input {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  border: 1px solid var(--border-color);
+  background-color: var(--primary-bg);
+  box-sizing: border-box;
+}
+#table-search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+#load-more-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+#loadMoreBtn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#loadMoreBtn:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+}
+</style>
     </head>
     <body>
         <div id="reading-progress-bar"></div>
@@ -123,10 +166,11 @@
                         <input type="text" id="table-search-input" placeholder="Type to search formulas..." aria-label="Search formulas in the table" />
                     </div>
 
-                    <div class="table-container">
+                    <div class="table-container stacked-on-mobile">
                         <table id="myTable">
                             <thead>
                                 <tr>
+                                    <th>S.No.</th>
                                     <th>Compound Name</th>
                                     <th>Molecular Formula</th>
                                     <th>यौगिक नाम</th>
@@ -423,7 +467,7 @@ t><td>Sodium sulfite</td><td>NA<sub>2</sub>SO<sub>3</sub></td><td>सोडि�
 <tr><td>Sulfate ion</td><td>SO<sub>4</sub>2−</td><td>सल्फेट आयन</td></tr>
 <tr><td>Sulfur dioxide</td><td>SO<sub>2</sub></td><td>सल्फर डाइऑक्साइड</td></tr>
 <tr><td>Sulfur Hexafluoride</td><td>SF<sub>6</sub></td><td>सल्फर हेक्साफ्लोराइड</td></tr>
-<tr><td>Sulfur trioxide</td><td>SO<sub>3</sub></td><td>सल्फर ट्राइऑक्साइड</td></tr>
+tr><td>Sulfur trioxide</td><td>SO<sub>3</sub></td><td>सल्फर ट्राइऑक्साइड</td></tr>
 <tr><td>Sulfuric acid</td><td>H<sub>2</sub>SO<sub>4</sub></td><td>सल्फ्यूरिक एसिड</td></tr>
 <tr><td>Sulfuric acid</td><td>H<sub>2</sub>SO<sub>4</sub></td><td>सल्फ्यूरिक एसिड</td></tr>
 <tr><td>Sulfurous acid</td><td>H<sub>2</sub>SO<sub>3</sub></td><td>सल्फ्यूरस अम्ल</td></tr>
@@ -526,6 +570,22 @@ t><td>Sodium sulfite</td><td>NA<sub>2</sub>SO<sub>3</sub></td><td>सोडि�
                 const table = document.getElementById('myTable');
                 if (!table) return;
 
+                const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+
+                const allTableRows = table.querySelectorAll('tbody tr');
+                allTableRows.forEach((row, rowIndex) => {
+                    const snoCell = document.createElement('td');
+                    snoCell.textContent = rowIndex + 1;
+                    row.insertBefore(snoCell, row.firstChild);
+
+                    const allCellsInRow = row.querySelectorAll('td');
+                    allCellsInRow.forEach((cell, cellIndex) => {
+                        if (headers[cellIndex]) {
+                            cell.setAttribute('data-label', headers[cellIndex]);
+                        }
+                    });
+                });
+
                 const searchInput = document.getElementById('table-search-input');
                 const loadMoreBtn = document.getElementById('loadMoreBtn');
                 const rows = Array.from(table.querySelectorAll('tbody tr'));
@@ -539,10 +599,8 @@ t><td>Sodium sulfite</td><td>NA<sub>2</sub>SO<sub>3</sub></td><td>सोडि�
                         return row.textContent.toLowerCase().includes(query);
                     });
 
-                    // Hide all rows first to handle search correctly
                     rows.forEach(row => row.style.display = 'none');
 
-                    // Then show the ones that match and are within the visible limit
                     matchingRows.forEach((row, index) => {
                          if (index < visibleRowsCount) {
                             row.style.display = '';
@@ -566,7 +624,6 @@ t><td>Sodium sulfite</td><td>NA<sub>2</sub>SO<sub>3</sub></td><td>सोडि�
                     applyFilters();
                 });
 
-                // Initial load
                 visibleRowsCount = rowsPerPage;
                 applyFilters();
             });
