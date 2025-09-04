@@ -60,6 +60,35 @@
                 background-color: var(--blue-light-bg);
             }
             
+            /* New single-column table styles */
+            #reactionsTable td {
+                padding: 1rem;
+                border-bottom: 1px solid var(--tbl-border);
+            }
+            #reactionsTable td p {
+                margin: 0.5rem 0;
+            }
+            #reactionsTable .reaction-name {
+                font-size: 1.1em;
+                color: var(--text-primary);
+                font-weight: 600;
+            }
+            #reactionsTable .reaction-equation {
+                font-family: monospace, monospace;
+                background-color: var(--primary-bg);
+                padding: 0.75rem;
+                border-radius: 6px;
+                margin: 0.75rem 0 !important;
+                display: inline-block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            #reactionsTable .reaction-explanation {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                color: var(--text-secondary);
+            }
+            
             /* Modal Styles */
             .modal-overlay {
                 position: fixed;
@@ -131,8 +160,6 @@
                 margin: 1.5rem 0 0.5rem;
                 font-size: 1.2rem;
             }
-
-
             
 /* Styles for Chemical Formulas page table search and load more */
 #table-search-wrapper {
@@ -212,7 +239,7 @@
         <div class="main-content-wrapper">
             <header class="header" id="header">
                 <nav class="navbar container1">
-                    <a href="../index.html" class="brand" aria-label="GK Learn Study"><div class="logo-container1"></div></a>
+                    <a href="../js/index.html" class="brand" aria-label="GK Learn Study"><div class="logo-container1"></div></a>
                     <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div>
                     <span class="overlay"></span>
                     <div class="menu" id="menu">
@@ -305,13 +332,11 @@
                         <div id="table-search-wrapper">
                             <input type="text" id="table-search-input" placeholder="Search reactions by name or reactant..." aria-label="Search the reactions table" />
                         </div>
-                        <div class="table-container stacked-on-mobile">
+                        <div class="table-container">
                             <table id="reactionsTable">
                                 <thead>
                                     <tr>
-                                        <th>S.No.</th>
-                                        <th>Reaction Name / Type</th>
-                                        <th>Equation & Explanation</th>
+                                        <th>Reaction Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -376,9 +401,9 @@
             <footer class="app-footer">
                 <div class="footer-content">
                      <div class="footer-section footer-about"><h3>About GK Learn Study</h3><p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p></div>
-                    <div class="footer-section"><h4>About Us</h4><ul><li><a href="../about.html">About Us</a></li><li><a href="../contact.html">Contact Us</a></li><li><a href="../privacy-policy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li></ul></div>
-                    <div class="footer-section"><h4>For you</h4><ul><li><a href="../gk-quiz/ancient-indian-history">Ancient Indian History</a></li><li><a href="../gk-quiz/medieval-indian-history">Medieval Indian History</a></li></ul></div>
-                    <div class="footer-section"><h4>Science & Computer</h4><ul><li><a href="../conversion.html">Conversion</a></li><li><a href="../all-formulas.html">All formulas</a></li></ul></div>
+                    <div class="footer-section"><h4>About Us</h4><ul><li><a href="../js/about.html">About Us</a></li><li><a href="../js/contact.html">Contact Us</a></li><li><a href="../js/privacy-policy.html">Privacy Policy</a></li><li><a href="../js/terms.html">Terms of Service</a></li></ul></div>
+                    <div class="footer-section"><h4>For you</h4><ul><li><a href="../js/gk-quiz/ancient-indian-history">Ancient Indian History</a></li><li><a href="../js/gk-quiz/medieval-indian-history">Medieval Indian History</a></li></ul></div>
+                    <div class="footer-section"><h4>Science & Computer</h4><ul><li><a href="../js/conversion.html">Conversion</a></li><li><a href="../js/all-formulas.html">All formulas</a></li></ul></div>
                     <div class="footer-section"><h4>Follow Us</h4><ul class="footer-socials"></ul></div>
                 </div>
                 <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
@@ -422,68 +447,60 @@
                     { name: 'Sodium and Oxygen Reaction', type: 'Combination', equation: '4Na(s) + O₂(g) → 2Na₂O(s)', conditions: 'Heat', explanation: 'Sodium (Na) reacts with oxygen gas (O₂) to form sodium oxide (Na₂O). Sodium is oxidized, and oxygen is reduced.' },
                     { name: 'Zinc and Acid Reaction', type: 'Displacement', equation: 'Zn(s) + 2H⁺(aq) → Zn²⁺(aq) + H₂(g)', conditions: 'Aqueous acid solution', explanation: 'Zinc (Zn) reacts with hydrogen ions (H⁺) from an acid to form zinc ions (Zn²⁺) and hydrogen gas (H₂). Zinc is oxidized, and hydrogen ions are reduced.' },
                     { name: 'Aluminum and Bromine Reaction', type: 'Combination', equation: '2Al(s) + 3Br₂(g) → 2AlBr₃(s)', conditions: 'Room temperature', explanation: 'Aluminum (Al) reacts with bromine (Br₂) to form aluminum bromide (AlBr₃). Aluminum is oxidized, and bromine is reduced.' },
-                    { name: 'Combustion of Butane', type: 'Combustion', equation: 'C₄H₁₀(g) + 13/2O₂(g) → 4CO₂(g) + 5H₂O(g)', conditions: 'Ignition', explanation: 'Butane (C₄H₁₀) reacts with oxygen (O₂) to form carbon dioxide (CO₂) and water (H₂O). Butane is oxidized, and oxygen is reduced.' },
+                    { name: 'Combustion of Butane', type: 'Combustion', equation: '2C₄H₁₀(g) + 13O₂(g) → 8CO₂(g) + 10H₂O(g)', conditions: 'Ignition', explanation: 'Butane (C₄H₁₀) reacts with oxygen (O₂) to form carbon dioxide (CO₂) and water (H₂O). Butane is oxidized, and oxygen is reduced.' },
                     { name: 'Iron displaces Copper', type: 'Displacement', equation: 'Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)', conditions: 'Aqueous solution', explanation: 'Iron(Fe) displaces copper(Cu) from copper(II) sulfate(CuSO₄) solution. Iron is oxidized, and copper is reduced.' },
-                    { name: 'Zinc and Nitric Acid', type: 'Redox', equation: 'Zn(s) + 2HNO₃(aq) → Zn(NO₃)₂(aq) + H₂(g)', conditions: 'Aqueous solution', explanation: 'Zinc(Zn) reacts with nitric acid(HNO₃) to form zinc nitrate(Zn(NO₃)₂) and hydrogen gas(H₂). Zinc is oxidized, and nitric acid is reduced.' },
-                    { name: 'Electrolysis of Copper(II) Sulfate', type: 'Decomposition', equation: 'CuSO₄(aq) → Cu(s) + SO₄²⁻(aq)', conditions: 'Electric current', explanation: 'Copper(II) sulfate solution(CuSO₄) is electrolyzed to deposit copper metal(Cu) at the cathode while sulfate ions(SO₄²⁻) are formed at the anode.' },
+                    { name: 'Zinc and Nitric Acid', type: 'Redox', equation: 'Zn(s) + 4HNO₃(aq) → Zn(NO₃)₂(aq) + 2NO₂(g) + 2H₂O(l)', conditions: 'Concentrated nitric acid', explanation: 'Zinc(Zn) reacts with concentrated nitric acid(HNO₃) to form zinc nitrate(Zn(NO₃)₂), nitrogen dioxide gas, and water. This is a redox reaction where nitric acid acts as a strong oxidizing agent.' },
+                    { name: 'Electrolysis of Copper(II) Sulfate', type: 'Decomposition', equation: '2CuSO₄(aq) + 2H₂O(l) → 2Cu(s) + O₂(g) + 2H₂SO₄(aq)', conditions: 'Electric current', explanation: 'Copper(II) sulfate solution(CuSO₄) is electrolyzed to deposit copper metal(Cu) at the cathode and produce oxygen gas and sulfuric acid at the anode.' },
                     { name: 'Formation of Lead(II) Iodide', type: 'Precipitation', equation: 'Pb(NO₃)₂(aq) + 2KI(aq) → PbI₂(s) + 2KNO₃(aq)', conditions: 'Aqueous solution', explanation: 'Lead(II) nitrate(Pb(NO₃)₂) reacts with potassium iodide(KI) to form a yellow precipitate of lead(II) iodide(PbI₂).' },
                     { name: 'Displacement of Hydrogen by Sodium', type: 'Displacement', equation: '2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)', conditions: 'Room temperature', explanation: 'Sodium(Na) reacts with water(H₂O) to form sodium hydroxide(NaOH) and hydrogen gas(H₂). Sodium is oxidized, and water is reduced.' },
                     { name: 'Reaction Between Iron and Sulfur', type: 'Combination', equation: 'Fe(s) + S(s) → FeS(s)', conditions: 'Heat', explanation: 'Iron(Fe) reacts with sulfur(S) to form iron(II) sulfide(FeS). Iron is oxidized, and sulfur is reduced.' },
                     { name: 'Combustion of Ethylene', type: 'Combustion', equation: 'C₂H₄(g) + 3O₂(g) → 2CO₂(g) + 2H₂O(g)', conditions: 'Ignition', explanation: 'Ethylene(C₂H₄) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Ethylene is oxidized, and oxygen is reduced.' },
-                    { name: 'Potassium and Bromine Reaction', type: 'Combination', equation: '2K(s) + Br₂(g) → 2KBr(s)', conditions: 'Room temperature', explanation: 'Potassium(K) reacts with bromine(Br₂) to form potassium bromide(KBr). Potassium is oxidized, and bromine is reduced.' },
-                    { name: 'Formation of Zinc Nitrate', type: 'Redox', equation: 'Zn(s) + 2HNO₃(aq) → Zn(NO₃)₂(aq) + H₂(g)', conditions: 'Aqueous solution', explanation: 'Zinc(Zn) reacts with nitric acid(HNO₃) to form zinc nitrate(Zn(NO₃)₂) and hydrogen gas(H₂). Zinc is oxidized, and nitric acid is reduced.' },
+                    { name: 'Potassium and Bromine Reaction', type: 'Combination', equation: '2K(s) + Br₂(l) → 2KBr(s)', conditions: 'Room temperature', explanation: 'Potassium(K) reacts with bromine(Br₂) to form potassium bromide(KBr). Potassium is oxidized, and bromine is reduced.' },
+                    { name: 'Formation of Zinc Nitrate', type: 'Redox', equation: 'Zn(s) + 2HNO₃(aq) → Zn(NO₃)₂(aq) + H₂(g)', conditions: 'Dilute nitric acid', explanation: 'Zinc(Zn) reacts with dilute nitric acid(HNO₃) to form zinc nitrate(Zn(NO₃)₂) and hydrogen gas(H₂). Zinc is oxidized, and nitric acid is reduced.' },
                     { name: 'Iron displaces Copper (from Chloride)', type: 'Displacement', equation: 'Fe(s) + CuCl₂(aq) → FeCl₂(aq) + Cu(s)', conditions: 'Aqueous solution', explanation: 'Iron(Fe) displaces copper(Cu) from copper(II) chloride(CuCl₂) solution. Iron is oxidized, and copper is reduced.' },
-                    { name: 'Potassium and Iodine Reaction', type: 'Combination', equation: '2K(s) + I₂(g) → 2KI(s)', conditions: 'Room temperature', explanation: 'Potassium(K) reacts with iodine(I₂) to form potassium iodide(KI). Potassium is oxidized, and iodine is reduced.' },
+                    { name: 'Potassium and Iodine Reaction', type: 'Combination', equation: '2K(s) + I₂(s) → 2KI(s)', conditions: 'Gentle heat', explanation: 'Potassium(K) reacts with iodine(I₂) to form potassium iodide(KI). Potassium is oxidized, and iodine is reduced.' },
                     { name: 'Combustion of Propane', type: 'Combustion', equation: 'C₃H₈(g) + 5O₂(g) → 3CO₂(g) + 4H₂O(g)', conditions: 'Ignition', explanation: 'Propane(C₃H₈) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Propane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Copper(II) Chloride', type: 'Redox', equation: '2CuCl₂(aq) + H₂(g) → 2CuCl(s) + 2HCl(aq)', conditions: 'Heat', explanation: 'Copper(II) chloride(CuCl₂) reacts with hydrogen gas(H₂) to form copper(I) chloride(CuCl) and hydrochloric acid(HCl). Copper(II) chloride is reduced.' },
-                    { name: 'Sodium and Iodine Reaction', type: 'Combination', equation: '2Na(s) + I₂(g) → 2NaI(s)', conditions: 'Room temperature', explanation: 'Sodium(Na) reacts with iodine(I₂) to form sodium iodide(NaI). Sodium is oxidized, and iodine is reduced.' },
+                    { name: 'Reduction of Copper(II) Chloride', type: 'Redox', equation: 'CuCl₂(aq) + H₂(g) → Cu(s) + 2HCl(aq)', conditions: 'Heat', explanation: 'Copper(II) chloride(CuCl₂) is reduced by hydrogen gas(H₂) to form solid copper(Cu) and hydrochloric acid(HCl).' },
+                    { name: 'Sodium and Iodine Reaction', type: 'Combination', equation: '2Na(s) + I₂(s) → 2NaI(s)', conditions: 'Gentle heat', explanation: 'Sodium(Na) reacts with iodine(I₂) to form sodium iodide(NaI). Sodium is oxidized, and iodine is reduced.' },
                     { name: 'Combustion of Pentane', type: 'Combustion', equation: 'C₅H₁₂(g) + 8O₂(g) → 5CO₂(g) + 6H₂O(g)', conditions: 'Ignition', explanation: 'Pentane(C₅H₁₂) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Pentane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Copper(II) Sulfate with SO₂', type: 'Redox', equation: 'CuSO₄(aq) + SO₂(g) + 2H₂O(l) → Cu(s) + H₂SO₄(aq)', conditions: 'Aqueous solution', explanation: 'Copper(II) sulfate(CuSO₄) reacts with sulfur dioxide(SO₂) and water(H₂O) to form copper metal(Cu) and sulfuric acid(H₂SO₄). Copper(II) sulfate is reduced.' },
+                    { name: 'Reduction of Copper(II) Sulfate with SO₂', type: 'Redox', equation: '2CuSO₄(aq) + SO₂(g) + 2H₂O(l) → 2Cu(s) + 2H₂SO₄(aq)', conditions: 'Aqueous solution', explanation: 'Copper(II) sulfate(CuSO₄) reacts with sulfur dioxide(SO₂) and water to form copper metal(Cu) and sulfuric acid. Copper(II) sulfate is reduced.' },
                     { name: 'Sodium and Sulfur Reaction', type: 'Combination', equation: '2Na(s) + S(s) → Na₂S(s)', conditions: 'Heat', explanation: 'Sodium(Na) reacts with sulfur(S) to form sodium sulfide(Na₂S). Sodium is oxidized, and sulfur is reduced.' },
-                    { name: 'Combustion of Hexane', type: 'Combustion', equation: 'C₆H₁₄(g) + 19/2O₂(g) → 6CO₂(g) + 7H₂O(g)', conditions: 'Ignition', explanation: 'Hexane(C₆H₁₄) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Hexane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Iron(III) Oxide with Carbon', type: 'Redox', equation: 'Fe₂O₃(s) + 3C(s) → 2Fe(s) + 3CO(g)', conditions: 'High heat (Blast Furnace)', explanation: 'Iron(III) oxide(Fe₂O₃) reacts with carbon(C) to form iron metal(Fe) and carbon monoxide(CO). Iron(III) oxide is reduced.' },
+                    { name: 'Combustion of Hexane', type: 'Combustion', equation: '2C₆H₁₄(g) + 19O₂(g) → 12CO₂(g) + 14H₂O(g)', conditions: 'Ignition', explanation: 'Hexane(C₆H₁₄) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Hexane is oxidized, and oxygen is reduced.' },
+                    { name: 'Reduction of Iron(III) Oxide with Carbon', type: 'Redox', equation: '2Fe₂O₃(s) + 3C(s) → 4Fe(s) + 3CO₂(g)', conditions: 'High heat (Blast Furnace)', explanation: 'Iron(III) oxide(Fe₂O₃) reacts with carbon(C) to form iron metal(Fe) and carbon dioxide(CO₂). This is a key reaction in steelmaking.' },
                     { name: 'Potassium and Sulfur Reaction', type: 'Combination', equation: '2K(s) + S(s) → K₂S(s)', conditions: 'Heat', explanation: 'Potassium(K) reacts with sulfur(S) to form potassium sulfide(K₂S). Potassium is oxidized, and sulfur is reduced.' },
                     { name: 'Combustion of Heptane', type: 'Combustion', equation: 'C₇H₁₆(g) + 11O₂(g) → 7CO₂(g) + 8H₂O(g)', conditions: 'Ignition', explanation: 'Heptane(C₇H₁₆) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Heptane is oxidized, and oxygen is reduced.' },
                     { name: 'Reduction of Iron(III) Oxide with Hydrogen', type: 'Redox', equation: 'Fe₂O₃(s) + 3H₂(g) → 2Fe(s) + 3H₂O(g)', conditions: 'Heat', explanation: 'Iron(III) oxide(Fe₂O₃) reacts with hydrogen gas(H₂) to form iron metal(Fe) and water vapor(H₂O). Iron(III) oxide is reduced.' },
-                    { name: 'Lithium and Bromine Reaction', type: 'Combination', equation: '2Li(s) + Br₂(g) → 2LiBr(s)', conditions: 'Room temperature', explanation: 'Lithium(Li) reacts with bromine(Br₂) to form lithium bromide(LiBr). Lithium is oxidized, and bromine is reduced.' },
-                    { name: 'Combustion of Octane', type: 'Combustion', equation: 'C₈H₁₈(g) + 25/2O₂(g) → 8CO₂(g) + 9H₂O(g)', conditions: 'Ignition', explanation: 'Octane(C₈H₁₈) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Octane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Silver(I) Nitrate with Copper', type: 'Displacement', equation: 'Cu(s) + 2AgNO₃(aq) → Cu(NO₃)₂(aq) + 2Ag(s)', conditions: 'Aqueous solution', explanation: 'Copper(Cu) reacts with silver(I) nitrate(AgNO₃) to form copper(II) nitrate(Cu(NO₃)₂) and silver metal(Ag). Copper is oxidized, and silver(I) nitrate is reduced.' },
-                    { name: 'Lithium and Iodine Reaction', type: 'Combination', equation: '2Li(s) + I₂(g) → 2LiI(s)', conditions: 'Room temperature', explanation: 'Lithium(Li) reacts with iodine(I₂) to form lithium iodide(LiI). Lithium is oxidized, and iodine is reduced.' },
-                    { name: 'Combustion of Nonane', type: 'Combustion', equation: 'C₉H₂₀(g) + 14O₂(g) → 9CO₂(g) + 10H₂O(g)', conditions: 'Ignition', explanation: 'Nonane(C₉H₂₀) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Nonane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Silver(I) Nitrate with Iron', type: 'Displacement', equation: 'Fe(s) + 2AgNO₃(aq) → Fe(NO₃)₂(aq) + 2Ag(s)', conditions: 'Aqueous solution', explanation: 'Iron(Fe) reacts with silver(I) nitrate(AgNO₃) to form iron(II) nitrate(Fe(NO₃)₂) and silver metal(Ag). Iron is oxidized, and silver(I) nitrate is reduced.' },
+                    { name: 'Lithium and Bromine Reaction', type: 'Combination', equation: '2Li(s) + Br₂(l) → 2LiBr(s)', conditions: 'Room temperature', explanation: 'Lithium(Li) reacts with bromine(Br₂) to form lithium bromide(LiBr). Lithium is oxidized, and bromine is reduced.' },
+                    { name: 'Combustion of Octane', type: 'Combustion', equation: '2C₈H₁₈(g) + 25O₂(g) → 16CO₂(g) + 18H₂O(g)', conditions: 'Ignition', explanation: 'Octane(C₈H₁₈) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). This reaction powers many internal combustion engines.' },
+                    { name: 'Lithium and Iodine Reaction', type: 'Combination', equation: '2Li(s) + I₂(s) → 2LiI(s)', conditions: 'Gentle heat', explanation: 'Lithium(Li) reacts with iodine(I₂) to form lithium iodide(LiI). Lithium is oxidized, and iodine is reduced.' },
+                    { name: 'Combustion of Nonane', type: 'Combustion', equation: 'C₉H₂₀(g) + 14O₂(g) → 9CO₂(g) + 10H₂O(g)', conditions: 'Ignition', explanation: 'Nonane(C₉H₂₀) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O).' },
                     { name: 'Lithium and Sulfur Reaction', type: 'Combination', equation: '2Li(s) + S(s) → Li₂S(s)', conditions: 'Heat', explanation: 'Lithium(Li) reacts with sulfur(S) to form lithium sulfide(Li₂S). Lithium is oxidized, and sulfur is reduced.' },
-                    { name: 'Combustion of Decane', type: 'Combustion', equation: 'C₁₀H₂₂(g) + 31/2O₂(g) → 10CO₂(g) + 11H₂O(g)', conditions: 'Ignition', explanation: 'Decane(C₁₀H₂₂) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Decane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Silver(I) Nitrate with Hydrogen Gas', type: 'Redox', equation: 'H₂(g) + 2AgNO₃(aq) → 2HNO₃(aq) + 2Ag(s)', conditions: 'Aqueous solution, catalyst may be needed', explanation: 'Hydrogen gas(H₂) reacts with silver(I) nitrate(AgNO₃) to form nitric acid(HNO₃) and silver metal(Ag). Silver(I) nitrate is reduced.' },
-                    { name: 'Formation of Silver Chloride', type: 'Precipitation', equation: 'AgNO₃(aq) + NaCl(aq) → AgCl(s) + NaNO₃(aq)', conditions: 'Aqueous solution', explanation: 'Silver nitrate(AgNO₃) reacts with sodium chloride(NaCl) to form a white precipitate of silver chloride(AgCl) and sodium nitrate(NaNO₃).' },
-                    { name: 'Calcium and Chlorine Reaction', type: 'Combination', equation: 'Ca(s) + Cl₂(g) → CaCl₂(s)', conditions: 'Room temperature', explanation: 'Calcium(Ca) reacts with chlorine gas(Cl₂) to form calcium chloride(CaCl₂). Calcium is oxidized, and chlorine is reduced.' },
-                    { name: 'Combustion of Dodecane', type: 'Combustion', equation: 'C₁₂H₂₆(g) + 37/2O₂(g) → 12CO₂(g) + 13H₂O(g)', conditions: 'Ignition', explanation: 'Dodecane(C₁₂H₂₆) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O). Dodecane is oxidized, and oxygen is reduced.' },
-                    { name: 'Reduction of Iron(III) Chloride with Zinc', type: 'Redox', equation: '2FeCl₃(aq) + Zn(s) → 2FeCl₂(aq) + ZnCl₂(aq)', conditions: 'Aqueous solution', explanation: 'Iron(III) chloride(FeCl₃) reacts with zinc(Zn) to form iron(II) chloride(FeCl₂) and zinc chloride(ZnCl₂). Iron(III) chloride is reduced.' },
-                    { name: 'Haloform Reaction', type: 'Organic', equation: 'CH₃COCH₃ + 3NaOCl → CHCl₃ + 2CH₃COONa + H₂O', conditions: 'Basic medium (e.g., NaOH)', explanation: 'Acetone reacts with sodium hypochlorite (bleach) in a basic medium to form chloroform, sodium acetate, and water. This reaction is used to detect the presence of methyl ketones.' },
-                    { name: 'Michael Addition', type: 'Organic', equation: 'CH₂=CHCOCH₃ + NH₂CH₂CH₃ → CH₃NHCH₂CH₂COCH₃', conditions: 'Base catalyst', explanation: 'In this reaction, an enolate (from ethylamine) adds to an α,β-unsaturated carbonyl compound (methyl vinyl ketone) to form a β-amino ketone product through nucleophilic addition.' },
-                    { name: 'Diels-Alder Reaction', type: 'Organic', equation: 'C₄H₆ + C₃H₄O → C₇H₁₀O', conditions: 'Heat', explanation: 'In this cycloaddition reaction, 1,3-butadiene (a conjugated diene) reacts with acrolein (a dienophile) to form a cyclic product, a cyclohexene compound.' },
-                    { name: 'Beckmann Rearrangement', type: 'Organic', equation: 'C₆H₅C(NOH)CH₃ + H₂SO₄ → C₆H₅NHCOCH₃', conditions: 'Acid catalyst (e.g., H₂SO₄)', explanation: 'In this reaction, an oxime (from acetophenone) rearranges in the presence of acid to form an amide (acetanilide).' },
-                    { name: 'Gabriel Synthesis', type: 'Organic', equation: 'Phthalimide + KOH + R-X → Primary Amine', conditions: 'Stepwise reaction with base and alkyl halide', explanation: 'A method for preparing primary amines from primary alkyl halides. Potassium phthalimide is nucleophilically substituted by an alkyl halide to give an N-alkylphthalimide, which is then hydrolyzed.' },
-                    { name: 'Cannizzaro Reaction', type: 'Organic', equation: '2C₆H₅CHO + NaOH → C₆H₅COONa + C₆H₅CH₂OH', conditions: 'Strong base (e.g., concentrated NaOH)', explanation: 'An aldehyde without alpha-hydrogens undergoes self-disproportionation in a concentrated alkali solution to form a carboxylic acid salt and an alcohol.' },
-                    { name: 'Wittig Reaction', type: 'Organic', equation: '(C₆H₅)₃P=CHR + R\'CHO → R\'CH=CHR + (C₆H₅)₃PO', conditions: 'Aprotic solvent', explanation: 'In this reaction, a phosphorus ylide (Wittig reagent) reacts with an aldehyde or ketone to form an alkene and triphenylphosphine oxide.' },
-                    { name: 'Claisen Condensation', type: 'Organic', equation: '2CH₃COOC₂H₅ + NaOEt → CH₃COCH₂COOC₂H₅ + EtOH', conditions: 'Strong base (e.g., NaOEt)', explanation: 'An ester with an α-hydrogen reacts with a strong base to form a β-keto ester product through a condensation reaction.' },
-                    { name: 'Clemmensen Reduction', type: 'Organic', equation: 'C₆H₅COCH₃ + Zn(Hg), HCl → C₆H₅CH₂CH₃', conditions: 'Zinc amalgam (Zn(Hg)) and concentrated HCl', explanation: 'A ketone or aldehyde is reduced to an alkane using zinc amalgam and hydrochloric acid.' },
-                    { name: 'Benzoin Condensation', type: 'Organic', equation: '2C₆H₅CHO + KCN → C₆H₅CH(OH)C(O)C₆H₅', conditions: 'Cyanide ion (e.g., KCN) catalyst', explanation: 'Two aromatic aldehydes react in the presence of a cyanide catalyst to form an α-hydroxy ketone, called a benzoin.' },
-                    { name: 'Grignard Reaction', type: 'Organic', equation: 'R-X + Mg → R-MgX', conditions: 'Dry ether solvent', explanation: 'An organomagnesium halide (Grignard reagent) is formed from an alkyl or aryl halide. This reagent is a powerful nucleophile used to form new carbon-carbon bonds.' },
-                    { name: 'Friedel-Crafts Alkylation', type: 'Organic', equation: 'C₆H₆ + CH₃Cl + AlCl₃ → C₆H₅CH₃ + HCl', conditions: 'Lewis acid catalyst (e.g., AlCl₃)', explanation: 'An aromatic ring is alkylated by an alkyl halide using a strong Lewis acid catalyst. Benzene reacts with methyl chloride to form toluene.' },
-                    { name: 'Benzilic Acid Rearrangement', type: 'Organic', equation: '(C₆H₅)₂C(O)C(O) + KOH → (C₆H₅)₂C(OH)COOK', conditions: 'Strong base (e.g., KOH)', explanation: 'In this rearrangement reaction, a 1,2-diketone (benzil) reacts with a strong base to form the salt of an α-hydroxy-carboxylic acid (benzilic acid).' },
-                    { name: 'Hofmann Rearrangement', type: 'Organic', equation: 'RCONH₂ + Br₂ + NaOH → RNH₂ + CO₂ + NaBr + H₂O', conditions: 'Bromine and strong base', explanation: 'A primary amide is converted to a primary amine with one fewer carbon atom by treatment with bromine and a strong base.' },
-                    { name: 'Reimer-Tiemann Reaction', type: 'Organic', equation: 'C₆H₅OH + CHCl₃ + NaOH → HOC₆H₄CHO', conditions: 'Chloroform and strong base', explanation: 'Phenol is ortho-formylated by reacting it with chloroform in a basic solution. This introduces a -CHO group onto the aromatic ring.' },
-                    { name: 'Claisen Rearrangement', type: 'Organic', equation: 'Allyl phenyl ether → o-Allylphenol', conditions: 'Heat', explanation: 'A [3,3]-sigmatropic rearrangement of an allyl vinyl ether or allyl aryl ether. The allyl group migrates to the ortho position.' },
-                    { name: 'Benzidine Rearrangement', type: 'Organic', equation: 'Hydrazobenzene + Acid → Benzidine', conditions: 'Acidic medium', explanation: 'A rearrangement reaction of a hydrazobenzene in acid to form a benzidine.' },
-                    { name: 'Acylation of Amines', type: 'Organic', equation: 'RNH₂ + R\'COCl → RNHCOR\' + HCl', conditions: 'Usually in the presence of a base', explanation: 'An amine reacts with an acyl chloride or anhydride to form an amide. This is a nucleophilic acyl substitution.' },
-                    { name: 'Michaelis-Arbuzov Reaction', type: 'Organic', equation: 'P(OR)₃ + R\'X → R\'PO(OR)₂ + RX', conditions: 'Heat', explanation: 'The reaction of a trialkyl phosphite with an alkyl halide to form a phosphonate.' },
-                    { name: 'Vilsmeier-Haack Reaction', type: 'Organic', equation: 'Activated aromatic ring + DMF/POCl₃ → Formylated aromatic ring', conditions: 'Dimethylformamide (DMF) and phosphoryl chloride (POCl₃)', explanation: 'A mild method to formylate electron-rich aromatic rings, such as anilines or phenols.' },
-                    { name: 'Knoevenagel Condensation', type: 'Organic', equation: 'RCHO + CH₂(COOH)₂ + Base → RCH=C(COOH)₂', conditions: 'Base catalyst (e.g., pyridine)', explanation: 'A condensation reaction between an aldehyde or ketone and a compound with an active methylene group, like malonic acid.' },
-                    { name: 'Baeyer-Villiger Oxidation', type: 'Organic', equation: 'R-CO-R\' + Peroxyacid → R-O-CO-R\'', conditions: 'Peroxyacid (e.g., m-CPBA)', explanation: 'The oxidation of a ketone to an ester by treatment with a peroxyacid.' },
-                    { name: 'Chichibabin Pyridine Synthesis', type: 'Organic', equation: 'Aldehydes + Ammonia → Pyridine derivative', conditions: 'Heat, catalyst', explanation: 'A condensation reaction to synthesize pyridine rings from aldehydes or ketones with ammonia or an ammonia derivative.' },
-                    { name: 'Duff Reaction', type: 'Organic', equation: 'Phenol + Hexamethylenetetramine → o-Hydroxybenzaldehyde', conditions: 'Acid catalyst (e.g., boric acid), glycerol', explanation: 'The ortho-formylation of phenols using hexamine (hexamethylenetetramine).' },
-                    { name: 'Wittig-Horner Reaction', type: 'Organic', equation: 'Phosphonate carbanion + Aldehyde → Alkene + Phosphate salt', conditions: 'Base (e.g., NaH)', explanation: 'A variation of the Wittig reaction where a phosphonate-stabilized carbanion reacts with an aldehyde or ketone to form an alkene, typically with high E-selectivity.' }
-                    // ... (and so on for all 130 reactions)
+                    { name: 'Combustion of Decane', type: 'Combustion', equation: '2C₁₀H₂₂(g) + 31O₂(g) → 20CO₂(g) + 22H₂O(g)', conditions: 'Ignition', explanation: 'Decane(C₁₀H₂₂) reacts with oxygen(O₂) to form carbon dioxide(CO₂) and water(H₂O).' },
+                    { name: 'Haloform Reaction', type: 'Organic', equation: 'CH₃COR + 3X₂ + 4OH⁻ → RCOO⁻ + CHX₃ + 3X⁻ + 3H₂O', conditions: 'Base (e.g., NaOH) and Halogen (Cl₂, Br₂, I₂)', explanation: 'A reaction where a methyl ketone or a compound that can be oxidized to a methyl ketone is halogenated in the presence of a base to give a haloform (CHX₃) and a carboxylate anion.' },
+                    { name: 'Michael Addition', type: 'Organic', equation: 'Enolate + α,β-Unsaturated Carbonyl → 1,5-Dicarbonyl Compound', conditions: 'Base catalyst', explanation: 'The nucleophilic addition of an enolate or other nucleophile to an α,β-unsaturated carbonyl compound. It creates a new carbon-carbon bond on the β-carbon.' },
+                    { name: 'Diels-Alder Reaction', type: 'Organic', equation: 'Diene + Dienophile → Cyclohexene derivative', conditions: 'Heat or Lewis acid catalyst', explanation: 'A [4+2] cycloaddition reaction between a conjugated diene and a substituted alkene (dienophile) to form a substituted cyclohexene system.' },
+                    { name: 'Beckmann Rearrangement', type: 'Organic', equation: 'Ketoxime + Acid → Amide', conditions: 'Acid catalyst (e.g., H₂SO₄, PCl₅)', explanation: 'The acid-catalyzed rearrangement of an oxime to an N-substituted amide. The group anti to the hydroxyl group migrates.' },
+                    { name: 'Gabriel Synthesis', type: 'Organic', equation: 'Phthalimide + KOH, then R-X, then H₃O⁺/heat → R-NH₂', conditions: 'Stepwise reaction with base, alkyl halide, and then hydrolysis/hydrazinolysis', explanation: 'A classic method for preparing primary amines from primary alkyl halides without over-alkylation. It uses phthalimide as a protected form of ammonia.' },
+                    { name: 'Cannizzaro Reaction', type: 'Organic', equation: '2 ArCHO + conc. NaOH → ArCOONa + ArCH₂OH', conditions: 'Strong base (e.g., concentrated NaOH)', explanation: 'An aldehyde lacking an alpha-hydrogen undergoes self-disproportionation (redox) in a strong base to yield a primary alcohol and a carboxylate salt.' },
+                    { name: 'Wittig Reaction', type: 'Organic', equation: 'Aldehyde/Ketone + Phosphorus Ylide → Alkene + Ph₃PO', conditions: 'Aprotic solvent', explanation: 'A versatile reaction for synthesizing alkenes. A phosphorus ylide (Wittig reagent) reacts with an aldehyde or ketone to form an alkene and triphenylphosphine oxide.' },
+                    { name: 'Claisen Condensation', type: 'Organic', equation: '2 RCH₂COOR\' + Base → RCH₂COCH(R)COOR\'', conditions: 'Strong base (e.g., NaOEt)', explanation: 'An ester having an α-hydrogen undergoes condensation with another ester molecule in the presence of a strong base to form a β-keto ester.' },
+                    { name: 'Clemmensen Reduction', type: 'Organic', equation: 'Ketone/Aldehyde + Zn(Hg), conc. HCl → Alkane', conditions: 'Zinc amalgam (Zn(Hg)) and concentrated HCl', explanation: 'A reaction used to reduce the carbonyl group of a ketone or aldehyde to a methylene group (CH₂), effectively converting it to an alkane. It works best for aryl ketones.' },
+                    { name: 'Benzoin Condensation', type: 'Organic', equation: '2 ArCHO + CN⁻ → Ar-CH(OH)-CO-Ar', conditions: 'Cyanide ion (e.g., KCN) catalyst', explanation: 'Two aromatic aldehydes dimerize in the presence of a cyanide catalyst to form an α-hydroxy ketone, known as a benzoin.' },
+                    { name: 'Grignard Reaction', type: 'Organic', equation: 'R-X + Mg → R-MgX (Grignard Reagent)', conditions: 'Dry ether solvent', explanation: 'The formation of an organomagnesium halide (Grignard reagent) from an alkyl or aryl halide and magnesium metal. These reagents are powerful nucleophiles used to create new C-C bonds.' },
+                    { name: 'Friedel-Crafts Alkylation', type: 'Organic', equation: 'Arene + R-X + Lewis Acid → Alkyl-Arene', conditions: 'Lewis acid catalyst (e.g., AlCl₃)', explanation: 'An aromatic ring is alkylated by an alkyl halide using a strong Lewis acid catalyst. Prone to rearrangements and polyalkylation.' },
+                    { name: 'Benzilic Acid Rearrangement', type: 'Organic', equation: '1,2-Diketone + Base → α-Hydroxy Carboxylate', conditions: 'Strong base (e.g., KOH)', explanation: 'A 1,2-diketone (like benzil) is treated with a strong base to form the salt of an α-hydroxy-carboxylic acid (benzilate anion) through a rearrangement.' },
+                    { name: 'Hofmann Rearrangement', type: 'Organic', equation: 'R-CONH₂ + Br₂ + NaOH → R-NH₂', conditions: 'Bromine and strong base', explanation: 'A primary amide is degraded to a primary amine with one fewer carbon atom. The reaction proceeds through an isocyanate intermediate.' },
+                    { name: 'Reimer-Tiemann Reaction', type: 'Organic', equation: 'Phenol + CHCl₃ + NaOH → o-Hydroxybenzaldehyde', conditions: 'Chloroform and strong base', explanation: 'A reaction used for the ortho-formylation of phenols. It proceeds via a dichlorocarbene intermediate.' },
+                    { name: 'Claisen Rearrangement', type: 'Organic', equation: 'Allyl Vinyl Ether → γ,δ-Unsaturated Carbonyl', conditions: 'Heat', explanation: 'A powerful [3,3]-sigmatropic rearrangement that forms a new carbon-carbon bond. Allyl aryl ethers also undergo this reaction to form o-allylphenols.' },
+                    { name: 'Benzidine Rearrangement', type: 'Organic', equation: 'Hydrazobenzene + Acid → Benzidine', conditions: 'Acidic medium', explanation: 'An acid-catalyzed rearrangement of hydrazobenzenes into benzidines (4,4\'-diaminobiphenyls) and other related products.' },
+                    { name: 'Acylation of Amines', type: 'Organic', equation: 'R-NH₂ + R\'-COCl → R-NH-CO-R\' + HCl', conditions: 'Often with a non-nucleophilic base (like pyridine)', explanation: 'The reaction of an amine with an acylating agent (like an acyl chloride or anhydride) to form an amide. This is a common protecting group strategy.' },
+                    { name: 'Michaelis-Arbuzov Reaction', type: 'Organic', equation: 'P(OR)₃ + R\'X → R\'PO(OR)₂ + RX', conditions: 'Heat', explanation: 'A key reaction for forming carbon-phosphorus bonds. It involves the reaction of a trialkyl phosphite with an alkyl halide to generate a phosphonate.' },
+                    { name: 'Vilsmeier-Haack Reaction', type: 'Organic', equation: 'Electron-rich Arene + DMF/POCl₃ → Formyl-Arene', conditions: 'Dimethylformamide (DMF) and phosphoryl chloride (POCl₃) form the Vilsmeier reagent', explanation: 'A method for formylating (adding a -CHO group to) electron-rich aromatic compounds like anilines and phenols.' },
+                    { name: 'Knoevenagel Condensation', type: 'Organic', equation: 'Aldehyde/Ketone + Active Methylene Compound → α,β-Unsaturated Product', conditions: 'Weak base catalyst (e.g., an amine like piperidine)', explanation: 'A modification of the aldol condensation where an active methylene compound (e.g., malonic ester) reacts with an aldehyde or ketone.' },
+                    { name: 'Baeyer-Villiger Oxidation', type: 'Organic', equation: 'Ketone + Peroxyacid → Ester', conditions: 'Peroxyacid (e.g., m-CPBA)', explanation: 'The oxidation of a ketone to an ester (or a cyclic ketone to a lactone) by treatment with a peroxyacid. The migratory aptitude of the groups attached to the carbonyl is important.' },
+                    { name: 'Chichibabin Pyridine Synthesis', type: 'Organic', equation: 'Aldehydes/Ketones + Ammonia → Pyridine', conditions: 'Heat, often gas phase with a catalyst', explanation: 'A condensation reaction for synthesizing pyridine rings from aldehydes or ketones with ammonia or its derivatives.' },
+                    { name: 'Duff Reaction', type: 'Organic', equation: 'Phenol + Hexamethylenetetramine → o-Hydroxybenzaldehyde', conditions: 'Acid catalyst (e.g., boric acid), glycerol solvent', explanation: 'A formylation reaction for activated aromatic rings, particularly phenols, using hexamine as the source of the formyl group.' },
+                    { name: 'Wittig-Horner Reaction', type: 'Organic', equation: 'Phosphonate Carbanion + Carbonyl → Alkene', conditions: 'Strong base (e.g., NaH, BuLi)', explanation: 'A variation of the Wittig reaction using phosphonate-stabilized carbanions. It often gives E-alkenes with high selectivity and is useful when the corresponding ylide is unstable.' }
                 ];
 
                 const tableBody = document.querySelector('#reactionsTable tbody');
@@ -503,17 +520,16 @@
                     const row = document.createElement('tr');
                     row.dataset.reactionIndex = index;
                     row.innerHTML = `
-                        <td data-label="S.No.">${index + 1}</td>
-                        <td data-label="Reaction Name / Type"><b>${reaction.name}</b></td>
-                        <td data-label="Equation & Explanation">
-                            <p><code>${reaction.equation}</code></p>
-                            <p>${reaction.explanation}</p>
+                        <td>
+                            <p class="reaction-name">${index + 1}. ${reaction.name}</p>
+                            <p class="reaction-equation"><code>${reaction.equation.replace(/→/g, '&rarr;')}</code></p>
+                            <p class="reaction-explanation">${reaction.explanation}</p>
                         </td>
                     `;
                     allRowsData.push({ element: row, data: reaction });
                 });
 
-                const rowsPerPage = 20;
+                const rowsPerPage = ;
                 let visibleRowsCount = 0;
 
                 function displayRows() {
@@ -574,7 +590,7 @@
 
                     modalTitle.textContent = reaction.name;
                     modalVisual.innerHTML = getReactionSVG(reaction.type);
-                    modalEquation.innerHTML = `<code>${reaction.equation}</code>`;
+                    modalEquation.innerHTML = `<code>${reaction.equation.replace(/→/g, '&rarr;')}</code>`;
                     modalConditions.textContent = reaction.conditions || 'Standard conditions unless otherwise specified.';
                     modalExplanation.textContent = reaction.explanation;
                     modal.classList.add('visible');
@@ -597,6 +613,12 @@
                         closeModal();
                     }
                 });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === "Escape" && modal.classList.contains('visible')) {
+                        closeModal();
+                    }
+                });
+
 
                 // Initial load
                 visibleRowsCount = rowsPerPage;
