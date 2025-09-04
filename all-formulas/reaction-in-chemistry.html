@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const reactionData = [
-  // Combination Reactions
+  // Combination Reactions (25)
   {
     name: 'Formation of Magnesium Oxide',
     type: 'Combination',
@@ -659,8 +659,43 @@ const reactionData = [
     conditions: 'Heat',
     explanation: 'Lithium(Li) reacts with sulfur(S) to form lithium sulfide(Li2S). Lithium is oxidized, and sulfur is reduced.'
   },
+  {
+    name: 'Formation of Phosphorus Pentachloride',
+    type: 'Combination',
+    conditions: 'Room temperature',
+    equation: 'PCl<sub>3</sub>(l) + Cl<sub>2</sub>(g) -> PCl<sub>5</sub>(s)',
+    explanation: 'Phosphorus trichloride reacts with chlorine gas to form solid phosphorus pentachloride.'
+  },
+  {
+    name: 'Formation of Ammonium Chloride',
+    type: 'Combination',
+    conditions: 'Gas phase',
+    equation: 'NH<sub>3</sub>(g) + HCl(g) -> NH<sub>4</sub>Cl(s)',
+    explanation: 'Ammonia gas and hydrogen chloride gas react to form a white solid, ammonium chloride. This is often seen as a white smoke when bottles of ammonia and HCl are brought near each other.'
+  },
+  {
+    name: 'Formation of Carbon Monoxide (Incomplete Combustion)',
+    type: 'Combination',
+    conditions: 'Limited Oxygen',
+    equation: '2C(s) + O<sub>2</sub>(g) -> 2CO(g)',
+    explanation: 'When carbon burns in a limited supply of oxygen, it undergoes incomplete combustion to form carbon monoxide, a toxic gas.'
+  },
+  {
+    name: 'Formation of Nitric Oxide',
+    type: 'Combination',
+    conditions: 'High Temperature (Lightning)',
+    equation: 'N<sub>2</sub>(g) + O<sub>2</sub>(g) -> 2NO(g)',
+    explanation: 'Nitrogen and oxygen combine at very high temperatures, such as in lightning strikes or internal combustion engines, to form nitric oxide.'
+  },
+  {
+    name: 'Formation of Calcium Carbonate from Metal Oxide',
+    type: 'Combination',
+    conditions: 'Heating',
+    equation: 'CaO(s) + CO<sub>2</sub>(g) -> CaCO<sub>3</sub>(s)',
+    explanation: 'The basic metal oxide calcium oxide reacts with the acidic gas carbon dioxide to form the salt calcium carbonate.'
+  },
 
-  // Decomposition Reactions
+  // Decomposition Reactions (20)
   {
     name: 'Decomposition of Calcium Carbonate',
     type: 'Decomposition',
@@ -717,8 +752,92 @@ const reactionData = [
     conditions: 'Electric current',
     explanation: 'Copper(II) sulfate solution(CuSO4) is electrolyzed to deposit copper metal(Cu) at the cathode and produce oxygen gas and sulfuric acid at the anode.'
   },
+  {
+    name: 'Decomposition of Copper(II) Carbonate',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: 'CuCO<sub>3</sub>(s) -> CuO(s) + CO<sub>2</sub>(g)',
+    explanation: 'Green copper(II) carbonate decomposes upon heating to form black copper(II) oxide and carbon dioxide gas.'
+  },
+  {
+    name: 'Decomposition of Zinc Carbonate',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: 'ZnCO<sub>3</sub>(s) -> ZnO(s) + CO<sub>2</sub>(g)',
+    explanation: 'Zinc carbonate decomposes when heated to form zinc oxide and carbon dioxide. Zinc oxide is yellow when hot and white when cold.'
+  },
+  {
+    name: 'Decomposition of Nitrous Oxide',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: '2N<sub>2</sub>O(g) -> 2N<sub>2</sub>(g) + O<sub>2</sub>(g)',
+    explanation: 'Nitrous oxide (laughing gas) decomposes into nitrogen and oxygen upon strong heating.'
+  },
+  {
+    name: 'Decomposition of Ammonium Dichromate',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: '(NH<sub>4</sub>)<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>(s) -> Cr<sub>2</sub>O<sub>3</sub>(s) + N<sub>2</sub>(g) + 4H<sub>2</sub>O(g)',
+    explanation: 'The famous "volcano" experiment. Orange ammonium dichromate decomposes exothermically to produce green chromium(III) oxide, nitrogen gas, and water vapor.'
+  },
+  {
+    name: 'Decomposition of Sodium Bicarbonate',
+    type: 'Decomposition',
+    conditions: 'Heating (>50°C)',
+    equation: '2NaHCO<sub>3</sub>(s) -> Na<sub>2</sub>CO<sub>3</sub>(s) + H<sub>2</sub>O(g) + CO<sub>2</sub>(g)',
+    explanation: 'Sodium bicarbonate (baking soda) decomposes when heated, releasing carbon dioxide gas, which causes dough to rise in baking.'
+  },
+  {
+    name: 'Decomposition of Silver Bromide',
+    type: 'Decomposition',
+    conditions: 'Sunlight',
+    equation: '2AgBr(s) -> 2Ag(s) + Br<sub>2</sub>(g)',
+    explanation: 'Similar to silver chloride, pale yellow silver bromide also undergoes photolytic decomposition, a principle used in photographic films.'
+  },
+  {
+    name: 'Decomposition of Mercuric Oxide',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: '2HgO(s) -> 2Hg(l) + O<sub>2</sub>(g)',
+    explanation: 'Red mercuric oxide, when heated, decomposes to produce liquid mercury and oxygen gas. This was a historically important reaction for discovering oxygen.'
+  },
+  {
+    name: 'Decomposition of Copper(II) Hydroxide',
+    type: 'Decomposition',
+    conditions: 'Gentle Heating',
+    equation: 'Cu(OH)<sub>2</sub>(s) -> CuO(s) + H<sub>2</sub>O(l)',
+    explanation: 'Blue copper(II) hydroxide precipitate decomposes upon gentle heating to form black copper(II) oxide and water.'
+  },
+  {
+    name: 'Decomposition of Carbonic Acid',
+    type: 'Decomposition',
+    conditions: 'Aqueous solution',
+    equation: 'H<sub>2</sub>CO<sub>3</sub>(aq) -> H<sub>2</sub>O(l) + CO<sub>2</sub>(g)',
+    explanation: 'Carbonic acid is unstable and readily decomposes into water and carbon dioxide, which is why carbonated drinks fizz when opened.'
+  },
+  {
+    name: 'Decomposition of Ammonium Nitrate',
+    type: 'Decomposition',
+    conditions: 'Careful heating',
+    equation: 'NH<sub>4</sub>NO<sub>3</sub>(s) -> N<sub>2</sub>O(g) + 2H<sub>2</sub>O(g)',
+    explanation: 'Ammonium nitrate decomposes upon gentle heating to form nitrous oxide (laughing gas) and water. It can decompose explosively at higher temperatures.'
+  },
+  {
+    name: 'Electrolysis of Molten Sodium Chloride',
+    type: 'Decomposition',
+    conditions: 'Electric current, molten state',
+    equation: '2NaCl(l) -> 2Na(l) + Cl<sub>2</sub>(g)',
+    explanation: 'In the Down\'s process, molten sodium chloride is electrolyzed to produce liquid sodium metal at the cathode and chlorine gas at the anode.'
+  },
+  {
+    name: 'Decomposition of Nickel(II) Carbonate',
+    type: 'Decomposition',
+    conditions: 'Heating',
+    equation: 'NiCO<sub>3</sub>(s) -> NiO(s) + CO<sub>2</sub>(g)',
+    explanation: 'Light green nickel(II) carbonate decomposes upon heating to form green-black nickel(II) oxide and carbon dioxide.'
+  },
 
-  // Displacement Reactions
+  // Displacement Reactions (20)
   {
     name: 'Zinc and Copper Sulfate Reaction',
     type: 'Displacement',
@@ -766,21 +885,21 @@ const reactionData = [
     type: 'Displacement',
     equation: 'Cu(s) + 2AgNO<sub>3</sub>(aq) -> Cu(NO<sub>3</sub>)<sub>2</sub>(aq) + 2Ag(s)',
     conditions: 'Aqueous solution',
-    explanation: 'Copper (Cu) displaces silver (Ag) from silver nitrate (AgNO3) solution, resulting in the formation of copper(II) nitrate (Cu(NO3)2) and silver metal (Ag). Copper is oxidized while silver is reduced.'
+    explanation: 'Copper (Cu) displaces silver (Ag) from silver nitrate (AgNO3) solution, resulting in the formation of copper(II) nitrate (Cu(NO3)2) and beautiful silver crystals. Copper is oxidized while silver is reduced.'
   },
   {
     name: 'Potassium and Water Reaction',
     type: 'Displacement',
     equation: '2K(s) + 2H<sub>2</sub>O(l) -> 2KOH(aq) + H<sub>2</sub>(g)',
     conditions: 'Room temperature',
-    explanation: 'Potassium (K) reacts violently with water (H2O) to form potassium hydroxide (KOH) and hydrogen gas (H2). Potassium is oxidized, and water is reduced.'
+    explanation: 'Potassium (K) reacts violently with water (H2O) to form potassium hydroxide (KOH) and hydrogen gas (H2). The heat generated is enough to ignite the hydrogen, producing a lilac flame.'
   },
   {
-    name: 'Zinc and Acid Reaction',
+    name: 'Zinc and Sulfuric Acid Reaction',
     type: 'Displacement',
-    equation: 'Zn(s) + 2H+(aq) -> Zn2+(aq) + H<sub>2</sub>(g)',
+    equation: 'Zn(s) + H<sub>2</sub>SO<sub>4</sub>(aq) -> ZnSO<sub>4</sub>(aq) + H<sub>2</sub>(g)',
     conditions: 'Aqueous acid solution',
-    explanation: 'Zinc (Zn) reacts with hydrogen ions (H+) from an acid to form zinc ions (Zn2+) and hydrogen gas (H2). Zinc is oxidized, and hydrogen ions are reduced.'
+    explanation: 'Zinc (Zn) reacts with dilute sulfuric acid to form zinc sulfate and hydrogen gas, which can be observed as bubbles.'
   },
   {
     name: 'Iron displaces Copper (from Chloride)',
@@ -789,31 +908,185 @@ const reactionData = [
     conditions: 'Aqueous solution',
     explanation: 'Iron(Fe) displaces copper(Cu) from copper(II) chloride(CuCl2) solution. Iron is oxidized, and copper is reduced.'
   },
-
-  // Double Displacement & Precipitation Reactions
   {
-    name: 'Barium Chloride and Sodium Sulfate Reaction',
+    name: 'Aluminum and Hydrochloric Acid',
+    type: 'Displacement',
+    conditions: 'Aqueous solution',
+    equation: '2Al(s) + 6HCl(aq) -> 2AlCl<sub>3</sub>(aq) + 3H<sub>2</sub>(g)',
+    explanation: 'Aluminum metal reacts with hydrochloric acid to displace hydrogen gas and form aluminum chloride solution.'
+  },
+  {
+    name: 'Calcium and Water Reaction',
+    type: 'Displacement',
+    conditions: 'Cold water',
+    equation: 'Ca(s) + 2H<sub>2</sub>O(l) -> Ca(OH)<sub>2</sub>(aq) + H<sub>2</sub>(g)',
+    explanation: 'Calcium reacts steadily with cold water, displacing hydrogen to form calcium hydroxide (which is sparingly soluble) and hydrogen gas.'
+  },
+  {
+    name: 'Fluorine and Sodium Chloride Reaction',
+    type: 'Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'F<sub>2</sub>(g) + 2NaCl(aq) -> 2NaF(aq) + Cl<sub>2</sub>(g)',
+    explanation: 'Fluorine is the most reactive halogen and will displace chlorine from a sodium chloride solution.'
+  },
+  {
+    name: 'Bromine and Potassium Iodide Reaction',
+    type: 'Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'Br<sub>2</sub>(aq) + 2KI(aq) -> 2KBr(aq) + I<sub>2</sub>(aq)',
+    explanation: 'Bromine is more reactive than iodine, so it displaces iodine from potassium iodide solution. The solution turns brown due to the formation of iodine.'
+  },
+  {
+    name: 'Reaction of Magnesium with Steam',
+    type: 'Displacement',
+    conditions: 'High temperature steam',
+    equation: 'Mg(s) + H<sub>2</sub>O(g) -> MgO(s) + H<sub>2</sub>(g)',
+    explanation: 'Magnesium burns in steam to displace hydrogen and form magnesium oxide, a white solid.'
+  },
+  {
+    name: 'Reaction of Zinc with Steam',
+    type: 'Displacement',
+    conditions: 'High temperature steam',
+    equation: 'Zn(s) + H<sub>2</sub>O(g) -> ZnO(s) + H<sub>2</sub>(g)',
+    explanation: 'Hot zinc metal reacts with steam to displace hydrogen and form zinc oxide.'
+  },
+  {
+    name: 'Reaction of Iron with Steam',
+    type: 'Displacement',
+    conditions: 'Red hot iron, steam',
+    equation: '3Fe(s) + 4H<sub>2</sub>O(g) <=> Fe<sub>3</sub>O<sub>4</sub>(s) + 4H<sub>2</sub>(g)',
+    explanation: 'When steam is passed over red-hot iron, it reversibly displaces hydrogen to form magnetic iron(II,III) oxide (magnetite).'
+  },
+  {
+    name: 'Thermite Reaction',
+    type: 'Displacement',
+    conditions: 'High temperature ignition',
+    equation: '2Al(s) + Fe<sub>2</sub>O<sub>3</sub>(s) -> Al<sub>2</sub>O<sub>3</sub>(s) + 2Fe(l)',
+    explanation: 'A highly exothermic reaction where aluminum displaces iron from iron(III) oxide, producing molten iron. It is used for welding railway tracks.'
+  },
+  {
+    name: 'Magnesium and Zinc Nitrate Reaction',
+    type: 'Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'Mg(s) + Zn(NO<sub>3</sub>)<sub>2</sub>(aq) -> Mg(NO<sub>3</sub>)<sub>2</sub>(aq) + Zn(s)',
+    explanation: 'Magnesium is more reactive than zinc, so it displaces zinc from its salt solution, forming magnesium nitrate and solid zinc.'
+  },
+  {
+    name: 'Lead and Silver Nitrate Reaction',
+    type: 'Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'Pb(s) + 2AgNO<sub>3</sub>(aq) -> Pb(NO<sub>3</sub>)<sub>2</sub>(aq) + 2Ag(s)',
+    explanation: 'Lead displaces silver from silver nitrate solution, resulting in the formation of lead(II) nitrate and solid silver.'
+  },
+
+  // Double Displacement & Precipitation Reactions (15)
+  {
+    name: 'Barium Chloride and Sodium Sulfate',
     type: 'Double Displacement',
     conditions: 'Aqueous solution',
     equation: 'BaCl<sub>2</sub>(aq) + Na<sub>2</sub>SO<sub>4</sub>(aq) -> BaSO<sub>4</sub>(s) + 2NaCl(aq)',
-    explanation: 'When solutions of barium chloride and sodium sulfate are mixed, a white precipitate of barium sulfate is formed along with a solution of sodium chloride. This is a precipitation reaction.'
+    explanation: 'When solutions of barium chloride and sodium sulfate are mixed, a thick white precipitate of barium sulfate is formed along with a solution of sodium chloride. This is a precipitation reaction.'
   },
   {
-    name: 'Lead(II) Nitrate and Potassium Iodide Reaction',
+    name: 'Lead(II) Nitrate and Potassium Iodide',
     type: 'Double Displacement',
     conditions: 'Aqueous solution',
     equation: 'Pb(NO<sub>3</sub>)<sub>2</sub>(aq) + 2KI(aq) -> PbI<sub>2</sub>(s) + 2KNO<sub>3</sub>(aq)',
     explanation: 'Mixing colorless solutions of lead(II) nitrate and potassium iodide produces a vibrant yellow precipitate of lead(II) iodide and a solution of potassium nitrate.'
   },
   {
-    name: 'Silver Nitrate and Sodium Chloride Reaction',
+    name: 'Silver Nitrate and Sodium Chloride',
     type: 'Double Displacement',
     conditions: 'Aqueous solution',
     equation: 'AgNO<sub>3</sub>(aq) + NaCl(aq) -> AgCl(s) + NaNO<sub>3</sub>(aq)',
     explanation: 'This reaction forms a white, curdy precipitate of silver chloride (AgCl) when silver nitrate and sodium chloride solutions are mixed. It is a classic test for chloride ions.'
   },
+  {
+    name: 'Copper(II) Sulfate and Sodium Hydroxide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'CuSO<sub>4</sub>(aq) + 2NaOH(aq) -> Cu(OH)<sub>2</sub>(s) + Na<sub>2</sub>SO<sub>4</sub>(aq)',
+    explanation: 'Mixing blue copper(II) sulfate solution with sodium hydroxide solution produces a pale blue gelatinous precipitate of copper(II) hydroxide.'
+  },
+  {
+    name: 'Ferric Chloride and Ammonium Hydroxide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'FeCl<sub>3</sub>(aq) + 3NH<sub>4</sub>OH(aq) -> Fe(OH)<sub>3</sub>(s) + 3NH<sub>4</sub>Cl(aq)',
+    explanation: 'This reaction produces a reddish-brown gelatinous precipitate of iron(III) hydroxide.'
+  },
+  {
+    name: 'Calcium Chloride and Sodium Carbonate',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'CaCl<sub>2</sub>(aq) + Na<sub>2</sub>CO<sub>3</sub>(aq) -> CaCO<sub>3</sub>(s) + 2NaCl(aq)',
+    explanation: 'This reaction produces a white precipitate of calcium carbonate, which is the main component of limestone and chalk.'
+  },
+  {
+    name: 'Lead(II) Acetate and Hydrogen Sulfide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution / Gas',
+    equation: 'Pb(CH<sub>3</sub>COO)<sub>2</sub>(aq) + H<sub>2</sub>S(g) -> PbS(s) + 2CH<sub>3</sub>COOH(aq)',
+    explanation: 'When hydrogen sulfide gas is passed through a solution of lead(II) acetate, a black precipitate of lead(II) sulfide is formed. This is a test for H2S gas.'
+  },
+  {
+    name: 'Barium Chloride and Sulfuric Acid',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'BaCl<sub>2</sub>(aq) + H<sub>2</sub>SO<sub>4</sub>(aq) -> BaSO<sub>4</sub>(s) + 2HCl(aq)',
+    explanation: 'Similar to the reaction with sodium sulfate, this reaction also produces a dense white precipitate of barium sulfate, which is insoluble in acids.'
+  },
+  {
+    name: 'Limewater Test for Carbon Dioxide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution / Gas',
+    equation: 'Ca(OH)<sub>2</sub>(aq) + CO<sub>2</sub>(g) -> CaCO<sub>3</sub>(s) + H<sub>2</sub>O(l)',
+    explanation: 'When carbon dioxide gas is passed through limewater (calcium hydroxide solution), it turns milky due to the formation of a white precipitate of calcium carbonate.'
+  },
+  {
+    name: 'Zinc Sulfate and Ammonium Sulfide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'ZnSO<sub>4</sub>(aq) + (NH<sub>4</sub>)<sub>2</sub>S(aq) -> ZnS(s) + (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>(aq)',
+    explanation: 'This reaction produces a white precipitate of zinc sulfide.'
+  },
+  {
+    name: 'Cadmium Nitrate and Sodium Sulfide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'Cd(NO<sub>3</sub>)<sub>2</sub>(aq) + Na<sub>2</sub>S(aq) -> CdS(s) + 2NaNO<sub>3</sub>(aq)',
+    explanation: 'Produces a bright yellow precipitate of cadmium sulfide, which is used as a pigment (cadmium yellow).'
+  },
+  {
+    name: 'Potassium Chromate and Silver Nitrate',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'K<sub>2</sub>CrO<sub>4</sub>(aq) + 2AgNO<sub>3</sub>(aq) -> Ag<sub>2</sub>CrO<sub>4</sub>(s) + 2KNO<sub>3</sub>(aq)',
+    explanation: 'A brick-red precipitate of silver chromate is formed. This reaction is used as an indicator in Mohr\'s method for chloride determination.'
+  },
+  {
+    name: 'Magnesium Chloride and Silver Nitrate',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'MgCl<sub>2</sub>(aq) + 2AgNO<sub>3</sub>(aq) -> 2AgCl(s) + Mg(NO<sub>3</sub>)<sub>2</sub>(aq)',
+    explanation: 'A white precipitate of silver chloride is formed, demonstrating another precipitation of an insoluble silver halide.'
+  },
+  {
+    name: 'Sodium Phosphate and Calcium Chloride',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: '2Na<sub>3</sub>PO<sub>4</sub>(aq) + 3CaCl<sub>2</sub>(aq) -> Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>(s) + 6NaCl(aq)',
+    explanation: 'This reaction forms a white precipitate of calcium phosphate, a major component of bones and teeth.'
+  },
+  {
+    name: 'Aluminum Sulfate and Calcium Hydroxide',
+    type: 'Double Displacement',
+    conditions: 'Aqueous solution',
+    equation: 'Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>(aq) + 3Ca(OH)<sub>2</sub>(aq) -> 2Al(OH)<sub>3</sub>(s) + 3CaSO<sub>4</sub>(s)',
+    explanation: 'This reaction produces two precipitates: gelatinous white aluminum hydroxide and white calcium sulfate.'
+  },
 
-  // Neutralization Reactions
+  // Neutralization Reactions (10)
   {
     name: 'Hydrochloric Acid and Sodium Hydroxide',
     type: 'Neutralization',
@@ -835,8 +1108,57 @@ const reactionData = [
     equation: 'CH<sub>3</sub>COOH(aq) + NaOH(aq) -> CH<sub>3</sub>COONa(aq) + H<sub>2</sub>O(l)',
     explanation: 'A weak acid (acetic acid) reacts with a strong base (sodium hydroxide) to form a basic salt (sodium acetate) and water. The final pH is greater than 7.'
   },
+  {
+    name: 'Nitric Acid and Calcium Hydroxide',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: '2HNO<sub>3</sub>(aq) + Ca(OH)<sub>2</sub>(aq) -> Ca(NO<sub>3</sub>)<sub>2</sub>(aq) + 2H<sub>2</sub>O(l)',
+    explanation: 'A strong acid (nitric acid) reacts with a strong base (calcium hydroxide) to form a salt (calcium nitrate) and water.'
+  },
+  {
+    name: 'Hydrochloric Acid and Ammonia',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: 'HCl(aq) + NH<sub>3</sub>(aq) -> NH<sub>4</sub>Cl(aq)',
+    explanation: 'A strong acid reacts with a weak base (ammonia) to form an acidic salt (ammonium chloride). The final pH is less than 7.'
+  },
+  {
+    name: 'Phosphoric Acid and Sodium Hydroxide',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: 'H<sub>3</sub>PO<sub>4</sub>(aq) + 3NaOH(aq) -> Na<sub>3</sub>PO<sub>4</sub>(aq) + 3H<sub>2</sub>O(l)',
+    explanation: 'The complete neutralization of a weak, triprotic acid (phosphoric acid) with a strong base forms a salt (sodium phosphate) and water.'
+  },
+  {
+    name: 'Carbonic Acid and Potassium Hydroxide',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: 'H<sub>2</sub>CO<sub>3</sub>(aq) + 2KOH(aq) -> K<sub>2</sub>CO<sub>3</sub>(aq) + 2H<sub>2</sub>O(l)',
+    explanation: 'A weak acid (carbonic acid) reacts with a strong base to form a salt (potassium carbonate) and water.'
+  },
+  {
+    name: 'Reaction with a Metal Oxide (Base)',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: '2HCl(aq) + CuO(s) -> CuCl<sub>2</sub>(aq) + H<sub>2</sub>O(l)',
+    explanation: 'Acids can also neutralize insoluble basic metal oxides. Here, hydrochloric acid reacts with black copper(II) oxide to form a green solution of copper(II) chloride and water.'
+  },
+  {
+    name: 'Reaction with a Metal Carbonate',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: '2HCl(aq) + CaCO<sub>3</sub>(s) -> CaCl<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)',
+    explanation: 'Acids react with carbonates to produce a salt, water, and carbon dioxide gas. This is a neutralization reaction that also involves gas evolution.'
+  },
+  {
+    name: 'Hydrofluoric Acid and Silicon Dioxide',
+    type: 'Neutralization',
+    conditions: 'Aqueous solution',
+    equation: '4HF(aq) + SiO<sub>2</sub>(s) -> SiF<sub>4</sub>(g) + 2H<sub>2</sub>O(l)',
+    explanation: 'A unique reaction where hydrofluoric acid (a weak acid) neutralizes silicon dioxide (an acidic oxide, but acts as a base here), which is the main component of glass. This is why HF is used to etch glass.'
+  },
 
-  // Redox Reactions
+  // Redox Reactions (20)
   {
     name: 'Oxidation of Copper',
     type: 'Redox',
@@ -855,7 +1177,7 @@ const reactionData = [
     name: 'Permanganate Titration of Iron(II)',
     type: 'Redox',
     conditions: 'Acidic solution (H<sub>2</sub>SO<sub>4</sub>)',
-    equation: 'MnO<sub>4</sub>-(aq) + 5Fe2+(aq) + 8H+(aq) -> Mn2+(aq) + 5Fe3+(aq) + 4H<sub>2</sub>O(l)',
+    equation: 'MnO<sub>4</sub>-(aq) + 5Fe<sup>2+</sup>(aq) + 8H<sup>+</sup>(aq) -> Mn<sup>2+</sup>(aq) + 5Fe<sup>3+</sup>(aq) + 4H<sub>2</sub>O(l)',
     explanation: 'In acidic medium, the purple permanganate ion (MnO4-) oxidizes green iron(II) ions (Fe2+) to yellow iron(III) ions (Fe3+). The permanganate is reduced to the colorless manganese(II) ion (Mn2+), acting as its own indicator.'
   },
   {
@@ -880,14 +1202,14 @@ const reactionData = [
     explanation: 'Iron (Fe) reacts with oxygen (O2) and water (H2O) in the presence of moisture to form iron(III) hydroxide (Fe(OH)3), commonly known as rust. Iron is oxidized in this reaction.'
   },
   {
-    name: 'Reduction of Copper(II) Oxide',
+    name: 'Reduction of Copper(II) Oxide by Hydrogen',
     type: 'Redox',
     equation: 'CuO(s) + H<sub>2</sub>(g) -> Cu(s) + H<sub>2</sub>O(g)',
     conditions: 'Heat',
     explanation: 'Copper(II) oxide (CuO) reacts with hydrogen gas (H2) to form copper (Cu) and water vapor (H2O). Copper(II) oxide is reduced.'
   },
   {
-    name: 'Zinc and Nitric Acid',
+    name: 'Zinc and Concentrated Nitric Acid',
     type: 'Redox',
     equation: 'Zn(s) + 4HNO<sub>3</sub>(aq) -> Zn(NO<sub>3</sub>)<sub>2</sub>(aq) + 2NO<sub>2</sub>(g) + 2H<sub>2</sub>O(l)',
     conditions: 'Concentrated nitric acid',
@@ -914,8 +1236,71 @@ const reactionData = [
     conditions: 'Heat',
     explanation: 'Iron(III) oxide(Fe2O3) reacts with hydrogen gas(H2) to form iron metal(Fe) and water vapor(H2O). Iron(III) oxide is reduced.'
   },
-  
-  // Combustion Reactions
+  {
+    name: 'Reaction of Copper with Dilute Nitric Acid',
+    type: 'Redox',
+    conditions: 'Dilute nitric acid',
+    equation: '3Cu(s) + 8HNO<sub>3</sub>(aq) -> 3Cu(NO<sub>3</sub>)<sub>2</sub>(aq) + 2NO(g) + 4H<sub>2</sub>O(l)',
+    explanation: 'Copper reacts with dilute nitric acid to produce copper(II) nitrate, nitric oxide gas (which turns brown in air), and water. The reduction product of nitric acid is different than with concentrated acid.'
+  },
+  {
+    name: 'Iodometry Titration',
+    type: 'Redox',
+    conditions: 'Aqueous solution',
+    equation: 'I<sub>2</sub>(aq) + 2S<sub>2</sub>O<sub>3</sub><sup>2-</sup>(aq) -> 2I<sup>-</sup>(aq) + S<sub>4</sub>O<sub>6</sub><sup>2-</sup>(aq)',
+    explanation: 'Iodine is titrated with a standard solution of sodium thiosulfate. The iodine is reduced to iodide ions, and the thiosulfate is oxidized to the tetrathionate ion. Starch is used as an indicator.'
+  },
+  {
+    name: 'Dichromate Titration of Oxalate',
+    type: 'Redox',
+    conditions: 'Acidic solution, Heat',
+    equation: 'Cr<sub>2</sub>O<sub>7</sub><sup>2-</sup>(aq) + 3C<sub>2</sub>O<sub>4</sub><sup>2-</sup>(aq) + 14H<sup>+</sup>(aq) -> 2Cr<sup>3+</sup>(aq) + 6CO<sub>2</sub>(g) + 7H<sub>2</sub>O(l)',
+    explanation: 'The orange dichromate ion oxidizes the oxalate ion to carbon dioxide gas, and is itself reduced to the green chromium(III) ion.'
+  },
+  {
+    name: 'Disproportionation of Chlorine in Base',
+    type: 'Redox',
+    conditions: 'Cold, dilute NaOH',
+    equation: 'Cl<sub>2</sub>(g) + 2NaOH(aq) -> NaCl(aq) + NaClO(aq) + H<sub>2</sub>O(l)',
+    explanation: 'Chlorine disproportionates in cold alkali. Chlorine (oxidation state 0) is reduced to chloride (-1) and oxidized to hypochlorite (+1).'
+  },
+  {
+    name: 'Disproportionation of Phosphorus',
+    type: 'Redox',
+    conditions: 'Conc. NaOH, Heat',
+    equation: 'P<sub>4</sub>(s) + 3NaOH(aq) + 3H<sub>2</sub>O(l) -> PH<sub>3</sub>(g) + 3NaH<sub>2</sub>PO<sub>2</sub>(aq)',
+    explanation: 'White phosphorus reacts with concentrated NaOH solution to form phosphine gas and sodium hypophosphite. Phosphorus (state 0) is reduced to phosphine (-3) and oxidized to hypophosphite (+1).'
+  },
+  {
+    name: 'Reaction of Manganese Dioxide with HCl',
+    type: 'Redox',
+    conditions: 'Heating',
+    equation: 'MnO<sub>2</sub>(s) + 4HCl(aq) -> MnCl<sub>2</sub>(aq) + Cl<sub>2</sub>(g) + 2H<sub>2</sub>O(l)',
+    explanation: 'This is a laboratory method for preparing chlorine gas. Manganese dioxide oxidizes hydrochloric acid to chlorine, while being reduced to manganese(II) chloride.'
+  },
+  {
+    name: 'Daniell Cell Reaction',
+    type: 'Redox',
+    conditions: 'Electrochemical cell',
+    equation: 'Zn(s) + Cu<sup>2+</sup>(aq) -> Zn<sup>2+</sup>(aq) + Cu(s)',
+    explanation: 'The overall reaction in a Daniell cell. Zinc is oxidized at the anode, and copper ions are reduced at the cathode, generating an electric current.'
+  },
+  {
+    name: 'Reaction of SO2 with H2S',
+    type: 'Redox',
+    conditions: 'Gas phase or solution',
+    equation: 'SO<sub>2</sub>(g) + 2H<sub>2</sub>S(g) -> 3S(s) + 2H<sub>2</sub>O(l)',
+    explanation: 'The Claus process for sulfur recovery. Sulfur dioxide oxidizes hydrogen sulfide to elemental sulfur, and is itself reduced to sulfur.'
+  },
+  {
+    name: 'Oxidation of Ammonia',
+    type: 'Redox',
+    conditions: 'Pt/Rh catalyst, 900°C',
+    equation: '4NH<sub>3</sub>(g) + 5O<sub>2</sub>(g) -> 4NO(g) + 6H<sub>2</sub>O(g)',
+    explanation: 'The Ostwald process for nitric acid production. Ammonia is catalytically oxidized to form nitric oxide.'
+  },
+
+  // Organic Reactions - Combustion (11)
   {
     name: 'Combustion of Methane',
     type: 'Organic',
@@ -935,66 +1320,66 @@ const reactionData = [
     type: 'Organic',
     equation: '2C<sub>4</sub>H<sub>10</sub>(g) + 13O<sub>2</sub>(g) -> 8CO<sub>2</sub>(g) + 10H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Butane (C4H10) reacts with oxygen (O2) to form carbon dioxide (CO2) and water (H2O). Butane is oxidized, and oxygen is reduced.'
+    explanation: 'Butane (C4H10) is a component of LPG and burns in oxygen to form carbon dioxide and water.'
   },
   {
-    name: 'Combustion of Ethylene',
+    name: 'Combustion of Ethene (Ethylene)',
     type: 'Organic',
     equation: 'C<sub>2</sub>H<sub>4</sub>(g) + 3O<sub>2</sub>(g) -> 2CO<sub>2</sub>(g) + 2H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Ethylene(C2H4) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). Ethylene is oxidized, and oxygen is reduced.'
+    explanation: 'Ethylene undergoes complete combustion to form carbon dioxide and water.'
   },
   {
     name: 'Combustion of Propane',
     type: 'Organic',
     equation: 'C<sub>3</sub>H<sub>8</sub>(g) + 5O<sub>2</sub>(g) -> 3CO<sub>2</sub>(g) + 4H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Propane(C3H8) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). Propane is oxidized, and oxygen is reduced.'
+    explanation: 'Propane, used in BBQs and heating, burns to produce carbon dioxide and water.'
   },
   {
     name: 'Combustion of Pentane',
     type: 'Organic',
     equation: 'C<sub>5</sub>H<sub>12</sub>(g) + 8O<sub>2</sub>(g) -> 5CO<sub>2</sub>(g) + 6H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Pentane(C5H12) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). Pentane is oxidized, and oxygen is reduced.'
+    explanation: 'Pentane, a volatile hydrocarbon, combusts to form carbon dioxide and water.'
   },
   {
     name: 'Combustion of Hexane',
     type: 'Organic',
     equation: '2C<sub>6</sub>H<sub>14</sub>(g) + 19O<sub>2</sub>(g) -> 12CO<sub>2</sub>(g) + 14H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Hexane(C6H14) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). Hexane is oxidized, and oxygen is reduced.'
+    explanation: 'Hexane is a component of gasoline and combusts exothermically.'
   },
   {
     name: 'Combustion of Heptane',
     type: 'Organic',
     equation: 'C<sub>7</sub>H<sub>16</sub>(g) + 11O<sub>2</sub>(g) -> 7CO<sub>2</sub>(g) + 8H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Heptane(C7H16) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). Heptane is oxidized, and oxygen is reduced.'
+    explanation: 'Heptane combustion is a standard reference for octane rating in fuels.'
   },
   {
     name: 'Combustion of Octane',
     type: 'Organic',
     equation: '2C<sub>8</sub>H<sub>18</sub>(g) + 25O<sub>2</sub>(g) -> 16CO<sub>2</sub>(g) + 18H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Octane(C8H18) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O). This reaction powers many internal combustion engines.'
+    explanation: 'Octane is a major component of gasoline, and its combustion powers many internal combustion engines.'
   },
   {
-    name: 'Combustion of Nonane',
+    name: 'Combustion of Ethyne (Acetylene)',
     type: 'Organic',
-    equation: 'C<sub>9</sub>H<sub>20</sub>(g) + 14O<sub>2</sub>(g) -> 9CO<sub>2</sub>(g) + 10H<sub>2</sub>O(g)',
     conditions: 'Ignition',
-    explanation: 'Nonane(C9H20) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O).'
+    equation: '2C<sub>2</sub>H<sub>2</sub>(g) + 5O<sub>2</sub>(g) -> 4CO<sub>2</sub>(g) + 2H<sub>2</sub>O(g)',
+    explanation: 'The combustion of acetylene with pure oxygen produces a very high-temperature flame, used in oxy-acetylene welding and cutting.'
   },
   {
-    name: 'Combustion of Decane',
+    name: 'Combustion of Glucose',
     type: 'Organic',
-    equation: '2C<sub>10</sub>H<sub>22</sub>(g) + 31O<sub>2</sub>(g) -> 20CO<sub>2</sub>(g) + 22H<sub>2</sub>O(g)',
-    conditions: 'Ignition',
-    explanation: 'Decane(C10H22) reacts with oxygen(O2) to form carbon dioxide(CO2) and water(H2O).'
+    conditions: 'Cellular Respiration',
+    equation: 'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>(s) + 6O<sub>2</sub>(g) -> 6CO<sub>2</sub>(g) + 6H<sub>2</sub>O(l)',
+    explanation: 'The overall equation for cellular respiration, where glucose is "burned" in the body to produce energy (ATP), carbon dioxide, and water.'
   },
-  
-  // Organic Reactions - General
+
+  // Organic Reactions - General & Named (93)
   {
     name: 'Chlorination of Methane',
     type: 'Organic',
@@ -1034,7 +1419,7 @@ const reactionData = [
     name: 'Polymerization of Ethene',
     type: 'Organic',
     conditions: 'High Temp/Pressure, Catalyst',
-    equation: 'n(CH<sub>2</sub>=CH<sub>2</sub>) -> [-CH<sub>2</sub>-CH<sub>2</sub>-]-n',
+    equation: 'n(CH<sub>2</sub>=CH<sub>2</sub>) -> [-CH<sub>2</sub>-CH<sub>2</sub>-]<sub>n</sub>',
     explanation: 'Many ethene monomers undergo addition polymerization to form poly(ethene), a long-chain polymer commonly known as polythene.'
   },
   {
@@ -1066,7 +1451,7 @@ const reactionData = [
     explanation: 'When ethanol is heated with concentrated sulfuric acid (a dehydrating agent), a molecule of water is removed to form ethene. This is an elimination reaction.'
   },
   {
-    name: 'Esterification Reaction',
+    name: 'Esterification Reaction (Fischer Esterification)',
     type: 'Organic',
     conditions: 'Conc. H<sub>2</sub>SO<sub>4</sub> catalyst, Heat',
     equation: 'CH<sub>3</sub>COOH(l) + C<sub>2</sub>H<sub>5</sub>OH(l) <=> CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>(l) + H<sub>2</sub>O(l)',
@@ -1115,7 +1500,6 @@ const reactionData = [
     explanation: 'An acyl group (from an acyl chloride like ethanoyl chloride) is attached to the benzene ring, forming a ketone (acetophenone). This is another important electrophilic substitution reaction.'
   },
   
-  // Advanced & Named Reactions
   {
     name: 'Wurtz Reaction',
     type: 'Organic',
@@ -1147,7 +1531,7 @@ const reactionData = [
   {
     name: 'Reaction of Grignard Reagent with CO<sub>2</sub>',
     type: 'Organic',
-    conditions: '1. Dry ether, 2. H<sub>3</sub>O+ (hydrolysis)',
+    conditions: '1. Dry ether, 2. H<sub>3</sub>O<sup>+</sup> (hydrolysis)',
     equation: 'CH<sub>3</sub>MgBr + CO<sub>2</sub> -> CH<sub>3</sub>COOH',
     explanation: 'Grignard reagents react with carbon dioxide (dry ice) followed by acid hydrolysis to form carboxylic acids with one more carbon atom than the original alkyl halide.'
   },
@@ -1175,7 +1559,7 @@ const reactionData = [
   {
     name: 'Reimer-Tiemann Reaction',
     type: 'Organic',
-    conditions: 'CHCl<sub>3</sub> + NaOH, then H+',
+    conditions: 'CHCl<sub>3</sub> + NaOH, then H<sup>+</sup>',
     equation: 'C<sub>6</sub>H<sub>5</sub>OH -> o-C<sub>6</sub>H<sub>4</sub>(OH)CHO',
     explanation: 'Phenol is treated with chloroform in the presence of sodium hydroxide to introduce a -CHO group at the ortho position of the benzene ring, forming salicylaldehyde.'
   },
@@ -1232,7 +1616,7 @@ const reactionData = [
     name: 'Sandmeyer Reaction',
     type: 'Organic',
     conditions: 'CuCl/HCl or CuBr/HBr',
-    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub>+Cl- -> C<sub>6</sub>H<sub>5</sub>Cl',
+    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub><sup>+</sup>Cl<sup>-</sup> -> C<sub>6</sub>H<sub>5</sub>Cl',
     explanation: 'A substitution reaction used to replace the diazonium group (-N2+) on an aromatic ring with a halide (Cl, Br) or cyanide (CN) using a copper(I) salt catalyst.'
   },
   {
@@ -1245,7 +1629,7 @@ const reactionData = [
   {
     name: 'Kolbe\'s Reaction',
     type: 'Organic',
-    conditions: '1. NaOH, 2. CO<sub>2</sub>, 3. H+',
+    conditions: '1. NaOH, 2. CO<sub>2</sub>, 3. H<sup>+</sup>',
     equation: 'C<sub>6</sub>H<sub>5</sub>OH -> o-C<sub>6</sub>H<sub>4</sub>(OH)COOH',
     explanation: 'Sodium phenoxide is treated with carbon dioxide under pressure, followed by acidification, to produce salicylic acid (2-hydroxybenzoic acid). This is an electrophilic substitution reaction.'
   },
@@ -1267,14 +1651,14 @@ const reactionData = [
     name: 'Diazotisation Reaction',
     type: 'Organic',
     conditions: 'NaNO<sub>2</sub> + HCl, 0-5°C',
-    equation: 'C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub> -> C<sub>6</sub>H<sub>5</sub>N<sub>2</sub>+Cl-',
+    equation: 'C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub> -> C<sub>6</sub>H<sub>5</sub>N<sub>2</sub><sup>+</sup>Cl<sup>-</sup>',
     explanation: 'A primary aromatic amine (like aniline) is treated with nitrous acid (from NaNO2 and HCl) at very low temperatures to form a benzene diazonium salt. These salts are highly reactive intermediates.'
   },
   {
     name: 'Coupling Reaction',
     type: 'Organic',
     conditions: 'Mildly alkaline medium',
-    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub>+Cl- + C<sub>6</sub>H<sub>5</sub>OH -> C<sub>6</sub>H<sub>5</sub>-N=N-C<sub>6</sub>H<sub>4</sub>-OH',
+    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub><sup>+</sup>Cl<sup>-</sup> + C<sub>6</sub>H<sub>5</sub>OH -> C<sub>6</sub>H<sub>5</sub>-N=N-C<sub>6</sub>H<sub>4</sub>-OH',
     explanation: 'Benzene diazonium salts react with electron-rich aromatic compounds like phenol or aniline to form brightly colored azo compounds, which are used as dyes.'
   },
   {
@@ -1302,7 +1686,7 @@ const reactionData = [
     name: 'Balz-Schiemann Reaction',
     type: 'Organic',
     conditions: '1. HBF<sub>4</sub>, 2. Heat',
-    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub>+Cl- -> C<sub>6</sub>H<sub>5</sub>F',
+    equation: 'C<sub>6</sub>H<sub>5</sub>N<sub>2</sub><sup>+</sup>Cl<sup>-</sup> -> C<sub>6</sub>H<sub>5</sub>F',
     explanation: 'A method for preparing fluorobenzene from an aromatic diazonium salt by treating it with fluoroboric acid (HBF4), which precipitates the diazonium fluoroborate, followed by gentle heating.'
   },
   {
@@ -1416,6 +1800,223 @@ const reactionData = [
     conditions: '1. Organometallic reagent, 2. Mild acid workup',
     equation: 'R-CON(OCH<sub>3</sub>)CH<sub>3</sub> + R\'MgBr -> R-CO-R\'',
     explanation: 'A reliable method for preparing ketones by reacting an N-methoxy-N-methylamide (Weinreb amide) with a Grignard or organolithium reagent. The reaction stops at the ketone stage without forming a tertiary alcohol.'
+  },
+  {
+    name: 'Polymerization of Vinyl Chloride',
+    type: 'Organic',
+    conditions: 'Free radical initiator',
+    equation: 'n(CH<sub>2</sub>=CHCl) -> [-CH<sub>2</sub>-CHCl-]<sub>n</sub>',
+    explanation: 'Vinyl chloride monomers polymerize to form poly(vinyl chloride), or PVC, a widely used plastic for pipes, flooring, and electrical insulation.'
+  },
+  {
+    name: 'Polymerization of Tetrafluoroethene',
+    type: 'Organic',
+    conditions: 'High pressure, radical initiator',
+    equation: 'n(CF<sub>2</sub>=CF<sub>2</sub>) -> [-CF<sub>2</sub>-CF<sub>2</sub>-]<sub>n</sub>',
+    explanation: 'Tetrafluoroethene polymerizes to form poly(tetrafluoroethene), PTFE, commercially known as Teflon, famous for its non-stick properties.'
+  },
+  {
+    name: 'Tollens\' Test',
+    type: 'Organic',
+    conditions: 'Tollens\' reagent [Ag(NH<sub>3</sub>)<sub>2</sub>]<sup>+</sup>, gentle heat',
+    equation: 'RCHO + 2[Ag(NH<sub>3</sub>)<sub>2</sub>]<sup>+</sup> + 3OH<sup>-</sup> -> RCOO<sup>-</sup> + 2Ag(s) + 4NH<sub>3</sub> + 2H<sub>2</sub>O',
+    explanation: 'A qualitative test for aldehydes. Aldehydes are oxidized to carboxylate ions, and the Ag+ ions in the Tollens\' reagent are reduced to metallic silver, which forms a characteristic "silver mirror" on the test tube.'
+  },
+  {
+    name: 'Fehling\'s Test',
+    type: 'Organic',
+    conditions: 'Fehling\'s solution (Cu<sup>2+</sup> complex), heat',
+    equation: 'RCHO + 2Cu<sup>2+</sup> + 5OH<sup>-</sup> -> RCOO<sup>-</sup> + Cu<sub>2</sub>O(s) + 3H<sub>2</sub>O',
+    explanation: 'Another test for aldehydes. The blue copper(II) ions in Fehling\'s solution are reduced by the aldehyde to form a red precipitate of copper(I) oxide.'
+  },
+  {
+    name: 'Iodoform Test',
+    type: 'Organic',
+    conditions: 'I<sub>2</sub> + NaOH',
+    equation: 'CH<sub>3</sub>COR + 3I<sub>2</sub> + 4NaOH -> RCOONa + CHI<sub>3</sub>(s) + 3NaI + 3H<sub>2</sub>O',
+    explanation: 'A test for methyl ketones (or alcohols that can be oxidized to methyl ketones). The reaction produces a yellow precipitate of iodoform (CHI3), which has a characteristic antiseptic smell.'
+  },
+  {
+    name: 'Swern Oxidation',
+    type: 'Organic',
+    conditions: 'Oxalyl chloride, DMSO, Triethylamine',
+    equation: 'RCH<sub>2</sub>OH -> RCHO',
+    explanation: 'A mild oxidation of primary or secondary alcohols to aldehydes or ketones, respectively. It avoids the use of toxic chromium reagents.'
+  },
+  {
+    name: 'Dess-Martin Oxidation',
+    type: 'Organic',
+    conditions: 'Dess-Martin Periodinane (DMP)',
+    equation: 'RCH<sub>2</sub>OH -> RCHO',
+    explanation: 'Another mild and selective method for oxidizing primary alcohols to aldehydes and secondary alcohols to ketones using the Dess-Martin periodinane reagent.'
+  },
+  {
+    name: 'Birch Reduction',
+    type: 'Organic',
+    conditions: 'Na or Li in liquid NH<sub>3</sub> with an alcohol',
+    equation: 'Benzene -> 1,4-Cyclohexadiene',
+    explanation: 'A reaction that reduces aromatic rings to 1,4-cyclohexadienes. It is a dissolving metal reduction and a key method for creating non-aromatic rings from aromatic precursors.'
+  },
+  {
+    name: 'Corey-House Synthesis',
+    type: 'Organic',
+    conditions: '1. 2Li, 2. CuI, 3. R\'-X',
+    equation: 'R<sub>2</sub>CuLi + R\'-X -> R-R\' + RCu + LiX',
+    explanation: 'A versatile method for forming unsymmetrical alkanes by coupling a lithium dialkylcuprate (Gilman reagent) with an alkyl halide.'
+  },
+  {
+    name: 'Michael Addition',
+    type: 'Organic',
+    conditions: 'Base',
+    equation: 'Enolate + α,β-Unsaturated carbonyl -> 1,5-Dicarbonyl compound',
+    explanation: 'The nucleophilic addition of an enolate (or other nucleophile) to an α,β-unsaturated carbonyl compound. It is a thermodynamically controlled conjugate addition.'
+  },
+  {
+    name: 'Robinson Annulation',
+    type: 'Organic',
+    conditions: 'Base',
+    equation: 'Cyclohexanone + Methyl vinyl ketone -> Octalone derivative',
+    explanation: 'A powerful ring-forming reaction that combines a Michael addition with a subsequent intramolecular aldol condensation to create a six-membered ring.'
+  },
+  {
+    name: 'Sharpless Asymmetric Epoxidation',
+    type: 'Organic',
+    conditions: 'Titanium tetraisopropoxide, DET, t-BuOOH',
+    equation: 'Allylic alcohol -> Chiral epoxide',
+    explanation: 'An enantioselective epoxidation of primary and secondary allylic alcohols. The chirality of the diethyl tartrate (DET) catalyst determines which face of the alkene is epoxidized, leading to high stereocontrol.'
+  },
+  {
+    name: 'Sonogashira Coupling',
+    type: 'Organic',
+    conditions: 'Pd and Cu catalysts, Base',
+    equation: 'Aryl halide + Terminal alkyne -> Aryl alkyne',
+    explanation: 'A cross-coupling reaction to form a carbon-carbon bond between a terminal alkyne and an aryl or vinyl halide, using both palladium and copper catalysts.'
+  },
+  {
+    name: 'Stille Coupling',
+    type: 'Organic',
+    conditions: 'Pd catalyst',
+    equation: 'R-X + R\'-Sn(Bu)<sub>3</sub> -> R-R\'',
+    explanation: 'A palladium-catalyzed cross-coupling reaction between an organotin compound (stannane) and an sp2-hybridized organic halide.'
+  },
+  {
+    name: 'Negishi Coupling',
+    type: 'Organic',
+    conditions: 'Pd or Ni catalyst',
+    equation: 'R-X + R\'-ZnX -> R-R\'',
+    explanation: 'A cross-coupling reaction where an organozinc compound is reacted with an organic halide in the presence of a nickel or palladium catalyst to form a new C-C bond.'
+  },
+  {
+    name: 'Mitsunobu Reaction',
+    type: 'Organic',
+    conditions: 'Triphenylphosphine (PPh<sub>3</sub>), DEAD or DIAD',
+    equation: 'R-OH + H-Nu -> R-Nu',
+    explanation: 'A versatile reaction for converting a primary or secondary alcohol into a variety of functional groups (like esters, ethers, azides) using a nucleophile. The reaction proceeds with an inversion of stereochemistry at the alcohol carbon.'
+  },
+  {
+    name: 'Acetal Formation',
+    type: 'Organic',
+    conditions: 'Acid catalyst (e.g., TsOH), 2 eq. of Alcohol',
+    equation: 'RCHO + 2R\'OH <=> RCH(OR\')<sub>2</sub> + H<sub>2</sub>O',
+    explanation: 'An aldehyde or ketone reacts with two equivalents of an alcohol in the presence of an acid catalyst to form an acetal. Acetals are often used as protecting groups for carbonyls.'
+  },
+  {
+    name: 'Cyanohydrin Formation',
+    type: 'Organic',
+    conditions: 'HCN, catalytic base',
+    equation: 'R<sub>2</sub>C=O + HCN -> R<sub>2</sub>C(OH)CN',
+    explanation: 'The nucleophilic addition of hydrogen cyanide to a ketone or aldehyde to form a cyanohydrin. This reaction is useful as it adds a carbon and creates two functional groups.'
+  },
+  {
+    name: 'Imine Formation',
+    type: 'Organic',
+    conditions: 'Mild acid catalyst',
+    equation: 'R<sub>2</sub>C=O + R\'NH<sub>2</sub> <=> R<sub>2</sub>C=NR\' + H<sub>2</sub>O',
+    explanation: 'An aldehyde or ketone reacts with a primary amine to form an imine (also known as a Schiff base). This is a reversible condensation reaction.'
+  },
+  {
+    name: 'Enamine Formation',
+    type: 'Organic',
+    conditions: 'Mild acid catalyst',
+    equation: 'R<sub>2</sub>C=O + R\'<sub>2</sub>NH <=> Enamine + H<sub>2</sub>O',
+    explanation: 'An aldehyde or ketone with an α-hydrogen reacts with a secondary amine to form an enamine. Enamines are useful nucleophiles in organic synthesis.'
+  },
+  {
+    name: 'Strecker Amino Acid Synthesis',
+    type: 'Organic',
+    conditions: '1. NH<sub>4</sub>Cl, KCN, 2. H<sub>3</sub>O<sup>+</sup>',
+    equation: 'RCHO -> R-CH(NH<sub>2</sub>)COOH',
+    explanation: 'A method for synthesizing amino acids by reacting an aldehyde with ammonium chloride and potassium cyanide to form an α-aminonitrile, which is then hydrolyzed.'
+  },
+  {
+    name: 'Malonic Ester Synthesis',
+    type: 'Organic',
+    conditions: '1. NaOEt, 2. R-X, 3. H<sub>3</sub>O<sup>+</sup>/Heat',
+    equation: 'Diethyl malonate -> R-CH<sub>2</sub>COOH',
+    explanation: 'A process for converting an alkyl halide into a carboxylic acid with two additional carbons. It involves alkylating diethyl malonate, followed by hydrolysis and decarboxylation.'
+  },
+  {
+    name: 'Acetoacetic Ester Synthesis',
+    type: 'Organic',
+    conditions: '1. NaOEt, 2. R-X, 3. H<sub>3</sub>O<sup>+</sup>/Heat',
+    equation: 'Ethyl acetoacetate -> CH<sub>3</sub>COCH<sub>2</sub>-R',
+    explanation: 'A process for converting an alkyl halide into a methyl ketone with three additional carbons. It involves alkylating ethyl acetoacetate, followed by hydrolysis and decarboxylation.'
+  },
+  {
+    name: 'Favorskii Rearrangement',
+    type: 'Organic',
+    conditions: 'Base (e.g., alkoxide)',
+    equation: 'α-Halo ketone -> Ester (after rearrangement)',
+    explanation: 'A base-catalyzed rearrangement of an α-halo ketone to a carboxylic acid derivative (often an ester). The reaction proceeds through a cyclopropanone intermediate.'
+  },
+  {
+    name: 'Arndt-Eistert Synthesis',
+    type: 'Organic',
+    conditions: '1. SOCl<sub>2</sub>, 2. CH<sub>2</sub>N<sub>2</sub>, 3. Ag<sub>2</sub>O/H<sub>2</sub>O',
+    equation: 'RCOOH -> RCH<sub>2</sub>COOH',
+    explanation: 'A method for converting a carboxylic acid to its next higher homolog (i.e., adding one CH2 group). It involves forming an acid chloride, reacting it with diazomethane, and then Wolff rearrangement.'
+  },
+  {
+    name: 'Baeyer\'s Strain Theory Explanation',
+    type: 'Organic',
+    conditions: 'Concept',
+    equation: 'Cyclopropane > Cyclobutane > Cyclopentane (in terms of ring strain)',
+    explanation: 'A theory explaining the relative stabilities of cycloalkanes based on the deviation of their bond angles from the ideal tetrahedral angle of 109.5°. While historically important, it has limitations, especially for larger rings.'
+  },
+  {
+    name: 'Markovnikov\'s Rule',
+    type: 'Organic',
+    conditions: 'Addition to unsymmetrical alkene',
+    equation: 'CH<sub>3</sub>CH=CH<sub>2</sub> + HBr -> CH<sub>3</sub>CH(Br)CH<sub>3</sub>',
+    explanation: 'When an unsymmetrical reagent (like H-X or H2O) is added to an unsymmetrical alkene, the hydrogen atom attaches to the carbon that already has more hydrogen atoms. This is due to the formation of the more stable carbocation intermediate.'
+  },
+  {
+    name: 'Anti-Markovnikov Addition (Peroxide Effect)',
+    type: 'Organic',
+    conditions: 'HBr, Peroxide (ROOR)',
+    equation: 'CH<sub>3</sub>CH=CH<sub>2</sub> + HBr -> CH<sub>3</sub>CH<sub>2</sub>CH<sub>2</sub>Br',
+    explanation: 'In the presence of peroxides, the addition of HBr to an unsymmetrical alkene proceeds via a free-radical mechanism, and the addition is anti-Markovnikov. The bromine attaches to the carbon with more hydrogens.'
+  },
+  {
+    name: 'SN1 Reaction (Tertiary Halide)',
+    type: 'Organic',
+    conditions: 'Protic solvent (e.g., H<sub>2</sub>O, EtOH)',
+    equation: '(CH<sub>3</sub>)<sub>3</sub>C-Br + H<sub>2</sub>O -> (CH<sub>3</sub>)<sub>3</sub>C-OH + HBr',
+    explanation: 'A nucleophilic substitution that proceeds in two steps through a planar carbocation intermediate. It is favored by tertiary substrates, weak nucleophiles, and protic solvents. It leads to a racemic mixture if the starting material is chiral.'
+  },
+  {
+    name: 'SN2 Reaction (Primary Halide)',
+    type: 'Organic',
+    conditions: 'Aprotic solvent (e.g., Acetone, DMSO)',
+    equation: 'CH<sub>3</sub>Br + NaOH -> CH<sub>3</sub>OH + NaBr',
+    explanation: 'A one-step nucleophilic substitution where the nucleophile attacks from the backside, displacing the leaving group. It is favored by primary substrates and strong nucleophiles, and results in an inversion of stereochemistry (Walden inversion).'
+  },
+  {
+    name: 'E1 Elimination Reaction',
+    type: 'Organic',
+    conditions: 'Heat, weak base',
+    equation: '(CH<sub>3</sub>)<sub>3</sub>C-Br + H<sub>2</sub>O -> (CH<sub>3</sub>)<sub>2</sub>C=CH<sub>2</sub> + H<sub>3</sub>O<sup>+</sup> + Br<sup>-</sup>',
+    explanation: 'A two-step elimination that proceeds through a carbocation intermediate, similar to SN1. It often competes with SN1 reactions and follows Zaitsev\'s rule.'
   },
 ];
 
