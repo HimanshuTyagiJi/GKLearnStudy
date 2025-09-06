@@ -1,3 +1,14 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// --- Start of Core UI Initialization ---
+
+/**
+ * Creates and injects the navigation menu items dynamically.
+ * This centralizes the menu links for easy updating across the site.
+ */
 function initMenuItems() {
   const menuInner = document.querySelector(".menu-inner");
   if (!menuInner) return;
@@ -123,32 +134,99 @@ function initReadingProgressBar() {
   });
 }
 
-function initSocialLinks() {
-  const socialLinksContainer = document.querySelector(".footer-socials");
+/**
+ * Creates and injects the footer content and social links dynamically.
+ * This centralizes the footer for easy updating across the site.
+ */
+function initFooter() {
+  const footerContent = document.querySelector(".footer-content");
+  if (!footerContent) return;
+
+  const footerHTML = `
+    <div class="footer-section footer-about">
+        <h3>About GK Learn Study</h3>
+        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+    </div>
+    <div class="footer-section">
+        <h4>About Us</h4>
+        <ul>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="/terms.html">Terms of Service</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>For you</h4>
+        <ul>
+            <li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/modern-indian-history">Modern Indian History</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/world-geography-mcq-quiz">World Geography</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz">Rivers and Lakes</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/physics-mcq-quiz">Physics</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/chemistry-mcq-quiz">Chemistry</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/biology-mcq-quiz">Biology</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz">Science and Technology</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/sanskrit-mcq-quiz">Sanskrit</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/books-and-authors-mcq-quiz">Books and Authors</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-art-and-culture-mcq-quiz">Indian Art and Culture</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-festivals-and-traditions-mcq-quiz">Festivals and Traditions</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/famous-monuments-mcq-quiz">Famous Monuments</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-government-and-constitution-mcq-quiz">Indian Constitution</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-defense-mcq-quiz">Indian Defense</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/international-relations-mcq-quiz">International Relations</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/indian-economy-mcq-quiz">Indian Economy</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/famous-personalities-mcq-quiz">Famous Personalities</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/awards-and-honors-mcq-quiz">Awards and Honors</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/technology-and-inventions-mcq-quiz">Technology and Inventions</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz">Space and Universe</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/environment-and-biodiversity-mcq-quiz">Environment and Biodiversity</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/wildlife-and-national-parks-mcq-quiz">Wildlife and National Parks</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/mathematical-mcq-quiz">Mathematics</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/computer-mcq-quiz">Computer</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/sports-general-knowledge-mcq-quiz">Sports GK</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/world-history">World History</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/world-organizations-mcq-quiz">World Organizations</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/important-dates-and-events-mcq-quiz">Important Dates & Events</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/disasters-and-accidents-mcq-quiz">Disasters and Accidents</a></li>
+            <li><a href="https://gklearnstudy.in/gk-quiz/transport-and-communication-mcq-quiz">Transport and Communication</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>Science & Computer</h4>
+        <ul>
+            <li><a href="conversion.html">Conversion</a></li>
+            <li><a href="all-formulas.html">All formulas</a></li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h4>Follow Us</h4>
+        <ul class="footer-socials"></ul>
+    </div>
+  `;
+  footerContent.innerHTML = footerHTML;
+
+  const socialLinksContainer = footerContent.querySelector(".footer-socials");
   if (!socialLinksContainer) return;
 
-  // Central place to manage all social media links. Just update the URL here.
   const socialLinksData = [
-   
-   {
-  name: "YouTube",
-  url: "https://www.youtube.com/@GKLearnStudy",
-  label: "YouTube",
-  title: "Subscribe to our YouTube channel",
-  svg: `<svg viewBox="0 0 24 24" style="width:28px; fill:white;">
+    {
+      name: "YouTube",
+      url: "https://www.youtube.com/@GKLearnStudy",
+      label: "YouTube",
+      title: "Subscribe to our YouTube channel",
+      svg: `<svg viewBox="0 0 24 24" style="width:28px; fill:currentColor;">
     <path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/>
   </svg>`,
-},
-
-   
-  
+    },
   ];
 
   const linksHTML = socialLinksData
     .map(
-      (link) => `
-        <li><a href="${link.url}" aria-label="${link.label}" title="${link.title}" target="_blank" rel="noopener noreferrer">${link.svg}</a></li>
-    `
+      (link) =>
+        `<li><a href="${link.url}" aria-label="${link.label}" title="${link.title}" target="_blank" rel="noopener noreferrer">${link.svg}</a></li>`
     )
     .join("");
 
@@ -158,13 +236,13 @@ function initSocialLinks() {
 // --- Main Application Logic ---
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Build the static UI parts
-  initMenuItems(); // Create menu links first
+  initMenuItems(); // Create menu links
+  initFooter(); // Create footer structure and content, including social links
   initNavigation(); // Then initialize navigation logic (like active states)
   initImagePlaceholders();
   initLinkAttributes();
   initFavicon();
   initReadingProgressBar();
-  initSocialLinks();
 
   // 2. Setup Header Search Logic (Global Search)
   const searchContainer = document.querySelector(".search-container");
@@ -279,7 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
       postElement.className = "post-card-link";
       postElement.setAttribute("title", post.title);
 
-      const readingTime = post.readingTime || "5 min read"; // Use the manual time, with a fallback.
+      const words = post.paragraph.split(/\s+/).length;
+      const readingTime = Math.ceil(words / 225);
 
       let imageOrSvgHtml = "";
       if (post.svg) {
@@ -299,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span class="post-author">By ${post.author}</span>
                              <span class="post-reading-time">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v6h6v-2h-4V7z"></path></svg>
-                                ${readingTime}
+                                ${readingTime} min read
                             </span>
                             <span class="post-date">${post.date}</span>
                         </div>
