@@ -20,7 +20,7 @@
 #load-more-btn:hover{background-color:var(--primary-hover-color);transform:translateY(-2px)}
 @media (max-width:480px){
     .container{width:97%;margin:0 auto;padding:0px 0px;text-align:justify;line-height:2}
-#root{width:97%;margin:0 auto;padding:0rem}
+#root{width:97%;margin:25px auto;padding:0rem}
 
     .post-card-content{padding:1rem}.post-card-title{font-size:1.1rem}.post-card-excerpt{font-size:.9rem}}
 .post-grid { display: grid; gap: 20px; justify-content: center; }
