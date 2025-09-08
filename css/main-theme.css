@@ -66,14 +66,16 @@
 }
 .categories-section .category-list {
     display: flex;
-    flex-wrap: wrap;
+    overflow : auto;
     gap: 1rem;
     padding: 0;
     margin: 0;
+    
     list-style: none;
 }
 .categories-section .category-list li {
     margin: 0;
+    min-width:200px;
     display: block;
 }
 .categories-section .category-list a {
