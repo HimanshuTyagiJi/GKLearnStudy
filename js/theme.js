@@ -22,21 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function initMenuItems() {
         if (!menuInner) return;
         const menuItems = [
-            { href: "#", text: "Home" },
-            { href: "#", text: "Education" },
-            { href: "#", text: "All Formula" },
-            { href: "#", text: "Computer" },
-            { href: "#", text: "How to" },
-            { href: "#", text: "GK Quiz" },
-            { href: "#", text: "Test" }, { href: "#", text: "All Formula" },
-            { href: "#", text: "Computer" },
-            { href: "#", text: "How to" },
-            { href: "#", text: "GK Quiz" },
-            { href: "#", text: "Test" }, { href: "#", text: "All Formula" },
-            { href: "#", text: "Computer" },
-            { href: "#", text: "How to" },
-            { href: "#", text: "GK Quiz" },
-            { href: "#", text: "Test" },
+            { href: "https://gklearnstudy.in", text: "Home" },
+            { href: "https://gklearnstudy.in/education", text: "Education" },
+            { href: "https://gklearnstudy.in/all-formulas", text: "All Formula" },
+            { href: "https://gklearnstudy.in/computer", text: "Computer" },
+            { href: "https://gklearnstudy.in/kaise-karen", text: "How to" },
+            { href: "https://gklearnstudy.in/gk-quiz", text: "GK Quiz" },
+            { href: "https://gklearnstudy.in/test", text: "Test" }
         ];
         menuInner.insertAdjacentHTML('afterbegin', menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join(''));
         menuInner.querySelector('a')?.classList.add('active'); // Set first item as active
