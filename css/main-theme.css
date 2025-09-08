@@ -1,6 +1,6 @@
 h1{color:var(--red); text-align:center;}
-.container{max-width:1200px;margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
-#root{max-width:1200px;margin:0 auto;padding:2rem}
+.container{margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
+
 .welcome-section{margin-bottom:2.5rem;background-color:var(--card-bg);border-radius:12px;border:1px solid var(--border-color);box-shadow:0 4px 12px var(--shadow-color-base);overflow:hidden}.welcome-banner-svg{width:100%;height:auto;display:block;max-width:800px;margin:0 auto}
 .post-filter-container{margin-bottom:2rem}
 #post-filter-input{width:100%;padding:.8rem 1.2rem;font-size:1rem;border-radius:25px;border:1px solid var(--border-color);background-color:var(--card-bg);color:var(--text-primary);box-shadow:0 2px 8px var(--shadow-color-base);transition:box-shadow .2s ease-in-out,border-color .2s ease-in-out;box-sizing:border-box;margin:0}
