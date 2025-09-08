@@ -242,7 +242,7 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
         justify-content: flex-start;
     }
     .menu-inner a {
-        color: rgba(255,255,255,0.75);
+       color: var(--text-secondary);
         transition: color 0.3s ease;
         position: relative;
         z-index: 1;
