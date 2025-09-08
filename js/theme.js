@@ -28,6 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
             { href: "#", text: "Computer" },
             { href: "#", text: "How to" },
             { href: "#", text: "GK Quiz" },
+            { href: "#", text: "Test" }, { href: "#", text: "All Formula" },
+            { href: "#", text: "Computer" },
+            { href: "#", text: "How to" },
+            { href: "#", text: "GK Quiz" },
+            { href: "#", text: "Test" }, { href: "#", text: "All Formula" },
+            { href: "#", text: "Computer" },
+            { href: "#", text: "How to" },
+            { href: "#", text: "GK Quiz" },
             { href: "#", text: "Test" },
         ];
         menuInner.insertAdjacentHTML('afterbegin', menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join(''));
