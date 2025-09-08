@@ -19,8 +19,8 @@ h1{color:var(--red); text-align:center;}
 #load-more-btn{background-color:var(--accent-color);color:var(--white);border:none;padding:.8rem 2rem;font-size:1rem;font-weight:500;border-radius:25px;cursor:pointer;transition:background-color .2s ease,transform .2s ease}
 #load-more-btn:hover{background-color:var(--primary-hover-color);transform:translateY(-2px)}
 @media (max-width:480px){
-    .container{width:100%;margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
-#root{width:100%;margin:0 auto;padding:2rem}
+    .container{width:97%;margin:0 auto;padding:0px 0px;text-align:justify;line-height:2}
+#root{width:97%;margin:0 auto;padding:0rem}
 
     .post-card-content{padding:1rem}.post-card-title{font-size:1.1rem}.post-card-excerpt{font-size:.9rem}}
 .post-grid { display: grid; gap: 20px; justify-content: center; }
