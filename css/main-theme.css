@@ -1,7 +1,7 @@
 h1{color:var(--red); text-align:center;}
-.container{margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
+.container{max-width:1200px;margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
+#root{max-width:1200px;margin:0 auto;padding:2rem}
 
-.welcome-section{margin-bottom:2.5rem;background-color:var(--card-bg);border-radius:12px;border:1px solid var(--border-color);box-shadow:0 4px 12px var(--shadow-color-base);overflow:hidden}.welcome-banner-svg{width:100%;height:auto;display:block;max-width:800px;margin:0 auto}
 .post-filter-container{margin-bottom:2rem}
 #post-filter-input{width:100%;padding:.8rem 1.2rem;font-size:1rem;border-radius:25px;border:1px solid var(--border-color);background-color:var(--card-bg);color:var(--text-primary);box-shadow:0 2px 8px var(--shadow-color-base);transition:box-shadow .2s ease-in-out,border-color .2s ease-in-out;box-sizing:border-box;margin:0}
 #post-filter-input:focus{outline:none;border-color:var(--accent-color);box-shadow:0 4px 12px var(--blue-transparent-shadow)}
@@ -18,7 +18,11 @@ h1{color:var(--red); text-align:center;}
 #load-more-container{text-align:center;margin-top:2rem;grid-column:1/-1}
 #load-more-btn{background-color:var(--accent-color);color:var(--white);border:none;padding:.8rem 2rem;font-size:1rem;font-weight:500;border-radius:25px;cursor:pointer;transition:background-color .2s ease,transform .2s ease}
 #load-more-btn:hover{background-color:var(--primary-hover-color);transform:translateY(-2px)}
-@media (max-width:480px){.post-card-content{padding:1rem}.post-card-title{font-size:1.1rem}.post-card-excerpt{font-size:.9rem}}
+@media (max-width:480px){
+    .container{width:100%;margin:0 auto;padding:24px 16px;text-align:justify;line-height:2}
+#root{width:100%;margin:0 auto;padding:2rem}
+
+    .post-card-content{padding:1rem}.post-card-title{font-size:1.1rem}.post-card-excerpt{font-size:.9rem}}
 .post-grid { display: grid; gap: 20px; justify-content: center; }
 .card { background-color: #ffffff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); overflow: hidden; cursor: pointer; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; max-width: 380px; display: flex; flex-direction: column; }
 .card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
