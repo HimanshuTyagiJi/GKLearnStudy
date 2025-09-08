@@ -298,7 +298,7 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
 .btn:hover { background-color: var(--btn-hover-bg-color); }
 .btn.primary {
   color: var(--btn-primary-text-color);
-  background-color: var(--btn-primary-bg-color);
+  background-color: #585381;
   border-color: var(--btn-primary-border-color);
 }
 .btn.primary:hover {
