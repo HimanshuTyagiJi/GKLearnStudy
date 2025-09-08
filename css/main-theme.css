@@ -86,7 +86,7 @@
     align-items: center;
 }
 .categories-section .category-list a:hover {
-    background-color: var(--accent-color);
+    background-color: var(--danger-color);
     color: var(--white) !important;
     border-color: var(--accent-color);
 }
