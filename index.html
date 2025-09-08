@@ -180,45 +180,9 @@
         <div id="root">
     
 <style>
-  .welcome-section {border:1px solid var(--card-border-color);border-radius:25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    width: 220px;
-    height: 220px;
-    flex-shrink: 0;
-  }
-
-  .welcome-text {
-    width: 700px;
-    height: 250px;
-  }
-
-  /* Mobile view */
-  @media (max-width: 768px) {
-    .welcome-section {
-      flex-direction: column;
-      gap: 30px;
-      text-align: center;
-    }
-    .logo {
-      width: 280px;  /* bigger logo for mobile */
-      height: 280px;
-    }
-    .welcome-text {
-      width: 95%;
-      height: auto;
-    }
-  }
-</style>
-
-<style>
-  .welcome-section { border:1px solid var(--card-border-color);
+  .welcome-section {
+    border: 1px solid var(--card-border-color);
+    border-radius: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -228,6 +192,7 @@
     width: 100%;
     max-width: 1200px;
     margin: auto;
+    flex-wrap: wrap; 
   }
 
   .logo {
@@ -251,20 +216,21 @@
       padding: 10px;
     }
     .logo {
-      width: 180px;   /* छोटा logo for mobile */
+      width: 180px;
       height: 180px;
     }
     .welcome-text {
       width: 100%;
     }
-    .welcome-text text {
-      font-size: 60px !important; /* mobile पर normal readable size */
-    }
+    /* Fixing font sizes for mobile readability */
     .welcome-text .title1 {
-      font-size: 60px !important;
+      font-size: 28px !important;
     }
     .welcome-text .title2 {
-      font-size: 44px !important;
+      font-size: 38px !important;
+    }
+     .welcome-text .bio {
+      font-size: 18px !important;
     }
   }
 </style>
@@ -320,7 +286,7 @@
     <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
   </svg>
 
-  <!-- 🔹 Right/Bottom: Welcome Text -->
+  <!-- 🔹 Right/Bottom: Welcome Text (FIXED) -->
   <svg class="welcome-text" viewBox="0 0 700 250" preserveAspectRatio="xMinYMin meet">
     <style>
       .title1 {
@@ -338,13 +304,14 @@
       }
       .bio {
         font: 22px "Segoe UI", sans-serif;
-        fill: var(--text-color-primary);
+        /* Using color for HTML content inside foreignObject */
+        color: var(--text-color-primary); 
+        line-height: 1.5; /* Added line-height for better readability */
+        margin: 0;
         opacity: 0;
         animation: fadeIn 1.5s ease forwards;
+        animation-delay: 1.2s;
       }
-      .line1 { animation-delay: 1.2s; }
-      .line2 { animation-delay: 1.5s; }
-      .line3 { animation-delay: 1.8s; }
 
       @keyframes slideIn {
         from { transform: translateX(-400px); opacity: 0; }
@@ -357,18 +324,17 @@
 
     <text x="0" y="40" class="title1">Welcome to</text>
     <text x="0" y="90" class="title2">GK Learn Study</text>
-    <text x="0" y="150" class="bio line1">Your daily source for insightful articles, handy tools, and general knowledge.</text>
-    <text x="0" y="180" class="bio line2">Dive in and explore a world of learning,</text>
-    <text x="0" y="210" class="bio line3">made simple and accessible for everyone.</text>
+    
+    <!-- Using foreignObject for responsive text wrapping -->
+    <foreignObject x="0" y="130" width="700" height="120">
+      <p xmlns="http://www.w3.org/1999/xhtml" class="bio">
+        Your daily source for insightful articles, handy tools, and general knowledge. 
+        Dive in and explore a world of learning, made simple and accessible for everyone.
+      </p>
+    </foreignObject>
   </svg>
 
 </div>
-
-
-
-
-
-          
 
          
                 <div class="categories-section sidebar-widget">
