@@ -179,162 +179,131 @@
     <main class="container">
         <div id="root">
     
-<style>
-  .welcome-section {
-    border: 1px solid var(--card-border-color);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
-    padding: 20px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    flex-wrap: wrap; 
-  }
 
-  .logo {
-    width: 220px;
-    height: 220px;
-    flex-shrink: 0;
-  }
-
-  .welcome-text {
-    width: 100%;
-    max-width: 700px;
-    height: auto;
-  }
-
-  /* Mobile view */
-  @media (max-width: 768px) {
-    .welcome-section {
-      flex-direction: column;
-      gap: 30px;
-      text-align: center;
-      padding: 10px;
+  <style>
+  
+    .logo-container {
+      border: 3px solid #641ef9;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      max-width: 1000px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in-out;
     }
     .logo {
-      width: 180px;
-      height: 180px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .welcome-text {
-      width: 100%;
+    .text {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      animation: slideIn 1.2s ease-in-out;
     }
-    /* Fixing font sizes for mobile readability */
-    .welcome-text .title1 {
-      font-size: 28px !important;
+    .text h1 {
+      font-size: 2rem;
+      color: #e53935;
+      margin-bottom: 10px;
     }
-    .welcome-text .title2 {
-      font-size: 38px !important;
+    .text h2 {
+      font-size: 1.5rem;
+      color: #641ef9;
+      margin-bottom: 15px;
     }
-     .welcome-text .bio {
-      font-size: 18px !important;
+    .text p {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.6;
     }
-  }
-</style>
 
-<div class="welcome-section">
-
-  <!-- 🔹 Left/Top: Logo -->
-  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
-    <title>GK Learn Study</title>
-
-    <circle cx="150" cy="150" r="150" fill="white" />
-
-    <defs>
-      <clipPath id="circle-clip-main">
-        <circle cx="150" cy="150" r="150" />
-      </clipPath>
-    </defs>
-
-    <g clip-path="url(#circle-clip-main)">
-      <path fill="#c0a4fb" fill-opacity="1">
-        <animate attributeName="d" dur="8s" repeatCount="indefinite"
-          values="
-            M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z;
-            M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z;
-            M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" />
-      </path>
-
-      <path fill="#641ef9" fill-opacity="0.7">
-        <animate attributeName="d" dur="7s" repeatCount="indefinite"
-          values="
-            M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z;
-            M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z;
-            M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" />
-      </path>
-    </g>
-
-    <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935"
-          text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-          style="transform-origin:150px 90px;" opacity="0">
-      GK
-      <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze" />
-      <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
-      <animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
-    </text>
-
-    <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle"
-          font-family="Arial, Helvetica, sans-serif" style="transform-origin:150px 195px;" opacity="0">
-      Learn Study
-      <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze" />
-      <animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze" />
-    </text>
-
-    <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
-  </svg>
-
-  <!-- 🔹 Right/Bottom: Welcome Text (FIXED) -->
-  <svg class="welcome-text" viewBox="0 0 700 250" preserveAspectRatio="xMinYMin meet">
-    <style>
-      .title1 {
-        font: bold 32px "Segoe UI", sans-serif;
-        fill: var(--text-color-primary);
-        opacity: 0;
-        animation: slideIn 1s ease-out forwards;
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .logo-container {
+        flex-direction: column;
+        text-align: center;
       }
-      .title2 {
-        font: bold 48px "Segoe UI", sans-serif;
-        fill: var(--accent-color);
-        opacity: 0;
-        animation: slideIn 1s ease-out forwards;
-        animation-delay: 0.3s;
+      .text h1 {
+        font-size: 1.6rem;
       }
-      .bio {
-        font: 22px "Segoe UI", sans-serif;
-        /* Using color for HTML content inside foreignObject */
-        color: var(--text-color-primary); 
-        line-height: 1.5; /* Added line-height for better readability */
-        margin: 0;
-        opacity: 0;
-        animation: fadeIn 1.5s ease forwards;
-        animation-delay: 1.2s;
+      .text h2 {
+        font-size: 1.2rem;
       }
+      .text p {
+        font-size: 0.95rem;
+      }
+    }
 
-      @keyframes slideIn {
-        from { transform: translateX(-400px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-      }
-      @keyframes fadeIn {
-        to { opacity: 1; }
-      }
-    </style>
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
 
-    <text x="0" y="40" class="title1">Welcome to</text>
-    <text x="0" y="90" class="title2">GK Learn Study</text>
-    
-    <!-- Using foreignObject for responsive text wrapping -->
-    <foreignObject x="0" y="130" width="700" height="120">
-      <p xmlns="http://www.w3.org/1999/xhtml" class="bio">
-        Your daily source for insightful articles, handy tools, and general knowledge. 
+
+  <div class="logo-container">
+    <!-- Left: Logo -->
+    <div class="logo">
+      <!-- Your SVG Logo -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+        <title>GK Learn Study</title>
+        <circle cx="150" cy="150" r="150" fill="white" />
+        <defs>
+          <clipPath id="circle-clip-main">
+            <circle cx="150" cy="150" r="150" />
+          </clipPath>
+        </defs>
+        <g clip-path="url(#circle-clip-main)">
+          <path fill="#c0a4fb" fill-opacity="1">
+            <animate attributeName="d" dur="8s" repeatCount="indefinite"
+              values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z;
+                      M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z;
+                      M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" />
+          </path>
+          <path fill="#641ef9" fill-opacity="0.7">
+            <animate attributeName="d" dur="7s" repeatCount="indefinite"
+              values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z;
+                      M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z;
+                      M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" />
+          </path>
+        </g>
+        <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin:150px 90px;" opacity="0">
+          GK
+          <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze" />
+          <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
+          <animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
+        </text>
+        <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin:150px 195px;" opacity="0">
+          Learn Study
+          <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze" />
+          <animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze" />
+        </text>
+        <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- Right: Text -->
+    <div class="text">
+      <h1>Welcome to</h1>
+      <h2>GK Learn Study</h2>
+      <p>
+        Your daily source for insightful articles, handy tools, and general knowledge.<br>
         Dive in and explore a world of learning, made simple and accessible for everyone.
       </p>
-    </foreignObject>
-  </svg>
+    </div>
+  </div>
 
-</div>
+
 
          
                 <div class="categories-section sidebar-widget">
