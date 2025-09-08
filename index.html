@@ -300,7 +300,75 @@
 
          
                 <div class="categories-section sidebar-widget">
-                    <h2>Categories</h2>
+                  <style>
+  .h2-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  .h2-icons svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Arrow animation */
+  .arrow-anim {
+    animation: moveArrow 1.2s infinite ease-in-out;
+  }
+  @keyframes moveArrow {
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(6px); }
+  }
+
+  /* Box color cycle */
+  @keyframes colorCycle {
+    0%   { fill: #4285F4; }  /* Blue */
+    25%  { fill: #EA4335; }  /* Red */
+    50%  { fill: #FBBC05; }  /* Yellow */
+    75%  { fill: #34A853; }  /* Green */
+    100% { fill: #4285F4; }
+  }
+  .box1 { animation: colorCycle 4s infinite; }
+  .box2 { animation: colorCycle 4s infinite 1s; }
+  .box3 { animation: colorCycle 4s infinite 2s; }
+  .box4 { animation: colorCycle 4s infinite 3s; }
+
+  /* Categories text animation */
+  @keyframes textColorCycle {
+    0%   { color: #4285F4; }
+    25%  { color: #EA4335; }
+    50%  { color: #FBBC05; }
+    75%  { color: #34A853; }
+    100% { color: #4285F4; }
+  }
+  .animated-text {
+    animation: textColorCycle 4s infinite linear;
+  }
+</style>
+
+<h2 class="h2-icons">
+  <!-- Animated 4 boxes -->
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <rect class="box1" x="2"  y="2"  width="8" height="8" rx="1.5"/>
+    <rect class="box2" x="14" y="2"  width="8" height="8" rx="1.5"/>
+    <rect class="box3" x="2"  y="14" width="8" height="8" rx="1.5"/>
+    <rect class="box4" x="14" y="14" width="8" height="8" rx="1.5"/>
+  </svg>
+
+  <!-- Animated text -->
+  <span class="animated-text">Categories</span>
+
+  <!-- Animated arrow -->
+  <svg class="arrow-anim" viewBox="0 0 24 24" stroke="#641ef9" fill="none"
+       stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+       xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 12h14"/>
+    <path d="M14 6l6 6-6 6"/>
+  </svg>
+</h2>
+
                     <ul class="category-list">
                         <li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">50</span></a></li>
                         <li><a href="#" data-category="Conversion">Unit Conversion <span class="category-count">11</span></a></li>
