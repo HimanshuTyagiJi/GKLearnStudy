@@ -178,56 +178,75 @@
 
     <main class="container">
         <div id="root">
-            <div class="main-content">
-                <div class="welcome-section">
-                    <svg class="welcome-banner-svg" width="1000" height="400" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="welcome-title">
-                        <title id="welcome-title">Welcome to GK Learn Study</title>
-                        <desc>An animated welcome banner with a lightbulb and book logo.</desc>
-                        <g transform="translate(100,100)">
-                            <circle cx="50" cy="30" r="20" class="bulb-glow" />
-                            <circle cx="50" cy="30" r="12" class="bulb-core" />
-                            <rect x="45" y="42" width="10" height="15" class="book-base" />
-                            <rect x="10" y="70" width="30" height="50" class="book-left" />
-                            <rect x="60" y="70" width="30" height="50" class="book-right" />
-                        </g>
-                        <text x="200" y="120" class="title1">Welcome to</text>
-                        <text x="200" y="170" class="title2">GK Learn Study</text>
-                        <text x="200" y="230" class="bio line1">Your daily source for insightful articles, handy tools, and general knowledge.</text>
-                        <text x="200" y="260" class="bio line2">Dive in and explore a world of learning,</text>
-                        <text x="200" y="290" class="bio line3">made simple and accessible for everyone.</text>
-                    </svg>
-                </div>
+              <div style="display: flex; align-items: center; justify-content: center; gap: 40px; max-width: 1000px; margin: auto; font-family: Arial, Helvetica, sans-serif; flex-wrap: wrap;">
 
-                <h1>Latest Articles & Learning Guides</h1>
+  <!-- Left side: GK Learn Study Logo -->
+  <div style="flex: 1; min-width: 280px; text-align: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+      <circle cx="150" cy="150" r="150" fill="white" />
+      <defs>
+        <clipPath id="circle-clip-main">
+          <circle cx="150" cy="150" r="150" />
+        </clipPath>
+      </defs>
+      <g clip-path="url(#circle-clip-main)">
+        <path fill="#c0a4fb" fill-opacity="1">
+          <animate attributeName="d" dur="8s" repeatCount="indefinite"
+            values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z;
+                    M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z;
+                    M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" />
+        </path>
+        <path fill="#641ef9" fill-opacity="0.7">
+          <animate attributeName="d" dur="7s" repeatCount="indefinite"
+            values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z;
+                    M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z;
+                    M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" />
+        </path>
+      </g>
+      <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935"
+            text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+            style="transform-origin:150px 90px;" opacity="0">
+        GK
+        <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze" />
+        <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
+        <animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
+      </text>
+      <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle"
+            font-family="Arial, Helvetica, sans-serif" style="transform-origin:150px 195px;" opacity="0">
+        Learn Study
+        <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze" />
+        <animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze" />
+      </text>
+      <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
+    </svg>
+  </div>
 
-                <div class="animated-logo-container">
-                    <svg width="150" height="150" viewBox="0 0 300 300">
-                        <circle cx="150" cy="150" r="150" fill="white" />
-                        <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                            GK
-                            <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" />
-                            <animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
-                            <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
-                        </text>
-                        <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                            Learn Study
-                            <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
-                            <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
-                        </text>
-                        <clipPath id="circle-clip-main">
-                            <circle cx="150" cy="150" r="150" />
-                        </clipPath>
-                        <g clip-path="url(#circle-clip-main)">
-                            <path fill="#c0a4fb" fill-opacity="1">
-                                <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" />
-                            </path>
-                            <path fill="#641ef9" fill-opacity="0.7">
-                                <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" />
-                            </path>
-                        </g>
-                    </svg>
-                </div>
+  <!-- Right side: Welcome Text with animation -->
+  <div style="flex: 1; min-width: 280px; animation: fadeSlide 2s ease forwards; opacity: 0;">
+    <h1 style="color:#333; margin: 0 0 10px;">Welcome to</h1>
+    <h2 style="color:#e53935; margin: 0 0 15px;">GK Learn Study</h2>
+    <p style="font-size: 16px; color:#555; line-height: 1.6; margin: 0;">
+      Your daily source for insightful articles, handy tools, and general knowledge.<br>
+      Dive in and explore a world of learning, made simple and accessible for everyone.
+    </p>
+  </div>
 
+</div>
+
+<!-- Animation Keyframes -->
+<style>
+@keyframes fadeSlide {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+</style>
+
+
+            <h1>Latest Articles & Learning Guides</h1>
+
+            <div class="animated-logo-container">
+              
+            </div>
                 <div class="categories-section sidebar-widget">
                     <h2>Categories</h2>
                     <ul class="category-list">
