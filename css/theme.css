@@ -5,7 +5,8 @@
   /* ======================================== */
 
   /* --- General --- */
-  --body-bg-color: #fff;
+  --body-bg-color: #ffffff;
+  --text:#000000;
   --text-color-primary: #202124;
   --text-color-secondary: #6c757d;
   --text-color-inverted: #fff;
@@ -16,12 +17,14 @@
   --link-color: #1a0dab;
   --link-color-hover: #0039ad;
   --overlay-bg-color: rgba(0,0,0,0.4);
-  --card-bg-color: #fff;
-  --card-border-color: #dfe1e5;
-  --card-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+  --card-bg-color: rgb(255 255 255);
+  --card-border-color: 0 1px 4px rgb(0 0 0 / 18%);
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 29%), 0 2px 4px -2px rgba(0,0,0,.1);
   --spinner-track-color: rgba(0, 0, 0, 0.1);
   --spinner-indicator-color: var(--accent-color);
   --white:#ffffff;
+  --blue-transparent-shadow:#b8d1f6;
+  
   /* --- Header & Nav --- */
   --header-bg-color: #0056b3;
   --brand-text-color: #ad0000;
@@ -178,7 +181,7 @@ body {
 .search-input {
   color: var(--text-color-primary);
   background-color: var(--card-bg-color);
-  border: 1px solid var(--card-border-color);
+  border: 1px solid #ffc307;
 }
 .close-menu-btn {
   background: none;
@@ -440,8 +443,8 @@ body, .header, .menu, .search-input, .theme-switcher,
     .header.search-active .navbar { display: none; }
     .header.search-active { display: flex; align-items: stretch; padding: 0; }
     .header.search-active .back-icon { display: flex; flex: 0 0 50px; align-items: center; justify-content: center; position: static; visibility: visible; opacity: 1; }
-    .header.search-active .search-input { display: block; flex: 1 1 auto; width: auto; height: var(--header-height); margin-top:1%; }
-    .header.search-active .search-input { height: 44px; }
+    .header.search-active .search-input {display: block;flex: 1 1 auto;width: auto;height: var(--header-height);margin-top:1%;}
+    .header.search-active .search-input {height: 42px;}
     .header { height:60px; }
     .back-icon { margin-top:1%; }
 }
