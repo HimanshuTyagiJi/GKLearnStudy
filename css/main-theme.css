@@ -46,7 +46,7 @@
 .post-grid { grid-template-columns: minmax(0, 380px); }
 @media (min-width: 768px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .post-grid { grid-template-columns: repeat(3, 1fr); } }
-.categories-section {width:100%;
+.categories-section {
     background-color: var(--card-bg);
     padding: 1.5rem;
     border-radius: 12px;
