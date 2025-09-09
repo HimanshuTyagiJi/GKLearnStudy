@@ -24,6 +24,7 @@
   --spinner-indicator-color: var(--accent-color);
   --white:#ffffff;
   --blue-transparent-shadow:#b8d1f6;
+  --yellow:#ffc307;
   
   /* --- Header & Nav --- */
   --header-bg-color: #0056b3;
@@ -185,7 +186,7 @@ body {
 .search-input {
   color: var(--text-color-primary);
   background-color: var(--card-bg-color);
-  border: 1px solid #ffc307;
+  border: 1px solid var(--yellow);
   
 }
 
@@ -235,7 +236,7 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
 .search-input {
   color: var(--text);
   background-color: var(--card-bg-color);
-  border: 1px solid var(--accent-color);
+  border: 1px solid var(--accent-color) !important;
   box-shadow: 0 2px 8px var(--blue-transparent-shadow);
 }
 .close-menu-btn {
