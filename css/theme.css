@@ -163,7 +163,7 @@ html[data-theme='dark'] {
 /*   All color rules are defined here for   */
 /*         easy theme management.           */
 /* ======================================== */
-
+a{text-decoration:none}
 /* --- General & Body --- */
 body {
   color: var(--text-color-primary);
