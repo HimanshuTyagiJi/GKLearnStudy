@@ -40,6 +40,7 @@
   --menu-arrow-shadow: 0 2px 5px rgba(0,0,0,0.1);
   
   /* Mobile Nav */
+  
   --menu-mobile-bg-color: #ffffff;
   --menu-mobile-link-color-active: #ffffff;
   --menu-mobile-selector-bg-color: #0056b3;
@@ -99,6 +100,8 @@
   --btn-small-danger-text-color: var(--danger-color);
 }
 
+
+
 html[data-theme='dark'] {
   /* ======================================== */
   /*             2. DARK THEME                */
@@ -107,6 +110,7 @@ html[data-theme='dark'] {
 
   /* --- General --- */
   --body-bg-color: #202124;
+  --text:#ffffff;
   --text-color-primary: #e8eaed;
   --text-color-secondary: #bdc1c6;
   --link-color: #8ab4f8;
@@ -118,7 +122,7 @@ html[data-theme='dark'] {
   
   /* --- Header & Nav --- */
   --header-bg-color: #585381;
-  
+   --menu-arrow-shadow: 0 2px 5px rgb(212 212 212 / 62%);
   --menu-link-color: #ffffff;
   --menu-link-color-hover: var(--text-color-primary);
   --menu-link-color-active: var(--accent-color);
@@ -163,7 +167,7 @@ html[data-theme='dark'] {
 /*   All color rules are defined here for   */
 /*         easy theme management.           */
 /* ======================================== */
-a{text-decoration:none}
+
 /* --- General & Body --- */
 body {
   color: var(--text-color-primary);
@@ -182,7 +186,9 @@ body {
   color: var(--text-color-primary);
   background-color: var(--card-bg-color);
   border: 1px solid #ffc307;
+  
 }
+
 .close-menu-btn {
   background: none;
   border: none;
@@ -218,6 +224,29 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
   }
 }
 @media (max-width: 850px) {
+  .header { background-color: var(--body-bg-color); box-shadow: var(--menu-arrow-shadow);}
+
+/* --- Header & Navbar --- */
+.search-icon, .theme-switcher, .back-icon {
+  background: none;
+  border: none;
+  color:var(--text);
+}
+.search-input {
+  color: var(--text);
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 2px 8px var(--blue-transparent-shadow);
+}
+.close-menu-btn {
+  background: none;
+  border: var(--accent-color);
+  color: var(--text-color-primary);
+}
+.burger { fill: var(--text) }
+.menu { background-color: var(--menu-mobile-bg-color); }
+.mobile-menu-header { background-color: var(--menu-mobile-bg-color); }
+.menu-brand-text { color: var(--brand-text-color); }
   .menu-inner a { color: var(--text-color-primary); }
   .menu-inner a.active {
     background-color: transparent;
@@ -583,7 +612,7 @@ body, .header, .menu, .search-input, .theme-switcher,
 
 
 @media (max-width: 850px) {
-    .suggestions { width: 100%; top: var(--header-height); left: 0; right: 0; border-radius: 0 0 8px 8px; box-sizing: border-box; }
+    .suggestions { width: 90%; left: 50%; transform: translateX(-50%);  top: var(--header-height);  border-radius: 0 0 8px 8px; box-sizing: border-box; }
 }
 @media (min-width: 851px) {
     .suggestions { width: 50%; left: 50%; transform: translateX(-50%); }
