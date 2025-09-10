@@ -24,7 +24,7 @@
 .card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
 
-.card-thumbnail { width: 100%; padding-top: 56.25%; background-color: #e0e0e0; position: relative; border-bottom: 1px solid #eee; }
+.card-thumbnail { width: 100%; padding-top: 56.25%; background-color: white; position: relative; border-bottom: 1px solid #eee; }
 
 .card-thumbnail img, .card-thumbnail svg { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
 
