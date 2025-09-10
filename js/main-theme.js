@@ -17,30 +17,173 @@ window.GKApp.searchData = [
     { title: "भाषा और व्याकरण: परिभाषा, भेद, उदाहरण", url: "vyakaran-language.html", paragraph: "भाषा विचारों के आदान-प्रदान का माध्यम है, और व्याकरण भाषा को शुद्ध रूप से लिखने और बोलने के नियम सिखाता है।", date: "January 6, 2025", author: "Owner", category: "Vyakaran" },
 ];
 
+// --- HINGLISH TO HINDI TRANSLITERATION ---
+window.GKApp.transliterateRomanToHindi = (input) => {
+    const map = {
+        'consonants': {
+            'k': 'क', 'kh': 'ख', 'g': 'ग', 'gh': 'घ', 'ng': 'ङ',
+            'ch': 'च', 'chh': 'छ', 'j': 'ज', 'jh': 'झ', 'ny': 'ञ',
+            't': 'ट', 'th': 'ठ', 'd': 'ड', 'dh': 'ढ', 'n': 'ण',
+            't': 'त', 'th': 'थ', 'd': 'द', 'dh': 'ध', 'n': 'न',
+            'p': 'प', 'ph': 'फ', 'b': 'ब', 'bh': 'भ', 'm': 'म',
+            'y': 'य', 'r': 'र', 'l': 'ल', 'v': 'व', 'w': 'व',
+            'sh': 'श', 'shh': 'ष', 's': 'स', 'h': 'ह',
+            'ksh': 'क्ष', 'tr': 'त्र', 'gy': 'ज्ञ'
+        },
+        'vowels': {
+            'a': 'अ', 'aa': 'आ', 'i': 'इ', 'ee': 'ई', 'u': 'उ', 'oo': 'ऊ',
+            'ri': 'ऋ', 'e': 'ए', 'ai': 'ऐ', 'o': 'ओ', 'au': 'औ'
+        },
+        'matras': {
+            'a': '', 'aa': 'ा', 'i': 'ि', 'ee': 'ी', 'u': 'ु', 'oo': 'ू',
+            'ri': 'ृ', 'e': 'े', 'ai': 'ै', 'o': 'ो', 'au': 'ौ'
+        },
+        'symbols': {
+            'an': 'ं', 'am': 'ं', 'ah': 'ः'
+        }
+    };
+
+    let output = '';
+    let i = 0;
+    while (i < input.length) {
+        let matched = false;
+        // Check for longest possible match (3 chars, e.g., 'ksh', 'shh')
+        if (i + 2 < input.length) {
+            let threeChar = input.substring(i, i + 3);
+            if (map.consonants[threeChar]) {
+                output += map.consonants[threeChar];
+                i += 3;
+                matched = true;
+            }
+        }
+        // Check for 2 char matches
+        if (!matched && i + 1 < input.length) {
+            let twoChar = input.substring(i, i + 2);
+            if (map.consonants[twoChar] || map.vowels[twoChar] || map.symbols[twoChar] || map.matras[twoChar]) {
+                 const lastChar = output.slice(-1);
+                 const lastIsConsonant = Object.values(map.consonants).includes(lastChar) || Object.values(map.consonants).includes(lastChar.slice(0,-1));
+                
+                if (lastIsConsonant && map.matras[twoChar] !== undefined) {
+                    if (output.endsWith('्')) output = output.slice(0, -1);
+                    output += map.matras[twoChar];
+                } else if (map.vowels[twoChar]) {
+                    output += map.vowels[twoChar];
+                } else if(map.consonants[twoChar]) {
+                    output += map.consonants[twoChar];
+                } else {
+                    output += map.symbols[twoChar];
+                }
+                i += 2;
+                matched = true;
+            }
+        }
+        // Check for 1 char matches
+        if (!matched) {
+            let oneChar = input.charAt(i);
+            const lastChar = output.slice(-1);
+            const lastIsConsonant = Object.values(map.consonants).includes(lastChar) || Object.values(map.consonants).includes(lastChar.slice(0,-1));
+
+            if (lastIsConsonant && map.matras[oneChar] !== undefined) {
+                 if (output.endsWith('्')) output = output.slice(0, -1);
+                 output += map.matras[oneChar];
+            } else if (map.vowels[oneChar]) {
+                output += map.vowels[oneChar];
+            } else if (map.consonants[oneChar]) {
+                output += map.consonants[oneChar];
+                // Add halant for consonant clusters, unless it's the end of the word
+                if (i + 1 < input.length && map.consonants[input.charAt(i+1)]) {
+                    output += '्';
+                }
+            } else {
+                output += oneChar; // Non-mapped chars
+            }
+            i += 1;
+        }
+    }
+    return output;
+};
+
+// --- LEVENSHTEIN DISTANCE ALGORITHM for Typo Tolerance ---
+window.GKApp.levenshtein = (s1, s2) => {
+    if (s1.length > s2.length) { [s1, s2] = [s2, s1]; }
+    const distances = Array(s1.length + 1).fill(0).map((_, i) => i);
+    for (let i = 0; i < s2.length; i++) {
+        let prev = i + 1;
+        for (let j = 0; j < s1.length; j++) {
+            const current = distances[j];
+            distances[j] = prev;
+            prev = s1[j] === s2[i] ? current : 1 + Math.min(current, prev, distances[j+1]);
+        }
+        distances[s1.length] = prev;
+    }
+    return distances[s1.length];
+};
+
+// --- ADVANCED FUZZY SEARCH with TYPO TOLERANCE ---
 window.GKApp.fuzzySearch = function (query, items) {
-  const lowerCaseQuery = query.toLowerCase().trim();
-  if (!lowerCaseQuery) return [];
-  const queryWords = lowerCaseQuery.split(" ").filter((w) => w.length > 1);
-  const results = items
-    .map((item) => {
-      let score = 0;
-      const title = item.title.toLowerCase();
-      const paragraph = item.paragraph.toLowerCase();
-      const author = item.author.toLowerCase();
-      if (title.includes(lowerCaseQuery)) score += 20;
-      if (paragraph.includes(lowerCaseQuery)) score += 5;
-      queryWords.forEach((qWord) => {
-        if (title.includes(qWord)) score += 10;
-        if (paragraph.includes(qWord)) score += 2;
-        if (author.includes(qWord)) score += 1;
-      });
-      return { item: item, score: score };
+    const lowerCaseQuery = query.toLowerCase().trim();
+    if (!lowerCaseQuery) return [];
+
+    const hindiQuery = window.GKApp.transliterateRomanToHindi(lowerCaseQuery);
+    
+    // Split query by space or common punctuation
+    const queryWords = lowerCaseQuery.split(/[\s,،।.]+/).filter(w => w);
+    const hindiQueryWords = hindiQuery.split(/[\s,،।.]+/).filter(w => w);
+    const allQueryWords = [...new Set([...queryWords, ...hindiQueryWords])];
+
+    const results = items.map(item => {
+        let score = 0;
+        const matchedWords = new Set();
+        
+        // Combine title and paragraph for a full search field
+        const content = `${item.title} ${item.paragraph}`;
+        const contentWords = content.split(/[\s,،।.]+/);
+
+        allQueryWords.forEach(qWord => {
+            let bestMatchScore = 0;
+            
+            contentWords.forEach(cWord => {
+                const distance = window.GKApp.levenshtein(qWord.toLowerCase(), cWord.toLowerCase());
+                // Allow more typos for longer words
+                const threshold = qWord.length > 4 ? 2 : 1;
+
+                if (distance <= threshold) {
+                    let currentScore = 0;
+                    // Higher score for title match
+                    if (item.title.toLowerCase().includes(cWord.toLowerCase())) {
+                       currentScore = 15;
+                    } else {
+                       currentScore = 5;
+                    }
+                    // Bonus for being a better match (less distance)
+                    currentScore -= distance * 2;
+                    
+                    if(currentScore > bestMatchScore) {
+                        bestMatchScore = currentScore;
+                    }
+                }
+            });
+            
+            if (bestMatchScore > 0) {
+                score += bestMatchScore;
+                matchedWords.add(qWord);
+            }
+        });
+        
+        // Bonus score if all query words are matched
+        if (matchedWords.size === allQueryWords.length) {
+            score *= 1.5;
+        }
+
+        return { item, score };
     })
-    .filter((result) => result.score > 0)
+    .filter(result => result.score > 2) // Set a minimum threshold to avoid irrelevant results
     .sort((a, b) => b.score - a.score)
-    .map((result) => result.item);
+    .map(result => result.item);
+    
   return [...new Map(results.map((item) => [item.url, item])).values()];
 };
+
 
 // --- SVG Placeholder for Search Results ---
 window.GKApp.generatePlaceholderSVG = (title = 'G') => {
