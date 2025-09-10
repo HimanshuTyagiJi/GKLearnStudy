@@ -353,7 +353,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </svg>
                         </div>
                         <div class="author-details">
-                            <span class="author vcard">by <span class="name"><a class="url fn n" href="#" rel="author">${post.author}</a></span></span>
+                            <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
                             <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time> </span>
                         </div>
                     </div>
@@ -368,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.innerHTML = `
                 <a href="${post.url}" class="card-link-wrapper">
                     <div class="card-thumbnail" aria-hidden="true">
-                        <span class="category-badge">${post.category}</span>
+                        <a href="categories.html" class="category-badge">${post.category}</a>
                         ${imageHtml}
                     </div>
                     <div class="card-content">
@@ -417,10 +417,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = event.target.closest('.card');
         if (!card) return;
 
+        // Stop propagation if a link inside the card is clicked, except for the main wrapper.
+        const targetElement = event.target.closest('a, button');
+        if (targetElement && !targetElement.classList.contains('card-link-wrapper')) {
+            event.stopPropagation();
+        }
+
         const shareButton = event.target.closest('.share-button');
         const postIndex = parseInt(card.dataset.index, 10);
-        // Correctly find the post from the *original* allPosts array if needed,
-        // but it's better to get it from the currently rendered list.
         const post = currentFilteredPosts[postIndex];
 
         if (shareButton) {
@@ -434,13 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 alert('Share functionality is not supported by your browser.');
             }
-        } else if (event.target.closest('a.card-link-wrapper')) {
-            // This is the default behavior, but we can be explicit if needed.
-            // Let the link do its job.
-        } else if (post) {
-             // Fallback for clicking the card but not a specific link/button
-            event.preventDefault();
-            window.location.href = post.url;
         }
     });
 
