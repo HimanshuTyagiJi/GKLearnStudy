@@ -366,16 +366,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
 
             card.innerHTML = `
-                <a href="${post.url}" class="card-link-wrapper">
-                    <div class="card-thumbnail" aria-hidden="true">
-                        <a href="categories.html" class="category-badge">${post.category}</a>
-                        ${imageHtml}
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">${post.title}</h3>
-                        <p class="card-summary">${post.paragraph}</p>
-                    </div>
-                </a>
+                <div class="card-thumbnail" aria-hidden="true">
+                    <a href="categories.html" class="category-badge">${post.category}</a>
+                    <a href="${post.url}" class="card-image-link">${imageHtml}</a>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
+                    <p class="card-summary">${post.paragraph}</p>
+                </div>
                 ${metaBlock}
             `;
             fragment.appendChild(card);
@@ -417,19 +415,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = event.target.closest('.card');
         if (!card) return;
 
-        // Stop propagation if a link inside the card is clicked, except for the main wrapper.
-        const targetElement = event.target.closest('a, button');
-        if (targetElement && !targetElement.classList.contains('card-link-wrapper')) {
-            event.stopPropagation();
-        }
-
         const shareButton = event.target.closest('.share-button');
-        const postIndex = parseInt(card.dataset.index, 10);
-        const post = currentFilteredPosts[postIndex];
-
         if (shareButton) {
-            event.preventDefault(); // Prevent navigation when clicking share
-            if (navigator.share && post) {
+            event.preventDefault();
+            const postIndex = parseInt(card.dataset.index, 10);
+            const post = currentFilteredPosts[postIndex];
+
+            if (post && navigator.share) {
                 navigator.share({
                     title: post.title,
                     text: post.paragraph,
