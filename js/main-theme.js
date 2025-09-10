@@ -42,6 +42,23 @@ window.GKApp.fuzzySearch = function (query, items) {
   return [...new Map(results.map((item) => [item.url, item])).values()];
 };
 
+// --- SVG Placeholder for Search Results ---
+window.GKApp.generatePlaceholderSVG = (title = 'G') => {
+    const text = title.charAt(0).toUpperCase();
+    let hash = 0;
+    for (let i = 0; i < title.length; i++) {
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const h = Math.abs(hash % 360);
+    const color = `hsl(${h}, 65%, 55%)`;
+    const svg = `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="8" fill="${color}" />
+        <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" dy=".3em">${text}</text>
+    </svg>`;
+    return svg;
+};
+
+
 // --- CONCEPTUAL IMAGE GENERATOR ---
 window.GKApp.generateConceptImage = (() => {
     const W = 1600;
