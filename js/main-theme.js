@@ -1,4 +1,3 @@
-
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
@@ -20,88 +19,111 @@ window.GKApp.searchData = [
 // --- HINGLISH TO HINDI TRANSLITERATION ---
 window.GKApp.transliterateRomanToHindi = (input) => {
     const map = {
-        'consonants': {
-            'k': 'क', 'kh': 'ख', 'g': 'ग', 'gh': 'घ', 'ng': 'ङ',
-            'ch': 'च', 'chh': 'छ', 'j': 'ज', 'jh': 'झ', 'ny': 'ञ',
-            't': 'ट', 'th': 'ठ', 'd': 'ड', 'dh': 'ढ', 'n': 'ण',
-            't': 'त', 'th': 'थ', 'd': 'द', 'dh': 'ध', 'n': 'न',
-            'p': 'प', 'ph': 'फ', 'b': 'ब', 'bh': 'भ', 'm': 'म',
-            'y': 'य', 'r': 'र', 'l': 'ल', 'v': 'व', 'w': 'व',
-            'sh': 'श', 'shh': 'ष', 's': 'स', 'h': 'ह',
-            'ksh': 'क्ष', 'tr': 'त्र', 'gy': 'ज्ञ'
+        consonants: {
+            // Complex consonants
+            'ksh': 'क्ष', 'gy': 'ज्ञ', 'dny': 'ज्ञ', 'jn': 'ज्ञ', 'shr': 'श्र',
+            // 2-letter consonants
+            'kh': 'ख', 'gh': 'घ', 'chh': 'छ', 'jh': 'झ',
+            'th': 'थ', 'dh': 'ध', 'ph': 'फ', 'bh': 'भ',
+            'shh': 'ष', 'sh': 'श', 'tr': 'त्र',
+            'gn': 'ङ', 'ny': 'ञ',
+            // Single consonants
+            'k': 'क', 'g': 'ग', 'c': 'क', 'j': 'ज',
+            't': 'त', 'd': 'द', 'n': 'न',
+            'p': 'प', 'b': 'ब', 'm': 'म',
+            'y': 'य', 'r': 'र', 'l': 'ल',
+            'v': 'व', 'w': 'व', 's': 'स', 'h': 'ह',
+            'z': 'ज़', 'f': 'फ़', 'q': 'क़', 'x': 'क्ष'
         },
-        'vowels': {
-            'a': 'अ', 'aa': 'आ', 'i': 'इ', 'ee': 'ई', 'u': 'उ', 'oo': 'ऊ',
-            'ri': 'ऋ', 'e': 'ए', 'ai': 'ऐ', 'o': 'ओ', 'au': 'औ'
+        vowels: {
+            'aa': 'आ', 'ee': 'ई', 'ii': 'ई', 'oo': 'ऊ', 'uu': 'ऊ',
+            'ai': 'ऐ', 'au': 'औ', 'ri': 'ऋ',
+            'a': 'अ', 'i': 'इ', 'e': 'ए',
+            'o': 'ओ', 'u': 'उ'
         },
-        'matras': {
-            'a': '', 'aa': 'ा', 'i': 'ि', 'ee': 'ी', 'u': 'ु', 'oo': 'ू',
-            'ri': 'ृ', 'e': 'े', 'ai': 'ै', 'o': 'ो', 'au': 'ौ'
+        matras: {
+            'aa': 'ा', 'ee': 'ी', 'ii': 'ी', 'oo': 'ू', 'uu': 'ू',
+            'ai': 'ै', 'au': 'ौ', 'ri': 'ृ',
+            'a': '', 'i': 'ि', 'e': 'े',
+            'o': 'ो', 'u': 'ु'
         },
-        'symbols': {
-            'an': 'ं', 'am': 'ं', 'ah': 'ः'
+        symbols: {
+            'an': 'ं', 'am': 'ं', 'ah': 'ः',
+            'om': 'ॐ', 'shree': 'श्री'
         }
     };
 
     let output = '';
     let i = 0;
+
     while (i < input.length) {
         let matched = false;
-        // Check for longest possible match (3 chars, e.g., 'ksh', 'shh')
-        if (i + 2 < input.length) {
-            let threeChar = input.substring(i, i + 3);
-            if (map.consonants[threeChar]) {
-                output += map.consonants[threeChar];
+
+        // --- Try 4-char (e.g., shree, dnya)
+        if (i + 3 < input.length) {
+            const fourChar = input.substring(i, i + 4).toLowerCase();
+            if (map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar]) {
+                output += map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar];
+                i += 4;
+                matched = true;
+            }
+        }
+
+        // --- Try 3-char combos
+        if (!matched && i + 2 < input.length) {
+            const threeChar = input.substring(i, i + 3).toLowerCase();
+            if (map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar]) {
+                output += map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar];
                 i += 3;
                 matched = true;
             }
         }
-        // Check for 2 char matches
+
+        // --- Try 2-char combos
         if (!matched && i + 1 < input.length) {
-            let twoChar = input.substring(i, i + 2);
-            if (map.consonants[twoChar] || map.vowels[twoChar] || map.symbols[twoChar] || map.matras[twoChar]) {
-                 const lastChar = output.slice(-1);
-                 const lastIsConsonant = Object.values(map.consonants).includes(lastChar) || Object.values(map.consonants).includes(lastChar.slice(0,-1));
-                
+            const twoChar = input.substring(i, i + 2).toLowerCase();
+            if (map.consonants[twoChar] || map.vowels[twoChar] || map.matras[twoChar] || map.symbols[twoChar]) {
+                const lastChar = output.slice(-1);
+                const lastIsConsonant = Object.values(map.consonants).includes(lastChar);
+
                 if (lastIsConsonant && map.matras[twoChar] !== undefined) {
                     if (output.endsWith('्')) output = output.slice(0, -1);
                     output += map.matras[twoChar];
-                } else if (map.vowels[twoChar]) {
-                    output += map.vowels[twoChar];
-                } else if(map.consonants[twoChar]) {
-                    output += map.consonants[twoChar];
                 } else {
-                    output += map.symbols[twoChar];
+                    output += map.consonants[twoChar] || map.vowels[twoChar] || map.symbols[twoChar];
                 }
                 i += 2;
                 matched = true;
             }
         }
-        // Check for 1 char matches
+
+        // --- Single char fallback
         if (!matched) {
-            let oneChar = input.charAt(i);
+            const oneChar = input.charAt(i).toLowerCase();
             const lastChar = output.slice(-1);
-            const lastIsConsonant = Object.values(map.consonants).includes(lastChar) || Object.values(map.consonants).includes(lastChar.slice(0,-1));
+            const lastIsConsonant = Object.values(map.consonants).includes(lastChar);
 
             if (lastIsConsonant && map.matras[oneChar] !== undefined) {
-                 if (output.endsWith('्')) output = output.slice(0, -1);
-                 output += map.matras[oneChar];
+                if (output.endsWith('्')) output = output.slice(0, -1);
+                output += map.matras[oneChar];
             } else if (map.vowels[oneChar]) {
                 output += map.vowels[oneChar];
             } else if (map.consonants[oneChar]) {
                 output += map.consonants[oneChar];
-                // Add halant for consonant clusters, unless it's the end of the word
-                if (i + 1 < input.length && map.consonants[input.charAt(i+1)]) {
+                // Add halant for consonant clusters
+                if (i + 1 < input.length && map.consonants[input.charAt(i + 1)]) {
                     output += '्';
                 }
             } else {
-                output += oneChar; // Non-mapped chars
+                output += oneChar;
             }
-            i += 1;
+            i++;
         }
     }
+
     return output;
 };
+
 
 // --- LEVENSHTEIN DISTANCE ALGORITHM for Typo Tolerance ---
 window.GKApp.levenshtein = (s1, s2) => {
