@@ -938,8 +938,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             card.innerHTML = `
                 <div class="card-thumbnail" aria-hidden="true">
-                    <a href="categories.html" class="category-badge">${post.category}</a>
-                    <a href="${post.url}" class="card-image-link">${imageHtml}</a>
+                    <span class="category-badge">${post.category}</span>
+                    <a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a>
                 </div>
                 <div class="card-content">
                     <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
