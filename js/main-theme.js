@@ -61,37 +61,75 @@ window.GKApp.generatePlaceholderSVG = (title = 'G') => {
 
 // --- CONCEPTUAL IMAGE GENERATOR ---
 window.GKApp.generateConceptImage = (() => {
-    const W = 1600;
-    const H = 900;
+    // Optimized, web-safe dimensions to ensure full rendering (16:9 ratio)
+    const W = 640;
+    const H = 360;
+    // Base dimensions for scaling calculations remain high for quality
+    const BASE_W = 1280;
+    const BASE_H = 720;
+    const S = W / BASE_W; // Scale factor
 
-    function drawGradient(ctx, w, h, c1, c2) {
-        const g = ctx.createLinearGradient(0, 0, w, h);
-        g.addColorStop(0, c1);
-        g.addColorStop(1, c2);
-        ctx.fillStyle = g;
+    const palettes = [
+        { bg1: '#6a11cb', bg2: '#2575fc', primary: '#ffffff', accent: '#f5d142' },
+        { bg1: '#00c6ff', bg2: '#0072ff', primary: '#ffffff', accent: '#fefefe' },
+        { bg1: '#f7971e', bg2: '#ffd200', primary: '#434343', accent: '#ffffff' },
+        { bg1: '#34e89e', bg2: '#08aeea', primary: '#ffffff', accent: '#f6f0ea' },
+        { bg1: '#ff4b1f', bg2: '#ff9068', primary: '#ffffff', accent: '#f7f2b2' },
+        { bg1: '#1a2a6c', bg2: '#b21f1f', bg3: '#fdbb2d', primary: '#ffffff', accent: '#eeeeee' },
+        { bg1: '#8e2de2', bg2: '#4a00e0', primary: '#ffffff', accent: '#d4d4d4' },
+    ];
+
+    function getPalette(title) {
+        let hash = 0;
+        for (let i = 0; i < title.length; i++) {
+            hash = title.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return palettes[Math.abs(hash % palettes.length)];
+    }
+    
+    function drawBackground(ctx, palette, w, h) {
+        const gradient = ctx.createLinearGradient(0, 0, w, h);
+        gradient.addColorStop(0, palette.bg1);
+        gradient.addColorStop(1, palette.bg2);
+        if (palette.bg3) gradient.addColorStop(0.5, palette.bg3);
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, w, h);
     }
 
-    function drawRoundedRect(ctx, x, y, w, h, r, fillStyle, strokeStyle) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y, x + w, y, r);
-        ctx.closePath();
-        if (fillStyle) { ctx.fillStyle = fillStyle; ctx.fill(); }
-        if (strokeStyle) { ctx.strokeStyle = strokeStyle; ctx.stroke(); }
+    function drawPattern(ctx, w, h) {
+        ctx.save();
+        ctx.globalAlpha = 0.05;
+        for (let i = 0; i < 80; i++) {
+            const x = Math.random() * w;
+            const y = Math.random() * h;
+            const size = Math.random() * 30 + 10;
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            if (i % 2 === 0) ctx.arc(x, y, size, 0, 2 * Math.PI);
+            else ctx.rect(x - size/2, y-size/2, size, size);
+            ctx.fill();
+        }
+        ctx.restore();
     }
+    
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight, palette) {
+        ctx.font = `bold 90px 'Arial', sans-serif`;
+        ctx.fillStyle = palette.primary;
+        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+        ctx.lineWidth = 8;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0,0,0,0.35)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 6;
+        ctx.shadowOffsetY = 6;
 
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
         const lines = [];
         for (let n = 0; n < words.length; n++) {
             const testLine = line + words[n] + ' ';
-            const metrics = ctx.measureText(testLine);
-            if (metrics.width > maxWidth && n > 0) {
+            if (ctx.measureText(testLine).width > maxWidth && n > 0) {
                 lines.push(line);
                 line = words[n] + ' ';
             } else {
@@ -99,202 +137,166 @@ window.GKApp.generateConceptImage = (() => {
             }
         }
         lines.push(line);
+
         const startY = y - (lineHeight * (lines.length - 1)) / 2;
         for (let i = 0; i < lines.length; i++) {
-            ctx.fillText(lines[i].trim(), x, startY + i * lineHeight);
+            const currentLine = lines[i].trim();
+            ctx.strokeText(currentLine, x, startY + i * lineHeight);
+            ctx.fillText(currentLine, x, startY + i * lineHeight);
         }
+        
+        ctx.shadowColor = 'transparent';
     }
 
-    function drawDefault(ctx, w, h, title) {
-        let hash = 0;
-        for (let i = 0; i < title.length; i++) {
-            hash = title.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const h1 = Math.abs(hash % 360);
-        const h2 = (h1 + 40) % 360;
-        const color1 = `hsl(${h1}, 70%, 50%)`;
-        const color2 = `hsl(${h2}, 60%, 35%)`;
-        drawGradient(ctx, w, h, color1, color2);
+    function drawEducationIcons(ctx, palette, w, h) {
+        ctx.save();
+        ctx.globalAlpha = 0.4;
+        
+        ctx.translate(w * 0.15, h * 0.5);
+        ctx.scale(2, 2);
+        ctx.rotate(-0.15);
+        ctx.fillStyle = palette.accent;
+        ctx.strokeStyle = palette.primary;
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(-90, -70);
+        ctx.quadraticCurveTo(-10, -90, 90, -70);
+        ctx.lineTo(90, 70);
+        ctx.quadraticCurveTo(0, 95, -90, 70);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -80);
+        ctx.lineTo(0, 82);
+        ctx.stroke();
 
-        ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-        ctx.font = `bold 90px Arial`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        wrapText(ctx, title, w / 2, h / 2, w * 0.8, 110);
-    }
-
-    /* --- Individual concept drawers --- */
-    function drawConversion(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#0f172a", "#0b3a5b");
-        const cx = w / 2, cy = h / 2;
-        const boxW = 260, boxH = 130;
-        drawRoundedRect(ctx, cx - boxW - 40, cy - boxH / 2, boxW, boxH, 16, "rgba(255,255,255,0.95)");
-        drawRoundedRect(ctx, cx + 40, cy - boxH / 2, boxW, boxH, 16, "rgba(255,255,255,0.95)");
-        ctx.strokeStyle = "#ffd166"; ctx.lineWidth = 12;
-        ctx.beginPath(); ctx.moveTo(cx - 20, cy); ctx.lineTo(cx + 20, cy); ctx.stroke();
-        ctx.fillStyle = "#ffd166";
-        ctx.beginPath(); ctx.moveTo(cx + 20, cy); ctx.lineTo(cx + 5, cy - 12); ctx.lineTo(cx + 5, cy + 12); ctx.closePath(); ctx.fill();
-        ctx.fillStyle = "#06202a"; ctx.font = "bold 32px Arial"; ctx.textAlign = "center";
-        ctx.fillText("From", cx - boxW / 2 - 40, cy + 10);
-        ctx.fillText("To", cx + boxW / 2 + 40, cy + 10);
-        ctx.fillStyle = "#fff"; ctx.font = "700 42px Arial"; ctx.fillText(title, w / 2, 100);
-    }
-
-    function drawAngle(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#2b2d42", "#8d99ae");
-        const cx = w * 0.36, cy = h * 0.56, r = 260;
-        ctx.beginPath(); ctx.fillStyle = "#edf2f4"; ctx.arc(cx, cy, r, Math.PI, 2 * Math.PI); ctx.fill();
-        ctx.strokeStyle = "#2b2d42";
-        for (let a = 0; a <= 180; a += 10) {
-            const rad = (Math.PI * (180 - a)) / 180;
-            const x1 = cx + Math.cos(rad) * (r - 6), y1 = cy + Math.sin(rad) * (r - 6);
-            const x2 = cx + Math.cos(rad) * (r - 20), y2 = cy + Math.sin(rad) * (r - 20);
-            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-        }
-        ctx.strokeStyle = "#ef233c"; ctx.lineWidth = 8;
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(Math.PI * 0.25) * 220, cy - Math.sin(Math.PI * 0.25) * 220); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(Math.PI * 0.6) * 220, cy - Math.sin(Math.PI * 0.6) * 220); ctx.stroke();
-        ctx.beginPath(); ctx.strokeStyle = "#2b2d42"; ctx.lineWidth = 6; ctx.arc(cx, cy, 120, -Math.PI * 0.6, -Math.PI * 0.25); ctx.stroke();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.textAlign = "left";
-        ctx.fillText(title, w * 0.55, 160);
-        ctx.font = "24px Arial"; ctx.fillStyle = "#fff"; ctx.fillText("Protractor / Angle diagram", w * 0.55, 210);
-    }
-
-    function drawArea(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#0f172a", "#083d77");
-        ctx.fillStyle = "#e8f1ff"; ctx.globalAlpha = 0.06;
-        for (let x = 0; x < w; x += 40) { ctx.fillRect(x, 0, 1, h); }
-        for (let y = 0; y < h; y += 40) { ctx.fillRect(0, y, w, 1); }
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = "rgba(255,205,210,0.95)"; ctx.fillRect(w * 0.22, h * 0.3, 520, 300);
-        ctx.strokeStyle = "#fff"; ctx.lineWidth = 6; ctx.strokeRect(w * 0.22, h * 0.3, 520, 300);
-        ctx.fillStyle = "#06202a"; ctx.font = "700 38px Arial"; ctx.textAlign = "left";
-        ctx.fillText("Area = length × width", w * 0.62, h * 0.45);
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, w * 0.06, 110);
-    }
-
-    function drawLength(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#073b4c", "#118ab2");
-        const y = h * 0.6;
-        ctx.fillStyle = "#fff3db"; ctx.fillRect(80, y - 30, w - 160, 60);
-        ctx.strokeStyle = "#333"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(80, y); ctx.lineTo(w - 80, y); ctx.stroke();
-        ctx.strokeStyle = "#333"; for (let x = 90; x < w - 80; x += 20) { ctx.beginPath(); ctx.moveTo(x, y - 10); ctx.lineTo(x, y + 10); ctx.stroke(); }
-        for (let x = 90; x < w - 80; x += 100) { ctx.fillStyle = "#333"; ctx.fillText(((x - 90) / 20).toFixed(0) + "cm", x, y + 40); }
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 100, 140);
-        ctx.font = "26px Arial"; ctx.fillText("Ruler / length units", 100, 190);
-    }
-
-    function drawPower(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#0f172a", "#2b9348");
-        ctx.save(); ctx.translate(w * 0.5, h * 0.45);
-        ctx.fillStyle = "#ffd166";
-        ctx.beginPath(); ctx.moveTo(-40, -150); ctx.lineTo(30, -20); ctx.lineTo(-10, -20); ctx.lineTo(40, 140); ctx.lineTo(-40, 40); ctx.lineTo(10, 40); ctx.closePath(); ctx.fill();
+        ctx.setTransform(S, 0, 0, S, 0, 0); // Reset scale and transform
+        ctx.translate(w - 250, h - 200);
+        ctx.rotate(0.8);
+        ctx.fillStyle = '#f5b041';
+        ctx.strokeStyle = palette.primary;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.rect(-100, -15, 200, 30);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#2c3e50';
+        ctx.beginPath();
+        ctx.moveTo(100, -15);
+        ctx.lineTo(130, 0);
+        ctx.lineTo(100, 15);
+        ctx.closePath();
+        ctx.fill();
+        
         ctx.restore();
-        ctx.strokeStyle = "#95d5b2"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(80, h - 140); ctx.lineTo(w - 80, h - 140); ctx.stroke();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 80, 110);
     }
 
-    function drawPressure(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#1b3b6f", "#1f7aea");
-        const cx = w * 0.5, cy = h * 0.55, r = 220;
-        ctx.beginPath(); ctx.fillStyle = "#fff"; ctx.arc(cx, cy, r + 20, Math.PI - 0.6, 2 * Math.PI + 0.6); ctx.fill();
-        ctx.strokeStyle = "#1b3b6f"; ctx.lineWidth = 4;
-        for (let a = 0; a <= 180; a += 10) {
-            const rad = Math.PI + (a * Math.PI / 180);
-            const x1 = cx + Math.cos(rad) * (r + 10), y1 = cy + Math.sin(rad) * (r + 10);
-            const x2 = cx + Math.cos(rad) * (r - 20), y2 = cy + Math.sin(rad) * (r - 20);
-            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-        }
-        ctx.strokeStyle = "#ef233c"; ctx.lineWidth = 10;
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(Math.PI * 1.2) * r * 0.8, cy + Math.sin(Math.PI * 1.2) * r * 0.8); ctx.stroke();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 60, 110);
+    function drawGeometryTools(ctx, palette, w, h) {
+        ctx.save();
+        ctx.globalAlpha = 0.5;
+        
+        ctx.translate(200, h - 200);
+        ctx.rotate(-0.4);
+        ctx.fillStyle = palette.accent;
+        ctx.strokeStyle = palette.primary;
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.arc(0, 0, 120, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        
+        ctx.setTransform(S, 0, 0, S, 0, 0); // Reset
+        ctx.translate(w - 200, 200);
+        ctx.rotate(0.3);
+        ctx.fillStyle = palette.accent;
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(200,0);
+        ctx.lineTo(0,200);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
     }
 
-    function drawSpeed(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#171717", "#ff7b00");
-        const cx = w * 0.5, cy = h * 0.62, r = 260;
-        ctx.beginPath(); ctx.fillStyle = "#fff"; ctx.arc(cx, cy, r, Math.PI, 2 * Math.PI); ctx.fill();
-        ctx.strokeStyle = "#333"; ctx.lineWidth = 4;
-        for (let i = 0; i <= 10; i++) {
-            const ang = Math.PI + (i * (Math.PI / 10));
-            const x1 = cx + Math.cos(ang) * (r - 10), y1 = cy + Math.sin(ang) * (r - 10);
-            const x2 = cx + Math.cos(ang) * (r - 40), y2 = cy + Math.sin(ang) * (r - 40);
-            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-        }
-        ctx.strokeStyle = "#ef233c"; ctx.lineWidth = 8;
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(Math.PI * 1.3) * r * 0.8, cy + Math.sin(Math.PI * 1.3) * r * 0.8); ctx.stroke();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 60, 110);
+    function drawComputerIcon(ctx, palette, w, h) {
+        ctx.save();
+        ctx.globalAlpha = 0.4;
+        ctx.strokeStyle = palette.primary;
+        ctx.fillStyle = palette.accent;
+        ctx.lineWidth = 8;
+        
+        ctx.translate(w - 350, h / 2);
+        ctx.beginPath();
+        ctx.roundRect(-150, -100, 300, 180, 15);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(-30, 80);
+        ctx.lineTo(30, 80);
+        ctx.lineTo(50, 120);
+        ctx.lineTo(-50, 120);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        
+        ctx.restore();
+    }
+    
+    function drawAbstractShapes(ctx, palette, w, h) {
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        ctx.fillStyle = palette.accent;
+        ctx.beginPath();
+        ctx.arc(w - 150, 150, 200, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = palette.primary;
+        ctx.beginPath();
+        ctx.moveTo(120, h - 80);
+        ctx.lineTo(320, h - 120);
+        ctx.lineTo(150, h - 300);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
     }
 
-    function drawTemperature(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#083d77", "#ffb4a2");
-        const cx = w * 0.75, cy = h * 0.55;
-        ctx.fillStyle = "#ff6b6b"; ctx.beginPath(); ctx.arc(cx, cy + 120, 60, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "#fff"; ctx.fillRect(cx - 20, cy - 220, 40, 260);
-        ctx.fillStyle = "#ff6b6b"; ctx.fillRect(cx - 16, cy + 20, 32, 160);
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 60, 110);
-        ctx.font = "600 30px Arial"; ctx.fillText("°C / °F conversion", 60, 160);
-    }
-
-    function drawTime(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#0b1b2b", "#3a506b");
-        const cx = w * 0.5, cy = h * 0.45, r = 180;
-        ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = "#111"; ctx.lineWidth = 6;
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(-Math.PI / 3) * 90, cy + Math.sin(-Math.PI / 3) * 90); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(-Math.PI / 6) * 130, cy + Math.sin(-Math.PI / 6) * 130); ctx.stroke();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 80, 110);
-    }
-
-    function drawVolume(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#022b3a", "#3fb0ac");
-        const left = w * 0.58, top = h * 0.22;
-        ctx.fillStyle = "#fff"; ctx.fillRect(left, top, 140, 520);
-        ctx.fillStyle = "#5eead4"; ctx.fillRect(left + 8, top + 450, 124, 120);
-        ctx.strokeStyle = "#0b3a3a";
-        for (let i = 0; i < 8; i++) {
-            ctx.beginPath(); ctx.moveTo(left, top + 40 + i * 60); ctx.lineTo(left - 20, top + 40 + i * 60); ctx.stroke();
-        }
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 60, 110);
-    }
-
-    function drawWeight(ctx, w, h, title) {
-        drawGradient(ctx, w, h, "#1e1f26", "#6c5ce7");
-        const cx = w * 0.5, cy = h * 0.5;
-        ctx.strokeStyle = "#fff"; ctx.lineWidth = 8;
-        ctx.beginPath(); ctx.moveTo(cx, cy - 160); ctx.lineTo(cx, cy + 60); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(cx - 220, cy - 40); ctx.lineTo(cx + 220, cy - 40); ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx - 140, cy + 80, 60, 0, Math.PI * 2); ctx.fillStyle = "#fff"; ctx.fill();
-        ctx.beginPath(); ctx.arc(cx + 140, cy + 80, 60, 0, Math.PI * 2); ctx.fillStyle = "#fff"; ctx.fill();
-        ctx.fillStyle = "#fff"; ctx.font = "700 44px Arial"; ctx.fillText(title, 80, 110);
-    }
-
-    function createImageFor(concept) {
+    function createImageFor(title) {
         const canvas = document.createElement('canvas');
         canvas.width = W;
         canvas.height = H;
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, W, H);
+        ctx.scale(S, S); // Scale the entire context
 
-        const name = concept.toLowerCase();
-        if (name.includes("angle")) drawAngle(ctx, W, H, concept);
-        else if (name.includes("area")) drawArea(ctx, W, H, concept);
-        else if (name.includes("length")) drawLength(ctx, W, H, concept);
-        else if (name.includes("power")) drawPower(ctx, W, H, concept);
-        else if (name.includes("pressure")) drawPressure(ctx, W, H, concept);
-        else if (name.includes("speed")) drawSpeed(ctx, W, H, concept);
-        else if (name.includes("temperature")) drawTemperature(ctx, W, H, concept);
-        else if (name.includes("time")) drawTime(ctx, W, H, concept);
-        else if (name.includes("volume")) drawVolume(ctx, W, H, concept);
-        else if (name.includes("weight")) drawWeight(ctx, W, H, concept);
-        else if (name.includes("conversion")) drawConversion(ctx, W, H, concept);
-        else drawDefault(ctx, W, H, concept);
+        const palette = getPalette(title);
+        const name = title.toLowerCase();
 
-        ctx.fillStyle = "rgba(255,255,255,0.9)";
-        ctx.font = "600 24px Arial";
+        drawBackground(ctx, palette, BASE_W, BASE_H);
+        drawPattern(ctx, BASE_W, BASE_H);
+
+        if (name.includes("vyakaran") || name.includes("hindi") || name.includes("विशेषण") || name.includes("सर्वनाम") || name.includes("संज्ञा")) {
+            drawEducationIcons(ctx, palette, BASE_W, BASE_H);
+        } else if (name.includes("conversion") || name.includes("unit") || name.includes("mass") || name.includes("weight")) {
+            drawGeometryTools(ctx, palette, BASE_W, BASE_H);
+        } else if (name.includes("computer")) {
+            drawComputerIcon(ctx, palette, BASE_W, BASE_H);
+        } else {
+            drawAbstractShapes(ctx, palette, BASE_W, BASE_H);
+        }
+        
+        wrapText(ctx, title, BASE_W / 2, BASE_H / 2, BASE_W * 0.8, 110, palette);
+
+        ctx.font = "600 28px 'Arial', sans-serif";
+        ctx.fillStyle = palette.primary;
         ctx.textAlign = "right";
-        ctx.textBaseline = "alphabetic";
-        ctx.fillText("gklearnstudy.in", W - 40, H - 40);
+        ctx.textBaseline = "bottom";
+        ctx.globalAlpha = 0.7;
+        ctx.fillText("gklearnstudy.in", BASE_W - 30, BASE_H - 25);
+        ctx.globalAlpha = 1;
+
         return canvas.toDataURL('image/png');
     }
 
