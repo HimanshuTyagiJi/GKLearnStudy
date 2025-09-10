@@ -1685,7 +1685,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <div class="author-details">
                             <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
-                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time> &bull; ${post.readingTime}</span>
+                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
                         </div>
                     </div>
                     <div class="share-button-wrapper">
