@@ -1,4 +1,5 @@
 
+
 :root {
   /* ======================================== */
   /*             1. LIGHT THEME               */
@@ -471,8 +472,13 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
 }
 .text h1 { color: var(--accent-color); }
 .text p { color: var(--text-color-secondary); }
+
+/* Performance: Remove expensive, continuous animations from category header */
+.box1, .box2, .box3, .box4, .animated-text {
+  animation: none;
+}
 .animated-text {
-  color: var(--accent-color);
+  color: var(--text-color-primary);
 }
 .arrow-anim { stroke: #641ef9; }
 
@@ -830,7 +836,7 @@ body, .header, .menu, .search-input, .theme-switcher,
 /* ===== Comments Widget Wrapper ===== */
 .comments-wrapper {
   position: relative;
-  min-height: 350px; /* Reserve space to prevent CLS */
+  min-height: 400px; /* Increased fallback height to prevent CLS */
 }
 
 .firebase-comments-widget {
@@ -932,6 +938,30 @@ body, .header, .menu, .search-input, .theme-switcher,
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+#comments-list {
+  position: relative;
+  /* Reserve space for comments to prevent CLS. */
+  min-height: 250px;
+  transition: min-height 0.2s ease-out;
+}
+
+/* Apply flex centering ONLY when the list is in its loading state (i.e., does NOT contain a .comment-item).
+   This keeps the spinner in the document flow, preventing the container from collapsing and causing a layout shift. */
+#comments-list:not(:has(.comment-item)) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0; /* Add some vertical padding to ensure space is occupied. */
+}
+
+/* Hide the loading indicators once actual comments are present.
+   This assumes JS adds comments with the .comment-item class. */
+#comments-list:has(.comment-item) > .spinner,
+#comments-list:has(.comment-item) > p.muted {
+  display: none;
 }
 
 .comment-item {
