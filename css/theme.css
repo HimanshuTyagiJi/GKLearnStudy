@@ -471,13 +471,8 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
 }
 .text h1 { color: var(--accent-color); }
 .text p { color: var(--text-color-secondary); }
-.animated-text { animation: textColorCycle 4s infinite linear; }
-@keyframes textColorCycle {
-  0%   { color: #4285F4; }
-  25%  { color: #EA4335; }
-  50%  { color: #FBBC05; }
-  75%  { color: #34A853; }
-  100% { color: #4285F4; }
+.animated-text {
+  color: var(--accent-color);
 }
 .arrow-anim { stroke: #641ef9; }
 
@@ -833,6 +828,11 @@ body, .header, .menu, .search-input, .theme-switcher,
 }
 
 /* ===== Comments Widget Wrapper ===== */
+.comments-wrapper {
+  position: relative;
+  min-height: 350px; /* Reserve space to prevent CLS */
+}
+
 .firebase-comments-widget {
   max-width: 700px;
   margin: 2rem auto;
@@ -1022,17 +1022,11 @@ body, .header, .menu, .search-input, .theme-switcher,
   0%,100% { transform: translateX(0); }
   50%     { transform: translateX(6px); }
 }
-@keyframes colorCycle {
-  0%   { fill: #4285F4; }
-  25%  { fill: #EA4335; }
-  50%  { fill: #FBBC05; }
-  75%  { fill: #34A853; }
-  100% { fill: #4285F4; }
-}
-.box1 { animation: colorCycle 4s infinite; }
-.box2 { animation: colorCycle 4s infinite 1s; }
-.box3 { animation: colorCycle 4s infinite 2s; }
-.box4 { animation: colorCycle 4s infinite 3s; }
+
+.box1 { fill: #4285F4; }
+.box2 { fill: #EA4335; }
+.box3 { fill: #FBBC05; }
+.box4 { fill: #34A853; }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
