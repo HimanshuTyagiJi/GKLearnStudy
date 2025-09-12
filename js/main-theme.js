@@ -8,7 +8,7 @@ window.GKApp.searchData = [
     title: "Weight & Mass Unit Conversion",
     url: "/conversion/weight-mass-unit-conversion",
     paragraph: "Convert between various units of weight and mass, such as kilograms (kg), grams (g), pounds (lb), and ounces (oz). An essential tool for science, cooking, and daily life.",
-    date: "Feb 24, 2025",
+    date: "February 24, 2025",
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "8 min read",
@@ -17,7 +17,7 @@ window.GKApp.searchData = [
     title: "Volume Unit Conversion",
     url: "/conversion/volume-unit-conversion",
     paragraph: "Easily convert between volume units like liters (L), milliliters (mL), gallons, and cubic meters. Essential for chemistry, cooking, and engineering.",
-    date: "Feb 23, 2025",
+    date: "February 23, 2025",
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
@@ -26,7 +26,7 @@ window.GKApp.searchData = [
     title: "Time Unit Conversion",
     url: "/conversion/time-unit-conversion",
     paragraph: "Convert time between seconds, minutes, hours, days, and more. A fundamental skill for scheduling, physics calculations, and everyday planning.",
-    date: "Feb 22, 2025",
+    date: "February 22, 2025",
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
@@ -35,7 +35,7 @@ window.GKApp.searchData = [
     title: "Temperature Unit Conversion - defination,use",
     url: "/conversion/temperature-unit-conversion",
     paragraph: "Switch between temperature scales including Celsius, Fahrenheit, and Kelvin. Crucial for weather forecasting, scientific experiments, and cooking.",
-    date: "Feb 21, 2025",
+    date: "February 21, 2025",
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
@@ -44,7 +44,7 @@ window.GKApp.searchData = [
     title: "Speed Unit Conversion",
     url: "/conversion/speed-unit-conversion",
     paragraph: "Convert speed units such as meters per second (m/s), kilometers per hour (km/h), and miles per hour (mph). Useful in physics, travel, and sports.",
-    date: "Feb 20, 2025",
+    date: "February 20, 2025",
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
@@ -53,7 +53,7 @@ window.GKApp.searchData = [
     title: "Pressure Unit Conversion",
     url: "/conversion/pressure-unit-conversion",
     paragraph: "Convert between pressure units like Pascal (Pa), atmospheres (atm), and pounds per square inch (psi). Important for engineering, meteorology, and physics.",
-    date: "Feb 19, 2025",
+    date: "February 19, 2025",
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
@@ -62,7 +62,7 @@ window.GKApp.searchData = [
     title: "Power Unit Conversion",
     url: "/conversion/power-unit-conversion",
     paragraph: "Convert units of power like watts (W), horsepower (hp), and kilowatts (kW). Essential for physics, engineering, and understanding energy consumption.",
-    date: "Feb 18, 2025",
+    date: "February 18, 2025",
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
@@ -71,7 +71,7 @@ window.GKApp.searchData = [
     title: "Length Unit Conversion",
     url: "/conversion/length-unit-conversion",
     paragraph: "Convert between units of length, including meters (m), kilometers (km), miles, and inches. A basic necessity for measurement and construction.",
-    date: "Feb 17, 2025",
+    date: "February 17, 2025",
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
@@ -80,7 +80,7 @@ window.GKApp.searchData = [
     title: "Area Unit Conversion",
     url: "/conversion/area-unit-conversion",
     paragraph: "Convert area units such as square meters, square feet, acres, and hectares. Vital for real estate, agriculture, and construction planning.",
-    date: "Feb 16, 2025",
+    date: "February 16, 2025",
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
@@ -89,7 +89,7 @@ window.GKApp.searchData = [
     title: "Angle Unit Conversion",
     url: "/conversion/angle-unit-conversion",
     paragraph: "Convert between degrees, radians, and other angular units. A core concept in mathematics, physics, and engineering for measuring rotation.",
-    date: "Feb 15, 2025",
+    date: "February 15, 2025",
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "8 min read",
@@ -98,7 +98,7 @@ window.GKApp.searchData = [
   title: "Unit Conversion",
   url: "/conversion",
   paragraph: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
-  date: "Feb 14, 2025",
+  date: "February 14, 2025",
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
@@ -108,7 +108,7 @@ window.GKApp.searchData = [
     title: "निबंध: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/essay-in-hindi.html",
     paragraph: "निबंध लेखन विचारों को व्यवस्थित रूप से प्रस्तुत करने की एक कला है। इस खंड में निबंध के प्रकार, संरचना और प्रभावी लेखन की तकनीकों को जानें।",
-    date: "Feb 13, 2025",
+    date: "February 13, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
@@ -117,7 +117,7 @@ window.GKApp.searchData = [
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/letter-writing-in-hindi.html",
     paragraph: "पत्र-लेखन संचार का एक महत्वपूर्ण माध्यम है। यहाँ औपचारिक और अनौपचारिक पत्रों के प्रारूप, भाषा-शैली और उदाहरणों का विस्तृत वर्णन है।",
-    date: "Feb 12, 2025",
+    date: "February 12, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -126,7 +126,7 @@ window.GKApp.searchData = [
     title: "अपठित-गद्यांश: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/unseen-passage-in-hindi.html",
     paragraph: "अपठित गद्यांश का उद्देश्य छात्रों की समझ और विश्लेषण क्षमता का मूल्यांकन करना है। यहाँ गद्यांश को हल करने की सही विधि और रणनीतियाँ बताई गई हैं।",
-    date: "Feb 11, 2025",
+    date: "February 11, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -135,7 +135,7 @@ window.GKApp.searchData = [
     title: "अनुच्छेद-लेखन: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/paragraph-writing-in-hindi.html",
     paragraph: "अनुच्छेद-लेखन किसी एक विषय पर संक्षिप्त और सारगर्भित जानकारी प्रस्तुत करने की कला है। यहाँ प्रभावी अनुच्छेद लिखने के नियम और उदाहरण दिए गए हैं।",
-    date: "Feb 10, 2025",
+    date: "February 10, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -144,7 +144,7 @@ window.GKApp.searchData = [
     title: "अलंकार: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/alankar-in-hindi.html",
     paragraph: "अलंकार काव्य की शोभा बढ़ाने वाले तत्व हैं। इस खंड में शब्दालंकार और अर्थालंकार के प्रमुख भेदों को उदाहरण सहित समझाया गया है।",
-    date: "Feb 9, 2025",
+    date: "February 9, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
@@ -153,7 +153,7 @@ window.GKApp.searchData = [
     title: "छन्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/chhand-in-hindi.html",
     paragraph: "छन्द काव्य में वर्णों या मात्राओं की नियमित संख्या के विन्यास को कहते हैं। यहाँ मात्रिक और वर्णिक छंदों के लक्षण और उदाहरण दिए गए हैं।",
-    date: "Feb 8, 2025",
+    date: "February 8, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -162,7 +162,7 @@ window.GKApp.searchData = [
     title: "रस: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/ras-in-hindi.html",
     paragraph: "रस का शाब्दिक अर्थ है 'आनंद'। काव्य को पढ़ने या सुनने से जिस आनंद की अनुभूति होती है, उसे रस कहते हैं। यहाँ सभी रसों का वर्णन है।",
-    date: "Feb 7, 2025",
+    date: "February 7, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -171,7 +171,7 @@ window.GKApp.searchData = [
     title: "युग्म शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/yugm-shabd.html",
     paragraph: "युग्म-शब्द वे शब्द होते हैं जो उच्चारण में समान लगते हैं, परन्तु उनके अर्थ भिन्न होते हैं। यहाँ ऐसे शब्दों के उदाहरण दिए गए हैं।",
-    date: "Feb 6, 2025",
+    date: "February 6, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
@@ -180,7 +180,7 @@ window.GKApp.searchData = [
     title: "त्रुटिसम भिन्नार्थक शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/pairs-of-similar-words.html",
     paragraph: "ये वे शब्द हैं जो सुनने में लगभग समान लगते हैं, पर उनकी वर्तनी और अर्थ में सूक्ष्म अंतर होता है। यह भाषा को समृद्ध बनाता है।",
-    date: "Feb 5, 2025",
+    date: "February 5, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "7 min read",
@@ -189,7 +189,7 @@ window.GKApp.searchData = [
     title: "एकार्थक प्रतीत होने वाले शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/words-apparently-similar-in-meanings-in-hindi.html",
     paragraph: "कुछ शब्द देखने में समान अर्थ वाले लगते हैं, लेकिन उनके प्रयोग और अर्थ में सूक्ष्म भिन्नता होती है। यहाँ ऐसे ही शब्दों का संकलन है।",
-    date: "Feb 4, 2025",
+    date: "February 4, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
@@ -198,7 +198,7 @@ window.GKApp.searchData = [
     title: "अनेकार्थी-शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/words-of-many-meanings-in-hindi.html",
     paragraph: "अनेकार्थी शब्द वे होते हैं जिनके एक से अधिक अर्थ निकलते हैं। प्रसंग के अनुसार उनका सही अर्थ समझा जाता है।",
-    date: "Feb 3, 2025",
+    date: "February 3, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
@@ -207,7 +207,7 @@ window.GKApp.searchData = [
     title: "अनेक शब्दों के लिए एक शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/one-word-substitution-in-hindi.html",
     paragraph: "भाषा को संक्षिप्त और प्रभावशाली बनाने के लिए वाक्यांश या अनेक शब्दों के स्थान पर एक शब्द का प्रयोग किया जाता है।",
-    date: "Feb 2, 2025",
+    date: "February 2, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -216,7 +216,7 @@ window.GKApp.searchData = [
     title: "लोकोक्तियाँ: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/proverbs-in-hindi.html",
     paragraph: "लोकोक्तियाँ या कहावतें ऐसे वाक्यांश हैं जो अपने अनुभव और परंपरा के आधार पर बने हैं और किसी सत्य को प्रकट करते हैं।",
-    date: "Feb 1, 2025",
+    date: "February 1, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -225,7 +225,7 @@ window.GKApp.searchData = [
     title: "मुहावरे: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/idioms-in-hindi.html",
     paragraph: "मुहावरे ऐसे वाक्यांश होते हैं जो अपने सामान्य अर्थ को छोड़कर किसी विशेष अर्थ को व्यक्त करते हैं, जिससे भाषा रोचक बनती है।",
-    date: "Jan 31, 2025",
+    date: "January 31, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -234,7 +234,7 @@ window.GKApp.searchData = [
     title: "पर्यायवाची-शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/synonyms-in-hindi.html",
     paragraph: "पर्यायवाची शब्द (समानार्थक शब्द) उन शब्दों को कहते हैं जिनके अर्थ समान होते हैं। यह शब्द-भंडार को समृद्ध करते हैं।",
-    date: "Jan 30, 2025",
+    date: "January 30, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -243,7 +243,7 @@ window.GKApp.searchData = [
     title: "विलोम-शब्द: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/antonyms-in-hindi.html",
     paragraph: "विलोम शब्द (विपरीतार्थक शब्द) वे शब्द होते हैं जो किसी दूसरे शब्द का उल्टा अर्थ बताते हैं। यह भाषा में संतुलन लाते हैं।",
-    date: "Jan 29, 2025",
+    date: "January 29, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -252,7 +252,7 @@ window.GKApp.searchData = [
     title: "देशज-विदेशज: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/deshaj-videshaj-in-hindi.html",
     paragraph: "देशज शब्द स्थानीय बोलियों से आते हैं, जबकि विदेशज शब्द अन्य भाषाओं से लिए गए हैं। यह हिंदी भाषा की विविधता को दर्शाता है।",
-    date: "Jan 28, 2025",
+    date: "January 28, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -261,7 +261,7 @@ window.GKApp.searchData = [
     title: "तत्सम-तद्भव: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/tatsam-tadbhav-in-hindi.html",
     paragraph: "तत्सम शब्द संस्कृत से ज्यों के त्यों लिए गए हैं, जबकि तद्भव शब्द संस्कृत से परिवर्तित होकर बने हैं।",
-    date: "Jan 27, 2025",
+    date: "January 27, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -270,7 +270,7 @@ window.GKApp.searchData = [
     title: "समास: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/compound-in-hindi.html",
     paragraph: "समास दो या दो से अधिक शब्दों को मिलाकर एक नया और संक्षिप्त शब्द बनाने की प्रक्रिया है। इसके प्रमुख भेदों का वर्णन यहाँ है।",
-    date: "Jan 26, 2025",
+    date: "January 26, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
@@ -279,7 +279,7 @@ window.GKApp.searchData = [
     title: "संधि: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/joining.html",
     paragraph: "संधि का अर्थ है 'मेल'। दो निकटवर्ती वर्णों के मेल से जो विकार (परिवर्तन) होता है, उसे संधि कहते हैं।",
-    date: "Jan 25, 2025",
+    date: "January 25, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
@@ -288,7 +288,7 @@ window.GKApp.searchData = [
     title: "प्रत्यय: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/suffix-in-hindi.html",
     paragraph: "प्रत्यय वे शब्दांश हैं जो किसी शब्द के अंत में जुड़कर उसके अर्थ में विशेषता या परिवर्तन लाते हैं।",
-    date: "Jan 24, 2025",
+    date: "January 24, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -297,7 +297,7 @@ window.GKApp.searchData = [
     title: "उपसर्ग: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/prefix-in-hindi.html",
     paragraph: "उपसर्ग वे शब्दांश हैं जो किसी शब्द के आरंभ में जुड़कर उसके अर्थ को बदल देते हैं या नया अर्थ देते हैं।",
-    date: "Jan 23, 2025",
+    date: "January 23, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -306,7 +306,7 @@ window.GKApp.searchData = [
     title: "विराम-चिन्ह: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/punctuation-in-hindi.html",
     paragraph: "विराम-चिन्हों का प्रयोग भाषा में स्पष्टता और भावों की सही अभिव्यक्ति के लिए किया जाता है। यहाँ सभी चिन्हों का वर्णन है।",
-    date: "Jan 22, 2025",
+    date: "January 22, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -315,7 +315,7 @@ window.GKApp.searchData = [
     title: "पुरुष: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/person-in-hindi.html",
     paragraph: "व्याकरण में पुरुष से तात्पर्य वक्ता, श्रोता और अन्य व्यक्ति से है। इसके तीन भेद हैं - उत्तम, मध्यम और अन्य पुरुष।",
-    date: "Jan 21, 2025",
+    date: "January 21, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "6 min read",
@@ -324,7 +324,7 @@ window.GKApp.searchData = [
     title: "वाच्य: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/voice-in-hindi.html",
     paragraph: "वाच्य क्रिया का वह रूप है जिससे यह पता चलता है कि वाक्य में कर्ता, कर्म या भाव में से किसकी प्रधानता है।",
-    date: "Jan 20, 2025",
+    date: "January 20, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
@@ -333,7 +333,7 @@ window.GKApp.searchData = [
     title: "निपात: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/particle-in-hindi.html",
     paragraph: "निपात वे अव्यय शब्द हैं जो किसी शब्द या पद के बाद लगकर उसके अर्थ में विशेष प्रकार का बल या भाव उत्पन्न करते हैं।",
-    date: "Jan 19, 2025",
+    date: "January 19, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
@@ -342,7 +342,7 @@ window.GKApp.searchData = [
     title: "अव्यय: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/indeclinable-words-in-hindi.html",
     paragraph: "अव्यय या अविकारी शब्द वे होते हैं जिनमें लिंग, वचन, पुरुष, कारक आदि के कारण कोई विकार या परिवर्तन नहीं होता।",
-    date: "Jan 18, 2025",
+    date: "January 18, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "7 min read",
@@ -351,7 +351,7 @@ window.GKApp.searchData = [
     title: "काल: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/tense-in-hindi.html",
     paragraph: "काल क्रिया के उस रूप को कहते हैं जिससे उसके करने या होने के समय का बोध होता है। इसके तीन मुख्य भेद हैं - भूत, वर्तमान, भविष्य।",
-    date: "Jan 17, 2025",
+    date: "January 17, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -360,7 +360,7 @@ window.GKApp.searchData = [
     title: "क्रिया: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/verb-in-hindi.html",
     paragraph: "जिस शब्द से किसी कार्य के करने या होने का बोध हो, उसे क्रिया कहते हैं। यह सकर्मक और अकर्मक दो प्रकार की होती है।",
-    date: "Jan 16, 2025",
+    date: "January 16, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -369,7 +369,7 @@ window.GKApp.searchData = [
     title: "विशेषण: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/adjective-in-hindi.html",
     paragraph: "जो शब्द संज्ञा या सर्वनाम की विशेषता बताते हैं, उन्हें विशेषण कहते हैं। यह गुण, संख्या, परिमाण आदि से संबंधित हो सकते हैं।",
-    date: "Jan 15, 2025",
+    date: "January 15, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -378,7 +378,7 @@ window.GKApp.searchData = [
     title: "सर्वनाम: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/pronoun-in-hindi.html",
     paragraph: "संज्ञा के स्थान पर प्रयोग होने वाले शब्दों को सर्वनाम कहते हैं। जैसे - मैं, तुम, वह, यह आदि।",
-    date: "Jan 14, 2025",
+    date: "January 14, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -387,7 +387,7 @@ window.GKApp.searchData = [
     title: "कारक: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/case-in-hindi.html",
     paragraph: "कारक संज्ञा या सर्वनाम का क्रिया के साथ संबंध बताते हैं। हिंदी में आठ कारक होते हैं, जिनके अपने विभक्ति चिन्ह होते हैं।",
-    date: "Jan 13, 2025",
+    date: "January 13, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -396,7 +396,7 @@ window.GKApp.searchData = [
     title: "लिंग: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/gender-in-hindi.html",
     paragraph: "जिस चिह्न से यह पता चले कि कोई संज्ञा पुरुष जाति की है या स्त्री जाति की, उसे लिंग कहते हैं। इसके दो भेद हैं - पुल्लिंग और स्त्रीलिंग।",
-    date: "Jan 12, 2025",
+    date: "January 12, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
@@ -405,7 +405,7 @@ window.GKApp.searchData = [
     title: "वचन: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/number-in-hindi.html",
     paragraph: "शब्द के जिस रूप से उसके एक या अनेक होने का बोध हो, उसे वचन कहते हैं। हिंदी में दो वचन हैं - एकवचन और बहुवचन।",
-    date: "Jan 11, 2025",
+    date: "January 11, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
@@ -414,7 +414,7 @@ window.GKApp.searchData = [
     title: "संज्ञा: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/noun-in-hindi.html",
     paragraph: "किसी व्यक्ति, वस्तु, स्थान, या भाव के नाम को संज्ञा कहते हैं। इसके मुख्य भेद व्यक्तिवाचक, जातिवाचक, और भाववाचक हैं।",
-    date: "Jan 10, 2025",
+    date: "January 10, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -423,7 +423,7 @@ window.GKApp.searchData = [
     title: "वाक्य-विचार: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/syntax-in-hindi.html",
     paragraph: "शब्दों का व्यवस्थित समूह जिससे कोई अर्थ प्रकट हो, वाक्य कहलाता है। यहाँ रचना और अर्थ के आधार पर वाक्य के भेद बताए गए हैं।",
-    date: "Jan 9, 2025",
+    date: "January 9, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -432,7 +432,7 @@ window.GKApp.searchData = [
     title: "शब्द-विचार: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/morphology-in-hindi.html",
     paragraph: "वर्णों के सार्थक समूह को शब्द कहते हैं। यहाँ उत्पत्ति, रचना, प्रयोग और अर्थ के आधार पर शब्दों के वर्गीकरण का वर्णन है।",
-    date: "Jan 8, 2025",
+    date: "January 8, 2025",
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -441,7 +441,7 @@ window.GKApp.searchData = [
     title: "वर्ण-विचार: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/phonology-in-hindi.html",
     paragraph: "भाषा की सबसे छोटी इकाई वर्ण कहलाती है। इस खंड में स्वर और व्यंजन वर्णों के भेद, उच्चारण स्थान और वर्गीकरण की जानकारी है।",
-    date: "Jan 7, 2025",
+    date: "January 7, 2025",
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
@@ -450,7 +450,7 @@ window.GKApp.searchData = [
     title: "भाषा और व्याकरण: परिभाषा, भेद, उदाहरण",
     url: "vyakaran-language.html",
     paragraph: "भाषा विचारों के आदान-प्रदान का माध्यम है, और व्याकरण भाषा को शुद्ध रूप से लिखने और बोलने के नियम सिखाता है।",
-    date: "Jan 6, 2025",
+    date: "January 6, 2025",
     author: "Owner",
     category: "Vyakaran",
     readingTime: "11 min read",
@@ -927,7 +927,7 @@ const createPostCard = (post, index) => {
 
 document.addEventListener("DOMContentLoaded", () => {
     const POSTS_INITIAL_LOAD = 12;
-    const POSTS_PER_PAGE = 30;
+    const POSTS_PER_PAGE = 20;
     const postsContainer = document.getElementById("post-grid");
     const postFilterInput = document.getElementById("post-filter-input");
     const categoryLinks = document.querySelectorAll(".category-list a");
@@ -957,11 +957,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { rootMargin: "0px 0px 200px 0px" });
 
-    const observeLazyImages = (container) => {
-        const lazyImages = container.querySelectorAll('.lazy-image');
-        lazyImages.forEach(img => lazyImageObserver.observe(img));
-    };
-
     const renderPosts = (posts) => {
         postsContainer.innerHTML = "";
         if (posts.length === 0) {
@@ -975,7 +970,9 @@ document.addEventListener("DOMContentLoaded", () => {
             fragment.appendChild(card);
         });
         postsContainer.appendChild(fragment);
-        observeLazyImages(postsContainer);
+
+        const lazyImages = postsContainer.querySelectorAll('.lazy-image');
+        lazyImages.forEach(img => lazyImageObserver.observe(img));
     };
 
     const appendPosts = (posts, startIndex) => {
@@ -984,11 +981,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = createPostCard(post, startIndex + index);
             fragment.appendChild(card);
         });
-        // Use a temporary container to observe images before appending to DOM
-        const tempContainer = document.createElement('div');
-        tempContainer.appendChild(fragment);
-        observeLazyImages(tempContainer);
-        postsContainer.appendChild(tempContainer);
+
+        const imagesInFragment = fragment.querySelectorAll('.lazy-image');
+        imagesInFragment.forEach(img => lazyImageObserver.observe(img));
+        
+        postsContainer.appendChild(fragment);
     };
 
     const updatePostsDisplay = () => {
