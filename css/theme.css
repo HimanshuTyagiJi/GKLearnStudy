@@ -1,5 +1,3 @@
-
-
 :root {
   /* ======================================== */
   /*             1. LIGHT THEME               */
@@ -942,9 +940,8 @@ body, .header, .menu, .search-input, .theme-switcher,
 
 #comments-list {
   position: relative;
-  /* Reserve space for comments to prevent CLS. */
-  min-height: 250px;
-  transition: min-height 0.2s ease-out;
+  /* Reserve a larger, stable space for comments to prevent CLS. */
+  min-height: 500px;
 }
 
 /* Apply flex centering ONLY when the list is in its loading state (i.e., does NOT contain a .comment-item).
