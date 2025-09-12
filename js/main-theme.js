@@ -926,7 +926,7 @@ const createPostCard = (post, index) => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const POSTS_INITIAL_LOAD = 12;
+    const POSTS_INITIAL_LOAD = 30;
     const POSTS_PER_PAGE = 20;
     const postsContainer = document.getElementById("post-grid");
     const postFilterInput = document.getElementById("post-filter-input");
