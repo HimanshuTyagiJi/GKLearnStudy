@@ -1,3 +1,4 @@
+
 :root {
   /* ======================================== */
   /*             1. LIGHT THEME               */
@@ -470,13 +471,13 @@ html[data-theme='dark'] .theme-switcher .moon { display: block; }
 }
 .text h1 { color: var(--accent-color); }
 .text p { color: var(--text-color-secondary); }
-
-/* Performance: Remove expensive, continuous animations from category header */
-.box1, .box2, .box3, .box4, .animated-text {
-  animation: none;
-}
-.animated-text {
-  color: var(--text-color-primary);
+.animated-text { animation: textColorCycle 4s infinite linear; }
+@keyframes textColorCycle {
+  0%   { color: #4285F4; }
+  25%  { color: #EA4335; }
+  50%  { color: #FBBC05; }
+  75%  { color: #34A853; }
+  100% { color: #4285F4; }
 }
 .arrow-anim { stroke: #641ef9; }
 
@@ -832,11 +833,6 @@ body, .header, .menu, .search-input, .theme-switcher,
 }
 
 /* ===== Comments Widget Wrapper ===== */
-.comments-wrapper {
-  position: relative;
-  min-height: 400px; /* Increased fallback height to prevent CLS */
-}
-
 .firebase-comments-widget {
   max-width: 700px;
   margin: 2rem auto;
@@ -938,29 +934,6 @@ body, .header, .menu, .search-input, .theme-switcher,
   margin: 0;
 }
 
-#comments-list {
-  position: relative;
-  /* Reserve a larger, stable space for comments to prevent CLS. */
-  min-height: 500px;
-}
-
-/* Apply flex centering ONLY when the list is in its loading state (i.e., does NOT contain a .comment-item).
-   This keeps the spinner in the document flow, preventing the container from collapsing and causing a layout shift. */
-#comments-list:not(:has(.comment-item)) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0; /* Add some vertical padding to ensure space is occupied. */
-}
-
-/* Hide the loading indicators once actual comments are present.
-   This assumes JS adds comments with the .comment-item class. */
-#comments-list:has(.comment-item) > .spinner,
-#comments-list:has(.comment-item) > p.muted {
-  display: none;
-}
-
 .comment-item {
   border-radius: var(--border-radius);
   margin-bottom: 1rem;
@@ -1049,11 +1022,17 @@ body, .header, .menu, .search-input, .theme-switcher,
   0%,100% { transform: translateX(0); }
   50%     { transform: translateX(6px); }
 }
-
-.box1 { fill: #4285F4; }
-.box2 { fill: #EA4335; }
-.box3 { fill: #FBBC05; }
-.box4 { fill: #34A853; }
+@keyframes colorCycle {
+  0%   { fill: #4285F4; }
+  25%  { fill: #EA4335; }
+  50%  { fill: #FBBC05; }
+  75%  { fill: #34A853; }
+  100% { fill: #4285F4; }
+}
+.box1 { animation: colorCycle 4s infinite; }
+.box2 { animation: colorCycle 4s infinite 1s; }
+.box3 { animation: colorCycle 4s infinite 2s; }
+.box4 { animation: colorCycle 4s infinite 3s; }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
