@@ -873,6 +873,57 @@ window.GKApp.generateConceptImage = (() => {
     return createImageFor;
 })();
 
+const createPostCard = (post, index) => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.setAttribute('aria-label', post.title);
+    card.dataset.index = index; 
+
+    const imageHtml = post.svg || `<img class="lazy-image" data-title="${post.title}" alt="${post.title}" width="320" height="180">`;
+    const clipPathId = `circle-clip-avatar-gt-${index}`;
+
+    const metaBlock = `
+        <div class="post-meta-container">
+            <div class="byline">
+                <div class="author-avatar">
+                    <svg width="40" height="40" viewBox="0 0 300 300">
+                        <circle cx="150" cy="150" r="150" fill="white"></circle>
+                        <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
+                        <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
+                        <clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath>
+                        <g clip-path="url(#${clipPathId})">
+                            <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                            <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="author-details">
+                    <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
+                    <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
+                </div>
+            </div>
+            <div class="share-button-wrapper">
+                <button class="share-button" title="Share this page">
+                    <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
+                    <span>Share</span>
+                </button>
+            </div>
+        </div>`;
+
+    card.innerHTML = `
+        <div class="card-thumbnail">
+            <a href="categories.html" class="category-badge">${post.category}</a>
+            <a href="${post.url}" class="card-image-link">${imageHtml}</a>
+        </div>
+        <div class="card-content">
+            <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
+            <p class="card-summary">${post.paragraph}</p>
+        </div>
+        ${metaBlock}
+    `;
+    return card;
+};
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const POSTS_INITIAL_LOAD = 40;
@@ -889,7 +940,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const allPosts = window.GKApp.searchData;
     let currentFilteredPosts = [...allPosts];
-    let visiblePostCount = POSTS_INITIAL_LOAD;
+    let visiblePostCount = 0;
+
+    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                const title = img.dataset.title;
+                if (title) {
+                    img.src = window.GKApp.generateConceptImage(title);
+                    img.classList.add('loaded');
+                    img.classList.remove('lazy-image');
+                    observer.unobserve(img);
+                }
+            }
+        });
+    }, { rootMargin: "0px 0px 200px 0px" });
+
+    const observeLazyImages = (container) => {
+        const lazyImages = container.querySelectorAll('.lazy-image');
+        lazyImages.forEach(img => lazyImageObserver.observe(img));
+    };
 
     const renderPosts = (posts) => {
         postsContainer.innerHTML = "";
@@ -900,62 +971,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const fragment = document.createDocumentFragment();
         posts.forEach((post, index) => {
-            const card = document.createElement('article');
-            card.className = 'card';
-            card.setAttribute('aria-label', post.title);
-            card.dataset.index = index; 
-
-            const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
-
-            const clipPathId = `circle-clip-avatar-gt-${index}`;
-
-            const metaBlock = `
-                <div class="post-meta-container">
-                    <div class="byline">
-                        <div class="author-avatar">
-                            <svg width="40" height="40" viewBox="0 0 300 300">
-                                <circle cx="150" cy="150" r="150" fill="white"></circle>
-                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
-                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
-                                <clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath>
-                                <g clip-path="url(#${clipPathId})">
-                                    <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
-                                    <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="author-details">
-                            <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
-                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
-                        </div>
-                    </div>
-                    <div class="share-button-wrapper">
-                        <button class="share-button" title="Share this page">
-                            <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
-                            <span>Share</span>
-                        </button>
-                    </div>
-                </div>`;
-
-            card.innerHTML = `
-                <div class="card-thumbnail" aria-hidden="true">
-                    <a href="categories.html" class="category-badge">${post.category}</a>
-                    <a href="${post.url}" class="card-image-link">${imageHtml}</a>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
-                    <p class="card-summary">${post.paragraph}</p>
-                </div>
-                ${metaBlock}
-            `;
+            const card = createPostCard(post, index);
             fragment.appendChild(card);
         });
         postsContainer.appendChild(fragment);
+        observeLazyImages(postsContainer);
+    };
+
+    const appendPosts = (posts, startIndex) => {
+        const fragment = document.createDocumentFragment();
+        posts.forEach((post, index) => {
+            const card = createPostCard(post, startIndex + index);
+            fragment.appendChild(card);
+        });
+        // Use a temporary container to observe images before appending to DOM
+        const tempContainer = document.createElement('div');
+        tempContainer.appendChild(fragment);
+        observeLazyImages(tempContainer);
+        postsContainer.appendChild(tempContainer);
     };
 
     const updatePostsDisplay = () => {
-        const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
+        const postsToRender = currentFilteredPosts.slice(0, POSTS_INITIAL_LOAD);
         renderPosts(postsToRender);
+        visiblePostCount = postsToRender.length;
 
         if (visiblePostCount >= currentFilteredPosts.length) {
             loadMoreBtn.style.display = "none";
@@ -964,15 +1003,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const handleFilter = (filteredPosts) => {
-        currentFilteredPosts = filteredPosts;
-        visiblePostCount = POSTS_INITIAL_LOAD;
-        updatePostsDisplay();
-    };
-
     const applyFilters = () => {
         const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
         const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
+        
         let filtered = allPosts;
         if (category.toLowerCase() !== "all") {
             filtered = filtered.filter((post) => post.category === category);
@@ -980,9 +1014,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (query) {
             filtered = window.GKApp.fuzzySearch(query, filtered);
         }
-        handleFilter(filtered);
+        
+        currentFilteredPosts = filtered;
+        updatePostsDisplay();
     };
-  
+
     postsContainer.addEventListener('click', (event) => {
         const card = event.target.closest('.card');
         if (!card) return;
@@ -1019,8 +1055,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     loadMoreBtn.addEventListener("click", () => {
-        visiblePostCount += POSTS_PER_PAGE;
-        updatePostsDisplay();
+        const nextPosts = currentFilteredPosts.slice(visiblePostCount, visiblePostCount + POSTS_PER_PAGE);
+        appendPosts(nextPosts, visiblePostCount);
+        visiblePostCount += nextPosts.length;
+
+        if (visiblePostCount >= currentFilteredPosts.length) {
+            loadMoreBtn.style.display = "none";
+        }
     });
 
     applyFilters();
