@@ -342,7 +342,7 @@ html[data-theme="dark"] .theme-switcher .moon {
   .menu.is-active {
     transform: translateX(0);
   }
-  .menu-inner {
+  .menu-inner {    align-items: left;
     overflow: auto;
     flex-direction: column;
     padding: 1rem;
