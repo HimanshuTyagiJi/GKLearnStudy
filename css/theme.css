@@ -156,6 +156,7 @@ body {
   display: flex;
   gap: 0.25rem;
   overflow: auto;
+      align-items: center;
 }
 .menu-inner a {
   text-decoration: none;
