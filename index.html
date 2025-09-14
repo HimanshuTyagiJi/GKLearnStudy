@@ -379,12 +379,56 @@
                 <div class="post-filter-container">
                     <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
                 </div>
-   <style>.bg-svg {
+
+                <main id="post-grid" class="post-grid">
+                
+
+                </main>
+
+                <div id="load-more-container">
+                    <button id="load-more-btn">Load More</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+        
+ <div class="comments-wrapper">
+            <div class="firebase-comments-widget" id="custom-comment-section">
+                <!-- Form is now static HTML -->
+                <h2>Comments</h2>
+                <div class="comment-form-shell" id="comment-form-shell">
+                    <form class="comment-form" id="comment-form">
+                        <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                        <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
+                        <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+                        <input type="hidden" id="parent-id" value="" />
+                        <div class="form-footer">
+                            <div id="char-counter">0 / 1000</div>
+                            <div class="actions">
+                                <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Comments go here -->
+                <div id="comments-list">
+                    <div class="spinner"></div>
+                    <p class="muted">Loading comments…</p>
+                </div>
+            </div>
+        </div>
+
+   <footer class="app-footer">   <style>.bg-svg {
      position:absolute;
-      top: 600px;
+
       left: 0;
       width: 100%;
-      height: 100%;
+     
       z-index: -1; /* text ke piche bhejna */
     }</style>
     <div class="bg-svg">
@@ -454,50 +498,6 @@
       </path>
     </svg>
   </div>
-                <main id="post-grid" class="post-grid">
-                
-
-                </main>
-
-                <div id="load-more-container">
-                    <button id="load-more-btn">Load More</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-
-
-        
- <div class="comments-wrapper">
-            <div class="firebase-comments-widget" id="custom-comment-section">
-                <!-- Form is now static HTML -->
-                <h2>Comments</h2>
-                <div class="comment-form-shell" id="comment-form-shell">
-                    <form class="comment-form" id="comment-form">
-                        <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                        <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-                        <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-                        <input type="hidden" id="parent-id" value="" />
-                        <div class="form-footer">
-                            <div id="char-counter">0 / 1000</div>
-                            <div class="actions">
-                                <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Comments go here -->
-                <div id="comments-list">
-                    <div class="spinner"></div>
-                    <p class="muted">Loading comments…</p>
-                </div>
-            </div>
-        </div>
-
-   <footer class="app-footer">
         <div class="footer-content">
             <!-- Footer content will be injected by header.js -->
         </div>
