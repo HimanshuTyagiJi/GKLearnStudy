@@ -343,6 +343,7 @@ html[data-theme="dark"] .theme-switcher .moon {
     transform: translateX(0);
   }
   .menu-inner {    align-items: flex-start;
+              
     overflow: auto;
     flex-direction: column;
     padding: 1rem;
