@@ -14,9 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const leftArrow = document.getElementById('menuLeft');
     const rightArrow = document.getElementById('menuRight');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const horiSelector = menu?.querySelector('.hori-selector');
-    
-    let isInitialLoad = true;
 
     // --- Dynamic Content Injection ---
     function initMenuItems() {
@@ -28,10 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
             { href: "https://gklearnstudy.in/computer", text: "Computer" },
             { href: "https://gklearnstudy.in/kaise-karen", text: "How to" },
             { href: "https://gklearnstudy.in/gk-quiz", text: "GK Quiz" },
-            { href: "https://gklearnstudy.in/test", text: "Test" }
+            { href: "https://gklearnstudy.in/test", text: "Test" },
         ];
-        menuInner.insertAdjacentHTML('afterbegin', menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join(''));
-        menuInner.querySelector('a')?.classList.add('active'); // Set first item as active
+        menuInner.innerHTML = menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+        const firstLink = menuInner.querySelector('a');
+        if (firstLink) {
+            firstLink.classList.add('active');
+        }
     }
 
     function initFooterContent() {
@@ -128,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase().trim();
+        // Assuming main1.js has populated window.GKApp
         const searchData = window.GKApp?.searchData || [];
         const fuzzySearch = window.GKApp?.fuzzySearch;
         const generateSVG = window.GKApp?.generatePlaceholderSVG;
@@ -183,8 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             rightArrow.style.display = "none";
             return;
         }
-        const hasOverflow = menuInner.scrollWidth > menuInner.clientWidth + 1;
-        menuInner.classList.toggle('is-overflowing', hasOverflow);
+        const hasOverflow = menuInner.scrollWidth > menuInner.clientWidth;
         if (!hasOverflow) {
             leftArrow.style.display = 'none';
             rightArrow.style.display = 'none';
@@ -198,52 +198,11 @@ document.addEventListener("DOMContentLoaded", () => {
     leftArrow?.addEventListener("click", () => menuInner.scrollBy({ left: -300, behavior: "smooth" }));
     rightArrow?.addEventListener("click", () => menuInner.scrollBy({ left: 300, behavior: "smooth" }));
     
-    // --- Active Menu Selector Logic ---
-    const moveActiveSelector = () => {
-        if (!horiSelector || !menuInner) return;
-        const activeLink = menuInner.querySelector("a.active");
-        if (activeLink) {
-            if (isInitialLoad) horiSelector.style.transition = 'none';
-            horiSelector.style.display = 'block';
-            horiSelector.style.left = `${activeLink.offsetLeft}px`;
-            horiSelector.style.width = `${activeLink.offsetWidth}px`;
-            horiSelector.style.top = `${activeLink.offsetTop}px`;
-            const isDesktop = window.innerWidth > 850;
-            horiSelector.style.height = `${isDesktop ? 53 : activeLink.offsetHeight}px`;
-            if (isInitialLoad) {
-                void horiSelector.offsetHeight;
-                horiSelector.style.transition = '';
-            }
-        } else {
-            horiSelector.style.display = 'none';
-        }
-    };
-
-    // --- Combined Initializer & Resize Handler ---
-    let resizeTimer;
-    const handleResizeAndLoad = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            updateArrows();
-            moveActiveSelector();
-            if (isInitialLoad) isInitialLoad = false;
-        }, 150);
-    };
-    
     // --- INITIALIZATION ---
     initMenuItems();
     initFooterContent();
-    const menuLinks = menuInner?.querySelectorAll('a');
-    menuLinks?.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if(this.getAttribute('href') === '#') e.preventDefault();
-            menuLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            moveActiveSelector();
-        });
-    });
 
     menuInner?.addEventListener("scroll", updateArrows);
-    window.addEventListener("resize", handleResizeAndLoad);
-    handleResizeAndLoad();
+    window.addEventListener("resize", updateArrows);
+    updateArrows(); // Initial check
 });
