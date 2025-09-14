@@ -178,6 +178,13 @@
   text-overflow: ellipsis;
   margin-bottom: 12px;
 }
+.card-summary a {
+  color: inherit;
+  text-decoration: none;
+}
+.card-summary a:hover {
+  color: var(--link-color);
+}
 
 .post-meta-container {
   display: flex;
@@ -354,4 +361,3 @@
 .card-thumbnail .lazy-image.loaded {
   opacity: 1;
 }
-
