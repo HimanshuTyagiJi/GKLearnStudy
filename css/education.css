@@ -1,0 +1,218 @@
+.education-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+.education-header h1 {
+    font-family: "Lora", serif;
+    color: var(--accent-color);
+    margin: 0 0 1rem;
+}
+.education-header .education-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+.subject-section {
+    margin-bottom: 3rem;
+}
+.subject-section h2 {
+    font-family: "Lora", serif;
+    font-size: 2.2rem;
+    color: var(--text-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--accent-color);
+    margin-bottom: 2rem;
+}
+.chapters-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 1rem 0.5rem 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--border-color);
+}
+.chapters-container::-webkit-scrollbar {
+    height: 8px;
+}
+.chapters-container::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+.chapters-container::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+}
+.chapter-card-link {
+    text-decoration: none;
+    color: inherit;
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+}
+.chapter-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-color-base);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+.chapter-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px var(--shadow-color-base);
+}
+.chapter-svg-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-light-bg);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.chapter-svg-container svg {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+.chapter-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+.chapter-title {
+    font-family: "Lora", serif;
+    font-size: 1.4rem;
+    margin: 0 0 0.75rem;
+    color: var(--accent-color);
+}
+.chapter-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+}
+.subject-section h2 {
+    font-size: 1.8rem;
+}
+.chapter-card-link {
+    flex: 0 0 250px;
+}
+@media (max-width: 480px) {
+    .education-header .education-description {
+        font-size: 1rem;
+    }
+    .subject-section h2 {
+        font-size: 1.5rem;
+    }
+    .chapter-card-link {
+        flex: 0 0 220px;
+    }
+    .chapter-title {
+        font-size: 1.2rem;
+    }
+    .chapter-description {
+        font-size: 0.9rem;
+    }
+}
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 15px;
+    padding: 40px;
+    color: var(--text-secondary);
+    width: 100%;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.formula-page-container {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-color-base);
+}
+.formula-section {
+    margin-bottom: 2.5rem;
+}
+.formula-category-title {
+    font-family: "Lora", serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--accent-color);
+    margin-bottom: 1.5rem;
+}
+.formula-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+.formula-item {
+    background-color: var(--primary-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.formula-item:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 6px 15px var(--shadow-color-3);
+}
+.formula-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.formula-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 0;
+}
+.formula-expression {
+    font-family: "Lora", serif;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    text-align: center;
+}
+.formula-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+}
+@media (max-width: 768px) {
+    .formula-page-container {
+        padding: 1.5rem;
+    }
+    .formula-category-title {
+        font-size: 1.6rem;
+    }
+    .formula-title {
+        font-size: 1.1rem;
+    }
+    .formula-expression {
+        font-size: 1.1rem;
+    }
+}
