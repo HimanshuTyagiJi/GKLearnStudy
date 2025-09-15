@@ -118,7 +118,7 @@ body {
   }
 }
 .container {
-  max-width: 1200px;
+  max-width: 65%;
   margin: 0 auto;
   padding: 24px 16px;
   text-align: justify;
@@ -291,6 +291,15 @@ html[data-theme="dark"] .theme-switcher .moon {
 }
 
 @media (max-width: 850px) {
+ 
+  .container {
+  max-width: 98%;
+  margin: 0 auto;
+  padding: 24px 16px;
+  text-align: justify;
+  line-height: 2;
+}
+  
   .menu {
     
     display: none;
