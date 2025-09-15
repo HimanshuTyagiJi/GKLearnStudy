@@ -117,7 +117,13 @@ body {
     transform: translateX(-4px);
   }
 }
-
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  text-align: justify;
+  line-height: 2;
+}
 /* === HEADER & NAVBAR STRUCTURE === */
 .header {
   background: var(--header-bg);
