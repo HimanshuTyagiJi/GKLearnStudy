@@ -908,6 +908,18 @@ html[data-theme="dark"] .theme-switcher .moon {
     }
 }
 
+
+.post-meta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
 .byline {
     font-size: 0.9rem;
     line-height: 1.5;
