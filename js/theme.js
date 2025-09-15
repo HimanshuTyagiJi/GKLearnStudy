@@ -206,3 +206,24 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", updateArrows);
     updateArrows(); // Initial check
 });
+  document.addEventListener("DOMContentLoaded", () => {
+                const shareButton = document.getElementById("shareButton");
+                if (shareButton) {
+                    shareButton.addEventListener("click", async () => {
+                        const shareData = {
+                            title: document.title,
+                            text: "Check out this comprehensive formula guide from GK Learn Study!",
+                            url: window.location.href,
+                        };
+                        try {
+                            if (navigator.share) {
+                                await navigator.share(shareData);
+                            } else {
+                                alert("Sharing is not supported on this browser, but you can copy the link manually.");
+                            }
+                        } catch (err) {
+                            console.error("Couldn't share content", err);
+                        }
+                    });
+                }
+            });
