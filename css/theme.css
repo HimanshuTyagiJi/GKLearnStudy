@@ -167,18 +167,16 @@ body {
   white-space: nowrap;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-.menu-inner a:hover {
-  background-color: var(--accent-color);
-  color: var(--white);
+.menu-inner a:hover:not(.active) {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 10px;
 }
 .menu-inner a.active {
   color: var(--link-color);
   font-weight: bold;
 }
-.menu-inner a.active:hover {
-  background: unset;
-  color: var(--link-color);
-}
+
 .search-container {
   display: flex;
   align-items: center;
