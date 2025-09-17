@@ -1,9 +1,18 @@
-
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
 // --- Single Source of Truth for Data ---
 window.GKApp.searchData = [
+  {
+    title: "Computer On Kaise Karen (How to Turn On a Computer)",
+    url: "/computer-on-kaise-kren.html",
+    paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
+    date: "February 25, 2025",
+    author: "Himanshu Tyagi",
+    category: "Kaise Karen",
+    readingTime: "5 min read",
+    page: "kaise-kren.html"
+  },
   {
     title: "Weight & Mass Unit Conversion",
     url: "/conversion/weight-mass-unit-conversion",
@@ -102,7 +111,7 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
-  page: "kaise-karen.html"
+  page: "kaise-kren.html"
 }
 ,
   {
@@ -113,7 +122,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
-    page: "kaise-karen.html"
+    page: "kaise-kren.html"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -463,14 +472,11 @@ window.GKApp.searchData = [
 window.GKApp.transliterateRomanToHindi = (input) => {
     const map = {
         consonants: {
-            // Complex consonants
             'ksh': 'क्ष', 'gy': 'ज्ञ', 'dny': 'ज्ञ', 'jn': 'ज्ञ', 'shr': 'श्र',
-            // 2-letter consonants
             'kh': 'ख', 'gh': 'घ', 'chh': 'छ', 'jh': 'झ',
             'th': 'थ', 'dh': 'ध', 'ph': 'फ', 'bh': 'भ',
             'shh': 'ष', 'sh': 'श', 'tr': 'त्र',
             'gn': 'ङ', 'ny': 'ञ',
-            // Single consonants
             'k': 'क', 'g': 'ग', 'c': 'क', 'j': 'ज',
             't': 'त', 'd': 'द', 'n': 'न',
             'p': 'प', 'b': 'ब', 'm': 'म',
@@ -490,83 +496,18 @@ window.GKApp.transliterateRomanToHindi = (input) => {
             'a': '', 'i': 'ि', 'e': 'े',
             'o': 'ो', 'u': 'ु'
         },
-        symbols: {
-            'an': 'ं', 'am': 'ं', 'ah': 'ः',
-            'om': 'ॐ', 'shree': 'श्री'
-        }
+        symbols: { 'an': 'ं', 'am': 'ं', 'ah': 'ः', 'om': 'ॐ', 'shree': 'श्री' }
     };
-
-    let output = '';
-    let i = 0;
-
+    let output = ''; let i = 0;
     while (i < input.length) {
         let matched = false;
-
-        // --- Try 4-char (e.g., shree, dnya)
-        if (i + 3 < input.length) {
-            const fourChar = input.substring(i, i + 4).toLowerCase();
-            if (map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar]) {
-                output += map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar];
-                i += 4;
-                matched = true;
-            }
-        }
-
-        // --- Try 3-char combos
-        if (!matched && i + 2 < input.length) {
-            const threeChar = input.substring(i, i + 3).toLowerCase();
-            if (map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar]) {
-                output += map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar];
-                i += 3;
-                matched = true;
-            }
-        }
-
-        // --- Try 2-char combos
-        if (!matched && i + 1 < input.length) {
-            const twoChar = input.substring(i, i + 2).toLowerCase();
-            if (map.consonants[twoChar] || map.vowels[twoChar] || map.matras[twoChar] || map.symbols[twoChar]) {
-                const lastChar = output.slice(-1);
-                const lastIsConsonant = Object.values(map.consonants).includes(lastChar);
-
-                if (lastIsConsonant && map.matras[twoChar] !== undefined) {
-                    if (output.endsWith('्')) output = output.slice(0, -1);
-                    output += map.matras[twoChar];
-                } else {
-                    output += map.consonants[twoChar] || map.vowels[twoChar] || map.symbols[twoChar];
-                }
-                i += 2;
-                matched = true;
-            }
-        }
-
-        // --- Single char fallback
-        if (!matched) {
-            const oneChar = input.charAt(i).toLowerCase();
-            const lastChar = output.slice(-1);
-            const lastIsConsonant = Object.values(map.consonants).includes(lastChar);
-
-            if (lastIsConsonant && map.matras[oneChar] !== undefined) {
-                if (output.endsWith('्')) output = output.slice(0, -1);
-                output += map.matras[oneChar];
-            } else if (map.vowels[oneChar]) {
-                output += map.vowels[oneChar];
-            } else if (map.consonants[oneChar]) {
-                output += map.consonants[oneChar];
-                // Add halant for consonant clusters
-                if (i + 1 < input.length && map.consonants[input.charAt(i + 1)]) {
-                    output += '्';
-                }
-            } else {
-                output += oneChar;
-            }
-            i++;
-        }
+        if (i + 3 < input.length) { const fourChar = input.substring(i, i + 4).toLowerCase(); if (map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar]) { output += map.consonants[fourChar] || map.vowels[fourChar] || map.symbols[fourChar]; i += 4; matched = true; } }
+        if (!matched && i + 2 < input.length) { const threeChar = input.substring(i, i + 3).toLowerCase(); if (map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar]) { output += map.consonants[threeChar] || map.vowels[threeChar] || map.symbols[threeChar]; i += 3; matched = true; } }
+        if (!matched && i + 1 < input.length) { const twoChar = input.substring(i, i + 2).toLowerCase(); if (map.consonants[twoChar] || map.vowels[twoChar] || map.matras[twoChar] || map.symbols[twoChar]) { const lastChar = output.slice(-1); const lastIsConsonant = Object.values(map.consonants).includes(lastChar); if (lastIsConsonant && map.matras[twoChar] !== undefined) { if (output.endsWith('्')) output = output.slice(0, -1); output += map.matras[twoChar]; } else { output += map.consonants[twoChar] || map.vowels[twoChar] || map.symbols[twoChar]; } i += 2; matched = true; } }
+        if (!matched) { const oneChar = input.charAt(i).toLowerCase(); const lastChar = output.slice(-1); const lastIsConsonant = Object.values(map.consonants).includes(lastChar); if (lastIsConsonant && map.matras[oneChar] !== undefined) { if (output.endsWith('्')) output = output.slice(0, -1); output += map.matras[oneChar]; } else if (map.vowels[oneChar]) { output += map.vowels[oneChar]; } else if (map.consonants[oneChar]) { output += map.consonants[oneChar]; if (i + 1 < input.length && map.consonants[input.charAt(i + 1)]) { output += '्'; } } else { output += oneChar; } i++; }
     }
-
     return output;
 };
-
 
 // --- LEVENSHTEIN DISTANCE ALGORITHM for Typo Tolerance ---
 window.GKApp.levenshtein = (s1, s2) => {
@@ -574,11 +515,7 @@ window.GKApp.levenshtein = (s1, s2) => {
     const distances = Array(s1.length + 1).fill(0).map((_, i) => i);
     for (let i = 0; i < s2.length; i++) {
         let prev = i + 1;
-        for (let j = 0; j < s1.length; j++) {
-            const current = distances[j];
-            distances[j] = prev;
-            prev = s1[j] === s2[i] ? current : 1 + Math.min(current, prev, distances[j+1]);
-        }
+        for (let j = 0; j < s1.length; j++) { const current = distances[j]; distances[j] = prev; prev = s1[j] === s2[i] ? current : 1 + Math.min(current, prev, distances[j + 1]); }
         distances[s1.length] = prev;
     }
     return distances[s1.length];
@@ -588,293 +525,47 @@ window.GKApp.levenshtein = (s1, s2) => {
 window.GKApp.fuzzySearch = function (query, items) {
     const lowerCaseQuery = query.toLowerCase().trim();
     if (!lowerCaseQuery) return [];
-
     const hindiQuery = window.GKApp.transliterateRomanToHindi(lowerCaseQuery);
-    
-    // Split query by space or common punctuation
     const queryWords = lowerCaseQuery.split(/[\s,،।.]+/).filter(w => w);
     const hindiQueryWords = hindiQuery.split(/[\s,،।.]+/).filter(w => w);
     const allQueryWords = [...new Set([...queryWords, ...hindiQueryWords])];
-
     const results = items.map(item => {
-        let score = 0;
-        const matchedWords = new Set();
-        
-        // Combine title and paragraph for a full search field
-        const content = `${item.title} ${item.paragraph}`;
-        const contentWords = content.split(/[\s,،।.]+/);
-
+        let score = 0; const matchedWords = new Set();
+        const content = `${item.title} ${item.paragraph}`; const contentWords = content.split(/[\s,،।.]+/);
         allQueryWords.forEach(qWord => {
             let bestMatchScore = 0;
-            
             contentWords.forEach(cWord => {
                 const distance = window.GKApp.levenshtein(qWord.toLowerCase(), cWord.toLowerCase());
-                // Allow more typos for longer words
                 const threshold = qWord.length > 4 ? 2 : 1;
-
-                if (distance <= threshold) {
-                    let currentScore = 0;
-                    // Higher score for title match
-                    if (item.title.toLowerCase().includes(cWord.toLowerCase())) {
-                       currentScore = 15;
-                    } else {
-                       currentScore = 5;
-                    }
-                    // Bonus for being a better match (less distance)
-                    currentScore -= distance * 2;
-                    
-                    if(currentScore > bestMatchScore) {
-                        bestMatchScore = currentScore;
-                    }
-                }
+                if (distance <= threshold) { let currentScore = 0; if (item.title.toLowerCase().includes(cWord.toLowerCase())) { currentScore = 15; } else { currentScore = 5; } currentScore -= distance * 2; if (currentScore > bestMatchScore) { bestMatchScore = currentScore; } }
             });
-            
-            if (bestMatchScore > 0) {
-                score += bestMatchScore;
-                matchedWords.add(qWord);
-            }
+            if (bestMatchScore > 0) { score += bestMatchScore; matchedWords.add(qWord); }
         });
-        
-        // Bonus score if all query words are matched
-        if (matchedWords.size === allQueryWords.length) {
-            score *= 1.5;
-        }
-
+        if (matchedWords.size === allQueryWords.length) { score *= 1.5; }
         return { item, score };
-    })
-    .filter(result => result.score > 2) // Set a minimum threshold to avoid irrelevant results
-    .sort((a, b) => b.score - a.score)
-    .map(result => result.item);
-    
-  return [...new Map(results.map((item) => [item.url, item])).values()];
+    }).filter(result => result.score > 2).sort((a, b) => b.score - a.score).map(result => result.item);
+    return [...new Map(results.map((item) => [item.url, item])).values()];
 };
-
 
 // --- SVG Placeholder for Search Results ---
 window.GKApp.generatePlaceholderSVG = (title = 'G') => {
-    const text = title.charAt(0).toUpperCase();
-    let hash = 0;
-    for (let i = 0; i < title.length; i++) {
-        hash = title.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const h = Math.abs(hash % 360);
-    const color = `hsl(${h}, 65%, 55%)`;
-    const svg = `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="8" fill="${color}" />
-        <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" dy=".3em">${text}</text>
-    </svg>`;
-    return svg;
+    const text = title.charAt(0).toUpperCase(); let hash = 0;
+    for (let i = 0; i < title.length; i++) { hash = title.charCodeAt(i) + ((hash << 5) - hash); }
+    const h = Math.abs(hash % 360); const color = `hsl(${h}, 65%, 55%)`;
+    return `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="${color}" /><text x="50%" y="50%" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" dy=".3em">${text}</text></svg>`;
 };
-
 
 // --- ADVANCED CONCEPTUAL IMAGE GENERATOR ---
 window.GKApp.generateConceptImage = (() => {
-    const W = 640, H = 360;
-    const BASE_W = 1280, BASE_H = 720;
-    const S = W / BASE_W;
-
-    const palettes = [
-        { bg1: '#6a11cb', bg2: '#2575fc', primary: '#ffffff', accent: '#f5d142' }, { bg1: '#00c6ff', bg2: '#0072ff', primary: '#ffffff', accent: '#fefefe' },
-        { bg1: '#f7971e', bg2: '#ffd200', primary: '#434343', accent: '#ffffff' }, { bg1: '#34e89e', bg2: '#08aeea', primary: '#ffffff', accent: '#f6f0ea' },
-        { bg1: '#ff4b1f', bg2: '#ff9068', primary: '#ffffff', accent: '#f7f2b2' }, { bg1: '#1a2a6c', bg2: '#b21f1f', bg3: '#fdbb2d', primary: '#ffffff', accent: '#eeeeee' },
-        { bg1: '#8e2de2', bg2: '#4a00e0', primary: '#ffffff', accent: '#d4d4d4' }, { bg1: '#1d2b64', bg2: '#f8cdda', primary: '#ffffff', accent: '#f0f0f0' },
-        { bg1: '#2193b0', bg2: '#6dd5ed', primary: '#ffffff', accent: '#f5f5f5' }, { bg1: '#ff512f', bg2: '#dd2476', primary: '#ffffff', accent: '#fdd835' },
-        { bg1: '#43cea2', bg2: '#185a9d', primary: '#ffffff', accent: '#e0f2f1' }, { bg1: '#c33764', bg2: '#1d2671', primary: '#ffffff', accent: '#fce4ec' },
-        { bg1: '#5614B0', bg2: '#dbd65c', primary: '#ffffff', accent: '#f3e5f5' }, { bg1: '#0f2027', bg2: '#203a43', bg3: '#2c5364', primary: '#ffffff', accent: '#cfd8dc' },
-        { bg1: '#141E30', bg2: '#243B55', primary: '#ffffff', accent: '#90a4ae' }, { bg1: '#2b5876', bg2: '#4e4376', primary: '#ffffff', accent: '#e8eaf6' },
-        { bg1: '#e52d27', bg2: '#b31217', primary: '#ffffff', accent: '#ffebee' }, { bg1: '#00416A', bg2: '#799F0C', bg3: '#FFE000', primary: '#ffffff', accent: '#f1f8e9' },
-        { bg1: '#373B44', bg2: '#4286f4', primary: '#ffffff', accent: '#e3f2fd' }, { bg1: '#1e3c72', bg2: '#2a5298', primary: '#ffffff', accent: '#d1d9ff' },
-        { bg1: '#3a6186', bg2: '#89253e', primary: '#ffffff', accent: '#fbe9e7' }, { bg1: '#16222A', bg2: '#3A6073', primary: '#ffffff', accent: '#eceff1' },
-        { bg1: '#4b6cb7', bg2: '#182848', primary: '#ffffff', accent: '#e7e9f8' }, { bg1: '#7b4397', bg2: '#dc2430', primary: '#ffffff', accent: '#fae8ff' },
-        { bg1: '#360033', bg2: '#0b8793', primary: '#ffffff', accent: '#e0f7fa' }
-    ];
-
-    function getPalette(title) {
-        let hash = 0;
-        for (let i = 0; i < title.length; i++) hash = title.charCodeAt(i) + ((hash << 5) - hash);
-        return palettes[Math.abs(hash % palettes.length)];
-    }
-
-    function drawBackground(ctx, palette, w, h) {
-        const gradient = ctx.createLinearGradient(0, 0, w, h);
-        gradient.addColorStop(0, palette.bg1);
-        gradient.addColorStop(1, palette.bg2);
-        if (palette.bg3) gradient.addColorStop(0.5, palette.bg3);
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, w, h);
-    }
-
-    function drawGeometricPattern(ctx, w, h) {
-        ctx.save();
-        ctx.globalAlpha = 0.04;
-        for (let i = 0; i < 60; i++) {
-            const x = Math.random() * w, y = Math.random() * h, size = Math.random() * 80 + 20;
-            ctx.fillStyle = 'white';
-            ctx.beginPath();
-            const type = Math.random();
-            if (type < 0.3) ctx.arc(x, y, size / 2, 0, 2 * Math.PI);
-            else if (type < 0.6) ctx.rect(x - size / 2, y - size / 2, size, size);
-            else { ctx.moveTo(x, y - size / 2); ctx.lineTo(x + size / 2, y + size / 2); ctx.lineTo(x - size / 2, y + size / 2); ctx.closePath(); }
-            ctx.fill();
-        }
-        ctx.restore();
-    }
-
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight, palette) {
-        const fontSize = text.length > 30 ? 75 : 90;
-        ctx.font = `bold ${fontSize}px 'Arial', sans-serif`;
-        ctx.fillStyle = palette.primary;
-        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
-        ctx.lineWidth = 8;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(0,0,0,0.35)';
-        ctx.shadowBlur = 12;
-        ctx.shadowOffsetX = 6;
-        ctx.shadowOffsetY = 6;
-
-        const words = text.split(' ');
-        let line = '', lines = [];
-        for (let n = 0; n < words.length; n++) {
-            const testLine = line + words[n] + ' ';
-            if (ctx.measureText(testLine).width > maxWidth && n > 0) {
-                lines.push(line);
-                line = words[n] + ' ';
-            } else line = testLine;
-        }
-        lines.push(line);
-
-        const startY = y - (lineHeight * (lines.length - 1)) / 2;
-        lines.forEach((currentLine, i) => {
-            currentLine = currentLine.trim();
-            ctx.strokeText(currentLine, x, startY + i * lineHeight);
-            ctx.fillText(currentLine, x, startY + i * lineHeight);
-        });
-        ctx.shadowColor = 'transparent';
-    }
-
-    function drawBookAndPencil(ctx, palette, w, h) {
-        ctx.save();
-        ctx.globalAlpha = 0.3;
-        ctx.strokeStyle = palette.primary;
-        ctx.fillStyle = palette.accent;
-        ctx.lineWidth = 10;
-        // Book
-        ctx.beginPath();
-        ctx.moveTo(w * 0.1, h * 0.8);
-        ctx.quadraticCurveTo(w * 0.25, h * 0.6, w * 0.4, h * 0.85);
-        ctx.quadraticCurveTo(w * 0.25, h * 0.9, w * 0.1, h * 0.8);
-        ctx.fill();
-        ctx.stroke();
-        // Pencil
-        ctx.translate(w * 0.8, h * 0.2);
-        ctx.rotate(0.5);
-        ctx.fillRect(-120, -15, 240, 30);
-        ctx.strokeRect(-120, -15, 240, 30);
-        ctx.beginPath();
-        ctx.moveTo(120, -15);
-        ctx.lineTo(150, 0);
-        ctx.lineTo(120, 15);
-        ctx.closePath();
-        ctx.fillStyle = '#333';
-        ctx.fill();
-        ctx.restore();
-    }
-    
-    function drawDevanagari(ctx, palette, w, h) {
-        ctx.save();
-        ctx.globalAlpha = 0.2;
-        ctx.fillStyle = palette.accent;
-        ctx.font = "250px 'Arial', sans-serif";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText("अ", w * 0.2, h * 0.3);
-        ctx.fillText("क", w * 0.8, h * 0.7);
-        ctx.restore();
-    }
-
-    function drawMathSymbols(ctx, palette, w, h) {
-        ctx.save();
-        ctx.globalAlpha = 0.4;
-        ctx.strokeStyle = palette.primary;
-        ctx.fillStyle = palette.accent;
-        ctx.lineWidth = 8;
-        // Protractor
-        ctx.beginPath();
-        ctx.arc(w * 0.2, h * 0.8, 150, Math.PI, 0);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        // Ruler/Triangle
-        ctx.translate(w * 0.8, h * 0.25);
-        ctx.rotate(0.4);
-        ctx.beginPath();
-        ctx.moveTo(0,0);
-        ctx.lineTo(250, 50);
-        ctx.lineTo(50, 250);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-    }
-
-    function drawCodeAndScreen(ctx, palette, w, h) {
-        ctx.save();
-        ctx.globalAlpha = 0.3;
-        ctx.strokeStyle = palette.primary;
-        ctx.fillStyle = palette.accent;
-        ctx.lineWidth = 12;
-        // Screen
-        ctx.beginPath();
-        ctx.roundRect(w * 0.15, h * 0.2, w * 0.7, h * 0.6, 30);
-        ctx.fill();
-        ctx.stroke();
-        // Code symbols
-        ctx.globalAlpha = 0.5;
-        ctx.fillStyle = palette.primary;
-        ctx.font = "bold 100px 'Courier New', monospace";
-        ctx.fillText("</>", w * 0.5, h * 0.5);
-        ctx.restore();
-    }
-
-    function createImageFor(title) {
-        const canvas = document.createElement('canvas');
-        canvas.width = W; canvas.height = H;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, W, H);
-        ctx.scale(S, S);
-
-        const palette = getPalette(title);
-        const name = title.toLowerCase();
-
-        drawBackground(ctx, palette, BASE_W, BASE_H);
-        drawGeometricPattern(ctx, BASE_W, BASE_H);
-
-        if (name.includes("vyakaran") || name.includes("hindi") || name.includes("विशेषण") || name.includes("सर्वनाम") || name.includes("संज्ञा")) {
-            drawDevanagari(ctx, palette, BASE_W, BASE_H);
-            drawBookAndPencil(ctx, palette, BASE_W, BASE_H);
-        } else if (name.includes("conversion") || name.includes("unit") || name.includes("mass") || name.includes("weight")) {
-            drawMathSymbols(ctx, palette, BASE_W, BASE_H);
-        } else if (name.includes("computer")) {
-            drawCodeAndScreen(ctx, palette, BASE_W, BASE_H);
-        }
-
-        wrapText(ctx, title, BASE_W / 2, BASE_H / 2, BASE_W * 0.8, 100, palette);
-
-        ctx.font = "600 28px 'Arial', sans-serif";
-        ctx.fillStyle = palette.primary;
-        ctx.textAlign = "right";
-        ctx.textBaseline = "bottom";
-        ctx.globalAlpha = 0.7;
-        ctx.fillText("gklearnstudy.in", BASE_W - 30, BASE_H - 25);
-        ctx.globalAlpha = 1;
-
-        return canvas.toDataURL('image/png');
-    }
-
+    const W = 640, H = 360, BASE_W = 1280, BASE_H = 720, S = W / BASE_W;
+    const palettes = [ { bg1: '#6a11cb', bg2: '#2575fc', primary: '#ffffff', accent: '#f5d142' }, { bg1: '#00c6ff', bg2: '#0072ff', primary: '#ffffff', accent: '#fefefe' }, { bg1: '#f7971e', bg2: '#ffd200', primary: '#434343', accent: '#ffffff' }, { bg1: '#34e89e', bg2: '#08aeea', primary: '#ffffff', accent: '#f6f0ea' }, { bg1: '#ff4b1f', bg2: '#ff9068', primary: '#ffffff', accent: '#f7f2b2' }, { bg1: '#1a2a6c', bg2: '#b21f1f', bg3: '#fdbb2d', primary: '#ffffff', accent: '#eeeeee' }, { bg1: '#8e2de2', bg2: '#4a00e0', primary: '#ffffff', accent: '#d4d4d4' }, { bg1: '#1d2b64', bg2: '#f8cdda', primary: '#ffffff', accent: '#f0f0f0' }, { bg1: '#2193b0', bg2: '#6dd5ed', primary: '#ffffff', accent: '#f5f5f5' }, { bg1: '#ff512f', bg2: '#dd2476', primary: '#ffffff', accent: '#fdd835' }, { bg1: '#43cea2', bg2: '#185a9d', primary: '#ffffff', accent: '#e0f2f1' }, { bg1: '#c33764', bg2: '#1d2671', primary: '#ffffff', accent: '#fce4ec' }, { bg1: '#5614B0', bg2: '#dbd65c', primary: '#ffffff', accent: '#f3e5f5' }, { bg1: '#0f2027', bg2: '#203a43', bg3: '#2c5364', primary: '#ffffff', accent: '#cfd8dc' }, { bg1: '#141E30', bg2: '#243B55', primary: '#ffffff', accent: '#90a4ae' }, { bg1: '#2b5876', bg2: '#4e4376', primary: '#ffffff', accent: '#e8eaf6' }, { bg1: '#e52d27', bg2: '#b31217', primary: '#ffffff', accent: '#ffebee' }, { bg1: '#00416A', bg2: '#799F0C', bg3: '#FFE000', primary: '#ffffff', accent: '#f1f8e9' }, { bg1: '#373B44', bg2: '#4286f4', primary: '#ffffff', accent: '#e3f2fd' }, { bg1: '#1e3c72', bg2: '#2a5298', primary: '#ffffff', accent: '#d1d9ff' }, { bg1: '#3a6186', bg2: '#89253e', primary: '#ffffff', accent: '#fbe9e7' }, { bg1: '#16222A', bg2: '#3A6073', primary: '#ffffff', accent: '#eceff1' }, { bg1: '#4b6cb7', bg2: '#182848', primary: '#ffffff', accent: '#e7e9f8' }, { bg1: '#7b4397', bg2: '#dc2430', primary: '#ffffff', accent: '#fae8ff' }, { bg1: '#360033', bg2: '#0b8793', primary: '#ffffff', accent: '#e0f7fa' }];
+    function getPalette(title) { let hash = 0; for (let i = 0; i < title.length; i++) hash = title.charCodeAt(i) + ((hash << 5) - hash); return palettes[Math.abs(hash % palettes.length)]; }
+    function drawBackground(ctx, palette, w, h) { const gradient = ctx.createLinearGradient(0, 0, w, h); gradient.addColorStop(0, palette.bg1); gradient.addColorStop(1, palette.bg2); if (palette.bg3) gradient.addColorStop(0.5, palette.bg3); ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h); }
+    function drawGeometricPattern(ctx, w, h) { ctx.save(); ctx.globalAlpha = 0.04; for (let i = 0; i < 60; i++) { const x = Math.random() * w, y = Math.random() * h, size = Math.random() * 80 + 20; ctx.fillStyle = 'white'; ctx.beginPath(); const type = Math.random(); if (type < 0.3) ctx.arc(x, y, size / 2, 0, 2 * Math.PI); else if (type < 0.6) ctx.rect(x - size / 2, y - size / 2, size, size); else { ctx.moveTo(x, y - size / 2); ctx.lineTo(x + size / 2, y + size / 2); ctx.lineTo(x - size / 2, y + size / 2); ctx.closePath(); } ctx.fill(); } ctx.restore(); }
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight, palette) { const fontSize = text.length > 30 ? 75 : 90; ctx.font = `bold ${fontSize}px 'Arial', sans-serif`; ctx.fillStyle = palette.primary; ctx.strokeStyle = 'rgba(0,0,0,0.2)'; ctx.lineWidth = 8; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.shadowColor = 'rgba(0,0,0,0.35)'; ctx.shadowBlur = 12; ctx.shadowOffsetX = 6; ctx.shadowOffsetY = 6; const words = text.split(' '); let line = '', lines = []; for (let n = 0; n < words.length; n++) { const testLine = line + words[n] + ' '; if (ctx.measureText(testLine).width > maxWidth && n > 0) { lines.push(line); line = words[n] + ' '; } else line = testLine; } lines.push(line); const startY = y - (lineHeight * (lines.length - 1)) / 2; lines.forEach((currentLine, i) => { currentLine = currentLine.trim(); ctx.strokeText(currentLine, x, startY + i * lineHeight); ctx.fillText(currentLine, x, startY + i * lineHeight); }); ctx.shadowColor = 'transparent'; }
+    function createImageFor(title) { const canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H; const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, W, H); ctx.scale(S, S); const palette = getPalette(title); drawBackground(ctx, palette, BASE_W, BASE_H); drawGeometricPattern(ctx, BASE_W, BASE_H); wrapText(ctx, title, BASE_W / 2, BASE_H / 2, BASE_W * 0.8, 100, palette); ctx.font = "600 28px 'Arial', sans-serif"; ctx.fillStyle = palette.primary; ctx.textAlign = "right"; ctx.textBaseline = "bottom"; ctx.globalAlpha = 0.7; ctx.fillText("gklearnstudy.in", BASE_W - 30, BASE_H - 25); ctx.globalAlpha = 1; return canvas.toDataURL('image/png'); }
     return createImageFor;
 })();
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const POSTS_INITIAL_LOAD = 40;
@@ -897,186 +588,120 @@ document.addEventListener("DOMContentLoaded", () => {
         const metaBlock = `
             <div class="post-meta-container">
                 <div class="byline">
-                    <a href="profile.html" aria-label="Author Profile">
-                        <div class="author-avatar">
-                            <svg width="40" height="40" viewBox="0 0 300 300">
-                                <circle cx="150" cy="150" r="150" fill="white"></circle>
-                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
-                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
-                                <clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath>
-                                <g clip-path="url(#${clipPathId})">
-                                    <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
-                                    <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
-                                </g>
-                            </svg>
-                        </div>
-                    </a>
+                    <div class="author-avatar">
+                        <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
+                    </div>
                     <div class="author-details">
-                        <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
+                        <span class="author vcard">by <span class="name">${post.author}</span></span>
                         <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
                     </div>
                 </div>
                 <div class="share-button-wrapper">
-                    <button class="share-button" title="Share this page">
-                        <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
-                        <span>Share</span>
-                    </button>
+                    <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
                 </div>
             </div>`;
 
-        card.innerHTML = `
-            <div class="card-thumbnail" aria-hidden="true">
-                <a href="categories.html" class="category-badge">${post.category}</a>
-                <a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
-                <p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>
-            </div>
-            ${metaBlock}
-        `;
+        card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
         return card;
     };
 
-    // Logic for main post grid
     if (postsContainer && loadMoreBtn) {
         const path = window.location.pathname;
         const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-        
-        const allPostsForPage = (currentPage === 'index.html' || currentPage === '')
-            ? window.GKApp.searchData 
-            : window.GKApp.searchData.filter(p => p.page === currentPage);
-
+        const allPostsForPage = (currentPage === 'index.html' || currentPage === '') ? window.GKApp.searchData : window.GKApp.searchData.filter(p => p.page === currentPage);
         let currentFilteredPosts = [...allPostsForPage];
         let visiblePostCount = POSTS_INITIAL_LOAD;
 
         const renderPosts = (posts) => {
             postsContainer.innerHTML = "";
-            if (posts.length === 0) {
-                postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>';
-                return;
-            }
-
+            if (posts.length === 0) { postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>'; return; }
             const fragment = document.createDocumentFragment();
-            posts.forEach((post, index) => {
-                fragment.appendChild(createPostCard(post, index));
-            });
+            posts.forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
             postsContainer.appendChild(fragment);
         };
-
         const updatePostsDisplay = () => {
             const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
             renderPosts(postsToRender);
-
-            if (visiblePostCount >= currentFilteredPosts.length) {
-                loadMoreBtn.style.display = "none";
-            } else {
-                loadMoreBtn.style.display = "block";
-            }
+            loadMoreBtn.style.display = (visiblePostCount >= currentFilteredPosts.length) ? "none" : "block";
         };
-
-        const handleFilter = (filteredPosts) => {
-            currentFilteredPosts = filteredPosts;
-            visiblePostCount = POSTS_INITIAL_LOAD;
-            updatePostsDisplay();
-        };
-
+        const handleFilter = (filteredPosts) => { currentFilteredPosts = filteredPosts; visiblePostCount = POSTS_INITIAL_LOAD; updatePostsDisplay(); };
         const applyFilters = () => {
             const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
             const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
             let filtered = allPostsForPage;
-            if (category.toLowerCase() !== "all") {
-                filtered = filtered.filter((post) => post.category === category);
-            }
-            if (query) {
-                filtered = window.GKApp.fuzzySearch(query, filtered);
-            }
+            if (category.toLowerCase() !== "all") { filtered = filtered.filter((post) => post.category === category); }
+            if (query) { filtered = window.GKApp.fuzzySearch(query, filtered); }
             handleFilter(filtered);
         };
-      
         postsContainer.addEventListener('click', (event) => {
-            const card = event.target.closest('.card');
-            if (!card) return;
-
+            const card = event.target.closest('.card'); if (!card) return;
             const shareButton = event.target.closest('.share-button');
             if (shareButton) {
                 event.preventDefault();
                 const postIndex = parseInt(card.dataset.index, 10);
                 const post = currentFilteredPosts[postIndex];
-
-                if (post && navigator.share) {
-                    navigator.share({
-                        title: post.title,
-                        text: post.paragraph,
-                        url: new URL(post.url, window.location.origin).href,
-                    }).catch((error) => console.log('Error sharing:', error));
-                } else {
-                    alert('Share functionality is not supported by your browser.');
-                }
+                if (post && navigator.share) { navigator.share({ title: post.title, text: post.paragraph, url: new URL(post.url, window.location.origin).href }).catch(console.log); } else { alert('Share functionality not supported.'); }
             }
         });
-
-        if (postFilterInput) {
-            postFilterInput.addEventListener("input", applyFilters);
-        }
-
+        if (postFilterInput) { postFilterInput.addEventListener("input", applyFilters); }
         const generateCategories = () => {
             if (!categoryListContainer) return;
-
-            const categoryCounts = allPostsForPage.reduce((acc, post) => {
-                if (post.category) {
-                    acc[post.category] = (acc[post.category] || 0) + 1;
-                }
-                return acc;
-            }, {});
-
-            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran' };
-
+            const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
+            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To' };
             let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
-
-            Object.entries(categoryCounts).forEach(([category, count]) => {
-                const displayName = categoryDisplayNames[category] || category;
-                categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`;
-            });
-
+            Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
             categoryListContainer.innerHTML = categoryHTML;
-
             const categoryLinks = categoryListContainer.querySelectorAll("a");
-            categoryLinks.forEach((link) => {
-                link.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    categoryLinks.forEach((l) => l.classList.remove("active-category"));
-                    link.classList.add("active-category");
-                    applyFilters();
-                });
-            });
+            categoryLinks.forEach((link) => { link.addEventListener("click", (e) => { e.preventDefault(); categoryLinks.forEach((l) => l.classList.remove("active-category")); link.classList.add("active-category"); applyFilters(); }); });
         };
-
-        loadMoreBtn.addEventListener("click", () => {
-            visiblePostCount += POSTS_PER_PAGE;
-            updatePostsDisplay();
-        });
-
+        loadMoreBtn.addEventListener("click", () => { visiblePostCount += POSTS_PER_PAGE; updatePostsDisplay(); });
         generateCategories();
         applyFilters();
     }
     
-    // Logic for related posts (runs on all pages with the container)
     if (relatedPostsGrid) {
-        const renderRelatedPosts = () => {
-            const allPosts = window.GKApp.searchData;
-            // Shuffle all posts and take the first 6
-            const shuffled = [...allPosts].sort(() => 0.5 - Math.random());
-            const selectedPosts = shuffled.slice(0, 6);
-
+        const renderPostsToGrid = (posts, grid) => {
             const fragment = document.createDocumentFragment();
-            selectedPosts.forEach((post, index) => {
-                fragment.appendChild(createPostCard(post, index));
-            });
-            relatedPostsGrid.innerHTML = ''; // Clear previous
-            relatedPostsGrid.appendChild(fragment);
+            posts.slice(0, 6).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+            grid.innerHTML = '';
+            grid.appendChild(fragment);
         };
-        renderRelatedPosts();
+        const renderRandomPosts = () => {
+            const shuffled = [...window.GKApp.searchData].sort(() => 0.5 - Math.random());
+            renderPostsToGrid(shuffled, relatedPostsGrid);
+        };
+        const renderContextualPosts = (currentSlug) => {
+            const allPosts = window.GKApp.searchData;
+            const currentArticle = allPosts.find(p => p.url.includes(currentSlug));
+            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
+            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'is', 'are', 'to', 'and', 'or', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
+            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
+            if (keywords.length === 0) { renderRandomPosts(); return; }
+            let scoredPosts = allPosts.filter(p => !p.url.includes(currentSlug)).map(post => {
+                let score = 0; const postContent = `${post.title} ${post.category}`.toLowerCase();
+                keywords.forEach(keyword => { if (postContent.includes(keyword)) { score += post.title.toLowerCase().includes(keyword) ? 10 : 2; } });
+                if (currentArticle && post.category === currentArticle.category) { score += 5; }
+                return { post, score };
+            });
+            let relevantPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
+            if (relevantPosts.length < 6) {
+                const existingUrls = new Set(relevantPosts.map(p => p.url)); if (currentArticle) existingUrls.add(currentArticle.url);
+                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
+                const needed = 6 - relevantPosts.length;
+                relevantPosts = [...relevantPosts, ...randomFill.slice(0, needed)];
+            }
+            renderPostsToGrid(relevantPosts, relatedPostsGrid);
+        };
+
+        const path = window.location.pathname;
+        const mainPageSlugs = ['/', '/index.html', '/kaise-kren', '/kaise-kren.html'];
+        const isMainPage = mainPageSlugs.includes(path) || path === '';
+
+        if (isMainPage) {
+            renderRandomPosts();
+        } else {
+            const slug = path.substring(path.lastIndexOf('/') + 1).replace(/\.[^/.]+$/, "");
+            if (slug) { renderContextualPosts(slug); } else { renderRandomPosts(); }
+        }
     }
 });
-
