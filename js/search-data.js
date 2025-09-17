@@ -1,4 +1,3 @@
-
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
@@ -626,20 +625,27 @@ window.GKApp.generateConceptImage = (() => {
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
+    // --- CONFIGURATION ---
     const POSTS_INITIAL_LOAD = 40;
     const POSTS_PER_PAGE = 20;
+    // Pages listed here will show random articles from the entire site in their "Related Articles" section.
+    const PAGES_WITH_RANDOM_RELATED = ['kaise-karen'];
+
+    // --- DOM Elements ---
     const postsContainer = document.getElementById("post-grid");
     const postFilterInput = document.getElementById("post-filter-input");
     const categoryListContainer = document.querySelector(".category-list");
     const loadMoreBtn = document.getElementById("load-more-btn");
     const relatedPostsGrid = document.getElementById("related-posts-grid");
 
+    // --- Page Context ---
     const path = window.location.pathname;
     let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
     const dotIndex = pageSlug.lastIndexOf('.');
     if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
     if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
 
+    // --- Post Card Creation ---
     const createPostCard = (post, index) => {
         const card = document.createElement('article');
         card.className = 'card';
@@ -669,6 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return card;
     };
 
+    // --- Main Post Grid Logic ---
     if (postsContainer && loadMoreBtn) {
         let pageKeyForFiltering = 'index';
         if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
@@ -730,6 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
         applyFilters();
     }
     
+    // --- Related Articles Logic ---
     if (relatedPostsGrid) {
         const MAX_RELATED_POSTS = 6;
         const renderPostsToGrid = (posts, grid) => {
@@ -742,43 +750,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const renderContextualPosts = (currentUrlPath) => {
             const allPosts = window.GKApp.searchData;
             const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
-
-            // Define stopwords for keyword extraction
             const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
-
-            // 1. Extract keywords from the current URL slug
             const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
-            
-            // 2. Get manual page tags from the current article
             const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
             
-            // 3. Score all other posts based on relevance
             const scoredPosts = allPosts
-                .filter(p => p.url !== currentArticle?.url) // Exclude the current article
+                .filter(p => p.url !== currentArticle?.url)
                 .map(post => {
                     let score = 0;
                     const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
                     const postTags = new Set(post.page ? post.page.split(';') : []);
-
-                    // Score based on URL keyword match
-                    urlKeywords.forEach(keyword => {
-                        if (postContent.includes(keyword)) {
-                            score += 15; // High score for keyword match
-                        }
-                    });
-
-                    // Score based on shared manual tags
-                    postTags.forEach(tag => {
-                        if (currentArticleTags.has(tag)) {
-                            score += 10; // Medium score for tag match
-                        }
-                    });
-                    
-                    // Bonus for matching both
-                    if (score > 15 && score % 10 !== 0) {
-                        score += 5;
-                    }
-                    
+                    urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
+                    postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
+                    if (score > 15 && score % 10 !== 0) { score += 5; }
                     return { post, score };
                 })
                 .filter(item => item.score > 0)
@@ -786,26 +770,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let stickyPosts = scoredPosts.map(p => p.post);
             const stickyUrls = new Set(stickyPosts.map(p => p.url));
-
-            // 4. Build the final list
             let finalRelatedList = [...stickyPosts];
             
-            // 5. Fill remaining slots with relevant posts
             if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                // Get other posts from the same category/tags
                 let fillerCandidates = [];
                 if (currentArticleTags.size > 0) {
                     const primaryTag = Array.from(currentArticleTags)[0];
-                     fillerCandidates = allPosts.filter(p => {
-                        return !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag);
-                    });
+                     fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
                 }
-                
-                // Add shuffled filler candidates
                 finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
             }
 
-            // 6. Ensure unique posts and fill with random if still needed
             finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
             if (finalRelatedList.length < MAX_RELATED_POSTS) {
                 const existingUrls = new Set(finalRelatedList.map(p => p.url));
@@ -817,21 +792,26 @@ document.addEventListener("DOMContentLoaded", () => {
             renderPostsToGrid(finalRelatedList, relatedPostsGrid);
         };
         
-        const mainPageSlugs = ['index', 'kaise-karen', 'vyakaran', 'conversion', 'computer'];
-        const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html` || (pageSlug === 'index' && path === '/'));
-
-        if (isCategoryPage) {
-            let postsForCategory;
-            if (pageSlug === 'index') {
-                postsForCategory = [...window.GKApp.searchData];
-            } else {
-                postsForCategory = window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageSlug));
-            }
-            renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
-        } else if (pageSlug) {
-            renderContextualPosts(path.substring(1));
+        if (pageSlug === 'index' || PAGES_WITH_RANDOM_RELATED.includes(pageSlug)) {
+            // For index page OR any page in the special list, show random posts from the entire site.
+            const allPosts = [...window.GKApp.searchData];
+            renderPostsToGrid(allPosts.sort(() => 0.5 - Math.random()), relatedPostsGrid);
         } else {
-             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid); // Fallback for safety
+            // For all other pages, use the appropriate contextual logic.
+            const mainPageSlugs = ['vyakaran', 'conversion', 'computer'];
+            const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
+
+            if (isCategoryPage) {
+                // Show random posts from within that specific category.
+                const postsForCategory = window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageSlug));
+                renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
+            } else if (pageSlug) {
+                // This is an individual article page. Use the smart contextual logic.
+                renderContextualPosts(path.substring(1));
+            } else {
+                // Fallback for safety (e.g., unexpected URL).
+                renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+            }
         }
     }
 });
