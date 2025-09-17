@@ -10,9 +10,9 @@ window.GKApp.searchData = [
     paragraph: "Learn the proper way to shut down your Windows or Mac computer to protect your data. A simple guide for beginners.",
     date: "February 26, 2025",
     author: "Himanshu Tyagi",
-    category: "Computer",
+    category: "Kaise Karen",
     readingTime: "4 min read",
-    page: "computer"
+    page: "computer;kaise-karen"
   },
   {
     title: "Computer On Kaise Karen (How to Turn On a Computer)",
@@ -20,9 +20,9 @@ window.GKApp.searchData = [
     paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
     date: "February 25, 2025",
     author: "Himanshu Tyagi",
-    category: "Computer",
+    category: "Kaise Karen",
     readingTime: "5 min read",
-    page: "computer"
+    page: "computer;kaise-karen"
   },
   {
     title: "Weight & Mass Unit Conversion",
@@ -634,16 +634,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadMoreBtn = document.getElementById("load-more-btn");
     const relatedPostsGrid = document.getElementById("related-posts-grid");
 
-    // --- Smart URL Slug Detection ---
     const path = window.location.pathname;
-    let pageSlug = path.substring(path.lastIndexOf('/') + 1);
+    let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
     const dotIndex = pageSlug.lastIndexOf('.');
-    if (dotIndex > -1) {
-        pageSlug = pageSlug.substring(0, dotIndex);
-    }
-    if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) {
-        pageSlug = 'index';
-    }
+    if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
+    if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
 
     const createPostCard = (post, index) => {
         const card = document.createElement('article');
@@ -676,15 +671,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (postsContainer && loadMoreBtn) {
         let pageKeyForFiltering = 'index';
-        // Determine the page's main category/group for filtering posts
-        if (path.includes('/vyakaran')) pageKeyForFiltering = 'vyakaran';
-        else if (path.includes('/conversion')) pageKeyForFiltering = 'conversion';
+        if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
+        else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
         else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
         else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
 
         const allPostsForPage = (pageKeyForFiltering === 'index')
             ? window.GKApp.searchData
-            : window.GKApp.searchData.filter(p => p.page === pageKeyForFiltering);
+            : window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
 
         let currentFilteredPosts = [...allPostsForPage];
         let visiblePostCount = POSTS_INITIAL_LOAD;
@@ -737,74 +731,107 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     if (relatedPostsGrid) {
+        const MAX_RELATED_POSTS = 6;
         const renderPostsToGrid = (posts, grid) => {
             const fragment = document.createDocumentFragment();
-            posts.slice(0, 6).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+            posts.slice(0, MAX_RELATED_POSTS).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
             grid.innerHTML = '';
             grid.appendChild(fragment);
         };
         
         const renderContextualPosts = (currentUrlPath) => {
             const allPosts = window.GKApp.searchData;
-            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}`);
+            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
 
-            let currentGroup = currentArticle ? currentArticle.page : null;
+            // Define stopwords for keyword extraction
+            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
 
-            if (!currentGroup) {
-                 const pathSegments = currentUrlPath.split('/');
-                 if(pathSegments.length > 1 && pathSegments[0] !== '') {
-                    currentGroup = pathSegments[0];
-                 }
-            }
+            // 1. Extract keywords from the current URL slug
+            const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
+            
+            // 2. Get manual page tags from the current article
+            const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
+            
+            // 3. Score all other posts based on relevance
+            const scoredPosts = allPosts
+                .filter(p => p.url !== currentArticle?.url) // Exclude the current article
+                .map(post => {
+                    let score = 0;
+                    const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
+                    const postTags = new Set(post.page ? post.page.split(';') : []);
 
-            if (!currentGroup) {
-                 renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
-                 return;
-            }
+                    // Score based on URL keyword match
+                    urlKeywords.forEach(keyword => {
+                        if (postContent.includes(keyword)) {
+                            score += 15; // High score for keyword match
+                        }
+                    });
 
-            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
-            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
-            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
+                    // Score based on shared manual tags
+                    postTags.forEach(tag => {
+                        if (currentArticleTags.has(tag)) {
+                            score += 10; // Medium score for tag match
+                        }
+                    });
+                    
+                    // Bonus for matching both
+                    if (score > 15 && score % 10 !== 0) {
+                        score += 5;
+                    }
+                    
+                    return { post, score };
+                })
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score);
 
-            const candidatePosts = allPosts.filter(p => p.page === currentGroup && p.url !== currentArticle?.url);
-            const scoredPosts = candidatePosts.map(post => {
-                let score = 0;
-                const postContent = `${post.title}`.toLowerCase();
-                keywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 10; } });
-                return { post, score };
-            });
-
-            const stickyPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
+            let stickyPosts = scoredPosts.map(p => p.post);
             const stickyUrls = new Set(stickyPosts.map(p => p.url));
-            const otherCategoryPosts = candidatePosts.filter(p => !stickyUrls.has(p.url));
 
-            let finalRelatedList = [...stickyPosts, ...otherCategoryPosts.sort(() => 0.5 - Math.random())];
+            // 4. Build the final list
+            let finalRelatedList = [...stickyPosts];
+            
+            // 5. Fill remaining slots with relevant posts
+            if (finalRelatedList.length < MAX_RELATED_POSTS) {
+                // Get other posts from the same category/tags
+                let fillerCandidates = [];
+                if (currentArticleTags.size > 0) {
+                    const primaryTag = Array.from(currentArticleTags)[0];
+                     fillerCandidates = allPosts.filter(p => {
+                        return !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag);
+                    });
+                }
+                
+                // Add shuffled filler candidates
+                finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
+            }
 
-            if (finalRelatedList.length < 6) {
+            // 6. Ensure unique posts and fill with random if still needed
+            finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
+            if (finalRelatedList.length < MAX_RELATED_POSTS) {
                 const existingUrls = new Set(finalRelatedList.map(p => p.url));
                 if (currentArticle) existingUrls.add(currentArticle.url);
                 const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
-                finalRelatedList.push(...randomFill.slice(0, 6 - finalRelatedList.length));
+                finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
             }
             
             renderPostsToGrid(finalRelatedList, relatedPostsGrid);
         };
         
         const mainPageSlugs = ['index', 'kaise-karen', 'vyakaran', 'conversion', 'computer'];
-        const isCategoryPage = mainPageSlugs.includes(pageSlug) && !path.substring(1).includes('/');
+        const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html` || (pageSlug === 'index' && path === '/'));
 
         if (isCategoryPage) {
             let postsForCategory;
             if (pageSlug === 'index') {
                 postsForCategory = [...window.GKApp.searchData];
             } else {
-                postsForCategory = window.GKApp.searchData.filter(p => p.page === pageSlug);
+                postsForCategory = window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageSlug));
             }
             renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
         } else if (pageSlug) {
             renderContextualPosts(path.substring(1));
         } else {
-             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid); // Fallback
+             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid); // Fallback for safety
         }
     }
 });
