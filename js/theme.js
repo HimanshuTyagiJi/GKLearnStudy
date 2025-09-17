@@ -1,28 +1,3 @@
-// Adsterra ad code - automatically insert in every .container
-document.addEventListener("DOMContentLoaded", function() {
-    var containers = document.querySelectorAll(".container");
-    
-    // Agar sirf first container me ad chahiye, use: containers[0]
-    containers.forEach(function(container) {
-        var adDiv = document.createElement("div");
-        adDiv.style.margin = "20px 0"; // spacing above/below ad
-        
-        adDiv.innerHTML = `
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '6b1c986d355922123adfb7231f064fa3',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
-            <\/script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/6b1c986d355922123adfb7231f064fa3/invoke.js"><\/script>
-        `;
-        
-        container.appendChild(adDiv);
-    });
-});
 
 
 document.addEventListener("DOMContentLoaded", () => {
