@@ -5,13 +5,13 @@ window.GKApp = window.GKApp || {};
 window.GKApp.searchData = [
   {
     title: "Computer On Kaise Karen (How to Turn On a Computer)",
-    url: "/computer-on-kaise-kren.html",
+    url: "/computer-on-kaise-karen.html",
     paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
     date: "February 25, 2025",
     author: "Himanshu Tyagi",
     category: "Kaise Karen",
     readingTime: "5 min read",
-    page: "kaise-kren.html"
+    page: "kaise-karen.html"
   },
   {
     title: "Weight & Mass Unit Conversion",
@@ -111,7 +111,7 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
-  page: "kaise-kren.html"
+  page: "kaise-karen.html"
 }
 ,
   {
@@ -122,7 +122,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
-    page: "kaise-kren.html"
+    page: "kaise-karen.html"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -694,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const path = window.location.pathname;
-        const mainPageSlugs = ['/', '/index.html', '/kaise-kren', '/kaise-kren.html'];
+        const mainPageSlugs = ['/', '/index.html', '/kaise-karen', '/kaise-karen.html'];
         const isMainPage = mainPageSlugs.includes(path) || path === '';
 
         if (isMainPage) {
@@ -705,3 +705,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
