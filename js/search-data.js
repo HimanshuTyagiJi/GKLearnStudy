@@ -5,13 +5,13 @@ window.GKApp = window.GKApp || {};
 window.GKApp.searchData = [
   {
     title: "Computer On Kaise Karen (How to Turn On a Computer)",
-    url: "/computer-on-kaise-karen.html",
+    url: "/computer-on-kaise-kren.html",
     paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
     date: "February 25, 2025",
     author: "Himanshu Tyagi",
     category: "Kaise Karen",
     readingTime: "5 min read",
-    page: "kaise-karen.html"
+    page: "kaise-karen"
   },
   {
     title: "Weight & Mass Unit Conversion",
@@ -111,7 +111,7 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
-  page: "kaise-karen.html"
+  page: "kaise-karen"
 }
 ,
   {
@@ -122,7 +122,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
-    page: "kaise-karen.html"
+    page: "kaise-karen"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -576,6 +576,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadMoreBtn = document.getElementById("load-more-btn");
     const relatedPostsGrid = document.getElementById("related-posts-grid");
 
+    // --- Smart URL Slug Detection ---
+    const path = window.location.pathname;
+    // Get the last part of the URL, e.g., "computer-on-kaise-kren.html" or "kaise-karen"
+    let pageSlug = path.substring(path.lastIndexOf('/') + 1);
+    // If there's a file extension, remove it. e.g., "computer-on-kaise-kren.html" -> "computer-on-kaise-kren"
+    const dotIndex = pageSlug.lastIndexOf('.');
+    if (dotIndex > -1) {
+        pageSlug = pageSlug.substring(0, dotIndex);
+    }
+    // Treat the root or "index" as the homepage slug "index"
+    if (pageSlug === '' || pageSlug === 'index') {
+        pageSlug = 'index';
+    }
+
+
     const createPostCard = (post, index) => {
         const card = document.createElement('article');
         card.className = 'card';
@@ -606,9 +621,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (postsContainer && loadMoreBtn) {
-        const path = window.location.pathname;
-        const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-        const allPostsForPage = (currentPage === 'index.html' || currentPage === '') ? window.GKApp.searchData : window.GKApp.searchData.filter(p => p.page === currentPage);
+        const allPostsForPage = (pageSlug === 'index') 
+            ? window.GKApp.searchData 
+            : window.GKApp.searchData.filter(p => p.page === pageSlug);
+
         let currentFilteredPosts = [...allPostsForPage];
         let visiblePostCount = POSTS_INITIAL_LOAD;
 
@@ -693,16 +709,18 @@ document.addEventListener("DOMContentLoaded", () => {
             renderPostsToGrid(relevantPosts, relatedPostsGrid);
         };
 
-        const path = window.location.pathname;
-        const mainPageSlugs = ['/', '/index.html', '/kaise-karen', '/kaise-karen.html'];
-        const isMainPage = mainPageSlugs.includes(path) || path === '';
+        const mainPageSlugs = ['index', 'kaise-karen']; // Slugs of pages that show a list of articles.
+        const isMainListingPage = mainPageSlugs.includes(pageSlug);
 
-        if (isMainPage) {
+        if (isMainListingPage) {
             renderRandomPosts();
         } else {
-            const slug = path.substring(path.lastIndexOf('/') + 1).replace(/\.[^/.]+$/, "");
-            if (slug) { renderContextualPosts(slug); } else { renderRandomPosts(); }
+            // Any other slug is assumed to be an article page.
+            if (pageSlug) {
+                renderContextualPosts(pageSlug);
+            } else {
+                renderRandomPosts(); // Fallback for safety.
+            }
         }
     }
 });
-
