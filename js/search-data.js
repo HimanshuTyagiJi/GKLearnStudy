@@ -10,9 +10,9 @@ window.GKApp.searchData = [
     paragraph: "Learn the proper way to shut down your Windows or Mac computer to protect your data. A simple guide for beginners.",
     date: "February 26, 2025",
     author: "Himanshu Tyagi",
-    category: "Kaise Karen",
+    category: "Computer",
     readingTime: "4 min read",
-    page: "kaise-karen"
+    page: "computer"
   },
   {
     title: "Computer On Kaise Karen (How to Turn On a Computer)",
@@ -20,9 +20,9 @@ window.GKApp.searchData = [
     paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
     date: "February 25, 2025",
     author: "Himanshu Tyagi",
-    category: "Kaise Karen",
+    category: "Computer",
     readingTime: "5 min read",
-    page: "kaise-karen"
+    page: "computer"
   },
   {
     title: "Weight & Mass Unit Conversion",
@@ -679,6 +679,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Determine the page's main category/group for filtering posts
         if (path.includes('/vyakaran')) pageKeyForFiltering = 'vyakaran';
         else if (path.includes('/conversion')) pageKeyForFiltering = 'conversion';
+        else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
         else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
 
         const allPostsForPage = (pageKeyForFiltering === 'index')
@@ -723,7 +724,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const generateCategories = () => {
             if (!categoryListContainer) return;
             const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
-            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To' };
+            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
             let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
             Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
             categoryListContainer.innerHTML = categoryHTML;
@@ -743,21 +744,20 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.appendChild(fragment);
         };
         
-        const renderContextualPosts = (currentSlug) => {
+        const renderContextualPosts = (currentUrlPath) => {
             const allPosts = window.GKApp.searchData;
-            const currentArticle = allPosts.find(p => p.url.endsWith(currentSlug));
+            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}`);
 
-            // Determine the current context/group (e.g., 'vyakaran', 'conversion')
-            let currentGroup = null;
-            if (currentArticle && currentArticle.page) {
-                currentGroup = currentArticle.page;
-            } else if (path.includes('/vyakaran/')) {
-                currentGroup = 'vyakaran';
-            } else if (path.includes('/conversion/')) {
-                currentGroup = 'conversion';
+            let currentGroup = currentArticle ? currentArticle.page : null;
+
+            if (!currentGroup) {
+                 const pathSegments = currentUrlPath.split('/');
+                 if(pathSegments.length > 1 && pathSegments[0] !== '') {
+                    currentGroup = pathSegments[0];
+                 }
             }
 
-            if (!currentGroup && pageSlug !== 'index') {
+            if (!currentGroup) {
                  renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
                  return;
             }
@@ -766,56 +766,43 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
             const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
 
-            // 1. Get all candidate posts from the same group
             const candidatePosts = allPosts.filter(p => p.page === currentGroup && p.url !== currentArticle?.url);
-
-            // 2. Score candidate posts based on keyword matches
             const scoredPosts = candidatePosts.map(post => {
                 let score = 0;
                 const postContent = `${post.title}`.toLowerCase();
-                keywords.forEach(keyword => {
-                    if (postContent.includes(keyword)) {
-                        score += 10;
-                    }
-                });
+                keywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 10; } });
                 return { post, score };
             });
 
-            // 3. Separate the highly relevant ("sticky") posts
             const stickyPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
-
-            // 4. Get the rest of the posts from the same category to use for random filling
             const stickyUrls = new Set(stickyPosts.map(p => p.url));
             const otherCategoryPosts = candidatePosts.filter(p => !stickyUrls.has(p.url));
 
-            // 5. Combine sticky posts with randomly shuffled other posts from the same category
-            let finalRelatedList = [
-                ...stickyPosts,
-                ...otherCategoryPosts.sort(() => 0.5 - Math.random())
-            ];
+            let finalRelatedList = [...stickyPosts, ...otherCategoryPosts.sort(() => 0.5 - Math.random())];
 
-            // 6. If we still don't have enough, fill with random posts from the entire site
             if (finalRelatedList.length < 6) {
                 const existingUrls = new Set(finalRelatedList.map(p => p.url));
                 if (currentArticle) existingUrls.add(currentArticle.url);
-                
-                const randomFill = allPosts
-                    .filter(p => !existingUrls.has(p.url))
-                    .sort(() => 0.5 - Math.random());
-                    
-                const needed = 6 - finalRelatedList.length;
-                finalRelatedList.push(...randomFill.slice(0, needed));
+                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
+                finalRelatedList.push(...randomFill.slice(0, 6 - finalRelatedList.length));
             }
             
             renderPostsToGrid(finalRelatedList, relatedPostsGrid);
         };
         
-        const mainPageSlugs = ['index', 'kaise-karen', 'vyakaran', 'conversion'];
-        if (mainPageSlugs.includes(pageSlug) && !path.includes('/')) {
-             // For main category pages, show random posts from the whole site
-             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+        const mainPageSlugs = ['index', 'kaise-karen', 'vyakaran', 'conversion', 'computer'];
+        const isCategoryPage = mainPageSlugs.includes(pageSlug) && !path.substring(1).includes('/');
+
+        if (isCategoryPage) {
+            let postsForCategory;
+            if (pageSlug === 'index') {
+                postsForCategory = [...window.GKApp.searchData];
+            } else {
+                postsForCategory = window.GKApp.searchData.filter(p => p.page === pageSlug);
+            }
+            renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
         } else if (pageSlug) {
-            renderContextualPosts(path.substring(1)); // Pass full path like 'computer-on-kaise-kren'
+            renderContextualPosts(path.substring(1));
         } else {
              renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid); // Fallback
         }
