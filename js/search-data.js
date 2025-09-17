@@ -3,19 +3,19 @@ window.GKApp = window.GKApp || {};
 
 // --- Single Source of Truth for Data ---
 window.GKApp.searchData = [
-  {
-    title: "Computer Off Kaise Karen (How to Turn On a Computer)",
-    url: "/computer-on-kaise-kren.html",
-    paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
-    date: "February 25, 2025",
+    {
+    title: "Computer Off Kaise Karen (How to Turn Off a Computer)",
+    url: "/computer-off-kaise-kren",
+    paragraph: "Learn the proper way to shut down your Windows or Mac computer to protect your data. A simple guide for beginners.",
+    date: "February 26, 2025",
     author: "Himanshu Tyagi",
     category: "Kaise Karen",
-    readingTime: "5 min read",
+    readingTime: "4 min read",
     page: "kaise-karen"
   },
-   {
+  {
     title: "Computer On Kaise Karen (How to Turn On a Computer)",
-    url: "/computer-on-kaise-kren.html",
+    url: "/computer-on-kaise-kren",
     paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
     date: "February 25, 2025",
     author: "Himanshu Tyagi",
@@ -588,15 +588,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Smart URL Slug Detection ---
     const path = window.location.pathname;
-    // Get the last part of the URL, e.g., "computer-on-kaise-kren.html" or "kaise-karen"
     let pageSlug = path.substring(path.lastIndexOf('/') + 1);
-    // If there's a file extension, remove it. e.g., "computer-on-kaise-kren.html" -> "computer-on-kaise-kren"
     const dotIndex = pageSlug.lastIndexOf('.');
     if (dotIndex > -1) {
         pageSlug = pageSlug.substring(0, dotIndex);
     }
-    // Treat the root or "index" as the homepage slug "index"
-    if (pageSlug === '' || pageSlug === 'index') {
+    if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) {
         pageSlug = 'index';
     }
 
@@ -698,40 +695,61 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         const renderContextualPosts = (currentSlug) => {
             const allPosts = window.GKApp.searchData;
-            const currentArticle = allPosts.find(p => p.url.includes(currentSlug));
-            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
-            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'is', 'are', 'to', 'and', 'or', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
-            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
-            if (keywords.length === 0) { renderRandomPosts(); return; }
-            let scoredPosts = allPosts.filter(p => !p.url.includes(currentSlug)).map(post => {
-                let score = 0; const postContent = `${post.title} ${post.category}`.toLowerCase();
-                keywords.forEach(keyword => { if (postContent.includes(keyword)) { score += post.title.toLowerCase().includes(keyword) ? 10 : 2; } });
-                if (currentArticle && post.category === currentArticle.category) { score += 5; }
-                return { post, score };
+            
+            const currentArticle = allPosts.find(p => {
+                const pSlug = p.url.substring(p.url.lastIndexOf('/') + 1);
+                return pSlug === currentSlug;
             });
+
+            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
+            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
+            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
+            
+            if (keywords.length === 0) { renderRandomPosts(); return; }
+            
+            let scoredPosts = allPosts
+                .filter(p => currentArticle ? p.url !== currentArticle.url : !p.url.includes(currentSlug))
+                .map(post => {
+                    let score = 0; 
+                    const postContent = `${post.title} ${post.category}`.toLowerCase();
+                    keywords.forEach(keyword => { 
+                        if (postContent.includes(keyword)) { 
+                            score += post.title.toLowerCase().includes(keyword) ? 10 : 2; 
+                        } 
+                    });
+                    if (currentArticle && post.category === currentArticle.category) { 
+                        score += 5; 
+                    }
+                    return { post, score };
+                });
+
             let relevantPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
+            
             if (relevantPosts.length < 6) {
-                const existingUrls = new Set(relevantPosts.map(p => p.url)); if (currentArticle) existingUrls.add(currentArticle.url);
-                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
+                const existingUrls = new Set(relevantPosts.map(p => p.url));
+                if (currentArticle) existingUrls.add(currentArticle.url);
+                
+                const randomFill = allPosts
+                    .filter(p => !existingUrls.has(p.url))
+                    .sort(() => 0.5 - Math.random());
+                    
                 const needed = 6 - relevantPosts.length;
                 relevantPosts = [...relevantPosts, ...randomFill.slice(0, needed)];
             }
             renderPostsToGrid(relevantPosts, relatedPostsGrid);
         };
 
-        const mainPageSlugs = ['index', 'kaise-karen']; // Slugs of pages that show a list of articles.
+        const mainPageSlugs = ['index', 'kaise-karen'];
         const isMainListingPage = mainPageSlugs.includes(pageSlug);
 
         if (isMainListingPage) {
             renderRandomPosts();
         } else {
-            // Any other slug is assumed to be an article page.
             if (pageSlug) {
                 renderContextualPosts(pageSlug);
             } else {
-                renderRandomPosts(); // Fallback for safety.
+                renderRandomPosts(); // Fallback
             }
         }
     }
 });
-
