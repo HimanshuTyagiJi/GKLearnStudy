@@ -30,9 +30,25 @@ document.addEventListener("DOMContentLoaded", () => {
             { href: "https://gklearnstudy.in/test", text: "Test" },
         ];
         menuInner.innerHTML = menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
-        const firstLink = menuInner.querySelector('a');
-        if (firstLink) {
-            firstLink.classList.add('active');
+        
+        const currentUrl = window.location.href;
+        const links = menuInner.querySelectorAll('a');
+        let bestMatch = null;
+
+        links.forEach(link => {
+            // A link is a candidate if the current URL starts with its href.
+            if (currentUrl.startsWith(link.href)) {
+                // If we haven't found a match yet, this is our best one so far.
+                // Or, if this link's href is longer than the previous best match,
+                // it's a more specific (and therefore better) match.
+                if (!bestMatch || link.href.length > bestMatch.href.length) {
+                    bestMatch = link;
+                }
+            }
+        });
+
+        if (bestMatch) {
+            bestMatch.classList.add('active');
         }
     }
 
