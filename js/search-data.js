@@ -1,3 +1,4 @@
+
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
@@ -101,6 +102,7 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
+  page: "kaise-kren.html"
 }
 ,
   {
@@ -111,6 +113,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
+    page: "kaise-kren.html"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -880,176 +883,199 @@ document.addEventListener("DOMContentLoaded", () => {
     const postFilterInput = document.getElementById("post-filter-input");
     const categoryListContainer = document.querySelector(".category-list");
     const loadMoreBtn = document.getElementById("load-more-btn");
-    
-    if (!postsContainer || !loadMoreBtn) {
-      console.error("Required elements for post grid not found.");
-      return;
-    }
+    const relatedPostsGrid = document.getElementById("related-posts-grid");
 
-    const allPosts = window.GKApp.searchData;
-    let currentFilteredPosts = [...allPosts];
-    let visiblePostCount = POSTS_INITIAL_LOAD;
+    const createPostCard = (post, index) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.setAttribute('aria-label', post.title);
+        card.dataset.index = index;
 
-    const renderPosts = (posts) => {
-        postsContainer.innerHTML = "";
-        if (posts.length === 0) {
-            postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>';
-            return;
-        }
+        const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
+        const clipPathId = `circle-clip-avatar-gt-${index}-${Math.random()}`;
 
-        const fragment = document.createDocumentFragment();
-        posts.forEach((post, index) => {
-            const card = document.createElement('article');
-            card.className = 'card';
-            card.setAttribute('aria-label', post.title);
-            card.dataset.index = index; 
-
-            const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
-
-            const clipPathId = `circle-clip-avatar-gt-${index}`;
-
-            const metaBlock = `
-                <div class="post-meta-container">
-                    <div class="byline">
-                        <a href="profile.html" aria-label="Author Profile">
-                            <div class="author-avatar">
-                                <svg width="40" height="40" viewBox="0 0 300 300">
-                                    <circle cx="150" cy="150" r="150" fill="white"></circle>
-                                    <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
-                                    <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
-                                    <clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath>
-                                    <g clip-path="url(#${clipPathId})">
-                                        <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
-                                        <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
-                                    </g>
-                                </svg>
-                            </div>
-                        </a>
-                        <div class="author-details">
-                            <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
-                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
+        const metaBlock = `
+            <div class="post-meta-container">
+                <div class="byline">
+                    <a href="profile.html" aria-label="Author Profile">
+                        <div class="author-avatar">
+                            <svg width="40" height="40" viewBox="0 0 300 300">
+                                <circle cx="150" cy="150" r="150" fill="white"></circle>
+                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
+                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
+                                <clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath>
+                                <g clip-path="url(#${clipPathId})">
+                                    <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                                    <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
+                                </g>
+                            </svg>
                         </div>
+                    </a>
+                    <div class="author-details">
+                        <span class="author vcard">by <span class="name"><a class="url fn n" href="profile.html" rel="author">${post.author}</a></span></span>
+                        <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
                     </div>
-                    <div class="share-button-wrapper">
-                        <button class="share-button" title="Share this page">
-                            <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
-                            <span>Share</span>
-                        </button>
-                    </div>
-                </div>`;
-
-            card.innerHTML = `
-                <div class="card-thumbnail" aria-hidden="true">
-                    <a href="categories.html" class="category-badge">${post.category}</a>
-                    <a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a>
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
-                    <p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>
+                <div class="share-button-wrapper">
+                    <button class="share-button" title="Share this page">
+                        <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
+                        <span>Share</span>
+                    </button>
                 </div>
-                ${metaBlock}
-            `;
-            fragment.appendChild(card);
-        });
-        postsContainer.appendChild(fragment);
+            </div>`;
+
+        card.innerHTML = `
+            <div class="card-thumbnail" aria-hidden="true">
+                <a href="categories.html" class="category-badge">${post.category}</a>
+                <a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
+                <p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>
+            </div>
+            ${metaBlock}
+        `;
+        return card;
     };
 
-    const updatePostsDisplay = () => {
-        const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
-        renderPosts(postsToRender);
+    // Logic for main post grid
+    if (postsContainer && loadMoreBtn) {
+        const path = window.location.pathname;
+        const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+        
+        const allPostsForPage = (currentPage === 'index.html' || currentPage === '')
+            ? window.GKApp.searchData 
+            : window.GKApp.searchData.filter(p => p.page === currentPage);
 
-        if (visiblePostCount >= currentFilteredPosts.length) {
-            loadMoreBtn.style.display = "none";
-        } else {
-            loadMoreBtn.style.display = "block";
-        }
-    };
+        let currentFilteredPosts = [...allPostsForPage];
+        let visiblePostCount = POSTS_INITIAL_LOAD;
 
-    const handleFilter = (filteredPosts) => {
-        currentFilteredPosts = filteredPosts;
-        visiblePostCount = POSTS_INITIAL_LOAD;
-        updatePostsDisplay();
-    };
-
-    const applyFilters = () => {
-        const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
-        const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
-        let filtered = allPosts;
-        if (category.toLowerCase() !== "all") {
-            filtered = filtered.filter((post) => post.category === category);
-        }
-        if (query) {
-            filtered = window.GKApp.fuzzySearch(query, filtered);
-        }
-        handleFilter(filtered);
-    };
-  
-    postsContainer.addEventListener('click', (event) => {
-        const card = event.target.closest('.card');
-        if (!card) return;
-
-        const shareButton = event.target.closest('.share-button');
-        if (shareButton) {
-            event.preventDefault();
-            const postIndex = parseInt(card.dataset.index, 10);
-            const post = currentFilteredPosts[postIndex];
-
-            if (post && navigator.share) {
-                navigator.share({
-                    title: post.title,
-                    text: post.paragraph,
-                    url: new URL(post.url, window.location.origin).href,
-                }).catch((error) => console.log('Error sharing:', error));
-            } else {
-                alert('Share functionality is not supported by your browser.');
+        const renderPosts = (posts) => {
+            postsContainer.innerHTML = "";
+            if (posts.length === 0) {
+                postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>';
+                return;
             }
-        }
-    });
 
-    if (postFilterInput) {
-        postFilterInput.addEventListener("input", applyFilters);
-    }
-
-    const generateCategories = () => {
-        if (!categoryListContainer) return;
-
-        const categoryCounts = allPosts.reduce((acc, post) => {
-            if (post.category) {
-                acc[post.category] = (acc[post.category] || 0) + 1;
-            }
-            return acc;
-        }, {});
-
-        const categoryDisplayNames = {
-            'Conversion': 'Unit Conversion',
-            'Vyakaran': 'Vyakaran'
+            const fragment = document.createDocumentFragment();
+            posts.forEach((post, index) => {
+                fragment.appendChild(createPostCard(post, index));
+            });
+            postsContainer.appendChild(fragment);
         };
 
-        let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPosts.length}</span></a></li>`;
+        const updatePostsDisplay = () => {
+            const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
+            renderPosts(postsToRender);
 
-        Object.entries(categoryCounts).forEach(([category, count]) => {
-            const displayName = categoryDisplayNames[category] || category;
-            categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`;
+            if (visiblePostCount >= currentFilteredPosts.length) {
+                loadMoreBtn.style.display = "none";
+            } else {
+                loadMoreBtn.style.display = "block";
+            }
+        };
+
+        const handleFilter = (filteredPosts) => {
+            currentFilteredPosts = filteredPosts;
+            visiblePostCount = POSTS_INITIAL_LOAD;
+            updatePostsDisplay();
+        };
+
+        const applyFilters = () => {
+            const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
+            const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
+            let filtered = allPostsForPage;
+            if (category.toLowerCase() !== "all") {
+                filtered = filtered.filter((post) => post.category === category);
+            }
+            if (query) {
+                filtered = window.GKApp.fuzzySearch(query, filtered);
+            }
+            handleFilter(filtered);
+        };
+      
+        postsContainer.addEventListener('click', (event) => {
+            const card = event.target.closest('.card');
+            if (!card) return;
+
+            const shareButton = event.target.closest('.share-button');
+            if (shareButton) {
+                event.preventDefault();
+                const postIndex = parseInt(card.dataset.index, 10);
+                const post = currentFilteredPosts[postIndex];
+
+                if (post && navigator.share) {
+                    navigator.share({
+                        title: post.title,
+                        text: post.paragraph,
+                        url: new URL(post.url, window.location.origin).href,
+                    }).catch((error) => console.log('Error sharing:', error));
+                } else {
+                    alert('Share functionality is not supported by your browser.');
+                }
+            }
         });
 
-        categoryListContainer.innerHTML = categoryHTML;
+        if (postFilterInput) {
+            postFilterInput.addEventListener("input", applyFilters);
+        }
 
-        const categoryLinks = categoryListContainer.querySelectorAll("a");
-        categoryLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                categoryLinks.forEach((l) => l.classList.remove("active-category"));
-                link.classList.add("active-category");
-                applyFilters();
+        const generateCategories = () => {
+            if (!categoryListContainer) return;
+
+            const categoryCounts = allPostsForPage.reduce((acc, post) => {
+                if (post.category) {
+                    acc[post.category] = (acc[post.category] || 0) + 1;
+                }
+                return acc;
+            }, {});
+
+            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran' };
+
+            let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
+
+            Object.entries(categoryCounts).forEach(([category, count]) => {
+                const displayName = categoryDisplayNames[category] || category;
+                categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`;
             });
+
+            categoryListContainer.innerHTML = categoryHTML;
+
+            const categoryLinks = categoryListContainer.querySelectorAll("a");
+            categoryLinks.forEach((link) => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    categoryLinks.forEach((l) => l.classList.remove("active-category"));
+                    link.classList.add("active-category");
+                    applyFilters();
+                });
+            });
+        };
+
+        loadMoreBtn.addEventListener("click", () => {
+            visiblePostCount += POSTS_PER_PAGE;
+            updatePostsDisplay();
         });
-    };
 
-    loadMoreBtn.addEventListener("click", () => {
-        visiblePostCount += POSTS_PER_PAGE;
-        updatePostsDisplay();
-    });
+        generateCategories();
+        applyFilters();
+    }
+    
+    // Logic for related posts (runs on all pages with the container)
+    if (relatedPostsGrid) {
+        const renderRelatedPosts = () => {
+            const allPosts = window.GKApp.searchData;
+            // Shuffle all posts and take the first 6
+            const shuffled = [...allPosts].sort(() => 0.5 - Math.random());
+            const selectedPosts = shuffled.slice(0, 6);
 
-    generateCategories();
-    applyFilters();
+            const fragment = document.createDocumentFragment();
+            selectedPosts.forEach((post, index) => {
+                fragment.appendChild(createPostCard(post, index));
+            });
+            relatedPostsGrid.innerHTML = ''; // Clear previous
+            relatedPostsGrid.appendChild(fragment);
+        };
+        renderRelatedPosts();
+    }
 });
