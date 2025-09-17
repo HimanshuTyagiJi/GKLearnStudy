@@ -1,3 +1,4 @@
+
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
@@ -31,6 +32,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "8 min read",
+    page: "conversion"
   },
   {
     title: "Volume Unit Conversion",
@@ -40,6 +42,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
+    page: "conversion"
   },
   {
     title: "Time Unit Conversion",
@@ -49,6 +52,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
+    page: "conversion"
   },
   {
     title: "Temperature Unit Conversion - defination,use",
@@ -58,6 +62,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
+    page: "conversion"
   },
   {
     title: "Speed Unit Conversion",
@@ -67,6 +72,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
+    page: "conversion"
   },
   {
     title: "Pressure Unit Conversion",
@@ -76,6 +82,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
+    page: "conversion"
   },
   {
     title: "Power Unit Conversion",
@@ -85,6 +92,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
+    page: "conversion"
   },
   {
     title: "Length Unit Conversion",
@@ -94,6 +102,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Conversion",
     readingTime: "8 min read",
+    page: "conversion"
   },
   {
     title: "Area Unit Conversion",
@@ -103,6 +112,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Conversion",
     readingTime: "7 min read",
+    page: "conversion"
   },
   {
     title: "Angle Unit Conversion",
@@ -112,6 +122,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Conversion",
     readingTime: "8 min read",
+    page: "conversion"
   },
  {
   title: "Unit Conversion",
@@ -121,9 +132,8 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
-  page: "kaise-karen"
-}
-,
+  page: "conversion"
+},
   {
     title: "निबंध: परिभाषा, भेद, उदाहरण",
     url: "vyakaran/essay-in-hindi.html",
@@ -132,7 +142,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
-    page: "kaise-karen"
+    page: "vyakaran"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -142,6 +152,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "अपठित-गद्यांश: परिभाषा, भेद, उदाहरण",
@@ -151,6 +162,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "अनुच्छेद-लेखन: परिभाषा, भेद, उदाहरण",
@@ -160,6 +172,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "अलंकार: परिभाषा, भेद, उदाहरण",
@@ -169,6 +182,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
+    page: "vyakaran"
   },
   {
     title: "छन्द: परिभाषा, भेद, उदाहरण",
@@ -178,6 +192,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "रस: परिभाषा, भेद, उदाहरण",
@@ -187,6 +202,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "युग्म शब्द: परिभाषा, भेद, उदाहरण",
@@ -196,6 +212,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
+    page: "vyakaran"
   },
   {
     title: "त्रुटिसम भिन्नार्थक शब्द: परिभाषा, भेद, उदाहरण",
@@ -205,6 +222,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "7 min read",
+    page: "vyakaran"
   },
   {
     title: "एकार्थक प्रतीत होने वाले शब्द: परिभाषा, भेद, उदाहरण",
@@ -214,6 +232,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
+    page: "vyakaran"
   },
   {
     title: "अनेकार्थी-शब्द: परिभाषा, भेद, उदाहरण",
@@ -223,6 +242,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
+    page: "vyakaran"
   },
   {
     title: "अनेक शब्दों के लिए एक शब्द: परिभाषा, भेद, उदाहरण",
@@ -232,6 +252,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "लोकोक्तियाँ: परिभाषा, भेद, उदाहरण",
@@ -241,6 +262,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "मुहावरे: परिभाषा, भेद, उदाहरण",
@@ -250,6 +272,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "पर्यायवाची-शब्द: परिभाषा, भेद, उदाहरण",
@@ -259,6 +282,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "विलोम-शब्द: परिभाषा, भेद, उदाहरण",
@@ -268,6 +292,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "देशज-विदेशज: परिभाषा, भेद, उदाहरण",
@@ -277,6 +302,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "तत्सम-तद्भव: परिभाषा, भेद, उदाहरण",
@@ -286,6 +312,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "समास: परिभाषा, भेद, उदाहरण",
@@ -295,6 +322,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
+    page: "vyakaran"
   },
   {
     title: "संधि: परिभाषा, भेद, उदाहरण",
@@ -304,6 +332,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
+    page: "vyakaran"
   },
   {
     title: "प्रत्यय: परिभाषा, भेद, उदाहरण",
@@ -313,6 +342,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "उपसर्ग: परिभाषा, भेद, उदाहरण",
@@ -322,6 +352,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "विराम-चिन्ह: परिभाषा, भेद, उदाहरण",
@@ -331,6 +362,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "पुरुष: परिभाषा, भेद, उदाहरण",
@@ -340,6 +372,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "6 min read",
+    page: "vyakaran"
   },
   {
     title: "वाच्य: परिभाषा, भेद, उदाहरण",
@@ -349,6 +382,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
+    page: "vyakaran"
   },
   {
     title: "निपात: परिभाषा, भेद, उदाहरण",
@@ -358,6 +392,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "6 min read",
+    page: "vyakaran"
   },
   {
     title: "अव्यय: परिभाषा, भेद, उदाहरण",
@@ -367,6 +402,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "7 min read",
+    page: "vyakaran"
   },
   {
     title: "काल: परिभाषा, भेद, उदाहरण",
@@ -376,6 +412,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "क्रिया: परिभाषा, भेद, उदाहरण",
@@ -385,6 +422,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "विशेषण: परिभाषा, भेद, उदाहरण",
@@ -394,6 +432,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "सर्वनाम: परिभाषा, भेद, उदाहरण",
@@ -403,6 +442,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "कारक: परिभाषा, भेद, उदाहरण",
@@ -412,6 +452,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "लिंग: परिभाषा, भेद, उदाहरण",
@@ -421,6 +462,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "8 min read",
+    page: "vyakaran"
   },
   {
     title: "वचन: परिभाषा, भेद, उदाहरण",
@@ -430,6 +472,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "7 min read",
+    page: "vyakaran"
   },
   {
     title: "संज्ञा: परिभाषा, भेद, उदाहरण",
@@ -439,6 +482,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "वाक्य-विचार: परिभाषा, भेद, उदाहरण",
@@ -448,6 +492,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "शब्द-विचार: परिभाषा, भेद, उदाहरण",
@@ -457,6 +502,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "वर्ण-विचार: परिभाषा, भेद, उदाहरण",
@@ -466,6 +512,7 @@ window.GKApp.searchData = [
     author: "Himanshu Tyagi",
     category: "Vyakaran",
     readingTime: "9 min read",
+    page: "vyakaran"
   },
   {
     title: "भाषा और व्याकरण: परिभाषा, भेद, उदाहरण",
@@ -475,6 +522,7 @@ window.GKApp.searchData = [
     author: "Owner",
     category: "Vyakaran",
     readingTime: "11 min read",
+    page: "vyakaran"
   },
 ];
 
@@ -597,7 +645,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pageSlug = 'index';
     }
 
-
     const createPostCard = (post, index) => {
         const card = document.createElement('article');
         card.className = 'card';
@@ -628,9 +675,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     if (postsContainer && loadMoreBtn) {
-        const allPostsForPage = (pageSlug === 'index') 
-            ? window.GKApp.searchData 
-            : window.GKApp.searchData.filter(p => p.page === pageSlug);
+        let pageKeyForFiltering = 'index';
+        // Determine the page's main category/group for filtering posts
+        if (path.includes('/vyakaran')) pageKeyForFiltering = 'vyakaran';
+        else if (path.includes('/conversion')) pageKeyForFiltering = 'conversion';
+        else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
+
+        const allPostsForPage = (pageKeyForFiltering === 'index')
+            ? window.GKApp.searchData
+            : window.GKApp.searchData.filter(p => p.page === pageKeyForFiltering);
 
         let currentFilteredPosts = [...allPostsForPage];
         let visiblePostCount = POSTS_INITIAL_LOAD;
@@ -689,67 +742,82 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.innerHTML = '';
             grid.appendChild(fragment);
         };
-        const renderRandomPosts = () => {
-            const shuffled = [...window.GKApp.searchData].sort(() => 0.5 - Math.random());
-            renderPostsToGrid(shuffled, relatedPostsGrid);
-        };
+        
         const renderContextualPosts = (currentSlug) => {
             const allPosts = window.GKApp.searchData;
-            
-            const currentArticle = allPosts.find(p => {
-                const pSlug = p.url.substring(p.url.lastIndexOf('/') + 1);
-                return pSlug === currentSlug;
+            const currentArticle = allPosts.find(p => p.url.endsWith(currentSlug));
+
+            // Determine the current context/group (e.g., 'vyakaran', 'conversion')
+            let currentGroup = null;
+            if (currentArticle && currentArticle.page) {
+                currentGroup = currentArticle.page;
+            } else if (path.includes('/vyakaran/')) {
+                currentGroup = 'vyakaran';
+            } else if (path.includes('/conversion/')) {
+                currentGroup = 'conversion';
+            }
+
+            if (!currentGroup && pageSlug !== 'index') {
+                 renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+                 return;
+            }
+
+            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
+            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
+            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
+
+            // 1. Get all candidate posts from the same group
+            const candidatePosts = allPosts.filter(p => p.page === currentGroup && p.url !== currentArticle?.url);
+
+            // 2. Score candidate posts based on keyword matches
+            const scoredPosts = candidatePosts.map(post => {
+                let score = 0;
+                const postContent = `${post.title}`.toLowerCase();
+                keywords.forEach(keyword => {
+                    if (postContent.includes(keyword)) {
+                        score += 10;
+                    }
+                });
+                return { post, score };
             });
 
-            const currentArticleTitle = currentArticle ? currentArticle.title : document.title;
-            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'kya', 'hai', 'mein', 'ko', 'definition', 'use', 'what', 'of', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण']);
-            const keywords = currentArticleTitle.toLowerCase().split(/[\s,()-]+/).filter(word => word.length > 2 && !stopwords.has(word));
-            
-            if (keywords.length === 0) { renderRandomPosts(); return; }
-            
-            let scoredPosts = allPosts
-                .filter(p => currentArticle ? p.url !== currentArticle.url : !p.url.includes(currentSlug))
-                .map(post => {
-                    let score = 0; 
-                    const postContent = `${post.title} ${post.category}`.toLowerCase();
-                    keywords.forEach(keyword => { 
-                        if (postContent.includes(keyword)) { 
-                            score += post.title.toLowerCase().includes(keyword) ? 10 : 2; 
-                        } 
-                    });
-                    if (currentArticle && post.category === currentArticle.category) { 
-                        score += 5; 
-                    }
-                    return { post, score };
-                });
+            // 3. Separate the highly relevant ("sticky") posts
+            const stickyPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
 
-            let relevantPosts = scoredPosts.filter(p => p.score > 0).sort((a, b) => b.score - a.score).map(p => p.post);
-            
-            if (relevantPosts.length < 6) {
-                const existingUrls = new Set(relevantPosts.map(p => p.url));
+            // 4. Get the rest of the posts from the same category to use for random filling
+            const stickyUrls = new Set(stickyPosts.map(p => p.url));
+            const otherCategoryPosts = candidatePosts.filter(p => !stickyUrls.has(p.url));
+
+            // 5. Combine sticky posts with randomly shuffled other posts from the same category
+            let finalRelatedList = [
+                ...stickyPosts,
+                ...otherCategoryPosts.sort(() => 0.5 - Math.random())
+            ];
+
+            // 6. If we still don't have enough, fill with random posts from the entire site
+            if (finalRelatedList.length < 6) {
+                const existingUrls = new Set(finalRelatedList.map(p => p.url));
                 if (currentArticle) existingUrls.add(currentArticle.url);
                 
                 const randomFill = allPosts
                     .filter(p => !existingUrls.has(p.url))
                     .sort(() => 0.5 - Math.random());
                     
-                const needed = 6 - relevantPosts.length;
-                relevantPosts = [...relevantPosts, ...randomFill.slice(0, needed)];
+                const needed = 6 - finalRelatedList.length;
+                finalRelatedList.push(...randomFill.slice(0, needed));
             }
-            renderPostsToGrid(relevantPosts, relatedPostsGrid);
+            
+            renderPostsToGrid(finalRelatedList, relatedPostsGrid);
         };
-
-        const mainPageSlugs = ['index', 'kaise-karen'];
-        const isMainListingPage = mainPageSlugs.includes(pageSlug);
-
-        if (isMainListingPage) {
-            renderRandomPosts();
+        
+        const mainPageSlugs = ['index', 'kaise-karen', 'vyakaran', 'conversion'];
+        if (mainPageSlugs.includes(pageSlug) && !path.includes('/')) {
+             // For main category pages, show random posts from the whole site
+             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+        } else if (pageSlug) {
+            renderContextualPosts(path.substring(1)); // Pass full path like 'computer-on-kaise-kren'
         } else {
-            if (pageSlug) {
-                renderContextualPosts(pageSlug);
-            } else {
-                renderRandomPosts(); // Fallback
-            }
+             renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid); // Fallback
         }
     }
 });
