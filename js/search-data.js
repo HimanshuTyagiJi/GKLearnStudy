@@ -102,7 +102,7 @@ window.GKApp.searchData = [
   author: "Owner",
   category: "Conversion",
   readingTime: "15 min read",
-  page: "kaise-kren.html"
+  page: "kaise-karen.html"
 }
 ,
   {
@@ -113,7 +113,7 @@ window.GKApp.searchData = [
     author: "Golu Tyagi",
     category: "Vyakaran",
     readingTime: "10 min read",
-    page: "kaise-kren.html"
+    page: "kaise-karen.html"
   },
   {
     title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
@@ -1079,3 +1079,4 @@ document.addEventListener("DOMContentLoaded", () => {
         renderRelatedPosts();
     }
 });
+
