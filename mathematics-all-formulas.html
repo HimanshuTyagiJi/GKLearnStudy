@@ -386,28 +386,238 @@
         <section class="hero-section">
             <div class="hero-content">
                 <div class="hero-svg">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#818cf8;"/>
-                                <stop offset="100%" style="stop-color:#4f46e5;"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M50 10 L90 35 L90 85 L50 110 L10 85 L10 35 Z" fill="url(#grad1)" opacity="0.1"/>
-                        <g fill="none" stroke="url(#grad1)" stroke-width="2">
-                            <path d="M20,50 Q50,20 80,50">
-                                <animate attributeName="d" values="M20,50 Q50,20 80,50; M20,50 Q50,80 80,50; M20,50 Q50,20 80,50" dur="4s" repeatCount="indefinite"/>
-                            </path>
-                            <circle cx="50" cy="60" r="30">
-                                <animate attributeName="r" values="30;35;30" dur="3s" repeatCount="indefinite"/>
-                            </circle>
-                            <path d="M30 30 L 70 90 M 70 30 L 30 90" stroke-width="1.5">
-                                 <animateTransform attributeName="transform" type="rotate" from="0 50 60" to="360 50 60" dur="10s" repeatCount="indefinite" />
-                            </path>
-                        </g>
-                    </svg>
+                <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" width="300" height="300" role="img" aria-label="Mathematical Symbol Emblem">
+  <title>Math Formula Emblem — blue, scattered symbols, animated</title>
+  <style>
+    :root { --blue1: #00d9ff; --blue2: #0066ff; --accent1:#7C4DFF; --accent2:#00E5B4; }
+    text { font-family: "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif; dominant-baseline: middle; }
+    @media (prefers-reduced-motion: reduce) {
+      *[data-anim] { animation: none !important; }
+      animate, animateTransform { beginElement(); }
+    }
+  </style>
+
+  <defs>
+    <!-- blue radial core like your earlier svg -->
+    <radialGradient id="gBlue" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="var(--blue1)" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="var(--blue2)" stop-opacity="0.45"/>
+    </radialGradient>
+
+    <linearGradient id="strokeGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#7C4DFF"/>
+      <stop offset="1" stop-color="#00E5B4"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- small sparkle -->
+    <g id="spark">
+      <path d="M0 -3 L0.9 -1 L2.8 0 L0.9 1 L0 3 L-0.9 1 L-2.8 0 L-0.9 -1 Z" fill="white" opacity="0.95"/>
+    </g>
+  </defs>
+
+  <!-- faint outer segmented arcs (tuti hui line style) -->
+  <g transform="translate(120,120)" stroke-linecap="round" stroke-width="5" opacity="0.92">
+    <path d="M-92 0 A92 92 0 0 1 -30 -86" stroke="url(#strokeGrad)" fill="none" stroke-opacity="0.9"/>
+    <path d="M-10 -88 A92 92 0 0 1 70 -40" stroke="rgba(255,255,255,0.06)" fill="none"/>
+    <path d="M76 36 A92 92 0 0 1 92 0" stroke="url(#gBlue)" fill="none" stroke-opacity="0.7"/>
+  </g>
+
+  <!-- outer floating dots (circle se bahar) -->
+  <g transform="translate(120,120)">
+    <!-- each dot orbits slowly but at different radii/dirs -->
+    <g data-anim>
+      <circle cx="0" cy="-106" r="3.6" fill="#FFD54F" opacity="0.98">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="11s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="75" cy="-80" r="3.2" fill="#FF7A7A" opacity="0.98">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="14s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="106" cy="0" r="3.8" fill="#9CCC65" opacity="0.98">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="18s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="-90" cy="68" r="2.8" fill="#7C4DFF" opacity="0.98">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="16s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <!-- some symbols placed BEHIND the core (aage/peeche effect) -->
+  <g transform="translate(120,120)" opacity="0.85">
+    <!-- symbol 1 (π) behind, slightly up-left, slow bob -->
+    <g transform="translate(-42,-84)" >
+      <text font-size="18" fill="#00E5B4">π</text>
+      <animateTransform attributeName="transform" type="translate" values="-42,-84; -44,-78; -42,-84" dur="3.4s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- symbol 2 (∞) behind bottom-left -->
+    <g transform="translate(-74,50)">
+      <text font-size="16" fill="#7C4DFF">∞</text>
+      <animateTransform attributeName="transform" type="translate" values="-74,50; -68,54; -74,50" dur="4.2s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- central pulsing core + main content -->
+  <g transform="translate(120,120)">
+    <!-- pulsing blue core -->
+    <circle r="62" fill="url(#gBlue)" opacity="0.9" filter="url(#softGlow)">
+      <animate attributeName="r" values="58;64;58" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.75;1;0.75" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- inner dotted orbit (thoda bahar-ish) -->
+    <g opacity="0.95" data-anim>
+      <circle cx="0" cy="-54" r="2.6" fill="#00d9ff"/>
+      <circle cx="36" cy="-38" r="2.6" fill="#7C4DFF"/>
+      <circle cx="54" cy="0" r="2.6" fill="#FFD54F"/>
+      <circle cx="36" cy="38" r="2.6" fill="#FF7A7A"/>
+      <circle cx="0" cy="54" r="2.6" fill="#9CCC65"/>
+      <circle cx="-36" cy="38" r="2.6" fill="#00E5B4"/>
+      <circle cx="-54" cy="0" r="2.6" fill="#7C4DFF"/>
+      <circle cx="-36" cy="-38" r="2.6" fill="#FF7A7A"/>
+      <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="10.6s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- MAIN sigma -->
+    <text x="0" y="10" text-anchor="middle" font-size="46" font-weight="700" fill="#ffffff" font-family="Segoe UI, Roboto, Noto Sans, Arial">∑</text>
+
+    <!-- animated line ABOVE sigma (hilti hui) -->
+    <rect x="-44" y="-54" width="88" height="4" rx="2" fill="rgba(255,255,255,0.7)" opacity="0.95">
+      <!-- small horizontal sway + tiny rotate to feel 'hiltna' -->
+      <animateTransform attributeName="transform" type="translate"
+        values="0 0; 0.8 0; -0.8 0; 0 0" dur="0.9s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate"
+        additive="sum" values="0 0 0; 3 0 -54; -3 0 -54; 0 0 0" dur="0.9s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- sparkles near center -->
+    <g transform="translate(-28,-22)" opacity="0.95">
+      <use href="#spark" transform="scale(0.9)">
+        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.9;0" dur="3s" repeatCount="indefinite"/>
+      </use>
+    </g>
+    <g transform="translate(34,18)" opacity="0.95">
+      <use href="#spark" transform="scale(0.7)">
+        <animate attributeName="opacity" values="0;0.9;0" dur="2.6s" repeatCount="indefinite"/>
+      </use>
+    </g>
+
+    <!-- subtitle ribbon -->
+    <g transform="translate(0,66)">
+      <rect x="-64" y="0" width="128" height="18" rx="9" fill="rgba(0,0,0,0.18)"/>
+      <text x="0" y="13" text-anchor="middle" font-size="10" fill="#ffffff" font-weight="600">Mathematical Symbols</text>
+    </g>
+  </g>
+
+  <!-- symbols in front (aage) — scattered, each with subtle bob + rotate so not perfect ring -->
+  <g transform="translate(120,120)" opacity="0.98" data-anim>
+    <!-- √ top-right, small orbit + bob -->
+    <g transform="translate(58,-46)">
+      <text font-size="18" fill="#FFD54F">√</text>
+      <animateTransform attributeName="transform" type="translate" values="58,-46; 61,-50; 58,-46" dur="3.6s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 0 0; 14 0 0; 0 0 0" dur="7s" repeatCount="indefinite" additive="sum"/>
+    </g>
+
+    <!-- ∫ right-mid -->
+    <g transform="translate(82,6)">
+      <text font-size="18" fill="#FF7A7A">∫</text>
+      <animateTransform attributeName="transform" type="translate" values="82,6;78,8;82,6" dur="4.2s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- θ lower-right -->
+    <g transform="translate(44,78)">
+      <text font-size="16" fill="#9CCC65">θ</text>
+      <animateTransform attributeName="transform" type="translate" values="44,78;48,72;44,78" dur="3.8s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- ≈ top-left -->
+    <g transform="translate(-68,-18)">
+      <text font-size="16" fill="#7C4DFF">≈</text>
+      <animateTransform attributeName="transform" type="translate" values="-68,-18; -65,-22; -68,-18" dur="3.2s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- e (Euler) left-mid -->
+    <g transform="translate(-86,10)">
+      <text font-size="16" fill="#00E5B4">e</text>
+      <animateTransform attributeName="transform" type="translate" values="-86,10; -82,12; -86,10" dur="4.6s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- extra symbol (∞) front-top -->
+    <g transform="translate(-6,-96)">
+      <text font-size="14" fill="#FFB86B">∞</text>
+      <animateTransform attributeName="transform" type="translate" values="-6,-96; -4,-90; -6,-96" dur="3.1s" repeatCount="indefinite"/>
+    </g>
+  </g>
+</svg>
+
                 </div>
                 <h1>Math Formulas for Class 9, 10, 11 & 12</h1>
+                 <div class="post-meta-container">
+                    <div class="byline">
+                        <div class="author-avatar">
+                            <svg width="40" height="40" viewBox="0 0 300 300">
+                                <circle cx="150" cy="150" r="150" fill="white" />
+                                <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
+                                <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
+                                <clipPath id="circle-clip-avatar">
+                                    <circle cx="150" cy="150" r="150" />
+                                </clipPath>
+                                <g clip-path="url(#circle-clip-avatar)">
+                                    <path fill="#c0a4fb" fill-opacity="1">
+                                        <animate
+                                            attributeName="d"
+                                            dur="8s"
+                                            repeatCount="indefinite"
+                                            values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                    <path fill="#641ef9" fill-opacity="0.7">
+                                        <animate
+                                            attributeName="d"
+                                            dur="7s"
+                                            repeatCount="indefinite"
+                                            values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                        />
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="author-details">
+                            <span class="author vcard">
+                                by
+                                <span class="name">
+                                    <a class="url fn n" href="#" rel="author">GK Learn Study</a>
+                                </span>
+                                <span class="author-status verified">
+                                    <a class="verified-author" title="Verified Author" href="#" aria-label="Verified Author">
+                                        <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"
+                                            ></path>
+                                        </svg>
+                                    </a>
+                                </span>
+                            </span>
+                            <span class="entry-modified-date"> | Updated on <time class="entry-date updated" datetime="2024-05-21T10:45:02+05:30">May 21, 2024</time> </span>
+                        </div>
+                    </div>
+                    <div class="share-button-wrapper">
+                        <button id="shareButton" class="share-button" title="Share this page">
+                            <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                <path
+                                    d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+                                />
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
                 <p>A comprehensive resource for all essential mathematical formulas, from basic algebra to advanced calculus. Perfect for board exams and competitive tests.</p>
             </div>
         </section>
