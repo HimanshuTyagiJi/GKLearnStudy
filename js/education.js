@@ -1,5 +1,6 @@
 
 
+
    
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -946,7 +947,7 @@
                     </style>
                     <path class="line" d="M20 50 H 80"/>
                     <g class="pen" transform="translate(-10 -25)">
-                        <polygon class="nib" points="70,80 75,75 72,78 z"/>
+                        <polygon class="nib" points="70,80 75,75 72,78"/>
                         <rect class="body" x="60" y="20" width="10" height="60" rx="5" transform="rotate(20 65 50)"/>
                     </g>
                 </svg>`
@@ -1172,4 +1173,3 @@
     populateChapters('physics-chapters-container', physicsChapters);
 
 });
-    
