@@ -7,7 +7,7 @@
     const allFormulasChapters = [
         {
             title: 'Mathematics Formulas',
-            url: '/math-formulas.html',
+            url: 'mathematics-all-formulas.html',
             description: 'Key formulas for algebra, geometry, trigonometry, and calculus. Your essential math reference.',
             svg: `<svg viewBox="0 0 100 100">
                     <style>
@@ -31,7 +31,7 @@
         },
         {
             title: 'Physics Formulas',
-            url: '/physics-formulas.html',
+            url: '/physics-all-formulas.html',
             description: 'Essential equations for mechanics, electromagnetism, and thermodynamics. Unlock the laws of the universe.',
             svg: `<svg viewBox="0 0 100 100">
                     <style>
@@ -63,7 +63,7 @@
         },
         {
             title: 'Chemistry Formulas',
-            url: '/chemistry-formulas.html',
+            url: '/all-formulas/all-chemical-formulas.html',
             description: 'From molecular structures to reaction equations, find the formulas that explain the world of chemistry.',
             svg: `<svg viewBox="0 0 100 100">
                     <style>
