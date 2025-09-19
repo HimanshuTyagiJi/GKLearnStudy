@@ -293,15 +293,27 @@
         }
         
         .details-content ul {
-    display: flex
+      display: flex
 ;
     list-style-type: none;
     padding-left: 0;
     justify-content: flex-start;
- 
     align-content: flex-start;
-    flex-wrap: wrap;
+    text-align: left;
     flex-direction: column;
+    align-items: flex-start;
+        }
+        mjx-math {
+     /* proper vertical spacing */
+  white-space: normal !important; /* allow wrapping */
+  word-break: break-word !important; /* लंबे formulas टूट सकें */
+}
+
+li mjx-math {
+
+  display: block;        /* li के अंदर formula block जैसा */
+}
+
     </style>
 </head>
 <body>
