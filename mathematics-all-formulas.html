@@ -34,7 +34,15 @@
           fontCache: 'global'
         }
       };
-    </script>
+    </script> <script>
+    window.MathJax = {
+      options: {
+        renderActions: {
+          addMenu: []   // यह context menu हटा देगा
+        }
+      }
+    };
+  </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /* --- General Page Styling --- */
@@ -283,6 +291,17 @@
         @media (max-width: 480px) {
             .class-nav-grid { grid-template-columns: 1fr; }
         }
+        
+        .details-content ul {
+    display: flex
+;
+    list-style-type: none;
+    padding-left: 0;
+    justify-content: flex-start;
+ 
+    align-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
     </style>
 </head>
 <body>
