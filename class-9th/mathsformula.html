@@ -137,7 +137,191 @@
     </head>
 
     <body>   <div id="reading-progress-bar"></div>
+<header class="math-header">
+  <div class="header-content">
+    
+    <!-- SVG Math Animation -->
+    <div class="header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" role="img" aria-labelledby="math-title-svg">
+        <title id="math-title-svg">Interactive Math Formulas Icon</title>
+        <style>
+          .circle-bg { fill:#4338ca; }
+          .math-text { font-size:30px; font-weight:700; fill:#fff; text-anchor:middle; dominant-baseline:middle; }
+          .formula { font-size:18px; fill:#facc15; font-weight:600; text-anchor:middle; }
+          .orbit { stroke:#a5b4fc; stroke-dasharray:4 6; fill:none; opacity:0.6; }
+          .rotate { animation: spin 12s linear infinite; transform-origin: 120px 110px; }
+          .floating { animation: float 3s ease-in-out infinite alternate; }
+          .glow { filter:url(#glow); }
+          .pulse { animation: pulse 2s ease-in-out infinite; }
+          @keyframes spin { from {transform:rotate(0);} to {transform:rotate(360deg);} }
+          @keyframes float { from{transform:translateY(0);} to{transform:translateY(-10px);} }
+          @keyframes pulse { 0%,100%{opacity:0.6; r:4;} 50%{opacity:1; r:6;} }
+        </style>
+        
+        <!-- Glow Filter -->
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
 
+        <!-- Background -->
+        <circle class="circle-bg" cx="120" cy="110" r="95"></circle>
+
+        <!-- Central Symbol -->
+        <text x="120" y="115" class="math-text glow">π</text>
+
+        <!-- Dotted Orbits -->
+        <circle class="orbit" cx="120" cy="110" r="70"></circle>
+        <circle class="orbit" cx="120" cy="110" r="45"></circle>
+
+        <!-- Rotating Formulas -->
+        <g class="rotate">
+          <text x="120" y="30" class="formula">x²</text>
+          <text x="200" y="110" class="formula">√a²+b²</text>
+          <text x="120" y="190" class="formula">sin θ</text>
+          <text x="40" y="110" class="formula">A=πr²</text>
+        </g>
+
+        <!-- Floating Extra -->
+        <text x="120" y="60" class="formula floating">a² + b² = c²</text>
+
+        <!-- Glowing Pulse Dots -->
+        <circle class="pulse glow" cx="190" cy="60" r="5" fill="#fbbf24"></circle>
+        <circle class="pulse glow" cx="60" cy="160" r="5" fill="#34d399"></circle>
+        <circle class="pulse glow" cx="170" cy="160" r="5" fill="#f87171"></circle>
+      </svg>
+    </div>
+
+    <!-- Text Content -->
+    <div class="header-text">
+      <h1>Class 9 Math – All Formulas</h1>
+      <p>
+        Master <strong>Class 9 Mathematics formulas</strong> in Algebra, Geometry, Trigonometry, and Mensuration.  
+        Interactive animations and clear breakdowns make revision engaging and effective for every student.
+      </p>
+    </div>
+  </div>
+        <br>
+        <div class="post-meta-container">
+                        <div class="byline">
+                            <div class="author-avatar">
+                                <svg width="40" height="40" viewBox="0 0 300 300">
+                                    <circle cx="150" cy="150" r="150" fill="white" />
+                                    <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
+                                    <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
+                                    <clipPath id="circle-clip-avatar">
+                                        <circle cx="150" cy="150" r="150" />
+                                    </clipPath>
+                                    <g clip-path="url(#circle-clip-avatar)">
+                                        <path fill="#c0a4fb" fill-opacity="1">
+                                            <animate
+                                                attributeName="d"
+                                                dur="8s"
+                                                repeatCount="indefinite"
+                                                values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                            />
+                                        </path>
+                                        <path fill="#641ef9" fill-opacity="0.7">
+                                            <animate
+                                                attributeName="d"
+                                                dur="7s"
+                                                repeatCount="indefinite"
+                                                values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                            />
+                                        </path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="author-details">
+                                <span class="author vcard">
+                                    by
+                                    <span class="name">
+                                        <a class="url fn n" href="#" rel="author">GK Learn Study</a>
+                                    </span>
+                                    <span class="author-status verified">
+                                        <a class="verified-author" title="Verified Author" href="#" aria-label="Verified Author">
+                                            <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"
+                                                ></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                </span>
+                                <span class="entry-modified-date"> | Updated on <time class="entry-date updated" datetime="2024-05-21T10:45:02+05:30">May 21, 2024</time> </span>
+                            </div>
+                        </div>
+                        <div class="share-button-wrapper">
+                            <button id="shareButton" class="share-button" title="Share this page">
+                                <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                    <path
+                                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+                                    />
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                    </div>
+</header>
+
+<style>
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .header-icon svg {
+    width: 240px;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .header-text {
+    text-align: center;
+  }
+  .header-text h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .header-text p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  /* Desktop Layout */
+  @media (min-width: 768px) {
+    .header-content {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+    .header-icon {
+      flex: 0 0 280px;
+      text-align: center;
+    }
+    .header-icon svg {
+      width: 100%;
+      max-width: 280px;
+    }
+    .header-text {
+      flex: 1;
+    }
+  }
+</style>
         <div id="sidebar-overlay"></div>
         <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
         <aside id="topic-sidebar">
