@@ -1,4 +1,181 @@
+.faq-section {
+    max-width: 900px;
+    margin: 3rem auto;
+}
 
+.faq-section h2 {
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.faq-section details {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
+
+.faq-section details[open] {
+    background-color: #fdfdfd;
+}
+
+.faq-section summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--text-primary);
+}
+
+.faq-section summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-section summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.faq-section details[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    overflow: hidden;
+}
+
+details[open] > .faq-answer {
+    animation: vyakaran-fadeIn 0.5s ease;
+}
+
+.common-angles-table-wrapper,
+.table-container {
+    background: var(--tbl-bg);
+    border: 1px solid var(--tbl-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin: 1rem 0;
+}
+.common-angles-table-wrapper:has(table),
+.table-container:has(table) {
+    overflow-x: auto;
+}
+.common-angles-table,
+.table-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--tbl-text);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Devanagari", "Noto Sans", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+   
+}
+.common-angles-table thead th,
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    background: var(--tbl-head-bg);
+    color: var(--tbl-head-text);
+    text-align: left;
+    font-weight: 700;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--tbl-border);
+    white-space: nowrap;
+    z-index: 1;
+}
+.common-angles-table td,
+.table-container td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--tbl-border);
+    vertical-align: top;
+}
+.common-angles-table tbody tr:nth-child(even),
+.table-container tbody tr:nth-child(even) {
+    background: var(--tbl-hover);
+}
+.common-angles-table tbody tr:hover,
+.table-container tbody tr:hover {
+    background: color-mix(in srgb, var(--tbl-hover) 70%, transparent);
+}
+.common-angles-table thead th:first-child,
+.table-container thead th:first-child {
+    border-top-left-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table thead th:last-child,
+.table-container thead th:last-child {
+    border-top-right-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table tbody tr:last-child td:first-child,
+.table-container tbody tr:last-child td:first-child {
+    border-bottom-left-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table tbody tr:last-child td:last-child,
+.table-container tbody tr:last-child td:last-child {
+    border-bottom-right-radius: calc(var(--radius) - 2px);
+}
+.common-angles-table td strong,
+.table-container td strong {
+    color: var(--tbl-head-text);
+    font-weight: 700;
+}
+.common-angles-table td em,
+.common-angles-table th em,
+.table-container td em,
+.table-container th em {
+    color: var(--tbl-muted);
+    font-style: normal;
+    font-weight: 500;
+}
+
+.common-angles-table-wrapper.is-empty,
+.table-container.is-empty {
+    display: grid;
+    place-items: center;
+    min-height: 160px;
+}
+.common-angles-table-wrapper.is-empty::after,
+.table-container.is-empty::after {
+    content: "अभी कोई डेटा उपलब्ध नहीं है";
+    color: var(--tbl-muted);
+    font-size: 15px;
+    padding: 18px 22px;
+    border: 1px dashed var(--tbl-border);
+    border-radius: 12px;
+}
+.common-angles-table td:hover,
+.table-container td:hover {
+    color: var(--red);
+    cursor: default;
+}:root {
+   
+   
+  
+   
+   
+   
+  
+   
+    --tbl-border: #e5e7eb;
+    --tbl-head-bg: #f3f4f6;
+   
+    --tbl-hover: #f9fafb;
+ }/******************************************************************************/
 
 .post-filter-container {
   margin-bottom: 2rem;
