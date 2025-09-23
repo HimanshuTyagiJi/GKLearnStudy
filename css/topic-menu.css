@@ -6,6 +6,15 @@
     text-align: justify;
     line-height: 2;
 }
+@media (max-width: 850px) {
+ 
+  .container {
+  max-width: 98%;
+  margin: 0 auto;
+  padding: 24px 16px;
+  text-align: justify;
+  line-height: 2;
+}
 @media screen and (min-width: 769.01px) {
 .app-footer {
     margin-left: 16%;
