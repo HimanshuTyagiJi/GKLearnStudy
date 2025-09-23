@@ -356,12 +356,13 @@
         </aside>
             <main class="container">
                 <div id="root">
-                    <header class="education-header">
-                        <div class="header-content">
-                            <div class="header-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 200" role="img" aria-labelledby="reaction-title-svg" style="width:100%;height:auto;">
+                   <header class="education-header">
+  <div class="header-content">
+    
+    <!-- SVG Reaction Animation -->
+    <div class="header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 200" role="img" aria-labelledby="reaction-title-svg">
         <title id="reaction-title-svg">Animated Chemical Reaction - pouring beakers</title>
-
         <defs>
           <linearGradient id="liquid1" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#3b82f6"/>
@@ -375,107 +376,67 @@
             <stop offset="0%" stop-color="#8b5cf6"/>
             <stop offset="100%" stop-color="#a78bfa"/>
           </linearGradient>
-
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
         </defs>
 
         <style>
           .glass { fill: rgba(255,255,255,0.06); stroke:#c7d2fe; stroke-width:2; }
           .small-glass { fill: rgba(255,255,255,0.05); stroke:#c7d2fe; stroke-width:1.6; }
           .stream { stroke-linecap:round; stroke-linejoin:round; opacity:0.95; }
-          .main-liquid { filter:url(#glow); }
+          .main-liquid { }
           .bubble { fill: #ffffff; opacity:0.9; }
-
           .tilt-left { transform-origin: 45px 60px; animation: tiltLeft 5s ease-in-out infinite; }
           .tilt-right { transform-origin: 175px 60px; animation: tiltRight 5s ease-in-out infinite; }
 
-          @keyframes tiltLeft {
-            0%,100% { transform: rotate(0deg); }
-            40%,60% { transform: rotate(45deg); }
-          }
-          @keyframes tiltRight {
-            0%,100% { transform: rotate(0deg); }
-            40%,60% { transform: rotate(-45deg); }
-          }
-
+          @keyframes tiltLeft { 0%,100%{transform:rotate(0deg);} 40%,60%{transform:rotate(45deg);} }
+          @keyframes tiltRight{ 0%,100%{transform:rotate(0deg);} 40%,60%{transform:rotate(-45deg);} }
           .stream-shimmer { stroke-opacity:0; animation: shimmer 5s ease-in-out infinite; }
-          @keyframes shimmer {
-            0%,35%,100% { stroke-opacity:0; }
-            45%,55% { stroke-opacity:1; }
-          }
+          @keyframes shimmer { 0%,35%,100%{stroke-opacity:0;} 45%,55%{stroke-opacity:1;} }
         </style>
 
-        <!-- left small beaker (A) -->
-        <g class="tilt-left" transform-origin="45 60">
+        <!-- Left beaker -->
+        <g class="tilt-left">
           <path class="small-glass" d="M10 70 V 25 H 50 V 70 Z"></path>
           <rect x="12" y="40" width="36" height="22" fill="url(#liquid1)"></rect>
           <path class="stream stream-shimmer" d="M50 25 C 70 45, 85 70, 105 100" stroke="url(#liquid1)" stroke-width="8" fill="none"></path>
         </g>
 
-        <!-- right small beaker (B) -->
-        <g class="tilt-right" transform-origin="175 60">
+        <!-- Right beaker -->
+        <g class="tilt-right">
           <path class="small-glass" d="M170 70 V 25 H 210 V 70 Z"></path>
           <rect x="172" y="40" width="36" height="22" fill="url(#liquid2)"></rect>
           <path class="stream stream-shimmer" d="M170 25 C 150 45, 135 70, 115 100" stroke="url(#liquid2)" stroke-width="8" fill="none"></path>
         </g>
 
-        <!-- main central beaker -->
+        <!-- Main beaker -->
         <path class="glass" d="M60 160 V 85 H 160 V 160 A 8 8 0 0 0 168 168 H 52 A 8 8 0 0 0 60 160 Z"></path>
-
-        <!-- animated liquid rectangle: y & height animated to simulate fill -->
-        <rect id="mainLiquid" class="main-liquid" x="62" y="150" width="96" height="10" fill="url(#reaction-mix)"></rect>
-
-        <!-- bubbles (staggered rise) -->
-        <circle class="bubble" cx="82" cy="150" r="3">
-          <animate attributeName="cy" values="150;125;110" dur="2.2s" repeatCount="indefinite" begin="2.2s"/>
-          <animate attributeName="opacity" values="1;0.8;0" dur="2.2s" repeatCount="indefinite" begin="2.2s"/>
-        </circle>
-        <circle class="bubble" cx="110" cy="150" r="4">
-          <animate attributeName="cy" values="150;130;105" dur="2.8s" repeatCount="indefinite" begin="2.4s"/>
-          <animate attributeName="opacity" values="1;0.6;0" dur="2.8s" repeatCount="indefinite" begin="2.4s"/>
-        </circle>
-        <circle class="bubble" cx="132" cy="150" r="2.5">
-          <animate attributeName="cy" values="150;128;108" dur="2s" repeatCount="indefinite" begin="2.1s"/>
-          <animate attributeName="opacity" values="1;0.7;0" dur="2s" repeatCount="indefinite" begin="2.1s"/>
-        </circle>
-
-        <!-- subtle ripple on top -->
-        <path id="ripple" d="M62 150 Q 80 144 100 150 T 158 150" stroke="rgba(255,255,255,0.25)" stroke-width="2" fill="none" opacity="0.0">
-          <animate attributeName="opacity" values="0;0.6;0" dur="2s" repeatCount="indefinite" begin="2.6s"/>
-          <animate attributeName="d" dur="4s" repeatCount="indefinite"
-            values="
-              M62 150 Q 80 144 100 150 T 158 150;
-              M62 146 Q 80 140 100 146 T 158 146;
-              M62 150 Q 80 144 100 150 T 158 150
-            " begin="2.6s"/>
-        </path>
-
-        <!-- animate fill of mainLiquid: rise and fall -->
-        <animate xlink:href="#mainLiquid" attributeName="y" values="150;110;110;150" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
-        <animate xlink:href="#mainLiquid" attributeName="height" values="10;50;50;10" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
-
-        <!-- reaction glow overlay when full -->
-        <rect x="62" y="110" width="96" height="50" fill="url(#reaction-mix)" opacity="0">
-          <animate attributeName="opacity" values="0;0.35;0.35;0" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
+        <rect id="mainLiquid" class="main-liquid" x="62" y="150" width="96" height="10" fill="url(#reaction-mix)">
+          <animate attributeName="y" values="150;110;110;150" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="height" values="10;50;50;10" dur="6s" repeatCount="indefinite"/>
         </rect>
 
-        <!-- label -->
-        <text x="110" y="185" text-anchor="middle" font-size="11" fill="#374151" font-weight="600">Reaction Mix</text>
+        <!-- Bubbles -->
+        <circle class="bubble" cx="82" cy="150" r="3">
+          <animate attributeName="cy" values="150;125;110" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="bubble" cx="110" cy="150" r="4">
+          <animate attributeName="cy" values="150;130;105" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="bubble" cx="132" cy="150" r="2.5">
+          <animate attributeName="cy" values="150;128;108" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
       </svg>
-                            </div>
-                            <div>
-                                <h1>Chemical Reactions & Equations</h1>
-                                <p class="education-description">A chemical reaction is a process that leads to the chemical transformation of one set of chemical substances to another. This page explores the fundamental types of reactions with clear definitions, examples, and a comprehensive list for students.</p>
-                            </div>
-                        </div>
-                        <br>
-                         <div class="post-meta-container">
+    </div>
+
+    <!-- Text Content -->
+    <div class="header-text">
+      <h1>Chemical Reactions &amp; Equations</h1>
+      <p>
+        A chemical reaction is a process that leads to the chemical transformation of one set of chemical substances to another. This page explores the fundamental types of reactions with clear definitions, examples, and a comprehensive list for students.
+      </p>
+    </div>
+  </div>
+
+  <div class="post-meta-container">
                         <div class="byline">
                             <div class="author-avatar">
                                 <svg width="40" height="40" viewBox="0 0 300 300">
@@ -535,9 +496,59 @@
                                 <span>Share</span>
                             </button>
                         </div>
-                    </div>
-                    </header>
-                    
+                    </div></header>
+
+<style>
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .header-icon svg {
+    width: 220px;
+    height: auto;
+    max-width: 100%;
+  }
+
+ 
+  .header-text h1 {text-align: center;
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .header-text p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  /* Desktop Layout */
+  @media (min-width: 768px) {
+    .header-content {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+    .header-icon {
+      flex: 0 0 280px;
+      text-align: center;
+    }
+    .header-icon svg {
+      width: 100%;
+      max-width: 280px;
+    }
+    .header-text {
+      flex: 1;
+    }
+  }
+</style>
+
                     <section class="topic-section">
                         <h2>Types of Chemical Reactions</h2>
                         <p>Chemical reactions are classified based on the changes occurring. Understanding these categories helps predict the products of a reaction and comprehend the processes happening at a molecular level.</p>
