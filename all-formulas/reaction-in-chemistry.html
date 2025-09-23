@@ -359,40 +359,183 @@
                     <header class="education-header">
                         <div class="header-content">
                             <div class="header-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="reaction-title-svg">
-                                    <title id="reaction-title-svg">Animated Chemical Reaction</title>
-                                    <defs>
-                                        <linearGradient id="liquid1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#60a5fa"/></linearGradient>
-                                        <linearGradient id="liquid2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fcd34d"/></linearGradient>
-                                        <linearGradient id="reaction-mix" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient>
-                                    </defs>
-                                    <style>
-                                        .beaker-glass { fill: rgba(224, 231, 255, 0.5); stroke: #a5b4fc; stroke-width: 3; }
-                                        .beaker-a { animation: pour-a 5s ease-in-out infinite; transform-origin: 40px 140px; }
-                                        .beaker-b { animation: pour-b 5s ease-in-out infinite; transform-origin: 160px 140px; }
-                                        .stream { fill-opacity: 0; stroke-linecap: round; animation: stream-flow 5s ease-in-out infinite; }
-                                        .main-liquid { animation: fill-main 5s ease-in-out infinite; }
-                                        .bubble { fill: #fff; animation: rise 1s ease-in infinite; }
-                                        @keyframes pour-a { 0%, 100% { transform: rotate(0deg); } 40%, 60% { transform: rotate(45deg); } }
-                                        @keyframes pour-b { 0%, 100% { transform: rotate(0deg); } 40%, 60% { transform: rotate(-45deg); } }
-                                        @keyframes stream-flow { 0%, 35%, 100% { fill-opacity: 0; } 45%, 55% { fill-opacity: 0.8; } }
-                                        @keyframes fill-main { 0% { height: 10px; y: 150px; } 35% { height: 10px; y: 150px; } 65% { height: 50px; y: 110px; } 100% { height: 10px; y: 150px; } }
-                                        @keyframes rise { from { cy: 150; opacity: 1; } to { cy: 100; opacity: 0; } }
-                                    </style>
-                                    <path class="beaker-glass" d="M60 160 V 80 H 140 V 160 A 10 10 0 0 0 150 170 H 50 A 10 10 0 0 0 60 160 Z" />
-                                    <rect class="main-liquid" x="62" y="150" width="76" height="10" fill="url(#reaction-mix)"/>
-                                    <circle class="bubble" cx="80" cy="150" r="3"><animate attributeName="cy" begin="2.5s" dur="1s" repeatCount="indefinite" from="150" to="110"/></circle>
-                                    <circle class="bubble" cx="120" cy="150" r="4"><animate attributeName="cy" begin="2.8s" dur="1.2s" repeatCount="indefinite" from="150" to="110"/></circle>
-                                    <circle class="bubble" cx="100" cy="150" r="2"><animate attributeName="cy" begin="2.6s" dur="0.8s" repeatCount="indefinite" from="150" to="110"/></circle>
-                                    <g class="beaker-a"><path class="beaker-glass" d="M20 70 V 20 H 60 V 70 Z"/><rect x="22" y="45" width="36" height="23" fill="url(#liquid1)"/><path class="stream" d="M 60 20 Q 80 40 100 80" stroke-width="8" stroke="url(#liquid1)"/></g>
-                                    <g class="beaker-b"><path class="beaker-glass" d="M140 70 V 20 H 180 V 70 Z"/><rect x="142" y="45" width="36" height="23" fill="url(#liquid2)"/><path class="stream" d="M 140 20 Q 120 40 100 80" stroke-width="8" stroke="url(#liquid2)"/></g>
-                                </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 200" role="img" aria-labelledby="reaction-title-svg" style="width:100%;height:auto;">
+        <title id="reaction-title-svg">Animated Chemical Reaction - pouring beakers</title>
+
+        <defs>
+          <linearGradient id="liquid1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3b82f6"/>
+            <stop offset="100%" stop-color="#60a5fa"/>
+          </linearGradient>
+          <linearGradient id="liquid2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#fcd34d"/>
+          </linearGradient>
+          <linearGradient id="reaction-mix" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#a78bfa"/>
+          </linearGradient>
+
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <style>
+          .glass { fill: rgba(255,255,255,0.06); stroke:#c7d2fe; stroke-width:2; }
+          .small-glass { fill: rgba(255,255,255,0.05); stroke:#c7d2fe; stroke-width:1.6; }
+          .stream { stroke-linecap:round; stroke-linejoin:round; opacity:0.95; }
+          .main-liquid { filter:url(#glow); }
+          .bubble { fill: #ffffff; opacity:0.9; }
+
+          .tilt-left { transform-origin: 45px 60px; animation: tiltLeft 5s ease-in-out infinite; }
+          .tilt-right { transform-origin: 175px 60px; animation: tiltRight 5s ease-in-out infinite; }
+
+          @keyframes tiltLeft {
+            0%,100% { transform: rotate(0deg); }
+            40%,60% { transform: rotate(45deg); }
+          }
+          @keyframes tiltRight {
+            0%,100% { transform: rotate(0deg); }
+            40%,60% { transform: rotate(-45deg); }
+          }
+
+          .stream-shimmer { stroke-opacity:0; animation: shimmer 5s ease-in-out infinite; }
+          @keyframes shimmer {
+            0%,35%,100% { stroke-opacity:0; }
+            45%,55% { stroke-opacity:1; }
+          }
+        </style>
+
+        <!-- left small beaker (A) -->
+        <g class="tilt-left" transform-origin="45 60">
+          <path class="small-glass" d="M10 70 V 25 H 50 V 70 Z"></path>
+          <rect x="12" y="40" width="36" height="22" fill="url(#liquid1)"></rect>
+          <path class="stream stream-shimmer" d="M50 25 C 70 45, 85 70, 105 100" stroke="url(#liquid1)" stroke-width="8" fill="none"></path>
+        </g>
+
+        <!-- right small beaker (B) -->
+        <g class="tilt-right" transform-origin="175 60">
+          <path class="small-glass" d="M170 70 V 25 H 210 V 70 Z"></path>
+          <rect x="172" y="40" width="36" height="22" fill="url(#liquid2)"></rect>
+          <path class="stream stream-shimmer" d="M170 25 C 150 45, 135 70, 115 100" stroke="url(#liquid2)" stroke-width="8" fill="none"></path>
+        </g>
+
+        <!-- main central beaker -->
+        <path class="glass" d="M60 160 V 85 H 160 V 160 A 8 8 0 0 0 168 168 H 52 A 8 8 0 0 0 60 160 Z"></path>
+
+        <!-- animated liquid rectangle: y & height animated to simulate fill -->
+        <rect id="mainLiquid" class="main-liquid" x="62" y="150" width="96" height="10" fill="url(#reaction-mix)"></rect>
+
+        <!-- bubbles (staggered rise) -->
+        <circle class="bubble" cx="82" cy="150" r="3">
+          <animate attributeName="cy" values="150;125;110" dur="2.2s" repeatCount="indefinite" begin="2.2s"/>
+          <animate attributeName="opacity" values="1;0.8;0" dur="2.2s" repeatCount="indefinite" begin="2.2s"/>
+        </circle>
+        <circle class="bubble" cx="110" cy="150" r="4">
+          <animate attributeName="cy" values="150;130;105" dur="2.8s" repeatCount="indefinite" begin="2.4s"/>
+          <animate attributeName="opacity" values="1;0.6;0" dur="2.8s" repeatCount="indefinite" begin="2.4s"/>
+        </circle>
+        <circle class="bubble" cx="132" cy="150" r="2.5">
+          <animate attributeName="cy" values="150;128;108" dur="2s" repeatCount="indefinite" begin="2.1s"/>
+          <animate attributeName="opacity" values="1;0.7;0" dur="2s" repeatCount="indefinite" begin="2.1s"/>
+        </circle>
+
+        <!-- subtle ripple on top -->
+        <path id="ripple" d="M62 150 Q 80 144 100 150 T 158 150" stroke="rgba(255,255,255,0.25)" stroke-width="2" fill="none" opacity="0.0">
+          <animate attributeName="opacity" values="0;0.6;0" dur="2s" repeatCount="indefinite" begin="2.6s"/>
+          <animate attributeName="d" dur="4s" repeatCount="indefinite"
+            values="
+              M62 150 Q 80 144 100 150 T 158 150;
+              M62 146 Q 80 140 100 146 T 158 146;
+              M62 150 Q 80 144 100 150 T 158 150
+            " begin="2.6s"/>
+        </path>
+
+        <!-- animate fill of mainLiquid: rise and fall -->
+        <animate xlink:href="#mainLiquid" attributeName="y" values="150;110;110;150" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
+        <animate xlink:href="#mainLiquid" attributeName="height" values="10;50;50;10" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
+
+        <!-- reaction glow overlay when full -->
+        <rect x="62" y="110" width="96" height="50" fill="url(#reaction-mix)" opacity="0">
+          <animate attributeName="opacity" values="0;0.35;0.35;0" keyTimes="0;0.45;0.85;1" dur="6s" repeatCount="indefinite" begin="0s"/>
+        </rect>
+
+        <!-- label -->
+        <text x="110" y="185" text-anchor="middle" font-size="11" fill="#374151" font-weight="600">Reaction Mix</text>
+      </svg>
                             </div>
                             <div>
                                 <h1>Chemical Reactions & Equations</h1>
                                 <p class="education-description">A chemical reaction is a process that leads to the chemical transformation of one set of chemical substances to another. This page explores the fundamental types of reactions with clear definitions, examples, and a comprehensive list for students.</p>
                             </div>
                         </div>
+                        <br>
+                         <div class="post-meta-container">
+                        <div class="byline">
+                            <div class="author-avatar">
+                                <svg width="40" height="40" viewBox="0 0 300 300">
+                                    <circle cx="150" cy="150" r="150" fill="white" />
+                                    <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text>
+                                    <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text>
+                                    <clipPath id="circle-clip-avatar">
+                                        <circle cx="150" cy="150" r="150" />
+                                    </clipPath>
+                                    <g clip-path="url(#circle-clip-avatar)">
+                                        <path fill="#c0a4fb" fill-opacity="1">
+                                            <animate
+                                                attributeName="d"
+                                                dur="8s"
+                                                repeatCount="indefinite"
+                                                values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
+                                            />
+                                        </path>
+                                        <path fill="#641ef9" fill-opacity="0.7">
+                                            <animate
+                                                attributeName="d"
+                                                dur="7s"
+                                                repeatCount="indefinite"
+                                                values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
+                                            />
+                                        </path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="author-details">
+                                <span class="author vcard">
+                                    by
+                                    <span class="name">
+                                        <a class="url fn n" href="#" rel="author">GK Learn Study</a>
+                                    </span>
+                                    <span class="author-status verified">
+                                        <a class="verified-author" title="Verified Author" href="#" aria-label="Verified Author">
+                                            <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"
+                                                ></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                </span>
+                                <span class="entry-modified-date"> | Updated on <time class="entry-date updated" datetime="2024-05-21T10:45:02+05:30">May 21, 2024</time> </span>
+                            </div>
+                        </div>
+                        <div class="share-button-wrapper">
+                            <button id="shareButton" class="share-button" title="Share this page">
+                                <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                    <path
+                                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+                                    />
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                    </div>
                     </header>
                     
                     <section class="topic-section">
