@@ -34,7 +34,7 @@
 
         <link rel="canonical" href="https://gklearnstudy.in/all-formulas/element-of-name" />
 
-        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="stylesheet" href="../css/theme.css" />
       <link rel="stylesheet" href="../css/topic-menu.css" />
 
         
@@ -102,7 +102,115 @@
             }
         </script>
     </head>
-    <body>
+    <body>  <header class="header" id="header">
+        <nav class="navbar">
+            <div class="burger" id="burger">
+                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                    <rect width="100" height="7" rx="5"></rect>
+                    <rect y="30" width="100" height="7" rx="5"></rect>
+                    <rect y="60" width="100" height="7" rx="5"></rect>
+                </svg>
+            </div>
+
+            <a href="../index.html" class="brand" aria-label="GK Learn Study">
+                <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="150" cy="150" r="150" fill="white"/>
+                  <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                    GK
+                    <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze"/>
+                    <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"/>
+                    <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"/>
+                  </text>
+                  <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                    Learn Study
+                    <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze"/>
+                    <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s" dur="1.2s" fill="freeze"/>
+                  </text>
+                  <clipPath id="circleClip">
+                    <circle cx="150" cy="150" r="150"/>
+                  </clipPath>
+                  <g clip-path="url(#circleClip)">
+                    <path fill="#ff9f80" fill-opacity="0.8">
+                      <animate attributeName="d" dur="6s" repeatCount="indefinite"
+                        values="
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                          M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                        "/>
+                    </path>
+                    <path fill="#6a4cff" fill-opacity="0.5">
+                      <animate attributeName="d" dur="7s" repeatCount="indefinite"
+                        values="
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                          M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                        "/>
+                    </path>
+                  </g>
+                </svg>
+            </a>
+
+            <div class="menu" id="menu">
+                <div class="mobile-menu-header">
+                    <a href="/" class="menu-brand-text">GK Learn Study</a>
+                    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="menu-inner">
+                    <!-- Menu links will be injected by header.js -->
+                </div>
+                <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                   <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                        <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+                <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                        <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search...">
+        <div class="overlay"></div>
+    </header>
+
+    <ul id="suggestions-list" class="suggestions"></ul>
+        
         <div id="reading-progress-bar"></div>
 
         <div id="sidebar-overlay"></div>
@@ -120,62 +228,6 @@
             </nav>
         </aside>
 
-        <div class="main-content-wrapper">
-            <header class="header" id="header">
-                <nav class="navbar container1">
-                    <a href="../index.html" class="brand" aria-label="GK Learn Study">
-                        <div class="logo-container1">
-                            <div class="demo2">
-                                <svg width="40" height="40" viewBox="0 0 300 300">
-                                    <circle cx="150" cy="150" r="150" fill="white" />
-                                    <text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle" style="transform-origin: center center" opacity="0">
-                                        GK
-                                        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.5s" fill="freeze" />
-                                        <animateTransform attributeName="transform" type="rotate" from="-15" to="0" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
-                                        <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.5s" fill="freeze" additive="sum" />
-                                    </text>
-                                    <text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle" style="transform-origin: center center" opacity="0">
-                                        Learn Study
-                                        <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
-                                        <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.8s" dur="1.5s" fill="freeze" />
-                                    </text>
-                                    <clipPath id="circle-clip"><circle cx="150" cy="150" r="150" /></clipPath>
-                                    <g clip-path="url(#circle-clip)">
-                                        <path fill="#c0a4fb" fill-opacity="1">
-                                            <animate
-                                                attributeName="d"
-                                                dur="8s"
-                                                repeatCount="indefinite"
-                                                values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
-                                            />
-                                        </path>
-                                        <path fill="#641ef9" fill-opacity="0.7">
-                                            <animate
-                                                attributeName="d"
-                                                dur="7s"
-                                                repeatCount="indefinite"
-                                                values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
-                                            />
-                                        </path>
-                                    </g>
-                                </svg>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="burger" id="burger"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></div>
-                    <span class="overlay"></span>
-                    <div class="menu" id="menu">
-                        <span class="back-arrow">×</span>
-                        <a href="/" class="menu-brand">GK</a>
-                        <div class="menu-inner"></div>
-                    </div>
-                </nav>
-            </header>
-            <div class="search-container">
-                <button class="search-icon" id="searchBtn"><span style="display: inline-block; transform: rotate(270deg)">⌕</span></button>
-                <button class="back-icon" id="backBtn">←</button>
-                <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required />
-            </div>
 
             <main class="container">
                 <div id="root">
@@ -418,78 +470,49 @@
                     <div class="comments-wrapper">
                         <hr />
                         <div class="firebase-comments-widget" id="custom-comment-section">
-                            <h3>Comments</h3>
+                            <h3>टिप्पणियाँ (Comments)</h3>
                             <div class="comment-form-shell" id="comment-form-shell">
                                 <form class="comment-form" id="comment-form">
-                                    <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
-                                    <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-                                    <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
+                                    <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                                    <input type="text" id="name" placeholder="आपका नाम" maxlength="50" required aria-label="Your name" />
+                                    <textarea id="comment" placeholder="आपकी टिप्पणी" maxlength="1000" required aria-label="Your comment"></textarea>
                                     <input type="hidden" id="parent-id" value="" />
                                     <div class="form-footer">
                                         <div id="char-counter">0 / 1000</div>
                                         <div class="actions">
                                             <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                            <button type="button" class="btn" id="cancel-reply" style="display: none">Cancel</button>
+                                            <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div id="comments-list">
                                 <div class="spinner"></div>
-                                <p class="muted">Loading comments…</p>
+                                <p class="muted">टिप्पणियाँ लोड हो रही हैं…</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
 
-            <ul id="suggestions-list" class="suggestions" style="display: none"></ul>
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
 
-            <footer class="app-footer">
-                <div class="footer-content">
-                    <div class="footer-section footer-about">
-                        <h3>About GK Learn Study</h3>
-                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
-                    </div>
-                    <div class="footer-section">
-                        <h4>About Us</h4>
-                        <ul>
-                            <li><a href="../about.html">About Us</a></li>
-                            <li><a href="../contact.html">Contact Us</a></li>
-                            <li><a href="../privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="../terms.html">Terms of Service</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>For you</h4>
-                        <ul>
-                            <li><a href="../gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
-                            <li><a href="../gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
-                            <li><a href="../gk-quiz/modern-indian-history">Modern Indian History</a></li>
-                            <li><a href="../gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Science & Computer</h4>
-                        <ul>
-                            <li><a href="../conversion.html">Conversion</a></li>
-                            <li><a href="../all-formulas.html">All formulas</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Follow Us</h4>
-                        <ul class="footer-socials"></ul>
-                    </div>
-                </div>
-                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
-            </footer>
+           <footer class="app-footer">  
+        <div class="footer-content">
+            <!-- Footer content will be injected by header.js -->
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 GK Learn Study | All Rights Reserved
+        </div>
+    </footer>
+
 
             <button id="back-to-top-btn" title="Go to top">↑</button>
         </div>
 
-        <script src="../js/header-menu.js" defer></script>
+        <script src="../js/theme.js" defer></script>
         <script src="../js/topic-menu.js" defer></script>
-        <script src="../js/search.js" defer></script>
+        <script src="../js/search-data.js" defer></script>
         <script type="module" src="../js/comment.js" defer></script>
     </body>
 </html>
