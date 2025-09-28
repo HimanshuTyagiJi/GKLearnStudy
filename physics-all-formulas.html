@@ -209,7 +209,7 @@
             </div>
 
             <div class="header-actions">
-                <div class="search-container-main">
+                <div class="search-container">
                     <button class="search-icon" id="searchBtn" aria-label="Open search bar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -291,12 +291,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  line-height: inherit;
-  background-color: var(--color-slate-50);
-  color: var(--color-slate-800);
-}
+
 
 h1, h2, h3 {
   font-size: inherit;
@@ -354,10 +349,8 @@ body.lang-english .english { display: inline-block; }
 
 .scroll-mt-16 { scroll-margin-top: 4rem; }
 
-/* 4. Generated Tailwind Utility Classes */
 
-/* Layout & Display */
-.container-main { width: 100%; margin-right: auto; margin-left: auto;  }
+.container { width: 100%; margin-right: auto; margin-left: auto;  }
 .fixed { position: fixed; }
 .sticky { position: sticky; }
 .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
@@ -477,19 +470,17 @@ body.lang-english .english { display: inline-block; }
 .overflow-y-auto { overflow-y: auto; }
 
 /* 5. Responsive Styles */
-@media (min-width: 640px) {
-  .container-main { width: 100%; }
+@media (min-width: 790px) {
+  .container { max-width: 90%; float:left; }
   .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
   .sm\:space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-left: 1rem; }
   .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
 }
 
-@media (min-width: 768px) {
-  .container-main { width: 100%; }
-}
+
 
 @media (min-width: 1024px) {
-  .container-main { width: 100%; }
+ 
   .lg\:flex { display: flex; }
   .lg\:hidden { display: none; }
   .lg\:sticky { position: sticky; }
@@ -560,7 +551,7 @@ body.lang-english .english { display: inline-block; }
 
     <!-- Header -->
     <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-sm shadow-sm">
-        <div class="container-main mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                      <button id="mobile-menu-button" class="lg:hidden mr-2 p-2 rounded-md text-slate-500 hover:text-slate-800 hover:bg-slate-100" aria-label="Open menu">
@@ -583,7 +574,7 @@ body.lang-english .english { display: inline-block; }
     <!-- Mobile sidebar backdrop -->
     <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden"></div>
 
-    <div class="container-main mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:flex">
             <!-- Sidebar -->
             <aside id="sidebar" class="fixed lg:sticky top-0 lg:top-16 h-full lg:h-[calc(100vh-4rem)] w-72 lg:w-64 shrink-0 p-4 bg-white lg:bg-transparent shadow-xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40">
@@ -601,7 +592,7 @@ body.lang-english .english { display: inline-block; }
             </aside>
             
             <!-- Main Content -->
-            <main id="container-main" class="py-8 w-full">
+            <main id="container" class="py-8 w-full">
                 <!-- Class 9th -->
                 <div class="mb-12">
                     <h2 class="text-2xl font-bold border-b border-slate-300 pb-2 mb-6">Class 9th</h2>
@@ -3282,7 +3273,7 @@ body.lang-english .english { display: inline-block; }
 
         // --- SIDEBAR GENERATION AND ACTIVE LINK HIGHLIGHTING ---
         const sidebarNav = document.getElementById('sidebar-nav');
-        const mainContent = document.getElementById('container-main');
+        const mainContent = document.getElementById('container');
         const sections = mainContent.querySelectorAll('section');
         let sidebarHTML = '';
         const gradeMap = new Map();
@@ -3352,7 +3343,7 @@ body.lang-english .english { display: inline-block; }
         <hr />
             <div class="content-section">
                 <h2>भौतिकी में त्रुटि मापन और विमीय विश्लेषण के सूत्र</h2>
-                <div class="container-mains" id="contentcontainer-main">
+                <div class="containers" id="contentcontainer">
                     <table id="myTable">
                         <thead>
                             <tr>
@@ -4487,7 +4478,5 @@ body.lang-english .english { display: inline-block; }
         </div>
     </footer>
 
-            <button id="back-to-top-btn" title="Go to top">↑</button>
-        </div>
-
+            <button id="back-to-top-btn" title="Go to top">↑</button></div>
     </body></html>
