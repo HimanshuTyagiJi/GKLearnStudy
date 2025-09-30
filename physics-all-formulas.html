@@ -543,10 +543,17 @@ body.lang-english .english { display: inline-block; }
         @media (max-width: 850px) {
     .menu {
        
-        height: 100%;}}@media (max-width: 768px) {
+        height: 100%;}}
+        
+        @media (max-width: 768px) {
     .sticky-header {width:100%;left:0;
         max-width: 100%;  /* ya apni desired width */
         margin: 50px auto 0 auto; /* center alignment */
+                  
+   
+    margin-top: 50px;
+    position: fixed;
+
     }
 }
     </style>
@@ -568,12 +575,7 @@ body.lang-english .english { display: inline-block; }
 <body class="bg-slate-50 text-slate-800">
 
     <!-- Header -->
- <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-sm shadow-sm" style="
-   
-   
-    margin-top: 50px;
-    position: fixed;
-">
+ <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
