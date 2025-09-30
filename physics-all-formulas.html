@@ -354,7 +354,7 @@ body.lang-english .english { display: inline-block; }
 .fixed { position: fixed; }
 .sticky { position: sticky; }
 .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.top-0 { top: 0; }
+.top-0 { top: 50px; }
 .top-16 { top: 4rem; }
 .z-20 { z-index: 20; }
 .z-30 { z-index: 30; }
@@ -491,7 +491,7 @@ body.lang-english .english { display: inline-block; }
   .lg\:shadow-none { box-shadow: none; }
   .lg\:translate-x-0 { --tw-translate-x: 0px; transform: translate(var(--tw-translate-x, 0), var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)); }
   .lg\:h-full { height: 100%; }
-  .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .lg\:px-8 { margin-top:10px }
   .lg\:overflow-auto { overflow: auto; }
   body.lg\:overflow-auto { overflow: auto; }
 }
@@ -544,7 +544,24 @@ body.lang-english .english { display: inline-block; }
     .menu {
        
         height: 100%;}}
+      
         
+ header.sticky {
+    position: fixed;
+    width: 100%;
+  top : 50px;left:0
+}
+
+/* Media query for small screens */
+@media (min-width: 768px) {
+    header.sticky {
+        width: 80% !important;     /* apni desired width */
+        margin: 0 auto; 
+        top :30px;/* center alignment */
+        height:85px;
+    }
+}
+
        
     </style>
     <script>
@@ -565,13 +582,7 @@ body.lang-english .english { display: inline-block; }
 <body class="bg-slate-50 text-slate-800">
 
     <!-- Header -->
- <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-sm shadow-sm" style="
-     width:100%;
-     left:0;
-     max-width: 100%;
-     margin-top: 50px;
-     position: fixed;"
-     >
+ <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
