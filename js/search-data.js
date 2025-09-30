@@ -3,26 +3,7 @@ window.GKApp = window.GKApp || {};
 
 // --- Single Source of Truth for Data ---
 window.GKApp.searchData = [
-    {
-    title: "Computer Off Kaise Karen (How to Turn Off a Computer)",
-    url: "/computer-off-kaise-kren",
-    paragraph: "Learn the proper way to shut down your Windows or Mac computer to protect your data. A simple guide for beginners.",
-    date: "February 26, 2025",
-    author: "Himanshu Tyagi",
-    category: "Kaise Karen",
-    readingTime: "4 min read",
-    page: "computer;kaise-karen"
-  },
-  {
-    title: "Computer On Kaise Karen (How to Turn On a Computer)",
-    url: "/computer-on-kaise-kren",
-    paragraph: "A step-by-step guide for beginners on how to start a desktop or laptop computer, from connecting power to logging in.",
-    date: "February 25, 2025",
-    author: "Himanshu Tyagi",
-    category: "Kaise Karen",
-    readingTime: "5 min read",
-    page: "computer;kaise-karen"
-  },
+ 
   {
     title: "Weight & Mass Unit Conversion",
     url: "/conversion/weight-mass-unit-conversion",
@@ -815,3 +796,4 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
