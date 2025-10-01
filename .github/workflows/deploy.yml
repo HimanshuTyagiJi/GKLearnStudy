@@ -31,5 +31,5 @@ jobs:
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # automatic token, no manual PAT/email
-          publish_dir: ./ # root folder deploy
+          github_token: ${{ secrets.GITHUB_TOKEN }} # automatic token
+          publish_dir: ./dist   # अब सिर्फ dist folder deploy होगा
