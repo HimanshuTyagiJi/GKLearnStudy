@@ -1,30 +1,5 @@
 <<<<<<< HEAD
-{
-    "name": "cors-proxy",
-    "version": "1.0.0",
-    "description": "CORS Proxy Server",
-    "main": "youtube.js",
-    "scripts": {
-        "start": "node youtube.js"
-    },
-    "dependencies": {
-        "cors-anywhere": "^0.4.4"
-    }
+...
 =======
-
-{
-  "name": "gklearnstudy-website",
-  "version": "1.0.0",
-  "description": "Website for GK Learn Study",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "build": "node build-search-data.mjs"
-  },
-  "author": "Himanshu Tyagi",
-  "license": "ISC",
-  "dependencies": {
-    "jsdom": "^24.0.0"
-  }
->>>>>>> d9513d8 (feat: Setup automated build process for search data)
-}
+...
+>>>>>>> commit_hash
