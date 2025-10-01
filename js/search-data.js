@@ -1,511 +1,26 @@
-
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
-// --- Single Source of Truth for Data ---
-window.GKApp.searchData = [
- 
-  {
-    title: "Weight & Mass Unit Conversion",
-    url: "/conversion/weight-mass-unit-conversion",
-    paragraph: "Convert between various units of weight and mass, such as kilograms (kg), grams (g), pounds (lb), and ounces (oz). An essential tool for science, cooking, and daily life.",
-    date: "February 24, 2025",
-    author: "Himanshu Tyagi",
-    category: "Conversion",
-    readingTime: "8 min read",
-    page: "conversion"
-  },
-  {
-    title: "Volume Unit Conversion",
-    url: "/conversion/volume-unit-conversion",
-    paragraph: "Easily convert between volume units like liters (L), milliliters (mL), gallons, and cubic meters. Essential for chemistry, cooking, and engineering.",
-    date: "February 23, 2025",
-    author: "Owner",
-    category: "Conversion",
-    readingTime: "8 min read",
-    page: "conversion"
-  },
-  {
-    title: "Time Unit Conversion",
-    url: "/conversion/time-unit-conversion",
-    paragraph: "Convert time between seconds, minutes, hours, days, and more. A fundamental skill for scheduling, physics calculations, and everyday planning.",
-    date: "February 22, 2025",
-    author: "Golu Tyagi",
-    category: "Conversion",
-    readingTime: "7 min read",
-    page: "conversion"
-  },
-  {
-    title: "Temperature Unit Conversion - defination,use",
-    url: "/conversion/temperature-unit-conversion",
-    paragraph: "Switch between temperature scales including Celsius, Fahrenheit, and Kelvin. Crucial for weather forecasting, scientific experiments, and cooking.",
-    date: "February 21, 2025",
-    author: "Himanshu Tyagi",
-    category: "Conversion",
-    readingTime: "7 min read",
-    page: "conversion"
-  },
-  {
-    title: "Speed Unit Conversion",
-    url: "/conversion/speed-unit-conversion",
-    paragraph: "Convert speed units such as meters per second (m/s), kilometers per hour (km/h), and miles per hour (mph). Useful in physics, travel, and sports.",
-    date: "February 20, 2025",
-    author: "Owner",
-    category: "Conversion",
-    readingTime: "8 min read",
-    page: "conversion"
-  },
-  {
-    title: "Pressure Unit Conversion",
-    url: "/conversion/pressure-unit-conversion",
-    paragraph: "Convert between pressure units like Pascal (Pa), atmospheres (atm), and pounds per square inch (psi). Important for engineering, meteorology, and physics.",
-    date: "February 19, 2025",
-    author: "Golu Tyagi",
-    category: "Conversion",
-    readingTime: "7 min read",
-    page: "conversion"
-  },
-  {
-    title: "Power Unit Conversion",
-    url: "/conversion/power-unit-conversion",
-    paragraph: "Convert units of power like watts (W), horsepower (hp), and kilowatts (kW). Essential for physics, engineering, and understanding energy consumption.",
-    date: "February 18, 2025",
-    author: "Himanshu Tyagi",
-    category: "Conversion",
-    readingTime: "7 min read",
-    page: "conversion"
-  },
-  {
-    title: "Length Unit Conversion",
-    url: "/conversion/length-unit-conversion",
-    paragraph: "Convert between units of length, including meters (m), kilometers (km), miles, and inches. A basic necessity for measurement and construction.",
-    date: "February 17, 2025",
-    author: "Owner",
-    category: "Conversion",
-    readingTime: "8 min read",
-    page: "conversion"
-  },
-  {
-    title: "Area Unit Conversion",
-    url: "/conversion/area-unit-conversion",
-    paragraph: "Convert area units such as square meters, square feet, acres, and hectares. Vital for real estate, agriculture, and construction planning.",
-    date: "February 16, 2025",
-    author: "Golu Tyagi",
-    category: "Conversion",
-    readingTime: "7 min read",
-    page: "conversion"
-  },
-  {
-    title: "Angle Unit Conversion",
-    url: "/conversion/angle-unit-conversion",
-    paragraph: "Convert between degrees, radians, and other angular units. A core concept in mathematics, physics, and engineering for measuring rotation.",
-    date: "February 15, 2025",
-    author: "Himanshu Tyagi",
-    category: "Conversion",
-    readingTime: "8 min read",
-    page: "conversion"
-  },
- {
-  title: "Unit Conversion",
-  url: "/conversion",
-  paragraph: "A comprehensive tool for converting various types of measurement units, including length, mass, volume, and more, for academic and practical applications.",
-  date: "February 14, 2025",
-  author: "Owner",
-  category: "Conversion",
-  readingTime: "15 min read",
-  page: "conversion"
-},
-  {
-    title: "निबंध: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/essay-in-hindi.html",
-    paragraph: "निबंध लेखन विचारों को व्यवस्थित रूप से प्रस्तुत करने की एक कला है। इस खंड में निबंध के प्रकार, संरचना और प्रभावी लेखन की तकनीकों को जानें।",
-    date: "February 13, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "10 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "पत्र-लेखन: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/letter-writing-in-hindi.html",
-    paragraph: "पत्र-लेखन संचार का एक महत्वपूर्ण माध्यम है। यहाँ औपचारिक और अनौपचारिक पत्रों के प्रारूप, भाषा-शैली और उदाहरणों का विस्तृत वर्णन है।",
-    date: "February 12, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अपठित-गद्यांश: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/unseen-passage-in-hindi.html",
-    paragraph: "अपठित गद्यांश का उद्देश्य छात्रों की समझ और विश्लेषण क्षमता का मूल्यांकन करना है। यहाँ गद्यांश को हल करने की सही विधि और रणनीतियाँ बताई गई हैं।",
-    date: "February 11, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अनुच्छेद-लेखन: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/paragraph-writing-in-hindi.html",
-    paragraph: "अनुच्छेद-लेखन किसी एक विषय पर संक्षिप्त और सारगर्भित जानकारी प्रस्तुत करने की कला है। यहाँ प्रभावी अनुच्छेद लिखने के नियम और उदाहरण दिए गए हैं।",
-    date: "February 10, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अलंकार: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/alankar-in-hindi.html",
-    paragraph: "अलंकार काव्य की शोभा बढ़ाने वाले तत्व हैं। इस खंड में शब्दालंकार और अर्थालंकार के प्रमुख भेदों को उदाहरण सहित समझाया गया है।",
-    date: "February 9, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "10 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "छन्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/chhand-in-hindi.html",
-    paragraph: "छन्द काव्य में वर्णों या मात्राओं की नियमित संख्या के विन्यास को कहते हैं। यहाँ मात्रिक और वर्णिक छंदों के लक्षण और उदाहरण दिए गए हैं।",
-    date: "February 8, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "रस: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/ras-in-hindi.html",
-    paragraph: "रस का शाब्दिक अर्थ है 'आनंद'। काव्य को पढ़ने या सुनने से जिस आनंद की अनुभूति होती है, उसे रस कहते हैं। यहाँ सभी रसों का वर्णन है।",
-    date: "February 7, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "युग्म शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/yugm-shabd.html",
-    paragraph: "युग्म-शब्द वे शब्द होते हैं जो उच्चारण में समान लगते हैं, परन्तु उनके अर्थ भिन्न होते हैं। यहाँ ऐसे शब्दों के उदाहरण दिए गए हैं।",
-    date: "February 6, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "6 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "त्रुटिसम भिन्नार्थक शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/pairs-of-similar-words.html",
-    paragraph: "ये वे शब्द हैं जो सुनने में लगभग समान लगते हैं, पर उनकी वर्तनी और अर्थ में सूक्ष्म अंतर होता है। यह भाषा को समृद्ध बनाता है।",
-    date: "February 5, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "7 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "एकार्थक प्रतीत होने वाले शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/words-apparently-similar-in-meanings-in-hindi.html",
-    paragraph: "कुछ शब्द देखने में समान अर्थ वाले लगते हैं, लेकिन उनके प्रयोग और अर्थ में सूक्ष्म भिन्नता होती है। यहाँ ऐसे ही शब्दों का संकलन है।",
-    date: "February 4, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "6 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अनेकार्थी-शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/words-of-many-meanings-in-hindi.html",
-    paragraph: "अनेकार्थी शब्द वे होते हैं जिनके एक से अधिक अर्थ निकलते हैं। प्रसंग के अनुसार उनका सही अर्थ समझा जाता है।",
-    date: "February 3, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "7 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अनेक शब्दों के लिए एक शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/one-word-substitution-in-hindi.html",
-    paragraph: "भाषा को संक्षिप्त और प्रभावशाली बनाने के लिए वाक्यांश या अनेक शब्दों के स्थान पर एक शब्द का प्रयोग किया जाता है।",
-    date: "February 2, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "लोकोक्तियाँ: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/proverbs-in-hindi.html",
-    paragraph: "लोकोक्तियाँ या कहावतें ऐसे वाक्यांश हैं जो अपने अनुभव और परंपरा के आधार पर बने हैं और किसी सत्य को प्रकट करते हैं।",
-    date: "February 1, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "मुहावरे: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/idioms-in-hindi.html",
-    paragraph: "मुहावरे ऐसे वाक्यांश होते हैं जो अपने सामान्य अर्थ को छोड़कर किसी विशेष अर्थ को व्यक्त करते हैं, जिससे भाषा रोचक बनती है।",
-    date: "January 31, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "पर्यायवाची-शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/synonyms-in-hindi.html",
-    paragraph: "पर्यायवाची शब्द (समानार्थक शब्द) उन शब्दों को कहते हैं जिनके अर्थ समान होते हैं। यह शब्द-भंडार को समृद्ध करते हैं।",
-    date: "January 30, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "विलोम-शब्द: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/antonyms-in-hindi.html",
-    paragraph: "विलोम शब्द (विपरीतार्थक शब्द) वे शब्द होते हैं जो किसी दूसरे शब्द का उल्टा अर्थ बताते हैं। यह भाषा में संतुलन लाते हैं।",
-    date: "January 29, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "देशज-विदेशज: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/deshaj-videshaj-in-hindi.html",
-    paragraph: "देशज शब्द स्थानीय बोलियों से आते हैं, जबकि विदेशज शब्द अन्य भाषाओं से लिए गए हैं। यह हिंदी भाषा की विविधता को दर्शाता है।",
-    date: "January 28, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "तत्सम-तद्भव: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/tatsam-tadbhav-in-hindi.html",
-    paragraph: "तत्सम शब्द संस्कृत से ज्यों के त्यों लिए गए हैं, जबकि तद्भव शब्द संस्कृत से परिवर्तित होकर बने हैं।",
-    date: "January 27, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "समास: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/compound-in-hindi.html",
-    paragraph: "समास दो या दो से अधिक शब्दों को मिलाकर एक नया और संक्षिप्त शब्द बनाने की प्रक्रिया है। इसके प्रमुख भेदों का वर्णन यहाँ है।",
-    date: "January 26, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "10 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "संधि: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/joining.html",
-    paragraph: "संधि का अर्थ है 'मेल'। दो निकटवर्ती वर्णों के मेल से जो विकार (परिवर्तन) होता है, उसे संधि कहते हैं।",
-    date: "January 25, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "10 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "प्रत्यय: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/suffix-in-hindi.html",
-    paragraph: "प्रत्यय वे शब्दांश हैं जो किसी शब्द के अंत में जुड़कर उसके अर्थ में विशेषता या परिवर्तन लाते हैं।",
-    date: "January 24, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "उपसर्ग: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/prefix-in-hindi.html",
-    paragraph: "उपसर्ग वे शब्दांश हैं जो किसी शब्द के आरंभ में जुड़कर उसके अर्थ को बदल देते हैं या नया अर्थ देते हैं।",
-    date: "January 23, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "विराम-चिन्ह: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/punctuation-in-hindi.html",
-    paragraph: "विराम-चिन्हों का प्रयोग भाषा में स्पष्टता और भावों की सही अभिव्यक्ति के लिए किया जाता है। यहाँ सभी चिन्हों का वर्णन है।",
-    date: "January 22, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "पुरुष: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/person-in-hindi.html",
-    paragraph: "व्याकरण में पुरुष से तात्पर्य वक्ता, श्रोता और अन्य व्यक्ति से है। इसके तीन भेद हैं - उत्तम, मध्यम और अन्य पुरुष।",
-    date: "January 21, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "6 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "वाच्य: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/voice-in-hindi.html",
-    paragraph: "वाच्य क्रिया का वह रूप है जिससे यह पता चलता है कि वाक्य में कर्ता, कर्म या भाव में से किसकी प्रधानता है।",
-    date: "January 20, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "7 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "निपात: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/particle-in-hindi.html",
-    paragraph: "निपात वे अव्यय शब्द हैं जो किसी शब्द या पद के बाद लगकर उसके अर्थ में विशेष प्रकार का बल या भाव उत्पन्न करते हैं।",
-    date: "January 19, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "6 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "अव्यय: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/indeclinable-words-in-hindi.html",
-    paragraph: "अव्यय या अविकारी शब्द वे होते हैं जिनमें लिंग, वचन, पुरुष, कारक आदि के कारण कोई विकार या परिवर्तन नहीं होता।",
-    date: "January 18, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "7 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "काल: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/tense-in-hindi.html",
-    paragraph: "काल क्रिया के उस रूप को कहते हैं जिससे उसके करने या होने के समय का बोध होता है। इसके तीन मुख्य भेद हैं - भूत, वर्तमान, भविष्य।",
-    date: "January 17, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "क्रिया: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/verb-in-hindi.html",
-    paragraph: "जिस शब्द से किसी कार्य के करने या होने का बोध हो, उसे क्रिया कहते हैं। यह सकर्मक और अकर्मक दो प्रकार की होती है।",
-    date: "January 16, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "विशेषण: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/adjective-in-hindi.html",
-    paragraph: "जो शब्द संज्ञा या सर्वनाम की विशेषता बताते हैं, उन्हें विशेषण कहते हैं। यह गुण, संख्या, परिमाण आदि से संबंधित हो सकते हैं।",
-    date: "January 15, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "सर्वनाम: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/pronoun-in-hindi.html",
-    paragraph: "संज्ञा के स्थान पर प्रयोग होने वाले शब्दों को सर्वनाम कहते हैं। जैसे - मैं, तुम, वह, यह आदि।",
-    date: "January 14, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "कारक: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/case-in-hindi.html",
-    paragraph: "कारक संज्ञा या सर्वनाम का क्रिया के साथ संबंध बताते हैं। हिंदी में आठ कारक होते हैं, जिनके अपने विभक्ति चिन्ह होते हैं।",
-    date: "January 13, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "लिंग: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/gender-in-hindi.html",
-    paragraph: "जिस चिह्न से यह पता चले कि कोई संज्ञा पुरुष जाति की है या स्त्री जाति की, उसे लिंग कहते हैं। इसके दो भेद हैं - पुल्लिंग और स्त्रीलिंग।",
-    date: "January 12, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "8 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "वचन: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/number-in-hindi.html",
-    paragraph: "शब्द के जिस रूप से उसके एक या अनेक होने का बोध हो, उसे वचन कहते हैं। हिंदी में दो वचन हैं - एकवचन और बहुवचन।",
-    date: "January 11, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "7 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "संज्ञा: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/noun-in-hindi.html",
-    paragraph: "किसी व्यक्ति, वस्तु, स्थान, या भाव के नाम को संज्ञा कहते हैं। इसके मुख्य भेद व्यक्तिवाचक, जातिवाचक, और भाववाचक हैं।",
-    date: "January 10, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "वाक्य-विचार: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/syntax-in-hindi.html",
-    paragraph: "शब्दों का व्यवस्थित समूह जिससे कोई अर्थ प्रकट हो, वाक्य कहलाता है। यहाँ रचना और अर्थ के आधार पर वाक्य के भेद बताए गए हैं।",
-    date: "January 9, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "शब्द-विचार: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/morphology-in-hindi.html",
-    paragraph: "वर्णों के सार्थक समूह को शब्द कहते हैं। यहाँ उत्पत्ति, रचना, प्रयोग और अर्थ के आधार पर शब्दों के वर्गीकरण का वर्णन है।",
-    date: "January 8, 2025",
-    author: "Golu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "वर्ण-विचार: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran/phonology-in-hindi.html",
-    paragraph: "भाषा की सबसे छोटी इकाई वर्ण कहलाती है। इस खंड में स्वर और व्यंजन वर्णों के भेद, उच्चारण स्थान और वर्गीकरण की जानकारी है।",
-    date: "January 7, 2025",
-    author: "Himanshu Tyagi",
-    category: "Vyakaran",
-    readingTime: "9 min read",
-    page: "vyakaran"
-  },
-  {
-    title: "भाषा और व्याकरण: परिभाषा, भेद, उदाहरण",
-    url: "vyakaran-language.html",
-    paragraph: "भाषा विचारों के आदान-प्रदान का माध्यम है, और व्याकरण भाषा को शुद्ध रूप से लिखने और बोलने के नियम सिखाता है।",
-    date: "January 6, 2025",
-    author: "Owner",
-    category: "Vyakaran",
-    readingTime: "11 min read",
-    page: "vyakaran"
-  },
-];
+// Caching mechanism for search data
+let searchDataPromise = null;
+const loadSearchData = () => {
+    if (!searchDataPromise) {
+        searchDataPromise = fetch('search-data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error("Could not load search data:", error);
+                return []; // Return empty array on failure to prevent crashes
+            });
+    }
+    return searchDataPromise;
+};
+window.GKApp.loadSearchData = loadSearchData;
+
 
 // --- HINGLISH TO HINDI TRANSLITERATION ---
 window.GKApp.transliterateRomanToHindi = (input) => {
@@ -607,194 +122,198 @@ window.GKApp.generateConceptImage = (() => {
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- CONFIGURATION ---
-    const POSTS_INITIAL_LOAD = 40;
-    const POSTS_PER_PAGE = 20;
-    // Pages listed here will show random articles from the entire site in their "Related Articles" section.
-    const PAGES_WITH_RANDOM_RELATED = ['kaise-karen'];
+    const initializePageContent = async () => {
+        // --- CONFIGURATION ---
+        const POSTS_INITIAL_LOAD = 40;
+        const POSTS_PER_PAGE = 20;
+        // Pages listed here will show random articles from the entire site in their "Related Articles" section.
+        const PAGES_WITH_RANDOM_RELATED = ['kaise-karen'];
 
-    // --- DOM Elements ---
-    const postsContainer = document.getElementById("post-grid");
-    const postFilterInput = document.getElementById("post-filter-input");
-    const categoryListContainer = document.querySelector(".category-list");
-    const loadMoreBtn = document.getElementById("load-more-btn");
-    const relatedPostsGrid = document.getElementById("related-posts-grid");
+        // --- DOM Elements ---
+        const postsContainer = document.getElementById("post-grid");
+        const postFilterInput = document.getElementById("post-filter-input");
+        const categoryListContainer = document.querySelector(".category-list");
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        const relatedPostsGrid = document.getElementById("related-posts-grid");
 
-    // --- Page Context ---
-    const path = window.location.pathname;
-    let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
-    const dotIndex = pageSlug.lastIndexOf('.');
-    if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
-    if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
+        // --- Page Context ---
+        const path = window.location.pathname;
+        let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
+        const dotIndex = pageSlug.lastIndexOf('.');
+        if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
+        if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
 
-    // --- Post Card Creation ---
-    const createPostCard = (post, index) => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.setAttribute('aria-label', post.title);
-        card.dataset.index = index;
+        // --- Asynchronously load post data ---
+        const allPosts = await loadSearchData();
 
-        const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
-        const clipPathId = `circle-clip-avatar-gt-${index}-${Math.random()}`;
+        // --- Post Card Creation ---
+        const createPostCard = (post, index) => {
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.setAttribute('aria-label', post.title);
+            card.dataset.index = index;
 
-        const metaBlock = `
-            <div class="post-meta-container">
-                <div class="byline">
-                    <div class="author-avatar">
-                        <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
+            const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
+            const clipPathId = `circle-clip-avatar-gt-${index}-${Math.random()}`;
+
+            const metaBlock = `
+                <div class="post-meta-container">
+                    <div class="byline">
+                        <div class="author-avatar">
+                            <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
+                        </div>
+                        <div class="author-details">
+                            <span class="author vcard">by <span class="name">${post.author}</span></span>
+                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
+                        </div>
                     </div>
-                    <div class="author-details">
-                        <span class="author vcard">by <span class="name">${post.author}</span></span>
-                        <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
+                    <div class="share-button-wrapper">
+                        <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
                     </div>
-                </div>
-                <div class="share-button-wrapper">
-                    <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
-                </div>
-            </div>`;
+                </div>`;
 
-        card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
-        return card;
-    };
-
-    // --- Main Post Grid Logic ---
-    if (postsContainer && loadMoreBtn) {
-        let pageKeyForFiltering = 'index';
-        if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
-        else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
-        else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
-        else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
-
-        const allPostsForPage = (pageKeyForFiltering === 'index')
-            ? window.GKApp.searchData
-            : window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
-
-        let currentFilteredPosts = [...allPostsForPage];
-        let visiblePostCount = POSTS_INITIAL_LOAD;
-
-        const renderPosts = (posts) => {
-            postsContainer.innerHTML = "";
-            if (posts.length === 0) { postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>'; return; }
-            const fragment = document.createDocumentFragment();
-            posts.forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
-            postsContainer.appendChild(fragment);
+            card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+            return card;
         };
-        const updatePostsDisplay = () => {
-            const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
-            renderPosts(postsToRender);
-            loadMoreBtn.style.display = (visiblePostCount >= currentFilteredPosts.length) ? "none" : "block";
-        };
-        const handleFilter = (filteredPosts) => { currentFilteredPosts = filteredPosts; visiblePostCount = POSTS_INITIAL_LOAD; updatePostsDisplay(); };
-        const applyFilters = () => {
-            const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
-            const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
-            let filtered = allPostsForPage;
-            if (category.toLowerCase() !== "all") { filtered = filtered.filter((post) => post.category === category); }
-            if (query) { filtered = window.GKApp.fuzzySearch(query, filtered); }
-            handleFilter(filtered);
-        };
-        postsContainer.addEventListener('click', (event) => {
-            const card = event.target.closest('.card'); if (!card) return;
-            const shareButton = event.target.closest('.share-button');
-            if (shareButton) {
-                event.preventDefault();
-                const postIndex = parseInt(card.dataset.index, 10);
-                const post = currentFilteredPosts[postIndex];
-                if (post && navigator.share) { navigator.share({ title: post.title, text: post.paragraph, url: new URL(post.url, window.location.origin).href }).catch(console.log); } else { alert('Share functionality not supported.'); }
-            }
-        });
-        if (postFilterInput) { postFilterInput.addEventListener("input", applyFilters); }
-        const generateCategories = () => {
-            if (!categoryListContainer) return;
-            const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
-            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
-            let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
-            Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
-            categoryListContainer.innerHTML = categoryHTML;
-            const categoryLinks = categoryListContainer.querySelectorAll("a");
-            categoryLinks.forEach((link) => { link.addEventListener("click", (e) => { e.preventDefault(); categoryLinks.forEach((l) => l.classList.remove("active-category")); link.classList.add("active-category"); applyFilters(); }); });
-        };
-        loadMoreBtn.addEventListener("click", () => { visiblePostCount += POSTS_PER_PAGE; updatePostsDisplay(); });
-        generateCategories();
-        applyFilters();
-    }
-    
-    // --- Related Articles Logic ---
-    if (relatedPostsGrid) {
-        const MAX_RELATED_POSTS = 6;
-        const renderPostsToGrid = (posts, grid) => {
-            const fragment = document.createDocumentFragment();
-            posts.slice(0, MAX_RELATED_POSTS).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
-            grid.innerHTML = '';
-            grid.appendChild(fragment);
-        };
-        
-        const renderContextualPosts = (currentUrlPath) => {
-            const allPosts = window.GKApp.searchData;
-            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
-            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
-            const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
-            const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
-            
-            const scoredPosts = allPosts
-                .filter(p => p.url !== currentArticle?.url)
-                .map(post => {
-                    let score = 0;
-                    const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
-                    const postTags = new Set(post.page ? post.page.split(';') : []);
-                    urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
-                    postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
-                    if (score > 15 && score % 10 !== 0) { score += 5; }
-                    return { post, score };
-                })
-                .filter(item => item.score > 0)
-                .sort((a, b) => b.score - a.score);
 
-            let stickyPosts = scoredPosts.map(p => p.post);
-            const stickyUrls = new Set(stickyPosts.map(p => p.url));
-            let finalRelatedList = [...stickyPosts];
-            
-            if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                let fillerCandidates = [];
-                if (currentArticleTags.size > 0) {
-                    const primaryTag = Array.from(currentArticleTags)[0];
-                     fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
+        // --- Main Post Grid Logic ---
+        if (postsContainer && loadMoreBtn) {
+            let pageKeyForFiltering = 'index';
+            if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
+            else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
+            else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
+            else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
+
+            const allPostsForPage = (pageKeyForFiltering === 'index')
+                ? allPosts
+                : allPosts.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
+
+            let currentFilteredPosts = [...allPostsForPage];
+            let visiblePostCount = POSTS_INITIAL_LOAD;
+
+            const renderPosts = (posts) => {
+                postsContainer.innerHTML = "";
+                if (posts.length === 0) { postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>'; return; }
+                const fragment = document.createDocumentFragment();
+                posts.forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+                postsContainer.appendChild(fragment);
+            };
+            const updatePostsDisplay = () => {
+                const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
+                renderPosts(postsToRender);
+                loadMoreBtn.style.display = (visiblePostCount >= currentFilteredPosts.length) ? "none" : "block";
+            };
+            const handleFilter = (filteredPosts) => { currentFilteredPosts = filteredPosts; visiblePostCount = POSTS_INITIAL_LOAD; updatePostsDisplay(); };
+            const applyFilters = () => {
+                const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
+                const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
+                let filtered = allPostsForPage;
+                if (category.toLowerCase() !== "all") { filtered = filtered.filter((post) => post.category === category); }
+                if (query) { filtered = window.GKApp.fuzzySearch(query, filtered); }
+                handleFilter(filtered);
+            };
+            postsContainer.addEventListener('click', (event) => {
+                const card = event.target.closest('.card'); if (!card) return;
+                const shareButton = event.target.closest('.share-button');
+                if (shareButton) {
+                    event.preventDefault();
+                    const postIndex = parseInt(card.dataset.index, 10);
+                    const post = currentFilteredPosts[postIndex];
+                    if (post && navigator.share) { navigator.share({ title: post.title, text: post.paragraph, url: new URL(post.url, window.location.origin).href }).catch(console.log); } else { alert('Share functionality not supported.'); }
                 }
-                finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
-            }
-
-            finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
-            if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                const existingUrls = new Set(finalRelatedList.map(p => p.url));
-                if (currentArticle) existingUrls.add(currentArticle.url);
-                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
-                finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
-            }
-            
-            renderPostsToGrid(finalRelatedList, relatedPostsGrid);
-        };
+            });
+            if (postFilterInput) { postFilterInput.addEventListener("input", applyFilters); }
+            const generateCategories = () => {
+                if (!categoryListContainer) return;
+                const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
+                const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
+                let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
+                Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
+                categoryListContainer.innerHTML = categoryHTML;
+                const categoryLinks = categoryListContainer.querySelectorAll("a");
+                categoryLinks.forEach((link) => { link.addEventListener("click", (e) => { e.preventDefault(); categoryLinks.forEach((l) => l.classList.remove("active-category")); link.classList.add("active-category"); applyFilters(); }); });
+            };
+            loadMoreBtn.addEventListener("click", () => { visiblePostCount += POSTS_PER_PAGE; updatePostsDisplay(); });
+            generateCategories();
+            applyFilters();
+        }
         
-        if (pageSlug === 'index' || PAGES_WITH_RANDOM_RELATED.includes(pageSlug)) {
-            // For index page OR any page in the special list, show random posts from the entire site.
-            const allPosts = [...window.GKApp.searchData];
-            renderPostsToGrid(allPosts.sort(() => 0.5 - Math.random()), relatedPostsGrid);
-        } else {
-            // For all other pages, use the appropriate contextual logic.
-            const mainPageSlugs = ['vyakaran', 'conversion', 'computer'];
-            const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
+        // --- Related Articles Logic ---
+        if (relatedPostsGrid) {
+            const MAX_RELATED_POSTS = 6;
+            const renderPostsToGrid = (posts, grid) => {
+                const fragment = document.createDocumentFragment();
+                posts.slice(0, MAX_RELATED_POSTS).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+                grid.innerHTML = '';
+                grid.appendChild(fragment);
+            };
+            
+            const renderContextualPosts = (currentUrlPath) => {
+                const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
+                const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
+                const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
+                const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
+                
+                const scoredPosts = allPosts
+                    .filter(p => p.url !== currentArticle?.url)
+                    .map(post => {
+                        let score = 0;
+                        const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
+                        const postTags = new Set(post.page ? post.page.split(';') : []);
+                        urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
+                        postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
+                        if (score > 15 && score % 10 !== 0) { score += 5; }
+                        return { post, score };
+                    })
+                    .filter(item => item.score > 0)
+                    .sort((a, b) => b.score - a.score);
 
-            if (isCategoryPage) {
-                // Show random posts from within that specific category.
-                const postsForCategory = window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageSlug));
-                renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
-            } else if (pageSlug) {
-                // This is an individual article page. Use the smart contextual logic.
-                renderContextualPosts(path.substring(1));
+                let stickyPosts = scoredPosts.map(p => p.post);
+                const stickyUrls = new Set(stickyPosts.map(p => p.url));
+                let finalRelatedList = [...stickyPosts];
+                
+                if (finalRelatedList.length < MAX_RELATED_POSTS) {
+                    let fillerCandidates = [];
+                    if (currentArticleTags.size > 0) {
+                        const primaryTag = Array.from(currentArticleTags)[0];
+                         fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
+                    }
+                    finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
+                }
+
+                finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
+                if (finalRelatedList.length < MAX_RELATED_POSTS) {
+                    const existingUrls = new Set(finalRelatedList.map(p => p.url));
+                    if (currentArticle) existingUrls.add(currentArticle.url);
+                    const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
+                    finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
+                }
+                
+                renderPostsToGrid(finalRelatedList, relatedPostsGrid);
+            };
+            
+            if (pageSlug === 'index' || PAGES_WITH_RANDOM_RELATED.includes(pageSlug)) {
+                // For index page OR any page in the special list, show random posts from the entire site.
+                renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
             } else {
-                // Fallback for safety (e.g., unexpected URL).
-                renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+                // For all other pages, use the appropriate contextual logic.
+                const mainPageSlugs = ['vyakaran', 'conversion', 'computer', 'gk-quiz'];
+                const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
+
+                if (isCategoryPage) {
+                    // Show random posts from within that specific category.
+                    const postsForCategory = allPosts.filter(p => p.page && p.page.split(';').includes(pageSlug));
+                    renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
+                } else if (pageSlug) {
+                    // This is an individual article page. Use the smart contextual logic.
+                    renderContextualPosts(path.substring(1));
+                } else {
+                    // Fallback for safety (e.g., unexpected URL).
+                    renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+                }
             }
         }
-    }
-});
+    };
 
+    initializePageContent();
+});
