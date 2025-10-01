@@ -22,9 +22,9 @@ jobs:
           node-version: '20' # Use a recent LTS version of Node.js
           cache: 'npm' # Cache npm dependencies for faster runs
 
-      # Step 3: Install dependencies from package.json
+      # Step 3: Install dependencies from package-lock.json
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Run the script to generate search-data.json
       - name: Generate Search Data
