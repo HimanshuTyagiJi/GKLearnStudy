@@ -5,7 +5,7 @@ window.GKApp = window.GKApp || {};
 let searchDataPromise = null;
 const loadSearchData = () => {
     if (!searchDataPromise) {
-        searchDataPromise = fetch('js/search-data.json')
+        searchDataPromise = fetch('search-data.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -317,4 +317,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializePageContent();
 });
+
 
