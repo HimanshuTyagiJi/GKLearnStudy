@@ -153,26 +153,21 @@ function initializeGkAppWithData(allPosts) {
                 </div>
             </div>`;
 
-        card.innerHTML = `<div class="card-thumbnail"><a href="${post.url}" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+        card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
         return card;
     };
 
     // --- Main Post Grid Logic ---
     if (postsContainer && loadMoreBtn) {
         let pageKeyForFiltering = 'index';
-        if (path.includes('/vyakaran')) pageKeyForFiltering = 'vyakaran';
-        else if (path.includes('/conversion')) pageKeyForFiltering = 'conversion';
+        if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
+        else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
         else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
         else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
-        else if (pageSlug === 'gk-quiz') pageKeyForFiltering = 'gk-quiz';
-
 
         const allPostsForPage = (pageKeyForFiltering === 'index')
             ? allPosts
-            : allPosts.filter(p => {
-                const postPages = p.page ? p.page.split(';') : (p.category ? [p.category.toLowerCase().replace(' ', '-')] : []);
-                return postPages.includes(pageKeyForFiltering);
-            });
+            : allPosts.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
 
         let currentFilteredPosts = [...allPostsForPage];
         let visiblePostCount = POSTS_INITIAL_LOAD;
@@ -212,7 +207,7 @@ function initializeGkAppWithData(allPosts) {
         const generateCategories = () => {
             if (!categoryListContainer) return;
             const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
-            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides', 'GK Quiz': 'GK Quizzes' };
+            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
             let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
             Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
             categoryListContainer.innerHTML = categoryHTML;
@@ -235,17 +230,17 @@ function initializeGkAppWithData(allPosts) {
         };
         
         const renderContextualPosts = (currentUrlPath) => {
-            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || `/${p.url}`.endsWith(currentUrlPath));
+            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
             const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
             const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
-            const currentArticleTags = new Set(currentArticle && (currentArticle.page || currentArticle.category) ? (currentArticle.page || currentArticle.category).toLowerCase().replace(' ', '-').split(';') : []);
+            const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
             
             const scoredPosts = allPosts
                 .filter(p => p.url !== currentArticle?.url)
                 .map(post => {
                     let score = 0;
                     const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
-                    const postTags = new Set((post.page || post.category) ? (post.page || post.category).toLowerCase().replace(' ', '-').split(';') : []);
+                    const postTags = new Set(post.page ? post.page.split(';') : []);
                     urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
                     postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
                     if (score > 15 && score % 10 !== 0) { score += 5; }
@@ -262,7 +257,7 @@ function initializeGkAppWithData(allPosts) {
                 let fillerCandidates = [];
                 if (currentArticleTags.size > 0) {
                     const primaryTag = Array.from(currentArticleTags)[0];
-                     fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && (p.page || p.category) && (p.page || p.category).toLowerCase().replace(' ', '-').split(';').includes(primaryTag));
+                     fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
                 }
                 finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
             }
@@ -285,10 +280,7 @@ function initializeGkAppWithData(allPosts) {
             const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
 
             if (isCategoryPage) {
-                const postsForCategory = allPosts.filter(p => {
-                    const postPages = (p.page || p.category) ? (p.page || p.category).toLowerCase().replace(' ', '-').split(';') : [];
-                    return postPages.includes(pageSlug);
-                });
+                const postsForCategory = allPosts.filter(p => p.page && p.page.split(';').includes(pageSlug));
                 renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
             } else if (pageSlug) {
                 renderContextualPosts(path.substring(1));
@@ -319,11 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const postsContainer = document.getElementById("post-grid");
             if (postsContainer) {
                 postsContainer.innerHTML = '<p class="error-message">Could not load articles. Please check your connection and try again later.</p>';
-            }
-            // Attempt to load from a potential backup or show a more specific error
-            const relatedGrid = document.getElementById("related-posts-grid");
-            if(relatedGrid) {
-                relatedGrid.innerHTML = '<p class="error-message">Could not load related articles.</p>';
             }
         });
 });
