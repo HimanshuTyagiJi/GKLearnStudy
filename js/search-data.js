@@ -1,25 +1,24 @@
 // Establish a global namespace to share data and functions
 window.GKApp = window.GKApp || {};
 
-// Caching mechanism for search data
-let searchDataPromise = null;
-const loadSearchData = () => {
-    if (!searchDataPromise) {
-        searchDataPromise = fetch('search-data.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error("Could not load search data:", error);
-                return []; // Return empty array on failure to prevent crashes
-            });
-    }
-    return searchDataPromise;
-};
-window.GKApp.loadSearchData = loadSearchData;
+// --- Asynchronous Data Loading ---
+// Fetch data and create a promise to signal when it's ready.
+// Other scripts can wait for this promise to resolve before using the data.
+window.GKApp.dataReady = fetch('/js/search-data.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        window.GKApp.searchData = data;
+    })
+    .catch(error => {
+        console.error("Could not load search data:", error);
+        // Propagate the error to allow other parts of the app to handle it gracefully.
+        throw error;
+    });
 
 
 // --- HINGLISH TO HINDI TRANSLITERATION ---
@@ -121,201 +120,211 @@ window.GKApp.generateConceptImage = (() => {
     return createImageFor;
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-    const initializePageContent = async () => {
-        // --- CONFIGURATION ---
-        const POSTS_INITIAL_LOAD = 40;
-        const POSTS_PER_PAGE = 20;
-        // Pages listed here will show random articles from the entire site in their "Related Articles" section.
-        const PAGES_WITH_RANDOM_RELATED = ['kaise-karen'];
 
-        // --- DOM Elements ---
-        const postsContainer = document.getElementById("post-grid");
-        const postFilterInput = document.getElementById("post-filter-input");
-        const categoryListContainer = document.querySelector(".category-list");
-        const loadMoreBtn = document.getElementById("load-more-btn");
-        const relatedPostsGrid = document.getElementById("related-posts-grid");
+/**
+ * Initializes all the post-rendering logic for the current page.
+ * This function should only be called after `window.GKApp.dataReady` has resolved.
+ */
+function initializePostRendering() {
+    // --- CONFIGURATION ---
+    const POSTS_INITIAL_LOAD = 40;
+    const POSTS_PER_PAGE = 20;
+    // Pages listed here will show random articles from the entire site in their "Related Articles" section.
+    const PAGES_WITH_RANDOM_RELATED = ['kaise-karen'];
 
-        // --- Page Context ---
-        const path = window.location.pathname;
-        let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
-        const dotIndex = pageSlug.lastIndexOf('.');
-        if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
-        if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
+    // --- DOM Elements ---
+    const postsContainer = document.getElementById("post-grid");
+    const postFilterInput = document.getElementById("post-filter-input");
+    const categoryListContainer = document.querySelector(".category-list");
+    const loadMoreBtn = document.getElementById("load-more-btn");
+    const relatedPostsGrid = document.getElementById("related-posts-grid");
 
-        // --- Asynchronously load post data ---
-        const allPosts = await loadSearchData();
+    // --- Page Context ---
+    const path = window.location.pathname;
+    let pageSlug = path.substring(path.lastIndexOf('/') + 1) || 'index';
+    const dotIndex = pageSlug.lastIndexOf('.');
+    if (dotIndex > -1) pageSlug = pageSlug.substring(0, dotIndex);
+    if (pageSlug === '' || pageSlug === 'index' || pageSlug.endsWith('index.html')) pageSlug = 'index';
 
-        // --- Post Card Creation ---
-        const createPostCard = (post, index) => {
-            const card = document.createElement('article');
-            card.className = 'card';
-            card.setAttribute('aria-label', post.title);
-            card.dataset.index = index;
+    // --- Post Card Creation ---
+    const createPostCard = (post, index) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.setAttribute('aria-label', post.title);
+        card.dataset.index = index;
 
-            const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
-            const clipPathId = `circle-clip-avatar-gt-${index}-${Math.random()}`;
+        const imageHtml = post.svg || `<img src="${window.GKApp.generateConceptImage(post.title)}" alt="${post.title}" loading="lazy" width="320" height="180">`;
+        const clipPathId = `circle-clip-avatar-gt-${index}-${Math.random()}`;
 
-            const metaBlock = `
-                <div class="post-meta-container">
-                    <div class="byline">
-                        <div class="author-avatar">
-                            <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
-                        </div>
-                        <div class="author-details">
-                            <span class="author vcard">by <span class="name">${post.author}</span></span>
-                            <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
-                        </div>
+        const metaBlock = `
+            <div class="post-meta-container">
+                <div class="byline">
+                    <div class="author-avatar">
+                        <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
                     </div>
-                    <div class="share-button-wrapper">
-                        <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
+                    <div class="author-details">
+                        <span class="author vcard">by <span class="name">${post.author}</span></span>
+                        <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? ` &bull; ${post.readingTime}` : ''}</span>
                     </div>
-                </div>`;
+                </div>
+                <div class="share-button-wrapper">
+                    <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
+                </div>
+            </div>`;
 
-            card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
-            return card;
-        };
-
-        // --- Main Post Grid Logic ---
-        if (postsContainer && loadMoreBtn) {
-            let pageKeyForFiltering = 'index';
-            if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
-            else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
-            else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
-            else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
-
-            const allPostsForPage = (pageKeyForFiltering === 'index')
-                ? allPosts
-                : allPosts.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
-
-            let currentFilteredPosts = [...allPostsForPage];
-            let visiblePostCount = POSTS_INITIAL_LOAD;
-
-            const renderPosts = (posts) => {
-                postsContainer.innerHTML = "";
-                if (posts.length === 0) { postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>'; return; }
-                const fragment = document.createDocumentFragment();
-                posts.forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
-                postsContainer.appendChild(fragment);
-            };
-            const updatePostsDisplay = () => {
-                const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
-                renderPosts(postsToRender);
-                loadMoreBtn.style.display = (visiblePostCount >= currentFilteredPosts.length) ? "none" : "block";
-            };
-            const handleFilter = (filteredPosts) => { currentFilteredPosts = filteredPosts; visiblePostCount = POSTS_INITIAL_LOAD; updatePostsDisplay(); };
-            const applyFilters = () => {
-                const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
-                const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
-                let filtered = allPostsForPage;
-                if (category.toLowerCase() !== "all") { filtered = filtered.filter((post) => post.category === category); }
-                if (query) { filtered = window.GKApp.fuzzySearch(query, filtered); }
-                handleFilter(filtered);
-            };
-            postsContainer.addEventListener('click', (event) => {
-                const card = event.target.closest('.card'); if (!card) return;
-                const shareButton = event.target.closest('.share-button');
-                if (shareButton) {
-                    event.preventDefault();
-                    const postIndex = parseInt(card.dataset.index, 10);
-                    const post = currentFilteredPosts[postIndex];
-                    if (post && navigator.share) { navigator.share({ title: post.title, text: post.paragraph, url: new URL(post.url, window.location.origin).href }).catch(console.log); } else { alert('Share functionality not supported.'); }
-                }
-            });
-            if (postFilterInput) { postFilterInput.addEventListener("input", applyFilters); }
-            const generateCategories = () => {
-                if (!categoryListContainer) return;
-                const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
-                const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
-                let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
-                Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
-                categoryListContainer.innerHTML = categoryHTML;
-                const categoryLinks = categoryListContainer.querySelectorAll("a");
-                categoryLinks.forEach((link) => { link.addEventListener("click", (e) => { e.preventDefault(); categoryLinks.forEach((l) => l.classList.remove("active-category")); link.classList.add("active-category"); applyFilters(); }); });
-            };
-            loadMoreBtn.addEventListener("click", () => { visiblePostCount += POSTS_PER_PAGE; updatePostsDisplay(); });
-            generateCategories();
-            applyFilters();
-        }
-        
-        // --- Related Articles Logic ---
-        if (relatedPostsGrid) {
-            const MAX_RELATED_POSTS = 6;
-            const renderPostsToGrid = (posts, grid) => {
-                const fragment = document.createDocumentFragment();
-                posts.slice(0, MAX_RELATED_POSTS).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
-                grid.innerHTML = '';
-                grid.appendChild(fragment);
-            };
-            
-            const renderContextualPosts = (currentUrlPath) => {
-                const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
-                const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
-                const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
-                const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
-                
-                const scoredPosts = allPosts
-                    .filter(p => p.url !== currentArticle?.url)
-                    .map(post => {
-                        let score = 0;
-                        const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
-                        const postTags = new Set(post.page ? post.page.split(';') : []);
-                        urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
-                        postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
-                        if (score > 15 && score % 10 !== 0) { score += 5; }
-                        return { post, score };
-                    })
-                    .filter(item => item.score > 0)
-                    .sort((a, b) => b.score - a.score);
-
-                let stickyPosts = scoredPosts.map(p => p.post);
-                const stickyUrls = new Set(stickyPosts.map(p => p.url));
-                let finalRelatedList = [...stickyPosts];
-                
-                if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                    let fillerCandidates = [];
-                    if (currentArticleTags.size > 0) {
-                        const primaryTag = Array.from(currentArticleTags)[0];
-                         fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
-                    }
-                    finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
-                }
-
-                finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
-                if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                    const existingUrls = new Set(finalRelatedList.map(p => p.url));
-                    if (currentArticle) existingUrls.add(currentArticle.url);
-                    const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
-                    finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
-                }
-                
-                renderPostsToGrid(finalRelatedList, relatedPostsGrid);
-            };
-            
-            if (pageSlug === 'index' || PAGES_WITH_RANDOM_RELATED.includes(pageSlug)) {
-                // For index page OR any page in the special list, show random posts from the entire site.
-                renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
-            } else {
-                // For all other pages, use the appropriate contextual logic.
-                const mainPageSlugs = ['vyakaran', 'conversion', 'computer', 'gk-quiz'];
-                const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
-
-                if (isCategoryPage) {
-                    // Show random posts from within that specific category.
-                    const postsForCategory = allPosts.filter(p => p.page && p.page.split(';').includes(pageSlug));
-                    renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
-                } else if (pageSlug) {
-                    // This is an individual article page. Use the smart contextual logic.
-                    renderContextualPosts(path.substring(1));
-                } else {
-                    // Fallback for safety (e.g., unexpected URL).
-                    renderPostsToGrid([...allPosts].sort(() => 0.5 - Math.random()), relatedPostsGrid);
-                }
-            }
-        }
+        card.innerHTML = `<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+        return card;
     };
 
-    initializePageContent();
+    // --- Main Post Grid Logic ---
+    if (postsContainer && loadMoreBtn) {
+        let pageKeyForFiltering = 'index';
+        if (path.includes('/vyakaran/')) pageKeyForFiltering = 'vyakaran';
+        else if (path.includes('/conversion/')) pageKeyForFiltering = 'conversion';
+        else if (path.includes('/computer')) pageKeyForFiltering = 'computer';
+        else if (pageSlug === 'kaise-karen') pageKeyForFiltering = 'kaise-karen';
+
+        const allPostsForPage = (pageKeyForFiltering === 'index')
+            ? window.GKApp.searchData
+            : window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageKeyForFiltering));
+
+        let currentFilteredPosts = [...allPostsForPage];
+        let visiblePostCount = POSTS_INITIAL_LOAD;
+
+        const renderPosts = (posts) => {
+            postsContainer.innerHTML = "";
+            if (posts.length === 0) { postsContainer.innerHTML = '<p class="no-posts-found">No articles match your filter.</p>'; return; }
+            const fragment = document.createDocumentFragment();
+            posts.forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+            postsContainer.appendChild(fragment);
+        };
+        const updatePostsDisplay = () => {
+            const postsToRender = currentFilteredPosts.slice(0, visiblePostCount);
+            renderPosts(postsToRender);
+            loadMoreBtn.style.display = (visiblePostCount >= currentFilteredPosts.length) ? "none" : "block";
+        };
+        const handleFilter = (filteredPosts) => { currentFilteredPosts = filteredPosts; visiblePostCount = POSTS_INITIAL_LOAD; updatePostsDisplay(); };
+        const applyFilters = () => {
+            const category = document.querySelector(".category-list a.active-category")?.dataset.category || "all";
+            const query = postFilterInput ? postFilterInput.value.trim().toLowerCase() : "";
+            let filtered = allPostsForPage;
+            if (category.toLowerCase() !== "all") { filtered = filtered.filter((post) => post.category === category); }
+            if (query) { filtered = window.GKApp.fuzzySearch(query, filtered); }
+            handleFilter(filtered);
+        };
+        postsContainer.addEventListener('click', (event) => {
+            const card = event.target.closest('.card'); if (!card) return;
+            const shareButton = event.target.closest('.share-button');
+            if (shareButton) {
+                event.preventDefault();
+                const postIndex = parseInt(card.dataset.index, 10);
+                const post = currentFilteredPosts[postIndex];
+                if (post && navigator.share) { navigator.share({ title: post.title, text: post.paragraph, url: new URL(post.url, window.location.origin).href }).catch(console.log); } else { alert('Share functionality not supported.'); }
+            }
+        });
+        if (postFilterInput) { postFilterInput.addEventListener("input", applyFilters); }
+        const generateCategories = () => {
+            if (!categoryListContainer) return;
+            const categoryCounts = allPostsForPage.reduce((acc, post) => { if (post.category) { acc[post.category] = (acc[post.category] || 0) + 1; } return acc; }, {});
+            const categoryDisplayNames = { 'Conversion': 'Unit Conversion', 'Vyakaran': 'Vyakaran', 'Kaise Karen': 'How To', 'Computer': 'Computer Guides' };
+            let categoryHTML = `<li><a href="#" data-category="all" class="active-category">All Articles <span class="category-count">${allPostsForPage.length}</span></a></li>`;
+            Object.entries(categoryCounts).forEach(([category, count]) => { const displayName = categoryDisplayNames[category] || category; categoryHTML += `<li><a href="#" data-category="${category}">${displayName} <span class="category-count">${count}</span></a></li>`; });
+            categoryListContainer.innerHTML = categoryHTML;
+            const categoryLinks = categoryListContainer.querySelectorAll("a");
+            categoryLinks.forEach((link) => { link.addEventListener("click", (e) => { e.preventDefault(); categoryLinks.forEach((l) => l.classList.remove("active-category")); link.classList.add("active-category"); applyFilters(); }); });
+        };
+        loadMoreBtn.addEventListener("click", () => { visiblePostCount += POSTS_PER_PAGE; updatePostsDisplay(); });
+        generateCategories();
+        applyFilters();
+    }
+    
+    // --- Related Articles Logic ---
+    if (relatedPostsGrid) {
+        const MAX_RELATED_POSTS = 6;
+        const renderPostsToGrid = (posts, grid) => {
+            const fragment = document.createDocumentFragment();
+            posts.slice(0, MAX_RELATED_POSTS).forEach((post, index) => { fragment.appendChild(createPostCard(post, index)); });
+            grid.innerHTML = '';
+            grid.appendChild(fragment);
+        };
+        
+        const renderContextualPosts = (currentUrlPath) => {
+            const allPosts = window.GKApp.searchData;
+            const currentArticle = allPosts.find(p => p.url === currentUrlPath || p.url === `/${currentUrlPath}` || p.url.endsWith(currentUrlPath));
+            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'off', 'is', 'are', 'to', 'and', 'or', 'was', 'it', 'this', 'that', 'kaise', 'karen', 'how', 'to', 'do', 'get', 'kya', 'hai', 'mein', 'ko', 'of', 'for', 'with', 'html', 'in-hindi', 'kren', 'chalaye', 'definition', 'use', 'what', 'for', 'with', 'परिभाषा', 'भेद', 'उदाहरण', 'लेखन', 'शब्द', 'विचार']);
+            const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
+            const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
+            
+            const scoredPosts = allPosts
+                .filter(p => p.url !== currentArticle?.url)
+                .map(post => {
+                    let score = 0;
+                    const postContent = `${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
+                    const postTags = new Set(post.page ? post.page.split(';') : []);
+                    urlKeywords.forEach(keyword => { if (postContent.includes(keyword)) { score += 15; } });
+                    postTags.forEach(tag => { if (currentArticleTags.has(tag)) { score += 10; } });
+                    if (score > 15 && score % 10 !== 0) { score += 5; }
+                    return { post, score };
+                })
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score);
+
+            let stickyPosts = scoredPosts.map(p => p.post);
+            const stickyUrls = new Set(stickyPosts.map(p => p.url));
+            let finalRelatedList = [...stickyPosts];
+            
+            if (finalRelatedList.length < MAX_RELATED_POSTS) {
+                let fillerCandidates = [];
+                if (currentArticleTags.size > 0) {
+                    const primaryTag = Array.from(currentArticleTags)[0];
+                     fillerCandidates = allPosts.filter(p => !stickyUrls.has(p.url) && p.url !== currentArticle?.url && p.page && p.page.split(';').includes(primaryTag));
+                }
+                finalRelatedList.push(...fillerCandidates.sort(() => 0.5 - Math.random()));
+            }
+
+            finalRelatedList = [...new Map(finalRelatedList.map(item => [item.url, item])).values()];
+            if (finalRelatedList.length < MAX_RELATED_POSTS) {
+                const existingUrls = new Set(finalRelatedList.map(p => p.url));
+                if (currentArticle) existingUrls.add(currentArticle.url);
+                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
+                finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
+            }
+            
+            renderPostsToGrid(finalRelatedList, relatedPostsGrid);
+        };
+        
+        if (pageSlug === 'index' || PAGES_WITH_RANDOM_RELATED.includes(pageSlug)) {
+            // For index page OR any page in the special list, show random posts from the entire site.
+            const allPosts = [...window.GKApp.searchData];
+            renderPostsToGrid(allPosts.sort(() => 0.5 - Math.random()), relatedPostsGrid);
+        } else {
+            // For all other pages, use the appropriate contextual logic.
+            const mainPageSlugs = ['vyakaran', 'conversion', 'computer'];
+            const isCategoryPage = mainPageSlugs.includes(pageSlug) && (path === `/${pageSlug}` || path === `/${pageSlug}.html`);
+
+            if (isCategoryPage) {
+                // Show random posts from within that specific category.
+                const postsForCategory = window.GKApp.searchData.filter(p => p.page && p.page.split(';').includes(pageSlug));
+                renderPostsToGrid(postsForCategory.sort(() => 0.5 - Math.random()), relatedPostsGrid);
+            } else if (pageSlug) {
+                // This is an individual article page. Use the smart contextual logic.
+                renderContextualPosts(path.substring(1));
+            } else {
+                // Fallback for safety (e.g., unexpected URL).
+                renderPostsToGrid([...window.GKApp.searchData].sort(() => 0.5 - Math.random()), relatedPostsGrid);
+            }
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.GKApp.dataReady
+        .then(initializePostRendering)
+        .catch(error => {
+            console.error("Failed to initialize post rendering due to data loading error:", error);
+            const postsContainer = document.getElementById("post-grid");
+            if (postsContainer) {
+                postsContainer.innerHTML = '<p class="no-posts-found">Could not load articles. Please check your connection and try again.</p>';
+            }
+        });
 });
-
-
