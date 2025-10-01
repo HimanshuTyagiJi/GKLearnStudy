@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     menuInner?.addEventListener("scroll", updateArrows);
     window.addEventListener("resize", updateArrows);
-    updateArrows(); // Initial check
+    requestAnimationFrame(updateArrows); // Initial check
 });
   document.addEventListener("DOMContentLoaded", () => {
                 const shareButton = document.getElementById("shareButton");
