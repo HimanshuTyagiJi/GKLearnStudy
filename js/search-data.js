@@ -52,12 +52,11 @@ function initializePostRendering(){
             ? post.svg 
             : `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
 
-        const clipPathId=`circle-clip-avatar-gt-${index}-${Math.random()}`;
         const metaBlock=`
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                        <svg width="40" height="40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="35%" font-size="90" font-weight="bold" fill="red" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="38" fill="purple" text-anchor="middle">Learn Study</text><clipPath id="${clipPathId}"><circle cx="150" cy="150" r="150"></circle></clipPath><g clip-path="url(#${clipPathId})"><path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path><path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path></g></svg>
+                        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" /><stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" /></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>
                     </div>
                     <div class="author-details">
                         <span class="author vcard">by <span class="name">${post.author}</span></span>
