@@ -127,7 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
             header.classList.add('search-active-desktop');
             overlay.classList.add('is-active');
         }
-        searchInput.focus();
+        // Defer focus to prevent forced reflow by allowing the browser to paint first.
+        setTimeout(() => searchInput.focus(), 0);
     };
 
     const closeSearch = () => {
