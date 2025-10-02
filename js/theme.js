@@ -227,17 +227,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!leftArrow || !rightArrow || !menuInner) return;
 
+        // Batch all DOM reads first to avoid layout thrashing.
         const isDesktop = window.innerWidth > 850;
         const scrollWidth = menuInner.scrollWidth;
         const clientWidth = menuInner.clientWidth;
+        const scrollLeft = menuInner.scrollLeft;
         
+        // Now, perform calculations and DOM writes.
+        const maxScroll = scrollWidth - clientWidth;
+
         if (!isDesktop || scrollWidth <= clientWidth) {
             leftArrow.style.display = 'none';
             rightArrow.style.display = 'none';
         } else {
-            const scrollLeft = menuInner.scrollLeft;
-            const maxScroll = scrollWidth - clientWidth;
-
             leftArrow.style.display = scrollLeft > 1 ? "flex" : "none";
             rightArrow.style.display = scrollLeft < maxScroll - 1 ? "flex" : "none";
         }
