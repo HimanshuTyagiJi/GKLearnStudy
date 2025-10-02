@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const leftArrow = document.getElementById('menuLeft');
     const rightArrow = document.getElementById('menuRight');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const shareButton = document.getElementById("shareButton");
 
     // --- Dynamic Content Injection ---
     function initMenuItems() {
@@ -35,11 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let bestMatch = null;
 
         links.forEach(link => {
-            // A link is a candidate if the current URL starts with its href.
             if (currentUrl.startsWith(link.href)) {
-                // If we haven't found a match yet, this is our best one so far.
-                // Or, if this link's href is longer than the previous best match,
-                // it's a more specific (and therefore better) match.
                 if (!bestMatch || link.href.length > bestMatch.href.length) {
                     bestMatch = link;
                 }
@@ -106,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Theme Switcher Logic ---
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     html.setAttribute('data-theme', savedTheme);
-    themeSwitcher.addEventListener('click', () => {
+    themeSwitcher?.addEventListener('click', () => {
         const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         html.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
@@ -140,10 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestionsList.style.display = 'none';
     };
 
-    searchBtn.addEventListener('click', openSearch);
-    backBtn.addEventListener('click', closeSearch);
+    searchBtn?.addEventListener('click', openSearch);
+    backBtn?.addEventListener('click', closeSearch);
 
-    searchInput.addEventListener('input', async () => {
+    searchInput?.addEventListener('input', async () => {
         const query = searchInput.value.toLowerCase().trim();
         
         if (query.length === 0) {
@@ -151,7 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Wait for data to be ready before searching
         await window.GKApp.dataReady;
 
         const searchData = window.GKApp?.searchData || [];
@@ -164,33 +160,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const filteredData = fuzzySearch(query, searchData);
-        suggestionsList.innerHTML = '';
+        
+        let suggestionsHTML = '';
         if (filteredData.length > 0) {
-            filteredData.slice(0, 10).forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="${item.url}" class="result-card">
+            suggestionsHTML = filteredData.slice(0, 10).map(item => `
+                <li>
+                    <a href="${item.url}" class="result-card">
                         <div class="result-icon">${item.svg || generateSVG(item.title)}</div>
                         <div class="result-text">
                             <div class="result-title">${item.title}</div>
                             <div class="result-description">${item.paragraph}</div>
                         </div>
                         <svg class="result-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
-                        </a>`;
-                suggestionsList.appendChild(li);
-            });
+                    </a>
+                </li>
+            `).join('');
         } else {
-            suggestionsList.innerHTML = `<li class="no-results">No results found</li>`;
+            suggestionsHTML = `<li class="no-results">No results found</li>`;
         }
+
+        suggestionsList.innerHTML = suggestionsHTML;
         suggestionsList.style.display = 'block';
     });
 
-    // --- Global Click/Key Listeners ---
+    // --- Global Click/Key/Interaction Listeners ---
     overlay?.addEventListener("click", () => {
         toggleMenu(false);
         closeSearch();
     });
     document.addEventListener('click', (e) => {
-        if (!header.contains(e.target) && !suggestionsList.contains(e.target)) {
+        if (header && suggestionsList && !header.contains(e.target) && !suggestionsList.contains(e.target)) {
             closeSearch();
         }
     });
@@ -200,59 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleMenu(false);
         }
     });
-
-    // --- Arrow Scroll Logic ---
-    let isUpdateArrowsScheduled = false;
-
-    const updateArrows = () => {
-        isUpdateArrowsScheduled = false; // Reset the flag for the next frame
-
-        if (!leftArrow || !rightArrow || !menuInner) return;
-
-        // Batch all DOM reads together
-        const isDesktop = window.innerWidth > 850;
-        const scrollWidth = menuInner.scrollWidth;
-        const clientWidth = menuInner.clientWidth;
-        
-        // Then, batch all DOM writes together
-        if (!isDesktop || scrollWidth <= clientWidth) {
-            // Hide arrows if not on desktop or if there's no overflow
-            leftArrow.style.display = 'none';
-            rightArrow.style.display = 'none';
-        } else {
-            // Only read scrollLeft when necessary
-            const scrollLeft = menuInner.scrollLeft;
-            const maxScroll = scrollWidth - clientWidth;
-
-            leftArrow.style.display = scrollLeft > 1 ? "flex" : "none";
-            rightArrow.style.display = scrollLeft < maxScroll - 1 ? "flex" : "none";
-        }
-    };
-
-    const throttledUpdateArrows = () => {
-        if (isUpdateArrowsScheduled) return; // If an update is already scheduled, do nothing
-        isUpdateArrowsScheduled = true;
-        requestAnimationFrame(updateArrows);
-    };
     
-    leftArrow?.addEventListener("click", () => menuInner.scrollBy({ left: -300, behavior: "smooth" }));
-    rightArrow?.addEventListener("click", () => menuInner.scrollBy({ left: 300, behavior: "smooth" }));
-    
-    // --- INITIALIZATION ---
-    initMenuItems();
-    initFooterContent();
-
-    // Use the throttled function for events that can fire rapidly
-    menuInner?.addEventListener("scroll", throttledUpdateArrows);
-    window.addEventListener("resize", throttledUpdateArrows);
-    
-    // Defer the initial check until the entire page is loaded to ensure
-    // styles are applied and dimensions are correct.
-    window.addEventListener("load", throttledUpdateArrows); 
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    const shareButton = document.getElementById("shareButton");
     if (shareButton) {
         shareButton.addEventListener("click", async () => {
             const shareData = {
@@ -271,4 +218,46 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // --- Arrow Scroll Logic ---
+    let isUpdateArrowsScheduled = false;
+
+    const updateArrows = () => {
+        isUpdateArrowsScheduled = false;
+
+        if (!leftArrow || !rightArrow || !menuInner) return;
+
+        const isDesktop = window.innerWidth > 850;
+        const scrollWidth = menuInner.scrollWidth;
+        const clientWidth = menuInner.clientWidth;
+        
+        if (!isDesktop || scrollWidth <= clientWidth) {
+            leftArrow.style.display = 'none';
+            rightArrow.style.display = 'none';
+        } else {
+            const scrollLeft = menuInner.scrollLeft;
+            const maxScroll = scrollWidth - clientWidth;
+
+            leftArrow.style.display = scrollLeft > 1 ? "flex" : "none";
+            rightArrow.style.display = scrollLeft < maxScroll - 1 ? "flex" : "none";
+        }
+    };
+
+    const throttledUpdateArrows = () => {
+        if (isUpdateArrowsScheduled) return;
+        isUpdateArrowsScheduled = true;
+        requestAnimationFrame(updateArrows);
+    };
+    
+    leftArrow?.addEventListener("click", () => menuInner.scrollBy({ left: -300, behavior: "smooth" }));
+    rightArrow?.addEventListener("click", () => menuInner.scrollBy({ left: 300, behavior: "smooth" }));
+    
+    // --- INITIALIZATION ---
+    initMenuItems();
+    initFooterContent();
+
+    menuInner?.addEventListener("scroll", throttledUpdateArrows);
+    window.addEventListener("resize", throttledUpdateArrows);
+    
+    window.addEventListener("load", throttledUpdateArrows); 
 });
