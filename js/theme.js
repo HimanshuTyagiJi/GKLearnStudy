@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mobile Menu
     const burger = document.getElementById("burger");
     const mobileMenuContainer = document.getElementById("mobile-menu-container");
-    const mobileMenuInner = mobileMenuContainer?.querySelector(".mobile-menu-inner");
+    const mobileMenuInner = document.querySelector("#mobile-menu-container .mobile-menu-inner");
     const closeMenuBtn = document.getElementById('closeMenuBtn');
     
     // Desktop Menu
     const desktopMenu = document.getElementById("menu");
-    const desktopMenuInner = desktopMenu?.querySelector(".menu-inner");
+    const desktopMenuInner = document.querySelector("#menu .menu-inner");
     const leftArrow = document.getElementById('menuLeft');
     const rightArrow = document.getElementById('menuRight');
     
