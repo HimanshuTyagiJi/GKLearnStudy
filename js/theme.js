@@ -1,5 +1,16 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+    // --- UTILITY FUNCTIONS ---
+    const debounce = (func, delay = 250) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    };
+
     // --- DOM Elements ---
     const themeSwitcher = document.getElementById('themeSwitcher');
     const html = document.documentElement;
@@ -140,8 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchBtn?.addEventListener('click', openSearch);
     backBtn?.addEventListener('click', closeSearch);
-
-    searchInput?.addEventListener('input', async () => {
+    
+    const handleSearchInput = async () => {
         const query = searchInput.value.toLowerCase().trim();
         
         if (query.length === 0) {
@@ -182,7 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         suggestionsList.innerHTML = suggestionsHTML;
         suggestionsList.style.display = 'block';
-    });
+    };
+    
+    searchInput?.addEventListener('input', debounce(handleSearchInput, 300));
+
 
     // --- Global Click/Key/Interaction Listeners ---
     overlay?.addEventListener("click", () => {
