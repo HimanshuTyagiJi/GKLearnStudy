@@ -241,8 +241,8 @@ document.addEventListener("DOMContentLoaded", () => {
         isUpdateArrowsScheduled = false;
 
         if (!leftArrow || !rightArrow || !menuInner) return;
-
-        // Batch all DOM reads first to avoid layout thrashing.
+        
+        // **PERFORMANCE FIX:** Batch all DOM reads first to avoid forced reflow (layout thrashing).
         const isDesktop = window.innerWidth > 850;
         const scrollWidth = menuInner.scrollWidth;
         const clientWidth = menuInner.clientWidth;
@@ -276,5 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
     menuInner?.addEventListener("scroll", throttledUpdateArrows);
     window.addEventListener("resize", throttledUpdateArrows);
     
-    window.addEventListener("load", throttledUpdateArrows); 
+    // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
+    window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
