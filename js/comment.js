@@ -1,5 +1,5 @@
 // --- Firebase Module Placeholders ---
-let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn;
+let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
@@ -9,6 +9,7 @@ let isAuthInitialized = false;
 let isFirestoreInitialized = false;
 let authPromise = null;
 let unsubscribeComments = null;
+let allComments = []; // Global cache for comments
 
 // --- Dynamic Script Loader ---
 function loadFirebaseScript(module) {
@@ -47,16 +48,15 @@ async function initializeFirebaseApp() {
 async function initFirestore() {
     if (isFirestoreInitialized) return;
     await initializeFirebaseApp();
-    // Use the full firestore library for real-time updates (onSnapshot)
     await loadFirebaseScript('firestore');
     const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
     db = firestore.getFirestore(firebaseApp);
-    addDocFn = firestore.addDoc; collectionFn = firestore.collection; getDocsFn = firestore.getDocs;
+    addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
     runTransactionFn = firestore.runTransaction;
-    onSnapshotFn = firestore.onSnapshot; // For real-time listeners
+    onSnapshotFn = firestore.onSnapshot;
     isFirestoreInitialized = true;
 }
 
@@ -143,109 +143,76 @@ async function signOutUser() {
 loginBtn.addEventListener('click', signInWithGoogle);
 logoutBtn.addEventListener('click', signOutUser);
 
-
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
         const wasLoggedIn = !!currentUser;
         currentUser = user;
         if (user) {
-            userInfo.innerHTML = `
-                <img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar">
-                <span class="user-name">${escapeHTML(user.displayName)}</span>
-            `;
+            userInfo.innerHTML = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
             authContainer.classList.add('logged-in');
             commentFormShell.style.display = 'block';
             loginPrompt.style.display = 'none';
             nameInput.value = user.displayName;
-            nameInput.readOnly = true;
         } else {
             authContainer.classList.remove('logged-in');
             commentFormShell.style.display = 'none';
             loginPrompt.style.display = 'block';
             nameInput.value = '';
-            nameInput.readOnly = false;
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
-        // Re-render comments if login state changes to show/hide user-specific buttons
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
         }
     });
 }
 
-// ====== Char Counter ======
-commentInput.addEventListener('input', () => {
-  charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`;
-});
+// ====== Char Counter & Form Logic ======
+commentInput.addEventListener('input', () => { charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`; });
 charCounter.textContent = `0 / ${commentInput.maxLength}`;
+cancelBtn.addEventListener('click', () => {
+  parentIdInput.value = '';
+  replyingToEl.style.display = 'none';
+  cancelBtn.style.display = 'none';
+  commentInput.placeholder = 'Your comment';
+});
 
-// ====== Build Comment Tree ======
-function buildTree(items){
+// ====== Comment Tree & Rendering Logic ======
+const buildTree = items => {
   const byId = {};
   items.forEach(it => (it.children = [], byId[it.id] = it));
   const roots = [];
   items.forEach(it => it.parentId && byId[it.parentId] ? byId[it.parentId].children.push(it) : roots.push(it));
   return roots;
-}
-function flattenTree(nodes){
+};
+const flattenTree = nodes => {
   const res = [];
   (function trav(n,d){
-    for(const x of n){
-      x.depth = d;
-      res.push(x);
-      if(x.children?.length) trav(x.children,d+1);
-    }
+    for(const x of n){ x.depth = d; res.push(x); if(x.children?.length) trav(x.children,d+1); }
   })(nodes,0);
   return res;
-}
+};
 
-let allComments = []; // Cache comments to avoid re-fetching
-
-// ====== Render Comments ======
 function renderNode(node){
   const li = document.createElement('div');
   li.className = 'comment-item' + (node.depth ? ' reply-item' : '');
-  
-  const authorAvatar = node.photoURL 
-    ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(node.name)}" class="comment-avatar" loading="lazy">`
-    : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
+  if (node.isOptimistic) li.style.opacity = '0.7';
 
-  const headerHTML = `
-    <div class="comment-header">
-        <div class="comment-author-info">
-            ${authorAvatar}
-            <div class="comment-author">${escapeHTML(node.name) || 'Anonymous'}</div>
-        </div>
-        <div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div>
-    </div>`;
+  const authorAvatar = node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(node.name)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
+  const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${escapeHTML(node.name) || 'Anonymous'}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
   const hasDisliked = currentUser && node.dislikedBy?.includes(currentUser.uid);
-
-  const actionsHTML = `
-    <div class="comment-actions" data-comment-id="${node.id}">
-        <button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">
-            👍 <span class="count">${node.likes || 0}</span>
-        </button>
-        <button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">
-            👎 <span class="count">${node.dislikes || 0}</span>
-        </button>
-        <button class="btn small reply-btn" data-action="reply">Reply</button>
-        ${currentUser && currentUser.uid === node.uid ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}
-    </div>`;
+  const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${currentUser && currentUser.uid === node.uid ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
 
   li.innerHTML = headerHTML;
-
   const body = document.createElement('div');
-  body.className = 'comment-body';
-  body.textContent = node.comment || '';
-  body.style.whiteSpace = 'pre-wrap';
-  
+  body.className = 'comment-body'; body.textContent = node.comment || ''; body.style.whiteSpace = 'pre-wrap';
   li.append(body);
   li.insertAdjacentHTML('beforeend', actionsHTML);
   return li;
 }
+
 function renderFlatList(nodes, container){
   container.innerHTML = ''; 
   if (nodes.length > 0) {
@@ -259,33 +226,27 @@ function renderFlatList(nodes, container){
 async function loadComments(){
   try {
     await initFirestore();
-
-    if (unsubscribeComments) {
-        unsubscribeComments(); // Detach any old listener before creating a new one
-    }
+    if (unsubscribeComments) unsubscribeComments();
 
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
-    
     unsubscribeComments = onSnapshotFn(q, (snapshot) => {
         allComments = [];
         snapshot.forEach(d => allComments.push({id: d.id, ...d.data()}));
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-        if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
+        commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
-        console.error('Error with real-time listener:', error);
-        commentsList.innerHTML = `<p class="muted error">Could not load comments in real-time. Please check security rules.</p>`;
-        if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
+        console.error('Real-time listener error:', error);
+        commentsList.innerHTML = `<p class="muted error">Could not load comments. Check security rules.</p>`;
+        commentsWrapper?.classList.remove('comments-loading');
     });
-
   } catch(err){
-    console.error('Error setting up comments listener:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments. Please check your connection.</p>`;
-    if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
+    console.error('Error setting up listener:', err);
+    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    commentsWrapper?.classList.remove('comments-loading');
   }
 }
 
-
-// ====== Handle Actions using Event Delegation ======
+// ====== Actions with Optimistic Updates ======
 commentsList.addEventListener('click', async (e) => {
     const button = e.target.closest('button[data-action]');
     if (!button) return;
@@ -293,7 +254,7 @@ commentsList.addEventListener('click', async (e) => {
     const action = button.dataset.action;
     const commentId = button.parentElement.dataset.commentId;
 
-    if (!currentUser && (action === 'like' || action === 'dislike' || action === 'reply')) {
+    if (!currentUser && ['like', 'dislike', 'reply'].includes(action)) {
         signInWithGoogle();
         return;
     }
@@ -306,157 +267,159 @@ commentsList.addEventListener('click', async (e) => {
             replyingToEl.style.display = 'block';
             replyingToEl.textContent = `Replying to ${escapeHTML(node.name || 'Anonymous')}`;
             cancelBtn.style.display = 'inline-block';
-            commentInput.placeholder = 'Write a reply…';
             commentInput.focus();
             break;
         case 'delete':
             if (confirm('Delete this comment and all its replies?')) {
-                await deleteWithDescendants(node.id);
+                deleteWithDescendants(node.id);
             }
             break;
-        case 'like':
-        case 'dislike':
-            await handleVote(node.id, action);
+        case 'like': case 'dislike':
+            handleVote(node.id, action);
             break;
     }
 });
 
-// ====== Voting Logic ======
 async function handleVote(commentId, voteType) {
     if (!currentUser) return;
-    const docRef = docFn(db, ...commentsPath, commentId);
     const uid = currentUser.uid;
 
+    const commentIndex = allComments.findIndex(c => c.id === commentId);
+    if (commentIndex === -1) return;
+
+    // --- Optimistic UI Update ---
+    const comment = allComments[commentIndex];
+    const likedBy = comment.likedBy || [];
+    const dislikedBy = comment.dislikedBy || [];
+    const isLiked = likedBy.includes(uid);
+    const isDisliked = dislikedBy.includes(uid);
+
+    if (voteType === 'like') {
+        if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
+        else {
+            likedBy.push(uid);
+            if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+        }
+    } else if (voteType === 'dislike') {
+        if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+        else {
+            dislikedBy.push(uid);
+            if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
+        }
+    }
+    comment.likes = likedBy.length;
+    comment.dislikes = dislikedBy.length;
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+    // --- End Optimistic UI Update ---
+
+    // --- Sync with Firestore ---
     try {
-        await runTransactionFn(db, async (transaction) => {
-            const doc = await transaction.get(docRef);
-            if (!doc.exists()) throw "Document does not exist!";
-
+        const docRef = docFn(db, ...commentsPath, commentId);
+        await runTransactionFn(db, async t => {
+            const doc = await t.get(docRef);
+            if (!doc.exists()) throw "Doc not found";
+            // Re-apply logic on server data to prevent race conditions
             const data = doc.data();
-            const likedBy = data.likedBy || [];
-            const dislikedBy = data.dislikedBy || [];
-
-            const isLiked = likedBy.includes(uid);
-            const isDisliked = dislikedBy.includes(uid);
-
-            const newLikedBy = [...likedBy];
-            const newDislikedBy = [...dislikedBy];
-
+            const serverLikedBy = data.likedBy || [], serverDislikedBy = data.dislikedBy || [];
+            const isServerLiked = serverLikedBy.includes(uid), isServerDisliked = serverDislikedBy.includes(uid);
             if (voteType === 'like') {
-                if (isLiked) { // Unlike
-                    const index = newLikedBy.indexOf(uid);
-                    newLikedBy.splice(index, 1);
-                } else { // Like
-                    newLikedBy.push(uid);
-                    if (isDisliked) { // Remove from dislike if previously disliked
-                        const index = newDislikedBy.indexOf(uid);
-                        newDislikedBy.splice(index, 1);
-                    }
+                if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                else {
+                    serverLikedBy.push(uid);
+                    if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
                 }
             } else if (voteType === 'dislike') {
-                if (isDisliked) { // Undislike
-                    const index = newDislikedBy.indexOf(uid);
-                    newDislikedBy.splice(index, 1);
-                } else { // Dislike
-                    newDislikedBy.push(uid);
-                    if (isLiked) { // Remove from like if previously liked
-                        const index = newLikedBy.indexOf(uid);
-                        newLikedBy.splice(index, 1);
-                    }
+                if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                else {
+                    serverDislikedBy.push(uid);
+                    if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                 }
             }
-            
-            transaction.update(docRef, {
-                likedBy: newLikedBy,
-                dislikedBy: newDislikedBy,
-                likes: newLikedBy.length,
-                dislikes: newDislikedBy.length
-            });
+            t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
         });
     } catch (e) {
-        console.error("Transaction failed: ", e);
-        alert("Could not process your vote. Please check permissions in your Firebase console.");
+        console.error("Vote transaction failed:", e); // onSnapshot will eventually correct the UI
     }
 }
 
-
-// ====== Delete Recursive ======
 async function deleteWithDescendants(rootId){
-  const toDelete = new Set([rootId]);
-  let added = true;
-  while(added){
-    added = false;
-    for(const it of allComments){
-      if(it.parentId && toDelete.has(it.parentId) && !toDelete.has(it.id)){
-        toDelete.add(it.id); added = true;
-      }
+    const toDeleteIds = new Set([rootId]);
+    let added = true;
+    while(added){
+        added = false;
+        for(const it of allComments) if(it.parentId && toDeleteIds.has(it.parentId) && !toDeleteIds.has(it.id)) { toDeleteIds.add(it.id); added = true; }
     }
-  }
-  for(const id of toDelete) await deleteDocFn(docFn(db,...commentsPath,id));
+
+    // --- Optimistic UI Update ---
+    const originalComments = [...allComments];
+    allComments = allComments.filter(c => !toDeleteIds.has(c.id));
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+
+    // --- Sync with Firestore ---
+    try {
+        await Promise.all([...toDeleteIds].map(id => deleteDocFn(docFn(db, ...commentsPath, id))));
+    } catch (error) {
+        console.error("Failed to delete comments:", error);
+        allComments = originalComments; // Revert on failure
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        alert("Could not delete the comment.");
+    }
 }
 
-// ====== Submit Comment ======
 form.addEventListener('submit', async e => {
-  e.preventDefault();
-  if(!currentUser || !commentInput.value.trim()) {
-      if (!currentUser) alert("Please sign in to post a comment.");
-      return;
-  }
+    e.preventDefault();
+    if (!currentUser || !commentInput.value.trim()) return;
 
-  submitButton.disabled = true;
-  submitButton.textContent = 'Posting…';
-  try {
-    await addDocFn(collectionFn(db,...commentsPath), {
-      name: currentUser.displayName,
-      uid: currentUser.uid,
-      photoURL: currentUser.photoURL,
-      comment: commentInput.value.trim(),
-      timestamp: serverTimestampFn(),
-      parentId: parentIdInput.value || null,
-      likes: 0,
-      dislikes: 0,
-      likedBy: [],
-      dislikedBy: []
-    });
-    form.reset();
-    commentInput.value = '';
-    charCounter.textContent = `0 / ${commentInput.maxLength}`;
-    replyingToEl.style.display = 'none';
-    cancelBtn.style.display = 'none';
+    submitButton.disabled = true;
+    submitButton.textContent = 'Posting…';
+
+    const commentText = commentInput.value.trim();
+    const parentId = parentIdInput.value || null;
+
+    // --- Optimistic UI Update ---
+    const tempComment = {
+        id: `temp_${Date.now()}`, name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+        comment: commentText, timestamp: { toDate: () => new Date() }, parentId: parentId,
+        likes: 0, dislikes: 0, likedBy: [], dislikedBy: [], isOptimistic: true
+    };
+    allComments.unshift(tempComment);
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+    
+    form.reset(); commentInput.value = ''; charCounter.textContent = `0 / ${commentInput.maxLength}`;
+    replyingToEl.style.display = 'none'; cancelBtn.style.display = 'none';
     nameInput.value = currentUser.displayName;
-  } catch(err){
-    console.error('Error adding comment:', err);
-    alert('Could not post comment.');
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = 'Submit';
-  }
-});
+    // --- End Optimistic UI Update ---
 
-cancelBtn.addEventListener('click', () => {
-  parentIdInput.value = '';
-  replyingToEl.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  commentInput.placeholder = 'Your comment';
+    // --- Sync with Firestore ---
+    try {
+        await addDocFn(collectionFn(db,...commentsPath), {
+            name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+            comment: commentText, timestamp: serverTimestampFn(), parentId: parentId,
+            likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
+        });
+    } catch(err){
+        console.error('Error adding comment:', err);
+        allComments = allComments.filter(c => c.id !== tempComment.id); // Revert on failure
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        alert('Could not post comment.');
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit';
+    }
 });
-
 
 // ====== LAZY INITIALIZATION LOGIC ======
 let commentsInitialized = false;
-
 async function initializeCommentsSection() {
     if (commentsInitialized) return;
     commentsInitialized = true;
-
     try {
         await initFirestore();
         await loadComments();
         initFirebaseAuth(); 
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
-        if (commentsList) {
-            commentsList.innerHTML = `<p class="muted error">Could not load the comments section.</p>`;
-        }
+        if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
     }
 }
 
@@ -470,7 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
         }, { rootMargin: "200px" });
-
         observer.observe(commentsWrapper);
     }
 });
