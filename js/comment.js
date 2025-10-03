@@ -1,22 +1,34 @@
+let db, auth, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
+let onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
+let currentUser = null;
 
-let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
-  if(db) return db;
+  if(db) return;
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js");
-  // Use the 'lite' version of Firestore to avoid real-time listeners and associated network issues.
-  const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
-  db=f.getFirestore(initializeApp({
+  const app = initializeApp({
     apiKey:"AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
     authDomain:"appcomment.firebaseapp.com",
     projectId:"appcomment",
     storageBucket:"appcomment.firebasestorage.app",
     messagingSenderId:"156258808941",
     appId:"1:156258808941:web:04a1f7470ac43657c7fb64"
-  }));
+  });
+
+  const firestorePromise = import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
+  const authPromise = import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
+
+  const [f, a] = await Promise.all([firestorePromise, authPromise]);
+
+  db = f.getFirestore(app);
   addDocFn=f.addDoc; collectionFn=f.collection; getDocsFn=f.getDocs;
   deleteDocFn=f.deleteDoc; queryFn=f.query; orderByFn=f.orderBy;
   serverTimestampFn=f.serverTimestamp; docFn=f.doc;
-  return db;
+
+  auth = a.getAuth(app);
+  onAuthStateChangedFn = a.onAuthStateChanged;
+  GoogleAuthProviderFn = a.GoogleAuthProvider;
+  signInWithPopupFn = a.signInWithPopup;
+  signOutFn = a.signOut;
 }
 
 // ====== Helpers ======
@@ -44,6 +56,56 @@ const cancelBtn = form.querySelector('#cancel-reply');
 const replyingToEl = form.querySelector('#replying-to');
 const submitButton = form.querySelector('#submit-button');
 const commentsWrapper = document.getElementById('comments-main-container');
+const authContainer = document.getElementById('auth-container');
+const loginBtn = document.getElementById('login-btn');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+const commentFormShell = document.getElementById('comment-form-shell');
+const loginPrompt = document.getElementById('login-prompt');
+
+// ====== Auth Functions ======
+async function signInWithGoogle() {
+    await initFirebase();
+    const provider = new GoogleAuthProviderFn();
+    try {
+        await signInWithPopupFn(auth, provider);
+    } catch (error) {
+        console.error("Google Sign-In Error:", error);
+        alert("Could not sign in with Google. Please try again.");
+    }
+}
+
+async function signOut() {
+    await signOutFn(auth);
+}
+
+loginBtn.addEventListener('click', signInWithGoogle);
+logoutBtn.addEventListener('click', signOut);
+
+function setupAuthObserver() {
+    onAuthStateChangedFn(auth, user => {
+        currentUser = user;
+        if (user) {
+            // User is signed in
+            userInfo.innerHTML = `
+                <img src="${user.photoURL}" alt="${user.displayName}" class="user-avatar">
+                <span class="user-name">${user.displayName}</span>
+            `;
+            authContainer.classList.add('logged-in');
+            commentFormShell.style.display = 'block';
+            loginPrompt.style.display = 'none';
+            nameInput.value = user.displayName;
+            nameInput.readOnly = true;
+        } else {
+            // User is signed out
+            authContainer.classList.remove('logged-in');
+            commentFormShell.style.display = 'none';
+            loginPrompt.style.display = 'block';
+            nameInput.value = '';
+            nameInput.readOnly = false;
+        }
+    });
+}
 
 
 // ====== Char Counter ======
@@ -76,15 +138,21 @@ function flattenTree(nodes){
 function renderNode(node){
   const li = document.createElement('div');
   li.className = 'comment-item' + (node.depth ? ' reply-item' : '');
-  const header = document.createElement('div');
-  header.className = 'comment-header';
-  const author = document.createElement('div');
-  author.className = 'comment-author';
-  author.textContent = node.name || 'Anonymous';
-  const date = document.createElement('div');
-  date.className = 'comment-date';
-  date.textContent = fmtDate(safeToDate(node.timestamp));
-  header.append(author, date);
+  
+  const authorAvatar = node.photoURL 
+    ? `<img src="${node.photoURL}" alt="${escapeHTML(node.name)}" class="comment-avatar">`
+    : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
+
+  const headerHTML = `
+    <div class="comment-header">
+        <div class="comment-author-info">
+            ${authorAvatar}
+            <div class="comment-author">${escapeHTML(node.name) || 'Anonymous'}</div>
+        </div>
+        <div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div>
+    </div>`;
+
+  li.innerHTML = headerHTML;
 
   const body = document.createElement('div');
   body.className = 'comment-body';
@@ -93,31 +161,37 @@ function renderNode(node){
 
   const actions = document.createElement('div');
   actions.className = 'comment-actions';
-  const replyBtn = document.createElement('button');
-  replyBtn.type = 'button';
-  replyBtn.className = 'btn small';
-  replyBtn.textContent = 'Reply';
-  const delBtn = document.createElement('button');
-  delBtn.type = 'button';
-  delBtn.className = 'btn small danger';
-  delBtn.textContent = 'Delete';
-  actions.append(replyBtn, delBtn);
+  
+  if (currentUser) {
+    const replyBtn = document.createElement('button');
+    replyBtn.type = 'button';
+    replyBtn.className = 'btn small';
+    replyBtn.textContent = 'Reply';
+    replyBtn.addEventListener('click', () => {
+        parentIdInput.value = node.id;
+        replyingToEl.style.display = 'block';
+        replyingToEl.textContent = `Replying to ${escapeHTML(node.name||'Anonymous')}`;
+        cancelBtn.style.display = 'inline-block';
+        commentInput.placeholder = 'Write a reply…';
+        commentInput.focus();
+    });
+    actions.appendChild(replyBtn);
+  }
 
-  replyBtn.addEventListener('click', () => {
-    parentIdInput.value = node.id;
-    replyingToEl.style.display = 'block';
-    replyingToEl.textContent = `Replying to ${escapeHTML(node.name||'Anonymous')}`;
-    cancelBtn.style.display = 'inline-block';
-    commentInput.placeholder = 'Write a reply…';
-    commentInput.focus();
-  });
-  delBtn.addEventListener('click', async () => {
-    if(!confirm('Delete this comment and all its replies?')) return;
-    await deleteWithDescendants(node.id);
-    await loadComments();
-  });
-
-  li.append(header, body, actions);
+  if (currentUser && currentUser.uid === node.uid) {
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'btn small danger';
+      delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', async () => {
+        if(!confirm('Delete this comment and all its replies?')) return;
+        await deleteWithDescendants(node.id);
+        await loadComments();
+      });
+      actions.appendChild(delBtn);
+  }
+  
+  li.append(body, actions);
   return li;
 }
 function renderFlatList(nodes, container){
@@ -127,7 +201,6 @@ function renderFlatList(nodes, container){
 
 // ====== Load Comments ======
 async function loadComments(){
-  // Skeleton is already showing. We just load the data.
   try {
     await initFirebase();
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
@@ -144,8 +217,6 @@ async function loadComments(){
     console.error('Error loading comments:', err);
     commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
   } finally {
-    // ** CRITICAL FOR CLS FIX **
-    // This removes the min-height from the container, collapsing it to the actual content height.
     if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
   }
 }
@@ -173,21 +244,26 @@ async function deleteWithDescendants(rootId){
 // ====== Submit ======
 form.addEventListener('submit', async e => {
   e.preventDefault();
-  if(!nameInput.value.trim() || !commentInput.value.trim()) return;
+  if(!currentUser || !commentInput.value.trim()) return;
+
   submitButton.disabled = true;
   submitButton.textContent = 'Posting…';
   try {
     await initFirebase();
     await addDocFn(collectionFn(db,...commentsPath), {
-      name: nameInput.value.trim(),
+      name: currentUser.displayName,
+      uid: currentUser.uid,
+      photoURL: currentUser.photoURL,
       comment: commentInput.value.trim(),
       timestamp: serverTimestampFn(),
       parentId: parentIdInput.value || null
     });
     form.reset();
+    commentInput.value = ''; // Ensure textarea is cleared
     charCounter.textContent = `0 / ${commentInput.maxLength}`;
     replyingToEl.style.display = 'none';
     cancelBtn.style.display = 'none';
+    nameInput.value = currentUser.displayName; // Re-fill after reset
     await loadComments();
   } catch(err){
     console.error('Error adding comment:', err);
@@ -207,10 +283,12 @@ cancelBtn.addEventListener('click', () => {
 
 // ====== Lazy Load Comments on Scroll ======
 let commentsLoaded = false;
-function initCommentsIfNeeded(){
+async function initCommentsIfNeeded(){
   if(commentsLoaded) return;
   commentsLoaded = true;
-  loadComments();
+  await initFirebase();
+  setupAuthObserver();
+  await loadComments();
 }
 
 if (commentsWrapper) {
@@ -218,13 +296,11 @@ if (commentsWrapper) {
       entries.forEach(entry => {
         if(entry.isIntersecting){
           initCommentsIfNeeded();
-          observer.disconnect(); // We only need to do this once.
+          observer.disconnect();
         }
       });
-    }, { rootMargin: "200px" }); // Start loading when it's 200px from the viewport
+    }, { rootMargin: "200px" });
 
     observer.observe(commentsWrapper);
-
-    // Also initialize if the user interacts with the form before scrolling
     form.addEventListener('focusin', initCommentsIfNeeded, { once: true });
 }
