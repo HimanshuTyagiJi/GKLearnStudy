@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     leftArrow?.addEventListener("click", () => menuInner.scrollBy({ left: -300, behavior: "smooth" }));
     rightArrow?.addEventListener("click", () => menuInner.scrollBy({ left: 300, behavior: "smooth" }));
-    
+
     // --- INITIALIZATION ---
     initMenuItems();
     initFooterContent();
