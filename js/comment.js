@@ -1,6 +1,6 @@
 
 // --- Firebase Module Placeholders ---
-let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
+let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
@@ -14,10 +14,16 @@ let authPromise = null;
 function loadFirebaseScript(module) {
     const url = `https://www.gstatic.com/firebasejs/9.22.1/firebase-${module}.js`;
     return new Promise((resolve, reject) => {
+        const existingScript = document.querySelector(`script[src="${url}"]`);
+        if (existingScript) {
+            if (existingScript.dataset.loaded) resolve();
+            else existingScript.addEventListener('load', resolve);
+            return;
+        }
         const script = document.createElement('script');
         script.src = url;
-        script.type = "module"; 
-        script.onload = resolve;
+        script.type = "module";
+        script.onload = () => { script.dataset.loaded = true; resolve(); };
         script.onerror = reject;
         document.head.appendChild(script);
     });
@@ -48,6 +54,7 @@ async function initFirestore() {
     addDocFn = firestore.addDoc; collectionFn = firestore.collection; getDocsFn = firestore.getDocs;
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
+    runTransactionFn = firestore.runTransaction;
     isFirestoreInitialized = true;
 }
 
@@ -70,7 +77,6 @@ function initFirebaseAuth() {
     }
     return authPromise;
 }
-
 
 // ====== Helpers ======
 const escapeHTML = s => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
@@ -105,14 +111,13 @@ const commentFormShell = document.getElementById('comment-form-shell');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
 
-
 // ====== Auth Functions ======
 async function signInWithGoogle() {
     loginBtn.disabled = true;
     loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
     
     try {
-        await initFirebaseAuth(); // Ensures auth is loaded before use
+        await initFirebaseAuth();
         const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
@@ -121,7 +126,6 @@ async function signInWithGoogle() {
             alert("Could not sign in with Google. Please check your connection and try again.");
         }
     } finally {
-        // Auth state change will handle the button visibility, but we reset if login fails
         if (!currentUser) {
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
@@ -160,6 +164,8 @@ function setupAuthObserver() {
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
+        // Re-render comments to show/hide user-specific buttons
+        loadComments();
     });
 }
 
@@ -189,6 +195,8 @@ function flattenTree(nodes){
   return res;
 }
 
+let allComments = []; // Cache comments to avoid re-fetching
+
 // ====== Render Comments ======
 function renderNode(node){
   const li = document.createElement('div');
@@ -206,6 +214,21 @@ function renderNode(node){
         </div>
         <div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div>
     </div>`;
+  
+  const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
+  const hasDisliked = currentUser && node.dislikedBy?.includes(currentUser.uid);
+
+  const actionsHTML = `
+    <div class="comment-actions" data-comment-id="${node.id}">
+        <button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">
+            👍 <span class="count">${node.likes || 0}</span>
+        </button>
+        <button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">
+            👎 <span class="count">${node.dislikes || 0}</span>
+        </button>
+        <button class="btn small reply-btn" data-action="reply">Reply</button>
+        ${currentUser && currentUser.uid === node.uid ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}
+    </div>`;
 
   li.innerHTML = headerHTML;
 
@@ -213,44 +236,13 @@ function renderNode(node){
   body.className = 'comment-body';
   body.textContent = node.comment || '';
   body.style.whiteSpace = 'pre-wrap';
-
-  const actions = document.createElement('div');
-  actions.className = 'comment-actions';
   
-  if (currentUser) {
-    const replyBtn = document.createElement('button');
-    replyBtn.type = 'button';
-    replyBtn.className = 'btn small';
-    replyBtn.textContent = 'Reply';
-    replyBtn.addEventListener('click', () => {
-        parentIdInput.value = node.id;
-        replyingToEl.style.display = 'block';
-        replyingToEl.textContent = `Replying to ${escapeHTML(node.name||'Anonymous')}`;
-        cancelBtn.style.display = 'inline-block';
-        commentInput.placeholder = 'Write a reply…';
-        commentInput.focus();
-    });
-    actions.appendChild(replyBtn);
-  }
-
-  if (currentUser && currentUser.uid === node.uid) {
-      const delBtn = document.createElement('button');
-      delBtn.type = 'button';
-      delBtn.className = 'btn small danger';
-      delBtn.textContent = 'Delete';
-      delBtn.addEventListener('click', async () => {
-        if(!confirm('Delete this comment and all its replies?')) return;
-        await deleteWithDescendants(node.id);
-        await loadComments();
-      });
-      actions.appendChild(delBtn);
-  }
-  
-  li.append(body, actions);
+  li.append(body);
+  li.insertAdjacentHTML('beforeend', actionsHTML);
   return li;
 }
 function renderFlatList(nodes, container){
-  container.innerHTML = ''; // Clear skeleton
+  container.innerHTML = ''; 
   if (nodes.length > 0) {
       nodes.forEach(n => container.appendChild(renderNode(n)));
   } else {
@@ -261,12 +253,13 @@ function renderFlatList(nodes, container){
 // ====== Load Comments ======
 async function loadComments(){
   try {
+    await initFirestore();
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
     const snap = await getDocsFn(q);
-    const rows = [];
-    snap.forEach(d => rows.push({id:d.id, ...d.data()}));
+    allComments = [];
+    snap.forEach(d => allComments.push({id:d.id, ...d.data()}));
     
-    renderFlatList(flattenTree(buildTree(rows)), commentsList);
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
   } catch(err){
     console.error('Error loading comments:', err);
     commentsList.innerHTML = `<p class="muted error">Could not load comments. Check Firebase security rules.</p>`;
@@ -275,17 +268,108 @@ async function loadComments(){
   }
 }
 
+// ====== Handle Actions using Event Delegation ======
+commentsList.addEventListener('click', async (e) => {
+    const button = e.target.closest('button[data-action]');
+    if (!button) return;
+
+    const action = button.dataset.action;
+    const commentId = button.parentElement.dataset.commentId;
+
+    if (!currentUser && (action === 'like' || action === 'dislike' || action === 'reply')) {
+        signInWithGoogle();
+        return;
+    }
+    
+    const node = allComments.find(c => c.id === commentId);
+
+    switch (action) {
+        case 'reply':
+            parentIdInput.value = node.id;
+            replyingToEl.style.display = 'block';
+            replyingToEl.textContent = `Replying to ${escapeHTML(node.name || 'Anonymous')}`;
+            cancelBtn.style.display = 'inline-block';
+            commentInput.placeholder = 'Write a reply…';
+            commentInput.focus();
+            break;
+        case 'delete':
+            if (confirm('Delete this comment and all its replies?')) {
+                await deleteWithDescendants(node.id);
+                await loadComments();
+            }
+            break;
+        case 'like':
+        case 'dislike':
+            await handleVote(node.id, action);
+            await loadComments();
+            break;
+    }
+});
+
+// ====== Voting Logic ======
+async function handleVote(commentId, voteType) {
+    const docRef = docFn(db, ...commentsPath, commentId);
+    const uid = currentUser.uid;
+
+    try {
+        await runTransactionFn(db, async (transaction) => {
+            const doc = await transaction.get(docRef);
+            if (!doc.exists()) throw "Document does not exist!";
+
+            const data = doc.data();
+            const likedBy = data.likedBy || [];
+            const dislikedBy = data.dislikedBy || [];
+
+            const isLiked = likedBy.includes(uid);
+            const isDisliked = dislikedBy.includes(uid);
+
+            const newLikedBy = [...likedBy];
+            const newDislikedBy = [...dislikedBy];
+
+            if (voteType === 'like') {
+                if (isLiked) { // Unlike
+                    const index = newLikedBy.indexOf(uid);
+                    newLikedBy.splice(index, 1);
+                } else { // Like
+                    newLikedBy.push(uid);
+                    if (isDisliked) { // Remove from dislike if previously disliked
+                        const index = newDislikedBy.indexOf(uid);
+                        newDislikedBy.splice(index, 1);
+                    }
+                }
+            } else if (voteType === 'dislike') {
+                if (isDisliked) { // Undislike
+                    const index = newDislikedBy.indexOf(uid);
+                    newDislikedBy.splice(index, 1);
+                } else { // Dislike
+                    newDislikedBy.push(uid);
+                    if (isLiked) { // Remove from like if previously liked
+                        const index = newLikedBy.indexOf(uid);
+                        newLikedBy.splice(index, 1);
+                    }
+                }
+            }
+            
+            transaction.update(docRef, {
+                likedBy: newLikedBy,
+                dislikedBy: newDislikedBy,
+                likes: newLikedBy.length,
+                dislikes: newDislikedBy.length
+            });
+        });
+    } catch (e) {
+        console.error("Transaction failed: ", e);
+    }
+}
+
+
 // ====== Delete Recursive ======
 async function deleteWithDescendants(rootId){
-  const q = queryFn(collectionFn(db,...commentsPath),orderByFn('timestamp','desc'));
-  const snap = await getDocsFn(q);
-  const all = [];
-  snap.forEach(d=>all.push({id:d.id,...d.data()}));
   const toDelete = new Set([rootId]);
   let added = true;
   while(added){
     added = false;
-    for(const it of all){
+    for(const it of allComments){
       if(it.parentId && toDelete.has(it.parentId) && !toDelete.has(it.id)){
         toDelete.add(it.id); added = true;
       }
@@ -311,14 +395,18 @@ form.addEventListener('submit', async e => {
       photoURL: currentUser.photoURL,
       comment: commentInput.value.trim(),
       timestamp: serverTimestampFn(),
-      parentId: parentIdInput.value || null
+      parentId: parentIdInput.value || null,
+      likes: 0,
+      dislikes: 0,
+      likedBy: [],
+      dislikedBy: []
     });
     form.reset();
-    commentInput.value = ''; // Ensure textarea is cleared
+    commentInput.value = '';
     charCounter.textContent = `0 / ${commentInput.maxLength}`;
     replyingToEl.style.display = 'none';
     cancelBtn.style.display = 'none';
-    nameInput.value = currentUser.displayName; // Re-fill after reset
+    nameInput.value = currentUser.displayName;
     await loadComments();
   } catch(err){
     console.error('Error adding comment:', err);
@@ -345,11 +433,8 @@ async function initializeCommentsSection() {
     commentsInitialized = true;
 
     try {
-        // Load comments for everyone first
         await initFirestore();
         await loadComments();
-        
-        // Start pre-loading auth in the background for users who might want to log in
         initFirebaseAuth(); 
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
