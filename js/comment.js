@@ -1,76 +1,76 @@
 
+// --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
+// --- State Variables ---
 let currentUser = null;
 let firebaseApp = null;
-let authInitialized = false;
-let firestoreInitialized = false;
+let isAuthInitialized = false;
+let isFirestoreInitialized = false;
+let authPromise = null;
 
-// Initialize Firebase App
-function initializeFirebaseApp() {
-    if (firebaseApp) return Promise.resolve(firebaseApp);
-    
+// --- Dynamic Script Loader ---
+function loadFirebaseScript(module) {
+    const url = `https://www.gstatic.com/firebasejs/9.22.1/firebase-${module}.js`;
     return new Promise((resolve, reject) => {
-        if (window.firebase && window.firebase.app) {
-            const { initializeApp } = window.firebase.app;
-            if (!firebaseApp) {
-                firebaseApp = initializeApp({
-                    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-                    authDomain: "appcomment.firebaseapp.com",
-                    projectId: "appcomment",
-                    storageBucket: "appcomment.firebasestorage.app",
-                    messagingSenderId: "156258808941",
-                    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-                });
-            }
-            return resolve(firebaseApp);
-        }
-        
-        const firebaseAppScript = document.createElement('script');
-        firebaseAppScript.src = "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        firebaseAppScript.onload = () => {
-            const { initializeApp } = window.firebase.app;
-            firebaseApp = initializeApp({
-                apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-                authDomain: "appcomment.firebaseapp.com",
-                projectId: "appcomment",
-                storageBucket: "appcomment.firebasestorage.app",
-                messagingSenderId: "156258808941",
-                appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-            });
-            resolve(firebaseApp);
-        };
-        firebaseAppScript.onerror = reject;
-        document.head.appendChild(firebaseAppScript);
+        const script = document.createElement('script');
+        script.src = url;
+        script.type = "module"; 
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+// --- Firebase Initialization Functions ---
+async function initializeFirebaseApp() {
+    if (firebaseApp) return;
+    await loadFirebaseScript('app');
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+    firebaseApp = initializeApp({
+        apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+        authDomain: "appcomment.firebaseapp.com",
+        projectId: "appcomment",
+        storageBucket: "appcomment.firebasestorage.app",
+        messagingSenderId: "156258808941",
+        appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
     });
 }
 
 async function initFirestore() {
-  if(firestoreInitialized) return;
-  const { getFirestore, addDoc, collection, getDocs, deleteDoc, query, orderBy, serverTimestamp, doc } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
-  
-  await initializeFirebaseApp();
-  db = getFirestore(firebaseApp);
-  
-  addDocFn = addDoc; collectionFn = collection; getDocsFn = getDocs;
-  deleteDocFn = deleteDoc; queryFn = query; orderByFn = orderBy;
-  serverTimestampFn = serverTimestamp; docFn = doc;
-  firestoreInitialized = true;
-}
-
-async function initFirebaseAuth() {
-    if (authInitialized) return;
-    const { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
-
+    if (isFirestoreInitialized) return;
     await initializeFirebaseApp();
-    auth = getAuth(firebaseApp);
-    onAuthStateChangedFn = onAuthStateChanged;
-    GoogleAuthProviderFn = GoogleAuthProvider;
-    signInWithPopupFn = signInWithPopup;
-    signOutFn = signOut;
-    authInitialized = true;
+    await loadFirebaseScript('firestore-lite');
+    const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
+    
+    db = firestore.getFirestore(firebaseApp);
+    addDocFn = firestore.addDoc; collectionFn = firestore.collection; getDocsFn = firestore.getDocs;
+    deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
+    serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
+    isFirestoreInitialized = true;
 }
+
+function initFirebaseAuth() {
+    if (!authPromise) {
+        authPromise = (async () => {
+            await initializeFirebaseApp();
+            await loadFirebaseScript('auth');
+            const authModule = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
+
+            auth = authModule.getAuth(firebaseApp);
+            onAuthStateChangedFn = authModule.onAuthStateChanged;
+            GoogleAuthProviderFn = authModule.GoogleAuthProvider;
+            signInWithPopupFn = authModule.signInWithPopup;
+            signOutFn = authModule.signOut;
+            
+            setupAuthObserver();
+            isAuthInitialized = true;
+        })();
+    }
+    return authPromise;
+}
+
 
 // ====== Helpers ======
 const escapeHTML = s => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
@@ -86,7 +86,7 @@ const pageId = (() => {
 })();
 const commentsPath = ['pages', pageId, 'comments'];
 
-// ====== DOM ======
+// ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
 const form = document.getElementById('comment-form');
 const nameInput = form.querySelector('#name');
@@ -105,22 +105,32 @@ const commentFormShell = document.getElementById('comment-form-shell');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
 
+
 // ====== Auth Functions ======
 async function signInWithGoogle() {
-    // CRITICAL: No 'await' before signInWithPopupFn to avoid popup blockers.
-    // Auth is pre-initialized by the time this button is clickable.
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
+    
     try {
+        await initFirebaseAuth(); // Ensures auth is loaded before use
         const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
         console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google. Please try again.");
+            alert("Could not sign in with Google. Please check your connection and try again.");
+        }
+    } finally {
+        // Auth state change will handle the button visibility, but we reset if login fails
+        if (!currentUser) {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = originalLoginHTML;
         }
     }
 }
 
 async function signOutUser() {
+    if (!isAuthInitialized) return;
     await signOutFn(auth);
 }
 
@@ -147,7 +157,6 @@ function setupAuthObserver() {
             loginPrompt.style.display = 'block';
             nameInput.value = '';
             nameInput.readOnly = false;
-            // Restore login button to its original, clickable state
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
@@ -180,13 +189,13 @@ function flattenTree(nodes){
   return res;
 }
 
-// ====== Render ======
+// ====== Render Comments ======
 function renderNode(node){
   const li = document.createElement('div');
   li.className = 'comment-item' + (node.depth ? ' reply-item' : '');
   
   const authorAvatar = node.photoURL 
-    ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(node.name)}" class="comment-avatar">`
+    ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(node.name)}" class="comment-avatar" loading="lazy">`
     : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
 
   const headerHTML = `
@@ -242,7 +251,11 @@ function renderNode(node){
 }
 function renderFlatList(nodes, container){
   container.innerHTML = ''; // Clear skeleton
-  nodes.forEach(n => container.appendChild(renderNode(n)));
+  if (nodes.length > 0) {
+      nodes.forEach(n => container.appendChild(renderNode(n)));
+  } else {
+      container.innerHTML = '<p class="muted">Be the first to comment!</p>';
+  }
 }
 
 // ====== Load Comments ======
@@ -253,14 +266,10 @@ async function loadComments(){
     const rows = [];
     snap.forEach(d => rows.push({id:d.id, ...d.data()}));
     
-    if (rows.length === 0) {
-        commentsList.innerHTML = '<p class="muted">Be the first to comment!</p>';
-    } else {
-        renderFlatList(flattenTree(buildTree(rows)), commentsList);
-    }
+    renderFlatList(flattenTree(buildTree(rows)), commentsList);
   } catch(err){
     console.error('Error loading comments:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    commentsList.innerHTML = `<p class="muted error">Could not load comments. Check Firebase security rules.</p>`;
   } finally {
     if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
   }
@@ -285,10 +294,13 @@ async function deleteWithDescendants(rootId){
   for(const id of toDelete) await deleteDocFn(docFn(db,...commentsPath,id));
 }
 
-// ====== Submit ======
+// ====== Submit Comment ======
 form.addEventListener('submit', async e => {
   e.preventDefault();
-  if(!currentUser || !commentInput.value.trim()) return;
+  if(!currentUser || !commentInput.value.trim()) {
+      if (!currentUser) alert("Please sign in to post a comment.");
+      return;
+  }
 
   submitButton.disabled = true;
   submitButton.textContent = 'Posting…';
@@ -325,27 +337,25 @@ cancelBtn.addEventListener('click', () => {
 });
 
 
-// ====== INITIALIZATION LOGIC ======
+// ====== LAZY INITIALIZATION LOGIC ======
 let commentsInitialized = false;
 
-async function prepareCommentsSection() {
+async function initializeCommentsSection() {
     if (commentsInitialized) return;
     commentsInitialized = true;
 
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = `<span class="spinner-small"></span> Loading...`;
-    
     try {
-        await Promise.all([initFirebaseAuth(), initFirestore()]);
-        
-        setupAuthObserver();
+        // Load comments for everyone first
+        await initFirestore();
         await loadComments();
+        
+        // Start pre-loading auth in the background for users who might want to log in
+        initFirebaseAuth(); 
     } catch (error) {
-        console.error("Failed to initialize comments/auth:", error);
+        console.error("Failed to initialize comments section:", error);
         if (commentsList) {
             commentsList.innerHTML = `<p class="muted error">Could not load the comments section.</p>`;
         }
-        loginBtn.innerHTML = 'Error Loading';
     }
 }
 
@@ -354,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              prepareCommentsSection();
+              initializeCommentsSection();
               observer.disconnect(); 
             }
           });
