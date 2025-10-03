@@ -1,3 +1,4 @@
+
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
 async function initFirebase(){
   if(db) return db;
@@ -42,6 +43,8 @@ const charCounter = form.querySelector('#char-counter');
 const cancelBtn = form.querySelector('#cancel-reply');
 const replyingToEl = form.querySelector('#replying-to');
 const submitButton = form.querySelector('#submit-button');
+const commentsWrapper = document.getElementById('comments-main-container');
+
 
 // ====== Char Counter ======
 commentInput.addEventListener('input', () => {
@@ -71,7 +74,7 @@ function flattenTree(nodes){
 
 // ====== Render ======
 function renderNode(node){
-  const li = document.createElement('li');
+  const li = document.createElement('div');
   li.className = 'comment-item' + (node.depth ? ' reply-item' : '');
   const header = document.createElement('div');
   header.className = 'comment-header';
@@ -118,26 +121,32 @@ function renderNode(node){
   return li;
 }
 function renderFlatList(nodes, container){
-  const ul = document.createElement('ul');
-  ul.className = 'comment-list';
-  nodes.forEach(n => ul.appendChild(renderNode(n)));
-  container.innerHTML = '';
-  container.appendChild(ul);
+  container.innerHTML = ''; // Clear skeleton
+  nodes.forEach(n => container.appendChild(renderNode(n)));
 }
 
 // ====== Load Comments ======
 async function loadComments(){
-  commentsList.innerHTML = `<div class="spinner"></div><p class="muted">Loading…</p>`;
+  // Skeleton is already showing. We just load the data.
   try {
     await initFirebase();
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
     const snap = await getDocsFn(q);
     const rows = [];
     snap.forEach(d => rows.push({id:d.id, ...d.data()}));
-    renderFlatList(flattenTree(buildTree(rows)), commentsList);
+    
+    if (rows.length === 0) {
+        commentsList.innerHTML = '<p class="muted">Be the first to comment!</p>';
+    } else {
+        renderFlatList(flattenTree(buildTree(rows)), commentsList);
+    }
   } catch(err){
     console.error('Error loading comments:', err);
     commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+  } finally {
+    // ** CRITICAL FOR CLS FIX **
+    // This removes the min-height from the container, collapsing it to the actual content height.
+    if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
   }
 }
 
@@ -196,23 +205,26 @@ cancelBtn.addEventListener('click', () => {
   commentInput.placeholder = 'Your comment';
 });
 
-// ====== Lazy Load Comments ======
-const commentSection = document.getElementById('custom-comment-section');
+// ====== Lazy Load Comments on Scroll ======
 let commentsLoaded = false;
 function initCommentsIfNeeded(){
   if(commentsLoaded) return;
   commentsLoaded = true;
   loadComments();
 }
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      initCommentsIfNeeded();
-      observer.disconnect();
-    }
-  });
-}, { rootMargin: "200px" });
-observer.observe(commentSection);
 
-// Initialize comments if user interacts with form before scrolling
-form.addEventListener('focusin', initCommentsIfNeeded);
+if (commentsWrapper) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          initCommentsIfNeeded();
+          observer.disconnect(); // We only need to do this once.
+        }
+      });
+    }, { rootMargin: "200px" }); // Start loading when it's 200px from the viewport
+
+    observer.observe(commentsWrapper);
+
+    // Also initialize if the user interacts with the form before scrolling
+    form.addEventListener('focusin', initCommentsIfNeeded, { once: true });
+}
