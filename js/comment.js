@@ -1,5 +1,6 @@
+
 let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithRedirectFn, signOutFn, getRedirectResultFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 let currentUser = null;
 let firebaseApp = null;
@@ -8,14 +9,14 @@ let firestoreInitialized = false;
 
 // Initialize Firebase App
 function initializeFirebaseApp() {
-    if (firebaseApp) return firebaseApp;
-    // Dynamically load the base firebase-app script if not already present
-    if (!window.firebase || !window.firebase.app) {
-        return new Promise((resolve, reject) => {
-            const firebaseAppScript = document.createElement('script');
-            firebaseAppScript.src = "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-            firebaseAppScript.onload = () => {
-                const { initializeApp } = window.firebase.app;
+    if (firebaseApp) return Promise.resolve(firebaseApp);
+    
+    // Dynamically load the base firebase-app script
+    return new Promise((resolve, reject) => {
+        if (window.firebase && window.firebase.app) {
+            // Already loaded
+            const { initializeApp } = window.firebase.app;
+            if (!firebaseApp) {
                 firebaseApp = initializeApp({
                     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
                     authDomain: "appcomment.firebaseapp.com",
@@ -24,25 +25,28 @@ function initializeFirebaseApp() {
                     messagingSenderId: "156258808941",
                     appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
                 });
-                resolve(firebaseApp);
-            };
-            firebaseAppScript.onerror = reject;
-            document.head.appendChild(firebaseAppScript);
-        });
-    } else {
-        const { initializeApp } = window.firebase.app;
-        firebaseApp = initializeApp({
-            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-            authDomain: "appcomment.firebaseapp.com",
-            projectId: "appcomment",
-            storageBucket: "appcomment.firebasestorage.app",
-            messagingSenderId: "156258808941",
-            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-        });
-        return Promise.resolve(firebaseApp);
-    }
+            }
+            return resolve(firebaseApp);
+        }
+        
+        const firebaseAppScript = document.createElement('script');
+        firebaseAppScript.src = "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        firebaseAppScript.onload = () => {
+            const { initializeApp } = window.firebase.app;
+            firebaseApp = initializeApp({
+                apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+                authDomain: "appcomment.firebaseapp.com",
+                projectId: "appcomment",
+                storageBucket: "appcomment.firebasestorage.app",
+                messagingSenderId: "156258808941",
+                appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+            });
+            resolve(firebaseApp);
+        };
+        firebaseAppScript.onerror = reject;
+        document.head.appendChild(firebaseAppScript);
+    });
 }
-
 
 async function initFirestore() {
   if(firestoreInitialized) return;
@@ -59,18 +63,16 @@ async function initFirestore() {
 
 async function initFirebaseAuth() {
     if (authInitialized) return;
-    const { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, signOut, getRedirectResult } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
+    const { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
 
     await initializeFirebaseApp();
     auth = getAuth(firebaseApp);
     onAuthStateChangedFn = onAuthStateChanged;
     GoogleAuthProviderFn = GoogleAuthProvider;
-    signInWithRedirectFn = signInWithRedirect;
+    signInWithPopupFn = signInWithPopup;
     signOutFn = signOut;
-    getRedirectResultFn = getRedirectResult;
     authInitialized = true;
 }
-
 
 // ====== Helpers ======
 const escapeHTML = s => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
@@ -107,16 +109,17 @@ const loginPrompt = document.getElementById('login-prompt');
 // ====== Auth Functions ======
 async function signInWithGoogle() {
     loginBtn.disabled = true;
-    loginBtn.textContent = 'Redirecting...';
     try {
-        await initFirebaseAuth();
+        await initFirebaseAuth(); // Ensure auth is ready
         const provider = new GoogleAuthProviderFn();
-        await signInWithRedirectFn(auth, provider);
+        await signInWithPopupFn(auth, provider);
     } catch (error) {
         console.error("Google Sign-In Error:", error);
-        alert("Could not sign in with Google. Please try again.");
+        if (error.code !== 'auth/popup-closed-by-user') {
+            alert("Could not sign in with Google. Please try again.");
+        }
+    } finally {
         loginBtn.disabled = false;
-        loginBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg> Sign in with Google to Comment`;
     }
 }
 
@@ -246,7 +249,6 @@ function renderFlatList(nodes, container){
 // ====== Load Comments ======
 async function loadComments(){
   try {
-    await initFirestore();
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
     const snap = await getDocsFn(q);
     const rows = [];
@@ -267,7 +269,6 @@ async function loadComments(){
 
 // ====== Delete Recursive ======
 async function deleteWithDescendants(rootId){
-  await initFirestore();
   const q = queryFn(collectionFn(db,...commentsPath),orderByFn('timestamp','desc'));
   const snap = await getDocsFn(q);
   const all = [];
@@ -293,7 +294,6 @@ form.addEventListener('submit', async e => {
   submitButton.disabled = true;
   submitButton.textContent = 'Posting…';
   try {
-    await initFirestore();
     await addDocFn(collectionFn(db,...commentsPath), {
       name: currentUser.displayName,
       uid: currentUser.uid,
@@ -327,47 +327,39 @@ cancelBtn.addEventListener('click', () => {
 
 
 // ====== INITIALIZATION LOGIC ======
+let commentsInitialized = false;
 
-// 1. Initialize Auth immediately on script load to catch redirect results.
-async function initializeAuthOnLoad() {
+async function initCommentsAndAuth() {
+    if (commentsInitialized) return;
+    commentsInitialized = true;
+
     try {
-        await initFirebaseAuth();
-        // This checks if the user is returning from a sign-in redirect
-        await getRedirectResultFn(auth); 
-        // This sets up a listener that will fire with the user's state
-        // either from the redirect result, a stored session, or null.
+        // Load both libraries concurrently for better performance
+        await Promise.all([initFirebaseAuth(), initFirestore()]);
+        
+        // Once both are loaded, set up the auth listener and load the comments
         setupAuthObserver();
+        await loadComments();
     } catch (error) {
-        console.error("Auth initialization failed:", error);
+        console.error("Failed to initialize comments/auth:", error);
+        if (commentsList) {
+            commentsList.innerHTML = `<p class="muted error">Could not load the comments section.</p>`;
+        }
     }
-}
-
-// 2. Lazy Load Comments on Scroll.
-let commentsLoaded = false;
-async function initCommentsIfNeeded(){
-    if(commentsLoaded) return;
-    commentsLoaded = true;
-
-    // Firestore is now loaded only when comments are actually needed.
-    await initFirestore();
-    await loadComments();
 }
 
 // --- Start the process ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Start auth check right away
-    initializeAuthOnLoad();
-
-    // Set up lazy loading for comments section
+    // Set up lazy loading for the entire comments section
     if (commentsWrapper) {
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
-            if(entry.isIntersecting){
-              initCommentsIfNeeded();
-              observer.disconnect();
+            if (entry.isIntersecting) {
+              initCommentsAndAuth();
+              observer.disconnect(); // We only need to do this once
             }
           });
-        }, { rootMargin: "200px" });
+        }, { rootMargin: "200px" }); // Start loading when it's 200px away from viewport
 
         observer.observe(commentsWrapper);
     }
