@@ -1,6 +1,5 @@
-
 // --- Firebase Module Placeholders ---
-let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn;
+let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
@@ -9,6 +8,7 @@ let firebaseApp = null;
 let isAuthInitialized = false;
 let isFirestoreInitialized = false;
 let authPromise = null;
+let unsubscribeComments = null;
 
 // --- Dynamic Script Loader ---
 function loadFirebaseScript(module) {
@@ -47,14 +47,16 @@ async function initializeFirebaseApp() {
 async function initFirestore() {
     if (isFirestoreInitialized) return;
     await initializeFirebaseApp();
-    await loadFirebaseScript('firestore-lite');
-    const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
+    // Use the full firestore library for real-time updates (onSnapshot)
+    await loadFirebaseScript('firestore');
+    const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
     db = firestore.getFirestore(firebaseApp);
     addDocFn = firestore.addDoc; collectionFn = firestore.collection; getDocsFn = firestore.getDocs;
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
     runTransactionFn = firestore.runTransaction;
+    onSnapshotFn = firestore.onSnapshot; // For real-time listeners
     isFirestoreInitialized = true;
 }
 
@@ -144,6 +146,7 @@ logoutBtn.addEventListener('click', signOutUser);
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
+        const wasLoggedIn = !!currentUser;
         currentUser = user;
         if (user) {
             userInfo.innerHTML = `
@@ -164,8 +167,10 @@ function setupAuthObserver() {
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
-        // Re-render comments to show/hide user-specific buttons
-        loadComments();
+        // Re-render comments if login state changes to show/hide user-specific buttons
+        if (wasLoggedIn !== !!user) {
+           renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        }
     });
 }
 
@@ -250,23 +255,35 @@ function renderFlatList(nodes, container){
   }
 }
 
-// ====== Load Comments ======
+// ====== Load Comments with Real-Time Listener ======
 async function loadComments(){
   try {
     await initFirestore();
+
+    if (unsubscribeComments) {
+        unsubscribeComments(); // Detach any old listener before creating a new one
+    }
+
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
-    const snap = await getDocsFn(q);
-    allComments = [];
-    snap.forEach(d => allComments.push({id:d.id, ...d.data()}));
     
-    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+    unsubscribeComments = onSnapshotFn(q, (snapshot) => {
+        allComments = [];
+        snapshot.forEach(d => allComments.push({id: d.id, ...d.data()}));
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
+    }, (error) => {
+        console.error('Error with real-time listener:', error);
+        commentsList.innerHTML = `<p class="muted error">Could not load comments in real-time. Please check security rules.</p>`;
+        if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
+    });
+
   } catch(err){
-    console.error('Error loading comments:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments. Check Firebase security rules.</p>`;
-  } finally {
+    console.error('Error setting up comments listener:', err);
+    commentsList.innerHTML = `<p class="muted error">Could not load comments. Please check your connection.</p>`;
     if(commentsWrapper) commentsWrapper.classList.remove('comments-loading');
   }
 }
+
 
 // ====== Handle Actions using Event Delegation ======
 commentsList.addEventListener('click', async (e) => {
@@ -295,19 +312,18 @@ commentsList.addEventListener('click', async (e) => {
         case 'delete':
             if (confirm('Delete this comment and all its replies?')) {
                 await deleteWithDescendants(node.id);
-                await loadComments();
             }
             break;
         case 'like':
         case 'dislike':
             await handleVote(node.id, action);
-            await loadComments();
             break;
     }
 });
 
 // ====== Voting Logic ======
 async function handleVote(commentId, voteType) {
+    if (!currentUser) return;
     const docRef = docFn(db, ...commentsPath, commentId);
     const uid = currentUser.uid;
 
@@ -359,6 +375,7 @@ async function handleVote(commentId, voteType) {
         });
     } catch (e) {
         console.error("Transaction failed: ", e);
+        alert("Could not process your vote. Please check permissions in your Firebase console.");
     }
 }
 
@@ -407,13 +424,12 @@ form.addEventListener('submit', async e => {
     replyingToEl.style.display = 'none';
     cancelBtn.style.display = 'none';
     nameInput.value = currentUser.displayName;
-    await loadComments();
   } catch(err){
     console.error('Error adding comment:', err);
     alert('Could not post comment.');
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = 'Post';
+    submitButton.textContent = 'Submit';
   }
 });
 
