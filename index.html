@@ -441,7 +441,7 @@
             </div>
         </main>
 
-        <div class="comments-wrapper">
+        <div class="comments-wrapper comments-loading" id="comments-main-container">
             <div class="firebase-comments-widget" id="custom-comment-section">
                 <!-- Form is now static HTML -->
                 <h2>Comments</h2>
@@ -463,8 +463,20 @@
 
                 <!-- Comments go here -->
                 <div id="comments-list">
-                    <div class="spinner"></div>
-                    <p class="muted">Loading comments…</p>
+                    <!-- Skeleton Loader -->
+                    <div class="skeleton-comment">
+                        <div class="skeleton-line header"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                    <div class="skeleton-comment">
+                        <div class="skeleton-line header"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                     <div class="skeleton-comment">
+                        <div class="skeleton-line header"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
                 </div>
             </div>
         </div>
