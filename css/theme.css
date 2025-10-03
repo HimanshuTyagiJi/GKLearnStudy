@@ -721,7 +721,7 @@ html[data-theme="dark"] .theme-switcher .moon {
 }
 
 
-/* Comments Widget */
+/* === Comments Widget === */
 .firebase-comments-widget {
     max-width: 700px;
     margin: 2rem auto;
@@ -774,6 +774,10 @@ html[data-theme="dark"] .theme-switcher .moon {
     transition: border-color 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
 }
+.comment-form input[type="text"]:read-only {
+    background-color: var(--button-hover-bg);
+    cursor: not-allowed;
+}
 .comment-form input[type="text"]:focus,
 .comment-form textarea:focus {
     outline: none;
@@ -799,7 +803,10 @@ html[data-theme="dark"] .theme-switcher .moon {
     gap: 0.5rem;
 }
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
     font-weight: 600;
     color: var(--text-primary);
     text-align: center;
@@ -867,8 +874,30 @@ html[data-theme="dark"] .theme-switcher .moon {
 .comment-header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.comment-author-info {
+    display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
+    gap: 0.75rem;
+}
+.comment-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.default-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1rem;
 }
 .comment-author {
     font-weight: 600;
@@ -877,20 +906,63 @@ html[data-theme="dark"] .theme-switcher .moon {
 .comment-date {
     font-size: 0.8em;
     color: var(--muted-text-color);
+    flex-shrink: 0;
 }
 .comment-body {
     font-size: 1rem;
     line-height: 1.6;
     margin: 0.5rem 0;
     color: var(--comment-body-text);
+    padding-left: calc(32px + 0.75rem); /* Align with author name */
 }
 .comment-actions {
     margin-top: 0.5rem;
+    padding-left: calc(32px + 0.75rem);
 }
 .inline-reply-slot > .comment-form-shell {
     margin-top: 1rem;
     margin-bottom: 0;
 }
+
+/* === AUTHENTICATION UI === */
+#auth-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--input-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+#login-btn, #logout-btn, #user-info {
+    display: none;
+}
+#auth-container:not(.logged-in) #login-btn {
+    display: inline-flex;
+}
+#auth-container.logged-in #logout-btn,
+#auth-container.logged-in #user-info {
+    display: flex;
+}
+#user-info {
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+#login-prompt {
+    padding: 1rem;
+    background-color: var(--input-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+
+
 @media (max-width: 600px) {
     .firebase-comments-widget {
         padding: 0.5rem;
@@ -912,6 +984,9 @@ html[data-theme="dark"] .theme-switcher .moon {
     }
     .comment-item.reply-item {
         margin-left: 10px;
+    }
+    .comment-body, .comment-actions {
+        padding-left: 0;
     }
 }
 
