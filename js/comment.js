@@ -11,10 +11,8 @@ let firestoreInitialized = false;
 function initializeFirebaseApp() {
     if (firebaseApp) return Promise.resolve(firebaseApp);
     
-    // Dynamically load the base firebase-app script
     return new Promise((resolve, reject) => {
         if (window.firebase && window.firebase.app) {
-            // Already loaded
             const { initializeApp } = window.firebase.app;
             if (!firebaseApp) {
                 firebaseApp = initializeApp({
@@ -105,12 +103,13 @@ const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const commentFormShell = document.getElementById('comment-form-shell');
 const loginPrompt = document.getElementById('login-prompt');
+const originalLoginHTML = loginBtn.innerHTML;
 
 // ====== Auth Functions ======
 async function signInWithGoogle() {
-    loginBtn.disabled = true;
+    // CRITICAL: No 'await' before signInWithPopupFn to avoid popup blockers.
+    // Auth is pre-initialized by the time this button is clickable.
     try {
-        await initFirebaseAuth(); // Ensure auth is ready
         const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
@@ -118,13 +117,10 @@ async function signInWithGoogle() {
         if (error.code !== 'auth/popup-closed-by-user') {
             alert("Could not sign in with Google. Please try again.");
         }
-    } finally {
-        loginBtn.disabled = false;
     }
 }
 
 async function signOutUser() {
-    await initFirebaseAuth();
     await signOutFn(auth);
 }
 
@@ -151,6 +147,9 @@ function setupAuthObserver() {
             loginPrompt.style.display = 'block';
             nameInput.value = '';
             nameInput.readOnly = false;
+            // Restore login button to its original, clickable state
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = originalLoginHTML;
         }
     });
 }
@@ -329,15 +328,16 @@ cancelBtn.addEventListener('click', () => {
 // ====== INITIALIZATION LOGIC ======
 let commentsInitialized = false;
 
-async function initCommentsAndAuth() {
+async function prepareCommentsSection() {
     if (commentsInitialized) return;
     commentsInitialized = true;
 
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = `<span class="spinner-small"></span> Loading...`;
+    
     try {
-        // Load both libraries concurrently for better performance
         await Promise.all([initFirebaseAuth(), initFirestore()]);
         
-        // Once both are loaded, set up the auth listener and load the comments
         setupAuthObserver();
         await loadComments();
     } catch (error) {
@@ -345,21 +345,20 @@ async function initCommentsAndAuth() {
         if (commentsList) {
             commentsList.innerHTML = `<p class="muted error">Could not load the comments section.</p>`;
         }
+        loginBtn.innerHTML = 'Error Loading';
     }
 }
 
-// --- Start the process ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Set up lazy loading for the entire comments section
     if (commentsWrapper) {
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              initCommentsAndAuth();
-              observer.disconnect(); // We only need to do this once
+              prepareCommentsSection();
+              observer.disconnect(); 
             }
           });
-        }, { rootMargin: "200px" }); // Start loading when it's 200px away from viewport
+        }, { rootMargin: "200px" });
 
         observer.observe(commentsWrapper);
     }
