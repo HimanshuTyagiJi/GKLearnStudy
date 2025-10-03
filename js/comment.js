@@ -11,6 +11,9 @@ let authPromise = null;
 let unsubscribeComments = null;
 let allComments = []; // Global cache for comments
 
+// !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
+const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
+
 // --- Dynamic Script Loader ---
 function loadFirebaseScript(module) {
     const url = `https://www.gstatic.com/firebasejs/9.22.1/firebase-${module}.js`;
@@ -198,6 +201,12 @@ function renderNode(node){
   li.className = 'comment-item';
   if (node.depth > 0) li.classList.add('reply-item');
   if (node.isOptimistic) li.classList.add('is-optimistic');
+  
+  const isOwner = node.uid === OWNER_UID;
+  if (isOwner) li.classList.add('owner-comment');
+
+  const authorName = isOwner ? 'GK Learn Study' : escapeHTML(node.name);
+  const verificationBadge = isOwner ? `<span class="verified-badge" title="Verified Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>` : '';
 
   let replyInfoHTML = '';
   if (node.parentId) {
@@ -207,12 +216,12 @@ function renderNode(node){
       }
   }
 
-  const authorAvatar = node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(node.name)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
-  const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${escapeHTML(node.name) || 'Anonymous'}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
+  const authorAvatar = node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`;
+  const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
   const hasDisliked = currentUser && node.dislikedBy?.includes(currentUser.uid);
-  const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${currentUser && currentUser.uid === node.uid ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
+  const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${currentUser && (currentUser.uid === node.uid || isOwner) ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
 
   const body = document.createElement('div');
   body.className = 'comment-body';
