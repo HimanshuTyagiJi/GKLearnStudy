@@ -720,6 +720,62 @@ html[data-theme="dark"] .theme-switcher .moon {
   font-size: 0.9rem;
 }
 
+/* === Rating Widget === */
+#rating-widget-wrapper {
+    margin-top: 2rem;
+}
+#rating-widget {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+}
+#rating-widget h2 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+#rating-summary {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    min-height: 24px;
+}
+#rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+#rating-stars .star {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    fill: var(--border-color);
+    transition: fill 0.2s ease, transform 0.2s ease;
+}
+#rating-stars.user-can-rate .star:hover {
+    fill: #fbc02d; /* Yellow hover */
+    transform: scale(1.1);
+}
+#rating-stars.user-can-rate .star:hover ~ .star {
+    fill: var(--border-color);
+}
+#rating-stars .star.filled {
+    fill: #fdd835; /* Gold filled */
+}
+#rating-stars .star.selected {
+    fill: #f57f17; /* Darker gold for user's own selection */
+    transform: scale(1.1);
+}
+#rating-login-prompt {
+    margin-top: 1rem;
+}
 
 /* === Comments Widget === */
 .firebase-comments-widget {
@@ -1063,8 +1119,9 @@ html[data-theme="light"] .btn.primary .spinner-small {
 
 
 /* === SKELETON LOADER FOR CLS FIX === */
-.comments-wrapper.comments-loading {
-    min-height: 400px; /* Reserve space to prevent layout shift */
+.comments-wrapper.comments-loading,
+.rating-widget-wrapper.rating-loading {
+    min-height: 200px; /* Reserve space to prevent layout shift */
 }
 
 #comments-list:empty + .skeleton-comment,
