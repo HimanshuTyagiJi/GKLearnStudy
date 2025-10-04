@@ -183,8 +183,14 @@ let userRating = 0; // The current user's rating for this page
 let isRatingSubmissionPending = false;
 let currentRatingSummary = null; // Cache for the latest rating summary
 
-function updateRatingUI(summaryData, currentUserRating) {
+function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     if (!ratingWidgetWrapper) return;
+    const ratingDisplay = document.getElementById('rating-display');
+
+    if (isInstant) {
+        ratingDisplay?.classList.add('no-transition');
+        ratingStarsContainer?.classList.add('no-transition');
+    }
 
     const breakdown = summaryData?.breakdown || {};
     let totalCount = summaryData?.totalCount || 0;
@@ -233,6 +239,13 @@ function updateRatingUI(summaryData, currentUserRating) {
     } else {
         ratingStarsContainer.classList.remove('user-can-rate');
         ratingLoginPrompt.style.display = 'block';
+    }
+
+    if (isInstant) {
+        setTimeout(() => {
+            ratingDisplay?.classList.remove('no-transition');
+            ratingStarsContainer?.classList.remove('no-transition');
+        }, 50);
     }
 }
 
@@ -336,7 +349,7 @@ function setupRatingListeners() {
         optimisticSummary.totalCount += 1;
         
         userRating = newRating; // Update local state immediately
-        updateRatingUI(optimisticSummary, newRating);
+        updateRatingUI(optimisticSummary, newRating, true);
 
         // --- Send to Server in Background ---
         submitRatingToServer(newRating, oldUserRating);
