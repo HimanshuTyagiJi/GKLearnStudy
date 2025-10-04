@@ -736,6 +736,18 @@ html[data-theme="dark"] .theme-switcher .moon {
     margin: 20px auto;
     animation: spin 1s ease infinite;
 }
+.spinner-small {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--spinner-border);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s ease-in-out infinite;
+}
+html[data-theme="light"] .btn.primary .spinner-small {
+    border-top-color: #fff;
+}
 .muted {
     color: var(--muted-text-color);
     text-align: center;
@@ -867,9 +879,24 @@ html[data-theme="dark"] .theme-switcher .moon {
     margin-bottom: 1rem;
     padding: 1rem 1.25rem;
     box-shadow: var(--card-shadow);
+    transition: opacity 0.4s ease, border-color 0.3s ease;
+}
+.comment-item.is-optimistic {
+    opacity: 0.6;
 }
 .comment-item.reply-item {
     margin-left: 20px;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent-color);
+}
+.reply-info {
+    font-size: 0.9em;
+    color: var(--muted-text-color);
+    margin-bottom: 0.5rem;
+}
+.reply-info strong {
+    color: var(--accent-color);
+    font-weight: 500;
 }
 .comment-header {
     display: flex;
@@ -890,6 +917,10 @@ html[data-theme="dark"] .theme-switcher .moon {
     border-radius: 50%;
     object-fit: cover;
 }
+.owner-avatar {
+    padding: 2px; /* Optional: adds a little space around the SVG content */
+    box-sizing: border-box;
+}
 .default-avatar {
     display: flex;
     align-items: center;
@@ -902,6 +933,8 @@ html[data-theme="dark"] .theme-switcher .moon {
 .comment-author {
     font-weight: 600;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
 }
 .comment-date {
     font-size: 0.8em;
@@ -918,10 +951,48 @@ html[data-theme="dark"] .theme-switcher .moon {
 .comment-actions {
     margin-top: 0.5rem;
     padding-left: calc(32px + 0.75rem);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 .inline-reply-slot > .comment-form-shell {
     margin-top: 1rem;
     margin-bottom: 0;
+}
+
+.vote-btn .count {
+    font-size: 0.8em;
+    margin-left: 0.25rem;
+    color: var(--muted-text-color);
+}
+
+.vote-btn.voted {
+    color: var(--blue);
+    font-weight: bold;
+}
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+.verified-badge svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+}
+.comment-item.owner-comment {
+    border-color: var(--blue);
+}
+.comment-item.owner-comment .comment-author {
+    color: var(--blue);
+    font-weight: 700;
 }
 
 /* === AUTHENTICATION UI === */
