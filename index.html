@@ -440,6 +440,25 @@
                 </div>
             </div>
         </main>
+        
+        <!-- RATING WIDGET -->
+        <div id="rating-widget-wrapper" class="rating-loading">
+            <div id="rating-widget">
+                 <h2>Rate this Article</h2>
+                 <div id="rating-summary">
+                     <!-- Skeleton loader -->
+                     <div class="skeleton-line" style="width: 150px; height: 24px; margin: 0 auto;"></div>
+                 </div>
+                 <div id="rating-stars" aria-label="Article rating">
+                     <svg class="star" data-value="1" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                     <svg class="star" data-value="2" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                     <svg class="star" data-value="3" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                     <svg class="star" data-value="4" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                     <svg class="star" data-value="5" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                 </div>
+                 <p id="rating-login-prompt" class="muted" style="display: none;">Please sign in to rate this article.</p>
+            </div>
+        </div>
 
         <div class="comments-wrapper comments-loading" id="comments-main-container">
             <div class="firebase-comments-widget" id="custom-comment-section">
