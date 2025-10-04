@@ -269,28 +269,33 @@ async function submitRating(newRating) {
                 transaction.get(userRatingRef)
             ]);
             
-            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0 };
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : {};
             const oldUserRating = userRatingDoc.exists() ? userRatingDoc.data().rating : 0;
             
-            const newBreakdown = {
+            const breakdown = {
                 '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
                 ...(summaryData.breakdown || {})
             };
 
-            // Adjust sum and breakdown based on old rating
-            let newSum = (summaryData.totalSum || 0) - oldUserRating + newRating;
+            // Adjust breakdown for the change in vote
             if (oldUserRating > 0) {
-                 newBreakdown[String(oldUserRating)] = Math.max(0, (newBreakdown[String(oldUserRating)] || 0) - 1);
+                 breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
             }
-            newBreakdown[String(newRating)] = (newBreakdown[String(newRating)] || 0) + 1;
+            breakdown[String(newRating)] = (breakdown[String(newRating)] || 0) + 1;
 
-            // Adjust count only if it's a new vote
-            const newCount = oldUserRating > 0 ? (summaryData.totalCount || 0) : (summaryData.totalCount || 0) + 1;
+            // Recalculate totals directly from the breakdown for data integrity
+            let newSum = 0;
+            let newCount = 0;
+            for (const star in breakdown) {
+                const count = breakdown[star] || 0;
+                newCount += count;
+                newSum += count * parseInt(star, 10);
+            }
 
             // Update user's specific rating
             transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
             // Update the aggregate summary
-            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: newBreakdown });
+            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
         });
         userRating = newRating; // Optimistically update local state
     } catch (error) {
@@ -710,7 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!target) return;
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isInteracting) {
               callback();
               observer.disconnect(); 
             }
