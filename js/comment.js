@@ -186,18 +186,19 @@ function updateRatingUI(summaryData, currentUserRating) {
     if (!ratingWidgetWrapper) return;
 
     userRating = currentUserRating || 0;
-    const { totalCount = 0, totalSum = 0, breakdown = {} } = summaryData || {};
+    const { totalCount = 0, totalSum = 0 } = summaryData || {};
+    const breakdown = summaryData?.breakdown || {};
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
     // Update summary text
-    if (averageRatingValue) averageRatingValue.textContent = average.toFixed(1);
+    if (averageRatingValue) averageRatingValue.textContent = isNaN(average) ? '0.0' : average.toFixed(1);
     if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
 
     // Update breakdown bars
     for (let i = 5; i >= 1; i--) {
         const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
         if (row) {
-            const countForStar = breakdown[i] || 0;
+            const countForStar = breakdown[String(i)] || 0;
             const percentage = totalCount > 0 ? (countForStar / totalCount) * 100 : 0;
             row.querySelector('.progress-bar').style.width = `${percentage}%`;
             row.querySelector('.vote-count').textContent = countForStar;
@@ -268,20 +269,23 @@ async function submitRating(newRating) {
                 transaction.get(userRatingRef)
             ]);
             
-            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {'1':0,'2':0,'3':0,'4':0,'5':0} };
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0 };
             const oldUserRating = userRatingDoc.exists() ? userRatingDoc.data().rating : 0;
             
-            const newBreakdown = { ...summaryData.breakdown };
+            const newBreakdown = {
+                '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
+                ...(summaryData.breakdown || {})
+            };
 
             // Adjust sum and breakdown based on old rating
-            let newSum = summaryData.totalSum - oldUserRating + newRating;
-            if(oldUserRating > 0) {
-                 newBreakdown[oldUserRating] = (newBreakdown[oldUserRating] || 1) - 1;
+            let newSum = (summaryData.totalSum || 0) - oldUserRating + newRating;
+            if (oldUserRating > 0) {
+                 newBreakdown[String(oldUserRating)] = Math.max(0, (newBreakdown[String(oldUserRating)] || 0) - 1);
             }
-            newBreakdown[newRating] = (newBreakdown[newRating] || 0) + 1;
+            newBreakdown[String(newRating)] = (newBreakdown[String(newRating)] || 0) + 1;
 
             // Adjust count only if it's a new vote
-            const newCount = oldUserRating > 0 ? summaryData.totalCount : summaryData.totalCount + 1;
+            const newCount = oldUserRating > 0 ? (summaryData.totalCount || 0) : (summaryData.totalCount || 0) + 1;
 
             // Update user's specific rating
             transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
