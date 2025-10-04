@@ -1,3 +1,4 @@
+
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -186,8 +187,18 @@ function updateRatingUI(summaryData, currentUserRating) {
     if (!ratingWidgetWrapper) return;
 
     userRating = currentUserRating || 0;
-    const { totalCount = 0, totalSum = 0 } = summaryData || {};
     const breakdown = summaryData?.breakdown || {};
+
+    // Recalculate totals directly from breakdown data for maximum reliability.
+    // This ensures UI consistency even if summary data in Firestore is incomplete.
+    let totalCount = 0;
+    let totalSum = 0;
+    for (let i = 1; i <= 5; i++) {
+        const count = Number(breakdown[String(i)]) || 0;
+        totalCount += count;
+        totalSum += count * i;
+    }
+
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
     // Update summary text
@@ -286,10 +297,12 @@ async function submitRating(newRating) {
             // Recalculate totals directly from the breakdown for data integrity
             let newSum = 0;
             let newCount = 0;
-            for (const star in breakdown) {
-                const count = breakdown[star] || 0;
+            // Ensure calculation is robust against unexpected data types or properties
+            for (let i = 1; i <= 5; i++) {
+                const starKey = String(i);
+                const count = Number(breakdown[starKey]) || 0;
                 newCount += count;
-                newSum += count * parseInt(star, 10);
+                newSum += count * i;
             }
 
             // Update user's specific rating
@@ -521,9 +534,16 @@ async function handleVote(commentId, voteType) {
             const data = doc.data();
             const serverLikedBy = data.likedBy || [], serverDislikedBy = data.dislikedBy || [];
             const isServerLiked = serverLikedBy.includes(uid), isServerDisliked = serverDislikedBy.includes(uid);
+            
             if (voteType === 'like') {
-                if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
-                else { serverLikedBy.push(uid); if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1); }
+                if (isServerLiked) {
+                    serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                } else {
+                    serverLikedBy.push(uid);
+                    if (isServerDisliked) {
+                        serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                    }
+                }
             } else if (voteType === 'dislike') {
                 if (isServerDisliked) {
                     serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
