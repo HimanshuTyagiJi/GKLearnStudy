@@ -1,5 +1,5 @@
 // --- Firebase Module Placeholders ---
-let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn;
+let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
@@ -9,6 +9,7 @@ let isAuthInitialized = false;
 let isFirestoreInitialized = false;
 let authPromise = null;
 let unsubscribeComments = null;
+let unsubscribeRating = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null; // Track the currently open inline reply form
 
@@ -61,6 +62,7 @@ async function initFirestore() {
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
     runTransactionFn = firestore.runTransaction;
     onSnapshotFn = firestore.onSnapshot;
+    getDocFn = firestore.getDoc; setDocFn = firestore.setDoc;
     isFirestoreInitialized = true;
 }
 
@@ -97,6 +99,7 @@ const pageId = (() => {
   return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_');
 })();
 const commentsPath = ['pages', pageId, 'comments'];
+const ratingsPath = ['pages', pageId, 'ratings'];
 
 // ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
@@ -109,6 +112,12 @@ const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
+
+const ratingWidgetWrapper = document.getElementById('rating-widget-wrapper');
+const ratingStarsContainer = document.getElementById('rating-stars');
+const ratingSummary = document.getElementById('rating-summary');
+const ratingLoginPrompt = document.getElementById('rating-login-prompt');
+
 
 // ====== Auth Functions ======
 async function signInWithGoogle() {
@@ -159,10 +168,164 @@ function setupAuthObserver() {
         }
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+           // Re-initialize rating system to reflect login state
+           if(ratingWidgetWrapper) initializeRatingSystem();
         }
     });
 }
 
+
+// ====== RATING SYSTEM LOGIC ======
+let userRating = 0; // The current user's rating for this page
+let isRatingSubmissionPending = false;
+
+function updateRatingUI(summaryData, currentUserRating) {
+    if (!ratingStarsContainer || !ratingSummary) return;
+
+    userRating = currentUserRating || 0;
+    const { count = 0, sum = 0 } = summaryData || {};
+    const average = count > 0 ? (sum / count) : 0;
+
+    // Update summary text
+    if (count > 0) {
+        ratingSummary.innerHTML = `<strong>${average.toFixed(1)}</strong> ⭐ out of 5 (${count} rating${count > 1 ? 's' : ''})`;
+    } else {
+        ratingSummary.textContent = 'Be the first to rate this article!';
+    }
+
+    // Update star visuals
+    const stars = ratingStarsContainer.querySelectorAll('.star');
+    stars.forEach(star => {
+        const starValue = parseInt(star.dataset.value, 10);
+        star.classList.remove('filled', 'selected');
+        if (userRating >= starValue) {
+            star.classList.add('selected'); // User's own rating
+        } else if (average >= starValue) {
+            star.classList.add('filled');
+        }
+    });
+    
+    // Handle user interaction state
+    if (currentUser) {
+        ratingStarsContainer.classList.add('user-can-rate');
+        ratingLoginPrompt.style.display = 'none';
+    } else {
+        ratingStarsContainer.classList.remove('user-can-rate');
+        ratingLoginPrompt.style.display = 'block';
+    }
+}
+
+
+async function loadRatings() {
+    await initFirestore();
+    if (unsubscribeRating) unsubscribeRating();
+
+    const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
+    
+    // Real-time listener for the summary
+    unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
+        const summaryData = doc.exists() ? doc.data() : { count: 0, sum: 0 };
+        // We get the user's rating once, then update the UI with the live summary
+        if (currentUser) {
+            const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
+            getDocFn(userRatingDocRef).then(userDoc => {
+                const userRatingData = userDoc.exists() ? userDoc.data().rating : 0;
+                updateRatingUI(summaryData, userRatingData);
+            });
+        } else {
+            updateRatingUI(summaryData, 0);
+        }
+         ratingWidgetWrapper?.classList.remove('rating-loading');
+    }, (error) => {
+        console.error("Error loading rating summary:", error);
+        ratingSummary.textContent = "Could not load ratings.";
+        ratingWidgetWrapper?.classList.remove('rating-loading');
+    });
+}
+
+async function submitRating(newRating) {
+    if (!currentUser || isRatingSubmissionPending) return;
+    isRatingSubmissionPending = true;
+
+    try {
+        await runTransactionFn(db, async (transaction) => {
+            const summaryRef = docFn(db, ...ratingsPath, '_summary');
+            const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
+
+            const [summaryDoc, userRatingDoc] = await Promise.all([
+                transaction.get(summaryRef),
+                transaction.get(userRatingRef)
+            ]);
+
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { count: 0, sum: 0 };
+            const oldUserRating = userRatingDoc.exists() ? userRatingDoc.data().rating : 0;
+
+            let newSum = summaryData.sum;
+            let newCount = summaryData.count;
+
+            if (oldUserRating > 0) {
+                // User is changing their rating
+                newSum = summaryData.sum - oldUserRating + newRating;
+            } else {
+                // User is rating for the first time
+                newSum = summaryData.sum + newRating;
+                newCount = summaryData.count + 1;
+            }
+
+            // Update user's specific rating
+            transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
+            // Update the aggregate summary
+            transaction.set(summaryRef, { sum: newSum, count: newCount });
+        });
+        userRating = newRating; // Optimistically update local state
+    } catch (error) {
+        console.error("Rating submission failed:", error);
+        alert("Could not save your rating. Please try again.");
+    } finally {
+        isRatingSubmissionPending = false;
+    }
+}
+
+function setupRatingListeners() {
+    if (!ratingStarsContainer) return;
+
+    ratingStarsContainer.addEventListener('mouseover', (e) => {
+        const star = e.target.closest('.star');
+        if (!star || !ratingStarsContainer.classList.contains('user-can-rate')) return;
+        
+        const hoverValue = parseInt(star.dataset.value, 10);
+        const stars = ratingStarsContainer.querySelectorAll('.star');
+        stars.forEach(s => {
+            s.classList.toggle('hover', parseInt(s.dataset.value, 10) <= hoverValue);
+            s.classList.remove('filled', 'selected');
+        });
+    });
+
+    ratingStarsContainer.addEventListener('mouseout', () => {
+        if (!ratingStarsContainer.classList.contains('user-can-rate')) return;
+        const stars = ratingStarsContainer.querySelectorAll('.star');
+        stars.forEach(s => s.classList.remove('hover'));
+        // We need to re-render the state after mouseout, so let's just reload
+        loadRatings(); 
+    });
+
+    ratingStarsContainer.addEventListener('click', (e) => {
+        const star = e.target.closest('.star');
+        if (!star) return;
+
+        if (!currentUser) {
+            signInWithGoogle();
+            return;
+        }
+
+        const ratingValue = parseInt(star.dataset.value, 10);
+        if (ratingValue === userRating) {
+             // If they click the same star, maybe do nothing or allow un-rating in the future
+            return;
+        }
+        submitRating(ratingValue);
+    });
+}
 
 // ====== Comment Tree & Rendering Logic ======
 const buildTree = items => {
@@ -501,16 +664,38 @@ async function initializeCommentsSection() {
     }
 }
 
+let ratingInitialized = false;
+async function initializeRatingSystem() {
+    if (ratingInitialized) { // allow re-initialization on auth change
+        if (unsubscribeRating) unsubscribeRating();
+    }
+    ratingInitialized = true;
+    try {
+        await initFirestore();
+        await loadRatings();
+        if (!isAuthInitialized) await initFirebaseAuth();
+        setupRatingListeners();
+    } catch (error) {
+        console.error("Failed to initialize rating system:", error);
+        if (ratingSummary) ratingSummary.textContent = `Could not load rating system.`;
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    if (commentsWrapper) {
+    const lazyLoad = (target, callback) => {
+        if (!target) return;
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              initializeCommentsSection();
+              callback();
               observer.disconnect(); 
             }
           });
         }, { rootMargin: "200px" });
-        observer.observe(commentsWrapper);
-    }
+        observer.observe(target);
+    };
+    
+    lazyLoad(commentsWrapper, initializeCommentsSection);
+    lazyLoad(ratingWidgetWrapper, initializeRatingSystem);
 });
