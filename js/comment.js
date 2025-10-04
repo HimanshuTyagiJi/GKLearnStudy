@@ -112,11 +112,14 @@ const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
+const commentCountSpan = document.getElementById('comment-count');
+
 
 const ratingWidgetWrapper = document.getElementById('rating-widget-wrapper');
 const ratingStarsContainer = document.getElementById('rating-stars');
-const ratingSummary = document.getElementById('rating-summary');
 const ratingLoginPrompt = document.getElementById('rating-login-prompt');
+const averageRatingValue = document.getElementById('average-rating-value');
+const totalRatingsCount = document.getElementById('total-ratings-count');
 
 
 // ====== Auth Functions ======
@@ -180,17 +183,25 @@ let userRating = 0; // The current user's rating for this page
 let isRatingSubmissionPending = false;
 
 function updateRatingUI(summaryData, currentUserRating) {
-    if (!ratingStarsContainer || !ratingSummary) return;
+    if (!ratingWidgetWrapper) return;
 
     userRating = currentUserRating || 0;
-    const { count = 0, sum = 0 } = summaryData || {};
-    const average = count > 0 ? (sum / count) : 0;
+    const { totalCount = 0, totalSum = 0, breakdown = {} } = summaryData || {};
+    const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
     // Update summary text
-    if (count > 0) {
-        ratingSummary.innerHTML = `<strong>${average.toFixed(1)}</strong> ⭐ out of 5 (${count} rating${count > 1 ? 's' : ''})`;
-    } else {
-        ratingSummary.textContent = 'Be the first to rate this article!';
+    if (averageRatingValue) averageRatingValue.textContent = average.toFixed(1);
+    if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
+
+    // Update breakdown bars
+    for (let i = 5; i >= 1; i--) {
+        const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
+        if (row) {
+            const countForStar = breakdown[i] || 0;
+            const percentage = totalCount > 0 ? (countForStar / totalCount) * 100 : 0;
+            row.querySelector('.progress-bar').style.width = `${percentage}%`;
+            row.querySelector('.vote-count').textContent = countForStar;
+        }
     }
 
     // Update star visuals
@@ -200,7 +211,7 @@ function updateRatingUI(summaryData, currentUserRating) {
         star.classList.remove('filled', 'selected');
         if (userRating >= starValue) {
             star.classList.add('selected'); // User's own rating
-        } else if (average >= starValue) {
+        } else if (Math.round(average) >= starValue) {
             star.classList.add('filled');
         }
     });
@@ -224,7 +235,7 @@ async function loadRatings() {
     
     // Real-time listener for the summary
     unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
-        const summaryData = doc.exists() ? doc.data() : { count: 0, sum: 0 };
+        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
         // We get the user's rating once, then update the UI with the live summary
         if (currentUser) {
             const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
@@ -238,7 +249,7 @@ async function loadRatings() {
          ratingWidgetWrapper?.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        ratingSummary.textContent = "Could not load ratings.";
+        if (totalRatingsCount) totalRatingsCount.textContent = "Could not load ratings.";
         ratingWidgetWrapper?.classList.remove('rating-loading');
     });
 }
@@ -256,26 +267,26 @@ async function submitRating(newRating) {
                 transaction.get(summaryRef),
                 transaction.get(userRatingRef)
             ]);
-
-            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { count: 0, sum: 0 };
+            
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {'1':0,'2':0,'3':0,'4':0,'5':0} };
             const oldUserRating = userRatingDoc.exists() ? userRatingDoc.data().rating : 0;
+            
+            const newBreakdown = { ...summaryData.breakdown };
 
-            let newSum = summaryData.sum;
-            let newCount = summaryData.count;
-
-            if (oldUserRating > 0) {
-                // User is changing their rating
-                newSum = summaryData.sum - oldUserRating + newRating;
-            } else {
-                // User is rating for the first time
-                newSum = summaryData.sum + newRating;
-                newCount = summaryData.count + 1;
+            // Adjust sum and breakdown based on old rating
+            let newSum = summaryData.totalSum - oldUserRating + newRating;
+            if(oldUserRating > 0) {
+                 newBreakdown[oldUserRating] = (newBreakdown[oldUserRating] || 1) - 1;
             }
+            newBreakdown[newRating] = (newBreakdown[newRating] || 0) + 1;
+
+            // Adjust count only if it's a new vote
+            const newCount = oldUserRating > 0 ? summaryData.totalCount : summaryData.totalCount + 1;
 
             // Update user's specific rating
             transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
             // Update the aggregate summary
-            transaction.set(summaryRef, { sum: newSum, count: newCount });
+            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: newBreakdown });
         });
         userRating = newRating; // Optimistically update local state
     } catch (error) {
@@ -418,6 +429,14 @@ async function loadComments(){
         allComments = [...optimisticComments, ...newComments];
 
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        
+        // Update total comment count
+        const totalComments = allComments.length;
+        if (commentCountSpan) {
+            commentCountSpan.textContent = totalComments;
+            commentCountSpan.nextSibling.textContent = ` Comment${totalComments !== 1 ? 's' : ''}`;
+        }
+        
         commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
         console.error('Real-time listener error:', error);
@@ -512,7 +531,7 @@ async function handleVote(commentId, voteType) {
                 if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                 else { serverLikedBy.push(uid); if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1); }
             } else if (voteType === 'dislike') {
-                if (isServerDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+                if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
                 else { serverDislikedBy.push(uid); if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1); }
             }
             t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
@@ -677,7 +696,7 @@ async function initializeRatingSystem() {
         setupRatingListeners();
     } catch (error) {
         console.error("Failed to initialize rating system:", error);
-        if (ratingSummary) ratingSummary.textContent = `Could not load rating system.`;
+        if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
     }
 }
 
