@@ -309,25 +309,10 @@ async function submitRating(newRating) {
 function setupRatingListeners() {
     if (!ratingStarsContainer) return;
 
-    ratingStarsContainer.addEventListener('mouseover', (e) => {
-        const star = e.target.closest('.star');
-        if (!star || !ratingStarsContainer.classList.contains('user-can-rate')) return;
-        
-        const hoverValue = parseInt(star.dataset.value, 10);
-        const stars = ratingStarsContainer.querySelectorAll('.star');
-        stars.forEach(s => {
-            s.classList.toggle('hover', parseInt(s.dataset.value, 10) <= hoverValue);
-            s.classList.remove('filled', 'selected');
-        });
-    });
-
-    ratingStarsContainer.addEventListener('mouseout', () => {
-        if (!ratingStarsContainer.classList.contains('user-can-rate')) return;
-        const stars = ratingStarsContainer.querySelectorAll('.star');
-        stars.forEach(s => s.classList.remove('hover'));
-        // We need to re-render the state after mouseout, so let's just reload
-        loadRatings(); 
-    });
+    // The mouseover/mouseout listeners were inefficient and causing state update issues.
+    // The existing CSS :hover rule provides a sufficient and more stable hover effect.
+    // Removing the JS-based hover handlers fixes the core problem of the rating count
+    // and progress bars not updating.
 
     ratingStarsContainer.addEventListener('click', (e) => {
         const star = e.target.closest('.star');
@@ -540,8 +525,14 @@ async function handleVote(commentId, voteType) {
                 if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                 else { serverLikedBy.push(uid); if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1); }
             } else if (voteType === 'dislike') {
-                if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
-                else { serverDislikedBy.push(uid); if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1); }
+                if (isServerDisliked) {
+                    serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                } else {
+                    serverDislikedBy.push(uid);
+                    if (isServerLiked) {
+                        serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                    }
+                }
             }
             t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
         });
