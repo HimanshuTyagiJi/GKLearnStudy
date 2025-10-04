@@ -10,6 +10,7 @@ let isFirestoreInitialized = false;
 let authPromise = null;
 let unsubscribeComments = null;
 let allComments = []; // Global cache for comments
+let activeReplyForm = null; // Track the currently open inline reply form
 
 // !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
@@ -99,20 +100,13 @@ const commentsPath = ['pages', pageId, 'comments'];
 
 // ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
-const form = document.getElementById('comment-form');
-const nameInput = form.querySelector('#name');
-const commentInput = form.querySelector('#comment');
-const parentIdInput = form.querySelector('#parent-id');
-const charCounter = form.querySelector('#char-counter');
-const cancelBtn = form.querySelector('#cancel-reply');
-const replyingToEl = form.querySelector('#replying-to');
-const submitButton = form.querySelector('#submit-button');
+const mainFormShell = document.getElementById('comment-form-shell');
+const mainForm = document.getElementById('comment-form');
 const commentsWrapper = document.getElementById('comments-main-container');
 const authContainer = document.getElementById('auth-container');
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
-const commentFormShell = document.getElementById('comment-form-shell');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
 
@@ -153,16 +147,15 @@ function setupAuthObserver() {
         if (user) {
             userInfo.innerHTML = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
             authContainer.classList.add('logged-in');
-            commentFormShell.style.display = 'block';
+            mainFormShell.style.display = 'block';
             loginPrompt.style.display = 'none';
-            nameInput.value = user.displayName;
         } else {
             authContainer.classList.remove('logged-in');
-            commentFormShell.style.display = 'none';
+            mainFormShell.style.display = 'none';
             loginPrompt.style.display = 'block';
-            nameInput.value = '';
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
+            closeActiveReplyForm();
         }
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
@@ -170,15 +163,6 @@ function setupAuthObserver() {
     });
 }
 
-// ====== Char Counter & Form Logic ======
-commentInput.addEventListener('input', () => { charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`; });
-charCounter.textContent = `0 / ${commentInput.maxLength}`;
-cancelBtn.addEventListener('click', () => {
-  parentIdInput.value = '';
-  replyingToEl.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  commentInput.placeholder = 'Your comment';
-});
 
 // ====== Comment Tree & Rendering Logic ======
 const buildTree = items => {
@@ -232,7 +216,8 @@ function renderNode(node){
   const showDeleteButton = currentUser && (currentUser.uid === node.uid || isOwner);
 
   const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${showDeleteButton ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
-
+  const inlineReplySlot = `<div class="inline-reply-slot"></div>`;
+  
   const body = document.createElement('div');
   body.className = 'comment-body';
   body.textContent = node.comment || '';
@@ -240,7 +225,7 @@ function renderNode(node){
 
   li.innerHTML = headerHTML + replyInfoHTML;
   li.appendChild(body);
-  li.insertAdjacentHTML('beforeend', actionsHTML);
+  li.insertAdjacentHTML('beforeend', actionsHTML + inlineReplySlot);
   
   return li;
 }
@@ -266,7 +251,6 @@ async function loadComments(){
         const newComments = [];
         snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
         
-        // Merge with optimistic comments that haven't been confirmed yet
         const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
         allComments = [...optimisticComments, ...newComments];
 
@@ -284,40 +268,45 @@ async function loadComments(){
   }
 }
 
-// ====== Actions with Optimistic Updates ======
-commentsList.addEventListener('click', async (e) => {
-    const button = e.target.closest('button[data-action]');
-    if (!button) return;
-
-    const action = button.dataset.action;
-    const commentId = button.parentElement.dataset.commentId;
-
-    if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
-        signInWithGoogle();
-        return;
+// ====== Inline Reply Form Management ======
+function closeActiveReplyForm() {
+    if (activeReplyForm) {
+        activeReplyForm.remove();
+        activeReplyForm = null;
     }
+}
+
+function openReplyForm(commentId, authorName, targetSlot) {
+    closeActiveReplyForm(); 
+
+    const formClone = mainFormShell.cloneNode(true);
+    formClone.id = ''; 
+    formClone.style.display = 'block';
+
+    const form = formClone.querySelector('form');
+    const parentIdInput = form.querySelector('#parent-id');
+    const replyingToEl = form.querySelector('#replying-to');
+    const cancelBtn = form.querySelector('#cancel-reply');
+    const commentInput = form.querySelector('#comment');
+    const charCounter = form.querySelector('#char-counter');
+
+    parentIdInput.value = commentId;
+    replyingToEl.innerHTML = `Replying to <strong>${escapeHTML(authorName)}</strong>`;
+    replyingToEl.style.display = 'block';
+    cancelBtn.style.display = 'inline-block';
+    commentInput.placeholder = `Replying to ${escapeHTML(authorName)}...`;
     
-    const node = allComments.find(c => c.id === commentId);
+    charCounter.textContent = `0 / ${commentInput.maxLength}`;
+    commentInput.addEventListener('input', () => { 
+        charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`; 
+    });
+    
+    targetSlot.appendChild(formClone);
+    activeReplyForm = formClone;
+    commentInput.focus();
+}
 
-    switch (action) {
-        case 'reply':
-            parentIdInput.value = node.id;
-            replyingToEl.style.display = 'block';
-            replyingToEl.textContent = `Replying to ${escapeHTML(node.name || 'Anonymous')}`;
-            cancelBtn.style.display = 'inline-block';
-            commentInput.focus();
-            break;
-        case 'delete':
-            if (confirm('Delete this comment and all its replies?')) {
-                deleteWithDescendants(node.id);
-            }
-            break;
-        case 'like': case 'dislike':
-            handleVote(node.id, action);
-            break;
-    }
-});
-
+// ====== Vote and Delete Logic ======
 async function handleVote(commentId, voteType) {
     if (!currentUser) return;
     const uid = currentUser.uid;
@@ -325,7 +314,6 @@ async function handleVote(commentId, voteType) {
     const commentIndex = allComments.findIndex(c => c.id === commentId);
     if (commentIndex === -1) return;
 
-    // --- Optimistic UI Update ---
     const comment = allComments[commentIndex];
     const likedBy = comment.likedBy || [];
     const dislikedBy = comment.dislikedBy || [];
@@ -348,9 +336,7 @@ async function handleVote(commentId, voteType) {
     comment.likes = likedBy.length;
     comment.dislikes = dislikedBy.length;
     renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-    // --- End Optimistic UI Update ---
 
-    // --- Sync with Firestore ---
     try {
         const docRef = docFn(db, ...commentsPath, commentId);
         await runTransactionFn(db, async t => {
@@ -369,7 +355,7 @@ async function handleVote(commentId, voteType) {
             t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
         });
     } catch (e) {
-        console.error("Vote transaction failed:", e); // onSnapshot will eventually correct the UI
+        console.error("Vote transaction failed:", e); 
     }
 }
 
@@ -395,50 +381,109 @@ async function deleteWithDescendants(rootId){
     }
 }
 
-form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (!currentUser || !commentInput.value.trim()) return;
+// ====== Delegated Event Listeners Setup ======
+function setupDelegatedListeners() {
+    const container = document.getElementById('custom-comment-section');
 
-    submitButton.disabled = true;
-    submitButton.textContent = 'Posting…';
+    container.addEventListener('click', async (e) => {
+        const button = e.target.closest('button');
+        if (!button) return;
 
-    const commentText = commentInput.value.trim();
-    const parentId = parentIdInput.value || null;
+        if (button.id === 'cancel-reply') {
+             closeActiveReplyForm();
+             return; 
+        }
+        
+        const action = button.dataset.action;
+        if (!action) return;
+        
+        const commentId = button.closest('[data-comment-id]')?.dataset.commentId;
+        if (!commentId) return;
 
-    const tempComment = {
-        id: `temp_${Date.now()}`, name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
-        comment: commentText, timestamp: { toDate: () => new Date() }, parentId: parentId,
-        likes: 0, dislikes: 0, likedBy: [], dislikedBy: [], isOptimistic: true
-    };
-    allComments.unshift(tempComment);
-    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-    
-    try {
-        await addDocFn(collectionFn(db,...commentsPath), {
-            name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
-            comment: commentText, timestamp: serverTimestampFn(), parentId: parentId,
-            likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
-        });
+        if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
+            signInWithGoogle();
+            return;
+        }
 
-        // Clear form only on successful submission
-        form.reset(); 
-        parentIdInput.value = ''; // Explicitly clear parent ID to exit reply mode
-        commentInput.value = '';
-        charCounter.textContent = `0 / ${commentInput.maxLength}`;
-        replyingToEl.style.display = 'none'; 
-        cancelBtn.style.display = 'none';
-        nameInput.value = currentUser.displayName;
+        const node = allComments.find(c => c.id === commentId);
+        if (!node) return;
 
-    } catch(err){
-        console.error('Error adding comment:', err);
-        allComments = allComments.filter(c => c.id !== tempComment.id); 
+        switch (action) {
+            case 'reply':
+                const replySlot = button.closest('.comment-item').querySelector('.inline-reply-slot');
+                openReplyForm(node.id, node.name, replySlot);
+                break;
+            case 'delete':
+                if (confirm('Delete this comment and all its replies?')) {
+                    deleteWithDescendants(node.id);
+                }
+                break;
+            case 'like': case 'dislike':
+                handleVote(node.id, action);
+                break;
+        }
+    });
+
+    container.addEventListener('submit', async e => {
+        e.preventDefault();
+        const form = e.target;
+        if (!form.matches('.comment-form')) return;
+
+        if (!currentUser) return;
+        
+        const commentInput = form.querySelector('#comment');
+        const parentIdInput = form.querySelector('#parent-id');
+        const submitButton = form.querySelector('#submit-button');
+
+        const commentText = commentInput.value.trim();
+        if (!commentText) return;
+
+        submitButton.disabled = true;
+        submitButton.innerHTML = `<span class="spinner-small"></span> Posting...`;
+
+        const parentId = parentIdInput.value || null;
+        const tempId = `temp_${Date.now()}`;
+
+        const tempComment = {
+            id: tempId, name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+            comment: commentText, timestamp: { toDate: () => new Date() }, parentId: parentId,
+            likes: 0, dislikes: 0, likedBy: [], dislikedBy: [], isOptimistic: true
+        };
+        allComments.unshift(tempComment);
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-        alert('Could not post comment.');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit';
-    }
-});
+        
+        try {
+            await addDocFn(collectionFn(db,...commentsPath), {
+                name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+                comment: commentText, timestamp: serverTimestampFn(), parentId: parentId,
+                likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
+            });
+            
+            // If it was an inline form, close it. Otherwise, reset the main form.
+            if (form.closest('.inline-reply-slot')) {
+                closeActiveReplyForm();
+            } else {
+                form.reset();
+                form.querySelector('#char-counter').textContent = `0 / ${commentInput.maxLength}`;
+            }
+
+        } catch(err){
+            console.error('Error adding comment:', err);
+            allComments = allComments.filter(c => c.id !== tempId); 
+            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+            alert('Could not post comment.');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit';
+        }
+    });
+
+    const mainCommentInput = mainForm.querySelector('#comment');
+    const mainCharCounter = mainForm.querySelector('#char-counter');
+    mainCommentInput.addEventListener('input', () => { 
+        mainCharCounter.textContent = `${mainCommentInput.value.length} / ${mainCommentInput.maxLength}`; 
+    });
+}
 
 // ====== LAZY INITIALIZATION LOGIC ======
 let commentsInitialized = false;
@@ -448,7 +493,8 @@ async function initializeCommentsSection() {
     try {
         await initFirestore();
         await loadComments();
-        initFirebaseAuth(); 
+        await initFirebaseAuth(); 
+        setupDelegatedListeners();
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
         if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
