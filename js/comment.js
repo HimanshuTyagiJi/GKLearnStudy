@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -182,30 +181,31 @@ function setupAuthObserver() {
 // ====== RATING SYSTEM LOGIC ======
 let userRating = 0; // The current user's rating for this page
 let isRatingSubmissionPending = false;
+let currentRatingSummary = null; // Cache for the latest rating summary
 
 function updateRatingUI(summaryData, currentUserRating) {
     if (!ratingWidgetWrapper) return;
 
-    userRating = currentUserRating || 0;
     const breakdown = summaryData?.breakdown || {};
+    let totalCount = summaryData?.totalCount || 0;
+    let totalSum = summaryData?.totalSum || 0;
 
-    // Recalculate totals directly from breakdown data for maximum reliability.
-    // This ensures UI consistency even if summary data in Firestore is incomplete.
-    let totalCount = 0;
-    let totalSum = 0;
-    for (let i = 1; i <= 5; i++) {
-        const count = Number(breakdown[String(i)]) || 0;
-        totalCount += count;
-        totalSum += count * i;
+    // Fallback calculation if summary totals are missing, for robustness
+    if (typeof summaryData?.totalCount === 'undefined' || typeof summaryData?.totalSum === 'undefined') {
+        totalCount = 0;
+        totalSum = 0;
+        for (let i = 1; i <= 5; i++) {
+            const count = Number(breakdown[String(i)]) || 0;
+            totalCount += count;
+            totalSum += count * i;
+        }
     }
 
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
-    // Update summary text
     if (averageRatingValue) averageRatingValue.textContent = isNaN(average) ? '0.0' : average.toFixed(1);
     if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
 
-    // Update breakdown bars
     for (let i = 5; i >= 1; i--) {
         const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
         if (row) {
@@ -216,19 +216,17 @@ function updateRatingUI(summaryData, currentUserRating) {
         }
     }
 
-    // Update star visuals
     const stars = ratingStarsContainer.querySelectorAll('.star');
     stars.forEach(star => {
         const starValue = parseInt(star.dataset.value, 10);
         star.classList.remove('filled', 'selected');
-        if (userRating >= starValue) {
-            star.classList.add('selected'); // User's own rating
+        if (currentUserRating >= starValue) {
+            star.classList.add('selected');
         } else if (Math.round(average) >= starValue) {
             star.classList.add('filled');
         }
     });
     
-    // Handle user interaction state
     if (currentUser) {
         ratingStarsContainer.classList.add('user-can-rate');
         ratingLoginPrompt.style.display = 'none';
@@ -245,17 +243,18 @@ async function loadRatings() {
 
     const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
     
-    // Real-time listener for the summary
     unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
         const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-        // We get the user's rating once, then update the UI with the live summary
+        currentRatingSummary = summaryData; // Cache the latest summary
+
         if (currentUser) {
             const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
             getDocFn(userRatingDocRef).then(userDoc => {
-                const userRatingData = userDoc.exists() ? userDoc.data().rating : 0;
-                updateRatingUI(summaryData, userRatingData);
+                userRating = userDoc.exists() ? userDoc.data().rating : 0;
+                updateRatingUI(summaryData, userRating);
             });
         } else {
+            userRating = 0;
             updateRatingUI(summaryData, 0);
         }
          ratingWidgetWrapper?.classList.remove('rating-loading');
@@ -266,8 +265,8 @@ async function loadRatings() {
     });
 }
 
-async function submitRating(newRating) {
-    if (!currentUser || isRatingSubmissionPending) return;
+async function submitRatingToServer(newRating, oldUserRating) {
+    if (!currentUser) return;
     isRatingSubmissionPending = true;
 
     try {
@@ -275,45 +274,32 @@ async function submitRating(newRating) {
             const summaryRef = docFn(db, ...ratingsPath, '_summary');
             const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
 
-            const [summaryDoc, userRatingDoc] = await Promise.all([
-                transaction.get(summaryRef),
-                transaction.get(userRatingRef)
-            ]);
+            const summaryDoc = await transaction.get(summaryRef);
             
-            const summaryData = summaryDoc.exists() ? summaryDoc.data() : {};
-            const oldUserRating = userRatingDoc.exists() ? userRatingDoc.data().rating : 0;
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
             
-            const breakdown = {
-                '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
-                ...(summaryData.breakdown || {})
-            };
+            const breakdown = { ...summaryData.breakdown };
+            let newSum = summaryData.totalSum || 0;
+            let newCount = summaryData.totalCount || 0;
 
-            // Adjust breakdown for the change in vote
             if (oldUserRating > 0) {
-                 breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
+                breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
+                newSum -= oldUserRating;
+                newCount -= 1;
             }
             breakdown[String(newRating)] = (breakdown[String(newRating)] || 0) + 1;
+            newSum += newRating;
+            newCount += 1;
 
-            // Recalculate totals directly from the breakdown for data integrity
-            let newSum = 0;
-            let newCount = 0;
-            // Ensure calculation is robust against unexpected data types or properties
-            for (let i = 1; i <= 5; i++) {
-                const starKey = String(i);
-                const count = Number(breakdown[starKey]) || 0;
-                newCount += count;
-                newSum += count * i;
-            }
-
-            // Update user's specific rating
             transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
-            // Update the aggregate summary
             transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
         });
-        userRating = newRating; // Optimistically update local state
     } catch (error) {
         console.error("Rating submission failed:", error);
         alert("Could not save your rating. Please try again.");
+        // Rollback optimistic UI change
+        updateRatingUI(currentRatingSummary, oldUserRating);
+        userRating = oldUserRating; // Revert local state
     } finally {
         isRatingSubmissionPending = false;
     }
@@ -322,28 +308,41 @@ async function submitRating(newRating) {
 function setupRatingListeners() {
     if (!ratingStarsContainer) return;
 
-    // The mouseover/mouseout listeners were inefficient and causing state update issues.
-    // The existing CSS :hover rule provides a sufficient and more stable hover effect.
-    // Removing the JS-based hover handlers fixes the core problem of the rating count
-    // and progress bars not updating.
-
     ratingStarsContainer.addEventListener('click', (e) => {
         const star = e.target.closest('.star');
-        if (!star) return;
+        if (!star || isRatingSubmissionPending) return;
 
         if (!currentUser) {
             signInWithGoogle();
             return;
         }
 
-        const ratingValue = parseInt(star.dataset.value, 10);
-        if (ratingValue === userRating) {
-             // If they click the same star, maybe do nothing or allow un-rating in the future
-            return;
+        const newRating = parseInt(star.dataset.value, 10);
+        const oldUserRating = userRating;
+
+        if (newRating === oldUserRating) return;
+
+        // --- Optimistic UI Update ---
+        const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
+
+        // Adjust counts and sums based on the new vote
+        if (oldUserRating > 0) {
+            optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
+            optimisticSummary.totalSum -= oldUserRating;
+            optimisticSummary.totalCount -= 1;
         }
-        submitRating(ratingValue);
+        optimisticSummary.breakdown[String(newRating)] = (optimisticSummary.breakdown[String(newRating)] || 0) + 1;
+        optimisticSummary.totalSum += newRating;
+        optimisticSummary.totalCount += 1;
+        
+        userRating = newRating; // Update local state immediately
+        updateRatingUI(optimisticSummary, newRating);
+
+        // --- Send to Server in Background ---
+        submitRatingToServer(newRating, oldUserRating);
     });
 }
+
 
 // ====== Comment Tree & Rendering Logic ======
 const buildTree = items => {
@@ -705,15 +704,18 @@ async function initializeCommentsSection() {
 
 let ratingInitialized = false;
 async function initializeRatingSystem() {
-    if (ratingInitialized) { // allow re-initialization on auth change
-        if (unsubscribeRating) unsubscribeRating();
+    if (unsubscribeRating) unsubscribeRating(); // Always reset listener
+    
+    // Only set up click listeners once
+    if (!ratingInitialized) {
+        setupRatingListeners();
+        ratingInitialized = true;
     }
-    ratingInitialized = true;
+    
     try {
         await initFirestore();
         await loadRatings();
         if (!isAuthInitialized) await initFirebaseAuth();
-        setupRatingListeners();
     } catch (error) {
         console.error("Failed to initialize rating system:", error);
         if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
