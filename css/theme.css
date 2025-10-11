@@ -1134,6 +1134,15 @@ html[data-theme="light"] .btn.primary .spinner-small {
     color: var(--blue);
     font-weight: 700;
 }
+/* NEW: Style for highlighted comment */
+@keyframes highlight-fade {
+    from { background-color: var(--blue-transparent-focus); }
+    to { background-color: transparent; }
+}
+.comment-item.highlighted {
+    animation: highlight-fade 2.5s ease-out;
+}
+
 
 /* === System Announcement Comment === */
 .system-announcement-comment {
