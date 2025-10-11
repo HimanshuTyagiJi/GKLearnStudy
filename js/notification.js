@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let messaging = null;
     let db = null;
     let auth = null;
+    let functions = null; // Added for callable functions
     let currentUser = null;
     let currentToken = null;
     let isFirebaseInitialized = false;
@@ -56,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadFirebaseScript('app'),
                 loadFirebaseScript('auth'),
                 loadFirebaseScript('firestore'),
-                loadFirebaseScript('messaging')
+                loadFirebaseScript('messaging'),
+                loadFirebaseScript('functions') // Added functions module
             ]);
             
             const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
@@ -75,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const { getMessaging } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
             messaging = getMessaging(firebaseApp);
             
+            const { getFunctions } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
+            functions = getFunctions(firebaseApp);
+
             isFirebaseInitialized = true;
             
             onAuthStateChanged(auth, user => {
@@ -161,30 +166,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function togglePageSubscription(token) {
-        if (!currentUser || !db || !token) return;
+        if (!currentUser || !functions || !token) return;
+
+        const action = isSubscribedOnThisPage ? 'unsubscribe' : 'subscribe';
         
-        const { doc, setDoc, getDoc, arrayUnion, arrayRemove } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
-        const pageSubRef = doc(db, 'pageSubscriptions', pageId);
-
         try {
-            const docSnap = await getDoc(pageSubRef);
-            const isCurrentlySubscribed = docSnap.exists() && docSnap.data().tokens?.includes(token);
+            const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
+            const manageSubscription = httpsCallable(functions, 'manageSubscription');
+            
+            const result = await manageSubscription({ pageId: pageId, token: token, action: action });
 
-            if (isCurrentlySubscribed) {
-                await setDoc(pageSubRef, { tokens: arrayRemove(token) }, { merge: true });
-                isSubscribedOnThisPage = false;
+            if (result.data.success) {
+                isSubscribedOnThisPage = (action === 'subscribe');
             } else {
-                await setDoc(pageSubRef, { tokens: arrayUnion(token) }, { merge: true });
-                isSubscribedOnThisPage = true;
+                 throw new Error(result.data.message || 'Function call was not successful.');
             }
         } catch (error) {
-            console.error('Error toggling subscription in Firestore:', error);
-            throw error; // Re-throw to be caught by the handler
+            console.error('Error calling manageSubscription function:', error);
+            alert(`Could not ${action}. Please try again.`);
         }
     }
 
     async function checkCurrentPageSubscription() {
-        if (Notification.permission !== 'granted' || !currentUser) {
+        if (Notification.permission !== 'granted' || !currentUser || !db) {
             isSubscribedOnThisPage = false;
             return;
         }
