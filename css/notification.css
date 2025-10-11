@@ -10,6 +10,7 @@
     justify-content: center;
     border-radius: 50%;
     position: relative;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .notification-btn:hover {
@@ -24,21 +25,31 @@
 
 .notification-btn .spinner-icon {
     display: none;
-    animation: spin 1s linear infinite;
 }
 
 .notification-btn.loading .bell-icon {
-    display: none;
+    opacity: 0.2;
 }
 
 .notification-btn.loading .spinner-icon {
     display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    animation: spin 1s linear infinite;
 }
 
 .notification-btn.subscribed .bell-icon {
     color: var(--green);
-    /* Add a subtle animation to confirm subscription */
+    fill: rgba(7, 102, 0, 0.1);
     animation: ring 0.8s ease-out;
+}
+
+html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
+    color: #66bb6a;
+    fill: rgba(102, 187, 106, 0.15);
 }
 
 .notification-btn.disabled {
@@ -56,11 +67,4 @@
     60% { transform: rotate(-5deg); }
     70% { transform: rotate(0); }
     100% { transform: rotate(0); }
-}
-
-/* Keyframes for the spinner are in theme.css, but we can add them here if needed */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
