@@ -1,7 +1,9 @@
+// firebase-messaging-sw.js
 
-// Import the Firebase app and messaging scripts (v9 modular syntax for service workers)
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js");
+// Using the V9 COMPAT libraries for the service worker for maximum compatibility.
+// This is the recommended approach by Firebase when not using ES modules (.mjs).
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,27 +16,22 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 // Retrieve an instance of Firebase Messaging so that it can handle background messages.
-const messaging = firebase.getMessaging(app);
+const messaging = firebase.messaging();
 
 // Add a handler for background messages.
-// This will be triggered when the app is in the background or closed.
-firebase.onBackgroundMessage(messaging, (payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
+messaging.onBackgroundMessage((payload) => {
+  console.log("[firebase-messaging-sw.js] Received background message ", payload);
 
-  // Customize notification here from the received payload.
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
     icon: payload.notification.icon,
+    // The data object is where we store custom data, like the URL to open.
     data: {
-        // This makes the notification clickable and opens the link
-        click_action: payload.fcmOptions.link 
+        url: payload.fcmOptions.link // The backend function should put the URL here.
     }
   };
 
@@ -42,23 +39,27 @@ firebase.onBackgroundMessage(messaging, (payload) => {
 });
 
 // Add an event listener for notification clicks to open the correct URL.
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', (event) => {
     event.notification.close(); // Close the notification
 
-    const urlToOpen = event.notification.data.click_action;
+    // Get the URL to open from the data object.
+    const urlToOpen = event.notification.data.url;
+    if (!urlToOpen) {
+        return;
+    }
 
     event.waitUntil(
         clients.matchAll({
-            type: "window"
-        }).then(function(clientList) {
-            // If the site is already open, focus it.
-            for (var i = 0; i < clientList.length; i++) {
-                var client = clientList[i];
+            type: "window",
+            includeUncontrolled: true
+        }).then((clientList) => {
+            // If the site is already open in a tab, focus it.
+            for (const client of clientList) {
                 if (client.url === urlToOpen && 'focus' in client) {
                     return client.focus();
                 }
             }
-            // Otherwise, open a new window.
+            // Otherwise, open a new tab.
             if (clients.openWindow) {
                 return clients.openWindow(urlToOpen);
             }
