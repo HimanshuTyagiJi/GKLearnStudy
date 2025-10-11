@@ -96,7 +96,7 @@ const fmtDate = d => {
 const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const pageId = (() => {
   const p = location.pathname;
-  return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_');
+  return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_').replace(/\.html$/,'');
 })();
 const commentsPath = ['pages', pageId, 'comments'];
 const ratingsPath = ['pages', pageId, 'ratings'];
@@ -423,15 +423,32 @@ function renderNode(node){
   return li;
 }
 
+function createSystemAnnouncement() {
+    const announcement = document.createElement('div');
+    announcement.className = 'system-announcement-comment';
+    announcement.innerHTML = `
+        <div class="comment-author-info">
+            <svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bot-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#005f61;"/><stop offset="100%" style="stop-color:#00c9d2;"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#bot-grad)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="white" font-family="Arial, sans-serif">🔔</text></svg>
+        </div>
+        <div class="comment-body">इस पेज पर नए कमेंट्स की सूचना पाने के लिए, ऊपर घंटी के आइकन पर क्लिक करें।</div>
+    `;
+    return announcement;
+}
+
 
 function renderFlatList(nodes, container){
-  container.innerHTML = ''; 
-  if (nodes.length > 0) {
-      nodes.forEach(n => container.appendChild(renderNode(n)));
-  } else {
-      container.innerHTML = '<p class="muted">Be the first to comment!</p>';
-  }
+    container.innerHTML = ''; 
+    
+    // Add the system announcement message at the top
+    container.appendChild(createSystemAnnouncement());
+
+    if (nodes.length > 0) {
+        nodes.forEach(n => container.appendChild(renderNode(n)));
+    } else {
+        container.insertAdjacentHTML('beforeend', '<p class="muted">Be the first to comment!</p>');
+    }
 }
+
 
 // ====== Load Comments with Real-Time Listener ======
 async function loadComments(){
