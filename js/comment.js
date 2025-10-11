@@ -1,777 +1,195 @@
-// --- Firebase Module Placeholders ---
-let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
-// --- State Variables ---
-let currentUser = null;
-let firebaseApp = null;
-let isAuthInitialized = false;
-let isFirestoreInitialized = false;
-let authPromise = null;
-let unsubscribeComments = null;
-let unsubscribeRating = null;
-let allComments = []; // Global cache for comments
-let activeReplyForm = null; // Track the currently open inline reply form
+// Firebase SDKs
+const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onCall } = require("firebase-functions/v2/https");
+const { initializeApp } = require("firebase-admin/app");
+const { getFirestore, FieldValue } = require("firebase-admin/firestore");
+const { getMessaging } = require("firebase-admin/messaging");
+const logger = require("firebase-functions/logger");
 
-// !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
-const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
+// Initialize the Firebase Admin SDK.
+initializeApp();
 
-// --- Dynamic Script Loader ---
-function loadFirebaseScript(module) {
-    const url = `https://www.gstatic.com/firebasejs/9.22.1/firebase-${module}.js`;
-    return new Promise((resolve, reject) => {
-        const existingScript = document.querySelector(`script[src="${url}"]`);
-        if (existingScript) {
-            if (existingScript.dataset.loaded) resolve();
-            else existingScript.addEventListener('load', resolve);
-            return;
-        }
-        const script = document.createElement('script');
-        script.src = url;
-        script.type = "module";
-        script.onload = () => { script.dataset.loaded = true; resolve(); };
-        script.onerror = reject;
-        document.head.appendChild(script);
-    });
-}
+// --- CONFIGURATION ---
+// The UID of the website owner to ensure they receive all notifications.
+const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2";
 
-// --- Firebase Initialization Functions ---
-async function initializeFirebaseApp() {
-    if (firebaseApp) return;
-    await loadFirebaseScript('app');
-    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
-    if (getApps().length === 0) {
-        firebaseApp = initializeApp({
-            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-            authDomain: "appcomment.firebaseapp.com",
-            projectId: "appcomment",
-            storageBucket: "appcomment.firebasestorage.app",
-            messagingSenderId: "156258808941",
-            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-        });
-    } else {
-        firebaseApp = getApp();
-    }
-}
-
-
-async function initFirestore() {
-    if (isFirestoreInitialized) return;
-    await initializeFirebaseApp();
-    await loadFirebaseScript('firestore');
-    const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
-    
-    db = firestore.getFirestore(firebaseApp);
-    addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
-    deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
-    serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
-    runTransactionFn = firestore.runTransaction;
-    onSnapshotFn = firestore.onSnapshot;
-    getDocFn = firestore.getDoc; setDocFn = firestore.setDoc;
-    isFirestoreInitialized = true;
-}
-
-function initFirebaseAuth() {
-    if (!authPromise) {
-        authPromise = (async () => {
-            await initializeFirebaseApp();
-            await loadFirebaseScript('auth');
-            const authModule = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
-
-            auth = authModule.getAuth(firebaseApp);
-            onAuthStateChangedFn = authModule.onAuthStateChanged;
-            GoogleAuthProviderFn = authModule.GoogleAuthProvider;
-            signInWithPopupFn = authModule.signInWithPopup;
-            signOutFn = authModule.signOut;
-            
-            setupAuthObserver();
-            isAuthInitialized = true;
-        })();
-    }
-    return authPromise;
-}
-
-// ====== Helpers ======
-const escapeHTML = s => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
-const fmtDate = d => {
-  const p = n => String(n).padStart(2,'0');
-  const m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return `${p(d.getDate())} ${m[d.getMonth()]} ${d.getFullYear()}, ${p(d.getHours())}:${p(d.getMinutes())}`;
-};
-const safeToDate = ts => ts?.toDate?.() ?? new Date();
-const pageId = (() => {
-  const p = location.pathname;
-  return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_').replace(/\.html$/,'');
-})();
-const commentsPath = ['pages', pageId, 'comments'];
-const ratingsPath = ['pages', pageId, 'ratings'];
-
-// ====== DOM Elements ======
-const commentsList = document.getElementById('comments-list');
-const mainFormShell = document.getElementById('comment-form-shell');
-const mainForm = document.getElementById('comment-form');
-const commentsWrapper = document.getElementById('comments-main-container');
-const authContainer = document.getElementById('auth-container');
-const loginBtn = document.getElementById('login-btn');
-const logoutBtn = document.getElementById('logout-btn');
-const userInfo = document.getElementById('user-info');
-const loginPrompt = document.getElementById('login-prompt');
-const originalLoginHTML = loginBtn.innerHTML;
-const commentCountSpan = document.getElementById('comment-count');
-
-
-const ratingWidgetWrapper = document.getElementById('rating-widget-wrapper');
-const ratingStarsContainer = document.getElementById('rating-stars');
-const ratingLoginPrompt = document.getElementById('rating-login-prompt');
-const averageRatingValue = document.getElementById('average-rating-value');
-const totalRatingsCount = document.getElementById('total-ratings-count');
-
-
-// ====== Auth Functions ======
-async function signInWithGoogle() {
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
-    
-    try {
-        await initFirebaseAuth();
-        const provider = new GoogleAuthProviderFn();
-        await signInWithPopupFn(auth, provider);
-    } catch (error) {
-        console.error("Google Sign-In Error:", error);
-        if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google. Please check your connection and try again.");
-        }
-    } finally {
-        if (!currentUser) {
-            loginBtn.disabled = false;
-            loginBtn.innerHTML = originalLoginHTML;
-        }
-    }
-}
-
-async function signOutUser() {
-    if (!isAuthInitialized) return;
-    await signOutFn(auth);
-}
-
-loginBtn.addEventListener('click', signInWithGoogle);
-logoutBtn.addEventListener('click', signOutUser);
-
-function setupAuthObserver() {
-    onAuthStateChangedFn(auth, user => {
-        const wasLoggedIn = !!currentUser;
-        currentUser = user;
-        if (user) {
-            userInfo.innerHTML = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
-            authContainer.classList.add('logged-in');
-            mainFormShell.style.display = 'block';
-            loginPrompt.style.display = 'none';
-        } else {
-            authContainer.classList.remove('logged-in');
-            mainFormShell.style.display = 'none';
-            loginPrompt.style.display = 'block';
-            loginBtn.disabled = false;
-            loginBtn.innerHTML = originalLoginHTML;
-            closeActiveReplyForm();
-        }
-        if (wasLoggedIn !== !!user) {
-           renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-           // Re-initialize rating system to reflect login state
-           if(ratingWidgetWrapper) initializeRatingSystem();
-        }
-    });
-}
-
-
-// ====== RATING SYSTEM LOGIC ======
-let userRating = 0; // The current user's rating for this page
-let isRatingSubmissionPending = false;
-let currentRatingSummary = null; // Cache for the latest rating summary
-
-function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
-    if (!ratingWidgetWrapper) return;
-    const ratingDisplay = document.getElementById('rating-display');
-
-    if (isInstant) {
-        ratingDisplay?.classList.add('no-transition');
-        ratingStarsContainer?.classList.add('no-transition');
-    }
-
-    const breakdown = summaryData?.breakdown || {};
-    let totalCount = summaryData?.totalCount || 0;
-    let totalSum = summaryData?.totalSum || 0;
-
-    // Fallback calculation if summary totals are missing, for robustness
-    if (typeof summaryData?.totalCount === 'undefined' || typeof summaryData?.totalSum === 'undefined') {
-        totalCount = 0;
-        totalSum = 0;
-        for (let i = 1; i <= 5; i++) {
-            const count = Number(breakdown[String(i)]) || 0;
-            totalCount += count;
-            totalSum += count * i;
-        }
-    }
-
-    const average = totalCount > 0 ? (totalSum / totalCount) : 0;
-
-    if (averageRatingValue) averageRatingValue.textContent = isNaN(average) ? '0.0' : average.toFixed(1);
-    if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
-
-    for (let i = 5; i >= 1; i--) {
-        const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
-        if (row) {
-            const countForStar = breakdown[String(i)] || 0;
-            const percentage = totalCount > 0 ? (countForStar / totalCount) * 100 : 0;
-            row.querySelector('.progress-bar').style.width = `${percentage}%`;
-            row.querySelector('.vote-count').textContent = countForStar;
-        }
-    }
-
-    const stars = ratingStarsContainer.querySelectorAll('.star');
-    stars.forEach(star => {
-        const starValue = parseInt(star.dataset.value, 10);
-        star.classList.remove('filled', 'selected');
-        if (currentUserRating >= starValue) {
-            star.classList.add('selected');
-        } else if (Math.round(average) >= starValue) {
-            star.classList.add('filled');
-        }
-    });
-    
-    if (currentUser) {
-        ratingStarsContainer.classList.add('user-can-rate');
-        ratingLoginPrompt.style.display = 'none';
-    } else {
-        ratingStarsContainer.classList.remove('user-can-rate');
-        ratingLoginPrompt.style.display = 'block';
-    }
-
-    if (isInstant) {
-        setTimeout(() => {
-            ratingDisplay?.classList.remove('no-transition');
-            ratingStarsContainer?.classList.remove('no-transition');
-        }, 50);
-    }
-}
-
-
-async function loadRatings() {
-    await initFirestore();
-    if (unsubscribeRating) unsubscribeRating();
-
-    const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
-    
-    unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
-        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-        currentRatingSummary = summaryData; // Cache the latest summary
-
-        if (currentUser) {
-            const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
-            getDocFn(userRatingDocRef).then(userDoc => {
-                userRating = userDoc.exists() ? userDoc.data().rating : 0;
-                updateRatingUI(summaryData, userRating);
-            });
-        } else {
-            userRating = 0;
-            updateRatingUI(summaryData, 0);
-        }
-         ratingWidgetWrapper?.classList.remove('rating-loading');
-    }, (error) => {
-        console.error("Error loading rating summary:", error);
-        if (totalRatingsCount) totalRatingsCount.textContent = "Could not load ratings.";
-        ratingWidgetWrapper?.classList.remove('rating-loading');
-    });
-}
-
-async function submitRatingToServer(newRating, oldUserRating) {
-    if (!currentUser) return;
-    isRatingSubmissionPending = true;
-
-    try {
-        await runTransactionFn(db, async (transaction) => {
-            const summaryRef = docFn(db, ...ratingsPath, '_summary');
-            const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
-
-            const summaryDoc = await transaction.get(summaryRef);
-            
-            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-            
-            const breakdown = { ...summaryData.breakdown };
-            let newSum = summaryData.totalSum || 0;
-            let newCount = summaryData.totalCount || 0;
-
-            if (oldUserRating > 0) {
-                breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
-                newSum -= oldUserRating;
-                newCount -= 1;
-            }
-            breakdown[String(newRating)] = (breakdown[String(newRating)] || 0) + 1;
-            newSum += newRating;
-            newCount += 1;
-
-            transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
-            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
-        });
-    } catch (error) {
-        console.error("Rating submission failed:", error);
-        alert("Could not save your rating. Please try again.");
-        // Rollback optimistic UI change
-        updateRatingUI(currentRatingSummary, oldUserRating);
-        userRating = oldUserRating; // Revert local state
-    } finally {
-        isRatingSubmissionPending = false;
-    }
-}
-
-function setupRatingListeners() {
-    if (!ratingStarsContainer) return;
-
-    ratingStarsContainer.addEventListener('click', (e) => {
-        const star = e.target.closest('.star');
-        if (!star || isRatingSubmissionPending) return;
-
-        if (!currentUser) {
-            signInWithGoogle();
-            return;
-        }
-
-        const newRating = parseInt(star.dataset.value, 10);
-        const oldUserRating = userRating;
-
-        if (newRating === oldUserRating) return;
-
-        // --- Optimistic UI Update ---
-        const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
-
-        // Adjust counts and sums based on the new vote
-        if (oldUserRating > 0) {
-            optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
-            optimisticSummary.totalSum -= oldUserRating;
-            optimisticSummary.totalCount -= 1;
-        }
-        optimisticSummary.breakdown[String(newRating)] = (optimisticSummary.breakdown[String(newRating)] || 0) + 1;
-        optimisticSummary.totalSum += newRating;
-        optimisticSummary.totalCount += 1;
-        
-        userRating = newRating; // Update local state immediately
-        updateRatingUI(optimisticSummary, newRating, true);
-
-        // --- Send to Server in Background ---
-        submitRatingToServer(newRating, oldUserRating);
-    });
-}
-
-
-// ====== Comment Tree & Rendering Logic ======
-const buildTree = items => {
-  const byId = {};
-  items.forEach(it => (it.children = [], byId[it.id] = it));
-  const roots = [];
-  items.forEach(it => it.parentId && byId[it.parentId] ? byId[it.parentId].children.push(it) : roots.push(it));
-  return roots;
-};
-const flattenTree = nodes => {
-  const res = [];
-  (function trav(n,d){
-    for(const x of n){ x.depth = d; res.push(x); if(x.children?.length) trav(x.children,d+1); }
-  })(nodes,0);
-  return res;
-};
-
-function renderNode(node){
-  const li = document.createElement('div');
-  li.className = 'comment-item';
-  if (node.depth > 0) li.classList.add('reply-item');
-  if (node.isOptimistic) li.classList.add('is-optimistic');
-  
-  const isOwner = currentUser && currentUser.uid === OWNER_UID;
-  const isCommentOwner = node.uid === OWNER_UID;
-  if (isCommentOwner) li.classList.add('owner-comment');
-
-  const authorName = isCommentOwner ? 'GK Learn Study' : escapeHTML(node.name);
-  const verificationBadge = isCommentOwner ? `<span class="verified-badge" title="Verified Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>` : '';
-
-  let replyInfoHTML = '';
-  if (node.parentId) {
-      const parent = allComments.find(c => c.id === node.parentId);
-      if (parent) {
-          const parentIsOwner = parent.uid === OWNER_UID;
-          const parentName = parentIsOwner ? 'GK Learn Study' : escapeHTML(parent.name);
-          const parentVerificationBadge = parentIsOwner ? ` <span class="verified-badge" title="Verified Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>` : '';
-          replyInfoHTML = `<div class="reply-info">Replying to <strong>@${parentName}${parentVerificationBadge}</strong></div>`;
-      }
+/**
+ * Secure callable function for clients to manage their notification subscription for a page.
+ */
+exports.manageSubscription = onCall(async (request) => {
+  // 1. Authentication Check: Ensure the user is authenticated.
+  if (!request.auth) {
+    logger.warn("Unauthenticated user tried to call manageSubscription.");
+    throw new onCall.HttpsError(
+      "unauthenticated",
+      "The function must be called while authenticated."
+    );
   }
 
-  const ownerAvatarSVG = `<svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="owner-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;"/><stop offset="100%" style="stop-color:#c0a4fb;"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#owner-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>`;
-  const authorAvatar = isCommentOwner 
-    ? ownerAvatarSVG 
-    : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
+  // 2. Data Validation: Ensure required data is present.
+  const { pageId, token, action } = request.data;
+  if (!pageId || !token || !["subscribe", "unsubscribe"].includes(action)) {
+    logger.error("Invalid arguments received.", request.data);
+    throw new onCall.HttpsError(
+      "invalid-argument",
+      "Required fields: 'pageId', 'token', 'action' ('subscribe' or 'unsubscribe')."
+    );
+  }
 
-  const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
-  
-  const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
-  const hasDisliked = currentUser && node.dislikedBy?.includes(currentUser.uid);
-  const showDeleteButton = currentUser && (currentUser.uid === node.uid || isOwner);
+  logger.log(
+    `Subscription request for page [${pageId}] with action [${action}] by user ${
+      request.auth.uid
+    }`
+  );
 
-  const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${showDeleteButton ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
-  const inlineReplySlot = `<div class="inline-reply-slot"></div>`;
-  
-  const body = document.createElement('div');
-  body.className = 'comment-body';
-  body.textContent = node.comment || '';
-  body.style.whiteSpace = 'pre-wrap';
+  // 3. Firestore Logic: Update the subscription document.
+  const db = getFirestore();
+  const pageSubRef = db.collection("pageSubscriptions").doc(pageId);
 
-  li.innerHTML = headerHTML + replyInfoHTML;
-  li.appendChild(body);
-  li.insertAdjacentHTML('beforeend', actionsHTML + inlineReplySlot);
-  
-  return li;
-}
-
-function createSystemAnnouncement() {
-    const announcement = document.createElement('div');
-    announcement.className = 'system-announcement-comment';
-    announcement.innerHTML = `
-        <div class="comment-author-info">
-            <svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bot-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#005f61;"/><stop offset="100%" style="stop-color:#00c9d2;"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#bot-grad)"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="white" font-family="Arial, sans-serif">🔔</text></svg>
-        </div>
-        <div class="comment-body">इस पेज पर नए कमेंट्स की सूचना पाने के लिए, ऊपर घंटी के आइकन पर क्लिक करें।</div>
-    `;
-    return announcement;
-}
-
-
-function renderFlatList(nodes, container){
-    container.innerHTML = ''; 
-    
-    // Add the system announcement message at the top
-    container.appendChild(createSystemAnnouncement());
-
-    if (nodes.length > 0) {
-        nodes.forEach(n => container.appendChild(renderNode(n)));
-    } else {
-        container.insertAdjacentHTML('beforeend', '<p class="muted">Be the first to comment!</p>');
-    }
-}
-
-
-// ====== Load Comments with Real-Time Listener ======
-async function loadComments(){
   try {
-    await initFirestore();
-    if (unsubscribeComments) unsubscribeComments();
+    const operation =
+      action === "subscribe"
+        ? FieldValue.arrayUnion(token)
+        : FieldValue.arrayRemove(token);
 
-    const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
-    unsubscribeComments = onSnapshotFn(q, (snapshot) => {
-        const newComments = [];
-        snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
-        
-        const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
-        allComments = [...optimisticComments, ...newComments];
+    // Using set with merge creates the document if it doesn't exist.
+    await pageSubRef.set({ tokens: operation }, { merge: true });
 
-        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-        
-        // Update total comment count
-        const totalComments = allComments.length;
-        if (commentCountSpan) {
-            commentCountSpan.textContent = totalComments;
-            commentCountSpan.nextSibling.textContent = ` Comment${totalComments !== 1 ? 's' : ''}`;
-        }
-        
-        commentsWrapper?.classList.remove('comments-loading');
-    }, (error) => {
-        console.error('Real-time listener error:', error);
-        commentsList.innerHTML = `<p class="muted error">Could not load comments. Check security rules.</p>`;
-        commentsWrapper?.classList.remove('comments-loading');
-    });
-  } catch(err){
-    console.error('Error setting up listener:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
-    commentsWrapper?.classList.remove('comments-loading');
+    logger.log(
+      `Successfully processed [${action}] for token on page [${pageId}]`
+    );
+    return { success: true, message: `Successfully ${action}d.` };
+  } catch (error) {
+    logger.error("Error updating subscription in Firestore:", error);
+    throw new onCall.HttpsError(
+      "internal",
+      "Failed to update subscription in the database."
+    );
   }
-}
-
-// ====== Inline Reply Form Management ======
-function closeActiveReplyForm() {
-    if (activeReplyForm) {
-        activeReplyForm.remove();
-        activeReplyForm = null;
-    }
-}
-
-function openReplyForm(commentId, authorName, targetSlot) {
-    closeActiveReplyForm(); 
-
-    const formClone = mainFormShell.cloneNode(true);
-    formClone.id = ''; 
-    formClone.style.display = 'block';
-
-    const form = formClone.querySelector('form');
-    const parentIdInput = form.querySelector('#parent-id');
-    const replyingToEl = form.querySelector('#replying-to');
-    const cancelBtn = form.querySelector('#cancel-reply');
-    const commentInput = form.querySelector('#comment');
-    const charCounter = form.querySelector('#char-counter');
-
-    parentIdInput.value = commentId;
-    replyingToEl.innerHTML = `Replying to <strong>${escapeHTML(authorName)}</strong>`;
-    replyingToEl.style.display = 'block';
-    cancelBtn.style.display = 'inline-block';
-    commentInput.placeholder = `Replying to ${escapeHTML(authorName)}...`;
-    
-    charCounter.textContent = `0 / ${commentInput.maxLength}`;
-    commentInput.addEventListener('input', () => { 
-        charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`; 
-    });
-    
-    targetSlot.appendChild(formClone);
-    activeReplyForm = formClone;
-    commentInput.focus();
-}
-
-// ====== Vote and Delete Logic ======
-async function handleVote(commentId, voteType) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-
-    const commentIndex = allComments.findIndex(c => c.id === commentId);
-    if (commentIndex === -1) return;
-
-    const comment = allComments[commentIndex];
-    const likedBy = comment.likedBy || [];
-    const dislikedBy = comment.dislikedBy || [];
-    const isLiked = likedBy.includes(uid);
-    const isDisliked = dislikedBy.includes(uid);
-
-    if (voteType === 'like') {
-        if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
-        else {
-            likedBy.push(uid);
-            if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
-        }
-    } else if (voteType === 'dislike') {
-        if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
-        else {
-            dislikedBy.push(uid);
-            if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
-        }
-    }
-    comment.likes = likedBy.length;
-    comment.dislikes = dislikedBy.length;
-    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-
-    try {
-        const docRef = docFn(db, ...commentsPath, commentId);
-        await runTransactionFn(db, async t => {
-            const doc = await t.get(docRef);
-            if (!doc.exists()) throw "Doc not found";
-            const data = doc.data();
-            const serverLikedBy = data.likedBy || [], serverDislikedBy = data.dislikedBy || [];
-            const isServerLiked = serverLikedBy.includes(uid), isServerDisliked = serverDislikedBy.includes(uid);
-            
-            if (voteType === 'like') {
-                if (isServerLiked) {
-                    serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
-                } else {
-                    serverLikedBy.push(uid);
-                    if (isServerDisliked) {
-                        serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
-                    }
-                }
-            } else if (voteType === 'dislike') {
-                if (isServerDisliked) {
-                    serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
-                } else {
-                    dislikedBy.push(uid);
-                    if (isServerLiked) {
-                        serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
-                    }
-                }
-            }
-            t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
-        });
-    } catch (e) {
-        console.error("Vote transaction failed:", e); 
-    }
-}
-
-async function deleteWithDescendants(rootId){
-    const toDeleteIds = new Set([rootId]);
-    let added = true;
-    while(added){
-        added = false;
-        for(const it of allComments) if(it.parentId && toDeleteIds.has(it.parentId) && !toDeleteIds.has(it.id)) { toDeleteIds.add(it.id); added = true; }
-    }
-
-    const originalComments = [...allComments];
-    allComments = allComments.filter(c => !toDeleteIds.has(c.id));
-    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-
-    try {
-        await Promise.all([...toDeleteIds].map(id => deleteDocFn(docFn(db, ...commentsPath, id))));
-    } catch (error) {
-        console.error("Failed to delete comments:", error);
-        allComments = originalComments; 
-        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-        alert("Could not delete the comment.");
-    }
-}
-
-// ====== Delegated Event Listeners Setup ======
-function setupDelegatedListeners() {
-    const container = document.getElementById('custom-comment-section');
-
-    container.addEventListener('click', async (e) => {
-        const button = e.target.closest('button');
-        if (!button) return;
-
-        if (button.id === 'cancel-reply') {
-             closeActiveReplyForm();
-             return; 
-        }
-        
-        const action = button.dataset.action;
-        if (!action) return;
-        
-        const commentId = button.closest('[data-comment-id]')?.dataset.commentId;
-        if (!commentId) return;
-
-        if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
-            signInWithGoogle();
-            return;
-        }
-
-        const node = allComments.find(c => c.id === commentId);
-        if (!node) return;
-
-        switch (action) {
-            case 'reply':
-                const replySlot = button.closest('.comment-item').querySelector('.inline-reply-slot');
-                openReplyForm(node.id, node.name, replySlot);
-                break;
-            case 'delete':
-                if (confirm('Delete this comment and all its replies?')) {
-                    deleteWithDescendants(node.id);
-                }
-                break;
-            case 'like': case 'dislike':
-                handleVote(node.id, action);
-                break;
-        }
-    });
-
-    container.addEventListener('submit', async e => {
-        e.preventDefault();
-        const form = e.target;
-        if (!form.matches('.comment-form')) return;
-
-        if (!currentUser) return;
-        
-        const commentInput = form.querySelector('#comment');
-        const parentIdInput = form.querySelector('#parent-id');
-        const submitButton = form.querySelector('#submit-button');
-
-        const commentText = commentInput.value.trim();
-        if (!commentText) return;
-
-        submitButton.disabled = true;
-        submitButton.innerHTML = `<span class="spinner-small"></span> Posting...`;
-
-        const parentId = parentIdInput.value || null;
-        const tempId = `temp_${Date.now()}`;
-
-        const tempComment = {
-            id: tempId, name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
-            comment: commentText, timestamp: { toDate: () => new Date() }, parentId: parentId,
-            likes: 0, dislikes: 0, likedBy: [], dislikedBy: [], isOptimistic: true
-        };
-        allComments.unshift(tempComment);
-        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-        
-        try {
-            await addDocFn(collectionFn(db,...commentsPath), {
-                name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
-                comment: commentText, timestamp: serverTimestampFn(), parentId: parentId,
-                likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
-            });
-            
-            // If it was an inline form, close it. Otherwise, reset the main form.
-            if (form.closest('.inline-reply-slot')) {
-                closeActiveReplyForm();
-            } else {
-                form.reset();
-                form.querySelector('#char-counter').textContent = `0 / ${commentInput.maxLength}`;
-            }
-
-        } catch(err){
-            console.error('Error adding comment:', err);
-            allComments = allComments.filter(c => c.id !== tempId); 
-            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-            alert('Could not post comment.');
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit';
-        }
-    });
-
-    const mainCommentInput = mainForm.querySelector('#comment');
-    const mainCharCounter = mainForm.querySelector('#char-counter');
-    mainCommentInput.addEventListener('input', () => { 
-        mainCharCounter.textContent = `${mainCommentInput.value.length} / ${mainCommentInput.maxLength}`; 
-    });
-}
-
-// ====== LAZY INITIALIZATION LOGIC ======
-let commentsInitialized = false;
-async function initializeCommentsSection() {
-    if (commentsInitialized) return;
-    commentsInitialized = true;
-    try {
-        await initFirestore();
-        await loadComments();
-        await initFirebaseAuth(); 
-        setupDelegatedListeners();
-    } catch (error) {
-        console.error("Failed to initialize comments section:", error);
-        if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
-    }
-}
-
-let ratingInitialized = false;
-async function initializeRatingSystem() {
-    if (unsubscribeRating) unsubscribeRating(); // Always reset listener
-    
-    // Only set up click listeners once
-    if (!ratingInitialized) {
-        setupRatingListeners();
-        ratingInitialized = true;
-    }
-    
-    try {
-        await initFirestore();
-        await loadRatings();
-        if (!isAuthInitialized) await initFirebaseAuth();
-    } catch (error) {
-        console.error("Failed to initialize rating system:", error);
-        if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
-    }
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const lazyLoad = (target, callback) => {
-        if (!target) return;
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              callback();
-              observer.disconnect(); 
-            }
-          });
-        }, { rootMargin: "200px" });
-        observer.observe(target);
-    };
-    
-    lazyLoad(commentsWrapper, initializeCommentsSection);
-    lazyLoad(ratingWidgetWrapper, initializeRatingSystem);
 });
+
+/**
+ * Cloud Function to send a notification when a new comment is created.
+ * Notifies:
+ * 1. All users subscribed to the page.
+ * 2. The author of the parent comment (if it's a reply).
+ * 3. The site owner (for all comments).
+ */
+exports.sendCommentNotification = onDocumentCreated(
+  "pages/{pageId}/comments/{commentId}",
+  async (event) => {
+    const { pageId, commentId } = event.params;
+    const snapshot = event.data;
+    if (!snapshot) {
+      logger.log("No data associated with the event");
+      return;
+    }
+
+    const commentData = snapshot.data();
+    const commentAuthor = commentData.name || "Someone";
+    const commentAuthorUid = commentData.uid;
+    const commentText = commentData.comment || "New comment posted";
+    const parentId = commentData.parentId;
+
+    logger.log(`New comment [${commentId}] on page [${pageId}]`);
+
+    const db = getFirestore();
+    const tokensToNotify = new Set(); // Use a Set to avoid duplicate tokens.
+
+    // --- 1. Get tokens for users subscribed to the page ---
+    const pageSubRef = db.collection("pageSubscriptions").doc(pageId);
+    const pageSubDoc = await pageSubRef.get();
+    if (pageSubDoc.exists) {
+      const pageTokens = pageSubDoc.data().tokens;
+      if (Array.isArray(pageTokens)) {
+        pageTokens.forEach((token) => tokensToNotify.add(token));
+        logger.log(`Found ${pageTokens.length} tokens subscribed to the page.`);
+      }
+    }
+
+    // Helper to fetch tokens for a given UID from the 'userTokens' collection.
+    const getTokensForUid = async (uid) => {
+      if (!uid) return [];
+      const userTokenRef = db.collection("userTokens").doc(uid);
+      const userTokenDoc = await userTokenRef.get();
+      if (userTokenDoc.exists) {
+        const userData = userTokenDoc.data();
+        return Array.isArray(userData.tokens) ? userData.tokens : [];
+      }
+      return [];
+    };
+
+    // --- 2. If it's a reply, get tokens for the parent comment's author ---
+    let parentAuthorUid = null;
+    if (parentId) {
+      const parentCommentRef = db
+        .collection("pages")
+        .doc(pageId)
+        .collection("comments")
+        .doc(parentId);
+      const parentCommentDoc = await parentCommentRef.get();
+      if (parentCommentDoc.exists) {
+        parentAuthorUid = parentCommentDoc.data().uid;
+        // Ensure not notifying someone for their own reply.
+        if (parentAuthorUid && parentAuthorUid !== commentAuthorUid) {
+          logger.log(`This is a reply to a comment by user ${parentAuthorUid}`);
+          const parentTokens = await getTokensForUid(parentAuthorUid);
+          parentTokens.forEach((token) => tokensToNotify.add(token));
+        }
+      }
+    }
+
+    // --- 3. Get tokens for the site owner, unless they wrote the comment or are the one being replied to ---
+    if (
+      commentAuthorUid !== OWNER_UID &&
+      parentAuthorUid !== OWNER_UID // Also avoids duplicate notification on reply to owner
+    ) {
+      logger.log("Comment is not from owner, fetching owner tokens.");
+      const ownerTokens = await getTokensForUid(OWNER_UID);
+      ownerTokens.forEach((token) => tokensToNotify.add(token));
+    }
+
+    const finalTokens = Array.from(tokensToNotify);
+    if (finalTokens.length === 0) {
+      logger.log("No tokens to notify. Exiting.");
+      return;
+    }
+
+    // --- 4. Construct and send the notification ---
+    const pageTitle = pageId
+      .replace(/_/g, " ")
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    const urlPath = pageId === "main_page" ? "" : pageId.replace(/_/g, "/");
+    const link = `https://gklearnstudy.in/${urlPath}`;
+
+    const payload = {
+      notification: {
+        title: `New comment on: ${pageTitle}`,
+        body: `${commentAuthor}: ${
+          commentText.length > 100
+            ? `${commentText.substring(0, 97)}...`
+            : commentText
+        }`,
+        icon: "https://gklearnstudy.in/favicon.ico",
+      },
+      webpush: { fcmOptions: { link } },
+    };
+
+    logger.log(`Sending notification to ${finalTokens.length} unique tokens.`);
+
+    try {
+      const response = await getMessaging().sendEachForMulticast({
+        tokens: finalTokens,
+        ...payload,
+      });
+      logger.log(
+        `Successfully sent ${response.successCount} messages for page ${pageId}`
+      );
+    } catch (error) {
+      logger.error("Error sending message:", error);
+    }
+  }
+);
