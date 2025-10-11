@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- State and Config ---
     let firebaseApp = null;
@@ -121,6 +122,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- Core Notification Logic ---
+    async function saveTokenForUser(token) {
+        if (!currentUser || !db || !token) return;
+        try {
+            const { doc, setDoc, arrayUnion } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+            const userTokenRef = doc(db, 'userTokens', currentUser.uid);
+            await setDoc(userTokenRef, {
+                tokens: arrayUnion(token)
+            }, { merge: true });
+        } catch (error) {
+            console.error("Failed to save user-specific token:", error);
+            // Non-critical error, so we don't alert the user.
+        }
+    }
+
     async function handleSubscriptionRequest() {
         if (isProcessing) return;
         isProcessing = true;
@@ -152,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (fcmToken) {
                 currentToken = fcmToken;
+                await saveTokenForUser(fcmToken); // Save token for user-specific notifications
                 await togglePageSubscription(fcmToken);
             } else {
                 console.warn('No registration token available. Request permission to generate one.');
