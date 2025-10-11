@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadFirebaseScript('messaging')
             ]);
             
-            const { initializeApp, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
-            try {
-                firebaseApp = getApp();
-            } catch (e) {
+            const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+            if (getApps().length === 0) {
                 firebaseApp = initializeApp(firebaseConfig);
+            } else {
+                firebaseApp = getApp();
             }
 
             const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js');
