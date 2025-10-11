@@ -15,18 +15,43 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
+// --- State for Smart Notifications ---
+// This object will store the visibility state for each page.
+// e.g., { 'main_page': true, 'education_computer': false }
+let pageVisibilityState = {};
+
+// Listen for messages from the main page (client).
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'VISIBILITY_CHANGE') {
+        const { pageId, isVisible } = event.data;
+        console.log(`[SW] Visibility for page ${pageId} is now ${isVisible}`);
+        pageVisibilityState[pageId] = isVisible;
+    }
+});
+
+
 // Handler for background messages. This will now reliably fire for all messages.
 messaging.onBackgroundMessage((payload) => {
   console.log("[firebase-messaging-sw.js] Received background message ", payload);
+
+  const pageId = payload.data.pageId;
+
+  // --- SMART NOTIFICATION LOGIC ---
+  // If the page where the comment was posted is currently visible, DO NOT show a notification.
+  if (pageVisibilityState[pageId]) {
+      console.log(`[SW] Suppressing notification because page ${pageId} comment section is visible.`);
+      return; // Exit without showing anything.
+  }
 
   // Extract notification data from the 'data' payload.
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
-    // Store the URL in the notification's data object to use in the 'notificationclick' event.
+    // Store the URL and the new commentId in the notification's data object.
     data: {
-        url: payload.data.url 
+        url: payload.data.url,
+        commentId: payload.data.commentId
     }
   };
 
@@ -38,28 +63,43 @@ messaging.onBackgroundMessage((payload) => {
 self.addEventListener('notificationclick', (event) => {
     event.notification.close(); 
 
-    // Get the URL to open from the notification's data object.
-    const urlToOpen = event.notification.data.url;
+    const data = event.notification.data;
+    const urlToOpen = data.url;
+    const commentId = data.commentId;
+
     if (!urlToOpen) {
         console.error("No URL found in notification data.");
         return;
     }
+    
+    // --- AUTO-SCROLL LOGIC ---
+    // Create a new URL object and add the comment ID as a hash.
+    // This creates a "deep link" like: https://example.com/page#comment-xyz123
+    const finalUrl = new URL(urlToOpen, self.location.origin);
+    if (commentId) {
+        finalUrl.hash = `comment-${commentId}`;
+    }
 
-    // This code attempts to focus an existing tab or open a new one.
+    // This code attempts to focus an existing tab or open a new one with the deep link.
     event.waitUntil(
         clients.matchAll({
             type: "window",
             includeUncontrolled: true
         }).then((clientList) => {
+            // Check if a client for this URL is already open.
             for (const client of clientList) {
-                // Check if a tab with the exact URL is already open.
-                if (client.url === urlToOpen && 'focus' in client) {
+                // We use .pathname to ignore the hash, so we can focus the right tab
+                // even if it doesn't have the hash yet.
+                const clientUrl = new URL(client.url);
+                if (clientUrl.pathname === finalUrl.pathname && 'focus' in client) {
+                    // Navigate the existing client to the new URL with the hash
+                    client.navigate(finalUrl.href);
                     return client.focus();
                 }
             }
-            // If no tab is found, open a new one.
+            // If no tab is found, open a new one with the final URL.
             if (clients.openWindow) {
-                return clients.openWindow(urlToOpen);
+                return clients.openWindow(finalUrl.href);
             }
         })
     );
