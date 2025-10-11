@@ -39,16 +39,21 @@ function loadFirebaseScript(module) {
 async function initializeFirebaseApp() {
     if (firebaseApp) return;
     await loadFirebaseScript('app');
-    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
-    firebaseApp = initializeApp({
-        apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-        authDomain: "appcomment.firebaseapp.com",
-        projectId: "appcomment",
-        storageBucket: "appcomment.firebasestorage.app",
-        messagingSenderId: "156258808941",
-        appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-    });
+    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+    if (getApps().length === 0) {
+        firebaseApp = initializeApp({
+            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+            authDomain: "appcomment.firebaseapp.com",
+            projectId: "appcomment",
+            storageBucket: "appcomment.firebasestorage.app",
+            messagingSenderId: "156258808941",
+            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+        });
+    } else {
+        firebaseApp = getApp();
+    }
 }
+
 
 async function initFirestore() {
     if (isFirestoreInitialized) return;
@@ -577,7 +582,7 @@ async function handleVote(commentId, voteType) {
                 if (isServerDisliked) {
                     serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
                 } else {
-                    serverDislikedBy.push(uid);
+                    dislikedBy.push(uid);
                     if (isServerLiked) {
                         serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                     }
