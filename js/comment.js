@@ -721,6 +721,76 @@ function setupDelegatedListeners() {
     });
 }
 
+
+// ====== NEW: Smart Notification & Deep Linking Logic ======
+
+/**
+ * Notifies the service worker about the visibility of the comments section.
+ * This prevents notifications from appearing if the user is already looking at the comments.
+ * @param {boolean} isVisible - Whether the comments section is currently visible.
+ */
+function notifyServiceWorkerVisibility(isVisible) {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+            type: 'VISIBILITY_CHANGE',
+            pageId: pageId,
+            isVisible: isVisible
+        });
+    }
+}
+
+/**
+ * Sets up an IntersectionObserver to track when the comments section is visible.
+ */
+function setupVisibilityObserver() {
+    if (!commentsWrapper) return;
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                notifyServiceWorkerVisibility(entry.isIntersecting);
+            });
+        },
+        {
+            root: null, // relative to the viewport
+            threshold: 0.1 // 10% of the element must be visible
+        }
+    );
+    observer.observe(commentsWrapper);
+}
+
+/**
+ * Checks for a #comment-<ID> hash in the URL and scrolls to it.
+ * It robustly waits for the comment to be rendered before attempting to scroll.
+ */
+function handleCommentDeepLink() {
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#comment-')) return;
+    
+    const commentId = hash.substring('#comment-'.length);
+    if (!commentId) return;
+
+    let attempts = 0;
+    const maxAttempts = 50; // Try for 10 seconds (50 * 200ms)
+    const interval = setInterval(() => {
+        // Find the comment element by its data attribute in the actions container
+        const commentElement = document.querySelector(`.comment-actions[data-comment-id="${commentId}"]`)?.closest('.comment-item');
+        
+        if (commentElement) {
+            clearInterval(interval);
+            commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            commentElement.classList.add('highlighted');
+            setTimeout(() => {
+                commentElement.classList.remove('highlighted');
+            }, 2500); // Highlight lasts for 2.5 seconds
+        } else if (attempts++ > maxAttempts) {
+            clearInterval(interval);
+            console.warn(`Could not find comment ${commentId} to scroll to.`);
+        }
+    }, 200);
+}
+
+
 // ====== LAZY INITIALIZATION LOGIC ======
 let commentsInitialized = false;
 async function initializeCommentsSection() {
@@ -731,6 +801,8 @@ async function initializeCommentsSection() {
         await loadComments();
         await initFirebaseAuth(); 
         setupDelegatedListeners();
+        setupVisibilityObserver(); // NEW: Start observing visibility
+        handleCommentDeepLink();   // NEW: Check for deep link on load
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
         if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
