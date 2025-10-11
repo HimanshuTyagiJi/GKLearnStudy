@@ -165,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
             const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             
+            // !!! DEBUGGING LINE ADDED HERE !!!
+            console.log('मेरा FCM टोकन:', fcmToken);
+
             if (fcmToken) {
                 currentToken = fcmToken;
                 await saveTokenForUser(fcmToken); // Save token for user-specific notifications
