@@ -835,6 +835,12 @@ html[data-theme="dark"] .theme-switcher .moon {
     font-weight: 500;
     color: var(--text-primary);
 }
+/* Rule to disable transitions for instant UI updates */
+#rating-display.no-transition .progress-bar,
+#rating-stars.no-transition .star {
+    transition: none !important;
+}
+
 @media (max-width: 600px) {
     #rating-display {
         flex-direction: column;
@@ -1128,6 +1134,28 @@ html[data-theme="light"] .btn.primary .spinner-small {
     color: var(--blue);
     font-weight: 700;
 }
+
+/* === System Announcement Comment === */
+.system-announcement-comment {
+    background-color: var(--input-bg);
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.system-announcement-comment .comment-author-info {
+    flex-shrink: 0;
+}
+.system-announcement-comment .comment-body {
+    padding-left: 0;
+    margin: 0;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
 
 /* === AUTHENTICATION UI === */
 #auth-container {
@@ -1876,4 +1904,56 @@ details[open] > .faq-answer {
 }
 .card-thumbnail .lazy-image.loaded {
   opacity: 1;
+}
+
+/* Notification Button Styles */
+.notification-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+}
+.notification-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+.notification-btn svg {
+  width: 22px;
+  height: 22px;
+}
+.notification-btn.subscribed .bell-icon {
+  color: var(--green);
+  fill: rgba(7, 102, 0, 0.1);
+}
+
+.notification-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.notification-btn.loading::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--spinner-border);
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+.notification-btn.loading svg {
+  opacity: 0.2;
+}
+html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
+    color: #66bb6a;
+    fill: rgba(102, 187, 106, 0.15);
 }
