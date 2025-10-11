@@ -1,8 +1,7 @@
 
-// Import the Firebase app and messaging scripts.
-// Note: This uses a different import syntax as it's a service worker.
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
+// Import the Firebase app and messaging scripts (v9 modular syntax for service workers)
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js");
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,23 +14,54 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
 // Retrieve an instance of Firebase Messaging so that it can handle background messages.
-const messaging = firebase.messaging();
+const messaging = firebase.getMessaging(app);
 
-// Optional: You can add a handler for background messages here if needed in the future.
-messaging.onBackgroundMessage((payload) => {
+// Add a handler for background messages.
+// This will be triggered when the app is in the background or closed.
+firebase.onBackgroundMessage(messaging, (payload) => {
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-  // Customize notification here
+
+  // Customize notification here from the received payload.
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
     icon: payload.notification.icon,
+    data: {
+        // This makes the notification clickable and opens the link
+        click_action: payload.fcmOptions.link 
+    }
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+// Add an event listener for notification clicks to open the correct URL.
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close(); // Close the notification
+
+    const urlToOpen = event.notification.data.click_action;
+
+    event.waitUntil(
+        clients.matchAll({
+            type: "window"
+        }).then(function(clientList) {
+            // If the site is already open, focus it.
+            for (var i = 0; i < clientList.length; i++) {
+                var client = clientList[i];
+                if (client.url === urlToOpen && 'focus' in client) {
+                    return client.focus();
+                }
+            }
+            // Otherwise, open a new window.
+            if (clients.openWindow) {
+                return clients.openWindow(urlToOpen);
+            }
+        })
+    );
 });
