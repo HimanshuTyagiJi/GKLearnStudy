@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -43,6 +44,8 @@
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
         <link rel="stylesheet" href="css/theme.css" media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
+
     <!-- Fallback for browsers that don't support JS -->
     <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
        
@@ -163,6 +166,15 @@
                             </svg>
                         </button>
                     </div>
+                     <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="Enable notifications">
+                        <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <svg class="spinner-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                        </svg>
+                    </button>
                     <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
                         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"></circle>
@@ -555,5 +567,6 @@
         <script src="js/theme.js" defer></script>
         <script src="js/search-data.js" defer></script>
         <script src="js/comment.js" defer></script>
+        <script src="js/notification.js" defer></script>
     </body>
 </html>
