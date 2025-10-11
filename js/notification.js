@@ -162,6 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
+            // Wait for the service worker to be ready before getting the token.
+            await navigator.serviceWorker.ready;
+
             const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
             const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             
@@ -214,6 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (!currentToken) {
+                // Wait for the service worker to be ready before getting the token.
+                await navigator.serviceWorker.ready;
+                
                 const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
                 currentToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             }
