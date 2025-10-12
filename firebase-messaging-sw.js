@@ -41,7 +41,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
-    // Add custom action buttons
+    // CORRECTED: Ensure exactly two action buttons are defined.
     actions: [
         { action: 'open', title: 'Open Page' },
         { action: 'unsubscribe', title: 'Unsubscribe' }
@@ -72,8 +72,8 @@ self.addEventListener('notificationclick', (event) => {
     // --- URL and Deep Link Logic ---
     const finalUrl = new URL(urlToOpen, self.location.origin);
     
-    // If the main body or 'Open' is clicked, scroll to the comment.
-    // For 'Unsubscribe', we just open the page without a hash.
+    // If the main body (no action) or the 'open' button is clicked, scroll to the comment.
+    // For 'unsubscribe', we just open the page without a hash.
     if ((!event.action || event.action === 'open') && commentId) {
         finalUrl.hash = `comment-${commentId}`;
     }
