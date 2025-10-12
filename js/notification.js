@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // --- State and Config ---
     let firebaseApp = null;
@@ -98,44 +97,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- UI Update Logic ---
     async function updateUIState() {
         if (!notificationBtn) return;
-
-        notificationBtn.classList.remove('loading', 'subscribed', 'disabled');
-
+        
+        notificationBtn.classList.remove('loading');
+        
+        // Final state should be determined by the actual subscription status
+        if (isProcessing) return; // Don't change UI while an operation is in flight
+        
         const permission = Notification.permission;
         if (permission === 'denied') {
             notificationBtn.classList.add('disabled');
+            notificationBtn.classList.remove('subscribed');
             notificationBtn.title = 'Notifications are blocked in your browser settings.';
             return;
         }
+
+        notificationBtn.classList.remove('disabled');
 
         if (permission === 'granted' && currentUser) {
             await checkCurrentPageSubscription();
             if (isSubscribedOnThisPage) {
                 notificationBtn.classList.add('subscribed');
-                notificationBtn.title = 'You are subscribed to notifications for this page.';
+                notificationBtn.title = 'You are subscribed to notifications for this page. Click to unsubscribe.';
             } else {
-                notificationBtn.title = 'Click to get notifications for this page.';
+                notificationBtn.classList.remove('subscribed');
+                notificationBtn.title = 'Click to get notifications for new comments on this page.';
             }
         } else {
-             notificationBtn.title = 'Click to enable notifications.';
+            notificationBtn.classList.remove('subscribed');
+            notificationBtn.title = 'Sign in and click to enable notifications.';
         }
     }
     
     // --- Core Notification Logic ---
-    async function saveTokenForUser(token) {
-        if (!currentUser || !db || !token) return;
-        try {
-            const { doc, setDoc, arrayUnion } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
-            const userTokenRef = doc(db, 'userTokens', currentUser.uid);
-            await setDoc(userTokenRef, {
-                tokens: arrayUnion(token)
-            }, { merge: true });
-        } catch (error) {
-            console.error("Failed to save user-specific token:", error);
-            // Non-critical error, so we don't alert the user.
-        }
-    }
-
     async function handleSubscriptionRequest() {
         if (isProcessing) return;
         isProcessing = true;
@@ -162,35 +155,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            // Wait for the service worker to be ready before getting the token.
+            // **RACE CONDITION FIX**: Always wait for SW to be ready before getting a token.
             await navigator.serviceWorker.ready;
 
             const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
             const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             
-            // !!! DEBUGGING LINE ADDED HERE !!!
-            console.log('मेरा FCM टोकन:', fcmToken);
-
             if (fcmToken) {
                 currentToken = fcmToken;
-                await saveTokenForUser(fcmToken); // Save token for user-specific notifications
-                await togglePageSubscription(fcmToken);
+                // Save token to user profile regardless of subscription action
+                await saveTokenForUser(fcmToken); 
+                
+                // --- Optimistic UI Update ---
+                const wasSubscribed = isSubscribedOnThisPage;
+                isSubscribedOnThisPage = !wasSubscribed; // Toggle state optimistically
+                notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
+                notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
+                
+                // Perform actual subscription in the background
+                const success = await togglePageSubscription(fcmToken, wasSubscribed);
+
+                // If background operation failed, revert the UI
+                if (!success) {
+                    isSubscribedOnThisPage = wasSubscribed; // Revert state
+                    notificationBtn.classList.toggle('subscribed', wasSubscribed);
+                }
+
             } else {
                 console.warn('No registration token available. Request permission to generate one.');
+                throw new Error("Could not retrieve FCM token.");
             }
         } catch (error) {
             console.error('An error occurred during the subscription process:', error);
             alert('Failed to manage subscription. Please try again.');
         } finally {
             isProcessing = false;
-            await updateUIState(); // Refresh UI based on the new state
+            // The final UI state will be set by the next call to updateUIState
+            await updateUIState(); 
+        }
+    }
+
+    async function saveTokenForUser(token) {
+        if (!currentUser || !db || !token) return;
+        try {
+            const { doc, setDoc, arrayUnion } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+            const userTokenRef = doc(db, 'userTokens', currentUser.uid);
+            await setDoc(userTokenRef, { tokens: arrayUnion(token) }, { merge: true });
+        } catch (error) {
+            console.error("Failed to save user-specific token:", error);
         }
     }
     
-    async function togglePageSubscription(token) {
-        if (!currentUser || !functions || !token) return;
+    async function togglePageSubscription(token, wasSubscribed) {
+        if (!currentUser || !functions || !token) return false;
 
-        const action = isSubscribedOnThisPage ? 'unsubscribe' : 'subscribe';
+        const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
         
         try {
             const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
@@ -199,13 +218,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await manageSubscription({ pageId: pageId, token: token, action: action });
 
             if (result.data.success) {
-                isSubscribedOnThisPage = (action === 'subscribe');
+                console.log(`Successfully ${action}d.`);
+                return true;
             } else {
                  throw new Error(result.data.message || 'Function call was not successful.');
             }
         } catch (error) {
-            console.error('Error calling manageSubscription function:', error);
+            console.error(`Error calling manageSubscription function for ${action}:`, error);
             alert(`Could not ${action}. Please try again.`);
+            return false;
         }
     }
 
@@ -217,9 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (!currentToken) {
-                // Wait for the service worker to be ready before getting the token.
                 await navigator.serviceWorker.ready;
-                
                 const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
                 currentToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             }
@@ -247,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
             await initializeFirebase();
-            updateUIState(); // Initial check once Firebase is ready
+            updateUIState();
             observer.disconnect();
         }
     }, { rootMargin: '100px' });
