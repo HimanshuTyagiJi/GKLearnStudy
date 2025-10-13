@@ -28,9 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightArrow = document.getElementById('menuRight');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
     const shareButton = document.getElementById("shareButton");
-    const translateBtn = document.getElementById("translate-btn");
-    const translateModal = document.getElementById("translate-helper-modal");
-    const translateModalClose = document.getElementById("translate-modal-close");
 
     // --- Dynamic Content Injection ---
     function initMenuItems() {
@@ -201,21 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     searchInput?.addEventListener('input', debounce(handleSearchInput, 300));
 
-    // --- Translate Modal Logic ---
-    if (translateBtn && translateModal) {
-        translateBtn.addEventListener('click', () => {
-            translateModal.hidden = false;
-        });
-        translateModalClose.addEventListener('click', () => {
-            translateModal.hidden = true;
-        });
-        translateModal.addEventListener('click', (e) => {
-            if (e.target === translateModal) {
-                translateModal.hidden = true;
-            }
-        });
-    }
-
     // --- Global Click/Key/Interaction Listeners ---
     overlay?.addEventListener("click", () => {
         toggleMenu(false);
@@ -230,7 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") {
             closeSearch();
             toggleMenu(false);
-            if(translateModal) translateModal.hidden = true;
         }
     });
     
