@@ -1,3 +1,4 @@
+
 :root {
   --red: #b30000;
   --blue: #2f2eff;
@@ -1940,10 +1941,6 @@ details[open] > .faq-answer {
   width: 22px;
   height: 22px;
 }
-.notification-btn.subscribed .bell-icon {
-  color: var(--green);
-  fill: rgba(7, 102, 0, 0.1);
-}
 
 .notification-btn.disabled {
   opacity: 0.5;
@@ -1965,8 +1962,4 @@ details[open] > .faq-answer {
 }
 .notification-btn.loading svg {
   opacity: 0.2;
-}
-html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
-    color: #66bb6a;
-    fill: rgba(102, 187, 106, 0.15);
 }
