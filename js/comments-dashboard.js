@@ -1,6 +1,6 @@
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn, FacebookAuthProviderFn, OAuthProviderFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
 let currentUser = null;
@@ -75,8 +75,6 @@ function initFirebaseAuth() {
             auth = authModule.getAuth(firebaseApp);
             onAuthStateChangedFn = authModule.onAuthStateChanged;
             GoogleAuthProviderFn = authModule.GoogleAuthProvider;
-            FacebookAuthProviderFn = authModule.FacebookAuthProvider;
-            OAuthProviderFn = authModule.OAuthProvider;
             signInWithPopupFn = authModule.signInWithPopup;
             signOutFn = authModule.signOut;
             setupAuthObserver();
@@ -99,9 +97,7 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
-const googleLoginBtn = document.getElementById('google-login-btn');
-const facebookLoginBtn = document.getElementById('facebook-login-btn');
-const microsoftLoginBtn = document.getElementById('microsoft-login-btn');
+const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -109,42 +105,22 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithProvider(provider) {
+async function signInWithGoogle() {
     try {
         await initFirebaseAuth();
+        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Sign-In Error:", error);
-        if (error.code === 'auth/account-exists-with-different-credential') {
-            alert("An account already exists with this email address using a different sign-in method.");
-        } else if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in.");
+        console.error("Google Sign-In Error:", error);
+        if (error.code !== 'auth/popup-closed-by-user') {
+            alert("Could not sign in with Google.");
         }
     }
 }
-
-async function signInWithGoogle() {
-    const provider = new GoogleAuthProviderFn();
-    signInWithProvider(provider);
-}
-
-async function signInWithFacebook() {
-    const provider = new FacebookAuthProviderFn();
-    signInWithProvider(provider);
-}
-
-async function signInWithMicrosoft() {
-    const provider = new OAuthProviderFn('microsoft.com');
-    signInWithProvider(provider);
-}
-
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-googleLoginBtn.addEventListener('click', signInWithGoogle);
-facebookLoginBtn.addEventListener('click', signInWithFacebook);
-microsoftLoginBtn.addEventListener('click', signInWithMicrosoft);
+loginBtn.addEventListener('click', signInWithGoogle);
 logoutBtn.addEventListener('click', signOutUser);
-
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -308,11 +284,11 @@ async function loadAllComments(){
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
-        ownerView.innerHTML = `<p class="muted error">Could not load comments. Please check Firestore security rules for collection group queries.</p>`;
+        ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">Could not load comments. Please check Firestore security rules for collection group queries.</p>`;
+    ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
   }
 }
 
