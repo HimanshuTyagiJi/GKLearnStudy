@@ -1,5 +1,4 @@
 
-
 document.addEventListener("DOMContentLoaded", () => {
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
@@ -140,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             header.classList.add('search-active-desktop');
             overlay.classList.add('is-active');
         }
+        // Defer focus to prevent forced reflow by allowing the browser to paint first.
         setTimeout(() => searchInput.focus(), 0);
     };
 
@@ -198,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     searchInput?.addEventListener('input', debounce(handleSearchInput, 300));
 
+
     // --- Global Click/Key/Interaction Listeners ---
     overlay?.addEventListener("click", () => {
         toggleMenu(false);
@@ -242,11 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!leftArrow || !rightArrow || !menuInner) return;
         
+        // **PERFORMANCE FIX:** Batch all DOM reads first to avoid forced reflow (layout thrashing).
         const isDesktop = window.innerWidth > 850;
         const scrollWidth = menuInner.scrollWidth;
         const clientWidth = menuInner.clientWidth;
         const scrollLeft = menuInner.scrollLeft;
         
+        // Now, perform calculations and DOM writes.
         const maxScroll = scrollWidth - clientWidth;
 
         if (!isDesktop || scrollWidth <= clientWidth) {
@@ -274,5 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
     menuInner?.addEventListener("scroll", throttledUpdateArrows);
     window.addEventListener("resize", throttledUpdateArrows);
     
+    // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
     window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
