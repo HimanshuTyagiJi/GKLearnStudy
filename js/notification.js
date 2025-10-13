@@ -98,10 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function updateUIState() {
         if (!notificationBtn) return;
         
+        // Stop any loading spinners before updating the final state
+        isProcessing = false;
         notificationBtn.classList.remove('loading');
-        
-        // Final state should be determined by the actual subscription status
-        if (isProcessing) return; // Don't change UI while an operation is in flight
         
         const permission = Notification.permission;
         if (permission === 'denied') {
@@ -123,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 notificationBtn.title = 'Click to get notifications for new comments on this page.';
             }
         } else {
+            isSubscribedOnThisPage = false; // Reset state if not logged in or no permission
             notificationBtn.classList.remove('subscribed');
             notificationBtn.title = 'Sign in and click to enable notifications.';
         }
@@ -132,18 +132,19 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleSubscriptionRequest() {
         if (isProcessing) return;
         isProcessing = true;
-        notificationBtn.classList.add('loading');
-
+        
         try {
             if (!isFirebaseInitialized) await initializeFirebase();
             if (!currentUser) {
                 alert('Please sign in to subscribe to notifications.');
                 document.getElementById('login-btn')?.click();
+                isProcessing = false;
                 return;
             }
 
             if (Notification.permission === 'denied') {
                 alert('Notifications are blocked. Please enable them in your browser settings.');
+                isProcessing = false;
                 return;
             }
             
@@ -151,46 +152,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 const permission = await Notification.requestPermission();
                 if (permission !== 'granted') {
                     alert('Permission was not granted for notifications.');
+                    isProcessing = false;
                     return;
                 }
             }
             
-            // **RACE CONDITION FIX**: Always wait for SW to be ready before getting a token.
+            // --- OPTIMISTIC UI UPDATE ---
+            const wasSubscribed = isSubscribedOnThisPage;
+            // Instantly toggle the visual state
+            isSubscribedOnThisPage = !wasSubscribed; 
+            notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
+            notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
+            notificationBtn.classList.add('loading');
+            
+            // --- BACKGROUND PROCESSING ---
             await navigator.serviceWorker.ready;
-
             const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
             const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
             
             if (fcmToken) {
                 currentToken = fcmToken;
-                // Save token to user profile regardless of subscription action
                 await saveTokenForUser(fcmToken); 
-                
-                // --- Optimistic UI Update ---
-                const wasSubscribed = isSubscribedOnThisPage;
-                isSubscribedOnThisPage = !wasSubscribed; // Toggle state optimistically
-                notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
-                notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
-                
-                // Perform actual subscription in the background
                 const success = await togglePageSubscription(fcmToken, wasSubscribed);
 
-                // If background operation failed, revert the UI
+                // If background operation failed, revert the optimistic UI change
                 if (!success) {
+                    console.log("Operation failed, reverting UI.");
                     isSubscribedOnThisPage = wasSubscribed; // Revert state
                     notificationBtn.classList.toggle('subscribed', wasSubscribed);
                 }
-
             } else {
-                console.warn('No registration token available. Request permission to generate one.');
                 throw new Error("Could not retrieve FCM token.");
             }
         } catch (error) {
             console.error('An error occurred during the subscription process:', error);
             alert('Failed to manage subscription. Please try again.');
+            // Revert UI on any error
+            isSubscribedOnThisPage = !isSubscribedOnThisPage; 
+            notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
         } finally {
-            isProcessing = false;
-            // The final UI state will be set by the next call to updateUIState
+            // Final, authoritative UI update
             await updateUIState(); 
         }
     }
@@ -266,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(async (entries) => {
         if (entries[0].isIntersecting) {
             await initializeFirebase();
-            updateUIState();
+            await updateUIState(); // Initial check
             observer.disconnect();
         }
     }, { rootMargin: '100px' });
