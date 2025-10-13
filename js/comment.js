@@ -190,11 +190,29 @@ function setupAuthObserver() {
         }
         
         if (user) {
-            const userNameSpan = `<span class="user-name">${escapeHTML(user.displayName)}</span>`;
-            const userAvatarImg = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar">`;
-            // Re-query for the button as it's now part of the user-info template
-            const notificationBtnHTML = document.getElementById('notification-btn').outerHTML;
-            userInfo.innerHTML = `${userAvatarImg}${userNameSpan}${notificationBtnHTML}`;
+            // Clear previous user details to prevent duplication
+            const existingDetails = userInfo.querySelectorAll('.user-avatar, .user-name');
+            existingDetails.forEach(el => el.remove());
+
+            const userNameSpan = document.createElement('span');
+            userNameSpan.className = 'user-name';
+            userNameSpan.textContent = user.displayName;
+
+            const userAvatarImg = document.createElement('img');
+            userAvatarImg.src = user.photoURL;
+            userAvatarImg.alt = user.displayName;
+            userAvatarImg.className = 'user-avatar';
+            
+            // Insert new elements before the notification button
+            const notificationBtn = document.getElementById('notification-btn');
+            if (notificationBtn) {
+                userInfo.insertBefore(userAvatarImg, notificationBtn);
+                userInfo.insertBefore(userNameSpan, notificationBtn);
+            } else {
+                // This case should not happen if HTML is correct, but as a fallback:
+                userInfo.appendChild(userAvatarImg);
+                userInfo.appendChild(userNameSpan);
+            }
 
             authContainer.classList.add('logged-in');
             mainFormShell.style.display = 'block';
@@ -204,7 +222,12 @@ function setupAuthObserver() {
             mainFormShell.style.display = 'none';
             loginPrompt.style.display = 'block';
             closeActiveReplyForm();
+            
+            // Clear user details on logout
+            const existingDetails = userInfo.querySelectorAll('.user-avatar, .user-name');
+            existingDetails.forEach(el => el.remove());
         }
+
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
            if(ratingWidgetWrapper) initializeRatingSystem();
