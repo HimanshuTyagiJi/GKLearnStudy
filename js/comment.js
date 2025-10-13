@@ -1,7 +1,7 @@
 
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn, FacebookAuthProviderFn, OAuthProviderFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
 let currentUser = null;
@@ -82,8 +82,6 @@ function initFirebaseAuth() {
             auth = authModule.getAuth(firebaseApp);
             onAuthStateChangedFn = authModule.onAuthStateChanged;
             GoogleAuthProviderFn = authModule.GoogleAuthProvider;
-            FacebookAuthProviderFn = authModule.FacebookAuthProvider;
-            OAuthProviderFn = authModule.OAuthProvider;
             signInWithPopupFn = authModule.signInWithPopup;
             signOutFn = authModule.signOut;
             
@@ -115,12 +113,11 @@ const mainFormShell = document.getElementById('comment-form-shell');
 const mainForm = document.getElementById('comment-form');
 const commentsWrapper = document.getElementById('comments-main-container');
 const authContainer = document.getElementById('auth-container');
-const googleLoginBtn = document.getElementById('google-login-btn');
-const facebookLoginBtn = document.getElementById('facebook-login-btn');
-const microsoftLoginBtn = document.getElementById('microsoft-login-btn');
+const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
+const originalLoginHTML = loginBtn.innerHTML;
 const commentCountSpan = document.getElementById('comment-count');
 
 
@@ -132,51 +129,33 @@ const totalRatingsCount = document.getElementById('total-ratings-count');
 
 
 // ====== Auth Functions ======
-async function signInWithProvider(provider) {
-    const loginButtons = [googleLoginBtn, facebookLoginBtn, microsoftLoginBtn];
-    loginButtons.forEach(btn => btn.disabled = true);
+async function signInWithGoogle() {
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
     
     try {
         await initFirebaseAuth();
+        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Sign-In Error:", error);
-        if (error.code === 'auth/account-exists-with-different-credential') {
-            alert("An account already exists with this email address using a different sign-in method.");
-        } else if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in. Please check your connection and try again.");
+        console.error("Google Sign-In Error:", error);
+        if (error.code !== 'auth/popup-closed-by-user') {
+            alert("Could not sign in with Google. Please check your connection and try again.");
         }
     } finally {
-        loginButtons.forEach(btn => btn.disabled = false);
+        if (!currentUser) {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = originalLoginHTML;
+        }
     }
 }
-
-async function signInWithGoogle() {
-    const provider = new GoogleAuthProviderFn();
-    signInWithProvider(provider);
-}
-
-async function signInWithFacebook() {
-    const provider = new FacebookAuthProviderFn();
-    signInWithProvider(provider);
-}
-
-async function signInWithMicrosoft() {
-    // IMPORTANT: You must enable "Microsoft" as a sign-in provider
-    // in your Firebase console -> Authentication -> Sign-in method
-    const provider = new OAuthProviderFn('microsoft.com');
-    signInWithProvider(provider);
-}
-
 
 async function signOutUser() {
     if (!isAuthInitialized) return;
     await signOutFn(auth);
 }
 
-googleLoginBtn.addEventListener('click', signInWithGoogle);
-facebookLoginBtn.addEventListener('click', signInWithFacebook);
-microsoftLoginBtn.addEventListener('click', signInWithMicrosoft);
+loginBtn.addEventListener('click', signInWithGoogle);
 logoutBtn.addEventListener('click', signOutUser);
 
 function setupAuthObserver() {
@@ -184,36 +163,14 @@ function setupAuthObserver() {
         const wasLoggedIn = !!currentUser;
         currentUser = user;
 
+        // Show/hide owner dashboard link in footer
         const dashboardLink = document.getElementById('dashboard-link');
         if (dashboardLink) {
             dashboardLink.style.display = (user && user.uid === OWNER_UID) ? 'list-item' : 'none';
         }
         
         if (user) {
-            // Clear previous user details to prevent duplication
-            const existingDetails = userInfo.querySelectorAll('.user-avatar, .user-name');
-            existingDetails.forEach(el => el.remove());
-
-            const userNameSpan = document.createElement('span');
-            userNameSpan.className = 'user-name';
-            userNameSpan.textContent = user.displayName;
-
-            const userAvatarImg = document.createElement('img');
-            userAvatarImg.src = user.photoURL;
-            userAvatarImg.alt = user.displayName;
-            userAvatarImg.className = 'user-avatar';
-            
-            // Insert new elements before the notification button
-            const notificationBtn = document.getElementById('notification-btn');
-            if (notificationBtn) {
-                userInfo.insertBefore(userAvatarImg, notificationBtn);
-                userInfo.insertBefore(userNameSpan, notificationBtn);
-            } else {
-                // This case should not happen if HTML is correct, but as a fallback:
-                userInfo.appendChild(userAvatarImg);
-                userInfo.appendChild(userNameSpan);
-            }
-
+            userInfo.innerHTML = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
             authContainer.classList.add('logged-in');
             mainFormShell.style.display = 'block';
             loginPrompt.style.display = 'none';
@@ -221,15 +178,13 @@ function setupAuthObserver() {
             authContainer.classList.remove('logged-in');
             mainFormShell.style.display = 'none';
             loginPrompt.style.display = 'block';
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = originalLoginHTML;
             closeActiveReplyForm();
-            
-            // Clear user details on logout
-            const existingDetails = userInfo.querySelectorAll('.user-avatar, .user-name');
-            existingDetails.forEach(el => el.remove());
         }
-
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+           // Re-initialize rating system to reflect login state
            if(ratingWidgetWrapper) initializeRatingSystem();
         }
     });
@@ -384,7 +339,7 @@ function setupRatingListeners() {
         if (!star || isRatingSubmissionPending) return;
 
         if (!currentUser) {
-            signInWithGoogle(); // Default to Google if not logged in
+            signInWithGoogle();
             return;
         }
 
