@@ -1,4 +1,5 @@
 
+
 document.addEventListener("DOMContentLoaded", () => {
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
@@ -27,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightArrow = document.getElementById('menuRight');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
     const shareButton = document.getElementById("shareButton");
+    const translateBtn = document.getElementById("translate-btn");
+    const translateModal = document.getElementById("translate-helper-modal");
+    const translateModalClose = document.getElementById("translate-modal-close");
 
     // --- Dynamic Content Injection ---
     function initMenuItems() {
@@ -74,7 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     { href: "/about.html", text: "About Us" },
                     { href: "/contact.html", text: "Contact Us" },
                     { href: "/privacy-policy.html", text: "Privacy Policy" },
-                    { href: "/terms.html", text: "Terms of Service" }
+                    { href: "/terms.html", text: "Terms of Service" },
+                    { href: "/comments.html", text: "Owner Dashboard", id: "dashboard-link" }
                 ]
             },
             foryou: {
@@ -99,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        const createLinks = (links) => links.map(l => `<li><a href="${l.href}">${l.text}</a></li>`).join('');
+        const createLinks = (links) => links.map(l => `<li ${l.id ? `id="${l.id}"` : ''}><a href="${l.href}">${l.text}</a></li>`).join('');
         const createSocials = (links) => links.map(l => `<li><a href="${l.href}" aria-label="${l.label}" target="_blank" rel="noopener noreferrer">${l.svg}</a></li>`).join('');
 
         footerContent.innerHTML = `
@@ -138,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
             header.classList.add('search-active-desktop');
             overlay.classList.add('is-active');
         }
-        // Defer focus to prevent forced reflow by allowing the browser to paint first.
         setTimeout(() => searchInput.focus(), 0);
     };
 
@@ -197,6 +201,20 @@ document.addEventListener("DOMContentLoaded", () => {
     
     searchInput?.addEventListener('input', debounce(handleSearchInput, 300));
 
+    // --- Translate Modal Logic ---
+    if (translateBtn && translateModal) {
+        translateBtn.addEventListener('click', () => {
+            translateModal.hidden = false;
+        });
+        translateModalClose.addEventListener('click', () => {
+            translateModal.hidden = true;
+        });
+        translateModal.addEventListener('click', (e) => {
+            if (e.target === translateModal) {
+                translateModal.hidden = true;
+            }
+        });
+    }
 
     // --- Global Click/Key/Interaction Listeners ---
     overlay?.addEventListener("click", () => {
@@ -212,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") {
             closeSearch();
             toggleMenu(false);
+            if(translateModal) translateModal.hidden = true;
         }
     });
     
@@ -242,13 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!leftArrow || !rightArrow || !menuInner) return;
         
-        // **PERFORMANCE FIX:** Batch all DOM reads first to avoid forced reflow (layout thrashing).
         const isDesktop = window.innerWidth > 850;
         const scrollWidth = menuInner.scrollWidth;
         const clientWidth = menuInner.clientWidth;
         const scrollLeft = menuInner.scrollLeft;
         
-        // Now, perform calculations and DOM writes.
         const maxScroll = scrollWidth - clientWidth;
 
         if (!isDesktop || scrollWidth <= clientWidth) {
@@ -276,6 +293,5 @@ document.addEventListener("DOMContentLoaded", () => {
     menuInner?.addEventListener("scroll", throttledUpdateArrows);
     window.addEventListener("resize", throttledUpdateArrows);
     
-    // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
     window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
