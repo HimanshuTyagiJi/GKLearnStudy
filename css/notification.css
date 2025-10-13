@@ -1,4 +1,5 @@
 
+
 .notification-btn {
     background: none;
     border: none;
@@ -42,29 +43,12 @@
 }
 
 .notification-btn.subscribed .bell-icon {
-    color: var(--green);
-    fill: rgba(7, 102, 0, 0.1);
-    animation: ring 0.8s ease-out;
+    /* Styles for subscribed state can be added here, e.g., a fill or a different color */
+    /* For now, it just uses the class as a hook for JS */
 }
 
-html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
-    color: #66bb6a;
-    fill: rgba(102, 187, 106, 0.15);
-}
 
 .notification-btn.disabled {
     cursor: not-allowed;
     opacity: 0.6;
-}
-
-@keyframes ring {
-    0% { transform: rotate(0); }
-    10% { transform: rotate(30deg); }
-    20% { transform: rotate(-25deg); }
-    30% { transform: rotate(20deg); }
-    40% { transform: rotate(-15deg); }
-    50% { transform: rotate(10deg); }
-    60% { transform: rotate(-5deg); }
-    70% { transform: rotate(0); }
-    100% { transform: rotate(0); }
 }
