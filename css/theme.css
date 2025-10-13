@@ -195,7 +195,7 @@ body {
 }
 
 /* === SHARED ACTION BUTTONS & INPUT === */
-.search-icon, .theme-switcher, .translate-btn {
+.search-icon, .theme-switcher {
   background: none;
   border: none;
   cursor: pointer;
@@ -206,11 +206,11 @@ body {
   justify-content: center;
   border-radius: 50%;
 }
-.search-icon:hover, .theme-switcher:hover, .translate-btn:hover {
+.search-icon:hover, .theme-switcher:hover {
   background-color: var(--border-color);
   color: var(--text-primary);
 }
-.search-icon svg, .theme-switcher svg, .translate-btn svg {
+.search-icon svg, .theme-switcher svg {
   width: 22px;
   height: 22px;
 }
@@ -1987,28 +1987,9 @@ html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
     fill: rgba(102, 187, 106, 0.15);
 }
 
-/* Translate Helper Modal */
-.translate-helper-modal {
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--overlay-bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.translate-helper-modal .modal-content {
-    background-color: var(--card-bg);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    animation: fadeIn 0.3s ease-out;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 .modal-close-btn {
     position: absolute;
@@ -2019,18 +2000,4 @@ html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
     font-size: 1.8rem;
     color: var(--muted-text-color);
     cursor: pointer;
-}
-.translate-helper-modal h3 {
-    margin-top: 0;
-    color: var(--accent-color);
-}
-.translate-helper-modal ul {
-    padding-left: 20px;
-}
-.translate-helper-modal .modal-tip {
-    font-size: 0.9em;
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
-    margin-top: 1rem;
 }
