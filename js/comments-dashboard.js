@@ -1,7 +1,6 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, FacebookAuthProviderFn, MicrosoftAuthProviderFn, signInWithPopupFn, signOutFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn, FacebookAuthProviderFn, OAuthProviderFn;
 
 // --- State Variables ---
 let currentUser = null;
@@ -13,6 +12,7 @@ let unsubscribeComments = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null;
 
+// The owner's Firebase UID.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
 
 // --- Dynamic Script Loader ---
@@ -76,7 +76,7 @@ function initFirebaseAuth() {
             onAuthStateChangedFn = authModule.onAuthStateChanged;
             GoogleAuthProviderFn = authModule.GoogleAuthProvider;
             FacebookAuthProviderFn = authModule.FacebookAuthProvider;
-            MicrosoftAuthProviderFn = authModule.OAuthProvider; // Microsoft uses generic OAuthProvider
+            OAuthProviderFn = authModule.OAuthProvider;
             signInWithPopupFn = authModule.signInWithPopup;
             signOutFn = authModule.signOut;
             setupAuthObserver();
@@ -99,7 +99,9 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
-const loginProviderButtons = document.getElementById('login-provider-buttons');
+const googleLoginBtn = document.getElementById('google-login-btn');
+const facebookLoginBtn = document.getElementById('facebook-login-btn');
+const microsoftLoginBtn = document.getElementById('microsoft-login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -107,53 +109,42 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithProvider(providerName) {
-    const button = document.querySelector(`.provider-btn[data-provider="${providerName}"]`);
-    if(!button) return;
-
-    const originalHtml = button.innerHTML;
-    button.disabled = true;
-    button.innerHTML = `<span class="spinner-small"></span> Connecting...`;
-    
+async function signInWithProvider(provider) {
     try {
         await initFirebaseAuth();
-        let provider;
-        switch(providerName) {
-            case 'google':
-                provider = new GoogleAuthProviderFn();
-                break;
-            case 'facebook':
-                provider = new FacebookAuthProviderFn();
-                break;
-            case 'microsoft':
-                provider = new MicrosoftAuthProviderFn('microsoft.com');
-                break;
-            default:
-                throw new Error('Unknown provider');
-        }
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error(`${providerName} Sign-In Error:`, error);
-        if (error.code !== 'auth/popup-closed-by-user') {
-            alert(`Could not sign in with ${providerName}.`);
-        }
-    } finally {
-        if (!currentUser) { // Only revert if login was unsuccessful
-            button.disabled = false;
-            button.innerHTML = originalHtml;
+        console.error("Sign-In Error:", error);
+        if (error.code === 'auth/account-exists-with-different-credential') {
+            alert("An account already exists with this email address using a different sign-in method.");
+        } else if (error.code !== 'auth/popup-closed-by-user') {
+            alert("Could not sign in.");
         }
     }
 }
 
+async function signInWithGoogle() {
+    const provider = new GoogleAuthProviderFn();
+    signInWithProvider(provider);
+}
+
+async function signInWithFacebook() {
+    const provider = new FacebookAuthProviderFn();
+    signInWithProvider(provider);
+}
+
+async function signInWithMicrosoft() {
+    const provider = new OAuthProviderFn('microsoft.com');
+    signInWithProvider(provider);
+}
+
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-loginProviderButtons.addEventListener('click', (e) => {
-    const button = e.target.closest('.provider-btn');
-    if (button && button.dataset.provider) {
-        signInWithProvider(button.dataset.provider);
-    }
-});
+googleLoginBtn.addEventListener('click', signInWithGoogle);
+facebookLoginBtn.addEventListener('click', signInWithFacebook);
+microsoftLoginBtn.addEventListener('click', signInWithMicrosoft);
 logoutBtn.addEventListener('click', signOutUser);
+
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -168,20 +159,20 @@ function setupAuthObserver() {
             if (user.uid === OWNER_UID) {
                 ownerView.style.display = 'block';
                 nonOwnerMessage.style.display = 'none';
-                if (!unsubscribeComments) {
+                if (!unsubscribeComments) { // Start loading comments only if owner logs in
                     loadAllComments();
                 }
             } else {
                 ownerView.style.display = 'none';
                 nonOwnerMessage.style.display = 'block';
-                if (unsubscribeComments) {
+                if (unsubscribeComments) { // Stop listener if a non-owner logs in
                     unsubscribeComments();
                     unsubscribeComments = null;
                 }
             }
         } else {
             authContainer.classList.remove('logged-in');
-            ownerView.innerHTML = '';
+            ownerView.innerHTML = '<div class="spinner"></div>'; // Clear view on logout
             if (unsubscribeComments) {
                 unsubscribeComments();
                 unsubscribeComments = null;
@@ -209,7 +200,7 @@ const flattenTree = nodes => {
 function renderNode(node){
   const li = document.createElement('div');
   li.className = 'comment-item';
-  li.dataset.pageId = node.pageId;
+  li.dataset.pageId = node.pageId; // Store pageId for replies
   if (node.depth > 0) li.classList.add('reply-item');
   
   const isOwner = currentUser && currentUser.uid === OWNER_UID;
@@ -245,45 +236,51 @@ function renderNode(node){
 
 function renderDashboard(comments) {
     if (!ownerView) return;
-    ownerView.innerHTML = ''; 
 
-    if (comments.length === 0) {
-        ownerView.innerHTML = '<p class="muted">No comments found across the site.</p>';
-        return;
-    }
-    
+    // Group comments by pageId
     const groupedByPage = comments.reduce((acc, comment) => {
         const pageId = comment.pageId || 'unknown';
-        if (!acc[pageId]) acc[pageId] = [];
+        if (!acc[pageId]) {
+            acc[pageId] = [];
+        }
         acc[pageId].push(comment);
         return acc;
     }, {});
 
-    const sortedPageIds = Object.keys(groupedByPage).sort((a,b) => {
-        // Find the most recent comment timestamp for each page to sort pages by activity
-        const lastCommentA = groupedByPage[a].reduce((latest, curr) => (!latest || curr.timestamp > latest.timestamp) ? curr : latest);
-        const lastCommentB = groupedByPage[b].reduce((latest, curr) => (!latest || curr.timestamp > latest.timestamp) ? curr : latest);
-        return safeToDate(lastCommentB.timestamp) - safeToDate(lastCommentA.timestamp);
-    });
+    ownerView.innerHTML = ''; // Clear previous content
+
+    if (Object.keys(groupedByPage).length === 0) {
+        ownerView.innerHTML = '<p class="muted">No comments found across the site.</p>';
+        return;
+    }
+
+    // Sort pages for consistent order, e.g., alphabetically
+    const sortedPageIds = Object.keys(groupedByPage).sort();
 
     sortedPageIds.forEach(pageId => {
         const pageSection = document.createElement('section');
         pageSection.className = 'dashboard-page-section';
-        pageSection.style.marginBottom = '2rem';
 
         const pageTitle = pageId === 'main_page' ? 'Home Page' : pageId.replace(/_/g, ' ');
-        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}.html`;
+        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}`;
         
-        pageSection.innerHTML = `<h2 class="page-section-header" style="padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1rem;">Comments on: <a href="${pageUrl}" target="_blank" rel="noopener noreferrer">${pageTitle}</a></h2>`;
+        pageSection.innerHTML = `
+            <h2 class="page-section-header">
+                Comments on: <a href="${pageUrl}" target="_blank" rel="noopener noreferrer">${pageTitle}</a>
+            </h2>
+        `;
 
         const commentListContainer = document.createElement('div');
         commentListContainer.className = 'comment-list-container';
         pageSection.appendChild(commentListContainer);
 
         const pageComments = groupedByPage[pageId];
-        const flattenedNodes = flattenTree(buildTree(pageComments));
+        const commentTree = buildTree(pageComments);
+        const flattenedNodes = flattenTree(commentTree);
         
-        flattenedNodes.forEach(node => commentListContainer.appendChild(renderNode(node)));
+        flattenedNodes.forEach(node => {
+            commentListContainer.appendChild(renderNode(node));
+        });
         
         ownerView.appendChild(pageSection);
     });
@@ -295,20 +292,19 @@ async function loadAllComments(){
   try {
     await initFirestore();
     if (unsubscribeComments) unsubscribeComments();
-    
-    ownerView.innerHTML = '<div class="spinner"></div><p class="muted">Loading all comments...</p>';
 
     const q = queryFn(collectionGroupFn(db, 'comments'), orderByFn('timestamp','desc'));
     
     unsubscribeComments = onSnapshotFn(q, (snapshot) => {
         const newComments = [];
         snapshot.forEach(doc => {
+            // Extract pageId from the document's path
             const pageId = doc.ref.parent.parent.id;
             newComments.push({ id: doc.id, pageId, ...doc.data() });
         });
         
-        allComments = newComments;
-        renderDashboard(allComments);
+        allComments = newComments; // Replace global cache
+        renderDashboard(allComments); // Re-render the entire dashboard
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
@@ -316,7 +312,7 @@ async function loadAllComments(){
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    ownerView.innerHTML = `<p class="muted error">Could not load comments. Please check Firestore security rules for collection group queries.</p>`;
   }
 }
 
@@ -337,13 +333,13 @@ function openReplyForm(commentId, authorName, targetSlot, pageId) {
 
     const form = formClone.querySelector('form');
     const parentIdInput = form.querySelector('#parent-id');
-    const pageIdInput = form.querySelector('#page-id');
+    const pageIdInput = form.querySelector('#page-id'); // New hidden input
     const replyingToEl = form.querySelector('#replying-to');
     const cancelBtn = form.querySelector('#cancel-reply');
     const commentInput = form.querySelector('#comment');
     
     parentIdInput.value = commentId;
-    pageIdInput.value = pageId;
+    pageIdInput.value = pageId; // Set the pageId for submission
     replyingToEl.innerHTML = `Replying to <strong>${escapeHTML(authorName)}</strong>`;
     replyingToEl.style.display = 'block';
     cancelBtn.style.display = 'inline-block';
@@ -368,7 +364,7 @@ async function deleteWithDescendants(rootId, pageId){
         }
     }
     
-    const originalComments = [...allComments];
+    // Optimistic UI update
     allComments = allComments.filter(c => !toDeleteIds.has(c.id));
     renderDashboard(allComments);
 
@@ -379,9 +375,9 @@ async function deleteWithDescendants(rootId, pageId){
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Failed to delete comments:", error);
-        allComments = originalComments;
-        renderDashboard(allComments);
-        alert("Could not delete the comment.");
+        // Note: Reverting state is complex here, a full reload might be simpler
+        alert("Could not delete the comment. The view will refresh.");
+        loadAllComments(); // Refresh data from server
     }
 }
 
