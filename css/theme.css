@@ -1181,13 +1181,11 @@ html[data-theme="light"] .btn.primary .spinner-small {
     margin-bottom: 1.5rem;
     border: 1px solid var(--border-color);
 }
-
-#login-options, #logout-btn, #user-info, #notification-btn {
+#login-btn, #logout-btn, #user-info, #notification-btn {
     display: none;
 }
-#auth-container:not(.logged-in) #login-options {
-    display: flex;
-    width: 100%;
+#auth-container:not(.logged-in) #login-btn {
+    display: inline-flex;
 }
 #auth-container.logged-in {
     justify-content: flex-start;
@@ -1236,52 +1234,6 @@ html[data-theme="light"] .btn.primary .spinner-small {
     background-color: transparent !important;
     color: var(--danger-color);
 }
-
-
-/* --- Social Login Buttons --- */
-#login-options {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.login-provider-btn {
-    flex-grow: 1;
-    min-width: 200px; /* Adjust as needed */
-}
-html[data-theme='dark'] .login-provider-btn#google-login-btn,
-html[data-theme='dark'] .login-provider-btn.microsoft {
-    background-color: var(--white);
-    color: #333;
-}
-.login-provider-btn.facebook {
-    background-color: #1877F2;
-    color: var(--white);
-    border-color: #1877F2;
-}
-.login-provider-btn.facebook:hover {
-    background-color: #166fe5;
-    border-color: #166fe5;
-}
-.login-provider-btn.microsoft {
-    background-color: var(--white);
-    color: #5E5E5E;
-    border: 1px solid #8c8c8c;
-}
-.login-provider-btn.microsoft:hover {
-    background-color: #f2f2f2;
-    border-color: #5E5E5E;
-}
-.login-provider-btn.yahoo {
-    background-color: #6001d2;
-    color: var(--white);
-    border-color: #6001d2;
-}
-.login-provider-btn.yahoo:hover {
-    background-color: #5201b1;
-    border-color: #5201b1;
-}
-
 
 @media (max-width: 600px) {
     .firebase-comments-widget {
