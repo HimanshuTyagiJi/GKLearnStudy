@@ -1,6 +1,6 @@
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
-let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, FacebookAuthProviderFn, OAuthProviderFn, signInWithPopupFn, signOutFn;
 
 // --- State Variables ---
 let currentUser = null;
@@ -75,6 +75,8 @@ function initFirebaseAuth() {
             auth = authModule.getAuth(firebaseApp);
             onAuthStateChangedFn = authModule.onAuthStateChanged;
             GoogleAuthProviderFn = authModule.GoogleAuthProvider;
+            FacebookAuthProviderFn = authModule.FacebookAuthProvider;
+            OAuthProviderFn = authModule.OAuthProvider;
             signInWithPopupFn = authModule.signInWithPopup;
             signOutFn = authModule.signOut;
             setupAuthObserver();
@@ -97,7 +99,6 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
-const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -105,22 +106,43 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithGoogle() {
+async function signInWithProvider(provider) {
+    const loginButtons = document.querySelectorAll('.login-provider-btn');
+    loginButtons.forEach(btn => {
+        btn.disabled = true;
+        const textSpan = btn.querySelector('.btn-text');
+        if(textSpan) textSpan.textContent = 'Connecting...';
+    });
+    
     try {
         await initFirebaseAuth();
-        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Google Sign-In Error:", error);
+        console.error("Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google.");
+            alert(`Could not sign in. Error: ${error.message}`);
+        }
+    } finally {
+        if (!currentUser) {
+            loginButtons.forEach(btn => {
+                btn.disabled = false;
+                const textSpan = btn.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = btn.dataset.originalText || 'Sign In';
+            });
         }
     }
 }
+
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-loginBtn.addEventListener('click', signInWithGoogle);
-logoutBtn.addEventListener('click', signOutUser);
+function setupLoginButtons() {
+    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
+    document.getElementById('facebook-login-btn')?.addEventListener('click', () => signInWithProvider(new FacebookAuthProviderFn()));
+    document.getElementById('microsoft-login-btn')?.addEventListener('click', () => signInWithProvider(new OAuthProviderFn('microsoft.com')));
+    document.getElementById('yahoo-login-btn')?.addEventListener('click', () => signInWithProvider(new OAuthProviderFn('yahoo.com')));
+    logoutBtn.addEventListener('click', signOutUser);
+}
+
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -153,6 +175,13 @@ function setupAuthObserver() {
                 unsubscribeComments();
                 unsubscribeComments = null;
             }
+             // Reset login buttons on sign out
+            const loginButtons = document.querySelectorAll('.login-provider-btn');
+            loginButtons.forEach(btn => {
+                btn.disabled = false;
+                const textSpan = btn.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = btn.dataset.originalText || 'Sign In';
+            });
         }
     });
 }
@@ -437,6 +466,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await initFirestore();
         await initFirebaseAuth(); 
+        setupLoginButtons();
         setupDelegatedListeners();
     } catch (error) {
         console.error("Failed to initialize dashboard:", error);
