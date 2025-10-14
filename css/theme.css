@@ -1181,16 +1181,25 @@ html[data-theme="light"] .btn.primary .spinner-small {
     margin-bottom: 1.5rem;
     border: 1px solid var(--border-color);
 }
-#login-btn, #logout-btn, #user-info {
+#login-btn, #logout-btn, #user-info, #notification-btn {
     display: none;
 }
 #auth-container:not(.logged-in) #login-btn {
     display: inline-flex;
 }
+#auth-container.logged-in {
+    justify-content: flex-start;
+    gap: 0.75rem;
+}
 #auth-container.logged-in #logout-btn,
-#auth-container.logged-in #user-info {
+#auth-container.logged-in #user-info,
+#auth-container.logged-in #notification-btn {
     display: flex;
 }
+#auth-container.logged-in #logout-btn {
+    margin-left: auto; /* Push logout button to the far right */
+}
+
 #user-info {
     align-items: center;
     gap: 0.75rem;
@@ -1208,6 +1217,23 @@ html[data-theme="light"] .btn.primary .spinner-small {
     margin-bottom: 1rem;
 }
 
+/* Bell Icon States */
+.notification-btn .bell-off-icon { display: none; }
+.notification-btn.permission-denied .bell-icon,
+.notification-btn.permission-denied .spinner-icon {
+    display: none;
+}
+.notification-btn.permission-denied .bell-off-icon {
+    display: block;
+    color: var(--danger-color);
+}
+.notification-btn.permission-denied {
+    cursor: not-allowed;
+}
+.notification-btn.permission-denied:hover {
+    background-color: transparent !important;
+    color: var(--danger-color);
+}
 
 @media (max-width: 600px) {
     .firebase-comments-widget {
