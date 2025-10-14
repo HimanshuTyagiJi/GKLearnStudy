@@ -41,11 +41,6 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
-    // CORRECTED: Ensure exactly two action buttons are defined.
-    actions: [
-        { action: 'open', title: 'Open Page' },
-        { action: 'unsubscribe', title: 'Unsubscribe' }
-    ],
     // Store data needed for actions
     data: {
         url: payload.data.url,
