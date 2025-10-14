@@ -101,10 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Stop any loading spinners before updating the final state
         isProcessing = false;
         notificationBtn.classList.remove('loading');
+        notificationBtn.classList.remove('permission-denied');
         
         const permission = Notification.permission;
         if (permission === 'denied') {
-            notificationBtn.classList.add('disabled');
+            notificationBtn.classList.add('disabled', 'permission-denied');
             notificationBtn.classList.remove('subscribed');
             notificationBtn.title = 'Notifications are blocked in your browser settings.';
             return;
