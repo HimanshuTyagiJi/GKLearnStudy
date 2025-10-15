@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -98,7 +97,6 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
-const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -106,22 +104,38 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithGoogle() {
+async function signInWithProvider(provider) {
+    const loginButton = document.getElementById('google-login-btn');
+    if(loginButton) {
+        loginButton.disabled = true;
+        const textSpan = loginButton.querySelector('.btn-text');
+        if(textSpan) textSpan.textContent = 'Connecting...';
+    }
+    
     try {
         await initFirebaseAuth();
-        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Google Sign-In Error:", error);
+        console.error("Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google.");
+            alert(`Could not sign in. Error: ${error.message}`);
+        }
+    } finally {
+        if (!currentUser && loginButton) {
+            loginButton.disabled = false;
+            const textSpan = loginButton.querySelector('.btn-text');
+            if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
         }
     }
 }
+
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-loginBtn.addEventListener('click', signInWithGoogle);
-logoutBtn.addEventListener('click', signOutUser);
+function setupLoginButtons() {
+    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
+    logoutBtn.addEventListener('click', signOutUser);
+}
+
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -153,6 +167,12 @@ function setupAuthObserver() {
             if (unsubscribeComments) {
                 unsubscribeComments();
                 unsubscribeComments = null;
+            }
+            const loginButton = document.getElementById('google-login-btn');
+            if (loginButton) {
+                 loginButton.disabled = false;
+                const textSpan = loginButton.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
             }
         }
     });
@@ -239,7 +259,7 @@ function renderDashboard(comments) {
         pageSection.className = 'dashboard-page-section';
 
         const pageTitle = pageId === 'main_page' ? 'Home Page' : pageId.replace(/_/g, ' ');
-        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}`;
+        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}.html`;
         
         pageSection.innerHTML = `
             <h2 class="page-section-header">
@@ -285,11 +305,24 @@ async function loadAllComments(){
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
-        ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+        ownerView.innerHTML = `
+            <div class="muted error" style="padding: 1rem; border: 1px solid var(--danger-color); border-radius: 8px;">
+                <p><strong>टिप्पणियाँ लोड नहीं हो सकीं।</strong></p>
+                <p>यह संभवतः एक गुम Firestore इंडेक्स के कारण है। इस डैशबोर्ड को सभी पेजों से टिप्पणियाँ लाने के लिए एक विशेष इंडेक्स की आवश्यकता होती है।</p>
+                <p><strong>इसे ठीक करने के लिए:</strong></p>
+                <ol style="text-align: left; margin-left: 20px;">
+                    <li>ब्राउज़र के डेवलपर कंसोल (F12) खोलें।</li>
+                    <li>आपको एक त्रुटि संदेश दिखना चाहिए जिसमें एक लंबा URL हो।</li>
+                    <li>उस URL पर क्लिक करें। यह आपको सीधे Firebase कंसोल में इंडेक्स बनाने वाले पेज पर ले जाएगा।</li>
+                    <li>इंडेक्स बनाने के लिए संकेतों का पालन करें (इसमें कुछ मिनट लग सकते हैं)।</li>
+                    <li>इंडेक्स बन जाने के बाद, इस पेज को रीफ़्रेश करें।</li>
+                </ol>
+                <p>यदि आपको अभी भी समस्या आ रही है, तो सुनिश्चित करें कि आपके Firestore सुरक्षा नियम सही हैं।</p>
+            </div>`;
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    ownerView.innerHTML = `<p class="muted error">टिप्पणियाँ लोड करने में एक अप्रत्याशित त्रुटि हुई। विवरण के लिए कंसोल देखें।</p>`;
   }
 }
 
@@ -438,9 +471,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await initFirestore();
         await initFirebaseAuth(); 
+        setupLoginButtons();
         setupDelegatedListeners();
     } catch (error) {
         console.error("Failed to initialize dashboard:", error);
         if (dashboardAuthPrompt) dashboardAuthPrompt.textContent = "Could not load dashboard services.";
     }
 });
+ 
