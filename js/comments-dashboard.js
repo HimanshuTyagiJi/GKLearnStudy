@@ -259,7 +259,7 @@ function renderDashboard(comments) {
         pageSection.className = 'dashboard-page-section';
 
         const pageTitle = pageId === 'main_page' ? 'Home Page' : pageId.replace(/_/g, ' ');
-        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}`;
+        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}.html`;
         
         pageSection.innerHTML = `
             <h2 class="page-section-header">
@@ -305,11 +305,32 @@ async function loadAllComments(){
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
-        ownerView.innerHTML = `<p class="muted error">टिप्पणियाँ लोड नहीं हो सकीं। यह दो कारणों से हो सकता है:<br>1. <strong>आवश्यक इंडेक्स गुम है:</strong> कृपया अपने ब्राउज़र के डेवलपर कंसोल की जाँच करें। Firebase वहाँ इंडेक्स बनाने के लिए एक सीधा लिंक प्रदान करेगा।<br>2. <strong>सुरक्षा नियम गलत हैं:</strong> डैशबोर्ड को सभी टिप्पणियों को पढ़ने के लिए एक विशेष 'collectionGroup' नियम की आवश्यकता है।</p>`;
+        ownerView.innerHTML = `
+            <div class="muted error" style="text-align: left; padding: 1rem; border: 1px solid var(--danger-color); border-radius: 8px;">
+                <h3 style="margin-top:0; color: var(--danger-color);">टिप्पणियाँ लोड नहीं हो सकीं (Firebase कॉन्फ़िगरेशन त्रुटि)</h3>
+                <p>यह एक कोड समस्या नहीं है, बल्कि आपके Firebase प्रोजेक्ट में एक कॉन्फ़िगरेशन समस्या है। <strong>कृपया इन दो चरणों का पालन करें:</strong></p>
+                <ol>
+                    <li>
+                        <strong>आवश्यक Firestore इंडेक्स बनाएं:</strong>
+                        <ul style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                            <li><strong>Collection ID:</strong> <code>comments</code></li>
+                            <li><strong>Field to index:</strong> <code>timestamp</code>, <strong>Order:</strong> <code>Descending</code></li>
+                            <li><strong>Query scope:</strong> <code>Collection group</code></li>
+                        </ul>
+                        <p style="font-size: 0.9em;"><em>Firebase को आपके ब्राउज़र के डेवलपर कंसोल में इसे बनाने के लिए एक स्वचालित लिंक भी प्रदान करना चाहिए।</em></p>
+                    </li>
+                    <li>
+                        <strong>सुरक्षा नियम (Security Rules) अपडेट करें:</strong>
+                        <p>सुनिश्चित करें कि आपके Firestore नियमों में एक नियम है जो आपको ('Owner') सभी टिप्पणियों को एक साथ पढ़ने की अनुमति देता है। नियम ऐसा दिखना चाहिए:</p>
+                        <pre style="background-color: var(--input-bg); padding: 0.5rem; border-radius: 4px; white-space: pre-wrap; font-size: 0.85em;"><code>match /{path=**}/comments/{commentId} {\n  allow list: if request.auth.uid == '${OWNER_UID}';\n}</code></pre>
+                    </li>
+                </ol>
+            </div>
+        `;
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">टिप्पणियाँ लोड नहीं हो सकीं। यह दो कारणों से हो सकता है:<br>1. <strong>आवश्यक इंडेक्स गुम है:</strong> कृपया अपने ब्राउज़र के डेवलपर कंसोल की जाँच करें। Firebase वहाँ इंडेक्स बनाने के लिए एक सीधा लिंक प्रदान करेगा।<br>2. <strong>सुरक्षा नियम गलत हैं:</strong> डैशबोर्ड को सभी टिप्पणियों को पढ़ने के लिए एक विशेष 'collectionGroup' नियम की आवश्यकता है।</p>`;
+    ownerView.innerHTML = `<p class="muted error">Could not set up the listener. Check console for details.</p>`;
   }
 }
 
@@ -362,6 +383,7 @@ async function deleteWithDescendants(rootId, pageId){
     }
     
     // Optimistic UI update
+    const originalComments = [...allComments];
     allComments = allComments.filter(c => !toDeleteIds.has(c.id));
     renderDashboard(allComments);
 
@@ -372,9 +394,9 @@ async function deleteWithDescendants(rootId, pageId){
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Failed to delete comments:", error);
-        // Note: Reverting state is complex here, a full reload might be simpler
-        alert("Could not delete the comment. The view will refresh.");
-        loadAllComments(); // Refresh data from server
+        allComments = originalComments; // Revert on failure
+        renderDashboard(allComments);
+        alert("Could not delete the comment.");
     }
 }
 
@@ -447,8 +469,10 @@ function setupDelegatedListeners() {
             console.error('Error adding reply:', err);
             alert('Could not post reply.');
         } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit Reply';
+            if (submitButton) { // Check if button still exists
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Reply';
+            }
         }
     });
 }
