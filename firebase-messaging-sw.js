@@ -15,63 +15,43 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-/**
- * Helper function to normalize URL pathnames for comparison.
- * This treats "/", "/index.html", and "/index" as the same path.
- * @param {string} path The pathname from a URL.
- * @returns {string} The normalized pathname.
- */
-function normalizePathname(path) {
-    if (path === '/index.html' || path === '/index') {
-        return '/';
+// --- State for Smart Notifications ---
+let pageVisibilityState = {};
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'VISIBILITY_CHANGE') {
+        const { pageId, isVisible } = event.data;
+        console.log(`[SW] Visibility for page ${pageId} is now ${isVisible}`);
+        pageVisibilityState[pageId] = isVisible;
     }
-    return path;
-}
+});
 
 
-messaging.onBackgroundMessage(async (payload) => {
+messaging.onBackgroundMessage((payload) => {
   console.log("[SW] Received background message ", payload);
 
-  const urlString = payload.data.url;
-  
-  // If there's a URL, check if we should suppress the notification.
-  if (urlString) {
-    const clientsList = await clients.matchAll({
-      type: 'window',
-      includeUncontrolled: true,
-    });
-    
-    const notificationUrl = new URL(urlString);
-    const normalizedNotificationPath = normalizePathname(notificationUrl.pathname);
+  const pageId = payload.data.pageId;
 
-    for (const client of clientsList) {
-      const clientUrl = new URL(client.url);
-      const normalizedClientPath = normalizePathname(clientUrl.pathname);
-
-      // If a tab with the same path is open AND focused, suppress the notification.
-      if (normalizedClientPath === normalizedNotificationPath && client.focused) {
-        console.log(`[SW] Suppressing notification. Reason: A tab for path "${normalizedClientPath}" is already open and focused.`);
-        return; // Exit without showing a notification.
-      }
-    }
+  if (pageVisibilityState[pageId]) {
+      console.log(`[SW] Suppressing notification because page ${pageId} is visible.`);
+      return;
   }
 
-  // If no matching focused client was found, proceed to show the notification.
-  const notificationTitle = payload.data.title || "New Notification";
+  const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
+    // Store data needed for actions
     data: {
         url: payload.data.url,
         commentId: payload.data.commentId
     }
   };
-  
-  console.log("[SW] Showing notification:", notificationTitle);
-  await self.registration.showNotification(notificationTitle, notificationOptions);
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-// Handler for when a user clicks on the notification.
+// Handler for when a user clicks on the notification OR its action buttons.
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
 
@@ -84,10 +64,12 @@ self.addEventListener('notificationclick', (event) => {
         return;
     }
     
+    // --- URL and Deep Link Logic ---
     const finalUrl = new URL(urlToOpen, self.location.origin);
     
-    // Add the comment hash to scroll to the specific comment.
-    if (commentId) {
+    // If the main body (no action) or the 'open' button is clicked, scroll to the comment.
+    // For 'unsubscribe', we just open the page without a hash.
+    if ((!event.action || event.action === 'open') && commentId) {
         finalUrl.hash = `comment-${commentId}`;
     }
 
@@ -99,8 +81,8 @@ self.addEventListener('notificationclick', (event) => {
             // Check if a client for this URL's pathname is already open.
             for (const client of clientList) {
                 const clientUrl = new URL(client.url);
-                if (normalizePathname(clientUrl.pathname) === normalizePathname(finalUrl.pathname) && 'focus' in client) {
-                    // Navigate the existing client to the new URL (with hash) and focus it.
+                if (clientUrl.pathname === finalUrl.pathname && 'focus' in client) {
+                    // Navigate the existing client to the new URL (with hash if applicable)
                     client.navigate(finalUrl.href);
                     return client.focus();
                 }
