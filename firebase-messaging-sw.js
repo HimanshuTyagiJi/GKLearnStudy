@@ -15,33 +15,35 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-// --- State for Smart Notifications ---
-let pageVisibilityState = {};
-
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'VISIBILITY_CHANGE') {
-        const { pageId, isVisible } = event.data;
-        console.log(`[SW] Visibility for page ${pageId} is now ${isVisible}`);
-        pageVisibilityState[pageId] = isVisible;
-    }
-});
-
-
-messaging.onBackgroundMessage((payload) => {
+messaging.onBackgroundMessage(async (payload) => {
   console.log("[SW] Received background message ", payload);
 
-  const pageId = payload.data.pageId;
-
-  if (pageVisibilityState[pageId]) {
-      console.log(`[SW] Suppressing notification because page ${pageId} is visible.`);
-      return;
+  const url = payload.data.url;
+  if (!url) {
+    console.log("[SW] No URL in payload, showing notification.");
+  } else {
+    // Check if a window for this page is already open and focused.
+    const clientList = await clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true,
+    });
+    
+    for (const client of clientList) {
+      const clientUrl = new URL(client.url);
+      const notificationUrl = new URL(url);
+      // If a tab with the same path is open and focused, don't show the notification.
+      if (clientUrl.pathname === notificationUrl.pathname && client.focused) {
+        console.log('[SW] Suppressing notification because a relevant tab is focused.');
+        return; 
+      }
+    }
   }
 
+  // If no focused window was found, show the notification.
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
-    // Store data needed for actions
     data: {
         url: payload.data.url,
         commentId: payload.data.commentId
@@ -51,7 +53,7 @@ messaging.onBackgroundMessage((payload) => {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-// Handler for when a user clicks on the notification OR its action buttons.
+// Handler for when a user clicks on the notification.
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
 
@@ -64,12 +66,10 @@ self.addEventListener('notificationclick', (event) => {
         return;
     }
     
-    // --- URL and Deep Link Logic ---
     const finalUrl = new URL(urlToOpen, self.location.origin);
     
-    // If the main body (no action) or the 'open' button is clicked, scroll to the comment.
-    // For 'unsubscribe', we just open the page without a hash.
-    if ((!event.action || event.action === 'open') && commentId) {
+    // Add the comment hash to scroll to the specific comment.
+    if (commentId) {
         finalUrl.hash = `comment-${commentId}`;
     }
 
@@ -82,7 +82,7 @@ self.addEventListener('notificationclick', (event) => {
             for (const client of clientList) {
                 const clientUrl = new URL(client.url);
                 if (clientUrl.pathname === finalUrl.pathname && 'focus' in client) {
-                    // Navigate the existing client to the new URL (with hash if applicable)
+                    // Navigate the existing client to the new URL (with hash)
                     client.navigate(finalUrl.href);
                     return client.focus();
                 }
