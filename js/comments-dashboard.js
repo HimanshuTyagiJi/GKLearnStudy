@@ -1,6 +1,7 @@
 (async () => {
     // Wait for the shared Firebase services to be ready
     const firebase = await window.firebaseServices.ready;
+    const { auth, db } = firebase;
 
     // --- State Variables ---
     let currentUser = null;
@@ -38,7 +39,7 @@
             if (textSpan) textSpan.textContent = 'Connecting...';
         }
         try {
-            await firebase.signInWithPopup(firebase.auth, provider);
+            await auth.signInWithPopup(provider);
         } catch (error) {
             console.error("Sign-In Error:", error);
             if (error.code !== 'auth/popup-closed-by-user') {
@@ -53,7 +54,7 @@
         }
     }
 
-    async function signOutUser() { await firebase.signOut(firebase.auth); }
+    async function signOutUser() { await auth.signOut(); }
 
     function setupLoginButtons() {
         document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new firebase.GoogleAuthProvider()));
@@ -61,7 +62,7 @@
     }
 
     function setupAuthObserver() {
-        firebase.onAuthStateChanged(firebase.auth, user => {
+        auth.onAuthStateChanged(user => {
             currentUser = user;
             dashboardAuthPrompt.style.display = user ? 'none' : 'block';
             customCommentSection.style.display = user ? 'block' : 'none';
@@ -175,8 +176,8 @@
     // ====== Load ALL Comments ======
     async function loadAllComments() {
         if (unsubscribeComments) unsubscribeComments();
-        const q = firebase.query(firebase.collectionGroup(firebase.db, 'comments'), firebase.orderBy('timestamp', 'desc'));
-        unsubscribeComments = firebase.onSnapshot(q, (snapshot) => {
+        const q = db.collectionGroup('comments').orderBy('timestamp', 'desc');
+        unsubscribeComments = q.onSnapshot((snapshot) => {
             const newComments = [];
             snapshot.forEach(doc => {
                 const pageId = doc.ref.parent.parent.id;
@@ -246,15 +247,17 @@
                 }
             }
         }
+        const originalComments = [...allComments];
         allComments = allComments.filter(c => !toDeleteIds.has(c.id));
         renderDashboard(allComments);
         try {
-            const deletePromises = [...toDeleteIds].map(id => firebase.deleteDoc(firebase.doc(firebase.db, 'pages', pageId, 'comments', id)));
+            const deletePromises = [...toDeleteIds].map(id => db.doc(`pages/${pageId}/comments/${id}`).delete());
             await Promise.all(deletePromises);
         } catch (error) {
             console.error("Failed to delete comments:", error);
-            alert("Could not delete the comment. The view will refresh.");
-            loadAllComments();
+            allComments = originalComments; // Restore on failure
+            renderDashboard(allComments);
+            alert("Could not delete the comment.");
         }
     }
 
@@ -303,8 +306,9 @@
             submitButton.disabled = true;
             submitButton.innerHTML = `<span class="spinner-small"></span> Posting...`;
             try {
-                const commentsPath = ['pages', pageId, 'comments'];
-                await firebase.addDoc(firebase.collection(firebase.db, ...commentsPath), {
+                const commentsPath = `pages/${pageId}/comments`;
+                const collectionRef = db.collection(commentsPath);
+                await collectionRef.add({
                     name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
                     comment: commentText, timestamp: firebase.serverTimestamp(), parentId: parentId,
                     likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
