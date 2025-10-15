@@ -17,6 +17,16 @@
         <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
        
+        <!-- Firebase SDKs - Make sure these paths are correct in your project -->
+        <!-- Firebase App (firebase-app.js) must be loaded first -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+        <!-- Firebase Auth (firebase-auth.js) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+        <!-- Firebase Firestore (firebase-firestore.js) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+        <!-- Firebase Messaging (firebase-messaging.js) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
+
     </head>
     <body>
         <header class="header" id="header">
@@ -66,13 +76,14 @@
         <main class="container">
             <div id="dashboard-container">
                 <h1>Comments Dashboard</h1>
-                <p id="dashboard-auth-prompt" class="muted">Please sign in to view and manage comments.</p>
+                <p id="dashboard-auth-prompt" class="muted">कृपया कमेंट्स देखने और मैनेज करने के लिए साइन इन करें।</p>
 
                 <div class="firebase-comments-widget" id="custom-comment-section" style="display: none;">
                     
                     <div id="auth-container">
                         <div id="user-info"></div>
-                        <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="Enable notifications">
+                        <!-- Notification बटन यहाँ है -->
+                        <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="नोटिफ़िकेशन चालू/बंद करें">
                             <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -93,31 +104,32 @@
                                 <span class="btn-text">Sign in with Google</span>
                             </button>
                         </div>
-                        <button id="logout-btn" class="btn">Logout</button>
+                        <button id="logout-btn" class="btn">लॉग आउट</button>
                     </div>
 
                     <div id="owner-view">
                         <!-- Comments will be grouped by page and injected here -->
                     </div>
 
-                     <p id="non-owner-message" class="muted" style="display: none; margin-top: 2rem;">This dashboard is for site administrators only.</p>
+                    <p id="non-owner-message" class="muted" style="display: none; margin-top: 2rem;">यह डैशबोर्ड केवल साइट एडमिनिस्ट्रेटर के लिए है।</p>
 
-                    <!-- Hidden form shell to be cloned for replies -->
-                     <div class="comment-form-shell" id="comment-form-shell" style="display: none;">
-                        <form class="comment-form" id="comment-form">
-                            <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                            <textarea id="comment" placeholder="Your reply" maxlength="1000" required aria-label="Your reply"></textarea>
-                            <input type="hidden" id="parent-id" value="" />
-                            <input type="hidden" id="page-id" value="" /> 
+                    <!-- Reply Form: यह एक ही फॉर्म होगा जिसे हम 'replyToComment' पर क्लिक करने पर भरेंगे और दिखाएंगे -->
+                    <div class="comment-form-wrapper" id="reply-form-wrapper" style="display: none; margin-top: 20px;">
+                        <form class="comment-form" id="reply-comment-form">
+                            <div class="replying-to" id="replying-to-text" aria-live="polite"></div>
+                            <textarea id="reply-comment-textarea" placeholder="आपका जवाब" maxlength="1000" required aria-label="आपका जवाब"></textarea>
+                            <input type="hidden" id="reply-parent-id" value="" />
+                            <input type="hidden" id="reply-page-id" value="" /> 
                             <div class="form-footer">
-                                <div id="char-counter">0 / 1000</div>
+                                <div id="reply-char-counter">0 / 1000</div>
                                 <div class="actions">
-                                    <button type="submit" class="btn primary" id="submit-button">Submit Reply</button>
-                                    <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
+                                    <button type="submit" class="btn primary" id="submit-reply-button">जवाब सबमिट करें</button>
+                                    <button type="button" class="btn" id="cancel-reply-button">कैंसिल करें</button>
                                 </div>
                             </div>
                         </form>
                     </div>
+
                 </div>
 
             </div>
@@ -131,6 +143,7 @@
         </footer>
 
         <script src="js/theme.js" defer></script>
+        <!-- आपका नया comments-dashboard.js यहाँ लोड होगा -->
         <script src="js/comments-dashboard.js" defer></script>
     </body>
 </html>
