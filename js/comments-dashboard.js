@@ -1,3 +1,4 @@
+
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -97,6 +98,7 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
+const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -104,38 +106,22 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithProvider(provider) {
-    const loginButton = document.getElementById('google-login-btn');
-    if(loginButton) {
-        loginButton.disabled = true;
-        const textSpan = loginButton.querySelector('.btn-text');
-        if(textSpan) textSpan.textContent = 'Connecting...';
-    }
-    
+async function signInWithGoogle() {
     try {
         await initFirebaseAuth();
+        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Sign-In Error:", error);
+        console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert(`Could not sign in. Error: ${error.message}`);
-        }
-    } finally {
-        if (!currentUser && loginButton) {
-            loginButton.disabled = false;
-            const textSpan = loginButton.querySelector('.btn-text');
-            if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
+            alert("Could not sign in with Google.");
         }
     }
 }
-
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-function setupLoginButtons() {
-    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
-    logoutBtn.addEventListener('click', signOutUser);
-}
-
+loginBtn.addEventListener('click', signInWithGoogle);
+logoutBtn.addEventListener('click', signOutUser);
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -167,12 +153,6 @@ function setupAuthObserver() {
             if (unsubscribeComments) {
                 unsubscribeComments();
                 unsubscribeComments = null;
-            }
-            const loginButton = document.getElementById('google-login-btn');
-            if (loginButton) {
-                 loginButton.disabled = false;
-                const textSpan = loginButton.querySelector('.btn-text');
-                if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
             }
         }
     });
@@ -259,7 +239,7 @@ function renderDashboard(comments) {
         pageSection.className = 'dashboard-page-section';
 
         const pageTitle = pageId === 'main_page' ? 'Home Page' : pageId.replace(/_/g, ' ');
-        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}.html`;
+        const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}`;
         
         pageSection.innerHTML = `
             <h2 class="page-section-header">
@@ -305,32 +285,11 @@ async function loadAllComments(){
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
-        ownerView.innerHTML = `
-            <div class="muted error" style="text-align: left; padding: 1rem; border: 1px solid var(--danger-color); border-radius: 8px;">
-                <h3 style="margin-top:0; color: var(--danger-color);">टिप्पणियाँ लोड नहीं हो सकीं (Firebase कॉन्फ़िगरेशन त्रुटि)</h3>
-                <p>यह एक कोड समस्या नहीं है, बल्कि आपके Firebase प्रोजेक्ट में एक कॉन्फ़िगरेशन समस्या है। <strong>कृपया इन दो चरणों का पालन करें:</strong></p>
-                <ol>
-                    <li>
-                        <strong>आवश्यक Firestore इंडेक्स बनाएं:</strong>
-                        <ul style="margin-top: 0.5rem; margin-bottom: 1rem;">
-                            <li><strong>Collection ID:</strong> <code>comments</code></li>
-                            <li><strong>Field to index:</strong> <code>timestamp</code>, <strong>Order:</strong> <code>Descending</code></li>
-                            <li><strong>Query scope:</strong> <code>Collection group</code></li>
-                        </ul>
-                        <p style="font-size: 0.9em;"><em>Firebase को आपके ब्राउज़र के डेवलपर कंसोल में इसे बनाने के लिए एक स्वचालित लिंक भी प्रदान करना चाहिए।</em></p>
-                    </li>
-                    <li>
-                        <strong>सुरक्षा नियम (Security Rules) अपडेट करें:</strong>
-                        <p>सुनिश्चित करें कि आपके Firestore नियमों में एक नियम है जो आपको ('Owner') सभी टिप्पणियों को एक साथ पढ़ने की अनुमति देता है। नियम ऐसा दिखना चाहिए:</p>
-                        <pre style="background-color: var(--input-bg); padding: 0.5rem; border-radius: 4px; white-space: pre-wrap; font-size: 0.85em;"><code>match /{path=**}/comments/{commentId} {\n  allow list: if request.auth.uid == '${OWNER_UID}';\n}</code></pre>
-                    </li>
-                </ol>
-            </div>
-        `;
+        ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">Could not set up the listener. Check console for details.</p>`;
+    ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
   }
 }
 
@@ -383,7 +342,6 @@ async function deleteWithDescendants(rootId, pageId){
     }
     
     // Optimistic UI update
-    const originalComments = [...allComments];
     allComments = allComments.filter(c => !toDeleteIds.has(c.id));
     renderDashboard(allComments);
 
@@ -394,9 +352,9 @@ async function deleteWithDescendants(rootId, pageId){
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Failed to delete comments:", error);
-        allComments = originalComments; // Revert on failure
-        renderDashboard(allComments);
-        alert("Could not delete the comment.");
+        // Note: Reverting state is complex here, a full reload might be simpler
+        alert("Could not delete the comment. The view will refresh.");
+        loadAllComments(); // Refresh data from server
     }
 }
 
@@ -469,10 +427,8 @@ function setupDelegatedListeners() {
             console.error('Error adding reply:', err);
             alert('Could not post reply.');
         } finally {
-            if (submitButton) { // Check if button still exists
-                submitButton.disabled = false;
-                submitButton.textContent = 'Submit Reply';
-            }
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit Reply';
         }
     });
 }
@@ -482,7 +438,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await initFirestore();
         await initFirebaseAuth(); 
-        setupLoginButtons();
         setupDelegatedListeners();
     } catch (error) {
         console.error("Failed to initialize dashboard:", error);
