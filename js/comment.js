@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -113,11 +112,9 @@ const mainFormShell = document.getElementById('comment-form-shell');
 const mainForm = document.getElementById('comment-form');
 const commentsWrapper = document.getElementById('comments-main-container');
 const authContainer = document.getElementById('auth-container');
-const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
-const originalLoginHTML = loginBtn.innerHTML;
 const commentCountSpan = document.getElementById('comment-count');
 
 
@@ -129,34 +126,42 @@ const totalRatingsCount = document.getElementById('total-ratings-count');
 
 
 // ====== Auth Functions ======
-async function signInWithGoogle() {
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
+async function signInWithProvider(provider) {
+    const loginButton = document.getElementById('google-login-btn');
+    if (loginButton) {
+        loginButton.disabled = true;
+        const textSpan = loginButton.querySelector('.btn-text');
+        if(textSpan) textSpan.textContent = 'Connecting...';
+    }
     
     try {
         await initFirebaseAuth();
-        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Google Sign-In Error:", error);
+        console.error("Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google. Please check your connection and try again.");
+            alert(`Could not sign in. Error: ${error.message}`);
         }
     } finally {
-        if (!currentUser) {
-            loginBtn.disabled = false;
-            loginBtn.innerHTML = originalLoginHTML;
+        if (!currentUser && loginButton) {
+            loginButton.disabled = false;
+            const textSpan = loginButton.querySelector('.btn-text');
+            if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
         }
     }
 }
+
 
 async function signOutUser() {
     if (!isAuthInitialized) return;
     await signOutFn(auth);
 }
 
-loginBtn.addEventListener('click', signInWithGoogle);
-logoutBtn.addEventListener('click', signOutUser);
+function setupLoginButtons() {
+    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
+    logoutBtn.addEventListener('click', signOutUser);
+}
+
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -178,8 +183,15 @@ function setupAuthObserver() {
             authContainer.classList.remove('logged-in');
             mainFormShell.style.display = 'none';
             loginPrompt.style.display = 'block';
-            loginBtn.disabled = false;
-            loginBtn.innerHTML = originalLoginHTML;
+            
+            // Reset login button on sign out
+            const loginButton = document.getElementById('google-login-btn');
+            if (loginButton) {
+                loginButton.disabled = false;
+                const textSpan = loginButton.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
+            }
+            
             closeActiveReplyForm();
         }
         if (wasLoggedIn !== !!user) {
@@ -236,15 +248,25 @@ function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     }
 
     const stars = ratingStarsContainer.querySelectorAll('.star');
-    stars.forEach(star => {
-        const starValue = parseInt(star.dataset.value, 10);
-        star.classList.remove('filled', 'selected');
-        if (currentUserRating >= starValue) {
-            star.classList.add('selected');
-        } else if (Math.round(average) >= starValue) {
-            star.classList.add('filled');
-        }
-    });
+    // Clear all previous states first
+    stars.forEach(star => star.classList.remove('filled', 'selected'));
+
+    if (currentUserRating > 0) {
+        // User has voted, show their specific rating
+        stars.forEach(star => {
+            if (parseInt(star.dataset.value, 10) <= currentUserRating) {
+                star.classList.add('selected');
+            }
+        });
+    } else {
+        // User has not voted, show the overall average rating
+        const roundedAverage = Math.round(average);
+        stars.forEach(star => {
+            if (parseInt(star.dataset.value, 10) <= roundedAverage) {
+                star.classList.add('filled');
+            }
+        });
+    }
     
     if (currentUser) {
         ratingStarsContainer.classList.add('user-can-rate');
@@ -339,7 +361,7 @@ function setupRatingListeners() {
         if (!star || isRatingSubmissionPending) return;
 
         if (!currentUser) {
-            signInWithGoogle();
+            alert('Please sign in to rate this article.');
             return;
         }
 
@@ -629,7 +651,7 @@ function setupDelegatedListeners() {
         if (!commentId) return;
 
         if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
-            signInWithGoogle();
+            alert("Please sign in to perform this action.");
             return;
         }
 
@@ -717,41 +739,6 @@ function setupDelegatedListeners() {
 // ====== NEW: Smart Notification & Deep Linking Logic ======
 
 /**
- * Notifies the service worker about the visibility of the comments section.
- * This prevents notifications from appearing if the user is already looking at the comments.
- * @param {boolean} isVisible - Whether the comments section is currently visible.
- */
-function notifyServiceWorkerVisibility(isVisible) {
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({
-            type: 'VISIBILITY_CHANGE',
-            pageId: pageId,
-            isVisible: isVisible
-        });
-    }
-}
-
-/**
- * Sets up an IntersectionObserver to track when the comments section is visible.
- */
-function setupVisibilityObserver() {
-    if (!commentsWrapper) return;
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                notifyServiceWorkerVisibility(entry.isIntersecting);
-            });
-        },
-        {
-            root: null, // relative to the viewport
-            threshold: 0.1 // 10% of the element must be visible
-        }
-    );
-    observer.observe(commentsWrapper);
-}
-
-/**
  * Checks for a #comment-<ID> hash in the URL and scrolls to it.
  * It robustly waits for the comment to be rendered before attempting to scroll.
  */
@@ -792,9 +779,9 @@ async function initializeCommentsSection() {
         await initFirestore();
         await loadComments();
         await initFirebaseAuth(); 
+        setupLoginButtons();
         setupDelegatedListeners();
-        setupVisibilityObserver(); // NEW: Start observing visibility
-        handleCommentDeepLink();   // NEW: Check for deep link on load
+        handleCommentDeepLink();   // Check for deep link on load
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
         if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
