@@ -1,238 +1,136 @@
-
 <!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comments Dashboard</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="/css/theme.css">
-    <style>
-        .dashboard-page-section {
-            margin-bottom: 2.5rem;
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
-        }
-        .page-section-header {
-            margin-top: 0;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .page-section-header a {
-            text-decoration: none;
-            color: var(--accent-color);
-        }
-        .page-section-header a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <header class="header" id="header">
-        <nav class="navbar"><a href="/" class="brand">GK Learn Study Dashboard</a></nav>
-    </header>
-
-    <main class="container">
-        <h1>All Comments</h1>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>All Comments Dashboard | GK Learn Study</title>
+        <meta name="description" content="Manage all comments across GK Learn Study from a single dashboard. Reply, moderate, and engage with your audience efficiently." />
+        <meta name="author" content="Mr. Himanshu Tyagi" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="icon" href="favicon.ico" sizes="any" />
+        <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="https://gklearnstudy.in/favicon.ico" />
+        <link rel="manifest" href="manifest.json" />
+        <meta name="theme-color" content="#FFFFFF" />
         
-        <div id="auth-container">
-            <div id="user-info"></div>
-            <div id="login-options">
-                 <button id="google-login-btn" class="btn login-provider-btn" data-original-text="Sign in to View Dashboard">
-                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path></svg>
-                    <span class="btn-text">Sign in to View Dashboard</span>
-                </button>
-            </div>
-            <button id="logout-btn" class="btn">Logout</button>
-        </div>
-        
-        <div id="dashboard-content" style="display: none;">
-            <div id="owner-view"><div class="spinner"></div></div>
-            <p id="non-owner-message" class="muted" style="display: none;">Access denied. This dashboard is for the site owner only.</p>
-        </div>
-
-        <!-- Hidden form for replies -->
-        <div class="comment-form-shell" id="comment-form-shell" style="display: none;">
-            <form class="comment-form"><textarea placeholder="Your reply..." maxlength="1000" required></textarea><input type="hidden" name="parentId"><input type="hidden" name="pageId"><div class="form-footer"><div class="actions"><button type="submit" class="btn primary">Submit Reply</button><button type="button" class="btn" data-action="cancel-reply">Cancel</button></div></div></form>
-        </div>
-    </main>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-    import { getFirestore, collectionGroup, query, orderBy, onSnapshot, doc, deleteDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
-    const firebaseConfig = { apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw", authDomain: "appcomment.firebaseapp.com", projectId: "appcomment", storageBucket: "appcomment.firebasestorage.app", messagingSenderId: "156258808941", appId: "1:156258808941:web:04a1f7470ac43657c7fb64" };
-    const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2";
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let currentUser = null, allComments = [], unsubscribe = null, activeReplyForm = null;
-
-    const dom = {
-        authContainer: document.getElementById('auth-container'),
-        loginBtn: document.getElementById('google-login-btn'),
-        logoutBtn: document.getElementById('logout-btn'),
-        userInfo: document.getElementById('user-info'),
-        dashboardContent: document.getElementById('dashboard-content'),
-        ownerView: document.getElementById('owner-view'),
-        nonOwnerMessage: document.getElementById('non-owner-message'),
-        replyFormShell: document.getElementById('comment-form-shell')
-    };
-
-    const escapeHTML = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#x27;'})[c]);
-    const fmtDate = d => d.toLocaleString();
-
-    onAuthStateChanged(auth, user => {
-        currentUser = user;
-        dom.authContainer.classList.toggle('logged-in', !!user);
-        dom.dashboardContent.style.display = user ? 'block' : 'none';
-        if (user) {
-            dom.userInfo.innerHTML = `<img src="${user.photoURL}" alt="" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
-            if (user.uid === OWNER_UID) {
-                dom.ownerView.style.display = 'block';
-                dom.nonOwnerMessage.style.display = 'none';
-                if (!unsubscribe) loadAllComments();
-            } else {
-                dom.ownerView.style.display = 'none';
-                dom.nonOwnerMessage.style.display = 'block';
-                if (unsubscribe) unsubscribe();
-            }
-        } else {
-            if (unsubscribe) unsubscribe();
-            dom.ownerView.innerHTML = '<div class="spinner"></div>';
-        }
-    });
-
-    dom.loginBtn.onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
-    dom.logoutBtn.onclick = () => signOut(auth);
-
-    function loadAllComments() {
-        const q = query(collectionGroup(db, 'comments'), orderBy('timestamp', 'desc'));
-        unsubscribe = onSnapshot(q, snapshot => {
-            allComments = snapshot.docs.map(d => ({ id: d.id, pageId: d.ref.parent.parent.id, ...d.data() }));
-            renderDashboard();
-        }, err => {
-            console.error(err);
-            dom.ownerView.innerHTML = `<p class="muted error">Error loading comments. Make sure Firestore indexes and security rules are correct.</p>`;
-        });
-    }
-
-    function renderDashboard() {
-        const grouped = allComments.reduce((acc, c) => {
-            (acc[c.pageId] = acc[c.pageId] || []).push(c);
-            return acc;
-        }, {});
-        
-        dom.ownerView.innerHTML = Object.keys(grouped).sort().map(pageId => {
-            const pageTitle = pageId === 'main_page' ? 'Home Page' : pageId.replace(/_/g, ' ');
-            const pageUrl = pageId === 'main_page' ? '/' : `/${pageId.replace(/_/g, '/')}.html`;
-            const buildTree = items => {
-                const byId = {}; items.forEach(it => (it.children = [], byId[it.id] = it));
-                const roots = []; items.forEach(it => it.parentId && byId[it.parentId] ? byId[it.parentId].children.push(it) : roots.push(it));
-                return roots;
-            };
-            const flattenTree = (nodes, depth = 0) => nodes.flatMap(n => [{...n, depth}, ...flattenTree(n.children, depth + 1)]);
-            const commentsHtml = flattenTree(buildTree(grouped[pageId])).map(renderNode).join('');
-
-            return `
-                <section class="dashboard-page-section">
-                    <h2 class="page-section-header">On: <a href="${pageUrl}" target="_blank">${pageTitle}</a></h2>
-                    ${commentsHtml}
-                </section>
-            `;
-        }).join('') || '<p class="muted">No comments yet.</p>';
-    }
-
-    function renderNode(node) {
-        const isOwner = node.uid === OWNER_UID;
-        const authorName = isOwner ? 'GK Learn Study' : escapeHTML(node.name);
-        const badge = isOwner ? `<span class="verified-badge" title="Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>` : '';
-        const avatar = `<img src="${escapeHTML(node.photoURL)}" alt="" class="comment-avatar">`;
-        return `
-            <div class="comment-item" style="margin-left: ${node.depth * 20}px;" data-page-id="${node.pageId}">
-                <div class="comment-header">
-                    <div class="comment-author-info">${avatar}<div class="comment-author">${authorName}${badge}</div></div>
-                    <div class="comment-date">${fmtDate(node.timestamp?.toDate() || new Date())}</div>
+        <link rel="stylesheet" href="css/theme.css" media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
+        <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
+       
+    </head>
+    <body>
+        <header class="header" id="header">
+             <nav class="navbar">
+                <div class="burger" id="burger">
+                    <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                        <rect width="100" height="7" rx="5"></rect>
+                        <rect y="30" width="100" height="7" rx="5"></rect>
+                        <rect y="60" width="100" height="7" rx="5"></rect>
+                    </svg>
                 </div>
-                <div class="comment-body">${escapeHTML(node.comment).replace(/\n/g, '<br>')}</div>
-                <div class="comment-actions" data-comment-id="${node.id}">
-                    <button class="btn small" data-action="reply">Reply</button>
-                    <button class="btn small danger" data-action="delete">Delete</button>
+
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
+                    <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="150" cy="150" r="150" fill="white" />
+                        <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle">GK</text>
+                        <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle">Learn Study</text>
+                    </svg>
+                </a>
+
+                <div class="menu" id="menu">
+                    <div class="mobile-menu-header">
+                        <a href="/" class="menu-brand-text">GK Learn Study</a>
+                        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-inner"></div>
                 </div>
-                <div class="inline-reply-slot"></div>
+
+                <div class="header-actions">
+                    <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container">
+            <div id="dashboard-container">
+                <h1>Comments Dashboard</h1>
+                <p id="dashboard-auth-prompt" class="muted">Please sign in to view and manage comments.</p>
+
+                <div class="firebase-comments-widget" id="custom-comment-section" style="display: none;">
+                    
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="Enable notifications">
+                            <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <svg class="bell-off-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                <path d="M18.63 13A17.89 17.89 0 0 1 18 8a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 7-3 9-3 9h14"></path>
+                                <path d="M18 8a6 6 0 0 0-9.33-5"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                            <svg class="spinner-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                            </svg>
+                        </button>
+                        <div id="login-options">
+                             <button id="google-login-btn" class="btn login-provider-btn" data-original-text="Sign in with Google">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg>
+                                <span class="btn-text">Sign in with Google</span>
+                            </button>
+                        </div>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+
+                    <div id="owner-view">
+                        <!-- Comments will be grouped by page and injected here -->
+                    </div>
+
+                     <p id="non-owner-message" class="muted" style="display: none; margin-top: 2rem;">This dashboard is for site administrators only.</p>
+
+                    <!-- Hidden form shell to be cloned for replies -->
+                     <div class="comment-form-shell" id="comment-form-shell" style="display: none;">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                            <textarea id="comment" placeholder="Your reply" maxlength="1000" required aria-label="Your reply"></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <input type="hidden" id="page-id" value="" /> 
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit Reply</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-        `;
-    }
-
-    dom.ownerView.onclick = e => {
-        const btn = e.target.closest('button[data-action]');
-        if (!btn) return;
+        </main>
         
-        const action = btn.dataset.action;
-        const commentItem = btn.closest('.comment-item');
-        const commentId = btn.closest('[data-comment-id]').dataset.commentId;
-        const pageId = commentItem.dataset.pageId;
-        const node = allComments.find(c => c.id === commentId);
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom">
+                &copy; 2024 GK Learn Study | All Rights Reserved
+            </div>
+        </footer>
 
-        if (action === 'cancel-reply') {
-            if (activeReplyForm) activeReplyForm.remove();
-            activeReplyForm = null;
-            return;
-        }
-
-        if (action === 'delete') {
-            if (!confirm('Delete this and all replies?')) return;
-            const toDelete = new Set([commentId]);
-            let added;
-            do {
-                added = false;
-                for (const c of allComments) {
-                    if (c.parentId && toDelete.has(c.parentId) && !toDelete.has(c.id)) {
-                        toDelete.add(c.id); added = true;
-                    }
-                }
-            } while (added);
-            toDelete.forEach(id => deleteDoc(doc(db, 'pages', pageId, 'comments', id)));
-        }
-
-        if (action === 'reply') {
-            if (activeReplyForm) activeReplyForm.remove();
-            const slot = commentItem.querySelector('.inline-reply-slot');
-            const formShell = dom.replyFormShell.cloneNode(true);
-            formShell.style.display = 'block';
-            formShell.querySelector('textarea').placeholder = `Replying to ${node.name}...`;
-            formShell.querySelector('input[name="parentId"]').value = commentId;
-            formShell.querySelector('input[name="pageId"]').value = pageId;
-            slot.appendChild(formShell);
-            activeReplyForm = formShell;
-            formShell.querySelector('textarea').focus();
-        }
-    };
-    
-    dom.ownerView.onsubmit = async e => {
-        e.preventDefault();
-        const form = e.target;
-        const input = form.querySelector('textarea');
-        const text = input.value.trim();
-        if (!text || !currentUser) return;
-
-        const parentId = form.querySelector('input[name="parentId"]').value;
-        const pageId = form.querySelector('input[name="pageId"]').value;
-        
-        await addDoc(collection(db, 'pages', pageId, 'comments'), {
-            name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
-            comment: text, timestamp: serverTimestamp(), parentId,
-        });
-
-        if (activeReplyForm) activeReplyForm.remove();
-        activeReplyForm = null;
-    };
-</script>
-
-</body>
+        <script src="js/theme.js" defer></script>
+        <script src="js/comments-dashboard.js" defer></script>
+    </body>
 </html>
