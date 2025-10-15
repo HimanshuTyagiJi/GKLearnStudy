@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, collectionGroupFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -98,7 +97,6 @@ const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
-const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const ownerView = document.getElementById('owner-view');
@@ -106,22 +104,38 @@ const nonOwnerMessage = document.getElementById('non-owner-message');
 const mainFormShell = document.getElementById('comment-form-shell');
 
 // ====== Auth Functions ======
-async function signInWithGoogle() {
+async function signInWithProvider(provider) {
+    const loginButton = document.getElementById('google-login-btn');
+    if(loginButton) {
+        loginButton.disabled = true;
+        const textSpan = loginButton.querySelector('.btn-text');
+        if(textSpan) textSpan.textContent = 'Connecting...';
+    }
+    
     try {
         await initFirebaseAuth();
-        const provider = new GoogleAuthProviderFn();
         await signInWithPopupFn(auth, provider);
     } catch (error) {
-        console.error("Google Sign-In Error:", error);
+        console.error("Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in with Google.");
+            alert(`Could not sign in. Error: ${error.message}`);
+        }
+    } finally {
+        if (!currentUser && loginButton) {
+            loginButton.disabled = false;
+            const textSpan = loginButton.querySelector('.btn-text');
+            if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
         }
     }
 }
+
 async function signOutUser() { if (isAuthInitialized) await signOutFn(auth); }
 
-loginBtn.addEventListener('click', signInWithGoogle);
-logoutBtn.addEventListener('click', signOutUser);
+function setupLoginButtons() {
+    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
+    logoutBtn.addEventListener('click', signOutUser);
+}
+
 
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
@@ -153,6 +167,12 @@ function setupAuthObserver() {
             if (unsubscribeComments) {
                 unsubscribeComments();
                 unsubscribeComments = null;
+            }
+            const loginButton = document.getElementById('google-login-btn');
+            if (loginButton) {
+                 loginButton.disabled = false;
+                const textSpan = loginButton.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
             }
         }
     });
@@ -285,11 +305,11 @@ async function loadAllComments(){
         
     }, (error) => {
         console.error('Dashboard listener error:', error);
-        ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+        ownerView.innerHTML = `<p class="muted error">टिप्पणियाँ लोड नहीं हो सकीं। यह दो कारणों से हो सकता है:<br>1. <strong>आवश्यक इंडेक्स गुम है:</strong> कृपया अपने ब्राउज़र के डेवलपर कंसोल की जाँच करें। Firebase वहाँ इंडेक्स बनाने के लिए एक सीधा लिंक प्रदान करेगा।<br>2. <strong>सुरक्षा नियम गलत हैं:</strong> डैशबोर्ड को सभी टिप्पणियों को पढ़ने के लिए एक विशेष 'collectionGroup' नियम की आवश्यकता है।</p>`;
     });
   } catch(err){
     console.error('Error setting up dashboard listener:', err);
-    ownerView.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    ownerView.innerHTML = `<p class="muted error">टिप्पणियाँ लोड नहीं हो सकीं। यह दो कारणों से हो सकता है:<br>1. <strong>आवश्यक इंडेक्स गुम है:</strong> कृपया अपने ब्राउज़र के डेवलपर कंसोल की जाँच करें। Firebase वहाँ इंडेक्स बनाने के लिए एक सीधा लिंक प्रदान करेगा।<br>2. <strong>सुरक्षा नियम गलत हैं:</strong> डैशबोर्ड को सभी टिप्पणियों को पढ़ने के लिए एक विशेष 'collectionGroup' नियम की आवश्यकता है।</p>`;
   }
 }
 
@@ -438,6 +458,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await initFirestore();
         await initFirebaseAuth(); 
+        setupLoginButtons();
         setupDelegatedListeners();
     } catch (error) {
         console.error("Failed to initialize dashboard:", error);
