@@ -1,21 +1,94 @@
-let db, addDocFn, collectionFn, getDocsFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn;
-async function initFirebase(){
-  if(db) return db;
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js");
-  // Use the 'lite' version of Firestore to avoid real-time listeners and associated network issues.
-  const f = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-lite.js");
-  db=f.getFirestore(initializeApp({
-    apiKey:"AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-    authDomain:"appcomment.firebaseapp.com",
-    projectId:"appcomment",
-    storageBucket:"appcomment.firebasestorage.app",
-    messagingSenderId:"156258808941",
-    appId:"1:156258808941:web:04a1f7470ac43657c7fb64"
-  }));
-  addDocFn=f.addDoc; collectionFn=f.collection; getDocsFn=f.getDocs;
-  deleteDocFn=f.deleteDoc; queryFn=f.query; orderByFn=f.orderBy;
-  serverTimestampFn=f.serverTimestamp; docFn=f.doc;
-  return db;
+// --- Firebase Module Placeholders ---
+let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
+let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
+
+// --- State Variables ---
+let currentUser = null;
+let firebaseApp = null;
+let isAuthInitialized = false;
+let isFirestoreInitialized = false;
+let authPromise = null;
+let unsubscribeComments = null;
+let unsubscribeRating = null;
+let allComments = []; // Global cache for comments
+let activeReplyForm = null; // Track the currently open inline reply form
+
+// !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
+const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
+
+// --- Dynamic Script Loader ---
+function loadFirebaseScript(module) {
+    const url = `https://www.gstatic.com/firebasejs/9.22.1/firebase-${module}.js`;
+    return new Promise((resolve, reject) => {
+        const existingScript = document.querySelector(`script[src="${url}"]`);
+        if (existingScript) {
+            if (existingScript.dataset.loaded) resolve();
+            else existingScript.addEventListener('load', resolve);
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = url;
+        script.type = "module";
+        script.onload = () => { script.dataset.loaded = true; resolve(); };
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
+
+// --- Firebase Initialization Functions ---
+async function initializeFirebaseApp() {
+    if (firebaseApp) return;
+    await loadFirebaseScript('app');
+    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+    if (getApps().length === 0) {
+        firebaseApp = initializeApp({
+            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+            authDomain: "appcomment.firebaseapp.com",
+            projectId: "appcomment",
+            storageBucket: "appcomment.firebasestorage.app",
+            messagingSenderId: "156258808941",
+            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+        });
+    } else {
+        firebaseApp = getApp();
+    }
+}
+
+
+async function initFirestore() {
+    if (isFirestoreInitialized) return;
+    await initializeFirebaseApp();
+    await loadFirebaseScript('firestore');
+    const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
+    
+    db = firestore.getFirestore(firebaseApp);
+    addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
+    deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
+    serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
+    runTransactionFn = firestore.runTransaction;
+    onSnapshotFn = firestore.onSnapshot;
+    getDocFn = firestore.getDoc; setDocFn = firestore.setDoc;
+    isFirestoreInitialized = true;
+}
+
+function initFirebaseAuth() {
+    if (!authPromise) {
+        authPromise = (async () => {
+            await initializeFirebaseApp();
+            await loadFirebaseScript('auth');
+            const authModule = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js");
+
+            auth = authModule.getAuth(firebaseApp);
+            onAuthStateChangedFn = authModule.onAuthStateChanged;
+            GoogleAuthProviderFn = authModule.GoogleAuthProvider;
+            signInWithPopupFn = authModule.signInWithPopup;
+            signOutFn = authModule.signOut;
+            
+            setupAuthObserver();
+            isAuthInitialized = true;
+        })();
+    }
+    return authPromise;
 }
 
 // ====== Helpers ======
@@ -28,191 +101,718 @@ const fmtDate = d => {
 const safeToDate = ts => ts?.toDate?.() ?? new Date();
 const pageId = (() => {
   const p = location.pathname;
-  return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_');
+  return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_').replace(/\.html$/,'');
 })();
 const commentsPath = ['pages', pageId, 'comments'];
+const ratingsPath = ['pages', pageId, 'ratings'];
 
-// ====== DOM ======
+// ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
-const form = document.getElementById('comment-form');
-const nameInput = form.querySelector('#name');
-const commentInput = form.querySelector('#comment');
-const parentIdInput = form.querySelector('#parent-id');
-const charCounter = form.querySelector('#char-counter');
-const cancelBtn = form.querySelector('#cancel-reply');
-const replyingToEl = form.querySelector('#replying-to');
-const submitButton = form.querySelector('#submit-button');
+const mainFormShell = document.getElementById('comment-form-shell');
+const mainForm = document.getElementById('comment-form');
+const commentsWrapper = document.getElementById('comments-main-container');
+const authContainer = document.getElementById('auth-container');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+const loginPrompt = document.getElementById('login-prompt');
+const commentCountSpan = document.getElementById('comment-count');
 
-// ====== Char Counter ======
-commentInput.addEventListener('input', () => {
-  charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`;
-});
-charCounter.textContent = `0 / ${commentInput.maxLength}`;
 
-// ====== Build Comment Tree ======
-function buildTree(items){
+const ratingWidgetWrapper = document.getElementById('rating-widget-wrapper');
+const ratingStarsContainer = document.getElementById('rating-stars');
+const ratingLoginPrompt = document.getElementById('rating-login-prompt');
+const averageRatingValue = document.getElementById('average-rating-value');
+const totalRatingsCount = document.getElementById('total-ratings-count');
+
+
+// ====== Auth Functions ======
+async function signInWithProvider(provider) {
+    const loginButton = document.getElementById('google-login-btn');
+    if (loginButton) {
+        loginButton.disabled = true;
+        const textSpan = loginButton.querySelector('.btn-text');
+        if(textSpan) textSpan.textContent = 'Connecting...';
+    }
+    
+    try {
+        await initFirebaseAuth();
+        await signInWithPopupFn(auth, provider);
+    } catch (error) {
+        console.error("Sign-In Error:", error);
+        if (error.code !== 'auth/popup-closed-by-user') {
+            alert(`Could not sign in. Error: ${error.message}`);
+        }
+    } finally {
+        if (!currentUser && loginButton) {
+            loginButton.disabled = false;
+            const textSpan = loginButton.querySelector('.btn-text');
+            if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
+        }
+    }
+}
+
+
+async function signOutUser() {
+    if (!isAuthInitialized) return;
+    await signOutFn(auth);
+}
+
+function setupLoginButtons() {
+    document.getElementById('google-login-btn')?.addEventListener('click', () => signInWithProvider(new GoogleAuthProviderFn()));
+    logoutBtn.addEventListener('click', signOutUser);
+}
+
+
+function setupAuthObserver() {
+    onAuthStateChangedFn(auth, user => {
+        const wasLoggedIn = !!currentUser;
+        currentUser = user;
+
+        // Show/hide owner dashboard link in footer
+        const dashboardLink = document.getElementById('dashboard-link');
+        if (dashboardLink) {
+            dashboardLink.style.display = (user && user.uid === OWNER_UID) ? 'list-item' : 'none';
+        }
+        
+        if (user) {
+            userInfo.innerHTML = `<img src="${user.photoURL}" alt="${escapeHTML(user.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(user.displayName)}</span>`;
+            authContainer.classList.add('logged-in');
+            mainFormShell.style.display = 'block';
+            loginPrompt.style.display = 'none';
+        } else {
+            authContainer.classList.remove('logged-in');
+            mainFormShell.style.display = 'none';
+            loginPrompt.style.display = 'block';
+            
+            // Reset login button on sign out
+            const loginButton = document.getElementById('google-login-btn');
+            if (loginButton) {
+                loginButton.disabled = false;
+                const textSpan = loginButton.querySelector('.btn-text');
+                if(textSpan) textSpan.textContent = loginButton.dataset.originalText || 'Sign In with Google';
+            }
+            
+            closeActiveReplyForm();
+        }
+        if (wasLoggedIn !== !!user) {
+           renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+           // Re-initialize rating system to reflect login state
+           if(ratingWidgetWrapper) initializeRatingSystem();
+        }
+    });
+}
+
+
+// ====== RATING SYSTEM LOGIC ======
+let userRating = 0; // The current user's rating for this page
+let isRatingSubmissionPending = false;
+let currentRatingSummary = null; // Cache for the latest rating summary
+
+function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
+    if (!ratingWidgetWrapper) return;
+    const ratingDisplay = document.getElementById('rating-display');
+
+    if (isInstant) {
+        ratingDisplay?.classList.add('no-transition');
+        ratingStarsContainer?.classList.add('no-transition');
+    }
+
+    const breakdown = summaryData?.breakdown || {};
+    let totalCount = summaryData?.totalCount || 0;
+    let totalSum = summaryData?.totalSum || 0;
+
+    // Fallback calculation if summary totals are missing, for robustness
+    if (typeof summaryData?.totalCount === 'undefined' || typeof summaryData?.totalSum === 'undefined') {
+        totalCount = 0;
+        totalSum = 0;
+        for (let i = 1; i <= 5; i++) {
+            const count = Number(breakdown[String(i)]) || 0;
+            totalCount += count;
+            totalSum += count * i;
+        }
+    }
+
+    const average = totalCount > 0 ? (totalSum / totalCount) : 0;
+
+    if (averageRatingValue) averageRatingValue.textContent = isNaN(average) ? '0.0' : average.toFixed(1);
+    if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
+
+    for (let i = 5; i >= 1; i--) {
+        const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
+        if (row) {
+            const countForStar = breakdown[String(i)] || 0;
+            const percentage = totalCount > 0 ? (countForStar / totalCount) * 100 : 0;
+            row.querySelector('.progress-bar').style.width = `${percentage}%`;
+            row.querySelector('.vote-count').textContent = countForStar;
+        }
+    }
+
+    const stars = ratingStarsContainer.querySelectorAll('.star');
+    stars.forEach(star => {
+        const starValue = parseInt(star.dataset.value, 10);
+        star.classList.remove('filled', 'selected');
+        if (currentUserRating >= starValue) {
+            star.classList.add('selected');
+        } else if (Math.round(average) >= starValue) {
+            star.classList.add('filled');
+        }
+    });
+    
+    if (currentUser) {
+        ratingStarsContainer.classList.add('user-can-rate');
+        ratingLoginPrompt.style.display = 'none';
+    } else {
+        ratingStarsContainer.classList.remove('user-can-rate');
+        ratingLoginPrompt.style.display = 'block';
+    }
+
+    if (isInstant) {
+        setTimeout(() => {
+            ratingDisplay?.classList.remove('no-transition');
+            ratingStarsContainer?.classList.remove('no-transition');
+        }, 50);
+    }
+}
+
+
+async function loadRatings() {
+    await initFirestore();
+    if (unsubscribeRating) unsubscribeRating();
+
+    const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
+    
+    unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
+        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
+        currentRatingSummary = summaryData; // Cache the latest summary
+
+        if (currentUser) {
+            const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
+            getDocFn(userRatingDocRef).then(userDoc => {
+                userRating = userDoc.exists() ? userDoc.data().rating : 0;
+                updateRatingUI(summaryData, userRating);
+            });
+        } else {
+            userRating = 0;
+            updateRatingUI(summaryData, 0);
+        }
+         ratingWidgetWrapper?.classList.remove('rating-loading');
+    }, (error) => {
+        console.error("Error loading rating summary:", error);
+        if (totalRatingsCount) totalRatingsCount.textContent = "Could not load ratings.";
+        ratingWidgetWrapper?.classList.remove('rating-loading');
+    });
+}
+
+async function submitRatingToServer(newRating, oldUserRating) {
+    if (!currentUser) return;
+    isRatingSubmissionPending = true;
+
+    try {
+        await runTransactionFn(db, async (transaction) => {
+            const summaryRef = docFn(db, ...ratingsPath, '_summary');
+            const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
+
+            const summaryDoc = await transaction.get(summaryRef);
+            
+            const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
+            
+            const breakdown = { ...summaryData.breakdown };
+            let newSum = summaryData.totalSum || 0;
+            let newCount = summaryData.totalCount || 0;
+
+            if (oldUserRating > 0) {
+                breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
+                newSum -= oldUserRating;
+                newCount -= 1;
+            }
+            breakdown[String(newRating)] = (breakdown[String(newRating)] || 0) + 1;
+            newSum += newRating;
+            newCount += 1;
+
+            transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestampFn() });
+            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
+        });
+    } catch (error) {
+        console.error("Rating submission failed:", error);
+        alert("Could not save your rating. Please try again.");
+        // Rollback optimistic UI change
+        updateRatingUI(currentRatingSummary, oldUserRating);
+        userRating = oldUserRating; // Revert local state
+    } finally {
+        isRatingSubmissionPending = false;
+    }
+}
+
+function setupRatingListeners() {
+    if (!ratingStarsContainer) return;
+
+    ratingStarsContainer.addEventListener('click', (e) => {
+        const star = e.target.closest('.star');
+        if (!star || isRatingSubmissionPending) return;
+
+        if (!currentUser) {
+            alert('Please sign in to rate this article.');
+            return;
+        }
+
+        const newRating = parseInt(star.dataset.value, 10);
+        const oldUserRating = userRating;
+
+        if (newRating === oldUserRating) return;
+
+        // --- Optimistic UI Update ---
+        const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
+
+        // Adjust counts and sums based on the new vote
+        if (oldUserRating > 0) {
+            optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
+            optimisticSummary.totalSum -= oldUserRating;
+            optimisticSummary.totalCount -= 1;
+        }
+        optimisticSummary.breakdown[String(newRating)] = (optimisticSummary.breakdown[String(newRating)] || 0) + 1;
+        optimisticSummary.totalSum += newRating;
+        optimisticSummary.totalCount += 1;
+        
+        userRating = newRating; // Update local state immediately
+        updateRatingUI(optimisticSummary, newRating, true);
+
+        // --- Send to Server in Background ---
+        submitRatingToServer(newRating, oldUserRating);
+    });
+}
+
+
+// ====== Comment Tree & Rendering Logic ======
+const buildTree = items => {
   const byId = {};
   items.forEach(it => (it.children = [], byId[it.id] = it));
   const roots = [];
   items.forEach(it => it.parentId && byId[it.parentId] ? byId[it.parentId].children.push(it) : roots.push(it));
   return roots;
-}
-function flattenTree(nodes){
+};
+const flattenTree = nodes => {
   const res = [];
   (function trav(n,d){
-    for(const x of n){
-      x.depth = d;
-      res.push(x);
-      if(x.children?.length) trav(x.children,d+1);
-    }
+    for(const x of n){ x.depth = d; res.push(x); if(x.children?.length) trav(x.children,d+1); }
   })(nodes,0);
   return res;
-}
+};
 
-// ====== Render ======
 function renderNode(node){
-  const li = document.createElement('li');
-  li.className = 'comment-item' + (node.depth ? ' reply-item' : '');
-  const header = document.createElement('div');
-  header.className = 'comment-header';
-  const author = document.createElement('div');
-  author.className = 'comment-author';
-  author.textContent = node.name || 'Anonymous';
-  const date = document.createElement('div');
-  date.className = 'comment-date';
-  date.textContent = fmtDate(safeToDate(node.timestamp));
-  header.append(author, date);
+  const li = document.createElement('div');
+  li.className = 'comment-item';
+  if (node.depth > 0) li.classList.add('reply-item');
+  if (node.isOptimistic) li.classList.add('is-optimistic');
+  
+  const isOwner = currentUser && currentUser.uid === OWNER_UID;
+  const isCommentOwner = node.uid === OWNER_UID;
+  if (isCommentOwner) li.classList.add('owner-comment');
 
+  const authorName = isCommentOwner ? 'GK Learn Study' : escapeHTML(node.name);
+  const verificationBadge = isCommentOwner ? `<span class="verified-badge" title="Verified Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>` : '';
+
+  let replyInfoHTML = '';
+  if (node.parentId) {
+      const parent = allComments.find(c => c.id === node.parentId);
+      if (parent) {
+          const parentIsOwner = parent.uid === OWNER_UID;
+          const parentName = parentIsOwner ? 'GK Learn Study' : escapeHTML(parent.name);
+          const parentVerificationBadge = parentIsOwner ? ` <span class="verified-badge" title="Verified Owner"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>` : '';
+          replyInfoHTML = `<div class="reply-info">Replying to <strong>@${parentName}${parentVerificationBadge}</strong></div>`;
+      }
+  }
+
+  const ownerAvatarSVG = `<svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="owner-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;"/><stop offset="100%" style="stop-color:#c0a4fb;"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#owner-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>`;
+  const authorAvatar = isCommentOwner 
+    ? ownerAvatarSVG 
+    : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
+
+  const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
+  
+  const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
+  const hasDisliked = currentUser && node.dislikedBy?.includes(currentUser.uid);
+  const showDeleteButton = currentUser && (currentUser.uid === node.uid || isOwner);
+
+  const actionsHTML = `<div class="comment-actions" data-comment-id="${node.id}"><button class="btn small vote-btn like-btn ${hasLiked ? 'voted' : ''}" data-action="like" aria-pressed="${!!hasLiked}">👍 <span class="count">${node.likes || 0}</span></button><button class="btn small vote-btn dislike-btn ${hasDisliked ? 'voted' : ''}" data-action="dislike" aria-pressed="${!!hasDisliked}">👎 <span class="count">${node.dislikes || 0}</span></button><button class="btn small reply-btn" data-action="reply">Reply</button>${showDeleteButton ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}</div>`;
+  const inlineReplySlot = `<div class="inline-reply-slot"></div>`;
+  
   const body = document.createElement('div');
   body.className = 'comment-body';
   body.textContent = node.comment || '';
   body.style.whiteSpace = 'pre-wrap';
 
-  const actions = document.createElement('div');
-  actions.className = 'comment-actions';
-  const replyBtn = document.createElement('button');
-  replyBtn.type = 'button';
-  replyBtn.className = 'btn small';
-  replyBtn.textContent = 'Reply';
-  const delBtn = document.createElement('button');
-  delBtn.type = 'button';
-  delBtn.className = 'btn small danger';
-  delBtn.textContent = 'Delete';
-  actions.append(replyBtn, delBtn);
-
-  replyBtn.addEventListener('click', () => {
-    parentIdInput.value = node.id;
-    replyingToEl.style.display = 'block';
-    replyingToEl.textContent = `Replying to ${escapeHTML(node.name||'Anonymous')}`;
-    cancelBtn.style.display = 'inline-block';
-    commentInput.placeholder = 'Write a reply…';
-    commentInput.focus();
-  });
-  delBtn.addEventListener('click', async () => {
-    if(!confirm('Delete this comment and all its replies?')) return;
-    await deleteWithDescendants(node.id);
-    await loadComments();
-  });
-
-  li.append(header, body, actions);
+  li.innerHTML = headerHTML + replyInfoHTML;
+  li.appendChild(body);
+  li.insertAdjacentHTML('beforeend', actionsHTML + inlineReplySlot);
+  
   return li;
 }
+
 function renderFlatList(nodes, container){
-  const ul = document.createElement('ul');
-  ul.className = 'comment-list';
-  nodes.forEach(n => ul.appendChild(renderNode(n)));
-  container.innerHTML = '';
-  container.appendChild(ul);
+    container.innerHTML = ''; 
+
+    if (nodes.length > 0) {
+        nodes.forEach(n => container.appendChild(renderNode(n)));
+    } else {
+        container.insertAdjacentHTML('beforeend', '<p class="muted">Be the first to comment!</p>');
+    }
 }
 
-// ====== Load Comments ======
+
+// ====== Load Comments with Real-Time Listener ======
 async function loadComments(){
-  commentsList.innerHTML = `<div class="spinner"></div><p class="muted">Loading…</p>`;
   try {
-    await initFirebase();
+    await initFirestore();
+    if (unsubscribeComments) unsubscribeComments();
+
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
-    const snap = await getDocsFn(q);
-    const rows = [];
-    snap.forEach(d => rows.push({id:d.id, ...d.data()}));
-    renderFlatList(flattenTree(buildTree(rows)), commentsList);
-  } catch(err){
-    console.error('Error loading comments:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
-  }
-}
+    unsubscribeComments = onSnapshotFn(q, (snapshot) => {
+        const newComments = [];
+        snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
+        
+        const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
+        allComments = [...optimisticComments, ...newComments];
 
-// ====== Delete Recursive ======
-async function deleteWithDescendants(rootId){
-  await initFirebase();
-  const q = queryFn(collectionFn(db,...commentsPath),orderByFn('timestamp','desc'));
-  const snap = await getDocsFn(q);
-  const all = [];
-  snap.forEach(d=>all.push({id:d.id,...d.data()}));
-  const toDelete = new Set([rootId]);
-  let added = true;
-  while(added){
-    added = false;
-    for(const it of all){
-      if(it.parentId && toDelete.has(it.parentId) && !toDelete.has(it.id)){
-        toDelete.add(it.id); added = true;
-      }
-    }
-  }
-  for(const id of toDelete) await deleteDocFn(docFn(db,...commentsPath,id));
-}
-
-// ====== Submit ======
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  if(!nameInput.value.trim() || !commentInput.value.trim()) return;
-  submitButton.disabled = true;
-  submitButton.textContent = 'Posting…';
-  try {
-    await initFirebase();
-    await addDocFn(collectionFn(db,...commentsPath), {
-      name: nameInput.value.trim(),
-      comment: commentInput.value.trim(),
-      timestamp: serverTimestampFn(),
-      parentId: parentIdInput.value || null
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        
+        // Update total comment count
+        const totalComments = allComments.length;
+        if (commentCountSpan) {
+            commentCountSpan.textContent = totalComments;
+            commentCountSpan.nextSibling.textContent = ` Comment${totalComments !== 1 ? 's' : ''}`;
+        }
+        
+        commentsWrapper?.classList.remove('comments-loading');
+    }, (error) => {
+        console.error('Real-time listener error:', error);
+        commentsList.innerHTML = `<p class="muted error">Could not load comments. Check security rules.</p>`;
+        commentsWrapper?.classList.remove('comments-loading');
     });
-    form.reset();
-    charCounter.textContent = `0 / ${commentInput.maxLength}`;
-    replyingToEl.style.display = 'none';
-    cancelBtn.style.display = 'none';
-    await loadComments();
   } catch(err){
-    console.error('Error adding comment:', err);
-    alert('Could not post comment.');
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = 'Post';
+    console.error('Error setting up listener:', err);
+    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    commentsWrapper?.classList.remove('comments-loading');
   }
-});
-
-cancelBtn.addEventListener('click', () => {
-  parentIdInput.value = '';
-  replyingToEl.style.display = 'none';
-  cancelBtn.style.display = 'none';
-  commentInput.placeholder = 'Your comment';
-});
-
-// ====== Lazy Load Comments ======
-const commentSection = document.getElementById('custom-comment-section');
-let commentsLoaded = false;
-function initCommentsIfNeeded(){
-  if(commentsLoaded) return;
-  commentsLoaded = true;
-  loadComments();
 }
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      initCommentsIfNeeded();
-      observer.disconnect();
-    }
-  });
-}, { rootMargin: "200px" });
-observer.observe(commentSection);
 
-// Initialize comments if user interacts with form before scrolling
-form.addEventListener('focusin', initCommentsIfNeeded);
+// ====== Inline Reply Form Management ======
+function closeActiveReplyForm() {
+    if (activeReplyForm) {
+        activeReplyForm.remove();
+        activeReplyForm = null;
+    }
+}
+
+function openReplyForm(commentId, authorName, targetSlot) {
+    closeActiveReplyForm(); 
+
+    const formClone = mainFormShell.cloneNode(true);
+    formClone.id = ''; 
+    formClone.style.display = 'block';
+
+    const form = formClone.querySelector('form');
+    const parentIdInput = form.querySelector('#parent-id');
+    const replyingToEl = form.querySelector('#replying-to');
+    const cancelBtn = form.querySelector('#cancel-reply');
+    const commentInput = form.querySelector('#comment');
+    const charCounter = form.querySelector('#char-counter');
+
+    parentIdInput.value = commentId;
+    replyingToEl.innerHTML = `Replying to <strong>${escapeHTML(authorName)}</strong>`;
+    replyingToEl.style.display = 'block';
+    cancelBtn.style.display = 'inline-block';
+    commentInput.placeholder = `Replying to ${escapeHTML(authorName)}...`;
+    
+    charCounter.textContent = `0 / ${commentInput.maxLength}`;
+    commentInput.addEventListener('input', () => { 
+        charCounter.textContent = `${commentInput.value.length} / ${commentInput.maxLength}`; 
+    });
+    
+    targetSlot.appendChild(formClone);
+    activeReplyForm = formClone;
+    commentInput.focus();
+}
+
+// ====== Vote and Delete Logic ======
+async function handleVote(commentId, voteType) {
+    if (!currentUser) return;
+    const uid = currentUser.uid;
+
+    const commentIndex = allComments.findIndex(c => c.id === commentId);
+    if (commentIndex === -1) return;
+
+    const comment = allComments[commentIndex];
+    const likedBy = comment.likedBy || [];
+    const dislikedBy = comment.dislikedBy || [];
+    const isLiked = likedBy.includes(uid);
+    const isDisliked = dislikedBy.includes(uid);
+
+    if (voteType === 'like') {
+        if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
+        else {
+            likedBy.push(uid);
+            if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+        }
+    } else if (voteType === 'dislike') {
+        if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+        else {
+            dislikedBy.push(uid);
+            if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1);
+        }
+    }
+    comment.likes = likedBy.length;
+    comment.dislikes = dislikedBy.length;
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+
+    try {
+        const docRef = docFn(db, ...commentsPath, commentId);
+        await runTransactionFn(db, async t => {
+            const doc = await t.get(docRef);
+            if (!doc.exists()) throw "Doc not found";
+            const data = doc.data();
+            const serverLikedBy = data.likedBy || [], serverDislikedBy = data.dislikedBy || [];
+            const isServerLiked = serverLikedBy.includes(uid), isServerDisliked = serverDislikedBy.includes(uid);
+            
+            if (voteType === 'like') {
+                if (isServerLiked) {
+                    serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                } else {
+                    serverLikedBy.push(uid);
+                    if (isServerDisliked) {
+                        serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                    }
+                }
+            } else if (voteType === 'dislike') {
+                if (isServerDisliked) {
+                    serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                } else {
+                    dislikedBy.push(uid);
+                    if (isServerLiked) {
+                        serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                    }
+                }
+            }
+            t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
+        });
+    } catch (e) {
+        console.error("Vote transaction failed:", e); 
+    }
+}
+
+async function deleteWithDescendants(rootId){
+    const toDeleteIds = new Set([rootId]);
+    let added = true;
+    while(added){
+        added = false;
+        for(const it of allComments) if(it.parentId && toDeleteIds.has(it.parentId) && !toDeleteIds.has(it.id)) { toDeleteIds.add(it.id); added = true; }
+    }
+
+    const originalComments = [...allComments];
+    allComments = allComments.filter(c => !toDeleteIds.has(c.id));
+    renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+
+    try {
+        await Promise.all([...toDeleteIds].map(id => deleteDocFn(docFn(db, ...commentsPath, id))));
+    } catch (error) {
+        console.error("Failed to delete comments:", error);
+        allComments = originalComments; 
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        alert("Could not delete the comment.");
+    }
+}
+
+// ====== Delegated Event Listeners Setup ======
+function setupDelegatedListeners() {
+    const container = document.getElementById('custom-comment-section');
+
+    container.addEventListener('click', async (e) => {
+        const button = e.target.closest('button');
+        if (!button) return;
+
+        if (button.id === 'cancel-reply') {
+             closeActiveReplyForm();
+             return; 
+        }
+        
+        const action = button.dataset.action;
+        if (!action) return;
+        
+        const commentId = button.closest('[data-comment-id]')?.dataset.commentId;
+        if (!commentId) return;
+
+        if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
+            alert("Please sign in to perform this action.");
+            return;
+        }
+
+        const node = allComments.find(c => c.id === commentId);
+        if (!node) return;
+
+        switch (action) {
+            case 'reply':
+                const replySlot = button.closest('.comment-item').querySelector('.inline-reply-slot');
+                openReplyForm(node.id, node.name, replySlot);
+                break;
+            case 'delete':
+                if (confirm('Delete this comment and all its replies?')) {
+                    deleteWithDescendants(node.id);
+                }
+                break;
+            case 'like': case 'dislike':
+                handleVote(node.id, action);
+                break;
+        }
+    });
+
+    container.addEventListener('submit', async e => {
+        e.preventDefault();
+        const form = e.target;
+        if (!form.matches('.comment-form')) return;
+
+        if (!currentUser) return;
+        
+        const commentInput = form.querySelector('#comment');
+        const parentIdInput = form.querySelector('#parent-id');
+        const submitButton = form.querySelector('#submit-button');
+
+        const commentText = commentInput.value.trim();
+        if (!commentText) return;
+
+        submitButton.disabled = true;
+        submitButton.innerHTML = `<span class="spinner-small"></span> Posting...`;
+
+        const parentId = parentIdInput.value || null;
+        const tempId = `temp_${Date.now()}`;
+
+        const tempComment = {
+            id: tempId, name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+            comment: commentText, timestamp: { toDate: () => new Date() }, parentId: parentId,
+            likes: 0, dislikes: 0, likedBy: [], dislikedBy: [], isOptimistic: true
+        };
+        allComments.unshift(tempComment);
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        
+        try {
+            await addDocFn(collectionFn(db,...commentsPath), {
+                name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
+                comment: commentText, timestamp: serverTimestampFn(), parentId: parentId,
+                likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
+            });
+            
+            // If it was an inline form, close it. Otherwise, reset the main form.
+            if (form.closest('.inline-reply-slot')) {
+                closeActiveReplyForm();
+            } else {
+                form.reset();
+                form.querySelector('#char-counter').textContent = `0 / ${commentInput.maxLength}`;
+            }
+
+        } catch(err){
+            console.error('Error adding comment:', err);
+            allComments = allComments.filter(c => c.id !== tempId); 
+            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+            alert('Could not post comment.');
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit';
+        }
+    });
+
+    const mainCommentInput = mainForm.querySelector('#comment');
+    const mainCharCounter = mainForm.querySelector('#char-counter');
+    mainCommentInput.addEventListener('input', () => { 
+        mainCharCounter.textContent = `${mainCommentInput.value.length} / ${mainCommentInput.maxLength}`; 
+    });
+}
+
+
+// ====== NEW: Smart Notification & Deep Linking Logic ======
+
+/**
+ * Checks for a #comment-<ID> hash in the URL and scrolls to it.
+ * It robustly waits for the comment to be rendered before attempting to scroll.
+ */
+function handleCommentDeepLink() {
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#comment-')) return;
+    
+    const commentId = hash.substring('#comment-'.length);
+    if (!commentId) return;
+
+    let attempts = 0;
+    const maxAttempts = 50; // Try for 10 seconds (50 * 200ms)
+    const interval = setInterval(() => {
+        // Find the comment element by its data attribute in the actions container
+        const commentElement = document.querySelector(`.comment-actions[data-comment-id="${commentId}"]`)?.closest('.comment-item');
+        
+        if (commentElement) {
+            clearInterval(interval);
+            commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            commentElement.classList.add('highlighted');
+            setTimeout(() => {
+                commentElement.classList.remove('highlighted');
+            }, 2500); // Highlight lasts for 2.5 seconds
+        } else if (attempts++ > maxAttempts) {
+            clearInterval(interval);
+            console.warn(`Could not find comment ${commentId} to scroll to.`);
+        }
+    }, 200);
+}
+
+
+// ====== LAZY INITIALIZATION LOGIC ======
+let commentsInitialized = false;
+async function initializeCommentsSection() {
+    if (commentsInitialized) return;
+    commentsInitialized = true;
+    try {
+        await initFirestore();
+        await loadComments();
+        await initFirebaseAuth(); 
+        setupLoginButtons();
+        setupDelegatedListeners();
+        handleCommentDeepLink();   // Check for deep link on load
+    } catch (error) {
+        console.error("Failed to initialize comments section:", error);
+        if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
+    }
+}
+
+let ratingInitialized = false;
+async function initializeRatingSystem() {
+    if (unsubscribeRating) unsubscribeRating(); // Always reset listener
+    
+    // Only set up click listeners once
+    if (!ratingInitialized) {
+        setupRatingListeners();
+        ratingInitialized = true;
+    }
+    
+    try {
+        await initFirestore();
+        await loadRatings();
+        if (!isAuthInitialized) await initFirebaseAuth();
+    } catch (error) {
+        console.error("Failed to initialize rating system:", error);
+        if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const lazyLoad = (target, callback) => {
+        if (!target) return;
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              callback();
+              observer.disconnect(); 
+            }
+          });
+        }, { rootMargin: "200px" });
+        observer.observe(target);
+    };
+    
+    lazyLoad(commentsWrapper, initializeCommentsSection);
+    lazyLoad(ratingWidgetWrapper, initializeRatingSystem);
+});
