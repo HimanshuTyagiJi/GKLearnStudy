@@ -1,6 +1,7 @@
 (async () => {
     // Wait for the shared Firebase services to be ready
     const firebase = await window.firebaseServices.ready;
+    const { auth, db, messaging } = firebase;
 
     // --- State and Config ---
     let currentUser = null;
@@ -60,7 +61,7 @@
             }
             
             await navigator.serviceWorker.ready;
-            const fcmToken = await firebase.getToken(firebase.messaging, { vapidKey: VAPID_KEY });
+            const fcmToken = await messaging.getToken({ vapidKey: VAPID_KEY });
             
             if (fcmToken) {
                 await saveTokenForUser(fcmToken); 
@@ -80,8 +81,8 @@
     async function saveTokenForUser(token) {
         if (!currentUser || !token) return;
         try {
-            const userTokenRef = firebase.doc(firebase.db, 'userTokens', currentUser.uid);
-            await firebase.setDoc(userTokenRef, { tokens: firebase.arrayUnion(token) }, { merge: true });
+            const userTokenRef = db.doc(`userTokens/${currentUser.uid}`);
+            await userTokenRef.set({ tokens: firebase.arrayUnion(token) }, { merge: true });
             console.log("User's FCM token saved successfully.");
         } catch (error) {
             console.error("Failed to save user-specific token:", error);
@@ -93,7 +94,7 @@
     notificationBtn.addEventListener('click', handlePermissionRequest);
     
     // Listen for auth changes from the central service to update UI
-    firebase.onAuthStateChanged(firebase.auth, (user) => {
+    auth.onAuthStateChanged((user) => {
         currentUser = user;
         updateUIState();
     });
