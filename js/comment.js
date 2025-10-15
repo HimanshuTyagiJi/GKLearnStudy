@@ -1,6 +1,7 @@
 (async () => {
     // Wait for the shared Firebase services to be ready
     const firebase = await window.firebaseServices.ready;
+    const { auth, db } = firebase;
 
     // --- State Variables ---
     let currentUser = null;
@@ -26,8 +27,8 @@
         const p = location.pathname;
         return ['/', '/index.html', ''].includes(p) ? 'main_page' : p.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, '_').replace(/\.html$/, '');
     })();
-    const commentsPath = ['pages', pageId, 'comments'];
-    const ratingsPath = ['pages', pageId, 'ratings'];
+    const commentsPath = `pages/${pageId}/comments`;
+    const ratingsPath = `pages/${pageId}/ratings`;
 
     // ====== DOM Elements ======
     const commentsList = document.getElementById('comments-list');
@@ -54,7 +55,7 @@
             if (textSpan) textSpan.textContent = 'Connecting...';
         }
         try {
-            await firebase.signInWithPopup(firebase.auth, provider);
+            await auth.signInWithPopup(provider);
         } catch (error) {
             console.error("Sign-In Error:", error);
             if (error.code !== 'auth/popup-closed-by-user') {
@@ -70,7 +71,7 @@
     }
 
     async function signOutUser() {
-        await firebase.signOut(firebase.auth);
+        await auth.signOut();
     }
 
     function setupLoginButtons() {
@@ -79,7 +80,7 @@
     }
 
     function setupAuthObserver() {
-        firebase.onAuthStateChanged(firebase.auth, user => {
+        auth.onAuthStateChanged(user => {
             const wasLoggedIn = !!currentUser;
             currentUser = user;
 
@@ -174,13 +175,13 @@
 
     async function loadRatings() {
         if (unsubscribeRating) unsubscribeRating();
-        const summaryDocRef = firebase.doc(firebase.db, ...ratingsPath, '_summary');
-        unsubscribeRating = firebase.onSnapshot(summaryDocRef, (doc) => {
+        const summaryDocRef = db.doc(`${ratingsPath}/_summary`);
+        unsubscribeRating = summaryDocRef.onSnapshot((doc) => {
             const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
             currentRatingSummary = summaryData;
             if (currentUser) {
-                const userRatingDocRef = firebase.doc(firebase.db, ...ratingsPath, currentUser.uid);
-                firebase.getDoc(userRatingDocRef).then(userDoc => {
+                const userRatingDocRef = db.doc(`${ratingsPath}/${currentUser.uid}`);
+                userRatingDocRef.get().then(userDoc => {
                     userRating = userDoc.exists() ? userDoc.data().rating : 0;
                     updateRatingUI(summaryData, userRating);
                 });
@@ -200,9 +201,9 @@
         if (!currentUser) return;
         isRatingSubmissionPending = true;
         try {
-            await firebase.runTransaction(firebase.db, async (transaction) => {
-                const summaryRef = firebase.doc(firebase.db, ...ratingsPath, '_summary');
-                const userRatingRef = firebase.doc(firebase.db, ...ratingsPath, currentUser.uid);
+            await db.runTransaction(async (transaction) => {
+                const summaryRef = db.doc(`${ratingsPath}/_summary`);
+                const userRatingRef = db.doc(`${ratingsPath}/${currentUser.uid}`);
                 const summaryDoc = await transaction.get(summaryRef);
                 const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
                 const breakdown = { ...summaryData.breakdown };
@@ -326,8 +327,8 @@
     // ====== Load Comments ======
     async function loadComments() {
         if (unsubscribeComments) unsubscribeComments();
-        const q = firebase.query(firebase.collection(firebase.db, ...commentsPath), firebase.orderBy('timestamp', 'desc'));
-        unsubscribeComments = firebase.onSnapshot(q, (snapshot) => {
+        const query = db.collection(commentsPath).orderBy('timestamp', 'desc');
+        unsubscribeComments = query.onSnapshot((snapshot) => {
             const newComments = [];
             snapshot.forEach(d => newComments.push({ id: d.id, ...d.data() }));
             const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
@@ -410,8 +411,8 @@
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
 
         try {
-            const docRef = firebase.doc(firebase.db, ...commentsPath, commentId);
-            await firebase.setDoc(docRef, { likedBy, dislikedBy, likes: likedBy.length, dislikes: dislikedBy.length }, { merge: true });
+            const docRef = db.doc(`${commentsPath}/${commentId}`);
+            await docRef.set({ likedBy, dislikedBy, likes: likedBy.length, dislikes: dislikedBy.length }, { merge: true });
         } catch (e) {
             console.error("Vote update failed:", e);
         }
@@ -428,7 +429,8 @@
         allComments = allComments.filter(c => !toDeleteIds.has(c.id));
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
         try {
-            await Promise.all([...toDeleteIds].map(id => firebase.deleteDoc(firebase.doc(firebase.db, ...commentsPath, id))));
+            const deletePromises = [...toDeleteIds].map(id => db.doc(`${commentsPath}/${id}`).delete());
+            await Promise.all(deletePromises);
         } catch (error) {
             console.error("Failed to delete comments:", error);
             allComments = originalComments;
@@ -494,7 +496,8 @@
             allComments.unshift(tempComment);
             renderFlatList(flattenTree(buildTree(allComments)), commentsList);
             try {
-                await firebase.addDoc(firebase.collection(firebase.db, ...commentsPath), {
+                const collectionRef = db.collection(commentsPath);
+                await collectionRef.add({
                     name: currentUser.displayName, uid: currentUser.uid, photoURL: currentUser.photoURL,
                     comment: commentText, timestamp: firebase.serverTimestamp(), parentId: parentId,
                     likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
