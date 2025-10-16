@@ -105,7 +105,9 @@
             .btn.primary { background-color: var(--primary-color, #007bff); color: white; }
             .btn.primary:hover { background-color: var(--primary-dark, #0056b3); }
             .btn.danger { background-color: var(--danger-color, #dc3545); color: white; }
-            .btn.danger:hover { background-color: var(--danger-dark, #c82333); }
+            .btn.danger:hover { background-color: var(--danger-dark, #c82333); }.btn.small.danger {
+    color: white;
+}
         </style>
 
     </head>
@@ -194,7 +196,7 @@
 
                     <!-- Non-owner message with subscription option -->
                     <p id="non-owner-message" class="info-message" style="display: none; margin-top: 2rem;">
-                        This dashboard is exclusively for the site owner. If you wish to gain access, you can subscribe for $25/month.
+                        This dashboard is exclusively for the site owner. If you wish to gain access, you can subscribe for Rs. 25/month.
                         <a href="#" target="_blank" class="btn primary" style="margin-top: 15px; display: block; max-width: 250px; width: 100%;">Learn More / Subscribe</a>
                         <!-- Note: Replace # with your actual subscription page link -->
                     </p>
