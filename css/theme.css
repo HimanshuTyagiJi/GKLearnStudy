@@ -27,7 +27,7 @@
   --primary-color: #2f2eff;
   --primary-hover-color: #0000e6;
   --danger-color: #e53935;
-  --muted-text-color: #6c757d;
+  --muted-text-color: #495057;
   --widget-background-color: #ffffff;
   --shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   --input-bg: #f8f9fa;
@@ -65,7 +65,7 @@ html[data-theme="dark"] {
   --primary-color: #9f94ff;
   --primary-hover-color: #bfb8ff;
   --danger-color: #ef9a9a;
-  --muted-text-color: #adb5bd;
+  --muted-text-color: #ced4da;
   --widget-background-color: #242a57;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   --input-bg: #0e0e20;
@@ -1181,25 +1181,16 @@ html[data-theme="light"] .btn.primary .spinner-small {
     margin-bottom: 1.5rem;
     border: 1px solid var(--border-color);
 }
-#login-btn, #logout-btn, #user-info, #notification-btn {
+#login-btn, #logout-btn, #user-info {
     display: none;
 }
 #auth-container:not(.logged-in) #login-btn {
     display: inline-flex;
 }
-#auth-container.logged-in {
-    justify-content: flex-start;
-    gap: 0.75rem;
-}
 #auth-container.logged-in #logout-btn,
-#auth-container.logged-in #user-info,
-#auth-container.logged-in #notification-btn {
+#auth-container.logged-in #user-info {
     display: flex;
 }
-#auth-container.logged-in #logout-btn {
-    margin-left: auto; /* Push logout button to the far right */
-}
-
 #user-info {
     align-items: center;
     gap: 0.75rem;
@@ -1217,23 +1208,6 @@ html[data-theme="light"] .btn.primary .spinner-small {
     margin-bottom: 1rem;
 }
 
-/* Bell Icon States */
-.notification-btn .bell-off-icon { display: none; }
-.notification-btn.permission-denied .bell-icon,
-.notification-btn.permission-denied .spinner-icon {
-    display: none;
-}
-.notification-btn.permission-denied .bell-off-icon {
-    display: block;
-    color: var(--danger-color);
-}
-.notification-btn.permission-denied {
-    cursor: not-allowed;
-}
-.notification-btn.permission-denied:hover {
-    background-color: transparent !important;
-    color: var(--danger-color);
-}
 
 @media (max-width: 600px) {
     .firebase-comments-widget {
@@ -1995,4 +1969,29 @@ details[open] > .faq-answer {
 html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
     color: #66bb6a;
     fill: rgba(102, 187, 106, 0.15);
+}
+
+/* === ERROR/RETRY UI === */
+.error-container {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: var(--input-bg);
+    border: 1px dashed var(--danger-color);
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+.error-container p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--danger-color);
+    font-size: 0.95rem;
+}
+.retry-btn {
+    color: var(--white) !important;
+    background-color: var(--blue);
+    border-color: var(--primary-color);
+}
+.retry-btn:hover {
+    background-color: var(--primary-hover-color);
+    border-color: var(--primary-hover-color);
 }
