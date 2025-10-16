@@ -1,4 +1,3 @@
-
 window.GKApp=window.GKApp||{};window.GKApp.dataReady=fetch('/js/search-data.json').then(response=>{if(!response.ok){throw new Error(`HTTP error! status: ${response.status}`)}
 return response.json()}).then(data=>{window.GKApp.searchData=data}).catch(error=>{console.error("Could not load search data:",error);throw error});window.GKApp.transliterateRomanToHindi=(input)=>{const map={consonants:{'ksh':'क्ष','gy':'ज्ञ','dny':'ज्ञ','jn':'ज्ञ','shr':'श्र','kh':'ख','gh':'घ','chh':'छ','jh':'झ','th':'थ','dh':'ध','ph':'फ','bh':'भ','shh':'ष','sh':'श','tr':'त्र','gn':'ङ','ny':'ञ','k':'क','g':'ग','c':'क','j':'ज','t':'त','d':'द','n':'न','p':'प','b':'ब','m':'म','y':'य','r':'र','l':'ल','v':'व','w':'व','s':'स','h':'ह','z':'ज़','f':'फ़','q':'क़','x':'क्ष'},vowels:{'aa':'आ','ee':'ई','ii':'ई','oo':'ऊ','uu':'ऊ','ai':'ऐ','au':'औ','ri':'ऋ','a':'अ','i':'इ','e':'ए','o':'ओ','u':'उ'},matras:{'aa':'ा','ee':'ी','ii':'ी','oo':'ू','uu':'ू','ai':'ै','au':'ौ','ri':'ृ','a':'','i':'ि','e':'े','o':'ो','u':'ु'},symbols:{'an':'ं','am':'ं','ah':'ः','om':'ॐ','shree':'श्री'}};let output='';let i=0;while(i<input.length){let matched=!1;if(i+3<input.length){const fourChar=input.substring(i,i+4).toLowerCase();if(map.consonants[fourChar]||map.vowels[fourChar]||map.symbols[fourChar]){output+=map.consonants[fourChar]||map.vowels[fourChar]||map.symbols[fourChar];i+=4;matched=!0}}
 if(!matched&&i+2<input.length){const threeChar=input.substring(i,i+3).toLowerCase();if(map.consonants[threeChar]||map.vowels[threeChar]||map.symbols[threeChar]){output+=map.consonants[threeChar]||map.vowels[threeChar]||map.symbols[threeChar];i+=3;matched=!0}}
@@ -51,8 +50,8 @@ function initializePostRendering(){
             ? post.svg 
             : `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
         
-        const readingTimeBadge = post.readingTime 
-            ? `<span class="reading-time-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>${post.readingTime}</span>` 
+        const readingTimeLabel = post.readingTime 
+            ? `<span class="reading-time-label">${post.readingTime}</span>` 
             : '';
 
         const metaBlock=`
@@ -70,7 +69,7 @@ function initializePostRendering(){
                     <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
                 </div>
             </div>`;
-        card.innerHTML=`<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a>${readingTimeBadge}<a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+        card.innerHTML=`<div class="card-thumbnail"><a href="categories.html?category=${encodeURIComponent(post.category)}" class="category-badge">${post.category}</a>${readingTimeLabel}<a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
         return card
     };
     window.GKApp.createPostCard = createPostCard;
