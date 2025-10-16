@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -13,6 +12,7 @@ let unsubscribeComments = null;
 let unsubscribeRating = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null; // Track the currently open inline reply form
+let isDelegatedListenerSetup = false; // Guard for event listeners
 
 // !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
@@ -106,6 +106,21 @@ const pageId = (() => {
 })();
 const commentsPath = ['pages', pageId, 'comments'];
 const ratingsPath = ['pages', pageId, 'ratings'];
+
+function showErrorUI(targetElement, message, retryCallback) {
+    if (!targetElement) return;
+    targetElement.innerHTML = `
+        <div class="error-container">
+            <p>${message}</p>
+            <button class="btn retry-btn">Try Again</button>
+        </div>
+    `;
+    targetElement.querySelector('.retry-btn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        targetElement.innerHTML = '<div class="spinner"></div>';
+        setTimeout(retryCallback, 50);
+    });
+}
 
 // ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
@@ -286,7 +301,7 @@ async function loadRatings() {
          ratingWidgetWrapper?.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        if (totalRatingsCount) totalRatingsCount.textContent = "Could not load ratings.";
+        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings due to a network error. Please try again.", initializeRatingSystem);
         ratingWidgetWrapper?.classList.remove('rating-loading');
     });
 }
@@ -473,12 +488,12 @@ async function loadComments(){
         commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
         console.error('Real-time listener error:', error);
-        commentsList.innerHTML = `<p class="muted error">Could not load comments. Check security rules.</p>`;
+        showErrorUI(commentsList, 'A network connection error occurred. Please check your connection and try again.', initializeCommentsSection);
         commentsWrapper?.classList.remove('comments-loading');
     });
   } catch(err){
     console.error('Error setting up listener:', err);
-    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
+    showErrorUI(commentsList, 'Could not load comments. Please check your connection and try again.', initializeCommentsSection);
     commentsWrapper?.classList.remove('comments-loading');
   }
 }
@@ -611,6 +626,9 @@ async function deleteWithDescendants(rootId){
 
 // ====== Delegated Event Listeners Setup ======
 function setupDelegatedListeners() {
+    if (isDelegatedListenerSetup) return;
+    isDelegatedListenerSetup = true;
+
     const container = document.getElementById('custom-comment-section');
 
     container.addEventListener('click', async (e) => {
@@ -797,7 +815,10 @@ async function initializeCommentsSection() {
         handleCommentDeepLink();   // NEW: Check for deep link on load
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
-        if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
+        if (commentsList) {
+             showErrorUI(commentsList, 'Could not connect to the comments service. Please check your connection and try again.', initializeCommentsSection);
+        }
+        commentsWrapper?.classList.remove('comments-loading');
     }
 }
 
@@ -817,7 +838,8 @@ async function initializeRatingSystem() {
         if (!isAuthInitialized) await initFirebaseAuth();
     } catch (error) {
         console.error("Failed to initialize rating system:", error);
-        if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
+        showErrorUI(document.getElementById('rating-widget'), 'Could not connect to the rating service. Please check your network and try again.', initializeRatingSystem);
+        ratingWidgetWrapper?.classList.remove('rating-loading');
     }
 }
 
