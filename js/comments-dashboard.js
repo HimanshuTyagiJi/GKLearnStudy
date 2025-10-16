@@ -1,7 +1,7 @@
 // js/comments-dashboard.js
 
-// Firebase Initialisation (Compatibility SDK का उपयोग करके)
-// सुनिश्चित करें कि firebase-app-compat.js, firebase-auth-compat.js, firebase-firestore-compat.js, firebase-messaging-compat.js HTML में पहले ही लोड हो चुके हैं।
+// Firebase Initialisation (Compatibility SDKs)
+// Ensure firebase-app-compat.js, firebase-auth-compat.js, firebase-firestore-compat.js, firebase-messaging-compat.js are loaded in HTML.
 firebase.initializeApp({
     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
     authDomain: "appcomment.firebaseapp.com",
@@ -13,20 +13,20 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-const messaging = firebase.messaging(); // नोटिफिकेशन के लिए
+const messaging = firebase.messaging(); // For notifications
 
 // --- CONSTANTS ---
-const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; // आपके क्लाउड फंक्शन से लिया गया मालिक का UID
+const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; // The owner's UID from your Cloud Function
 
 // --- STATE ---
-let currentUser = null; // वर्तमान लॉग-इन उपयोगकर्ता
-let isOwner = false;    // क्या वर्तमान उपयोगकर्ता मालिक है
-const allComments = []; // सभी कमेंट्स का ग्लोबल कैश
-let unsubscribeComments = null; // Firestore लिसनर को अनसब्सक्राइब करने के लिए
-let activeReplyForm = null; // वर्तमान में खुला रिप्लाई फॉर्म
+let currentUser = null; // Current logged-in user
+let isOwner = false;    // Is the current user the owner?
+const allComments = []; // Global cache for all comments
+let unsubscribeComments = null; // To unsubscribe the Firestore listener
+let activeReplyForm = null; // Currently open reply form
 
 // --- UI ELEMENTS ---
-// HTML में मौजूद एलिमेंट्स को JavaScript वेरिएबल्स से लिंक करें
+// Link to HTML elements by their IDs
 const dashboardAuthPrompt = document.getElementById('dashboard-auth-prompt');
 const customCommentSection = document.getElementById('custom-comment-section');
 const authContainer = document.getElementById('auth-container');
@@ -35,7 +35,7 @@ const logoutBtn = document.getElementById('logout-btn');
 const userInfoDiv = document.getElementById('user-info');
 const ownerViewDiv = document.getElementById('owner-view');
 const nonOwnerMessage = document.getElementById('non-owner-message');
-const mainFormShell = document.getElementById('main-form-shell'); // यह अब HTML में है
+const mainFormShell = document.getElementById('main-form-shell');
 const notificationButton = document.getElementById('notification-btn');
 const notificationBellIcon = notificationButton ? notificationButton.querySelector('.bell-icon') : null;
 const notificationBellOffIcon = notificationButton ? notificationButton.querySelector('.bell-off-icon') : null;
@@ -46,16 +46,16 @@ const notificationSpinnerIcon = notificationButton ? notificationButton.querySel
 
 const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
 const fmtDate = ts => {
-    const d = ts ? ts.toDate() : new Date(); // Firestore Timestamp को Date ऑब्जेक्ट में बदलें
+    const d = ts ? ts.toDate() : new Date(); // Convert Firestore Timestamp to Date object
     const p = n => String(n).padStart(2, '0');
-    const m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${p(d.getDate())} ${m[d.getMonth()]} ${d.getFullYear()}, ${p(d.getHours())}:${p(d.getMinutes())}`;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${p(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}, ${p(d.getHours())}:${p(d.getMinutes())}`;
 };
 
-// pageId को पढ़ने योग्य फॉर्मेट में बदलने के लिए (जैसे 'computer_science' -> 'Computer Science')
+// Formats pageId for display (e.g., 'computer_science' -> 'Computer Science')
 function formatPageId(pageId) {
-    if (!pageId) return 'अज्ञात पेज';
-    if (pageId === 'main_page') return 'होम पेज';
+    if (!pageId) return 'Unknown Page';
+    if (pageId === 'main_page') return 'Home Page';
     return pageId.replace(/_/g, " ")
                  .split(" ")
                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -95,7 +95,7 @@ function renderNode(node) {
     li.dataset.commentId = node.id; // Store commentId for replies
     if (node.depth > 0) li.classList.add('reply-item');
 
-    const isCommentOwner = node.uid === OWNER_UID; // यह कमेंट मालिक का है या नहीं
+    const isCommentOwner = node.uid === OWNER_UID; // Is this comment from the site owner?
     if (isCommentOwner) li.classList.add('owner-comment');
 
     const authorName = isCommentOwner ? 'GK Learn Study' : escapeHTML(node.name);
@@ -115,22 +115,22 @@ function renderNode(node) {
             <div class="comment-date">${fmtDate(node.timestamp)}</div>
         </div>`;
 
-    const showDeleteButton = currentUser && (currentUser.uid === node.uid || isOwner); // केवल कमेंट का लेखक या मालिक ही हटा सकता है
+    const showDeleteButton = currentUser && (currentUser.uid === node.uid || isOwner); // Only the comment author or owner can delete
 
     const actionsHTML = `
         <div class="comment-actions" data-comment-id="${node.id}">
-            <!-- Likes/Dislikes (यदि आप इन्हें लागू करना चाहें तो) -->
+            <!-- Likes/Dislikes (if you want to implement them) -->
             <!-- <button class="btn small vote-btn like-btn">👍 <span class="count">${node.likes || 0}</span></button>
             <button class="btn small vote-btn dislike-btn">👎 <span class="count">${node.dislikes || 0}</span></button> -->
-            <button class="btn small reply-btn" data-action="reply">रिप्लाई</button>
-            ${showDeleteButton ? `<button class="btn small danger delete-btn" data-action="delete">हटाएं</button>` : ''}
+            <button class="btn small reply-btn" data-action="reply">Reply</button>
+            ${showDeleteButton ? `<button class="btn small danger delete-btn" data-action="delete">Delete</button>` : ''}
         </div>`;
     const inlineReplySlot = `<div class="inline-reply-slot"></div>`;
 
     const body = document.createElement('div');
     body.className = 'comment-body';
     body.textContent = node.comment || '';
-    body.style.whiteSpace = 'pre-wrap'; // प्री-फॉरमेटेड टेक्स्ट के लिए
+    body.style.whiteSpace = 'pre-wrap'; // For pre-formatted text
 
     li.innerHTML = headerHTML;
     li.appendChild(body);
@@ -142,9 +142,9 @@ function renderNode(node) {
 function renderDashboard(comments) {
     if (!ownerViewDiv) return;
 
-    // Comments को pageId द्वारा ग्रुप करें
+    // Group comments by pageId
     const groupedByPage = comments.reduce((acc, comment) => {
-        const pageId = comment.pageId || 'unknown';
+        const pageId = comment.pageId || 'unknown_page'; // Use 'unknown_page' for grouping as well
         if (!acc[pageId]) {
             acc[pageId] = [];
         }
@@ -152,14 +152,14 @@ function renderDashboard(comments) {
         return acc;
     }, {});
 
-    ownerViewDiv.innerHTML = ''; // पिछली सामग्री साफ़ करें
+    ownerViewDiv.innerHTML = ''; // Clear previous content
 
     if (Object.keys(groupedByPage).length === 0) {
-        ownerViewDiv.innerHTML = '<p class="muted" style="text-align: center; padding: 20px;">साइट पर कोई कमेंट नहीं मिला।</p>';
+        ownerViewDiv.innerHTML = '<p class="muted" style="text-align: center; padding: 20px;">No comments found across the site.</p>';
         return;
     }
 
-    // पेजों को नाम के अनुसार सॉर्ट करें
+    // Sort pages for consistent order, e.g., alphabetically
     const sortedPageIds = Object.keys(groupedByPage).sort((a,b) => formatPageId(a).localeCompare(formatPageId(b)));
 
     sortedPageIds.forEach(pageId => {
@@ -170,7 +170,7 @@ function renderDashboard(comments) {
 
         pageSection.innerHTML = `
             <h2 class="page-section-header">
-                पेज पर कमेंट्स: <a href="${pageUrl}" target="_blank" rel="noopener noreferrer">${formatPageId(pageId)}</a>
+                Comments on: <a href="${pageUrl}" target="_blank" rel="noopener noreferrer">${formatPageId(pageId)}</a>
             </h2>
         `;
 
@@ -179,7 +179,7 @@ function renderDashboard(comments) {
         pageSection.appendChild(commentListContainer);
 
         const pageComments = groupedByPage[pageId];
-        // पहले टाइमस्टैम्प द्वारा सॉर्ट करें ताकि `buildTree` सही क्रम में काम करे
+        // Sort by timestamp first for correct tree building order
         pageComments.sort((a, b) => (a.timestamp && b.timestamp) ? a.timestamp.toDate().getTime() - b.timestamp.toDate().getTime() : 0);
         
         const commentTree = buildTree(pageComments);
@@ -197,45 +197,40 @@ function renderDashboard(comments) {
 // ====== Load ALL Comments with Real-Time Listener ======
 async function loadAllComments() {
     try {
-        if (unsubscribeComments) unsubscribeComments(); // मौजूदा लिसनर को अनसब्सक्राइब करें
+        if (unsubscribeComments) unsubscribeComments(); // Unsubscribe existing listener
 
-        ownerViewDiv.innerHTML = '<p class="muted" style="text-align: center; padding: 20px;">कमेंट्स लोड हो रहे हैं...</p>';
+        ownerViewDiv.innerHTML = '<p class="muted" style="text-align: center; padding: 20px;">Loading comments...</p>';
 
-        // Firestore में एक collectionGroup('comments') के लिए इंडेक्स की आवश्यकता होगी।
-        // जब आप पहली बार इस क्वेरी को बिना इंडेक्स के चलाएंगे, तो Firebase कंसोल आपको एक लिंक देगा जिससे आप इसे स्वचालित रूप से बना सकते हैं।
+        // A collectionGroup('comments') index is required for Firestore.
+        // When you first run this query without an index, the Firebase console will provide a link to create it automatically.
         unsubscribeComments = db.collectionGroup('comments')
-            .orderBy('timestamp', 'asc') // पुराने से नए कमेंट्स
+            .orderBy('timestamp', 'asc') // Order by timestamp (oldest to newest)
             .onSnapshot(snapshot => {
-           
-
-
-                   const newComments = [];
+                const newComments = [];
                 snapshot.forEach(doc => {
-                    // पेज आईडी को दस्तावेज़ के संदर्भ पथ से निकालें
                     let pageId;
                     if (doc.ref.parent && doc.ref.parent.parent) {
                         pageId = doc.ref.parent.parent.id;
                     } else {
-                        // यदि parent.parent मौजूद नहीं है, तो यह दर्शाता है कि यह एक रूट-लेवल कमेंट है या गलत संरचना है।
-                        // आप इसे 'unknown_page' या कोई अन्य डिफ़ॉल्ट मान दे सकते हैं, या इसे लॉग कर सकते हैं।
-                        console.warn(`कमेंट ID ${doc.id} के लिए pageId निकालने में असमर्थ। यह संभवतः सही पदानुक्रम में नहीं है।`);
-                        pageId = 'unknown_page'; // या इसे छोड़ दें और इस कमेंट को newComments में न जोड़ें।
+                        // Warn if pageId cannot be extracted. This suggests data not conforming to pages/{pageId}/comments/{commentId} structure.
+                        console.warn(`Could not extract pageId for comment ID ${doc.id}. It is likely not in the correct hierarchy.`);
+                        // If you don't want to display such comments, uncomment the 'return;' below
+                        // return; 
+                        pageId = 'unknown_page'; // Assign a default pageId for rendering if desired
                     }
                     newComments.push({ id: doc.id, pageId, ...doc.data() });
                 });
 
-                
-                allComments.length = 0; // ग्लोबल कैश साफ़ करें
-                allComments.push(...newComments); // नए कमेंट्स जोड़ें
-                renderDashboard(allComments); // डैशबोर्ड को फिर से रेंडर करें
-
+                allComments.length = 0; // Clear global cache
+                allComments.push(...newComments); // Add new comments
+                renderDashboard(allComments); // Re-render the dashboard
             }, (error) => {
                 console.error('Dashboard listener error:', error);
-                ownerViewDiv.innerHTML = `<p class="muted error">कमेंट्स लोड नहीं हो सके। Firebase कंसोल में कलेक्शन ग्रुप इंडेक्स की जांच करें।</p>`;
+                ownerViewDiv.innerHTML = `<p class="error-message">Failed to load comments. Please check the Collection Group Index in Firebase Console.</p>`;
             });
     } catch (err) {
         console.error('Error setting up dashboard listener:', err);
-        ownerViewDiv.innerHTML = `<p class="muted error">कमेंट्स लोड नहीं हो सके।</p>`;
+        ownerViewDiv.innerHTML = `<p class="error-message">Failed to load comments.</p>`;
     }
 }
 
@@ -245,9 +240,9 @@ googleLoginBtn.addEventListener('click', async () => {
     try {
         await auth.signInWithPopup(provider);
     } catch (error) {
-        console.error("Google साइन इन करते समय त्रुटि:", error);
+        console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Google साइन इन करते समय त्रुटि आई। कृपया पुनः प्रयास करें।");
+            alert("An error occurred during Google Sign-In. Please try again.");
         }
     }
 });
@@ -256,56 +251,58 @@ logoutBtn.addEventListener('click', async () => {
     try {
         await auth.signOut();
     } catch (error) {
-        console.error("साइन आउट करते समय त्रुटि:", error);
-        alert("साइन आउट करते समय त्रुटि आई।");
+        console.error("Sign-Out Error:", error);
+        alert("An error occurred during sign-out.");
     }
 });
 
-// प्रमाणीकरण स्थिति परिवर्तनों को सुनें
+// Listen to authentication state changes
 auth.onAuthStateChanged(user => {
     currentUser = user;
     isOwner = (user && user.uid === OWNER_UID);
 
     if (user) {
-        // उपयोगकर्ता लॉग-इन है।
+        // User is logged in.
         googleLoginBtn.style.display = 'none';
         logoutBtn.style.display = 'inline-block';
         userInfoDiv.innerHTML = `
-            नमस्ते, <span class="text-primary">${escapeHTML(user.displayName || 'अनाम उपयोगकर्ता')}</span>!
+            Hello, <span class="text-primary">${escapeHTML(user.displayName || 'Anonymous User')}</span>!
             <img src="${escapeHTML(user.photoURL || 'https://via.placeholder.com/30')}" alt="User Photo" class="user-avatar">
         `;
-        userInfoDiv.style.display = 'flex'; // flexbox के रूप में दिखाएं
+        userInfoDiv.style.display = 'flex'; // Display as flexbox
         dashboardAuthPrompt.style.display = 'none';
 
         if (isOwner) {
             customCommentSection.style.display = 'block';
             nonOwnerMessage.style.display = 'none';
-            if (!unsubscribeComments) { // केवल मालिक लॉग इन होने पर ही कमेंट्स लोड करना शुरू करें
+            if (!unsubscribeComments) { // Start loading comments only if owner logs in
                 loadAllComments();
             }
         } else {
-            customCommentSection.style.display = 'none';
-            nonOwnerMessage.style.display = 'block';
-            if (unsubscribeComments) { // यदि मालिक नहीं है तो लिसनर बंद करें
+            // Logged in but not the owner
+            customCommentSection.style.display = 'block'; // Show the custom section for the message
+            ownerViewDiv.innerHTML = ''; // Clear comments view (to make sure only the message is visible)
+            nonOwnerMessage.style.display = 'block'; // Show the restricted access message
+            if (unsubscribeComments) { // Stop listener if a non-owner logs in
                 unsubscribeComments();
                 unsubscribeComments = null;
             }
         }
-        updateNotificationButtonState(); // नोटिफिकेशन बटन की स्थिति अपडेट करें
+        updateNotificationButtonState(); // Update notification button status
     } else {
-        // उपयोगकर्ता लॉग आउट है।
+        // User is logged out.
         googleLoginBtn.style.display = 'inline-block';
         logoutBtn.style.display = 'none';
         userInfoDiv.style.display = 'none';
         customCommentSection.style.display = 'none';
         dashboardAuthPrompt.style.display = 'block';
-        nonOwnerMessage.style.display = 'none';
-        closeActiveReplyForm(); // लॉग आउट होने पर रिप्लाई फॉर्म बंद करें
+        nonOwnerMessage.style.display = 'none'; // Ensure this is hidden when logged out
+        closeActiveReplyForm(); // Close reply form on logout
         if (unsubscribeComments) {
             unsubscribeComments();
             unsubscribeComments = null;
         }
-        updateNotificationButtonState(); // नोटिफिकेशन बटन की स्थिति अपडेट करें
+        updateNotificationButtonState(); // Update notification button status
     }
 });
 
@@ -318,35 +315,35 @@ function closeActiveReplyForm() {
 }
 
 function openReplyForm(commentId, authorName, targetSlot, pageId) {
-    closeActiveReplyForm(); // पहले से खुले किसी भी फॉर्म को बंद करें
+    closeActiveReplyForm(); // Close any previously open form
 
     if (!mainFormShell) {
         console.error("main-form-shell element not found. Cannot open reply form.");
-        alert("रिप्लाई फॉर्म लोड नहीं हो सका।");
+        alert("Failed to load reply form.");
         return;
     }
 
     const formClone = mainFormShell.cloneNode(true);
-    formClone.id = ''; // क्लोन की आईडी हटा दें ताकि डुप्लिकेट न हो
+    formClone.id = ''; // Remove ID from clone to prevent duplicates
     formClone.style.display = 'block';
 
     const form = formClone.querySelector('form');
     const parentIdInput = form.querySelector('#parent-id');
-    const pageIdInput = form.querySelector('#page-id'); // नया हिडन इनपुट
+    const pageIdInput = form.querySelector('#page-id');
     const replyingToEl = form.querySelector('#replying-to');
     const cancelBtn = form.querySelector('#cancel-reply');
-    const commentInput = form.querySelector('#comment-input'); // HTML में #comment-input
+    const commentInput = form.querySelector('#comment-input');
     const charCounter = form.querySelector('.comment-form-char-counter');
 
     parentIdInput.value = commentId;
-    pageIdInput.value = pageId; // सबमिशन के लिए pageId सेट करें
-    replyingToEl.innerHTML = `आप <strong class="text-primary">${escapeHTML(authorName)}</strong> के कमेंट पर रिप्लाई कर रहे हैं।`;
+    pageIdInput.value = pageId; // Set pageId for submission
+    replyingToEl.innerHTML = `Replying to <strong class="text-primary">${escapeHTML(authorName)}</strong>.`;
     replyingToEl.style.display = 'block';
     cancelBtn.style.display = 'inline-block';
-    commentInput.value = ''; // टेक्स्ट इनपुट साफ़ करें
+    commentInput.value = ''; // Clear text input
     charCounter.textContent = '0 / 1000';
 
-    // char counter अपडेट करने के लिए इवेंट लिसनर
+    // Event listener to update char counter
     commentInput.addEventListener('input', () => {
         charCounter.textContent = `${commentInput.value.length} / 1000`;
     });
@@ -358,8 +355,8 @@ function openReplyForm(commentId, authorName, targetSlot, pageId) {
 
 // ====== Delete Logic ======
 async function deleteWithDescendants(rootId, pageId) {
-    if (!currentUser || !isOwner) { // सुनिश्चित करें कि केवल मालिक ही हटा सके
-        alert("आपको कमेंट हटाने की अनुमति नहीं है।");
+    if (!currentUser || !isOwner) { // Ensure only the owner can delete
+        alert("You do not have permission to delete comments.");
         return;
     }
 
@@ -376,41 +373,37 @@ async function deleteWithDescendants(rootId, pageId) {
         }
     }
 
-    // ऑप्टिमिस्टिक UI अपडेट (तत्काल हटाना दिखाएं)
-    // allComments = allComments.filter(c => !toDeleteIds.has(c.id)); // यह Realtime listener के साथ थोड़ा जटिल हो सकता है
-    // renderDashboard(allComments); // इसलिए इसे हटाने के बाद Firestore listener खुद ही अपडेट कर देगा
-
-    if (confirm(`क्या आप इस कमेंट और इसके सभी ${toDeleteIds.size - 1} रिप्लाई हटाना चाहते हैं?`)) {
+    if (confirm(`Are you sure you want to delete this comment and all its ${toDeleteIds.size - 1} replies?`)) {
         try {
             const deletePromises = [...toDeleteIds].map(id =>
                 db.collection('pages').doc(pageId).collection('comments').doc(id).delete()
             );
             await Promise.all(deletePromises);
-            alert("कमेंट सफलतापूर्वक हटा दिए गए।");
-            // Firestore listener अपने आप UI को अपडेट कर देगा
+            alert("Comment(s) successfully deleted.");
+            // The Firestore listener will automatically update the UI
         } catch (error) {
-            console.error("कमेंट्स हटाने में विफल रहा:", error);
-            alert("कमेंट हटाने में त्रुटि आई।");
-            // त्रुटि होने पर, Firestore listener UI को सर्वर से सही स्थिति में वापस लाएगा
+            console.error("Failed to delete comments:", error);
+            alert("An error occurred while deleting the comment(s).");
+            // On error, the Firestore listener will revert the UI to the server's state
         }
     }
 }
 
 // ====== Delegated Event Listeners Setup ======
 function setupDelegatedListeners() {
-    // customCommentSection के अंदर सभी क्लिक इवेंट्स को हैंडल करें
+    // Handle all click events within customCommentSection
     customCommentSection.addEventListener('click', async (e) => {
         const button = e.target.closest('button');
         if (!button) return;
 
-        // रिप्लाई फॉर्म के कैंसिल बटन के लिए
+        // For the reply form's cancel button
         if (button.id === 'cancel-reply') {
             closeActiveReplyForm();
             return;
         }
 
         const action = button.dataset.action;
-        if (!action) return; // केवल data-action वाले बटनों को प्रोसेस करें
+        if (!action) return; // Only process buttons with data-action
 
         const commentItem = button.closest('.comment-item');
         if (!commentItem) return;
@@ -419,66 +412,66 @@ function setupDelegatedListeners() {
         const pageId = commentItem.dataset.pageId;
 
         if (!commentId || !pageId) {
-            console.error("कमेंट ID या पेज ID नहीं मिला।");
+            console.error("Comment ID or Page ID not found.");
             return;
         }
 
         const node = allComments.find(c => c.id === commentId && c.pageId === pageId);
         if (!node) {
-            console.error("कमेंट नोड नहीं मिला।");
+            console.error("Comment node not found in cache.");
             return;
         }
 
         switch (action) {
             case 'reply':
                 if (!currentUser) {
-                    alert("रिप्लाई करने के लिए कृपया साइन इन करें।");
+                    alert("Please sign in to reply.");
                     return;
                 }
                 if (!isOwner) {
-                    alert("केवल साइट एडमिनिस्ट्रेटर ही रिप्लाई कर सकते हैं।");
+                    alert("Only the site administrator can reply.");
                     return;
                 }
                 const replySlot = commentItem.querySelector('.inline-reply-slot');
                 openReplyForm(node.id, node.name, replySlot, pageId);
                 break;
             case 'delete':
-                if (isOwner) { // केवल मालिक ही हटा सकता है
+                if (isOwner) { // Only owner can delete
                     deleteWithDescendants(node.id, pageId);
                 } else {
-                    alert("आपको इस कमेंट को हटाने की अनुमति नहीं है।");
+                    alert("You do not have permission to delete this comment.");
                 }
                 break;
-            // यहां आप लाइक/डिसलाइक के लिए भी लॉजिक जोड़ सकते हैं
+            // You can add logic for likes/dislikes here
         }
     });
 
-    // customCommentSection के अंदर सभी फॉर्म सबमिशन को हैंडल करें (रिप्लाई फॉर्म के लिए)
+    // Handle all form submissions within customCommentSection (for reply form)
     customCommentSection.addEventListener('submit', async e => {
         e.preventDefault();
         const form = e.target;
-        // सुनिश्चित करें कि यह रिप्लाई फॉर्म है और उपयोगकर्ता लॉग-इन है
+        // Ensure it's the reply form and user is logged in and is owner
         if (!form.matches('.comment-form') || !currentUser || !isOwner) return;
 
         const commentInput = form.querySelector('#comment-input');
         const parentIdInput = form.querySelector('#parent-id');
-        const pageIdInput = form.querySelector('#page-id'); // pageId इनपुट
+        const pageIdInput = form.querySelector('#page-id'); // pageId input
         const submitButton = form.querySelector('#submit-button');
 
         const commentText = commentInput.value.trim();
         const parentId = parentIdInput.value;
-        const pageId = pageIdInput.value; // pageId प्राप्त करें
+        const pageId = pageIdInput.value; // Get pageId
 
-        if (!commentText || !parentId || !pageId) { // pageId भी आवश्यक है
-            alert("कृपया अपना रिप्लाई लिखें और सुनिश्चित करें कि सभी जानकारी उपलब्ध है।");
+        if (!commentText || !parentId || !pageId) { // pageId is also required
+            alert("Please write your reply and ensure all information is available.");
             return;
         }
 
         submitButton.disabled = true;
-        submitButton.innerHTML = `<span class="spinner-small"></span> पोस्ट कर रहा है...`;
+        submitButton.innerHTML = `<span class="spinner-small"></span> Posting...`;
 
         try {
-            // सही पेज के कमेंट्स कलेक्शन में जोड़ें
+            // Add to the comments collection of the correct page
             await db.collection('pages').doc(pageId).collection('comments').add({
                 name: currentUser.displayName,
                 uid: currentUser.uid,
@@ -488,30 +481,30 @@ function setupDelegatedListeners() {
                 parentId: parentId,
                 likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
             });
-            alert('रिप्लाई सफलतापूर्वक पोस्ट किया गया!');
-            closeActiveReplyForm(); // फॉर्म बंद करें
+            alert('Reply successfully posted!');
+            closeActiveReplyForm(); // Close form
         } catch (err) {
-            console.error('रिप्लाई जोड़ने में त्रुटि:', err);
-            alert('रिप्लाई पोस्ट नहीं हो सका।');
+            console.error('Error adding reply:', err);
+            alert('Failed to post reply.');
         } finally {
             submitButton.disabled = false;
-            submitButton.textContent = 'जवाब सबमिट करें';
+            submitButton.textContent = 'Submit Reply';
         }
     });
 }
 
 // --- NOTIFICATION LOGIC (FCM) ---
-// सर्विस वर्कर पंजीकरण
+// Service Worker registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/firebase-messaging-sw.js')
             .then((registration) => {
                 console.log('Service Worker registered with scope:', registration.scope);
-                // SW को प्रारंभिक दृश्यता स्थिति भेजें
+                // Send initial visibility state to SW
                 if (navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
                         type: 'VISIBILITY_CHANGE',
-                        pageId: 'main_page', // यह डैशबोर्ड 'main_page' के रूप में कार्य करता है
+                        pageId: 'main_page', // This dashboard acts as 'main_page'
                         isVisible: document.visibilityState === 'visible'
                     });
                 }
@@ -521,29 +514,29 @@ if ('serviceWorker' in navigator) {
             });
     });
 
-    // SW को दृश्यता परिवर्तनों के बारे में सूचित करें
+    // Inform SW about visibility changes
     document.addEventListener('visibilitychange', () => {
         if (navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage({
                 type: 'VISIBILITY_CHANGE',
-                pageId: 'main_page', // यह डैशबोर्ड 'main_page' के रूप में कार्य करता है
+                pageId: 'main_page', // This dashboard acts as 'main_page'
                 isVisible: document.visibilityState === 'visible'
             });
         }
     });
 }
 
-// नोटिफिकेशन बटन की स्थिति को अपडेट करने के लिए
+// Function to update notification button state
 async function updateNotificationButtonState() {
     if (!notificationButton) return;
 
     notificationButton.style.display = 'none'; // Default hide
 
-    if (!currentUser || !isOwner) { // केवल मालिक ही डैशबोर्ड के लिए नोटिफिकेशन मैनेज कर सकता है
+    if (!currentUser || !isOwner) { // Only owner can manage notifications for the dashboard
         return;
     }
 
-    // अनुमति/टोकन की जांच करते समय स्पिनर दिखाएं
+    // Show spinner while checking permissions/token
     if (notificationSpinnerIcon) notificationSpinnerIcon.style.display = 'block';
     if (notificationBellIcon) notificationBellIcon.style.display = 'none';
     if (notificationBellOffIcon) notificationBellOffIcon.style.display = 'none';
@@ -554,7 +547,7 @@ async function updateNotificationButtonState() {
         if (permission === 'granted') {
             const currentToken = await messaging.getToken();
             if (currentToken) {
-                // जांचें कि यह टोकन मालिक के लिए Firestore में सहेजा गया है या नहीं
+                // Check if this token is saved for the owner in Firestore
                 const userTokenDoc = await db.collection('userTokens').doc(OWNER_UID).get();
                 if (userTokenDoc.exists) {
                     const tokens = userTokenDoc.data().tokens || [];
@@ -568,25 +561,25 @@ async function updateNotificationButtonState() {
                         notificationButton.dataset.subscribed = 'false';
                     }
                 } else {
-                    // मालिक के लिए कोई टोकन डॉक नहीं, इसलिए सब्सक्राइब्ड नहीं
+                    // No token doc for owner, so not subscribed
                     if (notificationBellIcon) notificationBellIcon.style.display = 'none';
                     if (notificationBellOffIcon) notificationBellOffIcon.style.display = 'block';
                     notificationButton.dataset.subscribed = 'false';
                 }
             } else {
-                // कोई टोकन नहीं, इसलिए सब्सक्राइब्ड नहीं
+                // No token, so not subscribed
                 if (notificationBellIcon) notificationBellIcon.style.display = 'none';
                 if (notificationBellOffIcon) notificationBellOffIcon.style.display = 'block';
                 notificationButton.dataset.subscribed = 'false';
             }
         } else {
-            // अनुमति अस्वीकृत, बेल-ऑफ दिखाएं
+            // Permission denied, show bell-off
             if (notificationBellIcon) notificationBellIcon.style.display = 'none';
             if (notificationBellOffIcon) notificationBellOffIcon.style.display = 'block';
             notificationButton.dataset.subscribed = 'false';
         }
     } catch (error) {
-        console.error("नोटिफिकेशन बटन की स्थिति अपडेट करने में त्रुटि:", error);
+        console.error("Error updating notification button state:", error);
         if (notificationBellIcon) notificationBellIcon.style.display = 'none';
         if (notificationBellOffIcon) notificationBellOffIcon.style.display = 'block';
         notificationButton.dataset.subscribed = 'false';
@@ -595,11 +588,11 @@ async function updateNotificationButtonState() {
     }
 }
 
-// नोटिफिकेशन बटन पर क्लिक हैंडलर
+// Notification button click handler
 if (notificationButton) {
     notificationButton.addEventListener('click', async () => {
         if (!currentUser || !isOwner) {
-            alert("आपको नोटिफ़िकेशन मैनेज करने के लिए साइन इन करना होगा।");
+            alert("You must be signed in to manage notifications.");
             return;
         }
 
@@ -611,11 +604,11 @@ if (notificationButton) {
             const subscribed = notificationButton.dataset.subscribed === 'true';
 
             if (subscribed) {
-                // अनसब्सक्राइब करें
+                // Unsubscribe
                 const currentToken = await messaging.getToken();
                 if (currentToken) {
                     await messaging.deleteToken(currentToken);
-                    // Firestore से टोकन हटाएँ
+                    // Remove token from Firestore
                     const userTokenRef = db.collection('userTokens').doc(OWNER_UID);
                     await db.runTransaction(async (transaction) => {
                         const doc = await transaction.get(userTokenRef);
@@ -625,15 +618,15 @@ if (notificationButton) {
                             transaction.update(userTokenRef, { tokens: updatedTokens });
                         }
                     });
-                    alert("नोटिफ़िकेशन सफलतापूर्वक बंद कर दिए गए हैं।");
+                    alert("Notifications successfully turned OFF.");
                 }
             } else {
-                // सब्सक्राइब करें
+                // Subscribe
                 const permission = await Notification.requestPermission();
                 if (permission === 'granted') {
                     const newToken = await messaging.getToken();
                     if (newToken) {
-                        // टोकन को Firestore में सहेजें
+                        // Save token to Firestore
                         const userTokenRef = db.collection('userTokens').doc(OWNER_UID);
                         await db.runTransaction(async (transaction) => {
                             const doc = await transaction.get(userTokenRef);
@@ -646,25 +639,25 @@ if (notificationButton) {
                                 transaction.set(userTokenRef, { tokens: [newToken] });
                             }
                         });
-                        alert("नोटिफ़िकेशन सफलतापूर्वक चालू कर दिए गए हैं।");
+                        alert("Notifications successfully turned ON.");
                     } else {
-                        alert("नोटिफ़िकेशन टोकन प्राप्त करने में असमर्थ।");
+                        alert("Unable to get notification token.");
                     }
                 } else {
-                    alert("नोटिफ़िकेशन चालू करने के लिए आपको ब्राउज़र अनुमतियाँ देनी होंगी।");
+                    alert("You must grant browser permissions to enable notifications.");
                 }
             }
         } catch (error) {
-            console.error("नोटिफ़िकेशन मैनेज करते समय त्रुटि:", error);
-            alert("नोटिफ़िकेशन मैनेज करते समय त्रुटि आई।");
+            console.error("Error managing notifications:", error);
+            alert("An error occurred while managing notifications.");
         } finally {
-            updateNotificationButtonState(); // एक्शन के बाद UI अपडेट करें
+            updateNotificationButtonState(); // Update UI after action
         }
     });
 }
 
 // ====== Initializer ======
 document.addEventListener('DOMContentLoaded', () => {
-    // Authentication observer पहले ही `auth.onAuthStateChanged` द्वारा सेट हो चुका है
+    // Authentication observer is already set up via `auth.onAuthStateChanged`
     setupDelegatedListeners();
 });
