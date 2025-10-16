@@ -1,12 +1,19 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     
+    // Use lowercase, normalized keys for robust matching.
     const authorBios = {
-        "Mr. Himanshu Tyagi": {
+        "himanshu tyagi": {
+            name: "Himanshu Tyagi",
             bio: "An avid learner and educator, specializing in Computer Science and General Knowledge. Dedicated to making complex topics simple and accessible for everyone.",
             education: "M.C.A. (Master of Computer Applications)",
         },
-        "Golu": {
+        "owner": { // Alias for Himanshu Tyagi
+            name: "Himanshu Tyagi",
+            bio: "An avid learner and educator, specializing in Computer Science and General Knowledge. Dedicated to making complex topics simple and accessible for everyone.",
+            education: "M.C.A. (Master of Computer Applications)",
+        },
+        "golu": {
+            name: "Golu",
             bio: "A passionate content creator with a focus on 'How-To' guides and practical knowledge. Golu believes in learning by doing and sharing experiences.",
             education: "B.A. (Bachelor of Arts)",
         }
@@ -17,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const postsHeading = document.getElementById('author-posts-heading');
 
     const urlParams = new URLSearchParams(window.location.search);
-    const authorName = urlParams.get('author');
+    const authorParam = urlParams.get('author');
 
-    const renderProfile = (authorData, postCount) => {
+    const renderProfile = (authorName, authorData, postCount) => {
         if (!profileCard) return;
         
         // Use the same avatar SVG from the post cards for consistency
@@ -63,28 +70,34 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const initializePage = async () => {
-        if (!authorName) {
+        if (!authorParam) {
             profileCard.innerHTML = `<p class="muted error">No author specified. Please go back and select an author.</p>`;
             postsHeading.style.display = 'none';
             return;
         }
 
-        document.title = `${authorName} | Author Profile | GK Learn Study`;
-        postsHeading.textContent = `Articles by ${authorName}`;
+        // Normalize the author name from the URL for lookup
+        const normalizedAuthorKey = authorParam.toLowerCase().replace('mr. ', '').trim();
+        const authorData = authorBios[normalizedAuthorKey];
 
-        const authorData = authorBios[authorName];
         if (!authorData) {
-            profileCard.innerHTML = `<p class="muted error">Author "${authorName}" not found.</p>`;
-             postsHeading.style.display = 'none';
+            profileCard.innerHTML = `<p class="muted error">Author "${authorParam}" not found.</p>`;
+            postsHeading.style.display = 'none';
             return;
         }
+        
+        const displayName = authorData.name;
+
+        document.title = `${displayName} | Author Profile | GK Learn Study`;
+        postsHeading.textContent = `Articles by ${displayName}`;
 
         await window.GKApp.dataReady;
         
         const allPosts = window.GKApp.searchData || [];
-        const authorPosts = allPosts.filter(post => post.author === authorName);
+        // Filter posts by the original name from the data, not the display name
+        const authorPosts = allPosts.filter(post => post.author === authorParam);
 
-        renderProfile(authorData, authorPosts.length);
+        renderProfile(displayName, authorPosts.length, authorData);
         renderPosts(authorPosts);
     };
 
