@@ -62,7 +62,12 @@ async function initFirestore() {
     await loadFirebaseScript('firestore');
     const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
-    db = firestore.getFirestore(firebaseApp);
+    // Using initializeFirestore to enable long polling for better stability on poor networks.
+    db = firestore.initializeFirestore(firebaseApp, {
+        experimentalForceLongPolling: true,
+        useFetchStreams: false, // Fallback for environments that don't support fetch streams well
+    });
+    
     addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
