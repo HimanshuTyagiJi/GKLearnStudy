@@ -385,28 +385,6 @@
                         .box4 {
                             animation: colorCycle 4s infinite 3s;
                         }
-
-                        /* Categories text animation */
-                        @keyframes textColorCycle {
-                            0% {
-                                color: #4285f4;
-                            }
-                            25% {
-                                color: #ea4335;
-                            }
-                            50% {
-                                color: #fbbc05;
-                            }
-                            75% {
-                                color: #34a853;
-                            }
-                            100% {
-                                color: #4285f4;
-                            }
-                        }
-                        .animated-text {
-                            animation: textColorCycle 4s infinite linear;
-                        }
                     </style>
 
                     <h2 class="h2-icons">
@@ -418,8 +396,8 @@
                             <rect class="box4" x="14" y="14" width="8" height="8" rx="1.5" />
                         </svg>
 
-                        <!-- Animated text -->
-                        <span class="animated-text">Categories</span>
+                        <!-- Static text -->
+                        <span>Categories</span>
 
                         <!-- Animated arrow -->
                         <svg class="arrow-anim" viewBox="0 0 24 24" stroke="#641ef9" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
@@ -485,7 +463,7 @@
                      </div>
                  </div>
 
-                 <div id="rating-stars" aria-label="Article rating">
+                 <div id="rating-stars" role="group" aria-label="Article rating">
                      <svg class="star" data-value="1" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                      <svg class="star" data-value="2" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                      <svg class="star" data-value="3" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
