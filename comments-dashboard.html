@@ -17,34 +17,35 @@
         <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
        
-        <!-- Firebase SDKs - These are compatibility versions and will be used -->
-        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
-
+        <!-- Custom styles for the dashboard -->
         <style>
-            /* Add some basic styling for the dashboard to make comments visible and readable */
-            body { font-family: Arial, sans-serif; margin: 0; background-color: var(--background-color); color: var(--text-color); }
-            .container { max-width: 960px; margin: 20px auto; padding: 20px; background-color: var(--card-background); border-radius: 8px; box-shadow: var(--shadow); }
-            h1, h2 { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; }
-            .muted { color: var(--muted-text-color); }
-            .firebase-comments-widget { margin-top: 20px; }
+            /* Basic resets and global theme variables (assuming theme.css defines them) */
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--background-color, #f4f7f6); color: var(--text-color, #333); line-height: 1.6; }
+            a { color: var(--primary-color, #007bff); text-decoration: none; }
+            a:hover { text-decoration: underline; }
+
+            .container { max-width: 960px; margin: 20px auto; padding: 20px; background-color: var(--card-background, #ffffff); border-radius: 8px; box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.1)); }
+            h1, h2 { color: var(--primary-color, #007bff); border-bottom: 1px solid var(--border-color, #eee); padding-bottom: 10px; margin-bottom: 20px; }
+            .muted { color: var(--muted-text-color, #777); }
+            .error-message { color: var(--danger-color, #dc3545); font-weight: bold; }
+            .info-message { background-color: var(--info-background, #e0f2f7); color: var(--info-color, #007bff); padding: 15px; border-radius: 5px; margin-top: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;}
+            .info-message p { margin-bottom: 10px; }
+            .info-message .btn { margin-top: 10px; }
 
             /* Auth Container */
-            #auth-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background); box-shadow: var(--shadow-sm); }
+            #auth-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background, #e9ecef); box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.05)); }
             #auth-container.logged-in #login-options { display: none; }
             #auth-container.logged-in #logout-btn { display: block; }
             #login-options button { margin-right: 10px; }
             #logout-btn { display: none; }
             #user-info { display: none; align-items: center; font-weight: bold; }
             #auth-container.logged-in #user-info { display: flex; }
-            .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin-right: 8px; }
+            .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid var(--border-color); }
             .user-name { color: var(--text-color); }
 
             /* Notification Button */
-            .notification-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); color: white; border: none; cursor: pointer; transition: background-color 0.2s ease; }
-            .notification-btn:hover { background-color: var(--primary-dark); }
+            .notification-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color, #007bff); color: white; border: none; cursor: pointer; transition: background-color 0.2s ease; margin-left: 10px; }
+            .notification-btn:hover { background-color: var(--primary-dark, #0056b3); }
             .notification-btn svg { width: 22px; height: 22px; }
             .notification-btn .spinner-icon { animation: spin 1s linear infinite; }
             @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -52,59 +53,59 @@
             .notification-btn .bell-icon, .notification-btn .bell-off-icon, .notification-btn .spinner-icon { display: none; }
 
 
-            /* Comments Dashboard */
-            .dashboard-page-section { margin-bottom: 30px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background); box-shadow: var(--shadow-sm); }
-            .page-section-header { margin-top: 0; margin-bottom: 15px; font-size: 1.5em; color: var(--primary-color); }
-            .page-section-header a { text-decoration: none; color: var(--primary-color); }
+            /* Comments Dashboard Sections */
+            .dashboard-page-section { margin-bottom: 30px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background, #e9ecef); box-shadow: var(--shadow-sm); }
+            .page-section-header { margin-top: 0; margin-bottom: 15px; font-size: 1.5em; color: var(--primary-color, #007bff); }
+            .page-section-header a { color: var(--primary-color, #007bff); }
             .page-section-header a:hover { text-decoration: underline; }
 
             .comment-list-container { margin-top: 15px; }
-            .comment-item { background-color: var(--background-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 10px; position: relative; }
-            .comment-item.reply-item { margin-left: 25px; border-left: 3px solid var(--primary-color-light); background-color: var(--secondary-background); }
+            .comment-item { background-color: var(--background-color, #ffffff); border: 1px solid var(--border-color, #ddd); border-radius: 6px; padding: 12px; margin-bottom: 10px; position: relative; }
+            .comment-item.reply-item { margin-left: 25px; border-left: 3px solid var(--primary-color-light, #a0d9f0); background-color: var(--secondary-background-light, #f0f7ff); }
 
             .comment-header { display: flex; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
             .comment-author-info { display: flex; align-items: center; margin-right: 10px; }
-            .comment-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; }
-            .comment-avatar.default-avatar { background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 0.9em; font-weight: bold; }
-            .owner-avatar { border: 2px solid var(--primary-color); }
-            .comment-author { font-weight: bold; color: var(--heading-color); }
-            .comment-date { font-size: 0.8em; color: var(--muted-text-color); margin-left: auto; } /* Push date to right */
-            .verified-badge { color: var(--success-color); margin-left: 5px; font-size: 0.9em; vertical-align: middle; }
+            .comment-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid var(--border-color); }
+            .comment-avatar.default-avatar { background-color: var(--primary-color, #007bff); color: white; display: flex; justify-content: center; align-items: center; font-size: 0.9em; font-weight: bold; }
+            .owner-avatar { border: 2px solid var(--primary-color, #007bff); }
+            .comment-author { font-weight: bold; color: var(--heading-color, #333); }
+            .comment-date { font-size: 0.8em; color: var(--muted-text-color, #777); margin-left: auto; } /* Push date to right */
+            .verified-badge { color: var(--success-color, #28a745); margin-left: 5px; font-size: 0.9em; vertical-align: middle; }
             .verified-badge svg { fill: currentColor; width: 16px; height: 16px; vertical-align: middle; }
 
-            .comment-body { margin-bottom: 10px; line-height: 1.6; color: var(--text-color); }
+            .comment-body { margin-bottom: 10px; line-height: 1.6; color: var(--text-color, #333); }
             .comment-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
             .comment-actions .btn.small { padding: 5px 10px; font-size: 0.85em; }
-            .comment-actions .vote-btn { background-color: var(--secondary-background); color: var(--text-color); border: 1px solid var(--border-color); }
-            .comment-actions .vote-btn:hover { background-color: var(--hover-background); }
-            .comment-actions .like-btn.active { color: var(--success-color); }
-            .comment-actions .dislike-btn.active { color: var(--danger-color); }
+            .comment-actions .vote-btn { background-color: var(--secondary-background, #e9ecef); color: var(--text-color); border: 1px solid var(--border-color, #ddd); }
+            .vote-btn:hover { background-color: var(--hover-background, #d3d9df); }
+            .like-btn.active { color: var(--success-color); }
+            .dislike-btn.active { color: var(--danger-color); }
             .comment-actions .count { margin-left: 5px; font-weight: bold; }
-            .comment-actions .reply-btn { background-color: var(--primary-color); color: white; border: none; }
-            .comment-actions .reply-btn:hover { background-color: var(--primary-dark); }
-            .comment-actions .delete-btn { background-color: var(--danger-color); color: white; border: none; }
-            .comment-actions .delete-btn:hover { background-color: var(--danger-dark); }
+            .comment-actions .reply-btn { background-color: var(--primary-color, #007bff); color: white; border: none; }
+            .comment-actions .reply-btn:hover { background-color: var(--primary-dark, #0056b3); }
+            .comment-actions .delete-btn { background-color: var(--danger-color, #dc3545); color: white; border: none; }
+            .comment-actions .delete-btn:hover { background-color: var(--danger-dark, #c82333); }
 
             .inline-reply-slot { margin-top: 10px; } /* Where reply form will appear */
 
             /* Reply Form */
-            .comment-form-shell { background-color: var(--secondary-background); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-top: 15px; }
-            .comment-form textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; resize: vertical; min-height: 80px; margin-bottom: 10px; background-color: var(--input-background); color: var(--text-color); }
-            .comment-form textarea::placeholder { color: var(--muted-text-color); }
+            .comment-form-shell { background-color: var(--secondary-background, #e9ecef); border: 1px solid var(--border-color, #ddd); border-radius: 8px; padding: 15px; margin-top: 15px; }
+            .comment-form textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color, #ccc); border-radius: 5px; resize: vertical; min-height: 80px; margin-bottom: 10px; background-color: var(--input-background, #fdfdfd); color: var(--text-color); }
+            .comment-form textarea::placeholder { color: var(--muted-text-color, #999); }
             .comment-form-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-            .comment-form-char-counter { font-size: 0.8em; color: var(--muted-text-color); }
+            .comment-form-char-counter { font-size: 0.8em; color: var(--muted-text-color, #777); }
             .comment-form-actions button { margin-left: 10px; }
             
-            #replying-to { font-size: 0.9em; color: var(--primary-color); margin-bottom: 10px; display: none; }
+            #replying-to { font-size: 0.9em; color: var(--primary-color, #007bff); margin-bottom: 10px; display: none; }
             .spinner-small { border: 2px solid #f3f3f3; border-top: 2px solid #3498db; border-radius: 50%; width: 12px; height: 12px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 5px; }
 
             /* Buttons */
-            .btn { background-color: var(--button-background); color: var(--button-text-color); border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s ease; }
-            .btn:hover { background-color: var(--button-hover-background); }
-            .btn.primary { background-color: var(--primary-color); color: white; }
-            .btn.primary:hover { background-color: var(--primary-dark); }
-            .btn.danger { background-color: var(--danger-color); color: white; }
-            .btn.danger:hover { background-color: var(--danger-dark); }
+            .btn { background-color: var(--button-background, #6c757d); color: var(--button-text-color, white); border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s ease; }
+            .btn:hover { background-color: var(--button-hover-background, #5a6268); }
+            .btn.primary { background-color: var(--primary-color, #007bff); color: white; }
+            .btn.primary:hover { background-color: var(--primary-dark, #0056b3); }
+            .btn.danger { background-color: var(--danger-color, #dc3545); color: white; }
+            .btn.danger:hover { background-color: var(--danger-dark, #c82333); }
         </style>
 
     </head>
@@ -156,14 +157,14 @@
         <main class="container">
             <div id="dashboard-container">
                 <h1>Comments Dashboard</h1>
-                <p id="dashboard-auth-prompt" class="muted">कृपया कमेंट्स देखने और मैनेज करने के लिए साइन इन करें।</p>
+                <p id="dashboard-auth-prompt" class="muted">Please sign in to view and manage comments.</p>
 
                 <div class="firebase-comments-widget" id="custom-comment-section" style="display: none;">
                     
                     <div id="auth-container">
                         <div id="user-info"></div>
-                        <!-- Notification बटन यहाँ है -->
-                        <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="नोटिफ़िकेशन चालू/बंद करें">
+                        <!-- Notification button here -->
+                        <button class="notification-btn" id="notification-btn" aria-label="Toggle notifications" title="Toggle Notifications">
                             <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -184,27 +185,32 @@
                                 <span class="btn-text">Sign in with Google</span>
                             </button>
                         </div>
-                        <button id="logout-btn" class="btn">लॉग आउट</button>
+                        <button id="logout-btn" class="btn">Log Out</button>
                     </div>
 
                     <div id="owner-view">
                         <!-- Comments will be grouped by page and injected here -->
                     </div>
 
-                    <p id="non-owner-message" class="muted" style="display: none; margin-top: 2rem;">यह डैशबोर्ड केवल साइट एडमिनिस्ट्रेटर के लिए है।</p>
+                    <!-- Non-owner message with subscription option -->
+                    <p id="non-owner-message" class="info-message" style="display: none; margin-top: 2rem;">
+                        This dashboard is exclusively for the site owner. If you wish to gain access, you can subscribe for $25/month.
+                        <a href="#" target="_blank" class="btn primary" style="margin-top: 15px; display: block; max-width: 250px; width: 100%;">Learn More / Subscribe</a>
+                        <!-- Note: Replace # with your actual subscription page link -->
+                    </p>
 
-                    <!-- Reply Form Template: यह एक ही फॉर्म होगा जिसे हम 'replyToComment' पर क्लिक करने पर क्लोन और भरेंगे -->
+                    <!-- Reply Form Template: This will be cloned and displayed when replying to a comment -->
                     <div class="comment-form-shell" id="main-form-shell" style="display: none;">
                         <form class="comment-form">
                             <div class="replying-to" id="replying-to" aria-live="polite" style="display: none;"></div>
-                            <textarea id="comment-input" placeholder="आपका जवाब" maxlength="1000" required aria-label="आपका जवाब"></textarea>
+                            <textarea id="comment-input" placeholder="Your reply" maxlength="1000" required aria-label="Your reply"></textarea>
                             <input type="hidden" id="parent-id" value="" />
                             <input type="hidden" id="page-id" value="" /> <!-- This will hold the pageId for the reply -->
                             <div class="comment-form-footer">
                                 <div class="comment-form-char-counter">0 / 1000</div>
                                 <div class="comment-form-actions">
-                                    <button type="submit" class="btn primary" id="submit-button">जवाब सबमिट करें</button>
-                                    <button type="button" class="btn" id="cancel-reply">कैंसिल करें</button>
+                                    <button type="submit" class="btn primary" id="submit-button">Submit Reply</button>
+                                    <button type="button" class="btn" id="cancel-reply">Cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -222,8 +228,14 @@
             </div>
         </footer>
 
+        <!-- Firebase SDKs -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
+
         <script src="js/theme.js" defer></script>
-        <!-- आपका नया comments-dashboard.js यहाँ लोड होगा -->
+        <!-- Your comments-dashboard.js will be loaded here -->
         <script src="js/comments-dashboard.js" defer></script>
     </body>
 </html>
