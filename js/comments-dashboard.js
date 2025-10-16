@@ -206,13 +206,25 @@ async function loadAllComments() {
         unsubscribeComments = db.collectionGroup('comments')
             .orderBy('timestamp', 'asc') // पुराने से नए कमेंट्स
             .onSnapshot(snapshot => {
-                const newComments = [];
+           
+
+
+                   const newComments = [];
                 snapshot.forEach(doc => {
                     // पेज आईडी को दस्तावेज़ के संदर्भ पथ से निकालें
-                    const pageId = doc.ref.parent.parent.id;
+                    let pageId;
+                    if (doc.ref.parent && doc.ref.parent.parent) {
+                        pageId = doc.ref.parent.parent.id;
+                    } else {
+                        // यदि parent.parent मौजूद नहीं है, तो यह दर्शाता है कि यह एक रूट-लेवल कमेंट है या गलत संरचना है।
+                        // आप इसे 'unknown_page' या कोई अन्य डिफ़ॉल्ट मान दे सकते हैं, या इसे लॉग कर सकते हैं।
+                        console.warn(`कमेंट ID ${doc.id} के लिए pageId निकालने में असमर्थ। यह संभवतः सही पदानुक्रम में नहीं है।`);
+                        pageId = 'unknown_page'; // या इसे छोड़ दें और इस कमेंट को newComments में न जोड़ें।
+                    }
                     newComments.push({ id: doc.id, pageId, ...doc.data() });
                 });
 
+                
                 allComments.length = 0; // ग्लोबल कैश साफ़ करें
                 allComments.push(...newComments); // नए कमेंट्स जोड़ें
                 renderDashboard(allComments); // डैशबोर्ड को फिर से रेंडर करें
