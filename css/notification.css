@@ -1,4 +1,5 @@
 
+
 .notification-btn {
     background: none;
     border: none;
@@ -67,4 +68,14 @@ html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
     60% { transform: rotate(-5deg); }
     70% { transform: rotate(0); }
     100% { transform: rotate(0); }
+}
+
+.notification-btn .bell-off-icon {
+    display: none;
+}
+.notification-btn.disabled .bell-icon {
+    display: none;
+}
+.notification-btn.disabled .bell-off-icon {
+    display: block;
 }
