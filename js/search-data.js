@@ -47,50 +47,33 @@ function initializePostRendering(){
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
-        // Lazy-load concept images
         const imageHtml = post.svg 
             ? post.svg 
             : `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
+        
+        const readingTimeBadge = post.readingTime 
+            ? `<span class="reading-time-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>${post.readingTime}</span>` 
+            : '';
 
         const metaBlock=`
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                        <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo1-title">
-                    <title id="logo1-title">GK Learn Study Logo - Recreation</title>
-                    <defs>
-                        <radialGradient id="bgGradient1" cx="50%" cy="50%" r="70%" fx="50%" fy="30%">
-                            <stop offset="0%" style="stop-color:rgb(255, 245, 250);" />
-                            <stop offset="100%" style="stop-color:rgb(250, 220, 235);" />
-                        </radialGradient>
-                        <clipPath id="circleClip1">
-                            <circle cx="150" cy="150" r="148"/>
-                        </clipPath>
-                    </defs>
-                    <circle cx="150" cy="150" r="150" fill="url(#bgGradient1)" />
-                    <g clip-path="url(#circleClip1)">
-                        <path d="M-20 235 C 80 215, 220 255, 320 235 L 300 300 L 0 300 Z" fill="#B486F5" fill-opacity="0.9" />
-                        <path d="M-20 245 C 100 265, 200 225, 320 245 L 300 300 L 0 300 Z" fill="#7B42D6" fill-opacity="0.7" />
-                        <text x="50%" y="35%" dominant-baseline="middle" text-anchor="middle" font-family="'Arial Rounded MT Bold', Arial, sans-serif" font-size="110" font-weight="bold" fill="#F85A5A" stroke="#E53935" stroke-width="1.5">GK</text>
-                        <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="48" fill="#603F8B">Learn Study</text>
-                    </g>
-                     <path d="M40 30 L45 45 L50 30 L65 25 L50 20 L45 5 L40 20 L25 25 Z" fill="#FDBFDF" transform="scale(0.8) translate(15, 25)"/>
-                     <path d="M30 80 C 10 60, 40 50, 50 70 C 60 50, 90 60, 70 80 L 50 100 Z" fill="#FF8EC6" transform="scale(0.3) translate(30, 160)"/>
-                     <path d="M260 20 L264 32 L268 20 L280 16 L268 8 L264 -4 L260 8 L248 12 Z" fill="#DAB6FC" transform="scale(0.7) translate(60, 25)"/>
-                     <path d="M270 270 L275 285 L280 270 L295 265 L280 260 L275 245 L270 260 L255 265 Z" fill="#FDBFDF" transform="scale(0.9) translate(15, 15)" />
-                </svg>   </div>
+                        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" /><stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" /></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>
+                    </div>
                     <div class="author-details">
-                        <span class="author vcard">by <span class="name">${post.author}</span></span>
-                        <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? `&bull;${post.readingTime}` : ''}</span>
+                        <span class="author vcard">by <a href="profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
+                        <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time></span>
                     </div>
                 </div>
                 <div class="share-button-wrapper">
                     <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
                 </div>
             </div>`;
-        card.innerHTML=`<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a><a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+        card.innerHTML=`<div class="card-thumbnail"><a href="categories.html" class="category-badge">${post.category}</a>${readingTimeBadge}<a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
         return card
     };
+    window.GKApp.createPostCard = createPostCard;
 
     let imageObserver;
     const initializeLazyLoading = (container) => {
@@ -121,6 +104,7 @@ function initializePostRendering(){
         });
         lazyImages.forEach(img => imageObserver.observe(img));
     };
+    window.GKApp.initializeLazyLoading = initializeLazyLoading;
 
     if(postsContainer&&loadMoreBtn){
         let pageKeyForFiltering='index';
@@ -288,4 +272,3 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
-
