@@ -17,15 +17,95 @@
         <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
         <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
        
-        <!-- Firebase SDKs - Make sure these paths are correct in your project -->
-        <!-- Firebase App (firebase-app.js) must be loaded first -->
+        <!-- Firebase SDKs - These are compatibility versions and will be used -->
         <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-        <!-- Firebase Auth (firebase-auth.js) -->
         <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-        <!-- Firebase Firestore (firebase-firestore.js) -->
         <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-        <!-- Firebase Messaging (firebase-messaging.js) -->
         <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
+
+        <style>
+            /* Add some basic styling for the dashboard to make comments visible and readable */
+            body { font-family: Arial, sans-serif; margin: 0; background-color: var(--background-color); color: var(--text-color); }
+            .container { max-width: 960px; margin: 20px auto; padding: 20px; background-color: var(--card-background); border-radius: 8px; box-shadow: var(--shadow); }
+            h1, h2 { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; }
+            .muted { color: var(--muted-text-color); }
+            .firebase-comments-widget { margin-top: 20px; }
+
+            /* Auth Container */
+            #auth-container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 20px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background); box-shadow: var(--shadow-sm); }
+            #auth-container.logged-in #login-options { display: none; }
+            #auth-container.logged-in #logout-btn { display: block; }
+            #login-options button { margin-right: 10px; }
+            #logout-btn { display: none; }
+            #user-info { display: none; align-items: center; font-weight: bold; }
+            #auth-container.logged-in #user-info { display: flex; }
+            .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin-right: 8px; }
+            .user-name { color: var(--text-color); }
+
+            /* Notification Button */
+            .notification-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); color: white; border: none; cursor: pointer; transition: background-color 0.2s ease; }
+            .notification-btn:hover { background-color: var(--primary-dark); }
+            .notification-btn svg { width: 22px; height: 22px; }
+            .notification-btn .spinner-icon { animation: spin 1s linear infinite; }
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            /* Default hide all icons, JS will show one */
+            .notification-btn .bell-icon, .notification-btn .bell-off-icon, .notification-btn .spinner-icon { display: none; }
+
+
+            /* Comments Dashboard */
+            .dashboard-page-section { margin-bottom: 30px; padding: 15px; border-radius: 8px; background-color: var(--secondary-background); box-shadow: var(--shadow-sm); }
+            .page-section-header { margin-top: 0; margin-bottom: 15px; font-size: 1.5em; color: var(--primary-color); }
+            .page-section-header a { text-decoration: none; color: var(--primary-color); }
+            .page-section-header a:hover { text-decoration: underline; }
+
+            .comment-list-container { margin-top: 15px; }
+            .comment-item { background-color: var(--background-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 10px; position: relative; }
+            .comment-item.reply-item { margin-left: 25px; border-left: 3px solid var(--primary-color-light); background-color: var(--secondary-background); }
+
+            .comment-header { display: flex; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+            .comment-author-info { display: flex; align-items: center; margin-right: 10px; }
+            .comment-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; }
+            .comment-avatar.default-avatar { background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 0.9em; font-weight: bold; }
+            .owner-avatar { border: 2px solid var(--primary-color); }
+            .comment-author { font-weight: bold; color: var(--heading-color); }
+            .comment-date { font-size: 0.8em; color: var(--muted-text-color); margin-left: auto; } /* Push date to right */
+            .verified-badge { color: var(--success-color); margin-left: 5px; font-size: 0.9em; vertical-align: middle; }
+            .verified-badge svg { fill: currentColor; width: 16px; height: 16px; vertical-align: middle; }
+
+            .comment-body { margin-bottom: 10px; line-height: 1.6; color: var(--text-color); }
+            .comment-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+            .comment-actions .btn.small { padding: 5px 10px; font-size: 0.85em; }
+            .comment-actions .vote-btn { background-color: var(--secondary-background); color: var(--text-color); border: 1px solid var(--border-color); }
+            .comment-actions .vote-btn:hover { background-color: var(--hover-background); }
+            .comment-actions .like-btn.active { color: var(--success-color); }
+            .comment-actions .dislike-btn.active { color: var(--danger-color); }
+            .comment-actions .count { margin-left: 5px; font-weight: bold; }
+            .comment-actions .reply-btn { background-color: var(--primary-color); color: white; border: none; }
+            .comment-actions .reply-btn:hover { background-color: var(--primary-dark); }
+            .comment-actions .delete-btn { background-color: var(--danger-color); color: white; border: none; }
+            .comment-actions .delete-btn:hover { background-color: var(--danger-dark); }
+
+            .inline-reply-slot { margin-top: 10px; } /* Where reply form will appear */
+
+            /* Reply Form */
+            .comment-form-shell { background-color: var(--secondary-background); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin-top: 15px; }
+            .comment-form textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; resize: vertical; min-height: 80px; margin-bottom: 10px; background-color: var(--input-background); color: var(--text-color); }
+            .comment-form textarea::placeholder { color: var(--muted-text-color); }
+            .comment-form-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+            .comment-form-char-counter { font-size: 0.8em; color: var(--muted-text-color); }
+            .comment-form-actions button { margin-left: 10px; }
+            
+            #replying-to { font-size: 0.9em; color: var(--primary-color); margin-bottom: 10px; display: none; }
+            .spinner-small { border: 2px solid #f3f3f3; border-top: 2px solid #3498db; border-radius: 50%; width: 12px; height: 12px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 5px; }
+
+            /* Buttons */
+            .btn { background-color: var(--button-background); color: var(--button-text-color); border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s ease; }
+            .btn:hover { background-color: var(--button-hover-background); }
+            .btn.primary { background-color: var(--primary-color); color: white; }
+            .btn.primary:hover { background-color: var(--primary-dark); }
+            .btn.danger { background-color: var(--danger-color); color: white; }
+            .btn.danger:hover { background-color: var(--danger-dark); }
+        </style>
 
     </head>
     <body>
@@ -113,18 +193,18 @@
 
                     <p id="non-owner-message" class="muted" style="display: none; margin-top: 2rem;">यह डैशबोर्ड केवल साइट एडमिनिस्ट्रेटर के लिए है।</p>
 
-                    <!-- Reply Form: यह एक ही फॉर्म होगा जिसे हम 'replyToComment' पर क्लिक करने पर भरेंगे और दिखाएंगे -->
-                    <div class="comment-form-wrapper" id="reply-form-wrapper" style="display: none; margin-top: 20px;">
-                        <form class="comment-form" id="reply-comment-form">
-                            <div class="replying-to" id="replying-to-text" aria-live="polite"></div>
-                            <textarea id="reply-comment-textarea" placeholder="आपका जवाब" maxlength="1000" required aria-label="आपका जवाब"></textarea>
-                            <input type="hidden" id="reply-parent-id" value="" />
-                            <input type="hidden" id="reply-page-id" value="" /> 
-                            <div class="form-footer">
-                                <div id="reply-char-counter">0 / 1000</div>
-                                <div class="actions">
-                                    <button type="submit" class="btn primary" id="submit-reply-button">जवाब सबमिट करें</button>
-                                    <button type="button" class="btn" id="cancel-reply-button">कैंसिल करें</button>
+                    <!-- Reply Form Template: यह एक ही फॉर्म होगा जिसे हम 'replyToComment' पर क्लिक करने पर क्लोन और भरेंगे -->
+                    <div class="comment-form-shell" id="main-form-shell" style="display: none;">
+                        <form class="comment-form">
+                            <div class="replying-to" id="replying-to" aria-live="polite" style="display: none;"></div>
+                            <textarea id="comment-input" placeholder="आपका जवाब" maxlength="1000" required aria-label="आपका जवाब"></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <input type="hidden" id="page-id" value="" /> <!-- This will hold the pageId for the reply -->
+                            <div class="comment-form-footer">
+                                <div class="comment-form-char-counter">0 / 1000</div>
+                                <div class="comment-form-actions">
+                                    <button type="submit" class="btn primary" id="submit-button">जवाब सबमिट करें</button>
+                                    <button type="button" class="btn" id="cancel-reply">कैंसिल करें</button>
                                 </div>
                             </div>
                         </form>
