@@ -62,11 +62,26 @@ async function initFirestore() {
     await loadFirebaseScript('firestore');
     const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
-    // Using initializeFirestore to enable long polling for better stability on poor networks.
-    db = firestore.initializeFirestore(firebaseApp, {
-        experimentalForceLongPolling: true,
-        useFetchStreams: false, // Fallback for environments that don't support fetch streams well
-    });
+    // Check if db is already initialized to avoid re-initializing with persistence.
+    // This can happen with lazy loading and multiple calls.
+    if (!db) {
+       try {
+            db = firestore.initializeFirestore(firebaseApp, {
+                // Enable offline persistence. Data will be cached locally, making the app
+                // more resilient to network issues and faster on subsequent loads.
+                localCache: firestore.persistentLocalCache({}),
+                experimentalForceLongPolling: true,
+                useFetchStreams: false,
+            });
+       } catch (error) {
+            console.error("Firestore initialization with persistence failed, falling back to in-memory:", error);
+            // Fallback to in-memory if persistence fails (e.g., in private browsing mode or due to errors)
+            db = firestore.initializeFirestore(firebaseApp, {
+                experimentalForceLongPolling: true,
+                useFetchStreams: false,
+            });
+       }
+    }
     
     addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
