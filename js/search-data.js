@@ -56,8 +56,29 @@ function initializePostRendering(){
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" /><stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" /></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>
-                    </div>
+                        <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo1-title">
+                    <title id="logo1-title">GK Learn Study Logo - Recreation</title>
+                    <defs>
+                        <radialGradient id="bgGradient1" cx="50%" cy="50%" r="70%" fx="50%" fy="30%">
+                            <stop offset="0%" style="stop-color:rgb(255, 245, 250);" />
+                            <stop offset="100%" style="stop-color:rgb(250, 220, 235);" />
+                        </radialGradient>
+                        <clipPath id="circleClip1">
+                            <circle cx="150" cy="150" r="148"/>
+                        </clipPath>
+                    </defs>
+                    <circle cx="150" cy="150" r="150" fill="url(#bgGradient1)" />
+                    <g clip-path="url(#circleClip1)">
+                        <path d="M-20 235 C 80 215, 220 255, 320 235 L 300 300 L 0 300 Z" fill="#B486F5" fill-opacity="0.9" />
+                        <path d="M-20 245 C 100 265, 200 225, 320 245 L 300 300 L 0 300 Z" fill="#7B42D6" fill-opacity="0.7" />
+                        <text x="50%" y="35%" dominant-baseline="middle" text-anchor="middle" font-family="'Arial Rounded MT Bold', Arial, sans-serif" font-size="110" font-weight="bold" fill="#F85A5A" stroke="#E53935" stroke-width="1.5">GK</text>
+                        <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="48" fill="#603F8B">Learn Study</text>
+                    </g>
+                     <path d="M40 30 L45 45 L50 30 L65 25 L50 20 L45 5 L40 20 L25 25 Z" fill="#FDBFDF" transform="scale(0.8) translate(15, 25)"/>
+                     <path d="M30 80 C 10 60, 40 50, 50 70 C 60 50, 90 60, 70 80 L 50 100 Z" fill="#FF8EC6" transform="scale(0.3) translate(30, 160)"/>
+                     <path d="M260 20 L264 32 L268 20 L280 16 L268 8 L264 -4 L260 8 L248 12 Z" fill="#DAB6FC" transform="scale(0.7) translate(60, 25)"/>
+                     <path d="M270 270 L275 285 L280 270 L295 265 L280 260 L275 245 L270 260 L255 265 Z" fill="#FDBFDF" transform="scale(0.9) translate(15, 15)" />
+                </svg>   </div>
                     <div class="author-details">
                         <span class="author vcard">by <span class="name">${post.author}</span></span>
                         <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time>${post.readingTime ? `&bull;${post.readingTime}` : ''}</span>
@@ -267,3 +288,4 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
