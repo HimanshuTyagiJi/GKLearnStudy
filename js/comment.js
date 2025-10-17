@@ -1,4 +1,3 @@
-
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -14,10 +13,6 @@ let unsubscribeRating = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null; // Track the currently open inline reply form
 let isDelegatedListenerSetup = false; // Guard for event listeners
-let appInitialized = false; // Guard for the main initializer
-let ratingInitialized = false; // Guard for rating click listeners
-let currentRatingSummary = null; // Cache for the latest rating summary
-let userRating = 0; // The current user's rating for this page
 
 // !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
@@ -138,7 +133,6 @@ function showErrorUI(targetElement, message, retryCallback) {
     targetElement.querySelector('.retry-btn')?.addEventListener('click', (e) => {
         e.preventDefault();
         targetElement.innerHTML = '<div class="spinner"></div>';
-        appInitialized = false; // Allow re-initialization
         setTimeout(retryCallback, 50);
     });
 }
@@ -192,20 +186,6 @@ async function signOutUser() {
 loginBtn.addEventListener('click', signInWithGoogle);
 logoutBtn.addEventListener('click', signOutUser);
 
-async function fetchUserRatingAndUpdateUI() {
-    if (!currentRatingSummary) return; // Don't update if we don't have summary data
-
-    if (currentUser) {
-        const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
-        const userDoc = await getDocFn(userRatingDocRef);
-        userRating = userDoc.exists() ? userDoc.data().rating : 0;
-    } else {
-        userRating = 0;
-    }
-    updateRatingUI(currentRatingSummary, userRating);
-}
-
-
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
         const wasLoggedIn = !!currentUser;
@@ -229,17 +209,18 @@ function setupAuthObserver() {
             loginBtn.innerHTML = originalLoginHTML;
             closeActiveReplyForm();
         }
-        
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-           if(ratingWidgetWrapper) fetchUserRatingAndUpdateUI();
+           if(ratingWidgetWrapper) initializeRatingSystem();
         }
     });
 }
 
 
 // ====== RATING SYSTEM LOGIC ======
+let userRating = 0;
 let isRatingSubmissionPending = false;
+let currentRatingSummary = null;
 
 function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     if (!ratingWidgetWrapper) return;
@@ -253,6 +234,16 @@ function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     const breakdown = summaryData?.breakdown || {};
     let totalCount = summaryData?.totalCount || 0;
     let totalSum = summaryData?.totalSum || 0;
+
+    if (typeof summaryData?.totalCount === 'undefined' || typeof summaryData?.totalSum === 'undefined') {
+        totalCount = 0;
+        totalSum = 0;
+        for (let i = 1; i <= 5; i++) {
+            const count = Number(breakdown[String(i)]) || 0;
+            totalCount += count;
+            totalSum += count * i;
+        }
+    }
 
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
@@ -297,18 +288,29 @@ function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
 }
 
 
-async function loadRatingsData() {
+async function loadRatings() {
     if (unsubscribeRating) unsubscribeRating();
 
     const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
     
     unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
-        currentRatingSummary = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-        fetchUserRatingAndUpdateUI(); // Update UI with latest summary and user rating
-        ratingWidgetWrapper?.classList.remove('rating-loading');
+        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
+        currentRatingSummary = summaryData;
+
+        if (currentUser) {
+            const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
+            getDocFn(userRatingDocRef).then(userDoc => {
+                userRating = userDoc.exists() ? userDoc.data().rating : 0;
+                updateRatingUI(summaryData, userRating);
+            });
+        } else {
+            userRating = 0;
+            updateRatingUI(summaryData, 0);
+        }
+         ratingWidgetWrapper?.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings.", initializeApp);
+        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings. Please try again.", initializeRatingSystem);
         ratingWidgetWrapper?.classList.remove('rating-loading');
     });
 }
@@ -321,10 +323,8 @@ async function submitRatingToServer(newRating, oldUserRating) {
         await runTransactionFn(db, async (transaction) => {
             const summaryRef = docFn(db, ...ratingsPath, '_summary');
             const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
-
             const summaryDoc = await transaction.get(summaryRef);
             const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-            
             const breakdown = { ...summaryData.breakdown };
             let newSum = summaryData.totalSum || 0;
             let newCount = summaryData.totalCount || 0;
@@ -352,19 +352,23 @@ async function submitRatingToServer(newRating, oldUserRating) {
 }
 
 function setupRatingListeners() {
-    if (!ratingStarsContainer || ratingInitialized) return;
-    ratingInitialized = true;
+    if (!ratingStarsContainer) return;
 
     ratingStarsContainer.addEventListener('click', (e) => {
         const star = e.target.closest('.star');
         if (!star || isRatingSubmissionPending) return;
-        if (!currentUser) { signInWithGoogle(); return; }
+
+        if (!currentUser) {
+            signInWithGoogle();
+            return;
+        }
 
         const newRating = parseInt(star.dataset.value, 10);
         const oldUserRating = userRating;
         if (newRating === oldUserRating) return;
 
         const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
+
         if (oldUserRating > 0) {
             optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
             optimisticSummary.totalSum -= oldUserRating;
@@ -376,6 +380,7 @@ function setupRatingListeners() {
         
         userRating = newRating;
         updateRatingUI(optimisticSummary, newRating, true);
+
         submitRatingToServer(newRating, oldUserRating);
     });
 }
@@ -481,7 +486,7 @@ async function loadComments(){
         commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
         console.error('Real-time listener error:', error);
-        showErrorUI(commentsList, 'A network connection error occurred.', initializeApp);
+        showErrorUI(commentsList, 'A network error occurred. Please check your connection and try again.', initializeCommentsSection);
         commentsWrapper?.classList.remove('comments-loading');
     });
 }
@@ -750,41 +755,63 @@ function handleCommentDeepLink() {
 }
 
 
-// ====== CENTRAL INITIALIZER ======
-async function initializeApp() {
-    if (appInitialized) return;
-    appInitialized = true;
-
+// ====== LAZY INITIALIZATION LOGIC ======
+let commentsInitialized = false;
+async function initializeCommentsSection() {
+    if (commentsInitialized) return;
+    commentsInitialized = true;
     try {
         await initFirebaseAuth();
         await initFirestore();
-
-        // Load data in parallel
-        await Promise.all([loadComments(), loadRatingsData()]);
-
+        await loadComments();
+        
         setupDelegatedListeners();
-        setupRatingListeners();
         setupVisibilityObserver();
         handleCommentDeepLink();
     } catch (error) {
-        console.error("Failed to initialize comments/ratings app:", error);
-        const errorMsg = 'Could not connect to the service. Please check your connection and try again.';
-        showErrorUI(commentsList, errorMsg, initializeApp);
-        showErrorUI(document.getElementById('rating-widget'), errorMsg, initializeApp);
+        console.error("Failed to initialize comments section:", error);
+        if (commentsList) {
+             showErrorUI(commentsList, 'Could not connect to the comments service. Please try again.', initializeCommentsSection);
+        }
         commentsWrapper?.classList.remove('comments-loading');
+    }
+}
+
+let ratingSystemInitialized = false;
+async function initializeRatingSystem() {
+    if (unsubscribeRating) unsubscribeRating();
+    
+    if (!ratingSystemInitialized) {
+        setupRatingListeners();
+        ratingSystemInitialized = true;
+    }
+    
+    try {
+        await initFirebaseAuth();
+        await initFirestore();
+        await loadRatings();
+    } catch (error) {
+        console.error("Failed to initialize rating system:", error);
+        showErrorUI(document.getElementById('rating-widget'), 'Could not connect to the rating service. Please try again.', initializeRatingSystem);
         ratingWidgetWrapper?.classList.remove('rating-loading');
     }
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
-    const lazyLoadTarget = commentsWrapper || ratingWidgetWrapper;
-    if (lazyLoadTarget) {
+    const lazyLoad = (target, callback) => {
+        if (!target) return;
         const observer = new IntersectionObserver(entries => {
-          if (entries[0].isIntersecting) {
-            initializeApp();
-            observer.disconnect(); 
-          }
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              callback();
+              observer.disconnect(); 
+            }
+          });
         }, { rootMargin: "200px" });
-        observer.observe(lazyLoadTarget);
-    }
+        observer.observe(target);
+    };
+    
+    lazyLoad(commentsWrapper, initializeCommentsSection);
+    lazyLoad(ratingWidgetWrapper, initializeRatingSystem);
 });
