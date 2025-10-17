@@ -14,6 +14,10 @@ let unsubscribeRating = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null; // Track the currently open inline reply form
 let isDelegatedListenerSetup = false; // Guard for event listeners
+let appInitialized = false; // Guard for the main initializer
+let ratingInitialized = false; // Guard for rating click listeners
+let currentRatingSummary = null; // Cache for the latest rating summary
+let userRating = 0; // The current user's rating for this page
 
 // !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
@@ -63,20 +67,15 @@ async function initFirestore() {
     await loadFirebaseScript('firestore');
     const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
-    // Check if db is already initialized to avoid re-initializing with persistence.
-    // This can happen with lazy loading and multiple calls.
     if (!db) {
        try {
             db = firestore.initializeFirestore(firebaseApp, {
-                // Enable offline persistence. Data will be cached locally, making the app
-                // more resilient to network issues and faster on subsequent loads.
                 localCache: firestore.persistentLocalCache({}),
                 experimentalForceLongPolling: true,
                 useFetchStreams: false,
             });
        } catch (error) {
             console.error("Firestore initialization with persistence failed, falling back to in-memory:", error);
-            // Fallback to in-memory if persistence fails (e.g., in private browsing mode or due to errors)
             db = firestore.initializeFirestore(firebaseApp, {
                 experimentalForceLongPolling: true,
                 useFetchStreams: false,
@@ -139,6 +138,7 @@ function showErrorUI(targetElement, message, retryCallback) {
     targetElement.querySelector('.retry-btn')?.addEventListener('click', (e) => {
         e.preventDefault();
         targetElement.innerHTML = '<div class="spinner"></div>';
+        appInitialized = false; // Allow re-initialization
         setTimeout(retryCallback, 50);
     });
 }
@@ -155,8 +155,6 @@ const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
 const originalLoginHTML = loginBtn.innerHTML;
 const commentCountSpan = document.getElementById('comment-count');
-
-
 const ratingWidgetWrapper = document.getElementById('rating-widget-wrapper');
 const ratingStarsContainer = document.getElementById('rating-stars');
 const ratingLoginPrompt = document.getElementById('rating-login-prompt');
@@ -194,12 +192,25 @@ async function signOutUser() {
 loginBtn.addEventListener('click', signInWithGoogle);
 logoutBtn.addEventListener('click', signOutUser);
 
+async function fetchUserRatingAndUpdateUI() {
+    if (!currentRatingSummary) return; // Don't update if we don't have summary data
+
+    if (currentUser) {
+        const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
+        const userDoc = await getDocFn(userRatingDocRef);
+        userRating = userDoc.exists() ? userDoc.data().rating : 0;
+    } else {
+        userRating = 0;
+    }
+    updateRatingUI(currentRatingSummary, userRating);
+}
+
+
 function setupAuthObserver() {
     onAuthStateChangedFn(auth, user => {
         const wasLoggedIn = !!currentUser;
         currentUser = user;
 
-        // Show/hide owner dashboard link in footer
         const dashboardLink = document.getElementById('dashboard-link');
         if (dashboardLink) {
             dashboardLink.style.display = (user && user.uid === OWNER_UID) ? 'list-item' : 'none';
@@ -218,19 +229,17 @@ function setupAuthObserver() {
             loginBtn.innerHTML = originalLoginHTML;
             closeActiveReplyForm();
         }
+        
         if (wasLoggedIn !== !!user) {
            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-           // Re-initialize rating system to reflect login state
-           if(ratingWidgetWrapper) initializeRatingSystem();
+           if(ratingWidgetWrapper) fetchUserRatingAndUpdateUI();
         }
     });
 }
 
 
 // ====== RATING SYSTEM LOGIC ======
-let userRating = 0; // The current user's rating for this page
 let isRatingSubmissionPending = false;
-let currentRatingSummary = null; // Cache for the latest rating summary
 
 function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     if (!ratingWidgetWrapper) return;
@@ -244,17 +253,6 @@ function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
     const breakdown = summaryData?.breakdown || {};
     let totalCount = summaryData?.totalCount || 0;
     let totalSum = summaryData?.totalSum || 0;
-
-    // Fallback calculation if summary totals are missing, for robustness
-    if (typeof summaryData?.totalCount === 'undefined' || typeof summaryData?.totalSum === 'undefined') {
-        totalCount = 0;
-        totalSum = 0;
-        for (let i = 1; i <= 5; i++) {
-            const count = Number(breakdown[String(i)]) || 0;
-            totalCount += count;
-            totalSum += count * i;
-        }
-    }
 
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
@@ -299,30 +297,18 @@ function updateRatingUI(summaryData, currentUserRating, isInstant = false) {
 }
 
 
-async function loadRatings() {
-    await initFirestore();
+async function loadRatingsData() {
     if (unsubscribeRating) unsubscribeRating();
 
     const summaryDocRef = docFn(db, ...ratingsPath, '_summary');
     
     unsubscribeRating = onSnapshotFn(summaryDocRef, (doc) => {
-        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-        currentRatingSummary = summaryData; // Cache the latest summary
-
-        if (currentUser) {
-            const userRatingDocRef = docFn(db, ...ratingsPath, currentUser.uid);
-            getDocFn(userRatingDocRef).then(userDoc => {
-                userRating = userDoc.exists() ? userDoc.data().rating : 0;
-                updateRatingUI(summaryData, userRating);
-            });
-        } else {
-            userRating = 0;
-            updateRatingUI(summaryData, 0);
-        }
-         ratingWidgetWrapper?.classList.remove('rating-loading');
+        currentRatingSummary = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
+        fetchUserRatingAndUpdateUI(); // Update UI with latest summary and user rating
+        ratingWidgetWrapper?.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings due to a network error. Please try again.", initializeRatingSystem);
+        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings.", initializeApp);
         ratingWidgetWrapper?.classList.remove('rating-loading');
     });
 }
@@ -337,7 +323,6 @@ async function submitRatingToServer(newRating, oldUserRating) {
             const userRatingRef = docFn(db, ...ratingsPath, currentUser.uid);
 
             const summaryDoc = await transaction.get(summaryRef);
-            
             const summaryData = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
             
             const breakdown = { ...summaryData.breakdown };
@@ -359,35 +344,27 @@ async function submitRatingToServer(newRating, oldUserRating) {
     } catch (error) {
         console.error("Rating submission failed:", error);
         alert("Could not save your rating. Please try again.");
-        // Rollback optimistic UI change
         updateRatingUI(currentRatingSummary, oldUserRating);
-        userRating = oldUserRating; // Revert local state
+        userRating = oldUserRating;
     } finally {
         isRatingSubmissionPending = false;
     }
 }
 
 function setupRatingListeners() {
-    if (!ratingStarsContainer) return;
+    if (!ratingStarsContainer || ratingInitialized) return;
+    ratingInitialized = true;
 
     ratingStarsContainer.addEventListener('click', (e) => {
         const star = e.target.closest('.star');
         if (!star || isRatingSubmissionPending) return;
-
-        if (!currentUser) {
-            signInWithGoogle();
-            return;
-        }
+        if (!currentUser) { signInWithGoogle(); return; }
 
         const newRating = parseInt(star.dataset.value, 10);
         const oldUserRating = userRating;
-
         if (newRating === oldUserRating) return;
 
-        // --- Optimistic UI Update ---
         const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
-
-        // Adjust counts and sums based on the new vote
         if (oldUserRating > 0) {
             optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
             optimisticSummary.totalSum -= oldUserRating;
@@ -397,10 +374,8 @@ function setupRatingListeners() {
         optimisticSummary.totalSum += newRating;
         optimisticSummary.totalCount += 1;
         
-        userRating = newRating; // Update local state immediately
+        userRating = newRating;
         updateRatingUI(optimisticSummary, newRating, true);
-
-        // --- Send to Server in Background ---
         submitRatingToServer(newRating, oldUserRating);
     });
 }
@@ -485,8 +460,6 @@ function renderFlatList(nodes, container){
 
 // ====== Load Comments with Real-Time Listener ======
 async function loadComments(){
-  try {
-    await initFirestore();
     if (unsubscribeComments) unsubscribeComments();
 
     const q = queryFn(collectionFn(db, ...commentsPath), orderByFn('timestamp','desc'));
@@ -499,7 +472,6 @@ async function loadComments(){
 
         renderFlatList(flattenTree(buildTree(allComments)), commentsList);
         
-        // Update total comment count
         const totalComments = allComments.length;
         if (commentCountSpan) {
             commentCountSpan.textContent = totalComments;
@@ -509,14 +481,9 @@ async function loadComments(){
         commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
         console.error('Real-time listener error:', error);
-        showErrorUI(commentsList, 'A network connection error occurred. Please check your connection and try again.', initializeCommentsSection);
+        showErrorUI(commentsList, 'A network connection error occurred.', initializeApp);
         commentsWrapper?.classList.remove('comments-loading');
     });
-  } catch(err){
-    console.error('Error setting up listener:', err);
-    showErrorUI(commentsList, 'Could not load comments. Please check your connection and try again.', initializeCommentsSection);
-    commentsWrapper?.classList.remove('comments-loading');
-  }
 }
 
 // ====== Inline Reply Form Management ======
@@ -598,22 +565,16 @@ async function handleVote(commentId, voteType) {
             const isServerLiked = serverLikedBy.includes(uid), isServerDisliked = serverDislikedBy.includes(uid);
             
             if (voteType === 'like') {
-                if (isServerLiked) {
-                    serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
-                } else {
+                if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                else {
                     serverLikedBy.push(uid);
-                    if (isServerDisliked) {
-                        serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
-                    }
+                    if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
                 }
             } else if (voteType === 'dislike') {
-                if (isServerDisliked) {
-                    serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
-                } else {
+                if (isServerDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                else {
                     dislikedBy.push(uid);
-                    if (isServerLiked) {
-                        serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
-                    }
+                    if (isServerLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                 }
             }
             t.update(docRef, { likedBy: serverLikedBy, dislikedBy: serverDislikedBy, likes: serverLikedBy.length, dislikes: serverDislikedBy.length });
@@ -656,10 +617,7 @@ function setupDelegatedListeners() {
         const button = e.target.closest('button');
         if (!button) return;
 
-        if (button.id === 'cancel-reply') {
-             closeActiveReplyForm();
-             return; 
-        }
+        if (button.id === 'cancel-reply') { closeActiveReplyForm(); return; }
         
         const action = button.dataset.action;
         if (!action) return;
@@ -694,9 +652,7 @@ function setupDelegatedListeners() {
     container.addEventListener('submit', async e => {
         e.preventDefault();
         const form = e.target;
-        if (!form.matches('.comment-form')) return;
-
-        if (!currentUser) return;
+        if (!form.matches('.comment-form') || !currentUser) return;
         
         const commentInput = form.querySelector('#comment');
         const parentIdInput = form.querySelector('#parent-id');
@@ -726,7 +682,6 @@ function setupDelegatedListeners() {
                 likes: 0, dislikes: 0, likedBy: [], dislikedBy: []
             });
             
-            // If it was an inline form, close it. Otherwise, reset the main form.
             if (form.closest('.inline-reply-slot')) {
                 closeActiveReplyForm();
             } else {
@@ -753,47 +708,23 @@ function setupDelegatedListeners() {
 }
 
 
-// ====== NEW: Smart Notification & Deep Linking Logic ======
-
-/**
- * Notifies the service worker about the visibility of the comments section.
- * This prevents notifications from appearing if the user is already looking at the comments.
- * @param {boolean} isVisible - Whether the comments section is currently visible.
- */
+// ====== Smart Notification & Deep Linking Logic ======
 function notifyServiceWorkerVisibility(isVisible) {
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
-            type: 'VISIBILITY_CHANGE',
-            pageId: pageId,
-            isVisible: isVisible
+            type: 'VISIBILITY_CHANGE', pageId: pageId, isVisible: isVisible
         });
     }
 }
 
-/**
- * Sets up an IntersectionObserver to track when the comments section is visible.
- */
 function setupVisibilityObserver() {
     if (!commentsWrapper) return;
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                notifyServiceWorkerVisibility(entry.isIntersecting);
-            });
-        },
-        {
-            root: null, // relative to the viewport
-            threshold: 0.1 // 10% of the element must be visible
-        }
-    );
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => notifyServiceWorkerVisibility(entry.isIntersecting));
+    }, { root: null, threshold: 0.1 });
     observer.observe(commentsWrapper);
 }
 
-/**
- * Checks for a #comment-<ID> hash in the URL and scrolls to it.
- * It robustly waits for the comment to be rendered before attempting to scroll.
- */
 function handleCommentDeepLink() {
     const hash = window.location.hash;
     if (!hash || !hash.startsWith('#comment-')) return;
@@ -802,18 +733,15 @@ function handleCommentDeepLink() {
     if (!commentId) return;
 
     let attempts = 0;
-    const maxAttempts = 50; // Try for 10 seconds (50 * 200ms)
+    const maxAttempts = 50; 
     const interval = setInterval(() => {
-        // Find the comment element by its data attribute in the actions container
         const commentElement = document.querySelector(`.comment-actions[data-comment-id="${commentId}"]`)?.closest('.comment-item');
         
         if (commentElement) {
             clearInterval(interval);
             commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             commentElement.classList.add('highlighted');
-            setTimeout(() => {
-                commentElement.classList.remove('highlighted');
-            }, 2500); // Highlight lasts for 2.5 seconds
+            setTimeout(() => commentElement.classList.remove('highlighted'), 2500);
         } else if (attempts++ > maxAttempts) {
             clearInterval(interval);
             console.warn(`Could not find comment ${commentId} to scroll to.`);
@@ -822,63 +750,41 @@ function handleCommentDeepLink() {
 }
 
 
-// ====== LAZY INITIALIZATION LOGIC ======
-let commentsInitialized = false;
-async function initializeCommentsSection() {
-    if (commentsInitialized) return;
-    commentsInitialized = true;
-    try {
-        await initFirestore();
-        await loadComments();
-        await initFirebaseAuth(); 
-        setupDelegatedListeners();
-        setupVisibilityObserver(); // NEW: Start observing visibility
-        handleCommentDeepLink();   // NEW: Check for deep link on load
-    } catch (error) {
-        console.error("Failed to initialize comments section:", error);
-        if (commentsList) {
-             showErrorUI(commentsList, 'Could not connect to the comments service. Please check your connection and try again.', initializeCommentsSection);
-        }
-        commentsWrapper?.classList.remove('comments-loading');
-    }
-}
+// ====== CENTRAL INITIALIZER ======
+async function initializeApp() {
+    if (appInitialized) return;
+    appInitialized = true;
 
-let ratingInitialized = false;
-async function initializeRatingSystem() {
-    if (unsubscribeRating) unsubscribeRating(); // Always reset listener
-    
-    // Only set up click listeners once
-    if (!ratingInitialized) {
-        setupRatingListeners();
-        ratingInitialized = true;
-    }
-    
     try {
+        await initFirebaseAuth();
         await initFirestore();
-        await loadRatings();
-        if (!isAuthInitialized) await initFirebaseAuth();
+
+        // Load data in parallel
+        await Promise.all([loadComments(), loadRatingsData()]);
+
+        setupDelegatedListeners();
+        setupRatingListeners();
+        setupVisibilityObserver();
+        handleCommentDeepLink();
     } catch (error) {
-        console.error("Failed to initialize rating system:", error);
-        showErrorUI(document.getElementById('rating-widget'), 'Could not connect to the rating service. Please check your network and try again.', initializeRatingSystem);
+        console.error("Failed to initialize comments/ratings app:", error);
+        const errorMsg = 'Could not connect to the service. Please check your connection and try again.';
+        showErrorUI(commentsList, errorMsg, initializeApp);
+        showErrorUI(document.getElementById('rating-widget'), errorMsg, initializeApp);
+        commentsWrapper?.classList.remove('comments-loading');
         ratingWidgetWrapper?.classList.remove('rating-loading');
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
-    const lazyLoad = (target, callback) => {
-        if (!target) return;
+    const lazyLoadTarget = commentsWrapper || ratingWidgetWrapper;
+    if (lazyLoadTarget) {
         const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              callback();
-              observer.disconnect(); 
-            }
-          });
+          if (entries[0].isIntersecting) {
+            initializeApp();
+            observer.disconnect(); 
+          }
         }, { rootMargin: "200px" });
-        observer.observe(target);
-    };
-    
-    lazyLoad(commentsWrapper, initializeCommentsSection);
-    lazyLoad(ratingWidgetWrapper, initializeRatingSystem);
+        observer.observe(lazyLoadTarget);
+    }
 });
