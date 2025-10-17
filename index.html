@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,11 +42,8 @@
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        <link rel="stylesheet" href="css/theme.css" media="print" onload="this.media='all'">
-        <link rel="stylesheet" href="css/notification.css" media="print" onload="this.media='all'">
-
-    <!-- Fallback for browsers that don't support JS -->
-    <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
+        <link rel="stylesheet" href="css/theme.css">
+        <link rel="stylesheet" href="css/notification.css">
        
         <script type="application/ld+json">
             {
@@ -415,7 +410,14 @@
                     <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
                 </div>
 
-                <main id="post-grid" class="post-grid"></main>
+                <main id="post-grid" class="post-grid">
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                </main>
 
                 <div id="load-more-container">
                     <button id="load-more-btn">Load More</button>
@@ -551,8 +553,6 @@
         </footer>
         <script src="js/theme.js" defer></script>
         <script src="js/search-data.js" defer></script>
-        <script src="js/comment.js" defer></script>
-        <script src="js/notification.js" defer></script>
         
         <script>
             // Register the service worker for notifications
@@ -560,13 +560,41 @@
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/firebase-messaging-sw.js')
                         .then(registration => {
-                            console.log('Service Worker registered with scope:', registration.scope);
+                            console.log('Firebase Messaging Service Worker registered with scope:', registration.scope);
                         })
                         .catch(err => {
                             console.error('Service Worker registration failed:', err);
                         });
                 });
             }
+        </script>
+        <script>
+            // Register the caching service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(registration => {
+                            console.log('Caching Service Worker registered with scope:', registration.scope);
+                        })
+                        .catch(err => {
+                            console.error('Caching Service Worker registration failed:', err);
+                        });
+                });
+            }
+        </script>
+        <script>
+            window.addEventListener('load', () => {
+                const loadScript = (src) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.defer = true;
+                    document.body.appendChild(script);
+                };
+                
+                // These scripts are not critical for the initial view and can be loaded last.
+                loadScript('js/comment.js');
+                loadScript('js/notification.js');
+            });
         </script>
     </body>
 </html>
