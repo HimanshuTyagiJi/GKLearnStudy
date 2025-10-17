@@ -1,3 +1,4 @@
+
 // --- Firebase Module Placeholders ---
 let db, addDocFn, collectionFn, deleteDocFn, queryFn, orderByFn, serverTimestampFn, docFn, runTransactionFn, onSnapshotFn, getDocFn, setDocFn;
 let auth, onAuthStateChangedFn, GoogleAuthProviderFn, signInWithPopupFn, signOutFn;
@@ -12,7 +13,6 @@ let unsubscribeComments = null;
 let unsubscribeRating = null;
 let allComments = []; // Global cache for comments
 let activeReplyForm = null; // Track the currently open inline reply form
-let isDelegatedListenerSetup = false; // Guard for event listeners
 
 // !!! IMPORTANT: Paste your Firebase User ID here to be recognized as the owner.
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
@@ -62,27 +62,7 @@ async function initFirestore() {
     await loadFirebaseScript('firestore');
     const firestore = await import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js");
     
-    // Check if db is already initialized to avoid re-initializing with persistence.
-    // This can happen with lazy loading and multiple calls.
-    if (!db) {
-       try {
-            db = firestore.initializeFirestore(firebaseApp, {
-                // Enable offline persistence. Data will be cached locally, making the app
-                // more resilient to network issues and faster on subsequent loads.
-                localCache: firestore.persistentLocalCache({}),
-                experimentalForceLongPolling: true,
-                useFetchStreams: false,
-            });
-       } catch (error) {
-            console.error("Firestore initialization with persistence failed, falling back to in-memory:", error);
-            // Fallback to in-memory if persistence fails (e.g., in private browsing mode or due to errors)
-            db = firestore.initializeFirestore(firebaseApp, {
-                experimentalForceLongPolling: true,
-                useFetchStreams: false,
-            });
-       }
-    }
-    
+    db = firestore.getFirestore(firebaseApp);
     addDocFn = firestore.addDoc; collectionFn = firestore.collection; 
     deleteDocFn = firestore.deleteDoc; queryFn = firestore.query; orderByFn = firestore.orderBy;
     serverTimestampFn = firestore.serverTimestamp; docFn = firestore.doc;
@@ -126,21 +106,6 @@ const pageId = (() => {
 })();
 const commentsPath = ['pages', pageId, 'comments'];
 const ratingsPath = ['pages', pageId, 'ratings'];
-
-function showErrorUI(targetElement, message, retryCallback) {
-    if (!targetElement) return;
-    targetElement.innerHTML = `
-        <div class="error-container">
-            <p>${message}</p>
-            <button class="btn retry-btn">Try Again</button>
-        </div>
-    `;
-    targetElement.querySelector('.retry-btn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        targetElement.innerHTML = '<div class="spinner"></div>';
-        setTimeout(retryCallback, 50);
-    });
-}
 
 // ====== DOM Elements ======
 const commentsList = document.getElementById('comments-list');
@@ -321,7 +286,7 @@ async function loadRatings() {
          ratingWidgetWrapper?.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings due to a network error. Please try again.", initializeRatingSystem);
+        if (totalRatingsCount) totalRatingsCount.textContent = "Could not load ratings.";
         ratingWidgetWrapper?.classList.remove('rating-loading');
     });
 }
@@ -508,12 +473,12 @@ async function loadComments(){
         commentsWrapper?.classList.remove('comments-loading');
     }, (error) => {
         console.error('Real-time listener error:', error);
-        showErrorUI(commentsList, 'A network connection error occurred. Please check your connection and try again.', initializeCommentsSection);
+        commentsList.innerHTML = `<p class="muted error">Could not load comments. Check security rules.</p>`;
         commentsWrapper?.classList.remove('comments-loading');
     });
   } catch(err){
     console.error('Error setting up listener:', err);
-    showErrorUI(commentsList, 'Could not load comments. Please check your connection and try again.', initializeCommentsSection);
+    commentsList.innerHTML = `<p class="muted error">Could not load comments.</p>`;
     commentsWrapper?.classList.remove('comments-loading');
   }
 }
@@ -646,9 +611,6 @@ async function deleteWithDescendants(rootId){
 
 // ====== Delegated Event Listeners Setup ======
 function setupDelegatedListeners() {
-    if (isDelegatedListenerSetup) return;
-    isDelegatedListenerSetup = true;
-
     const container = document.getElementById('custom-comment-section');
 
     container.addEventListener('click', async (e) => {
@@ -835,10 +797,7 @@ async function initializeCommentsSection() {
         handleCommentDeepLink();   // NEW: Check for deep link on load
     } catch (error) {
         console.error("Failed to initialize comments section:", error);
-        if (commentsList) {
-             showErrorUI(commentsList, 'Could not connect to the comments service. Please check your connection and try again.', initializeCommentsSection);
-        }
-        commentsWrapper?.classList.remove('comments-loading');
+        if (commentsList) commentsList.innerHTML = `<p class="muted error">Could not load comments section.</p>`;
     }
 }
 
@@ -858,8 +817,7 @@ async function initializeRatingSystem() {
         if (!isAuthInitialized) await initFirebaseAuth();
     } catch (error) {
         console.error("Failed to initialize rating system:", error);
-        showErrorUI(document.getElementById('rating-widget'), 'Could not connect to the rating service. Please check your network and try again.', initializeRatingSystem);
-        ratingWidgetWrapper?.classList.remove('rating-loading');
+        if (totalRatingsCount) totalRatingsCount.textContent = `Could not load rating system.`;
     }
 }
 
