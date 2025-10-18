@@ -268,7 +268,7 @@
                     .testimonial-text { font-style: italic; color: var(--text-secondary); line-height: 1.7; margin: 0 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
                     .testimonial-author { font-weight: 600; color: var(--text-primary); }
                     .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
-                    .founder-avatar-svg {border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
+                    .founder-avatar-svg { border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
                     .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
                     .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
                     .highlight-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
@@ -583,28 +583,17 @@
                 <section class="content-section">
                     <h2 class="section-title">Meet the Founder</h2>
                     <div class="founder-section">
-                        <svg class="founder-avatar-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="150" cy="150" r="150" fill="white" />
-                            <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                                GK
-                                <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
-                                <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s" dur="1.2s" fill="freeze" additive="sum" />
-                                <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.2s" fill="freeze" additive="sum" />
-                            </text>
-                            <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                                Learn Study
-                                <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
-                                <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
-                            </text>
-                            <clipPath id="circleClipFounder"><circle cx="150" cy="150" r="150" /></clipPath>
-                            <g clip-path="url(#circleClipFounder)">
-                                <path fill="#ff9f80" fill-opacity="0.8">
-                                    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z; M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z; M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z" />
-                                </path>
-                                <path fill="#6a4cff" fill-opacity="0.5">
-                                    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z; M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z; M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z" />
-                                </path>
+                       <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+                            <title>GK Learn Study</title>
+                            <circle cx="150" cy="150" r="150" fill="white"></circle>
+                            <defs><clipPath id="circle-clip-main"><circle cx="150" cy="150" r="150"></circle></clipPath></defs>
+                            <g clip-path="url(#circle-clip-main)">
+                                <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                                <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
                             </g>
+                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0"> GK <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform><animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform></text>
+                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0"> Learn Study <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze"></animateTransform></text>
+                            <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"></circle>
                         </svg>
                         <div class="founder-bio">
                             <h3>Mr. Himanshu Tyagi</h3>
