@@ -4,11 +4,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const postsGrid = document.getElementById('author-post-grid');
     const postsHeading = document.getElementById('author-posts-heading');
 
+    /**
+     * Generates a unique SVG avatar for an author based on their name.
+     * @param {string} name - The author's full name.
+     * @returns {string} - The HTML string for the SVG avatar.
+     */
+    const generateAuthorAvatarSVG = (name) => {
+        const words = name.split(' ').filter(Boolean);
+        let initials = words[0] ? words[0][0] : '';
+        if (words.length > 1) {
+            initials += words[words.length - 1][0];
+        }
+        initials = initials.toUpperCase();
+
+        // Generate a consistent color from the name's characters
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            hash = hash & hash; // Ensure it's a 32bit integer
+        }
+        const hue = Math.abs(hash % 360);
+        const color = `hsl(${hue}, 70%, 45%)`;
+
+        // Adjust font size based on number of initials for better centering
+        const fontSize = initials.length > 1 ? '48' : '60';
+
+        return `<div class="author-avatar-large">
+            <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="60" fill="${color}" />
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="${fontSize}" font-weight="bold" fill="white" font-family="Arial, sans-serif">${initials}</text>
+            </svg>
+        </div>`;
+    };
+
     const renderProfile = (authorName, postCount) => {
         if (!profileCard) return;
         
-        // A consistent, professional avatar for all authors.
-        const authorAvatar = `<div class="author-avatar-large"><svg width="120" height="120" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" /><stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" /></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg></div>`;
+        let authorAvatar;
+
+        // Use the specific GK Learn Study logo for the owner.
+        if (authorName === "Mr. Himanshu Tyagi" || authorName === "Owner") {
+            const ownerLogoSVG = `<svg width="120" height="120" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="150" fill="white" /><g><path d="M0 230 Q75 210, 150 230 T300 210 L300 300 L0 300 Z" fill="#c0a4fb" /><path d="M0 220 Q75 245, 150 220 T300 235 L300 300 L0 300 Z" fill="#641ef9" fill-opacity="0.7" /></g><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="700" fill="#e53935">GK</text><text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" fill="#6a1b9a">Learn Study</text><circle cx="150" cy="150" r="148" fill="none" stroke="#f0e6ff" stroke-width="6" /></svg>`;
+            authorAvatar = `<div class="author-avatar-large">${ownerLogoSVG}</div>`;
+        } else {
+            // Generate a dynamic avatar for all other authors.
+            authorAvatar = generateAuthorAvatarSVG(authorName);
+        }
         
         profileCard.innerHTML = `
             ${authorAvatar}
@@ -67,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const authorPosts = allPosts.filter(post => post.author === authorName);
 
         // If no posts are found for this author name, it means the author doesn't exist in the data.
-        if (authorPosts.length === 0) {
+        if (authorPosts.length === 0 && authorName !== "Mr. Himanshu Tyagi" && authorName !== "Owner") {
             profileCard.innerHTML = `<p class="muted error">Author "${authorName}" not found or has no articles.</p>`;
             postsHeading.style.display = 'none';
             return;
