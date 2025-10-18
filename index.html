@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -250,17 +249,19 @@
                     .featured-tool-card p { color: var(--text-secondary); margin-bottom: 1.5rem; }
                     .featured-tool-card .tool-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
                     .featured-tool-card .tool-btn:hover { background-color: #004d4e; }
-                    .subject-spotlight-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
-                    .subject-spotlight-card .icon-wrapper { width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
-                    .subject-spotlight-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
-                    .subject-spotlight-card p { color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1; }
-                    .subject-spotlight-card .spotlight-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
-                    .subject-spotlight-card .spotlight-btn:hover { background-color: #004d4e; }
+                    .subject-spotlight-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); padding: 2rem; display: flex; flex-direction: column; }
+                    .subject-spotlight-card .icon-wrapper { width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; margin-left: auto; margin-right: auto;}
+                    .subject-spotlight-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); text-align: center; }
+                    .subject-spotlight-links { list-style: none; padding: 0; margin: 0; text-align: left; flex-grow: 1;}
+                    .subject-spotlight-links li { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+                    .subject-spotlight-links li svg { width: 18px; height: 18px; color: var(--accent-color); flex-shrink: 0; }
+                    .subject-spotlight-links li a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color .2s ease; }
+                    .subject-spotlight-links li a:hover { color: var(--accent-color); }
                     .testimonial-card { background-color: var(--card-bg); border-left: 5px solid var(--accent-color); padding: 2rem; border-radius: 0 var(--border-radius) var(--border-radius) 0; box-shadow: var(--card-shadow); }
                     .testimonial-text { font-style: italic; color: var(--text-secondary); line-height: 1.7; margin: 0 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
                     .testimonial-author { font-weight: 600; color: var(--text-primary); }
                     .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
-                    .founder-avatar { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
+                    .founder-avatar-svg { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
                     .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
                     .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
                     .stats-section { background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px; text-align: center; }
@@ -272,9 +273,6 @@
                     .update-item .update-date { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
                     .update-item h3 { margin-top: 0; font-size: 1.2rem; }
                     .update-item p { margin-bottom: 0; }
-                    .featured-section { background-color: var(--body-bg); text-align: center; padding: 3rem 0; }
-                    .featured-logos { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 3rem; margin-top: 2rem; filter: grayscale(100%) opacity(0.6); }
-                    .featured-logos svg { height: 35px; color: var(--text-secondary); }
                     .explore-card { background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); padding: 2.5rem 2rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
                     .explore-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px var(--shadow-color); border-color: var(--accent-color); }
                     .explore-card .icon { font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
@@ -282,6 +280,15 @@
                     .explore-card p { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; }
                     .explore-card .explore-btn { font-weight: 600; text-decoration: none; color: var(--accent-color); border: 2px solid var(--accent-color); padding: 0.8rem 2rem; border-radius: 50px; transition: all 0.2s ease; }
                     .explore-card .explore-btn:hover { background: var(--accent-color); color: var(--white); }
+                    .latest-article-list { max-width: 800px; margin: 0 auto; }
+                    .latest-article-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border-color); transition: background-color .2s ease; border-radius: 8px;}
+                    .latest-article-item:hover { background-color: var(--input-bg); }
+                    .latest-article-item:last-child { border-bottom: none; }
+                    .latest-article-item .category-tag { background-color: var(--accent-color); color: white; padding: .25rem .6rem; border-radius: 15px; font-size: .8rem; font-weight: 500; white-space: nowrap; }
+                    .latest-article-item .article-title { flex-grow: 1; margin: 0; font-size: 1.1rem; }
+                    .latest-article-item .article-title a { text-decoration: none; color: var(--text-primary); font-weight: 600; }
+                    .latest-article-item .article-title a:hover { color: var(--accent-color); }
+                    .latest-article-item .article-date { color: var(--text-secondary); font-size: .9rem; white-space: nowrap; }
                      @media (min-width: 768px) { .founder-section { flex-direction: row; text-align: left; } }
                 </style>
 
@@ -315,8 +322,7 @@
                         <div class="info-card"> <div class="icon">🌍</div> <h3>Free & Accessible for All</h3> <p>We firmly believe in barrier-free education. Our entire library of high-quality resources is 100% free, with no hidden costs or premium subscriptions, ever.</p> </div>
                         <div class="info-card"> <div class="icon">🔄</div> <h3>Constantly Updated</h3> <p>The world is always changing, and so is our content. We regularly update our articles to reflect the latest information, exam patterns, and current affairs so you are always ahead.</p> </div>
                         <div class="info-card"> <div class="icon">🏆</div> <h3>Exam-Oriented Approach</h3> <p>Get a competitive edge in your preparation. Our content is specifically tailored to help aspirants preparing for competitive exams like SSC, Banking, Railways, and State PSCs.</p> </div>
-                         <div class="info-card"> <div class="icon">🛠️</div> <h3>Practical Tools & Utilities</h3> <p>Beyond just articles, we provide a suite of handy online tools like unit converters, formula sheets, and educational guides to assist you with your daily tasks and studies.</p> </div>
-                    </div>
+                         <div class="info-card"> <div class="icon">🛠️</div> <h3>Practical Tools & Utilities</h3> <p>Beyond just articles, we provide a suite of handy online tools like unit converters, formula sheets, and educational guides to assist you with your daily tasks and studies.</p> d>
                 </section>
 
                 <section class="content-section stats-section">
@@ -371,53 +377,58 @@
                         </div>
                     </div>
                 </section>
-
                 <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
-                    <h2 class="section-title">Featured Quizzes & Tools</h2>
-                    <p class="section-subtitle">Beyond articles, we offer interactive tools to test your knowledge and simplify complex calculations. Try them now!</p>
+                    <h2 class="section-title">Essential Formulas Hub</h2>
+                    <p class="section-subtitle">Your one-stop destination for all important formulas. Whether you're a student preparing for an exam or need a quick reference, we've got you covered.</p>
                     <div class="grid-3">
                         <div class="featured-tool-card">
-                            <span class="icon">📜</span>
-                            <h3>Indian History Quiz</h3>
-                            <p>Test your knowledge on the Mauryan Empire, Mughal Era, and more with our challenging quiz.</p>
-                            <a href="#" class="tool-btn">Take the Quiz</a>
+                             <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                            </div>
+                            <h3>Physics Formulas</h3>
+                            <p>From motion to thermodynamics, find all the critical physics formulas required for your studies and competitive exams.</p>
+                            <a href="/all-formulas" class="tool-btn">View Physics Formulas</a>
                         </div>
                         <div class="featured-tool-card">
-                            <span class="icon">💻</span>
-                            <h3>Computer Basics Quiz</h3>
-                            <p>How well do you know computer fundamentals? Find out with these essential questions.</p>
-                            <a href="#" class="tool-btn">Start Challenge</a>
+                             <div class="icon">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2.5-8.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm5 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 6c-1.93 0-3.5 1.57-3.5 3.5 0 .5.11.97.3 1.4.39.87 1.2 1.6 2.2 2.1.25.12.5.18.75.2.25-.02.5-.08.75-.2 1-.5 1.81-1.23 2.2-2.1.19-.43.3-.9.3-1.4C15.5 7.57 13.93 6 12 6z"/></svg>
+                            </div>
+                            <h3>Chemistry Formulas</h3>
+                            <p>Access a comprehensive list of chemical formulas, equations, and constants for quick and easy reference.</p>
+                            <a href="/all-formulas" class="tool-btn">View Chemistry Formulas</a>
                         </div>
                         <div class="featured-tool-card">
-                            <span class="icon">📏</span>
-                            <h3>Unit Converter Tool</h3>
-                            <p>Quickly convert length, weight, temperature, and more with our easy-to-use online tool.</p>
-                            <a href="#" class="tool-btn">Use Converter</a>
+                             <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM7 11h10v2H7v-2z"/></svg>
+                            </div>
+                            <h3>Maths Formulas</h3>
+                            <p>All the important mathematical formulas, from algebra and geometry to trigonometry and calculus, in one place.</p>
+                            <a href="/all-formulas" class="tool-btn">View Maths Formulas</a>
                         </div>
                     </div>
                 </section>
                 
                 <section class="content-section">
-                    <h2 class="section-title">Explore by Content Type</h2>
-                    <p class="section-subtitle">Whether you want to read, practice, or apply, we have the right format for your learning style. Choose how you want to engage with our content.</p>
-                    <div class="grid-3">
+                    <h2 class="section-title">Kaise Karen (How-To Guides)</h2>
+                    <p class="section-subtitle">Practical, step-by-step guides to help you master new skills and solve common problems. Learn how to do things efficiently and correctly.</p>
+                     <div class="grid-3">
                         <div class="explore-card">
-                            <div class="icon">📖</div>
-                            <h3>In-Depth Articles</h3>
-                            <p>Read our comprehensive guides and articles covering a vast range of topics, written by experts.</p>
-                            <a href="#post-grid" class="explore-btn">Browse Articles</a>
+                            <div class="icon">📄</div>
+                            <h3>How to Use VLOOKUP</h3>
+                            <p>Unlock the power of Excel with our simple, example-driven guide to mastering the VLOOKUP function.</p>
+                            <a href="/kaise-karen" class="explore-btn">Learn Now</a>
                         </div>
                         <div class="explore-card">
-                            <div class="icon">🎯</div>
-                            <h3>Interactive Quizzes</h3>
-                            <p>Test your knowledge, identify your weak spots, and prepare for exams with our engaging quizzes.</p>
-                             <a href="/gk-quiz" class="explore-btn">Take a Quiz</a>
+                            <div class="icon">✉️</div>
+                            <h3>How to Write a Formal Letter</h3>
+                            <p>Learn the correct format and etiquette for writing professional letters for jobs, applications, and official correspondence.</p>
+                             <a href="/kaise-karen" class="explore-btn">View Guide</a>
                         </div>
                         <div class="explore-card">
-                            <div class="icon">🛠️</div>
-                            <h3>Practical Tools</h3>
-                            <p>Use our handy converters and formula sheets to make your studies and daily tasks easier.</p>
-                            <a href="/all-formulas" class="explore-btn">Discover Tools</a>
+                            <div class="icon">💡</div>
+                            <h3>How to Prepare for an Interview</h3>
+                            <p>Our essential tips and tricks will help you build confidence and ace your next job interview with ease.</p>
+                            <a href="/kaise-karen" class="explore-btn">Get Tips</a>
                         </div>
                     </div>
                 </section>
@@ -446,34 +457,33 @@
                         <div class="subject-spotlight-card">
                             <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M60.4 25.1c-2.3-2.3-5.2-3.8-8.4-4.5.1-.3.1-.6.1-1 0-5.2-4.2-9.4-9.4-9.4-4.6 0-8.5 3.3-9.3 7.6-.8-.1-1.6-.2-2.4-.2-6.5 0-11.8 5.3-11.8 11.8 0 .4.1.8.1 1.2-4.1.7-7.4 3.2-9.1 6.3-2.8 5.1-1.6 11.5 2.8 15.2l.2.2c.4.3.8.6 1.3.8 2.5 1.2 5.2 1.8 7.9 1.8h29.2c5.4 0 10.4-2.1 14.1-5.9C64.6 42.1 65.5 31.7 60.4 25.1zM58 48.4c-3.1 3.1-7.2 4.8-11.6 4.8H17.2c-2.4 0-4.8-.5-7-1.5-.4-.2-.8-.4-1.1-.6l-.2-.2c-3.7-3.1-4.7-8.4-2.4-12.8 1.4-2.6 4.1-4.6 7.3-5.2.5-.1.9-.5.9-1v-1.7c0-.4-.1-.8-.1-1.2 0-5.3 4.3-9.6 9.6-9.6.9 0 1.8.1 2.6.4.5.1.9 0 1.3-.3.3-.3.5-.7.5-1.1V14c0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c0 .5.1 1 .2 1.4.3 2.9 1.6 5.5 3.6 7.5.4.4.9.6 1.4.6h.4c2.8.6 5.3 2 7.2 4.1C62.5 38.6 62.5 44.2 58 48.4z"/><path d="M30.9 34.6c-4.9 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8zm0 15.3c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z"/></svg></div>
                             <h3>General Knowledge</h3>
-                            <p>From ancient history to current affairs, our GK section is your gateway to understanding the world.</p>
-                            <a href="/gk-quiz" class="spotlight-btn">Explore GK</a>
+                            <ul class="subject-spotlight-links">
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">Indian History MCQ Quiz</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">World Geography Capitals</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">Latest Current Affairs</a></li>
+                            </ul>
                         </div>
                         <div class="subject-spotlight-card">
                            <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M54.4 39.2V21.5c0-1-.8-1.8-1.8-1.8h-14c-.6 0-1.1.3-1.4.7L32 26.9l-5.2-6.5c-.3-.4-.8-.7-1.4-.7H11.4c-1 0-1.8.8-1.8 1.8v17.8c0 1 .8 1.8 1.8 1.8h11.2v10.2c0 .7.8 1.1 1.4.7l15.9-10.9c.7-.5.7-1.5 0-2l-1.6-1.1h14.3c1-.1 1.8-.9 1.8-1.9zM11.9 38.7V22h13.2l5.9 7.4-5.9 7.4H11.9zm30.3-1.8H26.3l3.2-2.2c.7-.5.7-1.5 0-2l-3.2-2.2h15.9v6.4zm-1-16.3h11.7v16.3H41.1l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8v-2.3h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8V22h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2L41.1 22h-1.8v-1.5h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8H40v-2.2h1.2z"/></svg></div>
                             <h3>Computer Science</h3>
-                            <p>Master essential computer skills with our easy-to-follow guides, from MS Office to core concepts.</p>
-                             <a href="/computer" class="spotlight-btn">Learn Computing</a>
+                             <ul class="subject-spotlight-links">
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">Guide to MS Excel Functions</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">What is an Operating System?</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">Computer Basics Quiz</a></li>
+                            </ul>
                         </div>
                         <div class="subject-spotlight-card">
                             <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M49.3 16.5c-1.3-1.3-2.8-2.3-4.5-3.1-1.3-.6-2.6-1.1-4-1.5-.7-.2-1.4-.3-2.1-.5s-1.4-.2-2.2-.2c-1.2 0-2.4.2-3.6.5-1.1.3-2.2.7-3.3 1.2s-2.1 1.1-3.1 1.9-1.9 1.7-2.8 2.8c-1.2 1.5-2.2 3.2-2.9 5-.5 1.2-.8 2.4-1.1 3.7s-.4 2.6-.4 3.9.1 2.6.4 3.9.6 2.5 1.1 3.7c.7 1.8 1.7 3.5 2.9 5 .9.9 1.8 1.7 2.8 2.4s2 1.3 3.1 1.9 2.2.9 3.3 1.2c1.2.3 2.4.5 3.6.5s2.4-.2 3.6-.5c1.1-.3 2.2-.7 3.3-1.2s2.1-1.1 3.1-1.9 1.9-1.7 2.8-2.8c1.2-1.5 2.2-3.2 2.9-5 .5-1.2.8-2.4 1.1-3.7.2-1.3.4-2.6.4-3.9s-.1-2.6-.4-3.9-.6-2.5-1.1-3.7c-.8-1.9-1.8-3.6-3-5.1zm-1.6 28.3c-.9.9-1.9 1.6-3 2.3s-2.2.9-3.4 1.2-2.4.5-3.7.5-2.5-.2-3.7-.5-2.3-.7-3.4-1.2-2.1-1.1-3-2.3-1.6-1.9-2.3-3c-.7-1.2-1.3-2.5-1.7-3.8s-.6-2.7-.6-4.1.2-2.8.6-4.1 1-2.7 1.7-3.8c.7-1.2 1.4-2.1 2.3-3s1.9-1.6 3-2.3 2.2-.9 3.4-1.2c1.2-.3 2.4-.5 3.7-.5s2.5.2 3.7.5c1.2.3 2.3.7 3.4 1.2s2.1 1.1 3 2.3 1.6 1.9 2.3 3c.7 1.2 1.3 2.5 1.7 3.8.4 1.3.6 2.7.6 4.1s-.2 2.8-.6 4.1-1 2.7-1.7 3.8c-.6 1.1-1.4 2.1-2.2 3z"/><path d="M32 23.3c-4.8 0-8.7 3.9-8.7 8.7s3.9 8.7 8.7 8.7 8.7-3.9 8.7-8.7-3.9-8.7-8.7-8.7zm0 15c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z"/></svg></div>
                             <h3>Science & Formulas</h3>
-                            <p>Your one-stop resource for all important formulas in Physics, Chemistry, and Maths.</p>
-                            <a href="/all-formulas" class="spotlight-btn">View Formulas</a>
+                            <ul class="subject-spotlight-links">
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">All Physics Formulas PDF</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">Complete Chemistry Formula List</a></li>
+                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg><a href="#">How does Photosynthesis work?</a></li>
+                            </ul>
                         </div>
                     </div>
                 </section>
                 
-                <section class="content-section featured-section">
-                    <h2 class="section-title">A Trusted Resource</h2>
-                     <p class="section-subtitle">We are proud to be recognized as a reliable source of information for students and learners across various platforms.</p>
-                    <div class="featured-logos">
-                        <svg viewBox="0 0 125 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M62.3,16.5h-8.8V25h-4V5.9h8.8c3.2,0,5.4,2.3,5.4,5.3S65.5,16.5,62.3,16.5z M62.3,9.5h-4.8v3.4h4.8c1,0,1.7-0.7,1.7-1.7 C64.1,10.2,63.4,9.5,62.3,9.5z M74,16.5h-4.8V25h-4V5.9h8.8c3.2,0,5.4,2.3,5.4,5.3S77.2,16.5,74,16.5z M74,9.5h-4.8v3.4h4.8 c1,0,1.7-0.7,1.7-1.7C75.8,10.2,75.1,9.5,74,9.5z M85.2,25V5.9h4v19.1H85.2z M95.4,25V5.9h4v19.1H95.4z M107.4,15.5 c0,5.4-4.4,9.5-9.6,9.5s-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S107.4,10.1,107.4,15.5z M103.4,15.5c0-3.2-2.5-5.9-5.6-5.9 s-5.6,2.7-5.6,5.9s2.5,5.9,5.6,5.9S103.4,18.7,103.4,15.5z M121.5,25h-4l-5.6-9.2v9.2h-4V5.9h4l5.6,9.2V5.9h4V25z M47.3,15.5 c0,5.4-4.4,9.5-9.6,9.5s-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S47.3,10.1,47.3,15.5z M43.3,15.5c0-3.2-2.5-5.9-5.6-5.9 c-3,0-5.6,2.7-5.6,5.9s2.5,5.9,5.6,5.9S43.3,18.7,43.3,15.5z M25.8,25V5.9h4v19.1H25.8z M16.6,25V5.9h4v13.5l5.2-6.5h4.8 L25.1,19l6,6h-5.2L21,19.8V25H16.6z M11.1,25H3.2c-1,0-1.7-0.8-1.7-1.7v-16c0-1,0.8-1.7,1.7-1.7h7.8c1,0,1.7,0.8,1.7,1.7v16 C12.8,24.2,12.1,25,11.1,25z M9.2,9.1H5.3v12.2h3.9V9.1z"/></svg>
-                        <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M0 30V0h11.9v30H0zM22.1 30V0h11.9v30H22.1zM44.1 30V0h11.9v30H44.1zM60.2 30V10.8L71.4 30h10.2V0H69.7v19.2L58.5 0H48.3v30h11.9zM100 13.9c0-8.5-6.5-13.9-15.6-13.9H72.2v30h12.1c9.2 0 15.7-5.4 15.7-13.9v-2.2zM87.9 15c0 3.3-2.4 5.7-6.2 5.7h-2.1V9.3h2.1c3.8 0 6.2 2.3 6.2 5.7v0z"/></svg>
-                        <svg viewBox="0 0 143 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M22.9,2.9C19.1,2.9,16,6,16,10.1v10.5c0,4,3.1,7.2,6.9,7.2s6.9-3.2,6.9-7.2V10.1C29.8,6,26.7,2.9,22.9,2.9z M22.9,24.1 c-2.1,0-3.8-1.8-3.8-4.5V10.8c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C26.7,22.3,25,24.1,22.9,24.1z M3.8,10.1v10.5 c0,4,3.1,7.2,6.9,7.2c3.8,0,6.9-3.2,6.9-7.2V10.1C17.6,6,14.5,2.9,10.7,2.9S3.8,6,3.8,10.1z M10.7,24.1c-2.1,0-3.8-1.8-3.8-4.5 V10.8c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C14.5,22.3,12.8,24.1,10.7,24.1z M49.5,2.9c-3.8,0-6.9,3.2-6.9,7.2v10.5 c0,4,3.1,7.2,6.9,7.2s6.9-3.2,6.9-7.2V10.1C56.4,6,53.3,2.9,49.5,2.9z M49.5,24.1c-2.1,0-3.8-1.8-3.8-4.5V10.8 c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C53.3,22.3,51.6,24.1,49.5,24.1z M85.1,17.4h-5.2V3.2h-3.1v14.2h-5.2v2.8h5.2v7.3 h3.1v-7.3h5.2V17.4z M117.9,16.5c0,5.4-4.4,9.5-9.6,9.5c-5.2,0-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S117.9,11.1,117.9,16.5z M114.8,16.5c0-3.2-2.5-5.9-6.5-5.9s-6.5,2.7-6.5,5.9s2.9,5.9,6.5,5.9S114.8,19.7,114.8,16.5z M96.1,27.3L91,20.8v6.5h-3.1V3.2 h3.1v10.9l4.7-6.5h3.8l-5.6,7.6l6,12.1H96.1z M139.9,17.4h-5.2V3.2h-3.1v14.2h-5.2v2.8h5.2v7.3h3.1v-7.3h5.2V17.4z M66.4,3.2 v24.1h-3.1V3.2H66.4z"/></svg>
-                    </div>
-                </section>
-
                 <section class="content-section">
                     <h2 class="section-title">Our Content Philosophy</h2>
                     <div class="philosophy-content">
@@ -493,7 +503,29 @@
                 <section class="content-section">
                     <h2 class="section-title">Meet the Founder</h2>
                     <div class="founder-section">
-                        <img src="https://gklearnstudy.in/favicon.ico" alt="Mr. Himanshu Tyagi" class="founder-avatar">
+                        <svg class="founder-avatar-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="150" cy="150" r="150" fill="white" />
+                            <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                GK
+                                <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
+                                <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s" dur="1.2s" fill="freeze" additive="sum" />
+                                <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.2s" fill="freeze" additive="sum" />
+                            </text>
+                            <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                Learn Study
+                                <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                                <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                            </text>
+                            <clipPath id="circleClipFounder"><circle cx="150" cy="150" r="150" /></clipPath>
+                            <g clip-path="url(#circleClipFounder)">
+                                <path fill="#ff9f80" fill-opacity="0.8">
+                                    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z; M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z; M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z" />
+                                </path>
+                                <path fill="#6a4cff" fill-opacity="0.5">
+                                    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z; M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z; M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z" />
+                                </path>
+                            </g>
+                        </svg>
                         <div class="founder-bio">
                             <h3>Mr. Himanshu Tyagi</h3>
                             <p>GK Learn Study was founded by Mr. Himanshu Tyagi with a singular vision: to create a reliable and free educational platform for all. With a passion for teaching and a deep understanding of the challenges faced by students and learners, he has dedicated this platform to providing clear, accurate, and accessible knowledge. His commitment to the "Knowledge for All" principle is the driving force behind every article and guide we publish.</p>
@@ -525,48 +557,29 @@
                     </div>
                 </section>
 
-                <section class="content-section glossary-section">
-                    <h2 class="section-title">Glossary of Important Terms</h2>
-                    <p class="section-subtitle">Confused by a term? Find quick, simple definitions for key concepts across various subjects right here.</p>
-                    <details>
-                        <summary>Algorithm</summary>
-                        <div class="glossary-definition"><p>In computer science, an algorithm is a finite sequence of well-defined, computer-implementable instructions, typically to solve a class of specific problems or to perform a computation. It's like a recipe for a computer to follow.</p></div>
-                    </details>
-                    <details>
-                        <summary>CPU (Central Processing Unit)</summary>
-                        <div class="glossary-definition"><p>Often called the "brain" of the computer, the CPU is the primary component that performs most of the processing inside a computer. It executes instructions and performs calculations needed to run the operating system and applications.</p></div>
-                    </details>
-                    <details>
-                        <summary>GDP (Gross Domestic Product)</summary>
-                        <div class="glossary-definition"><p>GDP is the total monetary or market value of all the finished goods and services produced within a country's borders in a specific time period. It is a broad measure of a nation’s overall economic activity.</p></div>
-                    </details>
-                    <details>
-                        <summary>Photosynthesis</summary>
-                        <div class="glossary-definition"><p>The process used by plants, algae, and certain bacteria to convert light energy into chemical energy in the form of glucose. Through this process, they use sunlight, water, and carbon dioxide to create their own food.</p></div>
-                    </details>
-                    <details>
-                        <summary>HTML (HyperText Markup Language)</summary>
-                        <div class="glossary-definition"><p>The standard markup language for creating web pages and web applications. It describes the structure of a web page semantically and originally included cues for the appearance of the document.</p></div>
-                    </details>
-                    <details>
-                        <summary>RAM (Random Access Memory)</summary>
-                        <div class="glossary-definition"><p>RAM is a form of computer memory that can be read and changed in any order, typically used to store working data and machine code. It's a volatile memory, meaning it loses its data when the power is turned off.</p></div>
-                    </details>
-                </section>
-
-                <section class="content-section updates-section">
-                    <h2 class="section-title">Latest Updates & Announcements</h2>
-                    <p class="section-subtitle">We're always working to improve your learning experience. Here's what's new at GK Learn Study.</p>
-                    <div class="updates-grid">
-                        <div class="update-item">
-                            <div class="update-date">October 15, 2024</div>
-                            <h3>New Quiz Series Launched: World Geography</h3>
-                            <p>Test your knowledge of the world with our brand new quiz series covering continents, oceans, countries, and capitals. Perfect for students and trivia enthusiasts!</p>
+                <section class="content-section">
+                    <h2 class="section-title">Fresh off the Press: Latest Articles</h2>
+                    <p class="section-subtitle">Stay up-to-date with our most recently published content. We're always adding new guides, quizzes, and articles to help you learn.</p>
+                    <div class="latest-article-list">
+                        <div class="latest-article-item">
+                            <span class="category-tag">Computer</span>
+                            <h3 class="article-title"><a href="#">What is RAM and How Does It Work?</a></h3>
+                            <div class="article-date">October 28, 2024</div>
                         </div>
-                         <div class="update-item">
-                            <div class="update-date">October 1, 2024</div>
-                            <h3>Website Redesign: Faster & More Mobile-Friendly</h3>
-                            <p>We've updated our website design to be even faster and easier to use on all your devices. Enjoy a cleaner look and quicker access to the content you love.</p>
+                        <div class="latest-article-item">
+                            <span class="category-tag">GK Quiz</span>
+                            <h3 class="article-title"><a href="#">Quiz: Major Rivers of India</a></h3>
+                            <div class="article-date">October 26, 2024</div>
+                        </div>
+                        <div class="latest-article-item">
+                            <span class="category-tag">How To</span>
+                            <h3 class="article-title"><a href="#">How to Calculate Percentage Easily</a></h3>
+                            <div class="article-date">October 25, 2024</div>
+                        </div>
+                         <div class="latest-article-item">
+                            <span class="category-tag">Science</span>
+                            <h3 class="article-title"><a href="#">Understanding Newton's Laws of Motion</a></h3>
+                            <div class="article-date">October 22, 2024</div>
                         </div>
                     </div>
                 </section>
