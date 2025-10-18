@@ -58,8 +58,28 @@ function initializePostRendering(){
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                        <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" /><stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" /></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>
-                    </div>
+                       <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GK Learn Study white-blue-red circular logo">
+  <defs>
+    <!-- top to bottom gradient -->
+    <linearGradient id="avatar-profile" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />          <!-- top white -->
+      <stop offset="68%" stop-color="#ffffff" />         <!-- middle blue -->
+      <stop offset="100%" stop-color="#ff2b2b" />        <!-- bottom red -->
+    </linearGradient>
+  </defs>
+
+  <!-- main circle -->
+  <circle cx="20" cy="20" r="20" fill="url(#avatar-profile)" stroke="#ffffff" stroke-width="1"/>
+
+  <!-- main initials -->
+  <text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle"
+        font-size="14" font-weight="bold" fill="brown" font-family="Arial, sans-serif">GK</text>
+
+  <!-- subtext -->
+  <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle"
+        font-size="6" fill="blue" font-family="Arial, sans-serif">Learn Study</text>
+</svg>
+   </div>
                     <div class="author-details">
                         <span class="author vcard">by <a href="profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
                         <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time></span>
@@ -271,3 +291,4 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
