@@ -199,114 +199,30 @@
         <main class="container">
             <div id="root">
                 <style>
-                    .logo-container {
-                        border: 1px solid var(--border-color);
-                        border-radius: 16px;
-                        padding: 20px;
-                        display: flex;
-                        gap: 20px;
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-                        animation: fadeIn 1s ease-in-out;
-                        margin-bottom: 3rem;
-                        background-color: var(--card-bg);
-                    }
+                    .logo-container { border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; gap: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); animation: fadeIn 1s ease-in-out; margin-bottom: 3rem; background-color: var(--card-bg); }
                     .logo { flex: 1; display: flex; justify-content: center; align-items: center; }
                     .text { flex: 2; display: flex; flex-direction: column; justify-content: center; animation: slideIn 1.2s ease-in-out; }
                     .text h1 { text-align: left; font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
                     .text p { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; }
-                    @media (max-width: 768px) {
-                        .logo-container { flex-direction: column; }
-                        .text h1 { font-size: 1.6rem; }
-                        .text p { font-size: 0.95rem; }
-                    }
+                    @media (max-width: 768px) { .logo-container { flex-direction: column; } .text h1 { font-size: 1.6rem; } .text p { font-size: 0.95rem; } }
                     @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
                     @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-
-                    /* General Content Sections Styling */
-                    .content-section {
-                        padding: 4rem 0;
-                        border-bottom: 1px solid var(--border-color);
-                    }
-                    .content-section:last-of-type {
-                        border-bottom: none;
-                    }
-                    .section-title {
-                        text-align: center;
-                        font-size: 2.2rem;
-                        color: var(--text-primary);
-                        margin-bottom: 1rem;
-                        font-weight: 700;
-                        position: relative;
-                    }
-                     .section-subtitle {
-                        text-align: center;
-                        font-size: 1.1rem;
-                        color: var(--text-secondary);
-                        max-width: 700px;
-                        margin: 0 auto 3rem auto;
-                        line-height: 1.7;
-                    }
-                    .section-title::after {
-                        content: '';
-                        display: block;
-                        width: 80px;
-                        height: 4px;
-                        background-color: var(--accent-color);
-                        margin: 0.5rem auto 0;
-                        border-radius: 2px;
-                    }
-                    .grid-2, .grid-3, .grid-4 {
-                        display: grid;
-                        gap: 2rem;
-                    }
+                    .content-section { padding: 4rem 0; border-bottom: 1px solid var(--border-color); }
+                    .content-section:last-of-type { border-bottom: none; }
+                    .section-title { text-align: center; font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; position: relative; }
+                    .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
+                    .section-title::after { content: ''; display: block; width: 80px; height: 4px; background-color: var(--accent-color); margin: 0.5rem auto 0; border-radius: 2px; }
+                    .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
                     .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
                     .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
                     .grid-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-
-                    /* Info Card Styling */
-                    .info-card {
-                        background-color: var(--card-bg);
-                        padding: 2rem;
-                        border-radius: var(--border-radius);
-                        box-shadow: var(--card-shadow);
-                        text-align: center;
-                        transition: transform 0.2s ease, box-shadow 0.2s ease;
-                        border: 1px solid var(--border-color);
-                    }
-                    .info-card:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 8px 20px var(--shadow-color);
-                    }
-                    .info-card .icon {
-                        font-size: 3rem;
-                        color: var(--accent-color);
-                        margin-bottom: 1rem;
-                        line-height: 1;
-                    }
-                    .info-card h3 {
-                        font-size: 1.4rem;
-                        margin-bottom: 0.75rem;
-                    }
-                    .info-card p {
-                        color: var(--text-secondary);
-                        line-height: 1.6;
-                    }
-
-                    /* Learning Paths Section */
-                    .learning-path-card {
-                        background-color: var(--card-bg);
-                        border-radius: var(--border-radius);
-                        box-shadow: var(--card-shadow);
-                        overflow: hidden;
-                        border: 1px solid var(--border-color);
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    .learning-path-header {
-                        padding: 1.5rem;
-                        background: linear-gradient(135deg, var(--accent-color), #008c90);
-                        color: white;
-                    }
+                    .info-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid var(--border-color); }
+                    .info-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
+                    .info-card .icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; line-height: 1; }
+                    .info-card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+                    .info-card p { color: var(--text-secondary); line-height: 1.6; }
+                    .learning-path-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+                    .learning-path-header { padding: 1.5rem; background: linear-gradient(135deg, var(--accent-color), #008c90); color: white; }
                     .learning-path-header h3 { margin: 0; font-size: 1.5rem; }
                     .learning-path-header p { margin: 0.5rem 0 0; opacity: 0.9; }
                     .learning-path-steps { list-style: none; padding: 1.5rem; margin: 0; flex-grow: 1; }
@@ -314,45 +230,43 @@
                     .learning-path-steps li .step-number { background-color: var(--accent-color); color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; font-weight: 600; flex-shrink: 0; }
                     .learning-path-steps li a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; }
                     .learning-path-steps li a:hover { color: var(--accent-color); }
-
-                    /* Glossary Section */
-                    .glossary-section details {
-                        background-color: var(--card-bg);
-                        border-bottom: 1px solid var(--border-color);
-                    }
-                     .glossary-section summary {
-                        padding: 1rem 1.5rem;
-                        font-weight: 600;
-                        font-size: 1.1rem;
-                        cursor: pointer;
-                        list-style: none;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    }
+                    .glossary-section details { background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); }
+                    .glossary-section summary { padding: 1rem 1.5rem; font-weight: 600; font-size: 1.1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
                     .glossary-section summary::-webkit-details-marker { display: none; }
                     .glossary-section summary::after { content: '+'; font-size: 1.5rem; color: var(--accent-color); transition: transform 0.3s ease; }
                     .glossary-section details[open] summary::after { transform: rotate(45deg); }
                     .glossary-definition { padding: 0 1.5rem 1.5rem 3rem; line-height: 1.7; color: var(--text-secondary); }
-                    
-                    /* Philosophy Section */
                     .philosophy-content { max-width: 800px; margin: 0 auto; text-align: left; }
                     .philosophy-content h3 { font-size: 1.5rem; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; }
-                    .philosophy-content p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-
-                    /* CTA Section */
-                    .cta-section {
-                        background: linear-gradient(135deg, #641ef9, #9f94ff);
-                        color: white;
-                        text-align: center;
-                        padding: 4rem 2rem;
-                        border-radius: var(--border-radius);
-                        margin: 4rem 0;
-                    }
+                    .philosophy-content p, .philosophy-content li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+                    .cta-section { background: linear-gradient(135deg, #641ef9, #9f94ff); color: white; text-align: center; padding: 4rem 2rem; border-radius: var(--border-radius); margin: 4rem 0; }
                     .cta-section h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; }
                     .cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
                     .cta-btn { background-color: white; color: #641ef9; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; display: inline-block; }
                     .cta-btn:hover { background-color: #f0f0f0; transform: scale(1.05); }
+                    .featured-tool-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: center; padding: 2rem; }
+                    .featured-tool-card .icon { font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--accent-color); }
+                    .featured-tool-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+                    .featured-tool-card p { color: var(--text-secondary); margin-bottom: 1.5rem; }
+                    .featured-tool-card .tool-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
+                    .featured-tool-card .tool-btn:hover { background-color: #004d4e; }
+                    .subject-spotlight-card { background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--card-shadow); }
+                    .subject-spotlight-card h3 { font-size: 1.5rem; margin-top: 0; display: flex; align-items: center; gap: 0.75rem; color: var(--text-primary); }
+                    .subject-spotlight-card h3 svg { width: 32px; height: 32px; color: var(--accent-color); }
+                    .subject-spotlight-card p { color: var(--text-secondary); line-height: 1.6; }
+                    .subject-spotlight-card ul { list-style: none; padding: 0; margin-top: 1rem; }
+                    .subject-spotlight-card li { margin-bottom: 0.5rem; }
+                    .subject-spotlight-card a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+                    .subject-spotlight-card a:hover { color: var(--accent-color); }
+                    .subject-spotlight-card a::before { content: '→'; color: var(--accent-color); }
+                    .testimonial-card { background-color: var(--card-bg); border-left: 5px solid var(--accent-color); padding: 2rem; border-radius: 0 var(--border-radius) var(--border-radius) 0; box-shadow: var(--card-shadow); }
+                    .testimonial-text { font-style: italic; color: var(--text-secondary); line-height: 1.7; margin: 0 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+                    .testimonial-author { font-weight: 600; color: var(--text-primary); }
+                    .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-w: 800px; margin: 0 auto; }
+                    .founder-avatar { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
+                    .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
+                    .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
+                     @media (min-width: 768px) { .founder-section { flex-direction: row; text-align: left; } }
                 </style>
 
                 <div class="logo-container">
@@ -376,66 +290,36 @@
                     </div>
                 </div>
 
-                <!-- Why Choose Us Section -->
                 <section class="content-section">
                     <h2 class="section-title">Why Choose GK Learn Study?</h2>
                     <p class="section-subtitle">We are committed to being your most trusted partner in the journey of learning. Here’s what makes our platform unique and valuable for millions of users.</p>
-                    <div class="grid-3">
-                        <div class="info-card">
-                            <div class="icon">📚</div>
-                            <h3>Expert-Curated Content</h3>
-                            <p>Our articles are meticulously researched and written by subject matter experts to ensure you receive accurate, reliable, and up-to-date information.</p>
-                        </div>
-                        <div class="info-card">
-                            <div class="icon">🎯</div>
-                            <h3>Interactive Learning</h3>
-                            <p>Engage with our interactive quizzes and practical 'how-to' guides that make learning active and enjoyable, helping you retain knowledge better.</p>
-                        </div>
-                        <div class="info-card">
-                            <div class="icon">🌍</div>
-                            <h3>Free for Everyone</h3>
-                            <p>We believe that knowledge should be accessible to all. Our entire library of articles, tools, and resources is completely free, with no hidden costs.</p>
-                        </div>
-                        <div class="info-card">
-                            <div class="icon">🔄</div>
-                            <h3>Regularly Updated</h3>
-                            <p>The world is always changing, and so is our content. We constantly update our articles to reflect the latest information and events.</p>
-                        </div>
-                        <div class="info-card">
-                            <div class="icon">📱</div>
-                            <h3>Mobile Friendly</h3>
-                            <p>Learn on the go! Our website is fully optimized for all devices, ensuring a seamless experience on your phone, tablet, or desktop.</p>
-                        </div>
-                        <div class="info-card">
-                            <div class="icon">🔍</div>
-                            <h3>Simple & Clear</h3>
-                            <p>We break down complex topics into simple, easy-to-understand language, making learning accessible for readers of all levels.</p>
-                        </div>
+                    <div class="grid-4">
+                        <div class="info-card"> <div class="icon">📚</div> <h3>Expert-Curated Content</h3> <p>Articles are meticulously researched and written by subject matter experts to ensure accuracy and reliability.</p> </div>
+                        <div class="info-card"> <div class="icon">🎯</div> <h3>Interactive Learning</h3> <p>Engage with our quizzes and practical 'how-to' guides that make learning active and enjoyable.</p> </div>
+                        <div class="info-card"> <div class="icon">🌍</div> <h3>Free for Everyone</h3> <p>Our entire library of articles, tools, and resources is completely free, with no hidden costs or subscriptions.</p> </div>
+                        <div class="info-card"> <div class="icon">🔄</div> <h3>Regularly Updated</h3> <p>Content is constantly updated to reflect the latest information, ensuring you always get relevant knowledge.</p> </div>
+                        <div class="info-card"> <div class="icon">🏆</div> <h3>Exam-Oriented Approach</h3> <p>Our content is tailored to help aspirants preparing for competitive exams like SSC, Banking, and State services.</p> </div>
+                        <div class="info-card"> <div class="icon">🔍</div> <h3>Simple & Clear Language</h3> <p>We break down complex topics into simple, easy-to-understand language for readers of all levels.</p> </div>
+                        <div class="info-card"> <div class="icon">📱</div> <h3>Mobile Friendly Design</h3> <p>Learn on the go! Our website is fully optimized for a seamless experience on any device you use.</p> </div>
+                        <div class="info-card"> <div class="icon">💬</div> <h3>Community Driven</h3> <p>We listen to our readers' feedback to continuously improve and provide the content you need most.</p> </div>
                     </div>
                 </section>
                 
-                <!-- Learning Paths Section -->
                 <section class="content-section">
                     <h2 class="section-title">Structured Learning Paths</h2>
-                    <p class="section-subtitle">Don't just read articles randomly. Follow our curated learning paths designed to take you from beginner to expert in key subjects, one step at a time.</p>
+                    <p class="section-subtitle">Follow our curated learning paths designed to take you from beginner to expert in key subjects, one step at a time.</p>
                     <div class="grid-3">
                         <div class="learning-path-card">
-                            <div class="learning-path-header">
-                                <h3>Master MS Excel in 7 Days</h3>
-                                <p>Go from absolute beginner to a confident Excel user with this structured guide.</p>
-                            </div>
+                            <div class="learning-path-header"> <h3>Master MS Excel in 7 Days</h3> <p>Go from absolute beginner to a confident Excel user.</p> </div>
                             <ul class="learning-path-steps">
                                 <li><div class="step-number">1</div> <a href="#">Introduction to the Excel Interface</a></li>
-                                <li><div class="step-number">2</div> <a href="#">Basic Formulas & Functions (SUM, AVERAGE)</a></li>
+                                <li><div class="step-number">2</div> <a href="#">Basic Formulas & Functions</a></li>
                                 <li><div class="step-number">3</div> <a href="#">Understanding VLOOKUP & HLOOKUP</a></li>
                                 <li><div class="step-number">4</div> <a href="#">Creating Charts & Graphs</a></li>
                             </ul>
                         </div>
                         <div class="learning-path-card">
-                            <div class="learning-path-header">
-                                <h3>Indian History: Ancient to Medieval</h3>
-                                <p>A comprehensive journey through the foundational eras of Indian history.</p>
-                            </div>
+                            <div class="learning-path-header"> <h3>Indian History: Ancient to Medieval</h3> <p>A journey through the foundational eras of Indian history.</p> </div>
                              <ul class="learning-path-steps">
                                 <li><div class="step-number">1</div> <a href="#">The Indus Valley Civilization</a></li>
                                 <li><div class="step-number">2</div> <a href="#">The Mauryan & Gupta Empires</a></li>
@@ -444,10 +328,7 @@
                             </ul>
                         </div>
                         <div class="learning-path-card">
-                            <div class="learning-path-header">
-                                <h3>Physics Fundamentals</h3>
-                                <p>Grasp the core concepts of physics with our essential formula guides.</p>
-                            </div>
+                            <div class="learning-path-header"> <h3>Physics Fundamentals</h3> <p>Grasp the core concepts with our essential formula guides.</p> </div>
                              <ul class="learning-path-steps">
                                 <li><div class="step-number">1</div> <a href="#">Units, Dimensions & Measurements</a></li>
                                 <li><div class="step-number">2</div> <a href="#">Laws of Motion & Force</a></li>
@@ -458,25 +339,127 @@
                     </div>
                 </section>
 
-                <!-- Our Content Philosophy Section -->
+                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
+                    <h2 class="section-title">Featured Quizzes & Tools</h2>
+                    <p class="section-subtitle">Beyond articles, we offer interactive tools to test your knowledge and simplify complex calculations. Try them now!</p>
+                    <div class="grid-3">
+                        <div class="featured-tool-card">
+                            <span class="icon">📜</span>
+                            <h3>Indian History Quiz</h3>
+                            <p>Test your knowledge on the Mauryan Empire, Mughal Era, and more with our challenging quiz.</p>
+                            <a href="#" class="tool-btn">Take the Quiz</a>
+                        </div>
+                        <div class="featured-tool-card">
+                            <span class="icon">💻</span>
+                            <h3>Computer Basics Quiz</h3>
+                            <p>How well do you know computer fundamentals? Find out with these essential questions.</p>
+                            <a href="#" class="tool-btn">Start Challenge</a>
+                        </div>
+                        <div class="featured-tool-card">
+                            <span class="icon">📏</span>
+                            <h3>Unit Converter Tool</h3>
+                            <p>Quickly convert length, weight, temperature, and more with our easy-to-use online tool.</p>
+                            <a href="#" class="tool-btn">Use Converter</a>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="categories-section sidebar-widget">
+                    <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
+                    <ul class="category-list"></ul>
+                </div>
+                <div class="post-filter-container">
+                    <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
+                </div>
+                <main id="post-grid" class="post-grid">
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                </main>
+                <div id="load-more-container"> <button id="load-more-btn">Load More</button> </div>
+
+                <section class="content-section">
+                    <h2 class="section-title">Subject Spotlights</h2>
+                    <p class="section-subtitle">Dive deeper into our core subjects. Find curated lists of our most important articles to kickstart your learning journey in each field.</p>
+                    <div class="grid-3">
+                        <div class="subject-spotlight-card">
+                            <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg> General Knowledge</h3>
+                            <p>From ancient history to current affairs, our GK section is your gateway to understanding the world around you. Perfect for competitive exams and curious minds.</p>
+                            <ul>
+                                <li><a href="#">Ancient Indian History Quiz</a></li>
+                                <li><a href="#">Complete List of Indian States & Capitals</a></li>
+                                <li><a href="#">Important Battles in Indian History</a></li>
+                            </ul>
+                        </div>
+                        <div class="subject-spotlight-card">
+                            <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h9.75a2.25 2.25 0 012.25 2.25zm-10.5 6h9.75" /></svg> Computer Science</h3>
+                            <p>Master essential computer skills with our easy-to-follow guides. We cover everything from MS Office tutorials to fundamental concepts of computing.</p>
+                            <ul>
+                                <li><a href="#">Top 50 MS Excel Formulas</a></li>
+                                <li><a href="#">What is an Operating System?</a></li>
+                                <li><a href="#">How to use VLOOKUP in Excel</a></li>
+                            </ul>
+                        </div>
+                        <div class="subject-spotlight-card">
+                            <h3><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.66.538-1.187 1.188-1.187h1.512c.65 0 1.187.527 1.187 1.187v1.512c0 .65-.537 1.188-1.187 1.188h-1.512A1.188 1.188 0 0114.25 7.6V6.087zM8.25 6.087c0-.66.538-1.187 1.188-1.187h1.512c.65 0 1.187.527 1.187 1.187v1.512c0 .65-.537 1.188-1.187 1.188h-1.512A1.188 1.188 0 018.25 7.6V6.087zM12.75 10.501a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 18.75a2.25 2.25 0 012.25-2.25h7.5a2.25 2.25 0 012.25 2.25v.008a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.008z" /></svg> Science & Formulas</h3>
+                            <p>Your one-stop resource for all important formulas in Physics, Chemistry, and Maths, along with clear explanations of scientific concepts.</p>
+                            <ul>
+                                <li><a href="#">All Physics Formulas PDF</a></li>
+                                <li><a href="#">Complete Chemistry Formula List</a></li>
+                                <li><a href="#">How does Photosynthesis work?</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
                 <section class="content-section">
                     <h2 class="section-title">Our Content Philosophy</h2>
                     <div class="philosophy-content">
                         <h3>Our Mission: Democratizing Knowledge</h3>
-                        <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging. We strive to create a platform where learning is not a chore, but a journey of discovery.</p>
-                        <h3>The Three Pillars of Our Content</h3>
-                        <p>Every piece of content on our platform is built upon three core principles: Accuracy, Clarity, and Practicality.</p>
+                        <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging.</p>
+                        <h3>The Three Pillars of Our Content: Accuracy, Clarity, and Practicality</h3>
                         <ul>
-                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts. We are committed to correcting any errors promptly and transparently.</li>
-                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand. We use real-world examples, analogies, and clear formatting to ensure a smooth and effective learning experience.</li>
-                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program, a formula sheet for an exam, or a quiz to test your learning, we focus on content that provides real-world value and helps you achieve your goals.</li>
+                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts.</li>
+                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand, using real-world examples and clear formatting.</li>
+                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program or a formula sheet for an exam, we focus on content that provides real-world value and helps you achieve your goals.</li>
                         </ul>
-                        <h3>Commitment to Free Access</h3>
-                        <p>We are firm believers in the power of free and open access to information. Financial barriers should never stand in the way of learning. That's why every article, tool, and resource on GK Learn Study is, and always will be, completely free for everyone. Your support, through sharing our content and engaging with our community, is what allows us to continue this mission.</p>
                     </div>
                 </section>
 
-                 <!-- Glossary Section -->
+                <section class="content-section">
+                    <h2 class="section-title">Meet the Founder</h2>
+                    <div class="founder-section">
+                        <img src="https://gklearnstudy.in/favicon.ico" alt="Mr. Himanshu Tyagi" class="founder-avatar">
+                        <div class="founder-bio">
+                            <h3>Mr. Himanshu Tyagi</h3>
+                            <p>GK Learn Study was founded by Mr. Himanshu Tyagi with a singular vision: to create a reliable and free educational platform for all. With a passion for teaching and a deep understanding of the challenges faced by students and learners, he has dedicated this platform to providing clear, accurate, and accessible knowledge. His commitment to the "Knowledge for All" principle is the driving force behind every article and guide we publish.</p>
+                            <a href="profile.html?author=Mr.%20Himanshu%20Tyagi" class="cta-btn" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">View Profile</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
+                    <h2 class="section-title">From Our Community</h2>
+                    <p class="section-subtitle">We are proud to have helped thousands of learners. Here's what some of them have to say about their experience with GK Learn Study.</p>
+                    <div class="grid-3">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"The history quizzes are fantastic for revision. The explanations are clear and have helped me score better in my SSC exams. Thank you for this wonderful free resource!"</p>
+                            <div class="testimonial-author">- Priya S., Competitive Exam Aspirant</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"As a non-technical person, the computer 'how-to' articles are a lifesaver. I finally understood how to use VLOOKUP in Excel thanks to your simple, step-by-step guide."</p>
+                            <div class="testimonial-author">- Rohan M., Small Business Owner</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"I love that all the content is free and so well-organized. It's my go-to website for quick facts and learning something new every day. Highly recommended!"</p>
+                            <div class="testimonial-author">- Anjali K., College Student</div>
+                        </div>
+                    </div>
+                </section>
+
                 <section class="content-section glossary-section">
                     <h2 class="section-title">Glossary of Important Terms</h2>
                     <p class="section-subtitle">Confused by a term? Find quick, simple definitions for key concepts across various subjects right here.</p>
@@ -488,36 +471,22 @@
                         <summary>GDP (Gross Domestic Product)</summary>
                         <div class="glossary-definition"><p>GDP is the total monetary or market value of all the finished goods and services produced within a country's borders in a specific time period. It is a broad measure of a nation’s overall economic activity.</p></div>
                     </details>
-                     <details>
-                        <summary>VLOOKUP (Vertical Lookup)</summary>
-                        <div class="glossary-definition"><p>A function in spreadsheet applications like Microsoft Excel that is used to find and retrieve data from a specific column in a table. It's one of the most popular functions for data analysis and reporting.</p></div>
-                    </details>
-                     <details>
+                    <details>
                         <summary>Photosynthesis</summary>
                         <div class="glossary-definition"><p>The process used by plants, algae, and certain bacteria to convert light energy into chemical energy in the form of glucose. Through this process, they use sunlight, water, and carbon dioxide to create their own food.</p></div>
-                    </details>
-                     <details>
-                        <summary>Indus Valley Civilization</summary>
-                        <div class="glossary-definition"><p>One of the world's earliest urban civilizations, which flourished in the basins of the Indus River in what is now Pakistan and northwest India, from around 3300 BCE to 1300 BCE. It was noted for its advanced city planning and drainage systems.</p></div>
                     </details>
                     <details>
                         <summary>HTML (HyperText Markup Language)</summary>
                         <div class="glossary-definition"><p>The standard markup language for creating web pages and web applications. It describes the structure of a web page semantically and originally included cues for the appearance of the document.</p></div>
                     </details>
-                    <details>
-                        <summary>Newton's Laws of Motion</summary>
-                        <div class="glossary-definition"><p>Three fundamental principles of classical physics that describe the relationship between the motion of an object and the forces acting on it. They are: 1) An object at rest stays at rest and an object in motion stays in motion unless acted on by an external force. 2) Force equals mass times acceleration (F=ma). 3) For every action, there is an equal and opposite reaction.</p></div>
-                    </details>
                 </section>
 
-                <!-- CTA Section -->
                 <section class="cta-section">
                     <h2>Join Our Learning Community!</h2>
                     <p>Stay updated with our latest videos, tutorials, and quizzes. Follow us on YouTube for a more interactive learning experience.</p>
                     <a href="https://www.youtube.com/@GKLearnStudy" class="cta-btn" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
                 </section>
 
-                <!-- FAQ Section (Expanded) -->
                 <section class="faq-section content-section">
                     <h2 class="section-title">Frequently Asked Questions</h2>
                     <details>
@@ -529,11 +498,7 @@
                         <div class="faq-answer"><p>Yes, absolutely! All articles, quizzes, and tools on GK Learn Study are 100% free to access for everyone. Our mission is to make knowledge accessible to all without any financial barriers.</p></div>
                     </details>
                     <details>
-                        <summary>How often is the content updated?</summary>
-                        <div class="faq-answer"><p>We strive to add new articles and update existing content regularly to ensure it is accurate and relevant. Our GK and Current Affairs sections are updated most frequently to keep you informed about the latest events.</p></div>
-                    </details>
-                    <details>
-                        <summary>Can I trust the information provided here?</summary>
+                        <summary>How can I trust the information provided here?</summary>
                         <div class="faq-answer"><p>Yes. We take accuracy very seriously. All our articles are thoroughly researched from reliable sources and reviewed by subject matter experts before publication. We aim to be a trustworthy source of information.</p></div>
                     </details>
                     <details>
@@ -541,60 +506,10 @@
                         <div class="faq-answer"><p>We love hearing from our community! While we can't guarantee every request, we encourage you to use our Contact Us page to suggest topics you'd like to see covered. We prioritize suggestions that align with our website's focus and would benefit a large number of readers.</p></div>
                     </details>
                     <details>
-                        <summary>Do I need to create an account to use the website?</summary>
-                        <div class="faq-answer"><p>No, you do not need an account to read any of our articles or use our tools. All content is freely available. An account is only required if you wish to post comments or rate pages.</p></div>
-                    </details>
-                     <details>
-                        <summary>How can I support GK Learn Study?</summary>
-                        <div class="faq-answer"><p>The best way to support us is by sharing our articles with your friends, family, and social networks. Following us on our social media channels like YouTube also helps us grow and reach more learners. Your engagement is our biggest motivation!</p></div>
-                    </details>
-                     <details>
                         <summary>Are the quizzes suitable for competitive exams?</summary>
                         <div class="faq-answer"><p>Many of our quizzes are designed with competitive exams (like SSC, Banking, Railways, etc.) in mind. They cover important topics and are structured to help you practice and test your knowledge effectively. However, always refer to the official syllabus for your specific exam.</p></div>
                     </details>
-                    <details>
-                        <summary>What is 'Vyakaran'?</summary>
-                        <div class="faq-answer"><p>'Vyakaran' is the Hindi word for Grammar. Our Vyakaran section provides detailed articles on Hindi grammar rules, concepts, and examples to help students and learners master the language.</p></div>
-                    </details>
                 </section>
-
-
-                <div class="categories-section sidebar-widget">
-                    <style>
-                        .h2-icons { display: inline-flex; align-items: center; gap: 8px; font-size: 1.6rem; font-weight: 600; }
-                        .h2-icons svg { width: 24px; height: 24px; }
-                        .arrow-anim { animation: moveArrow 1.2s infinite ease-in-out; }
-                        @keyframes moveArrow { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
-                        @keyframes colorCycle { 0% { fill: #4285f4; } 25% { fill: #ea4335; } 50% { fill: #fbbc05; } 75% { fill: #34a853; } 100% { fill: #4285f4; } }
-                        .box1 { animation: colorCycle 4s infinite; }
-                        .box2 { animation: colorCycle 4s infinite 1s; }
-                        .box3 { animation: colorCycle 4s infinite 2s; }
-                        .box4 { animation: colorCycle 4s infinite 3s; }
-                    </style>
-                    <h2 class="h2-icons">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect class="box1" x="2" y="2" width="8" height="8" rx="1.5" /><rect class="box2" x="14" y="2" width="8" height="8" rx="1.5" /><rect class="box3" x="2" y="14" width="8" height="8" rx="1.5" /><rect class="box4" x="14" y="14" width="8" height="8" rx="1.5" /></svg>
-                        <span>Categories</span>
-                        <svg class="arrow-anim" viewBox="0 0 24 24" stroke="#641ef9" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h14" /><path d="M14 6l6 6-6 6" /></svg>
-                    </h2>
-                    <ul class="category-list"></ul>
-                </div>
-
-                <div class="post-filter-container">
-                    <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
-                </div>
-
-                <main id="post-grid" class="post-grid">
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                </main>
-
-                <div id="load-more-container">
-                    <button id="load-more-btn">Load More</button>
-                </div>
             </div>
 
             <div id="comments-and-ratings-container">
