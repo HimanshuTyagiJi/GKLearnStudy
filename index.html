@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -199,298 +200,383 @@
             <div id="root">
                 <style>
                     .logo-container {
-                        border: 1px solid var(--card-border-color);
+                        border: 1px solid var(--border-color);
                         border-radius: 16px;
                         padding: 20px;
                         display: flex;
                         gap: 20px;
-
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                         animation: fadeIn 1s ease-in-out;
+                        margin-bottom: 3rem;
+                        background-color: var(--card-bg);
                     }
-                    .logo {
-                        flex: 1;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
+                    .logo { flex: 1; display: flex; justify-content: center; align-items: center; }
+                    .text { flex: 2; display: flex; flex-direction: column; justify-content: center; animation: slideIn 1.2s ease-in-out; }
+                    .text h1 { text-align: left; font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
+                    .text p { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; }
+                    @media (max-width: 768px) {
+                        .logo-container { flex-direction: column; }
+                        .text h1 { font-size: 1.6rem; }
+                        .text p { font-size: 0.95rem; }
                     }
-                    .text {
-                        flex: 2;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        animation: slideIn 1.2s ease-in-out;
-                    }
-                    .text h1 {
-                        text-align: left;
-                        font-size: 2rem;
-                        color: var(--accent-color);
-                        margin-bottom: 10px;
-                    }
+                    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+                    @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
 
-                    .text p {
-                        font-size: 1rem;
-                        color: var(--text-color-secondary);
+                    /* General Content Sections Styling */
+                    .content-section {
+                        padding: 4rem 0;
+                        border-bottom: 1px solid var(--border-color);
+                    }
+                    .content-section:last-of-type {
+                        border-bottom: none;
+                    }
+                    .section-title {
+                        text-align: center;
+                        font-size: 2.2rem;
+                        color: var(--text-primary);
+                        margin-bottom: 1rem;
+                        font-weight: 700;
+                        position: relative;
+                    }
+                     .section-subtitle {
+                        text-align: center;
+                        font-size: 1.1rem;
+                        color: var(--text-secondary);
+                        max-width: 700px;
+                        margin: 0 auto 3rem auto;
+                        line-height: 1.7;
+                    }
+                    .section-title::after {
+                        content: '';
+                        display: block;
+                        width: 80px;
+                        height: 4px;
+                        background-color: var(--accent-color);
+                        margin: 0.5rem auto 0;
+                        border-radius: 2px;
+                    }
+                    .grid-2, .grid-3, .grid-4 {
+                        display: grid;
+                        gap: 2rem;
+                    }
+                    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+                    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+                    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+                    /* Info Card Styling */
+                    .info-card {
+                        background-color: var(--card-bg);
+                        padding: 2rem;
+                        border-radius: var(--border-radius);
+                        box-shadow: var(--card-shadow);
+                        text-align: center;
+                        transition: transform 0.2s ease, box-shadow 0.2s ease;
+                        border: 1px solid var(--border-color);
+                    }
+                    .info-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 20px var(--shadow-color);
+                    }
+                    .info-card .icon {
+                        font-size: 3rem;
+                        color: var(--accent-color);
+                        margin-bottom: 1rem;
+                        line-height: 1;
+                    }
+                    .info-card h3 {
+                        font-size: 1.4rem;
+                        margin-bottom: 0.75rem;
+                    }
+                    .info-card p {
+                        color: var(--text-secondary);
                         line-height: 1.6;
                     }
 
-                    /* Mobile responsive */
-                    @media (max-width: 768px) {
-                        .logo-container {
-                            flex-direction: column;
-                        }
-                        .text h1 {
-                            font-size: 1.6rem;
-                        }
+                    /* Learning Paths Section */
+                    .learning-path-card {
+                        background-color: var(--card-bg);
+                        border-radius: var(--border-radius);
+                        box-shadow: var(--card-shadow);
+                        overflow: hidden;
+                        border: 1px solid var(--border-color);
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .learning-path-header {
+                        padding: 1.5rem;
+                        background: linear-gradient(135deg, var(--accent-color), #008c90);
+                        color: white;
+                    }
+                    .learning-path-header h3 { margin: 0; font-size: 1.5rem; }
+                    .learning-path-header p { margin: 0.5rem 0 0; opacity: 0.9; }
+                    .learning-path-steps { list-style: none; padding: 1.5rem; margin: 0; flex-grow: 1; }
+                    .learning-path-steps li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 1rem; }
+                    .learning-path-steps li .step-number { background-color: var(--accent-color); color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; font-weight: 600; flex-shrink: 0; }
+                    .learning-path-steps li a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; }
+                    .learning-path-steps li a:hover { color: var(--accent-color); }
 
-                        .text p {
-                            font-size: 0.95rem;
-                        }
+                    /* Glossary Section */
+                    .glossary-section details {
+                        background-color: var(--card-bg);
+                        border-bottom: 1px solid var(--border-color);
                     }
+                     .glossary-section summary {
+                        padding: 1rem 1.5rem;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        list-style: none;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .glossary-section summary::-webkit-details-marker { display: none; }
+                    .glossary-section summary::after { content: '+'; font-size: 1.5rem; color: var(--accent-color); transition: transform 0.3s ease; }
+                    .glossary-section details[open] summary::after { transform: rotate(45deg); }
+                    .glossary-definition { padding: 0 1.5rem 1.5rem 3rem; line-height: 1.7; color: var(--text-secondary); }
+                    
+                    /* Philosophy Section */
+                    .philosophy-content { max-width: 800px; margin: 0 auto; text-align: left; }
+                    .philosophy-content h3 { font-size: 1.5rem; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; }
+                    .philosophy-content p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
 
-                    /* Animations */
-                    @keyframes fadeIn {
-                        from {
-                            opacity: 0;
-                            transform: scale(0.95);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: scale(1);
-                        }
+                    /* CTA Section */
+                    .cta-section {
+                        background: linear-gradient(135deg, #641ef9, #9f94ff);
+                        color: white;
+                        text-align: center;
+                        padding: 4rem 2rem;
+                        border-radius: var(--border-radius);
+                        margin: 4rem 0;
                     }
-                    @keyframes slideIn {
-                        from {
-                            opacity: 0;
-                            transform: translateX(50px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateX(0);
-                        }
-                    }
+                    .cta-section h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; }
+                    .cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
+                    .cta-btn { background-color: white; color: #641ef9; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; display: inline-block; }
+                    .cta-btn:hover { background-color: #f0f0f0; transform: scale(1.05); }
                 </style>
 
                 <div class="logo-container">
-                    <!-- Left: Logo -->
                     <div class="logo">
-                        <!-- Your SVG Logo -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
                             <title>GK Learn Study</title>
                             <circle cx="150" cy="150" r="150" fill="white" />
-                            <defs>
-                                <clipPath id="circle-clip-main">
-                                    <circle cx="150" cy="150" r="150" />
-                                </clipPath>
-                            </defs>
+                            <defs><clipPath id="circle-clip-main"><circle cx="150" cy="150" r="150" /></clipPath></defs>
                             <g clip-path="url(#circle-clip-main)">
-                                <path fill="#c0a4fb" fill-opacity="1">
-                                    <animate
-                                        attributeName="d"
-                                        dur="8s"
-                                        repeatCount="indefinite"
-                                        values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z;
-                      M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z;
-                      M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"
-                                    />
-                                </path>
-                                <path fill="#641ef9" fill-opacity="0.7">
-                                    <animate
-                                        attributeName="d"
-                                        dur="7s"
-                                        repeatCount="indefinite"
-                                        values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z;
-                      M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z;
-                      M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"
-                                    />
-                                </path>
+                                <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z" /></path>
+                                <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z" /></path>
                             </g>
-                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0">
-                                GK
-                                <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze" />
-                                <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
-                                <animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" />
-                            </text>
-                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0">
-                                Learn Study
-                                <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze" />
-                                <animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze" />
-                            </text>
+                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0"> GK <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze" /><animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" /><animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum" /></text>
+                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0"> Learn Study <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze" /><animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze" /></text>
                             <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6" />
                         </svg>
                     </div>
-
-                    <!-- Right: Text -->
                     <div class="text">
                         <h1>Welcome to GK Learn Study</h1>
-                        <p>
-                            Your daily source for insightful articles, handy tools, and general knowledge.<br />
-                            Dive in and explore a world of learning, made simple and accessible for everyone.
-                        </p>
+                        <p>Your comprehensive daily source for insightful articles, handy tools, and general knowledge. We are dedicated to making learning simple, accessible, and engaging for students, professionals, and curious minds alike. Dive in and explore a world of verified knowledge.</p>
                     </div>
                 </div>
 
                 <!-- Why Choose Us Section -->
-                <section class="info-section">
-                    <style>
-                        .info-section {
-                            text-align: center;
-                            padding: 40px 20px;
-                            margin: 40px 0;
-                            background-color: var(--card-bg);
-                            border: 1px solid var(--border-color);
-                            border-radius: 16px;
-                            box-shadow: var(--card-shadow);
-                        }
-                        .info-section h2 {
-                            font-size: 2rem;
-                            margin-bottom: 1rem;
-                            color: var(--accent-color);
-                        }
-                        .info-section .underline {
-                            width: 80px;
-                            height: 4px;
-                            background-color: var(--accent-color);
-                            margin: 0 auto 30px auto;
-                            border-radius: 2px;
-                        }
-                        .features-grid {
-                            display: grid;
-                            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                            gap: 25px;
-                            margin-top: 2rem;
-                        }
-                        .feature-item {
-                            padding: 20px;
-                            border-radius: 12px;
-                            background-color: var(--body-bg);
-                            border: 1px solid var(--border-color);
-                            transition: transform 0.2s ease, box-shadow 0.2s ease;
-                        }
-                        .feature-item:hover {
-                            transform: translateY(-5px);
-                            box-shadow: 0 6px 16px var(--shadow-color);
-                        }
-                        .feature-item svg {
-                            width: 50px;
-                            height: 50px;
-                            margin-bottom: 15px;
-                            color: var(--accent-color);
-                        }
-                        .feature-item h3 {
-                            font-size: 1.2rem;
-                            margin-bottom: 10px;
-                            color: var(--text-primary);
-                        }
-                        .feature-item p {
-                            font-size: 0.95rem;
-                            color: var(--text-color-secondary);
-                            line-height: 1.6;
-                        }
-                    </style>
-                    <h2>Why GK Learn Study?</h2>
-                    <div class="underline"></div>
-                    <div class="features-grid">
-                        <div class="feature-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
-                            <h3>Expertly Curated Content</h3>
-                            <p>Our articles are carefully researched and written to provide accurate, easy-to-understand information on a wide range of topics.</p>
+                <section class="content-section">
+                    <h2 class="section-title">Why Choose GK Learn Study?</h2>
+                    <p class="section-subtitle">We are committed to being your most trusted partner in the journey of learning. Here’s what makes our platform unique and valuable for millions of users.</p>
+                    <div class="grid-3">
+                        <div class="info-card">
+                            <div class="icon">📚</div>
+                            <h3>Expert-Curated Content</h3>
+                            <p>Our articles are meticulously researched and written by subject matter experts to ensure you receive accurate, reliable, and up-to-date information.</p>
                         </div>
-                        <div class="feature-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
-                            <h3>Interactive Quizzes</h3>
-                            <p>Test your knowledge and challenge yourself with our interactive quizzes covering subjects like history, geography, science, and more.</p>
+                        <div class="info-card">
+                            <div class="icon">🎯</div>
+                            <h3>Interactive Learning</h3>
+                            <p>Engage with our interactive quizzes and practical 'how-to' guides that make learning active and enjoyable, helping you retain knowledge better.</p>
                         </div>
-                        <div class="feature-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
-                            <h3>Always Free & Accessible</h3>
-                            <p>We believe that knowledge should be free for everyone. Our platform is completely free to use, with no hidden costs or subscriptions.</p>
+                        <div class="info-card">
+                            <div class="icon">🌍</div>
+                            <h3>Free for Everyone</h3>
+                            <p>We believe that knowledge should be accessible to all. Our entire library of articles, tools, and resources is completely free, with no hidden costs.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon">🔄</div>
+                            <h3>Regularly Updated</h3>
+                            <p>The world is always changing, and so is our content. We constantly update our articles to reflect the latest information and events.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon">📱</div>
+                            <h3>Mobile Friendly</h3>
+                            <p>Learn on the go! Our website is fully optimized for all devices, ensuring a seamless experience on your phone, tablet, or desktop.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon">🔍</div>
+                            <h3>Simple & Clear</h3>
+                            <p>We break down complex topics into simple, easy-to-understand language, making learning accessible for readers of all levels.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Learning Paths Section -->
+                <section class="content-section">
+                    <h2 class="section-title">Structured Learning Paths</h2>
+                    <p class="section-subtitle">Don't just read articles randomly. Follow our curated learning paths designed to take you from beginner to expert in key subjects, one step at a time.</p>
+                    <div class="grid-3">
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                                <h3>Master MS Excel in 7 Days</h3>
+                                <p>Go from absolute beginner to a confident Excel user with this structured guide.</p>
+                            </div>
+                            <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">Introduction to the Excel Interface</a></li>
+                                <li><div class="step-number">2</div> <a href="#">Basic Formulas & Functions (SUM, AVERAGE)</a></li>
+                                <li><div class="step-number">3</div> <a href="#">Understanding VLOOKUP & HLOOKUP</a></li>
+                                <li><div class="step-number">4</div> <a href="#">Creating Charts & Graphs</a></li>
+                            </ul>
+                        </div>
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                                <h3>Indian History: Ancient to Medieval</h3>
+                                <p>A comprehensive journey through the foundational eras of Indian history.</p>
+                            </div>
+                             <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">The Indus Valley Civilization</a></li>
+                                <li><div class="step-number">2</div> <a href="#">The Mauryan & Gupta Empires</a></li>
+                                <li><div class="step-number">3</div> <a href="#">Quiz: Ancient Indian History</a></li>
+                                <li><div class="step-number">4</div> <a href="#">The Delhi Sultanate & Mughal Era</a></li>
+                            </ul>
+                        </div>
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                                <h3>Physics Fundamentals</h3>
+                                <p>Grasp the core concepts of physics with our essential formula guides.</p>
+                            </div>
+                             <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">Units, Dimensions & Measurements</a></li>
+                                <li><div class="step-number">2</div> <a href="#">Laws of Motion & Force</a></li>
+                                <li><div class="step-number">3</div> <a href="#">Work, Energy, and Power</a></li>
+                                <li><div class="step-number">4</div> <a href="#">All Physics Formulas Cheat Sheet</a></li>
+                            </ul>
                         </div>
                     </div>
                 </section>
 
+                <!-- Our Content Philosophy Section -->
+                <section class="content-section">
+                    <h2 class="section-title">Our Content Philosophy</h2>
+                    <div class="philosophy-content">
+                        <h3>Our Mission: Democratizing Knowledge</h3>
+                        <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging. We strive to create a platform where learning is not a chore, but a journey of discovery.</p>
+                        <h3>The Three Pillars of Our Content</h3>
+                        <p>Every piece of content on our platform is built upon three core principles: Accuracy, Clarity, and Practicality.</p>
+                        <ul>
+                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts. We are committed to correcting any errors promptly and transparently.</li>
+                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand. We use real-world examples, analogies, and clear formatting to ensure a smooth and effective learning experience.</li>
+                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program, a formula sheet for an exam, or a quiz to test your learning, we focus on content that provides real-world value and helps you achieve your goals.</li>
+                        </ul>
+                        <h3>Commitment to Free Access</h3>
+                        <p>We are firm believers in the power of free and open access to information. Financial barriers should never stand in the way of learning. That's why every article, tool, and resource on GK Learn Study is, and always will be, completely free for everyone. Your support, through sharing our content and engaging with our community, is what allows us to continue this mission.</p>
+                    </div>
+                </section>
+
+                 <!-- Glossary Section -->
+                <section class="content-section glossary-section">
+                    <h2 class="section-title">Glossary of Important Terms</h2>
+                    <p class="section-subtitle">Confused by a term? Find quick, simple definitions for key concepts across various subjects right here.</p>
+                    <details>
+                        <summary>CPU (Central Processing Unit)</summary>
+                        <div class="glossary-definition"><p>Often called the "brain" of the computer, the CPU is the primary component that performs most of the processing inside a computer. It executes instructions and performs calculations needed to run the operating system and applications.</p></div>
+                    </details>
+                    <details>
+                        <summary>GDP (Gross Domestic Product)</summary>
+                        <div class="glossary-definition"><p>GDP is the total monetary or market value of all the finished goods and services produced within a country's borders in a specific time period. It is a broad measure of a nation’s overall economic activity.</p></div>
+                    </details>
+                     <details>
+                        <summary>VLOOKUP (Vertical Lookup)</summary>
+                        <div class="glossary-definition"><p>A function in spreadsheet applications like Microsoft Excel that is used to find and retrieve data from a specific column in a table. It's one of the most popular functions for data analysis and reporting.</p></div>
+                    </details>
+                     <details>
+                        <summary>Photosynthesis</summary>
+                        <div class="glossary-definition"><p>The process used by plants, algae, and certain bacteria to convert light energy into chemical energy in the form of glucose. Through this process, they use sunlight, water, and carbon dioxide to create their own food.</p></div>
+                    </details>
+                     <details>
+                        <summary>Indus Valley Civilization</summary>
+                        <div class="glossary-definition"><p>One of the world's earliest urban civilizations, which flourished in the basins of the Indus River in what is now Pakistan and northwest India, from around 3300 BCE to 1300 BCE. It was noted for its advanced city planning and drainage systems.</p></div>
+                    </details>
+                    <details>
+                        <summary>HTML (HyperText Markup Language)</summary>
+                        <div class="glossary-definition"><p>The standard markup language for creating web pages and web applications. It describes the structure of a web page semantically and originally included cues for the appearance of the document.</p></div>
+                    </details>
+                    <details>
+                        <summary>Newton's Laws of Motion</summary>
+                        <div class="glossary-definition"><p>Three fundamental principles of classical physics that describe the relationship between the motion of an object and the forces acting on it. They are: 1) An object at rest stays at rest and an object in motion stays in motion unless acted on by an external force. 2) Force equals mass times acceleration (F=ma). 3) For every action, there is an equal and opposite reaction.</p></div>
+                    </details>
+                </section>
+
+                <!-- CTA Section -->
+                <section class="cta-section">
+                    <h2>Join Our Learning Community!</h2>
+                    <p>Stay updated with our latest videos, tutorials, and quizzes. Follow us on YouTube for a more interactive learning experience.</p>
+                    <a href="https://www.youtube.com/@GKLearnStudy" class="cta-btn" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
+                </section>
+
+                <!-- FAQ Section (Expanded) -->
+                <section class="faq-section content-section">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <details>
+                        <summary>What kind of topics does GK Learn Study cover?</summary>
+                        <div class="faq-answer"><p>We cover a wide range of topics including General Knowledge (History, Geography, Current Affairs), Computer Science (MS Office, programming basics), Education (How-to guides), and essential tools like formula sheets and unit converters.</p></div>
+                    </details>
+                    <details>
+                        <summary>Is all the content on this website free?</summary>
+                        <div class="faq-answer"><p>Yes, absolutely! All articles, quizzes, and tools on GK Learn Study are 100% free to access for everyone. Our mission is to make knowledge accessible to all without any financial barriers.</p></div>
+                    </details>
+                    <details>
+                        <summary>How often is the content updated?</summary>
+                        <div class="faq-answer"><p>We strive to add new articles and update existing content regularly to ensure it is accurate and relevant. Our GK and Current Affairs sections are updated most frequently to keep you informed about the latest events.</p></div>
+                    </details>
+                    <details>
+                        <summary>Can I trust the information provided here?</summary>
+                        <div class="faq-answer"><p>Yes. We take accuracy very seriously. All our articles are thoroughly researched from reliable sources and reviewed by subject matter experts before publication. We aim to be a trustworthy source of information.</p></div>
+                    </details>
+                    <details>
+                        <summary>Can I request a topic for an article?</summary>
+                        <div class="faq-answer"><p>We love hearing from our community! While we can't guarantee every request, we encourage you to use our Contact Us page to suggest topics you'd like to see covered. We prioritize suggestions that align with our website's focus and would benefit a large number of readers.</p></div>
+                    </details>
+                    <details>
+                        <summary>Do I need to create an account to use the website?</summary>
+                        <div class="faq-answer"><p>No, you do not need an account to read any of our articles or use our tools. All content is freely available. An account is only required if you wish to post comments or rate pages.</p></div>
+                    </details>
+                     <details>
+                        <summary>How can I support GK Learn Study?</summary>
+                        <div class="faq-answer"><p>The best way to support us is by sharing our articles with your friends, family, and social networks. Following us on our social media channels like YouTube also helps us grow and reach more learners. Your engagement is our biggest motivation!</p></div>
+                    </details>
+                     <details>
+                        <summary>Are the quizzes suitable for competitive exams?</summary>
+                        <div class="faq-answer"><p>Many of our quizzes are designed with competitive exams (like SSC, Banking, Railways, etc.) in mind. They cover important topics and are structured to help you practice and test your knowledge effectively. However, always refer to the official syllabus for your specific exam.</p></div>
+                    </details>
+                    <details>
+                        <summary>What is 'Vyakaran'?</summary>
+                        <div class="faq-answer"><p>'Vyakaran' is the Hindi word for Grammar. Our Vyakaran section provides detailed articles on Hindi grammar rules, concepts, and examples to help students and learners master the language.</p></div>
+                    </details>
+                </section>
+
+
                 <div class="categories-section sidebar-widget">
                     <style>
-                        .h2-icons {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 8px;
-                            font-size: 1.6rem;
-                            font-weight: 600;
-                        }
-                        .h2-icons svg {
-                            width: 24px;
-                            height: 24px;
-                        }
-
-                        /* Arrow animation */
-                        .arrow-anim {
-                            animation: moveArrow 1.2s infinite ease-in-out;
-                        }
-                        @keyframes moveArrow {
-                            0%,
-                            100% {
-                                transform: translateX(0);
-                            }
-                            50% {
-                                transform: translateX(6px);
-                            }
-                        }
-
-                        /* Box color cycle */
-                        @keyframes colorCycle {
-                            0% {
-                                fill: #4285f4;
-                            } /* Blue */
-                            25% {
-                                fill: #ea4335;
-                            } /* Red */
-                            50% {
-                                fill: #fbbc05;
-                            } /* Yellow */
-                            75% {
-                                fill: #34a853;
-                            } /* Green */
-                            100% {
-                                fill: #4285f4;
-                            }
-                        }
-                        .box1 {
-                            animation: colorCycle 4s infinite;
-                        }
-                        .box2 {
-                            animation: colorCycle 4s infinite 1s;
-                        }
-                        .box3 {
-                            animation: colorCycle 4s infinite 2s;
-                        }
-                        .box4 {
-                            animation: colorCycle 4s infinite 3s;
-                        }
+                        .h2-icons { display: inline-flex; align-items: center; gap: 8px; font-size: 1.6rem; font-weight: 600; }
+                        .h2-icons svg { width: 24px; height: 24px; }
+                        .arrow-anim { animation: moveArrow 1.2s infinite ease-in-out; }
+                        @keyframes moveArrow { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+                        @keyframes colorCycle { 0% { fill: #4285f4; } 25% { fill: #ea4335; } 50% { fill: #fbbc05; } 75% { fill: #34a853; } 100% { fill: #4285f4; } }
+                        .box1 { animation: colorCycle 4s infinite; }
+                        .box2 { animation: colorCycle 4s infinite 1s; }
+                        .box3 { animation: colorCycle 4s infinite 2s; }
+                        .box4 { animation: colorCycle 4s infinite 3s; }
                     </style>
-
                     <h2 class="h2-icons">
-                        <!-- Animated 4 boxes -->
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <rect class="box1" x="2" y="2" width="8" height="8" rx="1.5" />
-                            <rect class="box2" x="14" y="2" width="8" height="8" rx="1.5" />
-                            <rect class="box3" x="2" y="14" width="8" height="8" rx="1.5" />
-                            <rect class="box4" x="14" y="14" width="8" height="8" rx="1.5" />
-                        </svg>
-
-                        <!-- Static text -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect class="box1" x="2" y="2" width="8" height="8" rx="1.5" /><rect class="box2" x="14" y="2" width="8" height="8" rx="1.5" /><rect class="box3" x="2" y="14" width="8" height="8" rx="1.5" /><rect class="box4" x="14" y="14" width="8" height="8" rx="1.5" /></svg>
                         <span>Categories</span>
-
-                        <!-- Animated arrow -->
-                        <svg class="arrow-anim" viewBox="0 0 24 24" stroke="#641ef9" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 12h14" />
-                            <path d="M14 6l6 6-6 6" />
-                        </svg>
+                        <svg class="arrow-anim" viewBox="0 0 24 24" stroke="#641ef9" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h14" /><path d="M14 6l6 6-6 6" /></svg>
                     </h2>
-
-                    <ul class="category-list">
-                        <!-- Categories will be dynamically injected here -->
-                    </ul>
+                    <ul class="category-list"></ul>
                 </div>
 
                 <div class="post-filter-container">
@@ -509,217 +595,26 @@
                 <div id="load-more-container">
                     <button id="load-more-btn">Load More</button>
                 </div>
-
-                <!-- FAQ Section -->
-                <section class="faq-section">
-                    <style>
-                        .faq-section {
-                            max-width: 800px;
-                            margin: 40px auto;
-                            padding: 40px 20px;
-                        }
-                        .faq-section h2 {
-                            text-align: center;
-                            font-size: 2rem;
-                            margin-bottom: 2rem;
-                            color: var(--accent-color);
-                        }
-                        .faq-item {
-                            background-color: var(--card-bg);
-                            border: 1px solid var(--border-color);
-                            border-radius: 8px;
-                            margin-bottom: 1rem;
-                            overflow: hidden;
-                        }
-                        .faq-question {
-                            width: 100%;
-                            background: none;
-                            border: none;
-                            text-align: left;
-                            padding: 1rem 1.5rem;
-                            font-size: 1.1rem;
-                            font-weight: 600;
-                            color: var(--text-primary);
-                            cursor: pointer;
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-                        .faq-question::after {
-                            content: '+';
-                            font-size: 1.5rem;
-                            transition: transform 0.2s ease;
-                        }
-                        .faq-answer {
-                            max-height: 0;
-                            overflow: hidden;
-                            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-                            padding: 0 1.5rem;
-                            color: var(--text-secondary);
-                            line-height: 1.7;
-                        }
-                        .faq-item.active .faq-question::after {
-                            transform: rotate(45deg);
-                        }
-                        .faq-item.active .faq-answer {
-                            max-height: 200px; /* Adjust as needed */
-                            padding: 0 1.5rem 1rem;
-                        }
-                    </style>
-                    <h2>Frequently Asked Questions</h2>
-                    <div class="faq-list">
-                        <div class="faq-item">
-                            <button class="faq-question">What kind of topics does GK Learn Study cover?</button>
-                            <div class="faq-answer">
-                                <p>We cover a wide range of topics including General Knowledge (GK), Current Affairs, Indian History, Geography, Science & Technology, Computer Science, 'How-To' guides, Mathematics Formulas, and Hindi Grammar (Vyakaran). Our goal is to be a comprehensive resource for students and lifelong learners.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <button class="faq-question">Is all the content on the website free?</button>
-                            <div class="faq-answer">
-                                <p>Yes, absolutely! All articles, quizzes, and educational materials on GK Learn Study are 100% free to access. We are committed to providing free education and knowledge to everyone, without any subscriptions or hidden fees.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item">
-                            <button class="faq-question">How often is new content added?</button>
-                            <div class="faq-answer">
-                                <p>We strive to add new, high-quality content regularly. Our team is constantly working on new articles and quizzes to keep our information fresh, relevant, and up-to-date with the latest developments and exam patterns.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <script>
-                        document.querySelectorAll('.faq-question').forEach(button => {
-                            button.addEventListener('click', () => {
-                                const faqItem = button.parentElement;
-                                faqItem.classList.toggle('active');
-                            });
-                        });
-                    </script>
-                </section>
-
-                <!-- About Section -->
-                <section class="about-section">
-                    <style>
-                        .about-section {
-                            padding: 40px 20px;
-                            margin: 40px 0;
-                            background-color: var(--body-bg);
-                            border-top: 1px solid var(--border-color);
-                            border-bottom: 1px solid var(--border-color);
-                        }
-                        .about-content {
-                            max-width: 800px;
-                            margin: 0 auto;
-                            text-align: center;
-                        }
-                        .about-content h2 {
-                            font-size: 2rem;
-                            margin-bottom: 1rem;
-                            color: var(--text-primary);
-                        }
-                        .about-content p {
-                            color: var(--text-secondary);
-                            line-height: 1.8;
-                            margin-bottom: 1rem;
-                        }
-                    </style>
-                    <div class="about-content">
-                        <h2>Our Mission: Knowledge for All</h2>
-                        <p>GK Learn Study was founded on a simple principle: making learning accessible, engaging, and free for everyone. In a world overflowing with information, we strive to be your trusted source for clear, concise, and accurate knowledge. Whether you're a student preparing for exams, a curious mind looking to learn something new, or someone who simply enjoys the thrill of a good quiz, our platform is built for you.</p>
-                        <p>From the complexities of computer science and essential mathematical formulas to the rich tapestry of Indian history and the nuances of Hindi grammar (Vyakaran), our content is designed to be both comprehensive and easy to digest. We are constantly expanding our library of articles, guides, and quizzes to cover more subjects and answer more of your questions. Thank you for being a part of our learning community!</p>
-                    </div>
-                </section>
             </div>
 
             <div id="comments-and-ratings-container">
                 <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
-                    <div class="rating-skeleton">
-                        <div class="rating-skeleton-display">
-                            <div class="skeleton-summary">
-                                <div class="skeleton-circle"></div>
-                                <div class="skeleton-line short" style="width: 80%; margin: 0 auto;"></div>
-                            </div>
-                            <div class="skeleton-breakdown">
-                                <div class="skeleton-line" style="height: 10px;"></div>
-                                <div class="skeleton-line" style="height: 10px;"></div>
-                                <div class="skeleton-line" style="height: 10px;"></div>
-                                <div class="skeleton-line" style="height: 10px;"></div>
-                                <div class="skeleton-line" style="height: 10px;"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="rating-skeleton"><div class="rating-skeleton-display"><div class="skeleton-summary"><div class="skeleton-circle"></div><div class="skeleton-line short" style="width: 80%; margin: 0 auto;"></div></div><div class="skeleton-breakdown"><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div></div></div></div>
                     <div id="rating-widget" class="rating-content">
                         <h2>Rate this Page</h2>
-                        <div id="rating-display">
-                            <div class="average-summary">
-                                <div id="average-rating-value">0.0</div>
-                                <div id="total-ratings-count">0 ratings</div>
-                            </div>
-                            <div class="rating-breakdown">
-                                <div class="breakdown-row" data-star-level="5"><span class="star-label">5 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div><span class="vote-count">0</span></div>
-                                <div class="breakdown-row" data-star-level="4"><span class="star-label">4 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div><span class="vote-count">0</span></div>
-                                <div class="breakdown-row" data-star-level="3"><span class="star-label">3 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div><span class="vote-count">0</span></div>
-                                <div class="breakdown-row" data-star-level="2"><span class="star-label">2 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div><span class="vote-count">0</span></div>
-                                <div class="breakdown-row" data-star-level="1"><span class="star-label">1 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div><span class="vote-count">0</span></div>
-                            </div>
-                        </div>
-                        <div id="rating-stars">
-                            <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </div>
-                        <div id="rating-login-prompt" style="display: none;">
-                            <p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p>
-                        </div>
+                        <div id="rating-display"><div class="average-summary"><div id="average-rating-value">0.0</div><div id="total-ratings-count">0 ratings</div></div><div class="rating-breakdown"><div class="breakdown-row" data-star-level="5"><span class="star-label">5 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="4"><span class="star-label">4 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="3"><span class="star-label">3 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="2"><span class="star-label">2 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="1"><span class="star-label">1 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div><span class="vote-count">0</span></div></div></div>
+                        <div id="rating-stars"><svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                        <div id="rating-login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p></div>
                     </div>
                 </div>
 
                 <div class="comments-wrapper comments-loading" id="comments-main-container">
                     <div class="firebase-comments-widget" id="custom-comment-section">
                         <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
-                
-                        <div id="auth-container">
-                            <div id="user-info"></div>
-                            <button id="login-btn" class="btn primary">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg>
-                                Sign in with Google
-                            </button>
-                            <button id="logout-btn" class="btn">Logout</button>
-                        </div>
-
-                        <div id="login-prompt" style="display: none;">
-                            <p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p>
-                        </div>
-                
-                        <div class="comment-form-shell" id="comment-form-shell" style="display: none;">
-                            <form class="comment-form" id="comment-form">
-                                <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                                <textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea>
-                                <input type="hidden" id="parent-id" value="" />
-                                <div class="form-footer">
-                                    <div id="char-counter">0 / 1000</div>
-                                    <div class="actions">
-                                        <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                        <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                
-                        <div id="comments-list" class="comment-list">
-                            <div class="skeleton-comment">
-                               <div class="skeleton-line header"></div>
-                               <div class="skeleton-line"></div>
-                               <div class="skeleton-line short"></div>
-                            </div>
-                             <div class="skeleton-comment">
-                               <div class="skeleton-line header"></div>
-                               <div class="skeleton-line"></div>
-                               <div class="skeleton-line short"></div>
-                            </div>
-                        </div>
+                        <div id="auth-container"><div id="user-info"></div><button id="login-btn" class="btn primary"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg> Sign in with Google</button><button id="logout-btn" class="btn">Logout</button></div>
+                        <div id="login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p></div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none;"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div><textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" /><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button></div></div></form></div>
+                        <div id="comments-list" class="comment-list"><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
                     </div>
                 </div>
             </div>
@@ -727,9 +622,7 @@
         </main>
         
         <footer class="app-footer">
-            <div class="footer-content">
-                <!-- Footer content will be injected by header.js -->
-            </div>
+            <div class="footer-content"></div>
             <div class="footer-bottom">
                 &copy; 2024 GK Learn Study | All Rights Reserved
             </div>
@@ -738,30 +631,14 @@
         <script src="js/search-data.js" defer></script>
         
         <script>
-            // Register the service worker for notifications
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/firebase-messaging-sw.js')
-                        .then(registration => {
-                            console.log('Firebase Messaging Service Worker registered with scope:', registration.scope);
-                        })
-                        .catch(err => {
-                            console.error('Service Worker registration failed:', err);
-                        });
-                });
-            }
-        </script>
-        <script>
-            // Register the caching service worker
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
+                        .then(r => console.log('Firebase Messaging SW registered.', r.scope))
+                        .catch(e => console.error('Firebase Messaging SW registration failed:', e));
                     navigator.serviceWorker.register('/sw.js')
-                        .then(registration => {
-                            console.log('Caching Service Worker registered with scope:', registration.scope);
-                        })
-                        .catch(err => {
-                            console.error('Caching Service Worker registration failed:', err);
-                        });
+                        .then(r => console.log('Caching SW registered.', r.scope))
+                        .catch(e => console.error('Caching SW registration failed:', e));
                 });
             }
         </script>
