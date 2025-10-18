@@ -15,8 +15,36 @@ const wrapText=(ctx,text,x,y,maxWidth,lineHeight,palette)=>{const fontSize=text.
 createImageFor=(imgTitle)=>{const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d');ctx.clearRect(0,0,W,H);ctx.scale(S,S);const palette=getPalette(imgTitle);drawBackground(ctx,palette,BASE_W,BASE_H);drawGeometricPattern(ctx,BASE_W,BASE_H);wrapText(ctx,imgTitle,BASE_W/2,BASE_H/2,BASE_W*0.8,100,palette);ctx.font="600 28px 'Arial', sans-serif";ctx.fillStyle=palette.primary;ctx.textAlign="right";ctx.textBaseline="bottom";ctx.globalAlpha=0.7;ctx.fillText("gklearnstudy.in",BASE_W-30,BASE_H-25);ctx.globalAlpha=1;return canvas.toDataURL('image/png')}}
 return createImageFor(title)}})();
 
+window.GKApp.generateAuthorAvatar = (name = 'G') => {
+    if (name === "Mr. Himanshu Tyagi") {
+        return `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>`;
+    }
+
+    const words = name.split(' ').filter(Boolean);
+    let initials = words.length > 0 ? words[0][0] : '';
+    if (words.length > 1) {
+        initials += words[words.length - 1][0];
+    }
+    initials = initials.toUpperCase();
+
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+        hash = hash & hash;
+    }
+    const hue = Math.abs(hash % 360);
+    const color = `hsl(${hue}, 65%, 55%)`;
+
+    const fontSize = initials.length > 1 ? '16' : '20';
+
+    return `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="${color}" />
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="${fontSize}" font-weight="bold" fill="#fff" font-family="Arial, sans-serif">${initials}</text>
+            </svg>`;
+};
+
 function initializePostRendering(){
-    const POSTS_INITIAL_LOAD=40;
+    const POSTS_INITIAL_LOAD=12;
     const POSTS_PER_PAGE=20;
     const PAGES_WITH_RANDOM_RELATED=['kaise-karen'];
     const postsContainer=document.getElementById("post-grid");
@@ -54,52 +82,14 @@ function initializePostRendering(){
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
             : '';
 
+        const authorAvatarHTML = window.GKApp.generateAuthorAvatar(post.author);
+
         const metaBlock=`
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                     <svg width="40" height="40" viewBox="0 0 40 40"
-     xmlns="http://www.w3.org/2000/svg"
-     role="img"
-     aria-label="GK Learn Study white-blue-red circular logo"
-     style="isolation:isolate; display:inline-block;">
-  <defs>
-    <!-- unique gradient id -->
-    <linearGradient id="avatar-profile-unique12345" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="70%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#ff9999"/>
-    </linearGradient>
-  </defs>
-
-  <!-- main circle with isolated gradient -->
-  <circle cx="20" cy="20" r="20"
-          fill="url(#avatar-profile-unique12345)"
-          stroke="#ffffff"
-          stroke-width="1"
-          style="vector-effect:non-scaling-stroke; shape-rendering:geometricPrecision;" />
-
-  <!-- main initials -->
-  <text x="50%" y="38%"
-        dominant-baseline="middle"
-        text-anchor="middle"
-        font-size="14"
-        font-weight="bold"
-        fill="#e40707"
-        font-family="Arial, sans-serif"
-        style="paint-order:stroke; isolation:isolate;">GK</text>
-
-  <!-- subtext -->
-  <text x="50%" y="68%"
-        dominant-baseline="middle"
-        text-anchor="middle"
-        font-size="6"
-        fill="#e40707"
-        font-family="Arial, sans-serif"
-        style="paint-order:stroke; isolation:isolate;">Learn Study</text>
-</svg>
-
-   </div>
+                        ${authorAvatarHTML}
+                    </div>
                     <div class="author-details">
                         <span class="author vcard">by <a href="profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
                         <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time></span>
@@ -311,7 +301,3 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
-
-
-
-
