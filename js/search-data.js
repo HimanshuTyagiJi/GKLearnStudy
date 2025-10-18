@@ -67,8 +67,8 @@ function initializePostRendering(){
     <!-- unique gradient id -->
     <linearGradient id="avatar-profile-unique12345" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="68%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#ff2b2b"/>
+      <stop offset="70%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ff9999"/>
     </linearGradient>
   </defs>
 
@@ -311,6 +311,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
 
 
 
