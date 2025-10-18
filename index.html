@@ -250,19 +250,16 @@
                     .featured-tool-card p { color: var(--text-secondary); margin-bottom: 1.5rem; }
                     .featured-tool-card .tool-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
                     .featured-tool-card .tool-btn:hover { background-color: #004d4e; }
-                    .subject-spotlight-card { background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--card-shadow); }
-                    .subject-spotlight-card h3 { font-size: 1.5rem; margin-top: 0; display: flex; align-items: center; gap: 0.75rem; color: var(--text-primary); }
-                    .subject-spotlight-card h3 svg { width: 40px; height: 40px; color: var(--accent-color); flex-shrink: 0; }
-                    .subject-spotlight-card p { color: var(--text-secondary); line-height: 1.6; }
-                    .subject-spotlight-card ul { list-style: none; padding: 0; margin-top: 1rem; }
-                    .subject-spotlight-card li { margin-bottom: 0.5rem; }
-                    .subject-spotlight-card a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
-                    .subject-spotlight-card a:hover { color: var(--accent-color); }
-                    .subject-spotlight-card a::before { content: '→'; color: var(--accent-color); }
+                    .subject-spotlight-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; }
+                    .subject-spotlight-card .icon-wrapper { width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem; }
+                    .subject-spotlight-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+                    .subject-spotlight-card p { color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1; }
+                    .subject-spotlight-card .spotlight-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
+                    .subject-spotlight-card .spotlight-btn:hover { background-color: #004d4e; }
                     .testimonial-card { background-color: var(--card-bg); border-left: 5px solid var(--accent-color); padding: 2rem; border-radius: 0 var(--border-radius) var(--border-radius) 0; box-shadow: var(--card-shadow); }
                     .testimonial-text { font-style: italic; color: var(--text-secondary); line-height: 1.7; margin: 0 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
                     .testimonial-author { font-weight: 600; color: var(--text-primary); }
-                    .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-w: 800px; margin: 0 auto; }
+                    .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
                     .founder-avatar { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
                     .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
                     .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
@@ -275,6 +272,16 @@
                     .update-item .update-date { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
                     .update-item h3 { margin-top: 0; font-size: 1.2rem; }
                     .update-item p { margin-bottom: 0; }
+                    .featured-section { background-color: var(--body-bg); text-align: center; padding: 3rem 0; }
+                    .featured-logos { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 3rem; margin-top: 2rem; filter: grayscale(100%) opacity(0.6); }
+                    .featured-logos svg { height: 35px; color: var(--text-secondary); }
+                    .explore-card { background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); padding: 2.5rem 2rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+                    .explore-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px var(--shadow-color); border-color: var(--accent-color); }
+                    .explore-card .icon { font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
+                    .explore-card h3 { font-size: 1.6rem; margin-bottom: 1rem; }
+                    .explore-card p { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; }
+                    .explore-card .explore-btn { font-weight: 600; text-decoration: none; color: var(--accent-color); border: 2px solid var(--accent-color); padding: 0.8rem 2rem; border-radius: 50px; transition: all 0.2s ease; }
+                    .explore-card .explore-btn:hover { background: var(--accent-color); color: var(--white); }
                      @media (min-width: 768px) { .founder-section { flex-direction: row; text-align: left; } }
                 </style>
 
@@ -301,17 +308,14 @@
 
                 <section class="content-section">
                     <h2 class="section-title">Why Choose GK Learn Study?</h2>
-                    <p class="section-subtitle">We are committed to being your most trusted partner in the journey of learning. Our platform is meticulously designed to provide a superior educational experience. Here’s what makes us unique and valuable for millions of users.</p>
+                    <p class="section-subtitle">We are committed to being your most trusted partner in the journey of learning. Our platform is meticulously designed to provide a superior educational experience. Here’s what makes us unique and valuable for millions of users across the country.</p>
                     <div class="grid-3">
-                        <div class="info-card"> <div class="icon">📚</div> <h3>Expert-Curated Content</h3> <p>Our articles are deeply researched and written by subject matter experts to guarantee the accuracy and reliability you deserve.</p> </div>
-                        <div class="info-card"> <div class="icon">🎯</div> <h3>Interactive Learning</h3> <p>Don't just read—engage! Our interactive quizzes and practical 'how-to' guides make the learning process active, enjoyable, and more effective.</p> </div>
-                        <div class="info-card"> <div class="icon">🌍</div> <h3>Free & Accessible for All</h3> <p>We firmly believe in barrier-free education. Our entire library of resources is 100% free, with no hidden costs or premium subscriptions.</p> </div>
-                        <div class="info-card"> <div class="icon">🔄</div> <h3>Constantly Updated</h3> <p>The world is always changing, and so is our content. We regularly update our articles to reflect the latest information and discoveries.</p> </div>
-                        <div class="info-card"> <div class="icon">🏆</div> <h3>Exam-Oriented Approach</h3> <p>Get an edge in your preparation. Our content is specifically tailored to help aspirants preparing for competitive exams like SSC, Banking, and more.</p> </div>
-                        <div class="info-card"> <div class="icon">🔍</div> <h3>Simple & Clear Language</h3> <p>We excel at breaking down the most complex topics into simple, digestible language that is easy to understand for learners of all levels.</p> </div>
-                        <div class="info-card"> <div class="icon">📱</div> <h3>Mobile-First Design</h3> <p>Learn anytime, anywhere. Our website is fully optimized for a seamless and intuitive experience on your phone, tablet, or desktop.</p> </div>
-                        <div class="info-card"> <div class="icon">💬</div> <h3>Community-Driven Growth</h3> <p>Your feedback matters. We actively listen to our readers' suggestions to continuously improve our platform and provide the content you need.</p> </div>
-                         <div class="info-card"> <div class="icon">🛠️</div> <h3>Practical Tools & Utilities</h3> <p>Beyond articles, we provide handy online tools like unit converters and formula sheets to assist you with your daily tasks and studies.</p> </div>
+                        <div class="info-card"> <div class="icon">📚</div> <h3>Expert-Curated Content</h3> <p>Our articles are deeply researched, fact-checked, and written by subject matter experts to guarantee the accuracy and reliability you deserve for your exam preparation and general learning.</p> </div>
+                        <div class="info-card"> <div class="icon">🎯</div> <h3>Interactive Learning</h3> <p>Don't just read—engage! Our interactive quizzes and practical 'how-to' guides make the learning process active, enjoyable, and much more effective at retaining information.</p> </div>
+                        <div class="info-card"> <div class="icon">🌍</div> <h3>Free & Accessible for All</h3> <p>We firmly believe in barrier-free education. Our entire library of high-quality resources is 100% free, with no hidden costs or premium subscriptions, ever.</p> </div>
+                        <div class="info-card"> <div class="icon">🔄</div> <h3>Constantly Updated</h3> <p>The world is always changing, and so is our content. We regularly update our articles to reflect the latest information, exam patterns, and current affairs so you are always ahead.</p> </div>
+                        <div class="info-card"> <div class="icon">🏆</div> <h3>Exam-Oriented Approach</h3> <p>Get a competitive edge in your preparation. Our content is specifically tailored to help aspirants preparing for competitive exams like SSC, Banking, Railways, and State PSCs.</p> </div>
+                         <div class="info-card"> <div class="icon">🛠️</div> <h3>Practical Tools & Utilities</h3> <p>Beyond just articles, we provide a suite of handy online tools like unit converters, formula sheets, and educational guides to assist you with your daily tasks and studies.</p> </div>
                     </div>
                 </section>
 
@@ -320,16 +324,16 @@
                     <p class="section-subtitle">Our commitment to quality education is reflected in our growth and the community we've built. We are proud of what we have achieved together.</p>
                     <div class="stats-grid">
                         <div class="stat-item">
-                            <div class="stat-number" data-target="500">0</div>
-                            <div class="stat-label">Articles Published</div>
+                            <div class="stat-number" data-target="150">0+</div>
+                            <div class="stat-label">Detailed Articles</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number" data-target="25000">0</div>
+                            <div class="stat-number" data-target="25000">0+</div>
                             <div class="stat-label">Happy Learners</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number" data-target="50">0</div>
-                            <div class="stat-label">Quizzes Available</div>
+                            <div class="stat-number" data-target="50">0+</div>
+                            <div class="stat-label">Interactive Quizzes</div>
                         </div>
                     </div>
                 </section>
@@ -392,6 +396,31 @@
                         </div>
                     </div>
                 </section>
+                
+                <section class="content-section">
+                    <h2 class="section-title">Explore by Content Type</h2>
+                    <p class="section-subtitle">Whether you want to read, practice, or apply, we have the right format for your learning style. Choose how you want to engage with our content.</p>
+                    <div class="grid-3">
+                        <div class="explore-card">
+                            <div class="icon">📖</div>
+                            <h3>In-Depth Articles</h3>
+                            <p>Read our comprehensive guides and articles covering a vast range of topics, written by experts.</p>
+                            <a href="#post-grid" class="explore-btn">Browse Articles</a>
+                        </div>
+                        <div class="explore-card">
+                            <div class="icon">🎯</div>
+                            <h3>Interactive Quizzes</h3>
+                            <p>Test your knowledge, identify your weak spots, and prepare for exams with our engaging quizzes.</p>
+                             <a href="/gk-quiz" class="explore-btn">Take a Quiz</a>
+                        </div>
+                        <div class="explore-card">
+                            <div class="icon">🛠️</div>
+                            <h3>Practical Tools</h3>
+                            <p>Use our handy converters and formula sheets to make your studies and daily tasks easier.</p>
+                            <a href="/all-formulas" class="explore-btn">Discover Tools</a>
+                        </div>
+                    </div>
+                </section>
 
                 <div class="categories-section sidebar-widget">
                     <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
@@ -410,40 +439,41 @@
                 </main>
                 <div id="load-more-container"> <button id="load-more-btn">Load More</button> </div>
 
-                <section class="content-section">
+                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
                     <h2 class="section-title">Subject Spotlights</h2>
-                    <p class="section-subtitle">Dive deeper into our core subjects. Find curated lists of our most important articles to kickstart your learning journey in each field.</p>
+                    <p class="section-subtitle">Dive deeper into our core subjects. Find curated collections of our most important articles to kickstart your learning journey in each field.</p>
                     <div class="grid-3">
                         <div class="subject-spotlight-card">
-                            <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M60.4 25.1c-2.3-2.3-5.2-3.8-8.4-4.5.1-.3.1-.6.1-1 0-5.2-4.2-9.4-9.4-9.4-4.6 0-8.5 3.3-9.3 7.6-.8-.1-1.6-.2-2.4-.2-6.5 0-11.8 5.3-11.8 11.8 0 .4.1.8.1 1.2-4.1.7-7.4 3.2-9.1 6.3-2.8 5.1-1.6 11.5 2.8 15.2l.2.2c.4.3.8.6 1.3.8 2.5 1.2 5.2 1.8 7.9 1.8h29.2c5.4 0 10.4-2.1 14.1-5.9C64.6 42.1 65.5 31.7 60.4 25.1zM58 48.4c-3.1 3.1-7.2 4.8-11.6 4.8H17.2c-2.4 0-4.8-.5-7-1.5-.4-.2-.8-.4-1.1-.6l-.2-.2c-3.7-3.1-4.7-8.4-2.4-12.8 1.4-2.6 4.1-4.6 7.3-5.2.5-.1.9-.5.9-1v-1.7c0-.4-.1-.8-.1-1.2 0-5.3 4.3-9.6 9.6-9.6.9 0 1.8.1 2.6.4.5.1.9 0 1.3-.3.3-.3.5-.7.5-1.1V14c0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c0 .5.1 1 .2 1.4.3 2.9 1.6 5.5 3.6 7.5.4.4.9.6 1.4.6h.4c2.8.6 5.3 2 7.2 4.1C62.5 38.6 62.5 44.2 58 48.4z" fill="currentColor"/><path d="M30.9 34.6c-4.9 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8zm0 15.3c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z" fill="currentColor"/></svg> General Knowledge</h3>
-                            <p>From ancient history to current affairs, our GK section is your gateway to understanding the world. Perfect for competitive exams and curious minds.</p>
-                            <ul>
-                                <li><a href="#">Ancient Indian History Quiz</a></li>
-                                <li><a href="#">Complete List of Indian States & Capitals</a></li>
-                                <li><a href="#">Important Battles in Indian History</a></li>
-                            </ul>
+                            <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M60.4 25.1c-2.3-2.3-5.2-3.8-8.4-4.5.1-.3.1-.6.1-1 0-5.2-4.2-9.4-9.4-9.4-4.6 0-8.5 3.3-9.3 7.6-.8-.1-1.6-.2-2.4-.2-6.5 0-11.8 5.3-11.8 11.8 0 .4.1.8.1 1.2-4.1.7-7.4 3.2-9.1 6.3-2.8 5.1-1.6 11.5 2.8 15.2l.2.2c.4.3.8.6 1.3.8 2.5 1.2 5.2 1.8 7.9 1.8h29.2c5.4 0 10.4-2.1 14.1-5.9C64.6 42.1 65.5 31.7 60.4 25.1zM58 48.4c-3.1 3.1-7.2 4.8-11.6 4.8H17.2c-2.4 0-4.8-.5-7-1.5-.4-.2-.8-.4-1.1-.6l-.2-.2c-3.7-3.1-4.7-8.4-2.4-12.8 1.4-2.6 4.1-4.6 7.3-5.2.5-.1.9-.5.9-1v-1.7c0-.4-.1-.8-.1-1.2 0-5.3 4.3-9.6 9.6-9.6.9 0 1.8.1 2.6.4.5.1.9 0 1.3-.3.3-.3.5-.7.5-1.1V14c0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c0 .5.1 1 .2 1.4.3 2.9 1.6 5.5 3.6 7.5.4.4.9.6 1.4.6h.4c2.8.6 5.3 2 7.2 4.1C62.5 38.6 62.5 44.2 58 48.4z"/><path d="M30.9 34.6c-4.9 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8zm0 15.3c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z"/></svg></div>
+                            <h3>General Knowledge</h3>
+                            <p>From ancient history to current affairs, our GK section is your gateway to understanding the world.</p>
+                            <a href="/gk-quiz" class="spotlight-btn">Explore GK</a>
                         </div>
                         <div class="subject-spotlight-card">
-                            <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M54.4 39.2V21.5c0-1-.8-1.8-1.8-1.8h-14c-.6 0-1.1.3-1.4.7L32 26.9l-5.2-6.5c-.3-.4-.8-.7-1.4-.7H11.4c-1 0-1.8.8-1.8 1.8v17.8c0 1 .8 1.8 1.8 1.8h11.2v10.2c0 .7.8 1.1 1.4.7l15.9-10.9c.7-.5.7-1.5 0-2l-1.6-1.1h14.3c1-.1 1.8-.9 1.8-1.9zM11.9 38.7V22h13.2l5.9 7.4-5.9 7.4H11.9zm30.3-1.8H26.3l3.2-2.2c.7-.5.7-1.5 0-2l-3.2-2.2h15.9v6.4zm-1-16.3h11.7v16.3H41.1l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8v-2.3h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8V22h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2L41.1 22h-1.8v-1.5h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8H40v-2.2h1.2z" fill="currentColor"/></svg> Computer Science</h3>
-                            <p>Master essential computer skills with our easy-to-follow guides. We cover everything from MS Office tutorials to fundamental concepts of computing.</p>
-                            <ul>
-                                <li><a href="#">Top 50 MS Excel Formulas</a></li>
-                                <li><a href="#">What is an Operating System?</a></li>
-                                <li><a href="#">How to use VLOOKUP in Excel</a></li>
-                            </ul>
+                           <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M54.4 39.2V21.5c0-1-.8-1.8-1.8-1.8h-14c-.6 0-1.1.3-1.4.7L32 26.9l-5.2-6.5c-.3-.4-.8-.7-1.4-.7H11.4c-1 0-1.8.8-1.8 1.8v17.8c0 1 .8 1.8 1.8 1.8h11.2v10.2c0 .7.8 1.1 1.4.7l15.9-10.9c.7-.5.7-1.5 0-2l-1.6-1.1h14.3c1-.1 1.8-.9 1.8-1.9zM11.9 38.7V22h13.2l5.9 7.4-5.9 7.4H11.9zm30.3-1.8H26.3l3.2-2.2c.7-.5.7-1.5 0-2l-3.2-2.2h15.9v6.4zm-1-16.3h11.7v16.3H41.1l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8v-2.3h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8V22h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2L41.1 22h-1.8v-1.5h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8H40v-2.2h1.2z"/></svg></div>
+                            <h3>Computer Science</h3>
+                            <p>Master essential computer skills with our easy-to-follow guides, from MS Office to core concepts.</p>
+                             <a href="/computer" class="spotlight-btn">Learn Computing</a>
                         </div>
                         <div class="subject-spotlight-card">
-                            <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M49.3 16.5c-1.3-1.3-2.8-2.3-4.5-3.1-1.3-.6-2.6-1.1-4-1.5-.7-.2-1.4-.3-2.1-.5s-1.4-.2-2.2-.2c-1.2 0-2.4.2-3.6.5-1.1.3-2.2.7-3.3 1.2s-2.1 1.1-3.1 1.9-1.9 1.7-2.8 2.8c-1.2 1.5-2.2 3.2-2.9 5-.5 1.2-.8 2.4-1.1 3.7s-.4 2.6-.4 3.9.1 2.6.4 3.9.6 2.5 1.1 3.7c.7 1.8 1.7 3.5 2.9 5 .9.9 1.8 1.7 2.8 2.4s2 1.3 3.1 1.9 2.2.9 3.3 1.2c1.2.3 2.4.5 3.6.5s2.4-.2 3.6-.5c1.1-.3 2.2-.7 3.3-1.2s2.1-1.1 3.1-1.9 1.9-1.7 2.8-2.8c1.2-1.5 2.2-3.2 2.9-5 .5-1.2.8-2.4 1.1-3.7.2-1.3.4-2.6.4-3.9s-.1-2.6-.4-3.9-.6-2.5-1.1-3.7c-.8-1.9-1.8-3.6-3-5.1zm-1.6 28.3c-.9.9-1.9 1.6-3 2.3s-2.2.9-3.4 1.2-2.4.5-3.7.5-2.5-.2-3.7-.5-2.3-.7-3.4-1.2-2.1-1.1-3-2.3-1.6-1.9-2.3-3c-.7-1.2-1.3-2.5-1.7-3.8s-.6-2.7-.6-4.1.2-2.8.6-4.1 1-2.7 1.7-3.8c.7-1.2 1.4-2.1 2.3-3s1.9-1.6 3-2.3 2.2-.9 3.4-1.2c1.2-.3 2.4-.5 3.7-.5s2.5.2 3.7.5c1.2.3 2.3.7 3.4 1.2s2.1 1.1 3 2.3 1.6 1.9 2.3 3c.7 1.2 1.3 2.5 1.7 3.8.4 1.3.6 2.7.6 4.1s-.2 2.8-.6 4.1-1 2.7-1.7 3.8c-.6 1.1-1.4 2.1-2.2 3z" fill="currentColor"/><path d="M32 23.3c-4.8 0-8.7 3.9-8.7 8.7s3.9 8.7 8.7 8.7 8.7-3.9 8.7-8.7-3.9-8.7-8.7-8.7zm0 15c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z" fill="currentColor"/></svg> Science & Formulas</h3>
-                            <p>Your one-stop resource for all important formulas in Physics, Chemistry, and Maths, along with clear explanations of scientific concepts.</p>
-                            <ul>
-                                <li><a href="#">All Physics Formulas PDF</a></li>
-                                <li><a href="#">Complete Chemistry Formula List</a></li>
-                                <li><a href="#">How does Photosynthesis work?</a></li>
-                            </ul>
+                            <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor"><path d="M49.3 16.5c-1.3-1.3-2.8-2.3-4.5-3.1-1.3-.6-2.6-1.1-4-1.5-.7-.2-1.4-.3-2.1-.5s-1.4-.2-2.2-.2c-1.2 0-2.4.2-3.6.5-1.1.3-2.2.7-3.3 1.2s-2.1 1.1-3.1 1.9-1.9 1.7-2.8 2.8c-1.2 1.5-2.2 3.2-2.9 5-.5 1.2-.8 2.4-1.1 3.7s-.4 2.6-.4 3.9.1 2.6.4 3.9.6 2.5 1.1 3.7c.7 1.8 1.7 3.5 2.9 5 .9.9 1.8 1.7 2.8 2.4s2 1.3 3.1 1.9 2.2.9 3.3 1.2c1.2.3 2.4.5 3.6.5s2.4-.2 3.6-.5c1.1-.3 2.2-.7 3.3-1.2s2.1-1.1 3.1-1.9 1.9-1.7 2.8-2.8c1.2-1.5 2.2-3.2 2.9-5 .5-1.2.8-2.4 1.1-3.7.2-1.3.4-2.6.4-3.9s-.1-2.6-.4-3.9-.6-2.5-1.1-3.7c-.8-1.9-1.8-3.6-3-5.1zm-1.6 28.3c-.9.9-1.9 1.6-3 2.3s-2.2.9-3.4 1.2-2.4.5-3.7.5-2.5-.2-3.7-.5-2.3-.7-3.4-1.2-2.1-1.1-3-2.3-1.6-1.9-2.3-3c-.7-1.2-1.3-2.5-1.7-3.8s-.6-2.7-.6-4.1.2-2.8.6-4.1 1-2.7 1.7-3.8c.7-1.2 1.4-2.1 2.3-3s1.9-1.6 3-2.3 2.2-.9 3.4-1.2c1.2-.3 2.4-.5 3.7-.5s2.5.2 3.7.5c1.2.3 2.3.7 3.4 1.2s2.1 1.1 3 2.3 1.6 1.9 2.3 3c.7 1.2 1.3 2.5 1.7 3.8.4 1.3.6 2.7.6 4.1s-.2 2.8-.6 4.1-1 2.7-1.7 3.8c-.6 1.1-1.4 2.1-2.2 3z"/><path d="M32 23.3c-4.8 0-8.7 3.9-8.7 8.7s3.9 8.7 8.7 8.7 8.7-3.9 8.7-8.7-3.9-8.7-8.7-8.7zm0 15c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z"/></svg></div>
+                            <h3>Science & Formulas</h3>
+                            <p>Your one-stop resource for all important formulas in Physics, Chemistry, and Maths.</p>
+                            <a href="/all-formulas" class="spotlight-btn">View Formulas</a>
                         </div>
                     </div>
                 </section>
                 
+                <section class="content-section featured-section">
+                    <h2 class="section-title">A Trusted Resource</h2>
+                     <p class="section-subtitle">We are proud to be recognized as a reliable source of information for students and learners across various platforms.</p>
+                    <div class="featured-logos">
+                        <svg viewBox="0 0 125 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M62.3,16.5h-8.8V25h-4V5.9h8.8c3.2,0,5.4,2.3,5.4,5.3S65.5,16.5,62.3,16.5z M62.3,9.5h-4.8v3.4h4.8c1,0,1.7-0.7,1.7-1.7 C64.1,10.2,63.4,9.5,62.3,9.5z M74,16.5h-4.8V25h-4V5.9h8.8c3.2,0,5.4,2.3,5.4,5.3S77.2,16.5,74,16.5z M74,9.5h-4.8v3.4h4.8 c1,0,1.7-0.7,1.7-1.7C75.8,10.2,75.1,9.5,74,9.5z M85.2,25V5.9h4v19.1H85.2z M95.4,25V5.9h4v19.1H95.4z M107.4,15.5 c0,5.4-4.4,9.5-9.6,9.5s-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S107.4,10.1,107.4,15.5z M103.4,15.5c0-3.2-2.5-5.9-5.6-5.9 s-5.6,2.7-5.6,5.9s2.5,5.9,5.6,5.9S103.4,18.7,103.4,15.5z M121.5,25h-4l-5.6-9.2v9.2h-4V5.9h4l5.6,9.2V5.9h4V25z M47.3,15.5 c0,5.4-4.4,9.5-9.6,9.5s-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S47.3,10.1,47.3,15.5z M43.3,15.5c0-3.2-2.5-5.9-5.6-5.9 c-3,0-5.6,2.7-5.6,5.9s2.5,5.9,5.6,5.9S43.3,18.7,43.3,15.5z M25.8,25V5.9h4v19.1H25.8z M16.6,25V5.9h4v13.5l5.2-6.5h4.8 L25.1,19l6,6h-5.2L21,19.8V25H16.6z M11.1,25H3.2c-1,0-1.7-0.8-1.7-1.7v-16c0-1,0.8-1.7,1.7-1.7h7.8c1,0,1.7,0.8,1.7,1.7v16 C12.8,24.2,12.1,25,11.1,25z M9.2,9.1H5.3v12.2h3.9V9.1z"/></svg>
+                        <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M0 30V0h11.9v30H0zM22.1 30V0h11.9v30H22.1zM44.1 30V0h11.9v30H44.1zM60.2 30V10.8L71.4 30h10.2V0H69.7v19.2L58.5 0H48.3v30h11.9zM100 13.9c0-8.5-6.5-13.9-15.6-13.9H72.2v30h12.1c9.2 0 15.7-5.4 15.7-13.9v-2.2zM87.9 15c0 3.3-2.4 5.7-6.2 5.7h-2.1V9.3h2.1c3.8 0 6.2 2.3 6.2 5.7v0z"/></svg>
+                        <svg viewBox="0 0 143 30" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M22.9,2.9C19.1,2.9,16,6,16,10.1v10.5c0,4,3.1,7.2,6.9,7.2s6.9-3.2,6.9-7.2V10.1C29.8,6,26.7,2.9,22.9,2.9z M22.9,24.1 c-2.1,0-3.8-1.8-3.8-4.5V10.8c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C26.7,22.3,25,24.1,22.9,24.1z M3.8,10.1v10.5 c0,4,3.1,7.2,6.9,7.2c3.8,0,6.9-3.2,6.9-7.2V10.1C17.6,6,14.5,2.9,10.7,2.9S3.8,6,3.8,10.1z M10.7,24.1c-2.1,0-3.8-1.8-3.8-4.5 V10.8c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C14.5,22.3,12.8,24.1,10.7,24.1z M49.5,2.9c-3.8,0-6.9,3.2-6.9,7.2v10.5 c0,4,3.1,7.2,6.9,7.2s6.9-3.2,6.9-7.2V10.1C56.4,6,53.3,2.9,49.5,2.9z M49.5,24.1c-2.1,0-3.8-1.8-3.8-4.5V10.8 c0-2.7,1.7-4.5,3.8-4.5s3.8,1.8,3.8,4.5v8.8C53.3,22.3,51.6,24.1,49.5,24.1z M85.1,17.4h-5.2V3.2h-3.1v14.2h-5.2v2.8h5.2v7.3 h3.1v-7.3h5.2V17.4z M117.9,16.5c0,5.4-4.4,9.5-9.6,9.5c-5.2,0-9.6-4.1-9.6-9.5s4.4-9.5,9.6-9.5S117.9,11.1,117.9,16.5z M114.8,16.5c0-3.2-2.5-5.9-6.5-5.9s-6.5,2.7-6.5,5.9s2.9,5.9,6.5,5.9S114.8,19.7,114.8,16.5z M96.1,27.3L91,20.8v6.5h-3.1V3.2 h3.1v10.9l4.7-6.5h3.8l-5.6,7.6l6,12.1H96.1z M139.9,17.4h-5.2V3.2h-3.1v14.2h-5.2v2.8h5.2v7.3h3.1v-7.3h5.2V17.4z M66.4,3.2 v24.1h-3.1V3.2H66.4z"/></svg>
+                    </div>
+                </section>
+
                 <section class="content-section">
                     <h2 class="section-title">Our Content Philosophy</h2>
                     <div class="philosophy-content">
@@ -451,9 +481,9 @@
                         <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging.</p>
                         <h3>The Three Pillars of Our Content: Accuracy, Clarity, and Practicality</h3>
                         <ul>
-                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts.</li>
-                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand, using real-world examples and clear formatting.</li>
-                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program or a formula sheet for an exam, we focus on content that provides real-world value and helps you achieve your goals.</li>
+                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts. We cross-reference data and verify every claim to ensure you receive the most reliable information for your studies and curiosity.</li>
+                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand, using real-world examples and clear formatting. Our goal is to make learning an intuitive and enjoyable experience, not a chore.</li>
+                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program, a formula sheet for an exam, or a quiz to test your skills, we focus on content that provides real-world value and helps you achieve your goals more efficiently.</li>
                         </ul>
                          <h3>Our Commitment to the Community</h3>
                         <p>GK Learn Study is more than just a website; it's a community of learners. We are deeply committed to listening to our audience. Your feedback, questions, and suggestions are invaluable to us and directly influence the topics we cover and the improvements we make. We actively encourage you to engage with our content, ask questions in the comments, and be a part of our growing family.</p>
@@ -608,18 +638,18 @@
             // Script for animated stats counter
             document.addEventListener("DOMContentLoaded", () => {
                 const counters = document.querySelectorAll('.stat-number');
-                const speed = 200; // The lower the slower
+                const speed = 200; 
 
                 const animateCounter = (counter) => {
                     const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
+                    const count = +counter.innerText.replace('+', '');
                     const inc = target / speed;
 
                     if (count < target) {
-                        counter.innerText = Math.ceil(count + inc);
+                        counter.innerText = Math.ceil(count + inc) + '+';
                         setTimeout(() => animateCounter(counter), 10);
                     } else {
-                        counter.innerText = target.toLocaleString();
+                        counter.innerText = target.toLocaleString() + '+';
                     }
                 };
 
