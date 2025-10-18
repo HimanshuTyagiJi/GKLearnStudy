@@ -17,7 +17,7 @@ return createImageFor(title)}})();
 
 window.GKApp.generateAuthorAvatar = (name = 'G') => {
     if (name === "Mr. Himanshu Tyagi") {
-        return `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white" font-family="Arial, sans-serif">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white" font-family="Arial, sans-serif">Learn Study</text></svg>`;
+        return `<svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="150" fill="white" /><g><path d="M0 230 Q75 210, 150 230 T300 210 L300 300 L0 300 Z" fill="#c0a4fb" /><path d="M0 220 Q75 245, 150 220 T300 235 L300 300 L0 300 Z" fill="#641ef9" fill-opacity="0.7" /></g><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="700" fill="#e53935">GK</text><text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" fill="#6a1b9a">Learn Study</text><circle cx="150" cy="150" r="148" fill="none" stroke="#f0e6ff" stroke-width="6" /></svg>`;
     }
 
     const words = name.split(' ').filter(Boolean);
