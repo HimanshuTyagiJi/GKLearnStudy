@@ -44,7 +44,7 @@ window.GKApp.generateAuthorAvatar = (name = 'G') => {
 };
 
 function initializePostRendering(){
-    const POSTS_INITIAL_LOAD=12;
+    const POSTS_INITIAL_LOAD=30;
     const POSTS_PER_PAGE=20;
     const PAGES_WITH_RANDOM_RELATED=['kaise-karen'];
     const postsContainer=document.getElementById("post-grid");
@@ -301,3 +301,4 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
