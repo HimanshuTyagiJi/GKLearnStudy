@@ -85,7 +85,7 @@ function initializePostRendering(){
         text-anchor="middle"
         font-size="14"
         font-weight="bold"
-        fill="brown"
+        fill="#e40707"
         font-family="Arial, sans-serif"
         style="paint-order:stroke; isolation:isolate;">GK</text>
 
@@ -94,7 +94,7 @@ function initializePostRendering(){
         dominant-baseline="middle"
         text-anchor="middle"
         font-size="6"
-        fill="blue"
+        fill="#e40707"
         font-family="Arial, sans-serif"
         style="paint-order:stroke; isolation:isolate;">Learn Study</text>
 </svg>
@@ -311,5 +311,6 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
 
 
