@@ -330,6 +330,85 @@
                     </div>
                 </div>
 
+                <!-- Why Choose Us Section -->
+                <section class="info-section">
+                    <style>
+                        .info-section {
+                            text-align: center;
+                            padding: 40px 20px;
+                            margin: 40px 0;
+                            background-color: var(--card-bg);
+                            border: 1px solid var(--border-color);
+                            border-radius: 16px;
+                            box-shadow: var(--card-shadow);
+                        }
+                        .info-section h2 {
+                            font-size: 2rem;
+                            margin-bottom: 1rem;
+                            color: var(--accent-color);
+                        }
+                        .info-section .underline {
+                            width: 80px;
+                            height: 4px;
+                            background-color: var(--accent-color);
+                            margin: 0 auto 30px auto;
+                            border-radius: 2px;
+                        }
+                        .features-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                            gap: 25px;
+                            margin-top: 2rem;
+                        }
+                        .feature-item {
+                            padding: 20px;
+                            border-radius: 12px;
+                            background-color: var(--body-bg);
+                            border: 1px solid var(--border-color);
+                            transition: transform 0.2s ease, box-shadow 0.2s ease;
+                        }
+                        .feature-item:hover {
+                            transform: translateY(-5px);
+                            box-shadow: 0 6px 16px var(--shadow-color);
+                        }
+                        .feature-item svg {
+                            width: 50px;
+                            height: 50px;
+                            margin-bottom: 15px;
+                            color: var(--accent-color);
+                        }
+                        .feature-item h3 {
+                            font-size: 1.2rem;
+                            margin-bottom: 10px;
+                            color: var(--text-primary);
+                        }
+                        .feature-item p {
+                            font-size: 0.95rem;
+                            color: var(--text-color-secondary);
+                            line-height: 1.6;
+                        }
+                    </style>
+                    <h2>Why GK Learn Study?</h2>
+                    <div class="underline"></div>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+                            <h3>Expertly Curated Content</h3>
+                            <p>Our articles are carefully researched and written to provide accurate, easy-to-understand information on a wide range of topics.</p>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+                            <h3>Interactive Quizzes</h3>
+                            <p>Test your knowledge and challenge yourself with our interactive quizzes covering subjects like history, geography, science, and more.</p>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                            <h3>Always Free & Accessible</h3>
+                            <p>We believe that knowledge should be free for everyone. Our platform is completely free to use, with no hidden costs or subscriptions.</p>
+                        </div>
+                    </div>
+                </section>
+
                 <div class="categories-section sidebar-widget">
                     <style>
                         .h2-icons {
@@ -430,6 +509,126 @@
                 <div id="load-more-container">
                     <button id="load-more-btn">Load More</button>
                 </div>
+
+                <!-- FAQ Section -->
+                <section class="faq-section">
+                    <style>
+                        .faq-section {
+                            max-width: 800px;
+                            margin: 40px auto;
+                            padding: 40px 20px;
+                        }
+                        .faq-section h2 {
+                            text-align: center;
+                            font-size: 2rem;
+                            margin-bottom: 2rem;
+                            color: var(--accent-color);
+                        }
+                        .faq-item {
+                            background-color: var(--card-bg);
+                            border: 1px solid var(--border-color);
+                            border-radius: 8px;
+                            margin-bottom: 1rem;
+                            overflow: hidden;
+                        }
+                        .faq-question {
+                            width: 100%;
+                            background: none;
+                            border: none;
+                            text-align: left;
+                            padding: 1rem 1.5rem;
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                            color: var(--text-primary);
+                            cursor: pointer;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                        .faq-question::after {
+                            content: '+';
+                            font-size: 1.5rem;
+                            transition: transform 0.2s ease;
+                        }
+                        .faq-answer {
+                            max-height: 0;
+                            overflow: hidden;
+                            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+                            padding: 0 1.5rem;
+                            color: var(--text-secondary);
+                            line-height: 1.7;
+                        }
+                        .faq-item.active .faq-question::after {
+                            transform: rotate(45deg);
+                        }
+                        .faq-item.active .faq-answer {
+                            max-height: 200px; /* Adjust as needed */
+                            padding: 0 1.5rem 1rem;
+                        }
+                    </style>
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-question">What kind of topics does GK Learn Study cover?</button>
+                            <div class="faq-answer">
+                                <p>We cover a wide range of topics including General Knowledge (GK), Current Affairs, Indian History, Geography, Science & Technology, Computer Science, 'How-To' guides, Mathematics Formulas, and Hindi Grammar (Vyakaran). Our goal is to be a comprehensive resource for students and lifelong learners.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Is all the content on the website free?</button>
+                            <div class="faq-answer">
+                                <p>Yes, absolutely! All articles, quizzes, and educational materials on GK Learn Study are 100% free to access. We are committed to providing free education and knowledge to everyone, without any subscriptions or hidden fees.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">How often is new content added?</button>
+                            <div class="faq-answer">
+                                <p>We strive to add new, high-quality content regularly. Our team is constantly working on new articles and quizzes to keep our information fresh, relevant, and up-to-date with the latest developments and exam patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.querySelectorAll('.faq-question').forEach(button => {
+                            button.addEventListener('click', () => {
+                                const faqItem = button.parentElement;
+                                faqItem.classList.toggle('active');
+                            });
+                        });
+                    </script>
+                </section>
+
+                <!-- About Section -->
+                <section class="about-section">
+                    <style>
+                        .about-section {
+                            padding: 40px 20px;
+                            margin: 40px 0;
+                            background-color: var(--body-bg);
+                            border-top: 1px solid var(--border-color);
+                            border-bottom: 1px solid var(--border-color);
+                        }
+                        .about-content {
+                            max-width: 800px;
+                            margin: 0 auto;
+                            text-align: center;
+                        }
+                        .about-content h2 {
+                            font-size: 2rem;
+                            margin-bottom: 1rem;
+                            color: var(--text-primary);
+                        }
+                        .about-content p {
+                            color: var(--text-secondary);
+                            line-height: 1.8;
+                            margin-bottom: 1rem;
+                        }
+                    </style>
+                    <div class="about-content">
+                        <h2>Our Mission: Knowledge for All</h2>
+                        <p>GK Learn Study was founded on a simple principle: making learning accessible, engaging, and free for everyone. In a world overflowing with information, we strive to be your trusted source for clear, concise, and accurate knowledge. Whether you're a student preparing for exams, a curious mind looking to learn something new, or someone who simply enjoys the thrill of a good quiz, our platform is built for you.</p>
+                        <p>From the complexities of computer science and essential mathematical formulas to the rich tapestry of Indian history and the nuances of Hindi grammar (Vyakaran), our content is designed to be both comprehensive and easy to digest. We are constantly expanding our library of articles, guides, and quizzes to cover more subjects and answer more of your questions. Thank you for being a part of our learning community!</p>
+                    </div>
+                </section>
             </div>
 
             <div id="comments-and-ratings-container">
