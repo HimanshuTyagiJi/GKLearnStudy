@@ -58,27 +58,47 @@ function initializePostRendering(){
             <div class="post-meta-container">
                 <div class="byline">
                     <div class="author-avatar">
-                       <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GK Learn Study white-blue-red circular logo">
+                     <svg width="40" height="40" viewBox="0 0 40 40"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-label="GK Learn Study white-blue-red circular logo"
+     style="isolation:isolate; display:inline-block;">
   <defs>
-    <!-- top to bottom gradient -->
-    <linearGradient id="avatar-profile" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />          <!-- top white -->
-      <stop offset="68%" stop-color="#ffffff" />         <!-- middle blue -->
-      <stop offset="100%" stop-color="#ff2b2b" />        <!-- bottom red -->
+    <!-- unique gradient id -->
+    <linearGradient id="avatar-profile-unique12345" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="68%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ff2b2b"/>
     </linearGradient>
   </defs>
 
-  <!-- main circle -->
-  <circle cx="20" cy="20" r="20" fill="url(#avatar-profile)" stroke="#ffffff" stroke-width="1"/>
+  <!-- main circle with isolated gradient -->
+  <circle cx="20" cy="20" r="20"
+          fill="url(#avatar-profile-unique12345)"
+          stroke="#ffffff"
+          stroke-width="1"
+          style="vector-effect:non-scaling-stroke; shape-rendering:geometricPrecision;" />
 
   <!-- main initials -->
-  <text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle"
-        font-size="14" font-weight="bold" fill="brown" font-family="Arial, sans-serif">GK</text>
+  <text x="50%" y="38%"
+        dominant-baseline="middle"
+        text-anchor="middle"
+        font-size="14"
+        font-weight="bold"
+        fill="brown"
+        font-family="Arial, sans-serif"
+        style="paint-order:stroke; isolation:isolate;">GK</text>
 
   <!-- subtext -->
-  <text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle"
-        font-size="6" fill="blue" font-family="Arial, sans-serif">Learn Study</text>
+  <text x="50%" y="68%"
+        dominant-baseline="middle"
+        text-anchor="middle"
+        font-size="6"
+        fill="blue"
+        font-family="Arial, sans-serif"
+        style="paint-order:stroke; isolation:isolate;">Learn Study</text>
 </svg>
+
    </div>
                     <div class="author-details">
                         <span class="author vcard">by <a href="profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
@@ -291,4 +311,5 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
+
 
