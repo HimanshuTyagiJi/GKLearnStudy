@@ -42,8 +42,8 @@
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        <link rel="stylesheet" href="css/theme.css">
-        <link rel="stylesheet" href="css/notification.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
        
         <script type="application/ld+json">
             {
@@ -198,6 +198,9 @@
         <main class="container">
             <div id="root">
                 <style>
+                    :root { --accent-color-rgb: 0, 95, 97; }
+                    html[data-theme=dark] { --accent-color-rgb: 255, 153, 219; }
+
                     .logo-container { border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; gap: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); animation: fadeIn 1s ease-in-out; margin-bottom: 3rem; background-color: var(--card-bg); }
                     .logo { flex: 1; display: flex; justify-content: center; align-items: center; }
                     .text { flex: 2; display: flex; flex-direction: column; justify-content: center; animation: slideIn 1.2s ease-in-out; }
@@ -267,15 +270,21 @@
                     .founder-avatar-svg { width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
                     .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
                     .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
+                    .highlight-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
                     .stats-section { background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px; text-align: center; }
                     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto; }
                     .stat-item { padding: 1rem; }
                     .stat-number { font-size: 3rem; font-weight: 700; color: var(--accent-color); line-height: 1.2; }
                     .stat-label { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
-                    .updates-section .update-item { background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color); margin-bottom: 1rem; box-shadow: var(--card-shadow); }
-                    .update-item .update-date { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
-                    .update-item h3 { margin-top: 0; font-size: 1.2rem; }
-                    .update-item p { margin-bottom: 0; }
+                    .current-affair-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color); box-shadow: var(--card-shadow); display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;}
+                    .current-affair-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
+                    .current-affair-card .affair-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+                    .current-affair-card .affair-category { background-color: var(--accent-color); color: white; padding: .2rem .6rem; border-radius: 15px; font-size: .8rem; font-weight: 500; }
+                    .current-affair-card h3 { margin-top: 0; font-size: 1.3rem; margin-bottom: 0.5rem; flex-grow: 1; }
+                    .current-affair-card h3 a { text-decoration: none; color: var(--text-primary); }
+                    .current-affair-card h3 a:hover { color: var(--accent-color); }
+                    .current-affair-card .read-more-btn { align-self: flex-start; text-decoration: none; color: var(--accent-color); font-weight: 600; margin-top: auto; padding-top: 1rem; }
+                    .current-affair-card .read-more-btn:hover { text-decoration: underline; }
                     .latest-article-list { max-width: 800px; margin: 0 auto; }
                     .latest-article-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border-color); transition: background-color .2s ease; border-radius: 8px;}
                     .latest-article-item:hover { background-color: var(--input-bg); }
@@ -374,7 +383,7 @@
                     </div>
                 </section>
 
-                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
+                <section class="content-section highlight-section">
                     <h2 class="section-title">Essential Formulas Hub</h2>
                     <p class="section-subtitle">Your one-stop destination for all important formulas. Whether you're a student preparing for an exam or need a quick reference, we've got you covered.</p>
                     <div class="grid-3">
@@ -457,6 +466,37 @@
                     </div>
                 </section>
 
+                <section class="content-section">
+                    <h2 class="section-title">Latest Current Affairs</h2>
+                    <p class="section-subtitle">Stay informed with our daily updates on the most important national and international events. Knowledge of current affairs is crucial for exams and staying aware.</p>
+                    <div class="grid-3">
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">National</span>
+                                <span class="affair-date">October 29, 2024</span>
+                            </div>
+                            <h3><a href="#">New Education Policy Phase 2 Implementation</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
+                        </div>
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">International</span>
+                                <span class="affair-date">October 28, 2024</span>
+                            </div>
+                            <h3><a href="#">Global Tech Summit Concludes with AI Accord</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
+                        </div>
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">Sports</span>
+                                <span class="affair-date">October 27, 2024</span>
+                            </div>
+                            <h3><a href="#">India Wins T20 Series in a Thrilling Final</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
+                        </div>
+                    </div>
+                </section>
+
                 <div class="categories-section sidebar-widget">
                     <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
                     <ul class="category-list"></ul>
@@ -474,7 +514,7 @@
                 </main>
                 <div id="load-more-container"> <button id="load-more-btn">Load More</button> </div>
 
-                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
+                <section class="content-section highlight-section">
                     <h2 class="section-title">Subject Spotlights</h2>
                     <p class="section-subtitle">Dive deeper into our core subjects. Find curated collections of our most important articles to kickstart your learning journey in each field.</p>
                     <div class="grid-3">
@@ -573,7 +613,7 @@
                     </div>
                 </section>
 
-                <section class="content-section" style="background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px;">
+                <section class="content-section highlight-section">
                     <h2 class="section-title">From Our Community</h2>
                     <p class="section-subtitle">We are proud to have helped thousands of learners. Here's what some of them have to say about their experience with GK Learn Study.</p>
                     <div class="grid-4">
@@ -684,8 +724,8 @@
                 &copy; 2024 GK Learn Study | All Rights Reserved
             </div>
         </footer>
-        <script src="js/theme.js" defer></script>
-        <script src="js/search-data.js" defer></script>
+        <script src="https://gklearnstudy.in/js/theme.js" defer></script>
+        <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
         <script>
             // Script for animated stats counter
             document.addEventListener("DOMContentLoaded", () => {
@@ -732,8 +772,8 @@
             }
         </script>
        
-        <script type="module" src="js/comment.js" defer></script>
-        <script type="module" src="js/notification.js" defer></script>
+        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
+        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
 
     </body>
 </html>
