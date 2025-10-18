@@ -44,7 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Use the specific GK Learn Study logo for the owner.
         if (authorName === "Mr. Himanshu Tyagi" || authorName === "Owner") {
-            const ownerLogoSVG = `<svg width="120" height="120" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="150" fill="white" /><g><path d="M0 230 Q75 210, 150 230 T300 210 L300 300 L0 300 Z" fill="#c0a4fb" /><path d="M0 220 Q75 245, 150 220 T300 235 L300 300 L0 300 Z" fill="#641ef9" fill-opacity="0.7" /></g><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="700" fill="#e53935">GK</text><text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" fill="#6a1b9a">Learn Study</text><circle cx="150" cy="150" r="148" fill="none" stroke="#f0e6ff" stroke-width="6" /></svg>`;
+            const ownerLogoSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+                            <title>GK Learn Study</title>
+                            <circle cx="150" cy="150" r="150" fill="white"></circle>
+                            <defs><clipPath id="circle-clip-main"><circle cx="150" cy="150" r="150"></circle></clipPath></defs>
+                            <g clip-path="url(#circle-clip-main)">
+                                <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                                <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
+                            </g>
+                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0"> GK <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform><animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform></text>
+                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0"> Learn Study <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze"></animateTransform></text>
+                            <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"></circle>
+                        </svg>`;
             authorAvatar = `<div class="author-avatar-large">${ownerLogoSVG}</div>`;
         } else {
             // Generate a dynamic avatar for all other authors.
