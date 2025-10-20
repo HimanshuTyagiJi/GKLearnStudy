@@ -74,9 +74,14 @@ function initializePostRendering(){
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
-        const imageHtml = post.svg 
-            ? post.svg 
-            : `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
+        let imageHtml;
+        if (post.svg) {
+            imageHtml = post.svg;
+        } else if (post.icon) {
+            imageHtml = `<div class="icon-thumbnail">${post.icon}</div>`;
+        } else {
+            imageHtml = `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
+        }
         
         const readingTimeLabel = post.readingTime 
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
@@ -136,11 +141,12 @@ function initializePostRendering(){
     window.GKApp.initializeLazyLoading = initializeLazyLoading;
 
     if(postsContainer&&loadMoreBtn){
-        let pageKeyForFiltering='index';
-        if(path.includes('/vyakaran/'))pageKeyForFiltering='vyakaran';
-        else if(path.includes('/conversion/'))pageKeyForFiltering='conversion';
-        else if(path.includes('/computer'))pageKeyForFiltering='computer';
-        else if(pageSlug==='kaise-karen')pageKeyForFiltering='kaise-karen';
+        const pageKeys = ['vyakaran', 'conversion', 'computer', 'kaise-karen', 'gk-quiz'];
+        let pageKeyForFiltering = 'index';
+        if (pageKeys.includes(pageSlug)) {
+            pageKeyForFiltering = pageSlug;
+        }
+
         const allPostsForPage=(pageKeyForFiltering==='index')?window.GKApp.searchData:window.GKApp.searchData.filter(p=>p.page&&p.page.split(';').includes(pageKeyForFiltering));
         let currentFilteredPosts=[...allPostsForPage];
         let visiblePostCount=POSTS_INITIAL_LOAD;
