@@ -44,7 +44,7 @@ window.GKApp.generateAuthorAvatar = (name = 'G') => {
 };
 
 function initializePostRendering(){
-    const POSTS_INITIAL_LOAD=30;
+    const POSTS_INITIAL_LOAD=12;
     const POSTS_PER_PAGE=20;
     const PAGES_WITH_RANDOM_RELATED=['kaise-karen'];
     const postsContainer=document.getElementById("post-grid");
@@ -74,9 +74,14 @@ function initializePostRendering(){
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
-        const imageHtml = post.svg 
-            ? post.svg 
-            : `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
+        let imageHtml = '';
+        if (post.svg) {
+            imageHtml = post.svg;
+        } else if (post.icon) {
+            imageHtml = `<div class="icon-thumbnail">${post.icon}</div>`;
+        } else {
+            imageHtml = `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
+        }
         
         const readingTimeLabel = post.readingTime 
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
@@ -301,4 +306,3 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     })
 })
-
