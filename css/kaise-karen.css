@@ -52,11 +52,37 @@
     line-height: 1.2;
 }
 
+.article-meta {
+    font-size: .9rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.article-meta a {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.article-meta a:hover {
+    color: var(--accent-color);
+}
+
 /* ====== Article Body Typography & Content ====== */
 .article-body {
     line-height: 1.8;
     font-size: 1.1rem;
     color: var(--text-primary);
+}
+
+.article-body h2, .article-body h3 {
+    scroll-margin-top: 80px; /* Offset for sticky header */
 }
 
 .article-body h2 {
@@ -65,14 +91,12 @@
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--accent-color);
-    scroll-margin-top: 80px; /* Offset for sticky header */
 }
 
 .article-body h3 {
     font-size: 1.4rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    scroll-margin-top: 80px;
 }
 
 .article-body p { margin-bottom: 1.25rem; }
@@ -161,9 +185,9 @@
 }
 
 
-#toc-list-desktop, #toc-list-mobile { list-style: none; padding: 0; margin: 0; }
+#toc-list { list-style: none; padding: 0; margin: 0; }
 
-#toc-list-desktop li a, #toc-list-mobile li a {
+#toc-list li a {
     text-decoration: none;
     color: var(--text-secondary);
     display: block;
@@ -174,22 +198,22 @@
     font-size: 0.95rem;
 }
 
-#toc-list-desktop li a:hover, #toc-list-mobile li a:hover {
+#toc-list li a:hover {
     color: var(--accent-color);
     background-color: var(--input-bg);
 }
 
-#toc-list-desktop li a.active, #toc-list-mobile li a.active {
+#toc-list li a.active {
     color: var(--accent-color);
     font-weight: 600;
     border-left-color: var(--accent-color);
-    background-color: color-mix(in srgb, var(--accent-color) 8%, transparent);
+    background-color: var(--accent-color-transparent); /* Updated */
 }
 
 /* ====== Custom SVG & Images ====== */
 .custom-svg-diagram {
     width: 100%;
-    height: auto; /* Ensures aspect ratio is maintained */
+    height: auto;
     max-width: 600px;
     margin: 2rem auto;
     display: block;
@@ -197,43 +221,10 @@
     border-radius: 8px;
     padding: 1rem;
     border: 1px solid var(--border-color);
-    box-sizing: border-box; /* Prevents padding from adding to width */
+    box-sizing: border-box;
 }
 .custom-svg-diagram text { fill: var(--text-primary); }
 .custom-svg-diagram .label-box { fill: var(--card-bg); }
-
-/* ====== Related Posts Section ====== */
-.related-posts-container {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.related-posts-container .widget-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 2.5rem;
-    position: relative;
-}
-
-.related-posts-container .widget-title::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 3px;
-    background-color: var(--accent-color);
-    margin: 0.5rem auto 0;
-    border-radius: 2px;
-}
-
-#related-posts-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
 
 /* ====== Responsive Layout for TOC ====== */
 .toc-sidebar { display: none; } /* Hide sidebar by default */
@@ -245,12 +236,8 @@
         gap: 2.5rem;
     }
     .toc-sidebar-container {
-        grid-column: 1 / 2;
         order: -1;
     }
-    .article-container {
-        grid-column: 2 / 3;
-    }
-    .toc-sidebar { display: block; } /* Show sidebar on desktop */
-    .toc-mobile-container { display: none; } /* Hide mobile accordion on desktop */
+    .toc-sidebar { display: block; }
+    .toc-mobile-container { display: none; }
 }
