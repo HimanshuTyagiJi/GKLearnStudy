@@ -31,10 +31,10 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside id="toc-sidebar-container" class="toc-sidebar-container">
+            <aside id="toc-container" class="toc-sidebar-container">
                  <div class="toc-sidebar">
                     <h3>In this guide</h3>
-                    <ul id="toc-list-desktop"></ul>
+                    <ul id="toc-list"></ul>
                 </div>
             </aside>
             <article id="article-content" class="article-container">
@@ -45,34 +45,21 @@
                     <span>&gt;</span>
                     <span>How to Use VLOOKUP</span>
                 </nav>
-                
-                <details class="toc-mobile-container">
+                <header class="article-header">
+                    <a href="/kaise-karen.html" class="category-link">Excel Guide</a>
+                    <h1>How to Use VLOOKUP in Excel: A Comprehensive Guide</h1>
+                    <div class="article-meta">
+                        <span>By <a href="/profile.html?author=Mr.%20Himanshu%20Tyagi">Mr. Himanshu Tyagi</a></span> | 
+                        <span>Last updated: October 30, 2024</span>
+                    </div>
+                </header>
+                 <details class="toc-mobile-container">
                     <summary>In this guide</summary>
                     <div class="toc-list-wrapper">
                         <ul id="toc-list-mobile"></ul>
                     </div>
                 </details>
-
-                <header class="article-header">
-                    <a href="/categories.html?category=Excel" class="category-link">Excel Guide</a>
-                    <h1>How to Use VLOOKUP in Excel: A Comprehensive Guide</h1>
-                </header>
                 <section class="article-body">
-                    <div class="post-meta-container">
-                        <div class="byline">
-                            <div class="author-avatar">
-                                <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GK Learn Study white-blue-red circular logo" style="isolation:isolate; display:inline-block;"><defs><linearGradient id="avatar-profile-unique12345" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="70%" stop-color="#ffffff"/><stop offset="100%" stop-color="#ff9999"/></linearGradient></defs><circle cx="20" cy="20" r="20" fill="url(#avatar-profile-unique12345)" stroke="#ffffff" stroke-width="1" style="vector-effect:non-scaling-stroke; shape-rendering:geometricPrecision;" /><text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle" font-size="14" font-weight="bold" fill="#e40707" font-family="Arial, sans-serif" style="paint-order:stroke; isolation:isolate;">GK</text><text x="50%" y="68%" dominant-baseline="middle" text-anchor="middle" font-size="6" fill="#e40707" font-family="Arial, sans-serif" style="paint-order:stroke; isolation:isolate;">Learn Study</text></svg>
-                            </div>
-                            <div class="author-details">
-                                <span class="author vcard">by <a href="/profile.html?author=Mr.%20Himanshu%20Tyagi" class="name">Mr. Himanshu Tyagi</a></span>
-                                <span class="entry-modified-date">Updated on <time class="entry-date updated">October 30, 2024</time></span>
-                            </div>
-                        </div>
-                        <div class="share-button-wrapper">
-                           <button class="share-button" id="shareButton" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
-                        </div>
-                    </div>
-
                     <div class="info-box">
                         <p><strong>Key Takeaways:</strong> VLOOKUP is a powerful Excel function for finding data in a table. The key is to remember its four arguments: what you're looking for, where to look, which column to return, and whether you need an exact match (almost always FALSE!).</p>
                     </div>
@@ -107,11 +94,11 @@
                         </style>
                         <!-- Table -->
                         <g id="table">
-                            <rect x="250" y="50" width="300" height="200" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1"/>
+                            <rect x="250" y="50" width="300" height="200" fill="none" stroke="#ccc" stroke-width="1"/>
                             <text x="325" y="75" class="table-header" text-anchor="middle">Product</text>
                             <text x="475" y="75" class="table-header" text-anchor="middle">Price</text>
-                            <line x1="250" y1="90" x2="550" y2="90" stroke="var(--border-color)"/>
-                            <line x1="400" y1="50" x2="400" y2="250" stroke="var(--border-color)"/>
+                            <line x1="250" y1="90" x2="550" y2="90" stroke="#ccc"/>
+                            <line x1="400" y1="50" x2="400" y2="250" stroke="#ccc"/>
                             <text x="325" y="115" text-anchor="middle">Mouse</text><text x="475" y="115" text-anchor="middle">₹1,500</text>
                             <text x="325" y="155" text-anchor="middle">Keyboard</text><text x="475" y="155" text-anchor="middle">₹3,000</text>
                             <text x="325" y="195" text-anchor="middle">Laptop</text><text x="475" y="195" text-anchor="middle">₹75,000</text>
@@ -121,8 +108,8 @@
                         <g id="labels">
                             <rect x="20" y="50" width="200" height="40" class="label-box" rx="5"/><text x="120" y="75" text-anchor="middle">lookup_value: "Laptop"</text>
                             <rect x="250" y="260" width="300" height="30" class="label-box" rx="5"/><text x="400" y="280" text-anchor="middle">table_array: A1:B5</text>
-                            <rect x="560" y="175" width="30" height="30" class="label-box" rx="5" fill="var(--input-bg)"/><text x="575" y="195" text-anchor="middle" font-weight="bold">2</text>
-                            <text x="50" y="300" font-weight="bold">Result: ₹75,000</text>
+                            <rect x="560" y="175" width="30" height="30" class="label-box" rx="5" fill="#ffd5d5"/><text x="575" y="195" text-anchor="middle" font-weight="bold">2</text>
+                            <text x="50" y="300">Result: ₹75,000</text>
                         </g>
                         <!-- Arrows -->
                         <g id="arrows" stroke-width="2" stroke-dasharray="4 2">
@@ -195,12 +182,12 @@
                     </ul>
                 </section>
                 
-                <div class="container related-posts-container">
-                    <h2 class="widget-title">Related How-To Guides</h2>
-                    <div id="related-posts-grid" class="post-grid">
-                        <div class="spinner"></div>
+                <section class="related-guides-section">
+                    <h2>You Might Also Like</h2>
+                    <div id="related-posts-grid" class="related-guides-grid post-grid">
+                        <!-- Related posts will be injected here -->
                     </div>
-                </div>
+                </section>
             </article>
         </div>
     </main>
@@ -214,56 +201,74 @@
     <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const articleContent = document.getElementById('article-content');
-            const tocDesktop = document.getElementById('toc-list-desktop');
-            const tocMobile = document.getElementById('toc-list-mobile');
-            const tocSidebarContainer = document.getElementById('toc-sidebar-container');
-            const mobileTocContainer = document.querySelector('.toc-mobile-container');
+            const articleContent = document.querySelector('.article-body');
+            const tocSidebar = document.querySelector('.toc-sidebar');
+            const tocList = document.getElementById('toc-list');
+            const tocListMobile = document.getElementById('toc-list-mobile');
 
-            const headings = articleContent.querySelectorAll('h2');
-            if (headings.length < 1 || !tocDesktop || !tocMobile) {
-                if(tocSidebarContainer) tocSidebarContainer.style.display = 'none';
-                if(mobileTocContainer) mobileTocContainer.style.display = 'none';
+            if (!articleContent || !tocList || !tocListMobile) return;
+
+            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
+            if (headings.length < 1) {
+                document.querySelector('.toc-sidebar-container')?.style.display = 'none';
+                document.querySelector('.toc-mobile-container')?.style.display = 'none';
                 return;
             }
 
-            const createTocItem = (heading, index) => {
-                const id = `heading-${index}`;
-                if (!heading.id) heading.id = id;
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="#${heading.id}">${heading.textContent}</a>`;
-                return li;
-            };
-            
-            const desktopFragment = document.createDocumentFragment();
-            const mobileFragment = document.createDocumentFragment();
-            headings.forEach((h, index) => {
-                desktopFragment.appendChild(createTocItem(h, index));
-                mobileFragment.appendChild(createTocItem(h, index));
+            // --- Build TOC ---
+            headings.forEach(h => {
+                const id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
+                h.id = id;
+                const tocItemHTML = `<li><a href="#${id}">${h.textContent}</a></li>`;
+                tocList.insertAdjacentHTML('beforeend', tocItemHTML);
+                tocListMobile.insertAdjacentHTML('beforeend', tocItemHTML);
             });
-            tocDesktop.appendChild(desktopFragment);
-            tocMobile.appendChild(mobileFragment);
 
-            const allLinks = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
+            // --- Active Link Highlighting ---
+            const links = tocList.querySelectorAll('a');
+            let activeLink = null;
+
             const observer = new IntersectionObserver(entries => {
-                let bestVisible = null;
-                entries.forEach(entry => {
+                // Find the entry that is closest to the top of the viewport
+                let closestEntry = null;
+                for (const entry of entries) {
                     if (entry.isIntersecting) {
-                        if (!bestVisible || entry.target.getBoundingClientRect().top < bestVisible.getBoundingClientRect().top) {
-                           bestVisible = entry.target;
-                        }
+                       closestEntry = entry;
+                       break; // The first one intersecting from the top is our target
                     }
-                });
-
-                allLinks.forEach(a => a.classList.remove('active'));
-                if (bestVisible) {
-                    const id = bestVisible.getAttribute('id');
-                    document.querySelectorAll(`#toc-list-desktop a[href="#${id}"], #toc-list-mobile a[href="#${id}"]`).forEach(a => a.classList.add('active'));
                 }
 
-            }, { rootMargin: "-80px 0px -50% 0px", threshold: [0, 1] });
+                if (closestEntry) {
+                    const id = closestEntry.target.getAttribute('id');
+                    const linkToActivate = tocList.querySelector(`a[href="#${id}"]`);
+
+                    if (linkToActivate && linkToActivate !== activeLink) {
+                        if (activeLink) {
+                            activeLink.classList.remove('active');
+                        }
+                        linkToActivate.classList.add('active');
+                        
+                        // Auto-scroll the sidebar to keep the active link in view
+                        if (tocSidebar) {
+                            linkToActivate.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                        activeLink = linkToActivate;
+                    }
+                }
+            }, { 
+                rootMargin: "-80px 0px -50% 0px", // Top offset for header, bottom offset to define the "active" area
+                threshold: 0
+            });
 
             headings.forEach(h => observer.observe(h));
+            
+            // --- Handle Mobile TOC Clicks ---
+            tocListMobile.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    const details = e.target.closest('details');
+                    if (details) details.open = false;
+                }
+            });
         });
     </script>
 </body>
