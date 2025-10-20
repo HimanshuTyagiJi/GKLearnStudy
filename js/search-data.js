@@ -74,6 +74,8 @@ function initializePostRendering(){
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
+        const isKaiseKarenPage = window.location.pathname.startsWith('/kaise-karen');
+
         let imageHtml;
         if (post.svg) {
             imageHtml = post.svg;
@@ -83,9 +85,13 @@ function initializePostRendering(){
             imageHtml = `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
         }
         
-        const readingTimeLabel = post.readingTime 
+        const readingTimeLabel = !isKaiseKarenPage && post.readingTime 
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
             : '';
+        
+        const summaryContent = isKaiseKarenPage
+            ? `<p class="card-summary">${post.paragraph}</p><a href="${post.url}" class="read-more-btn">Read More →</a>`
+            : `<p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>`;
 
         const authorAvatarHTML = window.GKApp.generateAuthorAvatar(post.author);
 
@@ -96,7 +102,7 @@ function initializePostRendering(){
                         ${authorAvatarHTML}
                     </div>
                     <div class="author-details">
-                        <span class="author vcard">by <a href="profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
+                        <span class="author vcard">by <a href="/profile.html?author=${encodeURIComponent(post.author)}" class="name">${post.author}</a></span>
                         <span class="entry-modified-date">Updated on <time class="entry-date updated">${post.date}</time></span>
                     </div>
                 </div>
@@ -104,7 +110,7 @@ function initializePostRendering(){
                     <button class="share-button" title="Share this page"><svg class="share-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg><span>Share</span></button>
                 </div>
             </div>`;
-        card.innerHTML=`<div class="card-thumbnail"><a href="categories.html?category=${encodeURIComponent(post.category)}" class="category-badge">${post.category}</a>${readingTimeLabel}<a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3><p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p></div>${metaBlock}`;
+        card.innerHTML=`<div class="card-thumbnail"><a href="/categories.html?category=${encodeURIComponent(post.category)}" class="category-badge">${post.category}</a>${readingTimeLabel}<a href="${post.url}" class="card-image-link" tabindex="-1">${imageHtml}</a></div><div class="card-content"><h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>${summaryContent}</div>${metaBlock}`;
         return card
     };
     window.GKApp.createPostCard = createPostCard;
