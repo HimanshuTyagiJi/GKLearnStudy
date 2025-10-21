@@ -32,7 +32,7 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside class="toc-sidebar-container">
+            <aside id="toc-sidebar-container" class="toc-sidebar-container">
                  <div class="toc-sidebar">
                     <h3>In this guide</h3>
                     <ul id="toc-list-desktop"></ul>
@@ -46,7 +46,7 @@
                     <span>&gt;</span>
                     <span>How to Use VLOOKUP</span>
                 </nav>
-                
+
                 <details class="toc-mobile-container">
                     <summary>In this guide</summary>
                     <div class="toc-list-wrapper">
@@ -67,15 +67,12 @@
                         <p><strong>Key Takeaways:</strong> VLOOKUP is a powerful Excel function for finding data in a table. The key is to remember its four arguments: what you're looking for, where to look, which column to return, and whether you need an exact match (almost always FALSE!).</p>
                     </div>
 
-                    <h2 id="what-is-vlookup">What Exactly is VLOOKUP?</h2>
+                    <h2>What Exactly is VLOOKUP?</h2>
                     <p>VLOOKUP stands for '<strong>Vertical Lookup</strong>'. It's a built-in Excel function that helps you search for a specific value in the leftmost column of a data range (a table) and then retrieve a related value from a different column in the same row. Think of it like looking up a name in a phone book to find their phone number. The name is your lookup value, the entire phone book is your table, and the phone number is the value you want to retrieve.</p>
 
-                    <h2 id="vlookup-syntax">Understanding the VLOOKUP Syntax</h2>
+                    <h2>Understanding the VLOOKUP Syntax</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                    <div class="code-block-wrapper">
-                        <button class="copy-code-btn" title="Copy code">Copy</button>
-                        <div class="code-content">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
-                    </div>
+                   <code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code>
                     <p>Let's examine each part:</p>
                     <ul>
                         <li><code>lookup_value</code>: This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date.</li>
@@ -89,7 +86,7 @@
                         </li>
                     </ul>
 
-                    <h2 id="practical-example">Step-by-Step Guide: A Practical Example</h2>
+                    <h2>Step-by-Step Guide: A Practical Example</h2>
                     <p>Let's imagine you have a small table of product sales. You want to quickly find out the price of a "Laptop".</p>
                     
                     <svg class="custom-svg-diagram" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="vlookup-diagram-title">
@@ -137,9 +134,9 @@
                         <li><strong>Get the result:</strong> Press Enter. The cell will display <strong>₹75,000</strong>.</li>
                     </ol>
 
-                    <h2 id="common-errors">Fixing Common VLOOKUP Errors</h2>
+                    <h2>Fixing Common VLOOKUP Errors</h2>
                     <p>VLOOKUP is powerful, but it can be frustrating when it doesn't work. Here are the most common errors and how to fix them:</p>
-                    <h3 id="n-a-error">The #N/A Error</h3>
+                    <h3>The #N/A Error</h3>
                     <p>This is the most frequent error. It means "Not Available."</p>
                     <ul>
                         <li><strong>Cause:</strong> The <code>lookup_value</code> was not found in the first column of the <code>table_array</code>.</li>
@@ -152,40 +149,35 @@
                             </ul>
                         </li>
                     </ul>
-                     <h3 id="ref-error">The #REF! Error</h3>
+                     <h3>The #REF! Error</h3>
                     <p>This error indicates an invalid cell reference.</p>
                     <ul>
                         <li><strong>Cause:</strong> The <code>col_index_num</code> is greater than the total number of columns in your <code>table_array</code>.</li>
                         <li><strong>Fix:</strong> Double-check your <code>col_index_num</code>. If your table has 3 columns, the index number cannot be 4.</li>
                     </ul>
-                     <h3 id="value-error">The #VALUE! Error</h3>
+                     <h3>The #VALUE! Error</h3>
                     <p>This error is less common with modern Excel but can occur.</p>
                     <ul>
                         <li><strong>Cause:</strong> Often happens if the <code>col_index_num</code> is less than 1.</li>
                         <li><strong>Fix:</strong> Ensure your column index is 1 or greater.</li>
                     </ul>
 
-                    <h2 id="pro-tips">Pro Tips for Advanced VLOOKUP Use</h2>
-                    <h3 id="iferror-tip">Handling Errors Gracefully with IFERROR</h3>
+                    <h2>Pro Tips for Advanced VLOOKUP Use</h2>
+                    <h3>Handling Errors Gracefully with IFERROR</h3>
                     <p>Instead of showing an ugly #N/A error, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <div class="code-block-wrapper">
-                        <button class="copy-code-btn" title="Copy code">Copy</button>
-                        <div class="code-content">=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</div>
-                    </div>
+                    <code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code>
+                    <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error.</p>
 
-                    <h3 id="wildcards-tip">Using VLOOKUP with Wildcards</h3>
+                    <h3>Using VLOOKUP with Wildcards</h3>
                     <p>You can use wildcards for partial matches. The asterisk (<code>*</code>) represents any sequence of characters.</p>
                     <ul>
                         <li>To find a value that <strong>starts with</strong> "Lap", use <code>"Lap*"</code>.</li>
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <div class="code-block-wrapper">
-                        <button class="copy-code-btn" title="Copy code">Copy</button>
-                        <div class="code-content">=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</div>
-                    </div>
+                    <code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code>
 
-                    <h2 id="modern-alternatives">Limitations and Modern Alternatives</h2>
+                    <h2>Limitations and Modern Alternatives</h2>
                     <p>While VLOOKUP is a workhorse, it has limitations. It can only look from left to right, and inserting new columns can break the formula. For more flexibility, modern Excel users often prefer these alternatives:</p>
                     <ul>
                         <li><strong>INDEX and MATCH:</strong> A powerful combination that can look up values in any direction (left, right, up, or down) and is not affected by inserting columns.</li>
@@ -215,76 +207,68 @@
     <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- 1. TOC Generation & Handling ---
-            const tocSidebar = document.querySelector('.toc-sidebar');
+            // --- Table of Contents Logic ---
             const tocListDesktop = document.getElementById('toc-list-desktop');
             const tocListMobile = document.getElementById('toc-list-mobile');
             const articleContent = document.getElementById('article-content');
-            
-            if (!tocListDesktop || !tocListMobile || !articleContent) {
-                console.error('TOC elements not found!');
-                return;
-            }
-
             const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
-            
-            if (headings.length < 2) {
-                document.querySelector('.toc-sidebar-container')?.remove();
-                document.querySelector('.toc-mobile-container')?.remove();
-            } else {
+
+            if (headings.length > 0 && tocListDesktop && tocListMobile) {
                 let tocHTML = '';
                 headings.forEach(h => {
-                    const id = h.id; // Use pre-existing IDs
-                    if (id) {
-                        const tagName = h.tagName.toLowerCase();
-                        tocHTML += `<li class="toc-${tagName}"><a href="#${id}">${h.textContent}</a></li>`;
-                    }
+                    const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    h.id = id;
+                    const tagName = h.tagName.toLowerCase();
+                    const liClass = tagName === 'h3' ? 'toc-level-2' : '';
+                    tocHTML += `<li class="${liClass}"><a href="#${id}">${h.textContent}</a></li>`;
                 });
                 tocListDesktop.innerHTML = tocHTML;
                 tocListMobile.innerHTML = tocHTML;
-            }
 
-            // --- 2. Active Link Highlighting on Scroll ---
-            const observer = new IntersectionObserver(entries => {
-                let lastVisibleId = null;
-                // Find the last intersecting element from the top
-                for (let i = entries.length - 1; i >= 0; i--) {
-                    if (entries[i].isIntersecting) {
-                        lastVisibleId = entries[i].target.getAttribute('id');
-                        break;
-                    }
-                }
+                const links = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
+                const desktopTOC = document.querySelector('.toc-sidebar');
                 
-                if (lastVisibleId) {
-                    const activeLinkSelector = `a[href="#${lastVisibleId}"]`;
-                    
-                    // Remove active class from all TOC links first
-                    document.querySelectorAll('#toc-list-desktop a.active, #toc-list-mobile a.active').forEach(l => l.classList.remove('active'));
-                    
-                    // Add active class to the current links
-                    const linksToActivate = document.querySelectorAll(`#toc-list-desktop ${activeLinkSelector}, #toc-list-mobile ${activeLinkSelector}`);
-                    
-                    linksToActivate.forEach(link => {
-                        link.classList.add('active');
-
-                        // --- 3. Auto-scroll TOC sidebar ---
-                        if (window.innerWidth >= 1024 && tocSidebar && link.closest('.toc-sidebar')) {
-                             link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                const observer = new IntersectionObserver(entries => {
+                    let mostVisibleEntry = null;
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
+                            mostVisibleEntry = entry;
                         }
                     });
-                }
-            }, { rootMargin: "-80px 0px -50% 0px", threshold: 0 });
 
-            if (headings.length > 0) {
-                 headings.forEach(h => observer.observe(h));
+                    if (mostVisibleEntry) {
+                        const id = mostVisibleEntry.target.getAttribute('id');
+                        links.forEach(l => {
+                            l.classList.remove('active');
+                            if (l.getAttribute('href') === `#${id}`) {
+                                l.classList.add('active');
+                                if (desktopTOC && l.closest('.toc-sidebar')) {
+                                    l.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                }
+                            }
+                        });
+                    }
+                }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
+
+                headings.forEach(h => observer.observe(h));
+            } else {
+                document.getElementById('toc-sidebar-container')?.style.display = 'none';
+                document.querySelector('.toc-mobile-container')?.style.display = 'none';
             }
+            
+            // --- Copy Code Snippet Logic ---
+            const allCodeBlocks = articleContent.querySelectorAll('pre');
+            allCodeBlocks.forEach(codeBlock => {
+                const button = document.createElement('button');
+                button.className = 'copy-code-btn';
+                button.textContent = 'Copy';
+                button.setAttribute('aria-label', 'Copy code to clipboard');
+                codeBlock.appendChild(button);
 
-            // --- 4. Code Copy Button Functionality ---
-            document.querySelectorAll('.copy-code-btn').forEach(button => {
                 button.addEventListener('click', () => {
-                    const codeContent = button.nextElementSibling;
-                    if (codeContent) {
-                         navigator.clipboard.writeText(codeContent.textContent || codeContent.innerText).then(() => {
+                    const code = codeBlock.querySelector('code')?.innerText;
+                    if (code) {
+                        navigator.clipboard.writeText(code).then(() => {
                             button.textContent = 'Copied!';
                             button.classList.add('copied');
                             setTimeout(() => {
@@ -292,7 +276,7 @@
                                 button.classList.remove('copied');
                             }, 2000);
                         }).catch(err => {
-                            console.error('Failed to copy code: ', err);
+                            console.error('Failed to copy text: ', err);
                             button.textContent = 'Error';
                         });
                     }
