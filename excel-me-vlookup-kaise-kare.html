@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <title>How to Use VLOOKUP in Excel: A Comprehensive Guide | GK Learn Study</title>
     <meta name="description" content="Master the VLOOKUP function in Excel with our in-depth guide. Learn the syntax, step-by-step examples, how to fix common errors like #N/A, and discover advanced pro tips." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="canonical" href="https://gklearnstudy.in/vlookup-in-excel.html" />
+    <link rel="canonical" href="https://gklearnstudy.in/kaise-karen/vlookup-in-excel.html" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/kaise-karen.css">
@@ -31,11 +32,9 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside id="toc-container" class="toc-sidebar-container">
-                 <div class="toc-sidebar">
-                    <h3>In this guide</h3>
-                    <ul id="toc-list"></ul>
-                </div>
+            <aside id="toc-container" class="toc toc-container">
+                <h3>In this guide</h3>
+                <ul id="toc-list"></ul>
             </aside>
             <article id="article-content" class="article-container">
                 <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -53,12 +52,6 @@
                         <span>Last updated: October 30, 2024</span>
                     </div>
                 </header>
-                 <details class="toc-mobile-container">
-                    <summary>In this guide</summary>
-                    <div class="toc-list-wrapper">
-                        <ul id="toc-list-mobile"></ul>
-                    </div>
-                </details>
                 <section class="article-body">
                     <div class="info-box">
                         <p><strong>Key Takeaways:</strong> VLOOKUP is a powerful Excel function for finding data in a table. The key is to remember its four arguments: what you're looking for, where to look, which column to return, and whether you need an exact match (almost always FALSE!).</p>
@@ -183,11 +176,20 @@
                 </section>
                 
                 <section class="related-guides-section">
-                    <h2>Related How-To Guides</h2>
-                    <div id="related-posts-grid" class="post-grid">
-                        <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                        <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                        <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <h2>You Might Also Like</h2>
+                    <div class="related-guides-grid">
+                        <a href="/kaise-karen/how-to-write-formal-letter.html" class="guide-card">
+                            <div class="guide-card-header"><span class="guide-card-icon">✍️</span><h3 class="guide-card-title">How to Write a Formal Letter</h3></div>
+                            <div class="guide-card-content"><p class="guide-card-description">Learn the correct format and tone for professional correspondence.</p></div>
+                        </a>
+                        <a href="/kaise-karen/interview-preparation-guide.html" class="guide-card">
+                            <div class="guide-card-header"><span class="guide-card-icon">👔</span><h3 class="guide-card-title">How to Prepare for a Job Interview</h3></div>
+                            <div class="guide-card-content"><p class="guide-card-description">Build confidence and ace your next job interview with these essential tips.</p></div>
+                        </a>
+                        <a href="/kaise-karen/online-safety-tips.html" class="guide-card">
+                            <div class="guide-card-header"><span class="guide-card-icon">🔒</span><h3 class="guide-card-title">How to Stay Safe Online</h3></div>
+                            <div class="guide-card-content"><p class="guide-card-description">Essential tips for protecting your personal information online.</p></div>
+                        </a>
                     </div>
                 </section>
             </article>
@@ -200,74 +202,45 @@
     </footer>
 
     <script src="/js/theme.js" defer></script>
-    <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const articleContent = document.querySelector('.article-body');
-            const tocSidebar = document.querySelector('.toc-sidebar');
+            const tocContainer = document.getElementById('toc-container');
             const tocList = document.getElementById('toc-list');
-            const tocListMobile = document.getElementById('toc-list-mobile');
+            const articleContent = document.getElementById('article-content');
 
-            if (!articleContent || !tocList || !tocListMobile) return;
-
-            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
+            const headings = articleContent.querySelectorAll('h2, h3');
             if (headings.length < 1) {
-                document.querySelector('.toc-sidebar-container')?.style.display = 'none';
-                document.querySelector('.toc-mobile-container')?.style.display = 'none';
+                tocContainer.style.display = 'none';
                 return;
             }
-
-            // --- Build TOC ---
-            headings.forEach(h => {
-                const id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
+            
+            tocList.innerHTML = '';
+            headings.forEach((h, index) => {
+                const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                 h.id = id;
-                const tocItemHTML = `<li><a href="#${id}">${h.textContent}</a></li>`;
-                tocList.insertAdjacentHTML('beforeend', tocItemHTML);
-                tocListMobile.insertAdjacentHTML('beforeend', tocItemHTML);
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#${id}">${h.textContent}</a>`;
+                tocList.appendChild(li);
             });
 
-            // --- Active Link Highlighting ---
             const links = tocList.querySelectorAll('a');
-            let activeLink = null;
-
             const observer = new IntersectionObserver(entries => {
-                let closestEntry = null;
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                       closestEntry = entry;
-                       break;
+                let mostVisibleEntry = null;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
+                       mostVisibleEntry = entry;
                     }
-                }
+                });
 
-                if (closestEntry) {
-                    const id = closestEntry.target.getAttribute('id');
-                    const linkToActivate = tocList.querySelector(`a[href="#${id}"]`);
-
-                    if (linkToActivate && linkToActivate !== activeLink) {
-                        if (activeLink) {
-                            activeLink.classList.remove('active');
-                        }
-                        linkToActivate.classList.add('active');
-                        
-                        if (tocSidebar) {
-                            linkToActivate.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }
-                        activeLink = linkToActivate;
-                    }
+                if (mostVisibleEntry) {
+                    const id = mostVisibleEntry.target.getAttribute('id');
+                    const activeLink = tocList.querySelector(`a[href="#${id}"]`);
+                    links.forEach(l => l.classList.remove('active'));
+                    if(activeLink) activeLink.classList.add('active');
                 }
-            }, { 
-                rootMargin: "-80px 0px -50% 0px",
-                threshold: 0
-            });
+            }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
 
             headings.forEach(h => observer.observe(h));
-            
-            tocListMobile.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') {
-                    const details = e.target.closest('details');
-                    if (details) details.open = false;
-                }
-            });
         });
     </script>
 </body>
