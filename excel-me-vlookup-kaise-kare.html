@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +32,7 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside id="toc-sidebar-container" class="toc-sidebar-container">
+            <aside class="toc-sidebar-container">
                  <div class="toc-sidebar">
                     <h3>In this guide</h3>
                     <ul id="toc-list-desktop"></ul>
@@ -45,7 +46,7 @@
                     <span>&gt;</span>
                     <span>How to Use VLOOKUP</span>
                 </nav>
-
+                
                 <details class="toc-mobile-container">
                     <summary>In this guide</summary>
                     <div class="toc-list-wrapper">
@@ -71,7 +72,10 @@
 
                     <h2>Understanding the VLOOKUP Syntax</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                    <pre><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+                    <div class="code-block-wrapper">
+                        <button class="copy-code-btn" title="Copy code">Copy</button>
+                        <div class="code-content"><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></div>
+                    </div>
                     <p>Let's examine each part:</p>
                     <ul>
                         <li><code>lookup_value</code>: This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date.</li>
@@ -164,8 +168,10 @@
                     <h2>Pro Tips for Advanced VLOOKUP Use</h2>
                     <h3>Handling Errors Gracefully with IFERROR</h3>
                     <p>Instead of showing an ugly #N/A error, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <pre><code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code></pre>
-                    <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error.</p>
+                    <div class="code-block-wrapper">
+                        <button class="copy-code-btn" title="Copy code">Copy</button>
+                        <div class="code-content"><code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code></div>
+                    </div>
 
                     <h3>Using VLOOKUP with Wildcards</h3>
                     <p>You can use wildcards for partial matches. The asterisk (<code>*</code>) represents any sequence of characters.</p>
@@ -174,7 +180,10 @@
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <pre><code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code></pre>
+                    <div class="code-block-wrapper">
+                        <button class="copy-code-btn" title="Copy code">Copy</button>
+                        <div class="code-content"><code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code></div>
+                    </div>
 
                     <h2>Limitations and Modern Alternatives</h2>
                     <p>While VLOOKUP is a workhorse, it has limitations. It can only look from left to right, and inserting new columns can break the formula. For more flexibility, modern Excel users often prefer these alternatives:</p>
@@ -206,71 +215,74 @@
     <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Table of Contents Logic ---
+            // --- 1. TOC Generation & Handling ---
+            const tocSidebar = document.querySelector('.toc-sidebar');
             const tocListDesktop = document.getElementById('toc-list-desktop');
             const tocListMobile = document.getElementById('toc-list-mobile');
             const articleContent = document.getElementById('article-content');
-            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
+            
+            if (!tocListDesktop || !tocListMobile || !articleContent) {
+                console.error('TOC elements not found!');
+                return; // Exit if essential elements are missing
+            }
 
-            if (headings.length > 0 && tocListDesktop && tocListMobile) {
+            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
+            
+            if (headings.length < 2) {
+                // If there aren't enough headings, hide the TOC completely
+                document.querySelector('.toc-sidebar-container')?.remove();
+                document.querySelector('.toc-mobile-container')?.remove();
+            } else {
                 let tocHTML = '';
                 headings.forEach(h => {
-                    const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    // Create a unique, URL-friendly ID for each heading
+                    const id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
                     h.id = id;
                     const tagName = h.tagName.toLowerCase();
-                    const liClass = tagName === 'h3' ? 'toc-level-2' : '';
-                    tocHTML += `<li class="${liClass}"><a href="#${id}">${h.textContent}</a></li>`;
+                    tocHTML += `<li class="toc-${tagName}"><a href="#${id}">${h.textContent}</a></li>`;
                 });
                 tocListDesktop.innerHTML = tocHTML;
                 tocListMobile.innerHTML = tocHTML;
+            }
 
-                const links = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
-                const desktopTOCContainer = document.querySelector('.toc-sidebar');
-                
-                const observer = new IntersectionObserver(entries => {
-                    let mostVisibleEntry = null;
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
-                            mostVisibleEntry = entry;
-                        }
-                    });
+            // --- 2. Active Link Highlighting on Scroll ---
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const links = document.querySelectorAll(`.toc-sidebar a[href="#${id}"], .toc-mobile-container a[href="#${id}"]`);
+                    
+                    if (entry.isIntersecting) {
+                         // Remove active class from all TOC links first
+                        document.querySelectorAll('#toc-list-desktop a.active, #toc-list-mobile a.active').forEach(l => l.classList.remove('active'));
+                        
+                        // Add active class to the current links
+                        links.forEach(link => {
+                            link.classList.add('active');
 
-                    if (mostVisibleEntry) {
-                        const id = mostVisibleEntry.target.getAttribute('id');
-                        links.forEach(l => {
-                            l.classList.remove('active');
-                            if (l.getAttribute('href') === `#${id}`) {
-                                l.classList.add('active');
-                                if (desktopTOCContainer && l.closest('.toc-sidebar')) {
-                                    l.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            // --- 3. Auto-scroll TOC sidebar ---
+                            if (window.innerWidth >= 1024 && tocSidebar && link.closest('.toc-sidebar')) {
+                                // scrollIntoView can be jumpy, check if it's already visible.
+                                const rect = link.getBoundingClientRect();
+                                const sidebarRect = tocSidebar.getBoundingClientRect();
+                                if (rect.top < sidebarRect.top || rect.bottom > sidebarRect.bottom) {
+                                     link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                                 }
                             }
                         });
                     }
-                }, { 
-                    rootMargin: "-80px 0px -40% 0px",
-                    threshold: [0.2, 0.8]
                 });
+            }, { rootMargin: "-80px 0px -50% 0px", threshold: 0.1 });
 
-                headings.forEach(h => observer.observe(h));
-            } else {
-                document.getElementById('toc-sidebar-container')?.style.display = 'none';
-                document.querySelector('.toc-mobile-container')?.style.display = 'none';
+            if (headings.length > 0) {
+                 headings.forEach(h => observer.observe(h));
             }
-            
-            // --- Copy Code Snippet Logic ---
-            const allCodeBlocks = articleContent.querySelectorAll('pre');
-            allCodeBlocks.forEach(codeBlock => {
-                const button = document.createElement('button');
-                button.className = 'copy-code-btn';
-                button.textContent = 'Copy';
-                button.setAttribute('aria-label', 'Copy code to clipboard');
-                codeBlock.appendChild(button);
 
+            // --- 4. Code Copy Button Functionality ---
+            document.querySelectorAll('.copy-code-btn').forEach(button => {
                 button.addEventListener('click', () => {
-                    const code = codeBlock.querySelector('code')?.innerText;
-                    if (code) {
-                        navigator.clipboard.writeText(code).then(() => {
+                    const codeContent = button.nextElementSibling;
+                    if (codeContent) {
+                         navigator.clipboard.writeText(codeContent.innerText).then(() => {
                             button.textContent = 'Copied!';
                             button.classList.add('copied');
                             setTimeout(() => {
@@ -278,7 +290,7 @@
                                 button.classList.remove('copied');
                             }, 2000);
                         }).catch(err => {
-                            console.error('Failed to copy text: ', err);
+                            console.error('Failed to copy code: ', err);
                             button.textContent = 'Error';
                         });
                     }
