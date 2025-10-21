@@ -301,4 +301,14 @@ html[data-theme=dark] .copy-code-btn.copied {
     }
     .toc-sidebar { display: block; } /* Show sidebar on desktop */
     .toc-mobile-container { display: none; } /* Hide mobile accordion on desktop */
+}.toc-sidebar-container {
+    align-self: start;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
 }
+.toc-sidebar {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
