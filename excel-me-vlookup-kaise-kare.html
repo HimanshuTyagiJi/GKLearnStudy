@@ -230,6 +230,7 @@
                 
                 const observer = new IntersectionObserver(entries => {
                     let mostVisibleEntry = null;
+                    // Find the entry that is most visible within the viewport
                     entries.forEach(entry => {
                         if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
                             mostVisibleEntry = entry;
@@ -242,6 +243,7 @@
                             l.classList.remove('active');
                             if (l.getAttribute('href') === `#${id}`) {
                                 l.classList.add('active');
+                                // Auto-scroll the desktop TOC sidebar if the active link is there
                                 if (desktopTOC && l.closest('.toc-sidebar')) {
                                     l.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                                 }
