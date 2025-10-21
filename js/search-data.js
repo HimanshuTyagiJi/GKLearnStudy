@@ -1,4 +1,3 @@
-
 window.GKApp=window.GKApp||{};window.GKApp.dataReady=fetch('/js/search-data.json').then(response=>{if(!response.ok){throw new Error(`HTTP error! status: ${response.status}`)}
 return response.json()}).then(data=>{window.GKApp.searchData=data}).catch(error=>{console.error("Could not load search data:",error);throw error});window.GKApp.transliterateRomanToHindi=(input)=>{const map={consonants:{'ksh':'क्ष','gy':'ज्ञ','dny':'ज्ञ','jn':'ज्ञ','shr':'श्र','kh':'ख','gh':'घ','chh':'छ','jh':'झ','th':'थ','dh':'ध','ph':'फ','bh':'भ','shh':'ष','sh':'श','tr':'त्र','gn':'ङ','ny':'ञ','k':'क','g':'ग','c':'क','j':'ज','t':'त','d':'द','n':'न','p':'प','b':'ब','m':'म','y':'य','r':'र','l':'ल','v':'व','w':'व','s':'स','h':'ह','z':'ज़','f':'फ़','q':'क़','x':'क्ष'},vowels:{'aa':'आ','ee':'ई','ii':'ई','oo':'ऊ','uu':'ऊ','ai':'ऐ','au':'औ','ri':'ऋ','a':'अ','i':'इ','e':'ए','o':'ओ','u':'उ'},matras:{'aa':'ा','ee':'ी','ii':'ी','oo':'ू','uu':'ू','ai':'ै','au':'ौ','ri':'ृ','a':'','i':'ि','e':'े','o':'ो','u':'ु'},symbols:{'an':'ं','am':'ं','ah':'ः','om':'ॐ','shree':'श्री'}};let output='';let i=0;while(i<input.length){let matched=!1;if(i+3<input.length){const fourChar=input.substring(i,i+4).toLowerCase();if(map.consonants[fourChar]||map.vowels[fourChar]||map.symbols[fourChar]){output+=map.consonants[fourChar]||map.vowels[fourChar]||map.symbols[fourChar];i+=4;matched=!0}}
 if(!matched&&i+2<input.length){const threeChar=input.substring(i,i+3).toLowerCase();if(map.consonants[threeChar]||map.vowels[threeChar]||map.symbols[threeChar]){output+=map.consonants[threeChar]||map.vowels[threeChar]||map.symbols[threeChar];i+=3;matched=!0}}
@@ -68,13 +67,15 @@ function initializePostRendering(){
         };
     };
     
-    const createPostCard=(post,index)=>{
+    const createPostCard=(post, index, options = {})=>{
+        const { style = 'default' } = options;
         const card=document.createElement('article');
         card.className='card';
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
         const isKaiseKarenPage = window.location.pathname.startsWith('/kaise-karen');
+        const useKaiseKarenStyle = isKaiseKarenPage || style === 'kaise-karen';
 
         let imageHtml;
         if (post.svg) {
@@ -85,11 +86,11 @@ function initializePostRendering(){
             imageHtml = `<img class="lazy-concept-image" data-title="${post.title}" alt="${post.title}" loading="lazy" width="320" height="180" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%23e9e9e9'/%3E%3C/svg%3E">`;
         }
         
-        const readingTimeLabel = !isKaiseKarenPage && post.readingTime 
+        const readingTimeLabel = !useKaiseKarenStyle && post.readingTime 
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
             : '';
         
-        const summaryContent = isKaiseKarenPage
+        const summaryContent = useKaiseKarenStyle
             ? `<p class="card-summary">${post.paragraph}</p><a href="${post.url}" class="read-more-btn">Read More →</a>`
             : `<p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>`;
 
@@ -245,8 +246,9 @@ function initializePostRendering(){
         const MAX_RELATED_POSTS=6;
         const renderPostsToGrid=(posts,grid)=>{
             const fragment=document.createDocumentFragment();
+            const options = grid.id === 'related-posts-grid' ? { style: 'kaise-karen' } : {};
             posts.slice(0,MAX_RELATED_POSTS).forEach((post,index)=>{
-                fragment.appendChild(createPostCard(post,index))
+                fragment.appendChild(createPostCard(post,index, options));
             });
             grid.innerHTML='';
             grid.appendChild(fragment);
