@@ -1,3 +1,4 @@
+
 /* ====== Main Article Layout ====== */
 .article-layout {
     display: grid;
@@ -112,15 +113,26 @@
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
 
-.article-body pre {
-    position: relative; /* For positioning the copy button */
+/* Code Block with Copy Button - NEW STRUCTURE */
+.code-block-wrapper {
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.code-content {
+    overflow-x: auto; /* Horizontal scrolling */
+    white-space: pre;   /* Behaves like a <pre> tag */
     background-color: var(--input-bg);
     padding: 1rem;
+    padding-top: 2.8rem; /* Make space for the button */
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    overflow-x: auto;
+    margin: 0;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
-.article-body pre code {
+
+/* Ensure inner <code> tag behaves correctly */
+.code-content code {
     background: none;
     padding: 0;
     font-size: 100%;
@@ -128,38 +140,28 @@
 
 .copy-code-btn {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: var(--button-hover-bg);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 0.25rem 0.6rem;
-    font-size: 0.8rem;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    top: 8px;
+    right: 8px;
     z-index: 1;
-}
-
-.article-body pre:hover .copy-code-btn {
-    opacity: 1;
+    background-color: var(--button-hover-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .copy-code-btn:hover {
-    background-color: var(--accent-color-transparent);
+    background-color: var(--border-color);
+    color: var(--text-primary);
 }
 
 .copy-code-btn.copied {
     background-color: var(--green);
     color: white;
-    border-color: var(--green);
-}
-
-html[data-theme=dark] .copy-code-btn.copied {
-    background-color: #66bb6a;
-    color: #000;
-    border-color: #66bb6a;
 }
 
 .info-box {
@@ -233,6 +235,11 @@ html[data-theme=dark] .copy-code-btn.copied {
     font-size: 0.95rem;
 }
 
+#toc-list-desktop li.toc-h3 a, #toc-list-mobile li.toc-h3 a {
+    padding-left: 2rem; /* Indent sub-headings */
+    font-size: 0.9rem;
+}
+
 #toc-list-desktop li a:hover, #toc-list-mobile li a:hover {
     color: var(--accent-color);
     background-color: var(--input-bg);
@@ -243,10 +250,6 @@ html[data-theme=dark] .copy-code-btn.copied {
     font-weight: 600;
     border-left-color: var(--accent-color);
     background-color: color-mix(in srgb, var(--accent-color) 8%, transparent);
-}
-
-#toc-list-desktop li.toc-level-2 a, #toc-list-mobile li.toc-level-2 a {
-    padding-left: 2rem; /* Indent H3 links */
 }
 
 /* ====== Custom SVG & Images ====== */
@@ -276,11 +279,6 @@ html[data-theme=dark] .copy-code-btn.copied {
     font-size: 1.8rem;
     margin-bottom: 2rem;
 }
-.related-guides-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
 
 /* ====== Responsive Layout for TOC ====== */
 .toc-sidebar-container { display: none; } /* Hide sidebar by default */
@@ -299,6 +297,5 @@ html[data-theme=dark] .copy-code-btn.copied {
     .article-container {
         grid-column: 2 / 3;
     }
-    .toc-sidebar { display: block; } /* Show sidebar on desktop */
     .toc-mobile-container { display: none; } /* Hide mobile accordion on desktop */
 }
