@@ -32,9 +32,11 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside id="toc-container" class="toc toc-container">
-                <h3>In this guide</h3>
-                <ul id="toc-list"></ul>
+            <aside id="toc-sidebar-container" class="toc-sidebar-container">
+                 <div class="toc-sidebar">
+                    <h3>In this guide</h3>
+                    <ul id="toc-list-desktop"></ul>
+                </div>
             </aside>
             <article id="article-content" class="article-container">
                 <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -44,6 +46,14 @@
                     <span>&gt;</span>
                     <span>How to Use VLOOKUP</span>
                 </nav>
+
+                <details class="toc-mobile-container">
+                    <summary>In this guide</summary>
+                    <div class="toc-list-wrapper">
+                        <ul id="toc-list-mobile"></ul>
+                    </div>
+                </details>
+
                 <header class="article-header">
                     <a href="/kaise-karen.html" class="category-link">Excel Guide</a>
                     <h1>How to Use VLOOKUP in Excel: A Comprehensive Guide</h1>
@@ -197,26 +207,27 @@
     <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const tocContainer = document.getElementById('toc-container');
-            const tocList = document.getElementById('toc-list');
+            const tocListDesktop = document.getElementById('toc-list-desktop');
+            const tocListMobile = document.getElementById('toc-list-mobile');
             const articleContent = document.getElementById('article-content');
 
-            const headings = articleContent.querySelectorAll('h2, h3');
+            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
             if (headings.length < 1) {
-                tocContainer.style.display = 'none';
+                document.getElementById('toc-sidebar-container').style.display = 'none';
+                document.querySelector('.toc-mobile-container').style.display = 'none';
                 return;
             }
             
-            tocList.innerHTML = '';
-            headings.forEach((h, index) => {
+            let tocHTML = '';
+            headings.forEach(h => {
                 const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                 h.id = id;
-                const li = document.createElement('li');
-                li.innerHTML = `<a href="#${id}">${h.textContent}</a>`;
-                tocList.appendChild(li);
+                tocHTML += `<li><a href="#${id}">${h.textContent}</a></li>`;
             });
+            tocListDesktop.innerHTML = tocHTML;
+            tocListMobile.innerHTML = tocHTML;
 
-            const links = tocList.querySelectorAll('a');
+            const links = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
             const observer = new IntersectionObserver(entries => {
                 let mostVisibleEntry = null;
                 entries.forEach(entry => {
@@ -227,9 +238,12 @@
 
                 if (mostVisibleEntry) {
                     const id = mostVisibleEntry.target.getAttribute('id');
-                    const activeLink = tocList.querySelector(`a[href="#${id}"]`);
-                    links.forEach(l => l.classList.remove('active'));
-                    if(activeLink) activeLink.classList.add('active');
+                    links.forEach(l => {
+                        l.classList.remove('active');
+                        if (l.getAttribute('href') === `#${id}`) {
+                            l.classList.add('active');
+                        }
+                    });
                 }
             }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
 
