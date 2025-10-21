@@ -81,20 +81,22 @@
     color: var(--text-primary);
 }
 
+.article-body h2, .article-body h3 {
+    scroll-margin-top: 80px; /* Offset for sticky header */
+}
+
 .article-body h2 {
     font-size: 1.8rem;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--accent-color);
-    scroll-margin-top: 80px; /* Offset for sticky header */
 }
 
 .article-body h3 {
     font-size: 1.4rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    scroll-margin-top: 80px;
 }
 
 .article-body p { margin-bottom: 1.25rem; }
@@ -205,13 +207,13 @@
     color: var(--accent-color);
     font-weight: 600;
     border-left-color: var(--accent-color);
-    background-color: var(--accent-color-transparent);
+    background-color: var(--accent-color-transparent); /* Updated */
 }
 
 /* ====== Custom SVG & Images ====== */
 .custom-svg-diagram {
     width: 100%;
-    height: auto; /* Ensures aspect ratio is maintained */
+    height: auto;
     max-width: 600px;
     margin: 2rem auto;
     display: block;
@@ -219,27 +221,10 @@
     border-radius: 8px;
     padding: 1rem;
     border: 1px solid var(--border-color);
-    box-sizing: border-box; /* Prevents padding from adding to width */
+    box-sizing: border-box;
 }
 .custom-svg-diagram text { fill: var(--text-primary); }
 .custom-svg-diagram .label-box { fill: var(--card-bg); }
-
-/* ====== Related Guides Section ====== */
-.related-guides-section {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-}
-.related-guides-section h2 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-}
-
-#related-posts-grid.post-grid {
-    grid-template-columns: repeat(auto-fit, 380px);
-    justify-content: center;
-}
 
 /* ====== Responsive Layout for TOC ====== */
 .toc-sidebar { display: none; } /* Hide sidebar by default */
@@ -251,12 +236,8 @@
         gap: 2.5rem;
     }
     .toc-sidebar-container {
-        grid-column: 1 / 2;
         order: -1;
     }
-    .article-container {
-        grid-column: 2 / 3;
-    }
-    .toc-sidebar { display: block; } /* Show sidebar on desktop */
-    .toc-mobile-container { display: none; } /* Hide mobile accordion on desktop */
+    .toc-sidebar { display: block; }
+    .toc-mobile-container { display: none; }
 }
