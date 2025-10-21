@@ -284,7 +284,7 @@ html[data-theme=dark] .copy-code-btn.copied {
 }
 
 /* ====== Responsive Layout for TOC ====== */
-.toc-sidebar { display: none; } /* Hide sidebar by default */
+.toc-sidebar-container { display: none; } /* Hide sidebar by default */
 .toc-mobile-container { display: block; } /* Show mobile accordion by default */
 
 @media (min-width: 1024px) {
@@ -293,6 +293,7 @@ html[data-theme=dark] .copy-code-btn.copied {
         gap: 2.5rem;
     }
     .toc-sidebar-container {
+        display: block;
         grid-column: 1 / 2;
         order: -1;
     }
