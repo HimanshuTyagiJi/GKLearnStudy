@@ -1,4 +1,3 @@
-
 /* ====== Main Article Layout ====== */
 .article-layout {
     display: grid;
@@ -113,29 +112,23 @@
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
 
-/* Code Block with Copy Button - NEW STRUCTURE */
+/* Code Block with Copy Button - FIXED */
 .code-block-wrapper {
     position: relative;
     margin: 1.5rem 0;
 }
 
 .code-content {
-    overflow-x: auto; /* Horizontal scrolling */
-    white-space: pre;   /* Behaves like a <pre> tag */
+    overflow-x: auto; /* IMPORTANT: This enables horizontal scrolling */
     background-color: var(--input-bg);
     padding: 1rem;
     padding-top: 2.8rem; /* Make space for the button */
     border-radius: 8px;
     border: 1px solid var(--border-color);
     margin: 0;
+    font-size: 0.9rem;
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-}
-
-/* Ensure inner <code> tag behaves correctly */
-.code-content code {
-    background: none;
-    padding: 0;
-    font-size: 100%;
+    white-space: pre; /* IMPORTANT: This prevents code from wrapping */
 }
 
 .copy-code-btn {
@@ -173,16 +166,16 @@
 }
 .info-box p:last-child { margin-bottom: 0; }
 
-/* ====== Table of Contents (TOC) ====== */
+/* ====== Table of Contents (TOC) - FIXED ====== */
 .toc-sidebar {
-    position: sticky;
+    position: sticky; /* IMPORTANT: Fixes the sidebar in place while scrolling */
     top: 80px; /* header height + margin */
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     padding: 1.5rem;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
+    max-height: calc(100vh - 100px); /* Limits height to viewport */
+    overflow-y: auto; /* IMPORTANT: Enables scrolling WITHIN the sidebar */
 }
 
 .toc-sidebar h3, .toc-mobile-container summary {
