@@ -73,7 +73,7 @@ function initializePostRendering(){
         card.setAttribute('aria-label',post.title);
         card.dataset.index=index;
         
-        const isKaiseKarenPage = window.location.pathname.endsWith('kaise-karen.html');
+        const isKaiseKarenPage = window.location.pathname.startsWith('/kaise-karen');
 
         let imageHtml;
         if (post.svg) {
@@ -88,7 +88,7 @@ function initializePostRendering(){
             ? `<span class="reading-time-label">${post.readingTime}</span>` 
             : '';
         
-        const summaryContent = isKaiseKarenPage || (post.page && post.page.includes('kaise-karen'))
+        const summaryContent = isKaiseKarenPage
             ? `<p class="card-summary">${post.paragraph}</p><a href="${post.url}" class="read-more-btn">Read More →</a>`
             : `<p class="card-summary"><a href="${post.url}">${post.paragraph}</a></p>`;
 
@@ -118,6 +118,7 @@ function initializePostRendering(){
     const initializeLazyLoading = (container) => {
         const lazyImages = container.querySelectorAll('.lazy-concept-image');
         if (!("IntersectionObserver" in window)) {
+            // Fallback for older browsers: load all images immediately
             lazyImages.forEach(img => {
                 const title = img.dataset.title;
                 if (title) img.src = window.GKApp.generateConceptImage(title);
@@ -239,7 +240,6 @@ function initializePostRendering(){
         generateCategories();
         applyFilters()
     }
-    
     if(relatedPostsGrid){
         const MAX_RELATED_POSTS=6;
         const renderPostsToGrid=(posts,grid)=>{
@@ -252,45 +252,69 @@ function initializePostRendering(){
             initializeLazyLoading(grid);
         };
         
-        const allPosts = window.GKApp.searchData;
-        const currentArticle = allPosts.find(p => p.url === path || p.url === path.substring(1));
+        const isKaiseKarenSection = window.location.pathname.startsWith('/kaise-karen');
 
-        if (currentArticle && currentArticle.page && currentArticle.page.includes('kaise-karen')) {
+        if (isKaiseKarenSection) {
+            const currentUrlPath = window.location.pathname;
+            const allPosts = window.GKApp.searchData;
             const relatedPosts = allPosts
-                .filter(p => p.page && p.page.includes('kaise-karen') && p.url !== currentArticle.url)
+                .filter(p => p.page && p.page.includes('kaise-karen') && p.url !== currentUrlPath)
                 .sort(() => 0.5 - Math.random());
             renderPostsToGrid(relatedPosts, relatedPostsGrid);
         } else {
-            // Fallback logic for other pages
-            const currentArticleTags = new Set(currentArticle && currentArticle.page ? currentArticle.page.split(';') : []);
-            const stopwords = new Set(['a', 'an', 'the', 'in', 'on', 'of', 'for', 'with', 'how', 'to']);
-            const urlKeywords = new Set(pageSlug.split('-').filter(word => word.length > 2 && !stopwords.has(word)));
-
-            const scoredPosts = allPosts
-                .filter(p => p.url !== currentArticle?.url)
-                .map(post => {
-                    let score = 0;
-                    const postTags = new Set(post.page ? post.page.split(';') : []);
-                    currentArticleTags.forEach(tag => { if (postTags.has(tag)) score += 10; });
-                    urlKeywords.forEach(keyword => { if (post.title.toLowerCase().includes(keyword)) score += 5; });
-                    return { post, score };
-                })
-                .filter(item => item.score > 0)
-                .sort((a, b) => b.score - a.score);
-
-            let finalRelatedList = scoredPosts.map(p => p.post);
-            if (finalRelatedList.length < MAX_RELATED_POSTS) {
-                const existingUrls = new Set(finalRelatedList.map(p => p.url));
-                if (currentArticle) existingUrls.add(currentArticle.url);
-                const randomFill = allPosts.filter(p => !existingUrls.has(p.url)).sort(() => 0.5 - Math.random());
-                finalRelatedList.push(...randomFill.slice(0, MAX_RELATED_POSTS - finalRelatedList.length));
+            const renderContextualPosts=(currentUrlPath)=>{
+                const allPosts=window.GKApp.searchData;
+                const currentArticle=allPosts.find(p=>p.url===currentUrlPath||p.url===`/${currentUrlPath}`||p.url.endsWith(currentUrlPath));
+                const stopwords=new Set(['a','an','the','in','on','off','is','are','to','and','or','was','it','this','that','kaise','karen','how','to','do','get','kya','hai','mein','ko','of','for','with','html','in-hindi','kren','chalaye','definition','use','what','for','with','परिभाषा','भेद','उदाहरण','लेखन','शब्द','विचार']);
+                const urlKeywords=new Set(pageSlug.split('-').filter(word=>word.length>2&&!stopwords.has(word)));
+                const currentArticleTags=new Set(currentArticle&&currentArticle.page?currentArticle.page.split(';'):[]);
+                const scoredPosts=allPosts.filter(p=>p.url!==currentArticle?.url).map(post=>{
+                    let score=0;
+                    const postContent=`${post.title.toLowerCase()} ${post.url.toLowerCase()}`;
+                    const postTags=new Set(post.page?post.page.split(';'):[]);
+                    urlKeywords.forEach(keyword=>{if(postContent.includes(keyword)){score+=15}});
+                    postTags.forEach(tag=>{if(currentArticleTags.has(tag)){score+=10}});
+                    if(score>15&&score%10!==0){score+=5}
+                    return{post,score}
+                }).filter(item=>item.score>0).sort((a,b)=>b.score-a.score);
+                let stickyPosts=scoredPosts.map(p=>p.post);
+                const stickyUrls=new Set(stickyPosts.map(p=>p.url));
+                let finalRelatedList=[...stickyPosts];
+                if(finalRelatedList.length<MAX_RELATED_POSTS){
+                    let fillerCandidates=[];
+                    if(currentArticleTags.size>0){
+                        const primaryTag=Array.from(currentArticleTags)[0];
+                        fillerCandidates=allPosts.filter(p=>!stickyUrls.has(p.url)&&p.url!==currentArticle?.url&&p.page&&p.page.split(';').includes(primaryTag))
+                    }
+                    finalRelatedList.push(...fillerCandidates.sort(()=>0.5-Math.random()))
+                }
+                finalRelatedList=[...new Map(finalRelatedList.map(item=>[item.url,item])).values()];
+                if(finalRelatedList.length<MAX_RELATED_POSTS){
+                    const existingUrls=new Set(finalRelatedList.map(p=>p.url));
+                    if(currentArticle)existingUrls.add(currentArticle.url);
+                    const randomFill=allPosts.filter(p=>!existingUrls.has(p.url)).sort(()=>0.5-Math.random());
+                    finalRelatedList.push(...randomFill.slice(0,MAX_RELATED_POSTS-finalRelatedList.length))
+                }
+                renderPostsToGrid(finalRelatedList,relatedPostsGrid)
+            };
+            if(pageSlug==='index'){
+                const allPosts=[...window.GKApp.searchData];
+                renderPostsToGrid(allPosts.sort(()=>0.5-Math.random()),relatedPostsGrid)
+            }else{
+                const mainPageSlugs=['vyakaran','conversion','computer'];
+                const isCategoryPage=mainPageSlugs.includes(pageSlug)&&(path===`/${pageSlug}`||path===`/${pageSlug}.html`);
+                if(isCategoryPage){
+                    const postsForCategory=window.GKApp.searchData.filter(p=>p.page&&p.page.split(';').includes(pageSlug));
+                    renderPostsToGrid(postsForCategory.sort(()=>0.5-Math.random()),relatedPostsGrid)
+                }else if(pageSlug){
+                    renderContextualPosts(path.substring(1))
+                }else{
+                    renderPostsToGrid([...window.GKApp.searchData].sort(()=>0.5-Math.random()),relatedPostsGrid)
+                }
             }
-
-            renderPostsToGrid([...new Map(finalRelatedList.map(item => [item.url, item])).values()], relatedPostsGrid);
         }
     }
 }
-
 document.addEventListener("DOMContentLoaded",()=>{
     window.GKApp.dataReady.then(initializePostRendering).catch(error=>{
         console.error("Failed to initialize post rendering due to data loading error:",error);
