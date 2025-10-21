@@ -62,7 +62,7 @@
 
                     <h2>Understanding the VLOOKUP Syntax</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                    <pre><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+                    <code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code>
                     <p>Let's examine each part:</p>
                     <ul>
                         <li><code>lookup_value</code>: This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date.</li>
@@ -155,7 +155,7 @@
                     <h2>Pro Tips for Advanced VLOOKUP Use</h2>
                     <h3>Handling Errors Gracefully with IFERROR</h3>
                     <p>Instead of showing an ugly #N/A error, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <pre><code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code></pre>
+                    <code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code>
                     <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error.</p>
 
                     <h3>Using VLOOKUP with Wildcards</h3>
@@ -165,7 +165,7 @@
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <pre><code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code></pre>
+                    <code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code>
 
                     <h2>Limitations and Modern Alternatives</h2>
                     <p>While VLOOKUP is a workhorse, it has limitations. It can only look from left to right, and inserting new columns can break the formula. For more flexibility, modern Excel users often prefer these alternatives:</p>
