@@ -235,11 +235,6 @@
     font-size: 1.8rem;
     margin-bottom: 2rem;
 }
-.related-guides-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
 
 /* ====== Responsive Layout for TOC ====== */
 .toc-sidebar { display: none; } /* Hide sidebar by default */
@@ -462,11 +457,6 @@
     text-align: center;
     font-size: 1.8rem;
     margin-bottom: 2rem;
-}
-.related-guides-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 /* ====== Responsive Layout ====== */
