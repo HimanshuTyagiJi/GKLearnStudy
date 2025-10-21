@@ -32,11 +32,9 @@
 
     <main class="container">
         <div class="article-layout">
-            <aside id="toc-sidebar-container" class="toc-sidebar-container">
-                 <div class="toc-sidebar">
-                    <h3>In this guide</h3>
-                    <ul id="toc-list-desktop"></ul>
-                </div>
+            <aside id="toc-container" class="toc toc-container">
+                <h3>In this guide</h3>
+                <ul id="toc-list"></ul>
             </aside>
             <article id="article-content" class="article-container">
                 <nav aria-label="breadcrumb" class="breadcrumb-nav">
@@ -46,14 +44,6 @@
                     <span>&gt;</span>
                     <span>How to Use VLOOKUP</span>
                 </nav>
-
-                <details class="toc-mobile-container">
-                    <summary>In this guide</summary>
-                    <div class="toc-list-wrapper">
-                        <ul id="toc-list-mobile"></ul>
-                    </div>
-                </details>
-
                 <header class="article-header">
                     <a href="/kaise-karen.html" class="category-link">Excel Guide</a>
                     <h1>How to Use VLOOKUP in Excel: A Comprehensive Guide</h1>
@@ -72,7 +62,7 @@
 
                     <h2>Understanding the VLOOKUP Syntax</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                   <code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code>
+                    <pre><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
                     <p>Let's examine each part:</p>
                     <ul>
                         <li><code>lookup_value</code>: This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date.</li>
@@ -165,7 +155,7 @@
                     <h2>Pro Tips for Advanced VLOOKUP Use</h2>
                     <h3>Handling Errors Gracefully with IFERROR</h3>
                     <p>Instead of showing an ugly #N/A error, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code>
+                    <pre><code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code></pre>
                     <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error.</p>
 
                     <h3>Using VLOOKUP with Wildcards</h3>
@@ -175,7 +165,7 @@
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code>
+                    <pre><code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code></pre>
 
                     <h2>Limitations and Modern Alternatives</h2>
                     <p>While VLOOKUP is a workhorse, it has limitations. It can only look from left to right, and inserting new columns can break the formula. For more flexibility, modern Excel users often prefer these alternatives:</p>
@@ -207,81 +197,43 @@
     <script src="/js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Table of Contents Logic ---
-            const tocListDesktop = document.getElementById('toc-list-desktop');
-            const tocListMobile = document.getElementById('toc-list-mobile');
+            const tocContainer = document.getElementById('toc-container');
+            const tocList = document.getElementById('toc-list');
             const articleContent = document.getElementById('article-content');
-            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
 
-            if (headings.length > 0 && tocListDesktop && tocListMobile) {
-                let tocHTML = '';
-                headings.forEach(h => {
-                    const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-                    h.id = id;
-                    const tagName = h.tagName.toLowerCase();
-                    const liClass = tagName === 'h3' ? 'toc-level-2' : '';
-                    tocHTML += `<li class="${liClass}"><a href="#${id}">${h.textContent}</a></li>`;
-                });
-                tocListDesktop.innerHTML = tocHTML;
-                tocListMobile.innerHTML = tocHTML;
-
-                const links = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
-                const desktopTOC = document.querySelector('.toc-sidebar');
-                
-                const observer = new IntersectionObserver(entries => {
-                    let mostVisibleEntry = null;
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
-                            mostVisibleEntry = entry;
-                        }
-                    });
-
-                    if (mostVisibleEntry) {
-                        const id = mostVisibleEntry.target.getAttribute('id');
-                        links.forEach(l => {
-                            l.classList.remove('active');
-                            if (l.getAttribute('href') === `#${id}`) {
-                                l.classList.add('active');
-                                if (desktopTOC && l.closest('.toc-sidebar')) {
-                                    l.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                                }
-                            }
-                        });
-                    }
-                }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
-
-                headings.forEach(h => observer.observe(h));
-            } else {
-                document.getElementById('toc-sidebar-container')?.style.display = 'none';
-                document.querySelector('.toc-mobile-container')?.style.display = 'none';
+            const headings = articleContent.querySelectorAll('h2, h3');
+            if (headings.length < 1) {
+                tocContainer.style.display = 'none';
+                return;
             }
             
-            // --- Copy Code Snippet Logic ---
-            const allCodeBlocks = articleContent.querySelectorAll('pre');
-            allCodeBlocks.forEach(codeBlock => {
-                const button = document.createElement('button');
-                button.className = 'copy-code-btn';
-                button.textContent = 'Copy';
-                button.setAttribute('aria-label', 'Copy code to clipboard');
-                codeBlock.appendChild(button);
+            tocList.innerHTML = '';
+            headings.forEach((h, index) => {
+                const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                h.id = id;
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#${id}">${h.textContent}</a>`;
+                tocList.appendChild(li);
+            });
 
-                button.addEventListener('click', () => {
-                    const code = codeBlock.querySelector('code')?.innerText;
-                    if (code) {
-                        navigator.clipboard.writeText(code).then(() => {
-                            button.textContent = 'Copied!';
-                            button.classList.add('copied');
-                            setTimeout(() => {
-                                button.textContent = 'Copy';
-                                button.classList.remove('copied');
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Failed to copy text: ', err);
-                            button.textContent = 'Error';
-                        });
+            const links = tocList.querySelectorAll('a');
+            const observer = new IntersectionObserver(entries => {
+                let mostVisibleEntry = null;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
+                       mostVisibleEntry = entry;
                     }
                 });
-            });
+
+                if (mostVisibleEntry) {
+                    const id = mostVisibleEntry.target.getAttribute('id');
+                    const activeLink = tocList.querySelector(`a[href="#${id}"]`);
+                    links.forEach(l => l.classList.remove('active'));
+                    if(activeLink) activeLink.classList.add('active');
+                }
+            }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
+
+            headings.forEach(h => observer.observe(h));
         });
     </script>
 </body>
