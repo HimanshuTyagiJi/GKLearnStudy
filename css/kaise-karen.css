@@ -23,7 +23,7 @@
 }
 .breadcrumb-nav a {
     color: var(--accent-color);
-    text-decoration: none;
+    text-decoration: underline;
 }
 .breadcrumb-nav a:hover {
     text-decoration: underline;
