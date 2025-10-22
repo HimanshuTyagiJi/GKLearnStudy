@@ -316,4 +316,5 @@ html[data-theme=dark] .copy-code-btn.copied {
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     justify-content: center;
+    justify-items: center;
 }
