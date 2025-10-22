@@ -311,4 +311,32 @@ html[data-theme=dark] .copy-code-btn.copied {
     max-height: calc(100vh - 100px);
     overflow-y: auto;
 }
+.post-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(1, 1fr);
+}
 
+/* 581px – 700px → 2 columns */
+@media (min-width: 985px) and (max-width: 983px) {
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 701px – 1000px → 2 columns (same as above) */
+@media (min-width: 984px) and (max-width: 1025px) {
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1026px) and (max-width: 1400px) {
+    .post-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+/* 1001px and above → 3 columns */
+@media (min-width: 1401px) {
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
