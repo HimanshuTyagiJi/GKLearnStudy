@@ -318,7 +318,7 @@ html[data-theme=dark] .copy-code-btn.copied {
 }
 
 /* 581px – 700px → 2 columns */
-@media (min-width: 985px) and (max-width: 983px) {
+@media (min-width: 575px) and (max-width: 983px) {
     .post-grid {
         grid-template-columns: repeat(2, 1fr);
     }
