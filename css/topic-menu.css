@@ -88,6 +88,9 @@
 #sidebar-overlay.is-open {
     display: block;
 }
+.app-footer {
+    position: relative;
+    z-index: 2; }
 
 /* ===== Desktop View ===== */
 @media (min-width: 992px) {
@@ -107,7 +110,7 @@
         overflow-y: auto;
         transition: left .3s ease-in-out;
         padding: 1rem;
-        z-index: 0;
+        z-index: 1;
     }
 @media (min-width: 992px) and (max-width: 1680px) {
     #topic-sidebar {
