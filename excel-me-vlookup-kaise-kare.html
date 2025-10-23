@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="canonical" href="https://gklearnstudy.in/excel-me-vlookup-kaise-kare.html" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="stylesheet" href="/css/theme.css">
-    <link rel="stylesheet" href="/css/kaise-karen.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in//css/theme.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in//css/kaise-karen.css">
 </head>
 <body>
     <header class="header" id="header">
@@ -64,77 +64,120 @@
                 </header>
                 <section class="article-body">
                     <div class="info-box">
-                        <p><strong>Key Takeaways:</strong> VLOOKUP is a powerful Excel function for finding data in a table. The key is to remember its four arguments: what you're looking for, where to look, which column to return, and whether you need an exact match (almost always FALSE!).</p>
+                        <p><strong>Key Takeaways:</strong> VLOOKUP is a powerful Excel function for finding data in a table. The key is to remember its four arguments: what you're looking for, where to look, which column to return, and whether you need an exact match (almost always FALSE!). This guide will turn you from a beginner into a confident VLOOKUP user.</p>
                     </div>
 
                     <h2>What Exactly is VLOOKUP?</h2>
-                    <p>VLOOKUP stands for '<strong>Vertical Lookup</strong>'. It's a built-in Excel function that helps you search for a specific value in the leftmost column of a data range (a table) and then retrieve a related value from a different column in the same row. Think of it like looking up a name in a phone book to find their phone number. The name is your lookup value, the entire phone book is your table, and the phone number is the value you want to retrieve.</p>
+                    <p>VLOOKUP stands for '<strong>Vertical Lookup</strong>'. It's a built-in Excel function that helps you search for a specific value in the leftmost column of a data range (a table) and then retrieve a related value from a different column in the same row. It's one of the most recognized functions in Excel and a fundamental skill for anyone working with data.</p>
+                    <p>Imagine you have a massive spreadsheet with thousands of products. You need to find the price for Product ID "ABC-123". Instead of manually scrolling and searching, VLOOKUP can do it for you in an instant. Think of it like looking up a name in a phone book to find their phone number. The name is your lookup value, the entire phone book is your table, and the phone number is the value you want to retrieve.</p>
 
-                    <h2>Understanding the VLOOKUP Syntax</h2>
+                    <h2>Understanding the VLOOKUP Syntax (In-Depth)</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                    <code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code>
-                    <p>Let's examine each part:</p>
+                    <pre><code class="language-excel">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+                    <p>Let's examine each of the four arguments in detail:</p>
                     <ul>
-                        <li><code>lookup_value</code>: This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date.</li>
-                        <li><code>table_array</code>: This is the range of cells that contains all your data. <strong>Crucially, the column containing your <code>lookup_value</code> must be the very first column in this range.</strong></li>
-                        <li><code>col_index_num</code>: This is the number of the column within your <code>table_array</code> from which you want to retrieve the result. The first column is 1, the second is 2, and so on.</li>
-                        <li><code>[range_lookup]</code>: This is an optional but very important argument. It tells Excel whether to find an exact match or an approximate match.
+                        <li><code>lookup_value</code>: <strong>What you want to look for.</strong> This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date. You can type the value directly into the formula (e.g., "Laptop") or, more commonly, refer to a cell that contains the value (e.g., D2).</li>
+                        <li><code>table_array</code>: <strong>Where you want to look for it.</strong> This is the range of cells that contains all your data. <strong>Crucially, the column containing your <code>lookup_value</code> must be the very first column in this range.</strong> This is the most common point of failure for VLOOKUP beginners.</li>
+                        <li><code>col_index_num</code>: <strong>Which column's value to return.</strong> This is the number of the column within your <code>table_array</code> from which you want to retrieve the result. The first column (your lookup column) is 1, the second is 2, the third is 3, and so on.</li>
+                        <li><code>[range_lookup]</code>: <strong>Exact or approximate match?</strong> This is an optional but very important argument that determines the type of match.
                             <ul>
-                                <li><strong>FALSE</strong> or <strong>0</strong>: This looks for an <strong>exact match</strong>. If it can't find the exact value, it will return an error. 95% of the time, this is what you want to use.</li>
-                                <li><strong>TRUE</strong> or <strong>1</strong> (or omitted): This looks for an <strong>approximate match</strong>. The first column of your table must be sorted in ascending order for this to work correctly. It's used for scenarios like finding a tax rate in a bracketed table.</li>
+                                <li><strong>FALSE</strong> or <strong>0</strong>: This looks for an <strong>exact match</strong>. If it can't find the exact value, it will return an error (#N/A). In 95% of real-world scenarios, this is what you want to use.</li>
+                                <li><strong>TRUE</strong> or <strong>1</strong> (or omitted): This looks for an <strong>approximate match</strong>. For this to work correctly, the first column of your table <em>must be sorted in ascending order</em>. It's used for scenarios like finding a tax rate in a bracketed table or assigning grades based on scores.</li>
                             </ul>
                         </li>
                     </ul>
 
-                    <h2>Step-by-Step Guide: A Practical Example</h2>
-                    <p>Let's imagine you have a small table of product sales. You want to quickly find out the price of a "Laptop".</p>
-                    
-                    <svg class="custom-svg-diagram" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="vlookup-diagram-title">
-                        <title id="vlookup-diagram-title">Diagram explaining how VLOOKUP finds data in a table.</title>
+                     <svg class="custom-svg-diagram" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="vlookup-diagram-title-2">
+                        <title id="vlookup-diagram-title-2">Detailed VLOOKUP Formula Diagram</title>
                         <style>
-                            .label-box { stroke: #a0a0a0; }
-                            .table-header { font-weight: bold; }
+                            .base-text { font-family: Arial, sans-serif; font-size: 16px; }
+                            .header-text { font-weight: bold; fill: #333; }
+                            .body-text { fill: #555; }
+                            .formula-text { font-family: 'Courier New', monospace; font-size: 18px; font-weight: bold; }
+                            .label-text { font-size: 14px; font-style: italic; }
+                            .arrow { stroke-width: 2; marker-end: url(#arrowhead); }
+                            .connector { stroke-dasharray: 4 3; }
                         </style>
-                        <!-- Table -->
-                        <g id="table">
-                            <rect x="250" y="50" width="300" height="200" fill="none" stroke="#ccc" stroke-width="1"/>
-                            <text x="325" y="75" class="table-header" text-anchor="middle">Product</text>
-                            <text x="475" y="75" class="table-header" text-anchor="middle">Price</text>
-                            <line x1="250" y1="90" x2="550" y2="90" stroke="#ccc"/>
-                            <line x1="400" y1="50" x2="400" y2="250" stroke="#ccc"/>
-                            <text x="325" y="115" text-anchor="middle">Mouse</text><text x="475" y="115" text-anchor="middle">₹1,500</text>
-                            <text x="325" y="155" text-anchor="middle">Keyboard</text><text x="475" y="155" text-anchor="middle">₹3,000</text>
-                            <text x="325" y="195" text-anchor="middle">Laptop</text><text x="475" y="195" text-anchor="middle">₹75,000</text>
-                            <text x="325" y="235" text-anchor="middle">Monitor</text><text x="475" y="235" text-anchor="middle">₹15,000</text>
+                        <defs>
+                            <marker id="arrowhead" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker>
+                        </defs>
+                        
+                        <rect x="10" y="10" width="780" height="430" rx="15" fill="#f9f9f9" stroke="#e0e0e0"/>
+
+                        <text x="400" y="50" text-anchor="middle" class="header-text" font-size="24px">VLOOKUP Anatomy</text>
+                        <text x="400" y="80" text-anchor="middle" class="formula-text">=VLOOKUP(<tspan fill="#007bff">D2</tspan>, <tspan fill="#28a745">A1:C5</tspan>, <tspan fill="#dc3545">3</tspan>, <tspan fill="#ffc107">FALSE</tspan>)</text>
+
+                        <!-- Argument 1: lookup_value -->
+                        <g>
+                            <path class="arrow connector" stroke="#007bff" d="M160 80 C 160 120, 100 150, 60 180" fill="none"/>
+                            <text x="170" y="130" fill="#007bff" class="label-text">1. lookup_value</text>
+                            <text x="170" y="150" fill="#007bff" class="label-text">(What to find)</text>
+                            <rect x="20" y="180" width="100" height="30" fill="#f0f8ff" stroke="#007bff"/>
+                            <text x="70" y="200" text-anchor="middle" class="body-text">Laptop</text>
+                            <text x="70" y="170" text-anchor="middle" class="header-text">Cell D2</text>
                         </g>
-                         <!-- Labels -->
-                        <g id="labels">
-                            <rect x="20" y="50" width="200" height="40" class="label-box" rx="5"/><text x="120" y="75" text-anchor="middle">lookup_value: "Laptop"</text>
-                            <rect x="250" y="260" width="300" height="30" class="label-box" rx="5"/><text x="400" y="280" text-anchor="middle">table_array: A1:B5</text>
-                            <rect x="560" y="175" width="30" height="30" class="label-box" rx="5" fill="#ffd5d5"/><text x="575" y="195" text-anchor="middle" font-weight="bold">2</text>
-                            <text x="50" y="300">Result: ₹75,000</text>
+
+                        <!-- Table Data -->
+                        <g transform="translate(250, 180)">
+                            <rect x="0" y="0" width="300" height="150" fill="#fff" stroke="#ccc"/>
+                            <rect x="0" y="0" width="300" height="30" fill="#f2f2f2"/>
+                            <line x1="0" y1="30" x2="300" y2="30" stroke="#ccc"/>
+                            <line x1="100" y1="0" x2="100" y2="150" stroke="#ccc"/>
+                            <line x1="200" y1="0" x2="200" y2="150" stroke="#ccc"/>
+                            <text x="50" y="20" text-anchor="middle" class="header-text">A: Product</text>
+                            <text x="150" y="20" text-anchor="middle" class="header-text">B: Price</text>
+                            <text x="250" y="20" text-anchor="middle" class="header-text">C: Stock</text>
+                            <text x="50" y="50" text-anchor="middle" class="body-text">Mouse</text><text x="150" y="50" text-anchor="middle">₹1,500</text><text x="250" y="50" text-anchor="middle">50</text>
+                            <text x="50" y="80" text-anchor="middle" class="body-text">Keyboard</text><text x="150" y="80" text-anchor="middle">₹3,000</text><text x="250" y="80" text-anchor="middle">25</text>
+                            <rect x="0" y="90" width="300" height="30" fill="#ffffcc"/>
+                            <text x="50" y="110" text-anchor="middle" class="body-text">Laptop</text><text x="150" y="110" text-anchor="middle">₹75,000</text><text x="250" y="110" text-anchor="middle">10</text>
+                            <text x="50" y="140" text-anchor="middle" class="body-text">Monitor</text><text x="150" y="140" text-anchor="middle">₹15,000</text><text x="250" y="140" text-anchor="middle">30</text>
                         </g>
-                        <!-- Arrows -->
-                        <g id="arrows" stroke-width="2" stroke-dasharray="4 2">
-                            <path d="M 220 70 C 240 70, 240 195, 260 195" stroke="#e53935" fill="none"/>
-                            <path d="M 400 250 L 400 260" stroke="#303f9f" fill="none"/>
-                            <path d="M 540 195 L 560 195" stroke="#00796b" fill="none"/>
-                            <path d="M 520 195 C 400 195, 200 300, 150 300" stroke="#f57c00" fill="none"/>
+
+                         <!-- Argument 2: table_array -->
+                        <g>
+                           <rect x="250" y="180" width="300" height="150" fill="none" stroke="#28a745" stroke-width="3" stroke-dasharray="5 5"/>
+                           <path class="arrow connector" stroke="#28a745" d="M300 80 v 80" fill="none"/>
+                           <text x="320" y="130" fill="#28a745" class="label-text">2. table_array</text>
+                           <text x="320" y="150" fill="#28a745" class="label-text">(Where to look)</text>
                         </g>
+
+                        <!-- Argument 3: col_index_num -->
+                        <g>
+                           <path class="arrow connector" stroke="#dc3545" d="M480 80 v 80" fill="none"/>
+                           <text x="500" y="130" fill="#dc3545" class="label-text">3. col_index_num</text>
+                           <text x="500" y="150" fill="#dc3545" class="label-text">(Column to return)</text>
+                           <text x="285" y="170" class="header-text" fill="#dc3545">1</text>
+                           <text x="385" y="170" class="header-text" fill="#dc3545">2</text>
+                           <text x="485" y="170" class="header-text" fill="#dc3545" font-size="20px">3</text>
+                        </g>
+
+                         <!-- Argument 4: range_lookup -->
+                        <g>
+                           <path class="arrow connector" stroke="#ffc107" d="M580 80 C 600 120, 620 150, 650 180" fill="none"/>
+                           <text x="600" y="130" fill="#ffc107" class="label-text">4. range_lookup</text>
+                           <text x="600" y="150" fill="#ffc107" class="label-text">(Exact Match)</text>
+                        </g>
+                        
+                        <!-- Result -->
+                        <text x="400" y="400" text-anchor="middle" font-size="22px" class="header-text">Result: <tspan fill="#dc3545" font-weight="bold">10</tspan></text>
                     </svg>
+
+                    <h3>Step-by-Step Guide: A Practical Example</h3>
+                    <p>Let's use the data from the diagram above. You have a table of products and you want to find out the stock quantity for a "Laptop".</p>
                     
                     <ol>
-                        <li><strong>Set up your data:</strong> Make sure your data is in a table format with the lookup values (Product names) in the first column.</li>
-                        <li><strong>Select your result cell:</strong> Click on an empty cell where you want the price to appear.</li>
+                        <li><strong>Set up your data:</strong> Make sure your data is in a table format with the lookup values (Product names) in the first column (Column A).</li>
+                        <li><strong>Select your result cell:</strong> Click on an empty cell where you want the stock quantity to appear.</li>
                         <li><strong>Start the formula:</strong> Type <code>=VLOOKUP(</code></li>
                         <li><strong>Argument 1 (lookup_value):</strong> Specify what you are looking for. You can type "Laptop" directly in quotes, or refer to a cell that contains the word "Laptop". Let's say you typed it in cell D2. So, the formula is now <code>=VLOOKUP(D2,</code></li>
-                        <li><strong>Argument 2 (table_array):</strong> Select your entire data table, including headers. Let's assume your data is in cells A1 to B5. Your formula becomes <code>=VLOOKUP(D2, A1:B5,</code></li>
-                        <li><strong>Argument 3 (col_index_num):</strong> You want the price, which is in the 2nd column of your selected table. So, you enter <code>2</code>. The formula is now <code>=VLOOKUP(D2, A1:B5, 2,</code></li>
-                        <li><strong>Argument 4 (range_lookup):</strong> You need an exact match for "Laptop". So, you type <code>FALSE</code>. The final formula is <code>=VLOOKUP(D2, A1:B5, 2, FALSE)</code></li>
-                        <li><strong>Get the result:</strong> Press Enter. The cell will display <strong>₹75,000</strong>.</li>
+                        <li><strong>Argument 2 (table_array):</strong> Select your entire data table. In our example, this is cells A1 to C5. Your formula becomes <code>=VLOOKUP(D2, A1:C5,</code></li>
+                        <li><strong>Argument 3 (col_index_num):</strong> You want the stock, which is in the 3rd column of your selected table (A is 1, B is 2, C is 3). So, you enter <code>3</code>. The formula is now <code>=VLOOKUP(D2, A1:C5, 3,</code></li>
+                        <li><strong>Argument 4 (range_lookup):</strong> You need an exact match for "Laptop". So, you type <code>FALSE</code>. The final formula is <code>=VLOOKUP(D2, A1:C5, 3, FALSE)</code></li>
+                        <li><strong>Get the result:</strong> Press Enter. The cell will display <strong>10</strong>.</li>
                     </ol>
 
-                    <h2>Fixing Common VLOOKUP Errors</h2>
+                    <h2>Fixing Common VLOOKUP Errors: A Troubleshooter's Guide</h2>
                     <p>VLOOKUP is powerful, but it can be frustrating when it doesn't work. Here are the most common errors and how to fix them:</p>
                     <h3>The #N/A Error</h3>
                     <p>This is the most frequent error. It means "Not Available."</p>
@@ -142,46 +185,63 @@
                         <li><strong>Cause:</strong> The <code>lookup_value</code> was not found in the first column of the <code>table_array</code>.</li>
                         <li><strong>Fixes:</strong>
                             <ul>
-                                <li>Check for typos in your lookup value.</li>
-                                <li>Look for extra spaces. "Laptop " is not the same as "Laptop". Use the <code>=TRIM()</code> function to clean your data.</li>
-                                <li>Ensure the data types match. A number formatted as text will not match a number formatted as a number.</li>
-                                <li>If you are using an exact match (FALSE), make sure the value truly exists.</li>
+                                <li><strong>Typos:</strong> Check for simple spelling mistakes in your lookup value or in the source data.</li>
+                                <li><strong>Extra Spaces:</strong> "Laptop " is not the same as "Laptop". This is a very common issue. Use the <code>=TRIM()</code> function on a helper column to clean your data before using VLOOKUP.</li>
+                                <li><strong>Number vs. Text:</strong> A number formatted as text (e.g., '123) will not match a number formatted as a number (123). Ensure the data types are consistent. You can use the <code>=VALUE()</code> function to convert text to numbers.</li>
+                                <li><strong>Absolute References:</strong> When you drag a VLOOKUP formula down, the <code>table_array</code> reference might shift. Use absolute references (e.g., <code>$A$1:$C$5</code>) to lock the table range. You can do this by selecting the range in the formula and pressing F4.</li>
                             </ul>
                         </li>
                     </ul>
                      <h3>The #REF! Error</h3>
                     <p>This error indicates an invalid cell reference.</p>
                     <ul>
-                        <li><strong>Cause:</strong> The <code>col_index_num</code> is greater than the total number of columns in your <code>table_array</code>.</li>
-                        <li><strong>Fix:</strong> Double-check your <code>col_index_num</code>. If your table has 3 columns, the index number cannot be 4.</li>
+                        <li><strong>Cause:</strong> The <code>col_index_num</code> is greater than the total number of columns in your <code>table_array</code>. If your table array is A1:C5 (3 columns), but you ask for column 4, you will get this error.</li>
+                        <li><strong>Fix:</strong> Double-check your <code>col_index_num</code> and make sure it's within the bounds of your selected table.</li>
                     </ul>
                      <h3>The #VALUE! Error</h3>
                     <p>This error is less common with modern Excel but can occur.</p>
                     <ul>
-                        <li><strong>Cause:</strong> Often happens if the <code>col_index_num</code> is less than 1.</li>
-                        <li><strong>Fix:</strong> Ensure your column index is 1 or greater.</li>
+                        <li><strong>Cause:</strong> Often happens if the <code>col_index_num</code> is less than 1 or contains non-numeric text.</li>
+                        <li><strong>Fix:</strong> Ensure your column index is a positive number (1 or greater).</li>
                     </ul>
 
                     <h2>Pro Tips for Advanced VLOOKUP Use</h2>
                     <h3>Handling Errors Gracefully with IFERROR</h3>
-                    <p>Instead of showing an ugly #N/A error, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <code>=IFERROR(VLOOKUP(D2, A1:B5, 2, FALSE), "Product Not Found")</code>
-                    <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error.</p>
+                    <p>Instead of showing an ugly #N/A error to your users, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
+                    <pre><code class="language-excel">=IFERROR(VLOOKUP(D2, A1:C5, 3, FALSE), "Product Not Found")</code></pre>
+                    <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error. This makes your spreadsheets much cleaner and easier to understand.</p>
 
-                    <h3>Using VLOOKUP with Wildcards</h3>
-                    <p>You can use wildcards for partial matches. The asterisk (<code>*</code>) represents any sequence of characters.</p>
+                    <h3>Using VLOOKUP with Wildcards for Partial Matches</h3>
+                    <p>You can use wildcards for partial matches when using exact match (FALSE). The asterisk (<code>*</code>) represents any sequence of characters, and a question mark (<code>?</code>) represents any single character.</p>
                     <ul>
-                        <li>To find a value that <strong>starts with</strong> "Lap", use <code>"Lap*"</code>.</li>
+                        <li>To find a value that <strong>starts with</strong> "Lap", use <code>"Lap*"</code> as your lookup value.</li>
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <code>=VLOOKUP("Lap*", A1:B5, 2, FALSE) ' This would find "Laptop"</code>
+                    <pre><code class="language-excel">=VLOOKUP("Lap*", A1:C5, 3, FALSE) ' This would find "Laptop" and return its stock</code></pre>
+
+                    <h3>Making Column Index Dynamic with COLUMN() or MATCH()</h3>
+                    <p>Hardcoding the `col_index_num` (like `3`) can be problematic if you insert or delete columns. To make your formula more robust, you can calculate this number dynamically.</p>
+                    <ul>
+                        <li><strong>Using COLUMN():</strong> If your return columns are in a simple sequence, you can use <code>COLUMN(C1)</code> which returns 3. When you drag this across, it becomes <code>COLUMN(D1)</code> which is 4, and so on.</li>
+                        <li><strong>Using MATCH():</strong> This is the most powerful method. The MATCH function finds the position of a value in a range. You can use it to find the position of a column header.
+                           <pre><code class="language-excel">=VLOOKUP(D2, $A$1:$C$5, MATCH("Stock", $A$1:$C$1, 0), FALSE)</code></pre>
+                           Here, <code>MATCH("Stock", $A$1:$C$1, 0)</code> finds "Stock" in the header row and returns its position (3), which is then fed into the VLOOKUP. Now your formula will not break even if you reorder the columns!
+                        </li>
+                    </ul>
 
                     <h2>Limitations and Modern Alternatives</h2>
-                    <p>While VLOOKUP is a workhorse, it has limitations. It can only look from left to right, and inserting new columns can break the formula. For more flexibility, modern Excel users often prefer these alternatives:</p>
+                    <p>While VLOOKUP is a workhorse, it has significant limitations that have led to the development of better functions:</p>
+                    <ol>
+                        <li><strong>Left-to-Right Only:</strong> It can only search in the first column and return a value from a column to its right. It cannot look left.</li>
+                        <li><strong>Fragile:</strong> Inserting or deleting columns can break formulas that have a hardcoded `col_index_num`.</li>
+                        <li><strong>Slower:</strong> On very large datasets, it can be less efficient than newer alternatives.</li>
+                    </ol>
+                    <h3>The Alternatives: INDEX/MATCH and XLOOKUP</h3>
+                    <p>For more flexibility and power, modern Excel users often prefer these alternatives:</p>
                     <ul>
-                        <li><strong>INDEX and MATCH:</strong> A powerful combination that can look up values in any direction (left, right, up, or down) and is not affected by inserting columns.</li>
-                        <li><strong>XLOOKUP:</strong> The modern successor to VLOOKUP, available in Microsoft 365 and Excel 2021. It's more powerful, more flexible, and easier to use. If you have access to it, it is highly recommended to use XLOOKUP instead.</li>
+                        <li><strong>INDEX and MATCH:</strong> For years, this was the gold standard for advanced lookups. It's a combination of two functions that is more flexible than VLOOKUP. It can look up values in any direction (left, right, up, or down) and is not affected by inserting columns.</li>
+                        <li><strong>XLOOKUP:</strong> The modern successor to VLOOKUP, available in Microsoft 365 and Excel 2021. It's more powerful, more flexible, and easier to use, combining the best of VLOOKUP and INDEX/MATCH into a single, intuitive function. If you have access to it, it is highly recommended to learn and use XLOOKUP instead.</li>
                     </ul>
                 </section>
                 
@@ -203,51 +263,96 @@
         <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
     </footer>
 
-    <script src="/js/theme.js" defer></script>
-    <script src="/js/search-data.js" defer></script>
+    <script src="https://gklearnstudy.in//js/theme.js" defer></script>
+    <script src="https://gklearnstudy.in//js/search-data.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const tocListDesktop = document.getElementById('toc-list-desktop');
-            const tocListMobile = document.getElementById('toc-list-mobile');
+            const tocLists = document.querySelectorAll('#toc-list-desktop, #toc-list-mobile');
             const articleContent = document.getElementById('article-content');
-
-            const headings = Array.from(articleContent.querySelectorAll('h2, h3'));
-            if (headings.length < 1) {
-                document.getElementById('toc-sidebar-container').style.display = 'none';
-                document.querySelector('.toc-mobile-container').style.display = 'none';
+            
+            if (tocLists.length === 0 || !articleContent) {
+                console.error('TOC script: Critical elements are missing.');
                 return;
             }
+
+            const headings = articleContent.querySelectorAll('h2, h3');
             
-            let tocHTML = '';
-            headings.forEach(h => {
-                const id = h.textContent.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-                h.id = id;
-                tocHTML += `<li><a href="#${id}">${h.textContent}</a></li>`;
-            });
-            tocListDesktop.innerHTML = tocHTML;
-            tocListMobile.innerHTML = tocHTML;
+            if (headings.length === 0) {
+                document.querySelector('.toc-sidebar-container')?.style.setProperty('display', 'none');
+                document.querySelector('.toc-mobile-container')?.style.setProperty('display', 'none');
+                return;
+            }
 
-            const links = document.querySelectorAll('#toc-list-desktop a, #toc-list-mobile a');
-            const observer = new IntersectionObserver(entries => {
-                let mostVisibleEntry = null;
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && (!mostVisibleEntry || entry.intersectionRatio > mostVisibleEntry.intersectionRatio)) {
-                       mostVisibleEntry = entry;
-                    }
-                });
+            const fragment = document.createDocumentFragment();
+            const headingData = []; 
 
-                if (mostVisibleEntry) {
-                    const id = mostVisibleEntry.target.getAttribute('id');
-                    links.forEach(l => {
-                        l.classList.remove('active');
-                        if (l.getAttribute('href') === `#${id}`) {
-                            l.classList.add('active');
-                        }
-                    });
+            headings.forEach((heading, index) => {
+                const text = heading.textContent.trim();
+                if (!text) return;
+
+                let id = heading.id;
+                if (!id) {
+                    id = `toc-heading-${index}`;
+                    heading.id = id;
                 }
-            }, { rootMargin: "-80px 0px -40% 0px", threshold: [0.2, 0.8] });
 
-            headings.forEach(h => observer.observe(h));
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                
+                a.textContent = text;
+                a.href = `#${id}`;
+                li.appendChild(a);
+
+                if (heading.tagName.toLowerCase() === 'h3') {
+                    li.className = 'toc-level-2';
+                }
+
+                fragment.appendChild(li);
+                headingData.push({ id: id, element: heading });
+            });
+
+            tocLists.forEach(list => {
+                list.innerHTML = '';
+                list.appendChild(fragment.cloneNode(true));
+            });
+
+            const tocLinks = document.querySelectorAll('.toc-sidebar a, .toc-mobile-container a');
+            const topOffset = 90;
+
+            const onScroll = () => {
+                const scrollPosition = window.scrollY;
+                let activeId = null;
+                
+                const visibleHeadings = headingData.filter(h => h.element.offsetTop <= scrollPosition + topOffset);
+                if (visibleHeadings.length > 0) {
+                    activeId = visibleHeadings[visibleHeadings.length - 1].id;
+                }
+
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                    const lastHeading = headingData[headingData.length - 1];
+                    if (lastHeading) {
+                        activeId = lastHeading.id;
+                    }
+                }
+
+                tocLinks.forEach(link => {
+                    const isActive = link.getAttribute('href') === `#${activeId}`;
+                    link.classList.toggle('active', isActive);
+                });
+            };
+
+            let isTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        onScroll();
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }, { passive: true });
+
+            onScroll();
         });
     </script>
 </body>
