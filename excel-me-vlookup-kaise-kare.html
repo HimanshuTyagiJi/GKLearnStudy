@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="canonical" href="https://gklearnstudy.in/excel-me-vlookup-kaise-kare.html" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="stylesheet" href="https://gklearnstudy.in//css/theme.css">
-    <link rel="stylesheet" href="https://gklearnstudy.in//css/kaise-karen.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
+    <link rel="stylesheet" href="https://gklearnstudy.in/css/kaise-karen.css">
 </head>
 <body>
     <header class="header" id="header">
@@ -73,7 +73,7 @@
 
                     <h2>Understanding the VLOOKUP Syntax (In-Depth)</h2>
                     <p>The syntax, or formula structure, for VLOOKUP can look intimidating at first, but it's quite simple once you break it down. Here's how it's structured:</p>
-                    <pre><code class="language-excel">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+                    <code class="language-excel">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code>
                     <p>Let's examine each of the four arguments in detail:</p>
                     <ul>
                         <li><code>lookup_value</code>: <strong>What you want to look for.</strong> This is the piece of information you already know and want to find in the table. It could be a product ID, a student's name, or a specific date. You can type the value directly into the formula (e.g., "Laptop") or, more commonly, refer to a cell that contains the value (e.g., D2).</li>
@@ -208,7 +208,7 @@
                     <h2>Pro Tips for Advanced VLOOKUP Use</h2>
                     <h3>Handling Errors Gracefully with IFERROR</h3>
                     <p>Instead of showing an ugly #N/A error to your users, you can display a more user-friendly message. Wrap your VLOOKUP formula inside the <code>IFERROR</code> function:</p>
-                    <pre><code class="language-excel">=IFERROR(VLOOKUP(D2, A1:C5, 3, FALSE), "Product Not Found")</code></pre>
+                    <code class="language-excel">=IFERROR(VLOOKUP(D2, A1:C5, 3, FALSE), "Product Not Found")</code>
                     <p>Now, if the VLOOKUP fails, the cell will show "Product Not Found" instead of the error. This makes your spreadsheets much cleaner and easier to understand.</p>
 
                     <h3>Using VLOOKUP with Wildcards for Partial Matches</h3>
@@ -218,14 +218,14 @@
                         <li>To find a value that <strong>ends with</strong> "top", use <code>"*top"</code>.</li>
                         <li>To find a value that <strong>contains</strong> "apt", use <code>"*apt*"</code>.</li>
                     </ul>
-                    <pre><code class="language-excel">=VLOOKUP("Lap*", A1:C5, 3, FALSE) ' This would find "Laptop" and return its stock</code></pre>
+                    <code class="language-excel">=VLOOKUP("Lap*", A1:C5, 3, FALSE) ' This would find "Laptop" and return its stock</code>
 
                     <h3>Making Column Index Dynamic with COLUMN() or MATCH()</h3>
                     <p>Hardcoding the `col_index_num` (like `3`) can be problematic if you insert or delete columns. To make your formula more robust, you can calculate this number dynamically.</p>
                     <ul>
                         <li><strong>Using COLUMN():</strong> If your return columns are in a simple sequence, you can use <code>COLUMN(C1)</code> which returns 3. When you drag this across, it becomes <code>COLUMN(D1)</code> which is 4, and so on.</li>
                         <li><strong>Using MATCH():</strong> This is the most powerful method. The MATCH function finds the position of a value in a range. You can use it to find the position of a column header.
-                           <pre><code class="language-excel">=VLOOKUP(D2, $A$1:$C$5, MATCH("Stock", $A$1:$C$1, 0), FALSE)</code></pre>
+                           <code class="language-excel">=VLOOKUP(D2, $A$1:$C$5, MATCH("Stock", $A$1:$C$1, 0), FALSE)</code>
                            Here, <code>MATCH("Stock", $A$1:$C$1, 0)</code> finds "Stock" in the header row and returns its position (3), which is then fed into the VLOOKUP. Now your formula will not break even if you reorder the columns!
                         </li>
                     </ul>
