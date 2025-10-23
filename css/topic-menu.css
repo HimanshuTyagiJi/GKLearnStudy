@@ -123,7 +123,7 @@
         overflow-y: auto;
         transition: left .3s ease-in-out;
         padding: 1rem;
-        z-index: 0;
+        z-index: -1;
     }
 
     #sidebar-overlay,
@@ -153,9 +153,4 @@
     }
 }
 
-/* Footer adjustment */
-@media screen and (min-width: 769.01px) {
-    .app-footer {
-        margin-left: 16%;
-    }
-}
+
