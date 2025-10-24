@@ -323,22 +323,100 @@
                         <div class="info-card"> <div class="icon">🏆</div> <h3>Exam-Oriented Approach</h3> <p>Get a competitive edge in your preparation. Our content is specifically tailored to help aspirants preparing for competitive exams like SSC, Banking, Railways, and State PSCs.</p> </div>
                          <div class="info-card"> <div class="icon">🛠️</div> <h3>Practical Tools & Utilities</h3> <p>Beyond just articles, we provide a suite of handy online tools like unit converters, formula sheets, and educational guides to assist you with your daily tasks and studies.</p> </div>
                 </section>
+                
+                <div class="categories-section sidebar-widget">
+                    <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
+                    <ul class="category-list"></ul>
+                </div>
+                <div class="post-filter-container">
+                    <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
+                </div>
+                <main id="post-grid" class="post-grid">
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                </main>
+                <div id="load-more-container"> <button id="load-more-btn">Load More</button> </div>
 
-                <section class="content-section stats-section">
-                    <h2 class="section-title">Behind the Numbers</h2>
-                    <p class="section-subtitle">Our commitment to quality education is reflected in our growth and the community we've built. We are proud of what we have achieved together.</p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="150">0+</div>
-                            <div class="stat-label">Detailed Articles</div>
+                <section class="content-section">
+                    <h2 class="section-title">Latest Current Affairs</h2>
+                    <p class="section-subtitle">Stay informed with our daily updates on the most important national and international events. Knowledge of current affairs is crucial for exams and staying aware.</p>
+                    <div class="grid-3">
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">National</span>
+                                <span class="affair-date">October 29, 2024</span>
+                            </div>
+                            <h3><a href="#">New Education Policy Phase 2 Implementation</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="25000">0+</div>
-                            <div class="stat-label">Happy Learners</div>
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">International</span>
+                                <span class="affair-date">October 28, 2024</span>
+                            </div>
+                            <h3><a href="#">Global Tech Summit Concludes with AI Accord</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="50">0+</div>
-                            <div class="stat-label">Interactive Quizzes</div>
+                        <div class="current-affair-card">
+                            <div class="affair-meta">
+                                <span class="affair-category">Sports</span>
+                                <span class="affair-date">October 27, 2024</span>
+                            </div>
+                            <h3><a href="#">India Wins T20 Series in a Thrilling Final</a></h3>
+                            <a href="#" class="read-more-btn">Read More →</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section highlight-section">
+                    <h2 class="section-title">Subject Spotlights</h2>
+                    <p class="section-subtitle">Dive deeper into our core subjects. Find curated collections of our most important articles to kickstart your learning journey in each field.</p>
+                    <div class="grid-3">
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M60.4 25.1c-2.3-2.3-5.2-3.8-8.4-4.5.1-.3.1-.6.1-1 0-5.2-4.2-9.4-9.4-9.4-4.6 0-8.5 3.3-9.3 7.6-.8-.1-1.6-.2-2.4-.2-6.5 0-11.8 5.3-11.8 11.8 0 .4.1.8.1 1.2-4.1.7-7.4 3.2-9.1 6.3-2.8 5.1-1.6 11.5 2.8 15.2l.2.2c.4.3.8.6 1.3.8 2.5 1.2 5.2 1.8 7.9 1.8h29.2c5.4 0 10.4-2.1 14.1-5.9C64.6 42.1 65.5 31.7 60.4 25.1zM58 48.4c-3.1 3.1-7.2 4.8-11.6 4.8H17.2c-2.4 0-4.8-.5-7-1.5-.4-.2-.8-.4-1.1-.6l-.2-.2c-3.7-3.1-4.7-8.4-2.4-12.8 1.4-2.6 4.1-4.6 7.3-5.2.5-.1.9-.5.9-1v-1.7c0-.4-.1-.8-.1-1.2 0-5.3 4.3-9.6 9.6-9.6.9 0 1.8.1 2.6.4.5.1.9 0 1.3-.3.3-.3.5-.7.5-1.1V14c0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c0 .5.1 1 .2 1.4.3 2.9 1.6 5.5 3.6 7.5.4.4.9.6 1.4.6h.4c2.8.6 5.3 2 7.2 4.1C62.5 38.6 62.5 44.2 58 48.4z"/><path d="M30.9 34.6c-4.9 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8zm0 15.3c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z"/></svg>
+                                <div class="header-content">
+                                    <h3>General Knowledge</h3>
+                                    <p>Explore history, geography, and current affairs.</p>
+                                </div>
+                            </div>
+                            <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">Indian History MCQ Quiz</a></li>
+                                <li><div class="step-number">2</div> <a href="#">World Geography Capitals</a></li>
+                                <li><div class="step-number">3</div> <a href="#">Latest Current Affairs</a></li>
+                            </ul>
+                        </div>
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                               <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M54.4 39.2V21.5c0-1-.8-1.8-1.8-1.8h-14c-.6 0-1.1.3-1.4.7L32 26.9l-5.2-6.5c-.3-.4-.8-.7-1.4-.7H11.4c-1 0-1.8.8-1.8 1.8v17.8c0 1 .8 1.8 1.8 1.8h11.2v10.2c0 .7.8 1.1 1.4.7l15.9-10.9c.7-.5.7-1.5 0-2l-1.6-1.1h14.3c1-.1 1.8-.9 1.8-1.9zM11.9 38.7V22h13.2l5.9 7.4-5.9 7.4H11.9zm30.3-1.8H26.3l3.2-2.2c.7-.5.7-1.5 0-2l-3.2-2.2h15.9v6.4zm-1-16.3h11.7v16.3H41.1l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8v-2.3h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8V22h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2L41.1 22h-1.8v-1.5h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8H40v-2.2h1.2z"/></svg>
+                               <div class="header-content">
+                                    <h3>Computer Science</h3>
+                                    <p>Guides on software, hardware, and core concepts.</p>
+                               </div>
+                            </div>
+                            <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">Guide to MS Excel Functions</a></li>
+                                <li><div class="step-number">2</div> <a href="#">What is an Operating System?</a></li>
+                                <li><div class="step-number">3</div> <a href="#">Computer Basics Quiz</a></li>
+                           </ul>
+                        </div>
+                        <div class="learning-path-card">
+                            <div class="learning-path-header">
+                                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M49.3 16.5c-1.3-1.3-2.8-2.3-4.5-3.1-1.3-.6-2.6-1.1-4-1.5-.7-.2-1.4-.3-2.1-.5s-1.4-.2-2.2-.2c-1.2 0-2.4.2-3.6.5-1.1.3-2.2.7-3.3 1.2s-2.1 1.1-3.1 1.9-1.9 1.7-2.8 2.8c-1.2 1.5-2.2 3.2-2.9 5-.5 1.2-.8 2.4-1.1 3.7s-.4 2.6-.4 3.9.1 2.6.4 3.9.6 2.5 1.1 3.7c.7 1.8 1.7 3.5 2.9 5 .9.9 1.8 1.7 2.8 2.4s2 1.3 3.1 1.9 2.2.9 3.3 1.2c1.2.3 2.4.5 3.6.5s2.4-.2 3.6-.5c1.1-.3 2.2-.7 3.3-1.2s2.1-1.1 3.1-1.9 1.9-1.7 2.8-2.8c1.2-1.5 2.2-3.2 2.9-5 .5-1.2.8 2.4-1.1 3.7.2-1.3.4-2.6.4-3.9s-.1-2.6-.4-3.9-.6-2.5-1.1-3.7c-.8-1.9-1.8-3.6-3-5.1zm-1.6 28.3c-.9.9-1.9 1.6-3 2.3s-2.2.9-3.4 1.2-2.4.5-3.7.5-2.5-.2-3.7-.5-2.3-.7-3.4-1.2-2.1-1.1-3-2.3-1.6-1.9-2.3-3c-.7-1.2-1.3-2.5-1.7-3.8s-.6-2.7-.6-4.1.2-2.8.6-4.1 1-2.7 1.7-3.8c.7-1.2 1.4-2.1 2.3-3s1.9-1.6 3-2.3 2.2-.9 3.4-1.2c1.2-.3 2.4-.5 3.7-.5s2.5.2 3.7.5c1.2.3 2.3.7 3.4 1.2s2.1 1.1 3 2.3 1.6 1.9 2.3 3c.7 1.2 1.3 2.5 1.7 3.8.4 1.3.6 2.7.6 4.1s-.2 2.8-.6 4.1-1 2.7-1.7 3.8c-.6 1.1-1.4 2.1-2.2 3z"/><path d="M32 23.3c-4.8 0-8.7 3.9-8.7 8.7s3.9 8.7 8.7 8.7 8.7-3.9 8.7-8.7-3.9-8.7-8.7-8.7zm0 15c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z"/></svg>
+                                <div class="header-content">
+                                    <h3>Science & Formulas</h3>
+                                    <p>Essential formulas and concepts for Physics & Chemistry.</p>
+                                </div>
+                            </div>
+                           <ul class="learning-path-steps">
+                                <li><div class="step-number">1</div> <a href="#">All Physics Formulas PDF</a></li>
+                                <li><div class="step-number">2</div> <a href="#">Complete Chemistry Formula List</a></li>
+                                <li><div class="step-number">3</div> <a href="#">How does Photosynthesis work?</a></li>
+                            </ul>
                         </div>
                     </div>
                 </section>
@@ -383,7 +461,20 @@
                     <div class="grid-3">
                         <div class="featured-tool-card">
                              <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                                <!-- Physics SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="300" height="300" aria-hidden="true">
+  <!-- orbits -->
+  <ellipse cx="32" cy="32" rx="18" ry="7" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(25 32 32)"/>
+  <ellipse cx="32" cy="32" rx="18" ry="7" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-25 32 32)"/>
+  <ellipse cx="32" cy="32" rx="18" ry="7" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(90 32 32)"/>
+  <!-- electrons -->
+  <circle cx="47" cy="25" r="2.5" fill="currentColor"/>
+  <circle cx="20.8" cy="22.5" r="2.5" fill="currentColor"/>
+  <circle cx="32" cy="46.5" r="2.5" fill="currentColor"/>
+  <!-- nucleus -->
+  <circle cx="32" cy="32" r="4.5" fill="currentColor"/>
+</svg>
+
                             </div>
                             <h3>Physics Formulas</h3>
                             <p>From motion to thermodynamics, find all the critical physics formulas required for your studies and competitive exams.</p>
@@ -391,7 +482,7 @@
                         </div>
                         <div class="featured-tool-card">
                              <div class="icon">
-                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2.5-8.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm5 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 6c-1.93 0-3.5 1.57-3.5 3.5 0 .5.11.97.3 1.4.39.87 1.2 1.6 2.2 2.1.25.12.5.18.75.2.25-.02.5-.08.75-.2 1-.5 1.81-1.23 2.2-2.1.19-.43.3-.9.3-1.4C15.5 7.57 13.93 6 12 6z"/></svg>
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="300" height="300" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2.5-8.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm5 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM12 6c-1.93 0-3.5 1.57-3.5 3.5 0 .5.11.97.3 1.4.39.87 1.2 1.6 2.2 2.1.25.12.5.18.75.2.25-.02.5-.08.75-.2 1-.5 1.81-1.23 2.2-2.1.19-.43.3-.9.3-1.4C15.5 7.57 13.93 6 12 6z"/></svg>
                             </div>
                             <h3>Chemistry Formulas</h3>
                             <p>Access a comprehensive list of chemical formulas, equations, and constants for quick and easy reference.</p>
@@ -399,7 +490,7 @@
                         </div>
                         <div class="featured-tool-card">
                              <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM7 11h10v2H7v-2z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="300" height="300" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM7 11h10v2H7v-2z"/></svg>
                             </div>
                             <h3>Maths Formulas</h3>
                             <p>All the important mathematical formulas, from algebra and geometry to trigonometry and calculus, in one place.</p>
@@ -459,120 +550,49 @@
                         </div>
                     </div>
                 </section>
-
-                <section class="content-section">
-                    <h2 class="section-title">Latest Current Affairs</h2>
-                    <p class="section-subtitle">Stay informed with our daily updates on the most important national and international events. Knowledge of current affairs is crucial for exams and staying aware.</p>
-                    <div class="grid-3">
-                        <div class="current-affair-card">
-                            <div class="affair-meta">
-                                <span class="affair-category">National</span>
-                                <span class="affair-date">October 29, 2024</span>
-                            </div>
-                            <h3><a href="#">New Education Policy Phase 2 Implementation</a></h3>
-                            <a href="#" class="read-more-btn">Read More →</a>
+                
+                <section class="content-section stats-section">
+                    <h2 class="section-title">Behind the Numbers</h2>
+                    <p class="section-subtitle">Our commitment to quality education is reflected in our growth and the community we've built. We are proud of what we have achieved together.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="150">0+</div>
+                            <div class="stat-label">Detailed Articles</div>
                         </div>
-                        <div class="current-affair-card">
-                            <div class="affair-meta">
-                                <span class="affair-category">International</span>
-                                <span class="affair-date">October 28, 2024</span>
-                            </div>
-                            <h3><a href="#">Global Tech Summit Concludes with AI Accord</a></h3>
-                            <a href="#" class="read-more-btn">Read More →</a>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="25000">0+</div>
+                            <div class="stat-label">Happy Learners</div>
                         </div>
-                        <div class="current-affair-card">
-                            <div class="affair-meta">
-                                <span class="affair-category">Sports</span>
-                                <span class="affair-date">October 27, 2024</span>
-                            </div>
-                            <h3><a href="#">India Wins T20 Series in a Thrilling Final</a></h3>
-                            <a href="#" class="read-more-btn">Read More →</a>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="50">0+</div>
+                            <div class="stat-label">Interactive Quizzes</div>
                         </div>
                     </div>
                 </section>
 
-                <div class="categories-section sidebar-widget">
-                    <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
-                    <ul class="category-list"></ul>
-                </div>
-                <div class="post-filter-container">
-                    <input type="text" id="post-filter-input" placeholder="Filter articles by title, content, or author..." aria-label="Filter articles" />
-                </div>
-                <main id="post-grid" class="post-grid">
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-thumbnail"></div><div class="skeleton-content"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
-                </main>
-                <div id="load-more-container"> <button id="load-more-btn">Load More</button> </div>
-
                 <section class="content-section highlight-section">
-                    <h2 class="section-title">Subject Spotlights</h2>
-                    <p class="section-subtitle">Dive deeper into our core subjects. Find curated collections of our most important articles to kickstart your learning journey in each field.</p>
-                    <div class="grid-3">
-                        <div class="learning-path-card">
-                            <div class="learning-path-header">
-                                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M60.4 25.1c-2.3-2.3-5.2-3.8-8.4-4.5.1-.3.1-.6.1-1 0-5.2-4.2-9.4-9.4-9.4-4.6 0-8.5 3.3-9.3 7.6-.8-.1-1.6-.2-2.4-.2-6.5 0-11.8 5.3-11.8 11.8 0 .4.1.8.1 1.2-4.1.7-7.4 3.2-9.1 6.3-2.8 5.1-1.6 11.5 2.8 15.2l.2.2c.4.3.8.6 1.3.8 2.5 1.2 5.2 1.8 7.9 1.8h29.2c5.4 0 10.4-2.1 14.1-5.9C64.6 42.1 65.5 31.7 60.4 25.1zM58 48.4c-3.1 3.1-7.2 4.8-11.6 4.8H17.2c-2.4 0-4.8-.5-7-1.5-.4-.2-.8-.4-1.1-.6l-.2-.2c-3.7-3.1-4.7-8.4-2.4-12.8 1.4-2.6 4.1-4.6 7.3-5.2.5-.1.9-.5.9-1v-1.7c0-.4-.1-.8-.1-1.2 0-5.3 4.3-9.6 9.6-9.6.9 0 1.8.1 2.6.4.5.1.9 0 1.3-.3.3-.3.5-.7.5-1.1V14c0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c0 .5.1 1 .2 1.4.3 2.9 1.6 5.5 3.6 7.5.4.4.9.6 1.4.6h.4c2.8.6 5.3 2 7.2 4.1C62.5 38.6 62.5 44.2 58 48.4z"/><path d="M30.9 34.6c-4.9 0-8.8 3.9-8.8 8.8s3.9 8.8 8.8 8.8 8.8-3.9 8.8-8.8-3.9-8.8-8.8-8.8zm0 15.3c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5-2.9 6.5-6.5 6.5z"/></svg>
-                                <div class="header-content">
-                                    <h3>General Knowledge</h3>
-                                    <p>Explore history, geography, and current affairs.</p>
-                                </div>
-                            </div>
-                            <ul class="learning-path-steps">
-                                <li><div class="step-number">1</div> <a href="#">Indian History MCQ Quiz</a></li>
-                                <li><div class="step-number">2</div> <a href="#">World Geography Capitals</a></li>
-                                <li><div class="step-number">3</div> <a href="#">Latest Current Affairs</a></li>
-                            </ul>
+                    <h2 class="section-title">From Our Community</h2>
+                    <p class="section-subtitle">We are proud to have helped thousands of learners. Here's what some of them have to say about their experience with GK Learn Study.</p>
+                    <div class="grid-4">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"The history quizzes are fantastic for revision. The explanations are clear and have helped me score better in my SSC exams. Thank you for this wonderful free resource!"</p>
+                            <div class="testimonial-author">- Priya S., Competitive Exam Aspirant</div>
                         </div>
-                        <div class="learning-path-card">
-                            <div class="learning-path-header">
-                               <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M54.4 39.2V21.5c0-1-.8-1.8-1.8-1.8h-14c-.6 0-1.1.3-1.4.7L32 26.9l-5.2-6.5c-.3-.4-.8-.7-1.4-.7H11.4c-1 0-1.8.8-1.8 1.8v17.8c0 1 .8 1.8 1.8 1.8h11.2v10.2c0 .7.8 1.1 1.4.7l15.9-10.9c.7-.5.7-1.5 0-2l-1.6-1.1h14.3c1-.1 1.8-.9 1.8-1.9zM11.9 38.7V22h13.2l5.9 7.4-5.9 7.4H11.9zm30.3-1.8H26.3l3.2-2.2c.7-.5.7-1.5 0-2l-3.2-2.2h15.9v6.4zm-1-16.3h11.7v16.3H41.1l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8v-2.3h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8h-1.8V22h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2L41.1 22h-1.8v-1.5h1.8l-2.6-1.8c-.7-.5-.7-1.5 0-2l2.6-1.8H40v-2.2h1.2z"/></svg>
-                               <div class="header-content">
-                                    <h3>Computer Science</h3>
-                                    <p>Guides on software, hardware, and core concepts.</p>
-                               </div>
-                            </div>
-                            <ul class="learning-path-steps">
-                                <li><div class="step-number">1</div> <a href="#">Guide to MS Excel Functions</a></li>
-                                <li><div class="step-number">2</div> <a href="#">What is an Operating System?</a></li>
-                                <li><div class="step-number">3</div> <a href="#">Computer Basics Quiz</a></li>
-                           </ul>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"As a non-technical person, the computer 'how-to' articles are a lifesaver. I finally understood how to use VLOOKUP in Excel thanks to your simple, step-by-step guide."</p>
+                            <div class="testimonial-author">- Rohan M., Small Business Owner</div>
                         </div>
-                        <div class="learning-path-card">
-                            <div class="learning-path-header">
-                                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M49.3 16.5c-1.3-1.3-2.8-2.3-4.5-3.1-1.3-.6-2.6-1.1-4-1.5-.7-.2-1.4-.3-2.1-.5s-1.4-.2-2.2-.2c-1.2 0-2.4.2-3.6.5-1.1.3-2.2.7-3.3 1.2s-2.1 1.1-3.1 1.9-1.9 1.7-2.8 2.8c-1.2 1.5-2.2 3.2-2.9 5-.5 1.2-.8 2.4-1.1 3.7s-.4 2.6-.4 3.9.1 2.6.4 3.9.6 2.5 1.1 3.7c.7 1.8 1.7 3.5 2.9 5 .9.9 1.8 1.7 2.8 2.4s2 1.3 3.1 1.9 2.2.9 3.3 1.2c1.2.3 2.4.5 3.6.5s2.4-.2 3.6-.5c1.1-.3 2.2-.7 3.3-1.2s2.1-1.1 3.1-1.9 1.9-1.7 2.8-2.8c1.2-1.5 2.2-3.2 2.9-5 .5-1.2.8-2.4 1.1-3.7.2-1.3.4-2.6.4-3.9s-.1-2.6-.4-3.9-.6-2.5-1.1-3.7c-.8-1.9-1.8-3.6-3-5.1zm-1.6 28.3c-.9.9-1.9 1.6-3 2.3s-2.2.9-3.4 1.2-2.4.5-3.7.5-2.5-.2-3.7-.5-2.3-.7-3.4-1.2-2.1-1.1-3-2.3-1.6-1.9-2.3-3c-.7-1.2-1.3-2.5-1.7-3.8s-.6-2.7-.6-4.1.2-2.8.6-4.1 1-2.7 1.7-3.8c.7-1.2 1.4-2.1 2.3-3s1.9-1.6 3-2.3 2.2-.9 3.4-1.2c1.2-.3 2.4-.5 3.7-.5s2.5.2 3.7.5c1.2.3 2.3.7 3.4 1.2s2.1 1.1 3 2.3 1.6 1.9 2.3 3c.7 1.2 1.3 2.5 1.7 3.8.4 1.3.6 2.7.6 4.1s-.2 2.8-.6 4.1-1 2.7-1.7 3.8c-.6 1.1-1.4 2.1-2.2 3z"/><path d="M32 23.3c-4.8 0-8.7 3.9-8.7 8.7s3.9 8.7 8.7 8.7 8.7-3.9 8.7-8.7-3.9-8.7-8.7-8.7zm0 15c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z"/></svg>
-                                <div class="header-content">
-                                    <h3>Science & Formulas</h3>
-                                    <p>Essential formulas and concepts for Physics & Chemistry.</p>
-                                </div>
-                            </div>
-                           <ul class="learning-path-steps">
-                                <li><div class="step-number">1</div> <a href="#">All Physics Formulas PDF</a></li>
-                                <li><div class="step-number">2</div> <a href="#">Complete Chemistry Formula List</a></li>
-                                <li><div class="step-number">3</div> <a href="#">How does Photosynthesis work?</a></li>
-                            </ul>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"I love that all the content is free and so well-organized. It's my go-to website for quick facts and learning something new every day. Highly recommended!"</p>
+                            <div class="testimonial-author">- Anjali K., College Student</div>
+                        </div>
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">"The collection of physics and maths formulas is the best I've found online. It's saved me hours of searching. A must-visit site for any science student."</p>
+                            <div class="testimonial-author">- Sameer P., Engineering Student</div>
                         </div>
                     </div>
                 </section>
                 
-                <section class="content-section">
-                    <h2 class="section-title">Our Content Philosophy</h2>
-                    <div class="philosophy-content">
-                        <h3>Our Mission: Democratizing Knowledge</h3>
-                        <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging.</p>
-                        <h3>The Three Pillars of Our Content: Accuracy, Clarity, and Practicality</h3>
-                        <ul>
-                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts. We cross-reference data and verify every claim to ensure you receive the most reliable information for your studies and curiosity.</li>
-                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand, using real-world examples and clear formatting. Our goal is to make learning an intuitive and enjoyable experience, not a chore.</li>
-                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program, a formula sheet for an exam, or a quiz to test your skills, we focus on content that provides real-world value and helps you achieve your goals more efficiently.</li>
-                        </ul>
-                         <h3>Our Commitment to the Community</h3>
-                        <p>GK Learn Study is more than just a website; it's a community of learners. We are deeply committed to listening to our audience. Your feedback, questions, and suggestions are invaluable to us and directly influence the topics we cover and the improvements we make. We actively encourage you to engage with our content, ask questions in the comments, and be a part of our growing family.</p>
-                    </div>
-                </section>
-
                 <section class="content-section">
                     <h2 class="section-title">Meet the Founder</h2>
                     <div class="founder-section">
@@ -607,26 +627,19 @@
                     </div>
                 </section>
 
-                <section class="content-section highlight-section">
-                    <h2 class="section-title">From Our Community</h2>
-                    <p class="section-subtitle">We are proud to have helped thousands of learners. Here's what some of them have to say about their experience with GK Learn Study.</p>
-                    <div class="grid-4">
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"The history quizzes are fantastic for revision. The explanations are clear and have helped me score better in my SSC exams. Thank you for this wonderful free resource!"</p>
-                            <div class="testimonial-author">- Priya S., Competitive Exam Aspirant</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"As a non-technical person, the computer 'how-to' articles are a lifesaver. I finally understood how to use VLOOKUP in Excel thanks to your simple, step-by-step guide."</p>
-                            <div class="testimonial-author">- Rohan M., Small Business Owner</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"I love that all the content is free and so well-organized. It's my go-to website for quick facts and learning something new every day. Highly recommended!"</p>
-                            <div class="testimonial-author">- Anjali K., College Student</div>
-                        </div>
-                        <div class="testimonial-card">
-                            <p class="testimonial-text">"The collection of physics and maths formulas is the best I've found online. It's saved me hours of searching. A must-visit site for any science student."</p>
-                            <div class="testimonial-author">- Sameer P., Engineering Student</div>
-                        </div>
+                <section class="content-section">
+                    <h2 class="section-title">Our Content Philosophy</h2>
+                    <div class="philosophy-content">
+                        <h3>Our Mission: Democratizing Knowledge</h3>
+                        <p>At GK Learn Study, our mission is to democratize education by providing high-quality, easily understandable, and practical knowledge to every corner of India and beyond. We believe that curiosity is the engine of intellectual growth, and our goal is to fuel that curiosity with content that is both informative and engaging.</p>
+                        <h3>The Three Pillars of Our Content: Accuracy, Clarity, and Practicality</h3>
+                        <ul>
+                            <li><strong>Accuracy:</strong> Our top priority is to provide information you can trust. Each topic is thoroughly researched from multiple authoritative sources. Before any article is published, it undergoes a rigorous fact-checking process by our team of subject matter experts. We cross-reference data and verify every claim to ensure you receive the most reliable information for your studies and curiosity.</li>
+                            <li><strong>Clarity:</strong> We believe that complex topics don't need complicated explanations. Our writers specialize in breaking down difficult subjects into simple, step-by-step language that anyone can understand, using real-world examples and clear formatting. Our goal is to make learning an intuitive and enjoyable experience, not a chore.</li>
+                            <li><strong>Practicality:</strong> Knowledge is most powerful when it can be applied. Whether it's a 'how-to' guide for a software program, a formula sheet for an exam, or a quiz to test your skills, we focus on content that provides real-world value and helps you achieve your goals more efficiently.</li>
+                        </ul>
+                         <h3>Our Commitment to the Community</h3>
+                        <p>GK Learn Study is more than just a website; it's a community of learners. We are deeply committed to listening to our audience. Your feedback, questions, and suggestions are invaluable to us and directly influence the topics we cover and the improvements we make. We actively encourage you to engage with our content, ask questions in the comments, and be a part of our growing family.</p>
                     </div>
                 </section>
 
@@ -637,22 +650,22 @@
                         <div class="latest-article-item">
                             <span class="category-tag">Computer</span>
                             <h3 class="article-title"><a href="#">What is RAM and How Does It Work?</a></h3>
-                            <div class="article-date">October 28, 2024</div>
+                            <div class="article-date">October 25, 2025</div>
                         </div>
                         <div class="latest-article-item">
                             <span class="category-tag">GK Quiz</span>
                             <h3 class="article-title"><a href="#">Quiz: Major Rivers of India</a></h3>
-                            <div class="article-date">October 26, 2024</div>
+                            <div class="article-date">October 24, 2025</div>
                         </div>
                         <div class="latest-article-item">
                             <span class="category-tag">How To</span>
                             <h3 class="article-title"><a href="#">How to Calculate Percentage Easily</a></h3>
-                            <div class="article-date">October 25, 2024</div>
+                            <div class="article-date">October 23, 2025</div>
                         </div>
                          <div class="latest-article-item">
                             <span class="category-tag">Science</span>
                             <h3 class="article-title"><a href="#">Understanding Newton's Laws of Motion</a></h3>
-                            <div class="article-date">October 22, 2024</div>
+                            <div class="article-date">October 22, 2025</div>
                         </div>
                     </div>
                 </section>
