@@ -653,6 +653,24 @@
                     <a href="#" class="edu-card-btn">Make a Suggestion</a>
                 </div>
             </div>
+            
+            <!-- New Section 13: Disclaimer -->
+            <div class="section-divider">
+                <h2>Important Disclaimer & User Feedback</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card grid-col-span-2 card-highlight">
+                    <div class="edu-card-icon">⚠️</div>
+                    <h3>Please Verify Information</h3>
+                    <p>
+                        The content provided on this platform is for educational and informational purposes only. While we strive for accuracy, we cannot guarantee that all information is complete, correct, or up-to-date. We strongly recommend that you cross-reference the material with your official textbooks and other reliable sources. We are not responsible for any inaccuracies or discrepancies.
+                    </p>
+                    <p style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                        If you find any information that you believe is incorrect, or if you have concerns about copyright, please do not hesitate to contact us. Your feedback and suggestions are invaluable to us. You can reach out via our contact page or leave a comment.
+                    </p>
+                    <a href="/contact.html" class="edu-card-btn">Contact Us or Suggest an Edit</a>
+                </div>
+            </div>
 
         </main>
         
@@ -729,7 +747,6 @@
                         
                         const categoryCardGrid = document.createElement('div');
                         categoryCardGrid.className = 'category-card-grid';
-
                         
                         const chunkSize = 4;
                         const totalChunks = Math.ceil(posts.length / chunkSize);
@@ -743,7 +760,7 @@
                             cardHeader.className = 'learning-path-header';
                             
                             const cardTitle = totalChunks > 1 
-                                ? `${category} - Section ${i / chunkSize + 1}` 
+                                ? `${category} - Section ${Math.floor(i / chunkSize) + 1}`
                                 : category;
                             
                             cardHeader.innerHTML = `<h3>${cardTitle}</h3>`;
@@ -751,12 +768,11 @@
                             const stepsList = document.createElement('ul');
                             stepsList.className = 'learning-path-steps';
                             
-                            let categoryPostCounter = 1;
-                            chunk.forEach(post => {
+                            chunk.forEach((post, chunkIndex) => {
+                                const postNumber = i + chunkIndex + 1; // Correct sequential numbering
                                 const stepItem = document.createElement('li');
-                                stepItem.innerHTML = `<div class="step-number">${categoryPostCounter}</div><a href="${post.url}">${post.title}</a>`;
+                                stepItem.innerHTML = `<div class="step-number">${postNumber}</div><a href="${post.url}">${post.title}</a>`;
                                 stepsList.appendChild(stepItem);
-                                categoryPostCounter++;
                             });
 
                             card.appendChild(cardHeader);
