@@ -222,36 +222,37 @@
                         return;
                     }
 
-                    // 1. Group posts by category and find the latest date in each
-                    const categoryData = allPosts.reduce((acc, post) => {
+                    // 1. Group posts by category
+                    const postsByCategory = allPosts.reduce((acc, post) => {
                         const category = post.category;
                         if (category) {
                             if (!acc[category]) {
-                                acc[category] = { posts: [], latestDate: new Date(0) };
+                                acc[category] = [];
                             }
-                            acc[category].posts.push(post);
-                            const postDate = new Date(post.date);
-                            if (postDate > acc[category].latestDate) {
-                                acc[category].latestDate = postDate;
-                            }
+                            acc[category].push(post);
                         }
                         return acc;
                     }, {});
 
-                    // 2. Sort categories by the latest post date (descending)
-                    const sortedCategories = Object.keys(categoryData).sort((a, b) => {
-                        return categoryData[b].latestDate - categoryData[a].latestDate;
-                    });
+                    // 2. Determine the order of categories based on their first appearance in the JSON
+                    const orderedCategories = [];
+                    const seenCategories = new Set();
+                    for (const post of allPosts) {
+                        if (post.category && !seenCategories.has(post.category)) {
+                            seenCategories.add(post.category);
+                            orderedCategories.push(post.category);
+                        }
+                    }
 
                     contentGrid.innerHTML = '';
                     const pageFragment = document.createDocumentFragment();
-                    let globalPostCounter = 1;
 
-                    // 3. Iterate through sorted categories and build cards
-                    for (const category of sortedCategories) {
-                        const { posts } = categoryData[category];
-                        if (posts.length === 0) continue;
+                    // 3. Iterate through the ordered categories and build cards
+                    for (const category of orderedCategories) {
+                        const posts = postsByCategory[category];
+                        if (!posts || posts.length === 0) continue;
 
+                        let categoryPostCounter = 1; // Reset counter for each new category
                         const chunkSize = 4;
                         const totalChunks = Math.ceil(posts.length / chunkSize);
 
@@ -263,8 +264,9 @@
                             // Create Card Header
                             const cardHeader = document.createElement('div');
                             cardHeader.className = 'learning-path-header';
-                            // Add chunk number if there's more than one card for the category
-                            const cardTitle = totalChunks > 1 ? `${category} ${i / chunkSize + 1}` : category;
+                            
+                            // Add "Section" to title if there's more than one card for the category
+                            const cardTitle = totalChunks > 1 ? `${category} - Section ${i / chunkSize + 1}` : category;
                             cardHeader.innerHTML = `<h3>${cardTitle}</h3>`;
                             
                             // Create Card Body (List)
@@ -273,9 +275,9 @@
 
                             chunk.forEach(post => {
                                 const stepItem = document.createElement('li');
-                                stepItem.innerHTML = `<div class="step-number">${globalPostCounter}</div><a href="${post.url}">${post.title}</a>`;
+                                stepItem.innerHTML = `<div class="step-number">${categoryPostCounter}</div><a href="${post.url}">${post.title}</a>`;
                                 stepsList.appendChild(stepItem);
-                                globalPostCounter++;
+                                categoryPostCounter++; // Use the category-specific counter
                             });
 
                             card.appendChild(cardHeader);
