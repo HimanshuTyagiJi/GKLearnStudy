@@ -10,47 +10,25 @@
         <link rel="icon" href="favicon.ico" sizes="any" />
         <link rel="stylesheet" href="css/theme.css" />
         <style>
-            :root { --accent-color-rgb: 0, 95, 97; }
-            html[data-theme=dark] { --accent-color-rgb: 255, 153, 219; }
+            body::before {
+                content: '';
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0%25' stop-color='%231E9600'/%3E%3Cstop offset='100%25' stop-color='%23FFF200'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='translate(400, 580)'%3E%3Cpath d='M0,0 Q-30,-20 -20,-50 T0,-100 T20,-50 Q30,-20 0,0' fill='%23654321' fill-opacity='0.8'%3E%3CanimateTransform attributeName='transform' type='scale' from='1' to='1.1' begin='0s' dur='15s' repeatCount='indefinite' additive='sum'/%3E%3C/path%3E%3Cpath id='stem' d='M0,0 V-250' stroke='url(%23grad)' stroke-width='8' stroke-linecap='round'%3E%3Canimate attributeName='stroke-dasharray' from='0,300' to='300,0' dur='5s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.42 0 0.58 1'/%3E%3C/path%3E%3Cg transform='translate(0,-250)' opacity='0'%3E%3Canimate attributeName='opacity' from='0' to='1' begin='4.5s' dur='1s' fill='freeze'/%3E%3Ccircle cx='0' cy='0' r='20' fill='%232E7D32'%3E%3Canimate attributeName='r' from='0' to='20' begin='4.5s' dur='1s' fill='freeze'/%3E%3C/circle%3E%3Cg class='petal'%3E%3Cpath d='M0,0 C-40,-40 -40,-80 0,-100 C40,-80 40,-40 0,0' fill='%23FFC107'%3E%3CanimateTransform attributeName='transform' type='scale' from='0' to='1' begin='5.5s' dur='2s' fill='freeze' keyTimes='0;1' keySplines='0.16 1 0.3 1'/%3E%3C/path%3E%3C/g%3E%3Cuse href='%23petal' transform='rotate(72)'/%3E%3Cuse href='%23petal' transform='rotate(144)'/%3E%3Cuse href='%23petal' transform='rotate(216)'/%3E%3Cuse href='%23petal' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='25' fill='%23E65100'%3E%3Canimate attributeName='r' from='0' to='25' begin='5.8s' dur='1.5s' fill='freeze'/%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: bottom 10px right 10px;
+                background-size: 250px;
+                z-index: -1;
+                opacity: 0.1;
+                pointer-events: none;
+            }
+            html[data-theme="dark"] body::before {
+                opacity: 0.2;
+            }
 
-            .logo-container { border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; gap: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); animation: fadeIn 1s ease-in-out; margin-bottom: 3rem; background-color: var(--card-bg); }
-            .logo { flex: 1; display: flex; justify-content: center; align-items: center; }
-            .text { flex: 2; display: flex; flex-direction: column; justify-content: center; animation: slideIn 1.2s ease-in-out; }
-            .text h1 { text-align: left; font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
-            .text p { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; }
-            @media (max-width: 768px) { .logo-container { flex-direction: column; } .text h1 { font-size: 1.6rem; } .text p { font-size: 0.95rem; } }
-            @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-            @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-            .content-section { padding: 4rem 0; border-bottom: 1px solid var(--border-color); }
-            .content-section:last-of-type { border-bottom: none; }
-            .section-title { text-align: center; font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; position: relative; }
-            .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
-            .section-title::after { content: ''; display: block; width: 80px; height: 4px; background-color: var(--accent-color); margin: 0.75rem auto 0; border-radius: 2px; }
-            .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
-            .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-            .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-            .grid-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-            .info-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid var(--border-color); }
-            .info-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
-            .info-card .icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; line-height: 1; }
-            .info-card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
-            .info-card p { color: var(--text-secondary); line-height: 1.6; }
-            .learning-path-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-            .learning-path-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
-            .learning-path-header { padding: 1.25rem 1.5rem; background: linear-gradient(135deg, var(--accent-color), #008c90); color: white; display: flex; align-items: center; gap: 1rem; }
-            .learning-path-header .header-content { flex-grow: 1; }
-            .learning-path-header h3 { margin: 0; font-size: 1.4rem; }
-            .learning-path-steps { list-style: none; padding: 1.5rem; margin: 0; flex-grow: 1; }
-            .learning-path-steps li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 1rem; }
-            .learning-path-steps li:last-child { margin-bottom: 0; }
-            .learning-path-steps li .step-number { background-color: var(--accent-color); color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; font-weight: 600; flex-shrink: 0; }
-            .learning-path-steps li a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; line-height: 28px; }
-            .learning-path-steps li a:hover { color: var(--accent-color); }
-            .philosophy-content { max-width: 800px; margin: 0 auto; text-align: left; }
-            .philosophy-content h3 { font-size: 1.5rem; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; }
-            .philosophy-content p, .philosophy-content li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-            .highlight-section { background-color: var(--input-bg); padding: 3rem 1.5rem; margin: 2rem -1.5rem; border-radius: var(--border-radius); }
-            
             .education-hero {
                 text-align: center;
                 padding: 3rem 1rem;
@@ -65,7 +43,6 @@
                 font-weight: 700;
                 color: var(--text-primary);
                 margin: 0 0 0.5rem 0;
-                font-family: 'Lora', serif;
             }
 
             .education-hero p {
@@ -74,19 +51,89 @@
                 max-width: 700px;
                 margin: 0 auto;
             }
+
             #education-content-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 3rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+                gap: 2rem;
+                padding: 2rem 0;
             }
 
-            .dynamic-category-section {
-                padding: 2rem 0;
-                border-bottom: 1px solid var(--border-color);
+            .learning-path-card { 
+                background-color: var(--card-bg); 
+                border-radius: 12px; 
+                box-shadow: 0 4px 12px var(--shadow-color); 
+                overflow: hidden; 
+                border: 1px solid var(--border-color); 
+                display: flex; 
+                flex-direction: column; 
+                transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             }
-            .dynamic-category-section:last-of-type {
-                border-bottom: none;
+            .learning-path-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 10px 25px var(--shadow-color);
             }
+
+            .learning-path-header { 
+                padding: 1rem 1.5rem; 
+                background: linear-gradient(135deg, #008080, #005f61); 
+                color: white; 
+            }
+            html[data-theme="dark"] .learning-path-header {
+                 background: linear-gradient(135deg, #26a69a, #00796b); 
+            }
+
+            .learning-path-header h3 { 
+                margin: 0; 
+                font-size: 1.3rem; 
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .learning-path-steps { 
+                list-style: none; 
+                padding: 1.5rem; 
+                margin: 0; 
+                flex-grow: 1; 
+            }
+            .learning-path-steps li { 
+                margin-bottom: 1.25rem; 
+                display: flex; 
+                align-items: flex-start; 
+                gap: 1rem; 
+            }
+            .learning-path-steps li:last-child {
+                margin-bottom: 0;
+            }
+
+            .learning-path-steps li .step-number { 
+                background-color: #008080; 
+                color: white; 
+                border-radius: 50%; 
+                width: 28px; 
+                height: 28px; 
+                display: inline-flex; 
+                justify-content: center; 
+                align-items: center; 
+                font-weight: 600; 
+                flex-shrink: 0;
+                font-size: 0.9rem;
+            }
+             html[data-theme="dark"] .learning-path-steps li .step-number {
+                background-color: #26a69a;
+             }
+
+            .learning-path-steps li a { 
+                text-decoration: none; 
+                color: var(--text-primary); 
+                font-weight: 500; 
+                transition: color 0.2s ease; 
+                line-height: 28px;
+                flex-grow: 1;
+            }
+            .learning-path-steps li a:hover { color: var(--accent-color); }
 
             .spinner-container {
                 display: flex;
@@ -96,6 +143,7 @@
                 padding: 4rem 0;
                 min-height: 200px;
                 color: var(--text-secondary);
+                grid-column: 1 / -1;
             }
 
             .spinner {
@@ -107,20 +155,14 @@
                 margin-bottom: 1rem;
                 animation: spin 1s ease infinite;
             }
+            @keyframes spin { to { transform: rotate(360deg); } }
+
             .no-posts-found {
                 text-align: center;
                 color: var(--text-secondary);
                 font-size: 1.1rem;
                 padding: 2rem;
-            }
-
-            @media (max-width: 768px) {
-                .highlight-section {
-                    margin-left: -1rem;
-                    margin-right: -1rem;
-                    padding-left: 1rem;
-                    padding-right: 1rem;
-                }
+                grid-column: 1 / -1;
             }
         </style>
     </head>
@@ -149,33 +191,6 @@
                 <p>Welcome to your centralized portal for structured learning. Dive into our comprehensive library of articles, guides, and resources, dynamically organized by subject to help you master new concepts and excel in your studies.</p>
             </div>
             
-            <section class="content-section page-intro">
-                <h2 class="section-title">A Universe of Knowledge at Your Fingertips</h2>
-                <p class="section-subtitle">At GK Learn Study, we believe that learning should be organized, accessible, and comprehensive. This Education Hub is the heart of our platform, designed to eliminate confusion and provide clear, structured paths for every subject we cover. Instead of searching aimlessly, you can now explore complete collections of our content, grouped automatically by category. Whether you're preparing for a competitive exam, working on a school project, or simply feeding your curiosity, this is your starting point for a deeper understanding of every topic.</p>
-            </section>
-
-            <section class="content-section highlight-section">
-                <h2 class="section-title">How to Use This Hub</h2>
-                 <p class="section-subtitle">Getting the most out of this page is easy. Here’s a quick guide to navigating our vast library of content.</p>
-                <div class="grid-3">
-                    <div class="info-card">
-                        <div class="icon">🔍</div>
-                        <h3>1. Find Your Subject</h3>
-                        <p>Scroll down to find dedicated sections for every category available on our site, from Hindi Grammar to Computer Science. Each section is clearly titled.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="icon">📚</div>
-                        <h3>2. Explore Learning Paths</h3>
-                        <p>Within each section, articles are organized into convenient 'Learning Path' cards. Each card groups related topics, helping you learn in a logical sequence.</p>
-                    </div>
-                    <div class="info-card">
-                        <div class="icon">🔗</div>
-                        <h3>3. Click and Learn</h3>
-                        <p>Simply click on any article link to dive straight into the detailed guide. This page is always up-to-date with our latest content, so check back often!</p>
-                    </div>
-                </div>
-            </section>
-            
             <!-- Dynamic Content Area -->
             <div id="education-content-grid">
                 <div class="spinner-container">
@@ -183,32 +198,6 @@
                     <p>Loading All Subjects...</p>
                 </div>
             </div>
-
-            <section class="content-section">
-                 <h2 class="section-title">Our Learning Philosophy</h2>
-                <div class="philosophy-content">
-                    <h3>Clarity, Structure, and Accessibility</h3>
-                    <p>Our core philosophy is that knowledge should be accessible to everyone, regardless of their background. We are committed to breaking down complex subjects into simple, easy-to-understand modules. We believe that a structured approach to learning is the most effective. That's why this hub automatically organizes content for you, creating a virtual syllabus for your self-study journey. We prioritize accuracy and clarity, ensuring every article is not just informative, but also engaging and practical.</p>
-                    <h3>Constant Growth and Improvement</h3>
-                    <p>The world of knowledge is ever-expanding, and so is GK Learn Study. This dynamic hub reflects our commitment to continuous growth. As we publish new articles and explore new subjects, they will automatically appear here, ensuring you always have access to the latest and most comprehensive resources. Our goal is to build a living library that grows with our community of learners.</p>
-                </div>
-            </section>
-
-             <section class="faq-section content-section">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <details>
-                    <summary>How often is this page updated?</summary>
-                    <div class="faq-answer"><p>This page is updated automatically and instantly. The moment a new article is added to our system with a new or existing category, it appears here in the relevant section. You are always seeing the most current collection of our content.</p></div>
-                </details>
-                <details>
-                    <summary>What if I can't find a specific topic?</summary>
-                    <div class="faq-answer"><p>If a topic you're looking for doesn't appear here, it means we haven't covered it yet. We are constantly expanding our content library. You can use the search bar in the header to find related articles or contact us with suggestions for new topics you'd like to see!</p></div>
-                </details>
-                <details>
-                    <summary>Can I suggest a new category?</summary>
-                    <div class="faq-answer"><p>Absolutely! We love feedback from our community. If there's a subject or category you think would be a great addition to our Education Hub, please let us know via our Contact Us page. Your suggestions help us grow and better serve your learning needs.</p></div>
-                </details>
-            </section>
         </main>
         
         <footer class="app-footer">
@@ -218,103 +207,93 @@
 
         <script src="js/theme.js" defer></script>
         <script src="js/search-data.js" defer></script>
-        <script>document.addEventListener("DOMContentLoaded", () => {
-    
-    const initializeEducationPage = async () => {
-        const contentGrid = document.getElementById('education-content-grid');
-        if (!contentGrid) return;
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const initializeEducationPage = async () => {
+                const contentGrid = document.getElementById('education-content-grid');
+                if (!contentGrid) return;
 
-        try {
-            // Wait for the global search data to be fetched and ready.
-            await window.GKApp.dataReady;
-            const allPosts = window.GKApp.searchData;
+                try {
+                    await window.GKApp.dataReady;
+                    const allPosts = window.GKApp.searchData;
 
-            if (!allPosts || allPosts.length === 0) {
-                contentGrid.innerHTML = '<p class="no-posts-found">No educational content is available at the moment. Please check back later.</p>';
-                return;
-            }
-
-            // Group posts by their category
-            const postsByCategory = allPosts.reduce((acc, post) => {
-                const category = post.category;
-                if (category) {
-                    if (!acc[category]) {
-                        acc[category] = [];
+                    if (!allPosts || allPosts.length === 0) {
+                        contentGrid.innerHTML = '<p class="no-posts-found">No educational content is available at the moment. Please check back later.</p>';
+                        return;
                     }
-                    acc[category].push(post);
-                }
-                return acc;
-            }, {});
 
-            // Clear the loading spinner
-            contentGrid.innerHTML = '';
-            const pageFragment = document.createDocumentFragment();
-            
-            // Get sorted category keys to maintain a consistent order
-            const sortedCategories = Object.keys(postsByCategory).sort();
+                    // 1. Group posts by category and find the latest date in each
+                    const categoryData = allPosts.reduce((acc, post) => {
+                        const category = post.category;
+                        if (category) {
+                            if (!acc[category]) {
+                                acc[category] = { posts: [], latestDate: new Date(0) };
+                            }
+                            acc[category].posts.push(post);
+                            const postDate = new Date(post.date);
+                            if (postDate > acc[category].latestDate) {
+                                acc[category].latestDate = postDate;
+                            }
+                        }
+                        return acc;
+                    }, {});
 
-            for (const category of sortedCategories) {
-                const posts = postsByCategory[category];
-                if (posts.length === 0) continue;
-
-                const categorySection = document.createElement('section');
-                categorySection.className = 'dynamic-category-section';
-
-                const sectionTitle = document.createElement('h2');
-                sectionTitle.className = 'section-title';
-                sectionTitle.textContent = category;
-                
-                const sectionSubtitle = document.createElement('p');
-                sectionSubtitle.className = 'section-subtitle';
-                sectionSubtitle.textContent = `Explore all our articles and guides related to ${category}.`;
-
-                const gridContainer = document.createElement('div');
-                gridContainer.className = 'grid-3';
-
-                // Chunk posts into groups of 4 for each 'learning-path-card'
-                const chunkSize = 4;
-                for (let i = 0; i < posts.length; i += chunkSize) {
-                    const chunk = posts.slice(i, i + chunkSize);
-                    
-                    const card = document.createElement('div');
-                    card.className = 'learning-path-card';
-                    
-                    const cardHeader = document.createElement('div');
-                    cardHeader.className = 'learning-path-header';
-                    // Use the first post's title for the card or a generic title
-                    const cardTitle = chunk[0]?.title.split(' ').slice(0, 3).join(' ') || category;
-                    cardHeader.innerHTML = `<div class="header-content"><h3>${cardTitle}...</h3></div>`;
-                    
-                    const stepsList = document.createElement('ul');
-                    stepsList.className = 'learning-path-steps';
-
-                    chunk.forEach((post, index) => {
-                        const stepItem = document.createElement('li');
-                        stepItem.innerHTML = `<div class="step-number">${i + index + 1}</div><a href="${post.url}">${post.title}</a>`;
-                        stepsList.appendChild(stepItem);
+                    // 2. Sort categories by the latest post date (descending)
+                    const sortedCategories = Object.keys(categoryData).sort((a, b) => {
+                        return categoryData[b].latestDate - categoryData[a].latestDate;
                     });
 
-                    card.appendChild(cardHeader);
-                    card.appendChild(stepsList);
-                    gridContainer.appendChild(card);
+                    contentGrid.innerHTML = '';
+                    const pageFragment = document.createDocumentFragment();
+                    let globalPostCounter = 1;
+
+                    // 3. Iterate through sorted categories and build cards
+                    for (const category of sortedCategories) {
+                        const { posts } = categoryData[category];
+                        if (posts.length === 0) continue;
+
+                        const chunkSize = 4;
+                        const totalChunks = Math.ceil(posts.length / chunkSize);
+
+                        for (let i = 0; i < posts.length; i += chunkSize) {
+                            const chunk = posts.slice(i, i + chunkSize);
+                            const card = document.createElement('div');
+                            card.className = 'learning-path-card';
+                            
+                            // Create Card Header
+                            const cardHeader = document.createElement('div');
+                            cardHeader.className = 'learning-path-header';
+                            // Add chunk number if there's more than one card for the category
+                            const cardTitle = totalChunks > 1 ? `${category} ${i / chunkSize + 1}` : category;
+                            cardHeader.innerHTML = `<h3>${cardTitle}</h3>`;
+                            
+                            // Create Card Body (List)
+                            const stepsList = document.createElement('ul');
+                            stepsList.className = 'learning-path-steps';
+
+                            chunk.forEach(post => {
+                                const stepItem = document.createElement('li');
+                                stepItem.innerHTML = `<div class="step-number">${globalPostCounter}</div><a href="${post.url}">${post.title}</a>`;
+                                stepsList.appendChild(stepItem);
+                                globalPostCounter++;
+                            });
+
+                            card.appendChild(cardHeader);
+                            card.appendChild(stepsList);
+                            pageFragment.appendChild(card);
+                        }
+                    }
+                    
+                    contentGrid.appendChild(pageFragment);
+
+                } catch (error) {
+                    console.error("Failed to initialize dynamic education page:", error);
+                    contentGrid.innerHTML = '<p class="no-posts-found" style="color: var(--danger-color);">Could not load educational content due to an error. Please try refreshing the page.</p>';
                 }
-                
-                categorySection.appendChild(sectionTitle);
-                categorySection.appendChild(sectionSubtitle);
-                categorySection.appendChild(gridContainer);
-                pageFragment.appendChild(categorySection);
-            }
-            
-            contentGrid.appendChild(pageFragment);
+            };
 
-        } catch (error) {
-            console.error("Failed to initialize dynamic education page:", error);
-            contentGrid.innerHTML = '<p class="no-posts-found" style="color: var(--danger-color);">Could not load educational content due to an error. Please try refreshing the page.</p>';
-        }
-    };
-
-    initializeEducationPage();
-});
-</script>
+            initializeEducationPage();
+        });
+        </script>
     </body>
 </html>
