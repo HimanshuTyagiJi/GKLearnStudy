@@ -64,10 +64,19 @@
                 font-size: clamp(1.8rem, 4vw, 2.2rem);
                 font-weight: 700;
                 color: var(--accent-color);
-                margin-bottom: 2rem;
+                margin-bottom: 1.5rem;
                 padding-bottom: 0.75rem;
                 border-bottom: 2px solid var(--accent-color);
                 display: inline-block;
+            }
+            
+            .category-description {
+                font-size: 1rem;
+                color: var(--text-secondary);
+                max-width: 800px;
+                margin: -1rem auto 2.5rem 0;
+                text-align: left;
+                line-height: 1.7;
             }
 
             .category-card-grid {
@@ -180,6 +189,94 @@
                 font-size: 1.1rem;
                 padding: 2rem;
             }
+            
+            .additional-sections-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 1.5rem;
+            }
+            .edu-card {
+                background-color: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: 1.5rem;
+                box-shadow: var(--card-shadow);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+            }
+            .edu-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px var(--shadow-color);
+            }
+            .edu-card.card-highlight {
+                background: linear-gradient(145deg, var(--card-bg), color-mix(in srgb, var(--accent-color) 5%, var(--card-bg)));
+                border-color: var(--accent-color);
+            }
+            .edu-card-icon {
+                font-size: 2.5rem;
+                line-height: 1;
+                margin-bottom: 1rem;
+                color: var(--accent-color);
+            }
+            .edu-card h3 {
+                margin: 0 0 0.5rem 0;
+                font-size: 1.3rem;
+                color: var(--text-primary);
+            }
+            .edu-card p {
+                color: var(--text-secondary);
+                font-size: 0.95rem;
+                line-height: 1.6;
+                flex-grow: 1;
+                margin-bottom: 1.5rem;
+            }
+            .edu-card-btn {
+                display: inline-block;
+                background-color: var(--accent-color);
+                color: var(--white);
+                padding: 0.7rem 1.5rem;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 500;
+                margin-top: auto;
+                transition: background-color 0.2s ease;
+            }
+            .edu-card-btn:hover {
+                background-color: var(--green);
+            }
+
+            .grid-col-span-2 {
+                grid-column: span 1;
+            }
+            @media (min-width: 768px) {
+                .grid-col-span-2 {
+                    grid-column: span 2;
+                }
+            }
+
+            .section-divider {
+                text-align: center;
+                margin: 4rem 0 2rem 0;
+            }
+            .section-divider h2 {
+                font-size: 2.2rem;
+                color: var(--text-primary);
+                font-weight: 700;
+                position: relative;
+                display: inline-block;
+                padding-bottom: 0.5rem;
+            }
+            .section-divider h2::after {
+                content: '';
+                display: block;
+                width: 80%;
+                height: 3px;
+                background-color: var(--accent-color);
+                margin: 0.5rem auto 0;
+                border-radius: 2px;
+            }
         </style>
     </head>
     <body>
@@ -214,6 +311,349 @@
                     <p>Loading All Subjects...</p>
                 </div>
             </div>
+
+            <!-- Existing Content Sections -->
+            <div class="section-divider">
+                <h2>More Learning Resources</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card grid-col-span-2">
+                    <div class="edu-card-icon">🧠</div>
+                    <h3>Featured Quiz of the Week</h3>
+                    <p>Test your knowledge on Ancient Indian History! Are you ready to challenge yourself and see how you score against others?</p>
+                    <a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history" class="edu-card-btn">Take the Quiz Now</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">⚛️</div>
+                    <h3>Physics Spotlight</h3>
+                    <p>From Newton's laws to quantum mechanics, explore the fundamental principles that govern the universe.</p>
+                    <a href="#" class="edu-card-btn">Explore Physics</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🧪</div>
+                    <h3>Chemistry Corner</h3>
+                    <p>Dive into the world of atoms, molecules, and reactions. A perfect resource for school and competitive exams.</p>
+                    <a href="#" class="edu-card-btn">Learn Chemistry</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">📏</div>
+                    <h3>Formula Quick-Reference</h3>
+                    <p>Need a formula for Math, Physics, or Chemistry? Find all important formulas in one convenient place.</p>
+                    <a href="/all-formulas.html" class="edu-card-btn">Find Formulas</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">💡</div>
+                    <h3>Effective Study Techniques</h3>
+                    <p>Learn proven methods like the Pomodoro Technique and Active Recall to boost your learning and retention.</p>
+                    <a href="#" class="edu-card-btn">Study Smarter</a>
+                </div>
+                <div class="edu-card grid-col-span-2">
+                    <div class="edu-card-icon">🎬</div>
+                    <h3>Video Learning Hub</h3>
+                    <p>Sometimes, seeing is believing. Watch our curated video tutorials that simplify complex topics and make learning visual and engaging.</p>
+                    <a href="https://www.youtube.com/@GKLearnStudy" class="edu-card-btn">Watch on YouTube</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">📥</div>
+                    <h3>Downloadable Study Notes</h3>
+                    <p>Get access to our collection of free, high-quality PDF notes for quick revision and offline study.</p>
+                    <a href="#" class="edu-card-btn">Download PDFs</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🏆</div>
+                    <h3>Competitive Exam Corner</h3>
+                    <p>Stay updated on upcoming exams, syllabus changes, and preparation strategies for various competitive tests.</p>
+                    <a href="#" class="edu-card-btn">View Exam Info</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🗺️</div>
+                    <h3>Learn with Mind Maps</h3>
+                    <p>Visualize complex information with our collection of mind maps, making it easier to connect ideas and remember key facts.</p>
+                    <a href="#" class="edu-card-btn">See Mind Maps</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🌟</div>
+                    <h3>Daily Dose of Knowledge</h3>
+                    <p>A new fascinating fact or a challenging question every day to keep your mind sharp and curious.</p>
+                    <a href="#" class="edu-card-btn">Get Today's Fact</a>
+                </div>
+            </div>
+            
+            <!-- New Section 1: Interactive Tools -->
+            <div class="section-divider">
+                <h2>Interactive Learning Tools</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">🧮</div>
+                    <h3>Scientific Calculator</h3>
+                    <p>Perform complex calculations for your science and math problems with our easy-to-use online scientific calculator.</p>
+                    <a href="#" class="edu-card-btn">Open Calculator</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">⚖️</div>
+                    <h3>Unit Converter</h3>
+                    <p>Quickly convert between different units of length, weight, temperature, and more with this handy tool.</p>
+                    <a href="/conversion.html" class="edu-card-btn">Use Converter</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🌐</div>
+                    <h3>Interactive Periodic Table</h3>
+                    <p>Explore the elements with our clickable periodic table, complete with properties, history, and uses for each element.</p>
+                    <a href="#" class="edu-card-btn">Explore Elements</a>
+                </div>
+            </div>
+
+            <!-- New Section 2: Visual Learning -->
+            <div class="section-divider">
+                <h2>Visual Learning Center</h2>
+            </div>
+            <div class="additional-sections-grid">
+                 <div class="edu-card grid-col-span-2">
+                    <div class="edu-card-icon">📊</div>
+                    <h3>Infographics Library</h3>
+                    <p>Complex topics made simple! Browse our library of infographics that break down difficult concepts into easy-to-understand visuals.</p>
+                    <a href="#" class="edu-card-btn">Browse Infographics</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">📜</div>
+                    <h3>Historical Maps</h3>
+                    <p>Journey through time with interactive maps that illustrate historical events, empires, and battles.</p>
+                    <a href="#" class="edu-card-btn">View Maps</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🧬</div>
+                    <h3>Science Diagrams</h3>
+                    <p>From the human cell to the solar system, explore detailed diagrams that explain key scientific concepts.</p>
+                    <a href="#" class="edu-card-btn">See Diagrams</a>
+                </div>
+            </div>
+
+            <!-- New Section 3: History -->
+            <div class="section-divider">
+                <h2>Explore History</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">⏳</div>
+                    <h3>Indian History Timeline</h3>
+                    <p>An interactive timeline covering major events from the Indus Valley Civilization to modern India.</p>
+                    <a href="#" class="edu-card-btn">View Timeline</a>
+                </div>
+                 <div class="edu-card">
+                    <div class="edu-card-icon">🏛️</div>
+                    <h3>World History Events</h3>
+                    <p>Learn about pivotal moments in world history, from ancient civilizations to the World Wars.</p>
+                    <a href="#" class="edu-card-btn">Discover Events</a>
+                </div>
+                 <div class="edu-card">
+                    <div class="edu-card-icon">⚔️</div>
+                    <h3>Famous Battles</h3>
+                    <p>Study the strategies, key figures, and outcomes of the most significant battles in history.</p>
+                    <a href="#" class="edu-card-btn">Learn About Battles</a>
+                </div>
+            </div>
+
+            <!-- New Section 4: Biographies -->
+            <div class="section-divider">
+                <h2>Biographies of Great Minds</h2>
+            </div>
+            <div class="additional-sections-grid">
+                 <div class="edu-card">
+                    <div class="edu-card-icon">🧑‍🔬</div>
+                    <h3>Great Scientists</h3>
+                    <p>Read the life stories and discoveries of pioneers like Isaac Newton, Marie Curie, and Albert Einstein.</p>
+                    <a href="#" class="edu-card-btn">Read Biographies</a>
+                </div>
+                 <div class="edu-card">
+                    <div class="edu-card-icon">🇮🇳</div>
+                    <h3>Freedom Fighters</h3>
+                    <p>Learn about the lives and sacrifices of the brave individuals who fought for India's independence.</p>
+                    <a href="#" class="edu-card-btn">Discover Heroes</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">✍️</div>
+                    <h3>Literary Authors</h3>
+                    <p>Explore the lives and works of famous authors and poets who have shaped literature through the ages.</p>
+                    <a href="#" class="edu-card-btn">Learn About Authors</a>
+                </div>
+            </div>
+
+            <!-- New Section 5: Current Affairs -->
+            <div class="section-divider">
+                <h2>Current Affairs for Students</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">📰</div>
+                    <h3>Weekly News Roundup</h3>
+                    <p>A summary of the most important national and international news from the past week, tailored for students.</p>
+                    <a href="#" class="edu-card-btn">Read Roundup</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🛰️</div>
+                    <h3>Science & Tech News</h3>
+                    <p>Stay updated on the latest breakthroughs in space exploration, technology, and environmental science.</p>
+                    <a href="#" class="edu-card-btn">Latest in Tech</a>
+                </div>
+                 <div class="edu-card">
+                    <div class="edu-card-icon">📈</div>
+                    <h3>Economy Explained</h3>
+                    <p>Simple explanations of key economic terms and events that are important for competitive exams.</p>
+                    <a href="#" class="edu-card-btn">Understand Economy</a>
+                </div>
+            </div>
+
+            <!-- New Section 6: Career Guidance -->
+            <div class="section-divider">
+                <h2>Career Guidance Portal</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card card-highlight">
+                    <div class="edu-card-icon">🧭</div>
+                    <h3>Career Path Finder</h3>
+                    <p>Not sure what to do after your studies? Our guide helps you explore different career options based on your interests.</p>
+                    <a href="#" class="edu-card-btn">Find Your Path</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🎓</div>
+                    <h3>Courses After 12th</h3>
+                    <p>Explore the various degree and diploma courses available after completing Class 12th in Science, Commerce, and Arts.</p>
+                    <a href="#" class="edu-card-btn">Explore Courses</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">💼</div>
+                    <h3>Interview Preparation</h3>
+                    <p>Get tips, common questions, and expert advice to ace your next job interview and land your dream job.</p>
+                    <a href="/kaise-karen/interview-preparation-guide.html" class="edu-card-btn">Prepare Now</a>
+                </div>
+            </div>
+
+            <!-- New Section 7: Skill Development -->
+            <div class="section-divider">
+                <h2>Essential Skill Development</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">🗣️</div>
+                    <h3>Public Speaking Tips</h3>
+                    <p>Build confidence and learn how to deliver effective presentations with our practical public speaking guide.</p>
+                    <a href="#" class="edu-card-btn">Improve Skills</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">💻</div>
+                    <h3>Coding Basics</h3>
+                    <p>Get started with the world of programming. Learn the fundamental concepts of coding with our beginner-friendly tutorials.</p>
+                    <a href="#" class="edu-card-btn">Start Coding</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">📝</div>
+                    <h3>Resume Writing</h3>
+                    <p>Learn how to craft a professional resume that stands out to recruiters and highlights your skills effectively.</p>
+                    <a href="#" class="edu-card-btn">Build Your Resume</a>
+                </div>
+            </div>
+
+            <!-- New Section 8: Glossary -->
+            <div class="section-divider">
+                <h2>Glossary of Important Terms</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">🔬</div>
+                    <h3>Science Glossary</h3>
+                    <p>Definitions of key terms in Physics, Chemistry, and Biology, from 'Atom' to 'Zygote'.</p>
+                    <a href="#" class="edu-card-btn">Browse Science Terms</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">➗</div>
+                    <h3>Mathematics Glossary</h3>
+                    <p>Understand the definitions of important mathematical concepts, from 'Algebra' to 'Trigonometry'.</p>
+                    <a href="#" class="edu-card-btn">Browse Math Terms</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🖥️</div>
+                    <h3>Computer Glossary</h3>
+                    <p>A comprehensive list of common computer and internet terms, from 'Algorithm' to 'Firewall'.</p>
+                    <a href="#" class="edu-card-btn">Browse Tech Terms</a>
+                </div>
+            </div>
+            
+            <!-- New Section 9: Student Well-being -->
+            <div class="section-divider">
+                <h2>Student Well-being & Health</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">🧘</div>
+                    <h3>Managing Exam Stress</h3>
+                    <p>Learn effective techniques to manage anxiety and stress during exam season for better performance and mental health.</p>
+                    <a href="#" class="edu-card-btn">Learn to Relax</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🍎</div>
+                    <h3>Nutrition for Students</h3>
+                    <p>Discover the best foods to boost brainpower, improve concentration, and maintain energy throughout the day.</p>
+                    <a href="#" class="edu-card-btn">Eat for Success</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">😴</div>
+                    <h3>The Importance of Sleep</h3>
+                    <p>Understand how proper sleep impacts learning, memory, and overall health, and get tips for a better night's rest.</p>
+                    <a href="#" class="edu-card-btn">Sleep Well</a>
+                </div>
+            </div>
+
+            <!-- New Section 10: Practice & Mock Tests -->
+            <div class="section-divider">
+                <h2>Practice & Mock Tests</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card">
+                    <div class="edu-card-icon">📝</div>
+                    <h3>SSC Exam Mock Tests</h3>
+                    <p>Prepare for SSC CGL, CHSL, and other exams with our full-length mock tests designed to simulate the real exam experience.</p>
+                    <a href="#" class="edu-card-btn">Start SSC Test</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🏦</div>
+                    <h3>Banking Exam Series</h3>
+                    <p>Practice with mock tests designed for IBPS, SBI PO, and Clerk examinations to improve your speed and accuracy.</p>
+                    <a href="#" class="edu-card-btn">Start Banking Test</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">🌍</div>
+                    <h3>General Knowledge Challenge</h3>
+                    <p>Take a timed GK quiz to test your knowledge on a wide range of topics and see where you stand.</p>
+                    <a href="/gk-quiz" class="edu-card-btn">Take Challenge</a>
+                </div>
+            </div>
+
+            <!-- New Section 11: Connect & Community -->
+            <div class="section-divider">
+                <h2>Connect & Community</h2>
+            </div>
+            <div class="additional-sections-grid">
+                <div class="edu-card card-highlight">
+                    <div class="edu-card-icon">🎬</div>
+                    <h3>Join our YouTube Channel</h3>
+                    <p>Subscribe for video lectures, exam analysis, preparation tips, and live Q&A sessions with our experts.</p>
+                    <a href="https://www.youtube.com/@GKLearnStudy" class="edu-card-btn">Subscribe on YouTube</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">💬</div>
+                    <h3>Study Forum</h3>
+                    <p>Discuss doubts, share notes, and collaborate with fellow students in our community forum. Learning is better together!</p>
+                    <a href="#" class="edu-card-btn">Visit Forum</a>
+                </div>
+                <div class="edu-card">
+                    <div class="edu-card-icon">💡</div>
+                    <h3>Suggest a Topic</h3>
+                    <p>Have a topic you want us to cover? Let us know! We create content based on your feedback and needs.</p>
+                    <a href="#" class="edu-card-btn">Make a Suggestion</a>
+                </div>
+            </div>
+
         </main>
         
         <footer class="app-footer">
@@ -229,6 +669,17 @@
                 const hubContainer = document.getElementById('education-hub-container');
                 if (!hubContainer) return;
 
+                // Descriptions for categories
+                const categoryDescriptions = {
+                    'हिन्दी व्याकरण': 'Master the fundamentals of Hindi grammar. Our guides cover everything from basic rules to advanced concepts, helping you improve your language skills.',
+                    'Conversion': 'A collection of tools and guides to help you easily convert between different units of measurement, from length and weight to digital storage.',
+                    'Technology': 'Stay updated with the world of technology. Explore guides on software, hardware, and essential digital skills for everyday life.',
+                    'Kaise Karen': 'Practical, step-by-step guides to help you master new skills and solve common problems efficiently and correctly.',
+                    'General Knowledge': 'Expand your awareness of the world. Dive into topics covering history, geography, civics, and current affairs.',
+                    // Add more categories and descriptions as needed
+                };
+                const defaultDescription = 'Explore our collection of articles and guides on this subject to enhance your knowledge.';
+
                 try {
                     await window.GKApp.dataReady;
                     const allPosts = window.GKApp.searchData;
@@ -238,7 +689,6 @@
                         return;
                     }
 
-                    // 1. Group posts by category
                     const postsByCategory = allPosts.reduce((acc, post) => {
                         const category = post.category;
                         if (category) {
@@ -248,7 +698,6 @@
                         return acc;
                     }, {});
 
-                    // 2. Determine the order of categories based on their first appearance in the JSON
                     const orderedCategories = [];
                     const seenCategories = new Set();
                     for (const post of allPosts) {
@@ -261,26 +710,27 @@
                     hubContainer.innerHTML = '';
                     const pageFragment = document.createDocumentFragment();
 
-                    // 3. Iterate through ordered categories to build distinct sections
                     for (const category of orderedCategories) {
                         const posts = postsByCategory[category];
                         if (!posts || posts.length === 0) continue;
 
-                        // Create the main section for the category
                         const categorySection = document.createElement('section');
                         categorySection.className = 'category-section';
 
-                        // Create the title for the category
                         const categoryTitleEl = document.createElement('h2');
                         categoryTitleEl.className = 'category-title';
                         categoryTitleEl.textContent = category;
                         categorySection.appendChild(categoryTitleEl);
                         
-                        // Create the grid for this category's cards
+                        const categoryDescriptionEl = document.createElement('p');
+                        categoryDescriptionEl.className = 'category-description';
+                        categoryDescriptionEl.textContent = categoryDescriptions[category] || defaultDescription;
+                        categorySection.appendChild(categoryDescriptionEl);
+                        
                         const categoryCardGrid = document.createElement('div');
                         categoryCardGrid.className = 'category-card-grid';
 
-                        let categoryPostCounter = 1;
+                        
                         const chunkSize = 4;
                         const totalChunks = Math.ceil(posts.length / chunkSize);
 
@@ -292,7 +742,6 @@
                             const cardHeader = document.createElement('div');
                             cardHeader.className = 'learning-path-header';
                             
-                            // *** NEW NAMING LOGIC ***
                             const cardTitle = totalChunks > 1 
                                 ? `${category} - Section ${i / chunkSize + 1}` 
                                 : category;
@@ -301,7 +750,8 @@
                             
                             const stepsList = document.createElement('ul');
                             stepsList.className = 'learning-path-steps';
-
+                            
+                            let categoryPostCounter = 1;
                             chunk.forEach(post => {
                                 const stepItem = document.createElement('li');
                                 stepItem.innerHTML = `<div class="step-number">${categoryPostCounter}</div><a href="${post.url}">${post.title}</a>`;
