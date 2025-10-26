@@ -51,12 +51,29 @@
                 max-width: 700px;
                 margin: 0 auto;
             }
+            
+            #education-hub-container {
+                padding: 1rem 0;
+            }
 
-            #education-content-grid {
+            .category-section {
+                margin-bottom: 3.5rem;
+            }
+
+            .category-title {
+                font-size: clamp(1.8rem, 4vw, 2.2rem);
+                font-weight: 700;
+                color: var(--accent-color);
+                margin-bottom: 2rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 2px solid var(--accent-color);
+                display: inline-block;
+            }
+
+            .category-card-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
                 gap: 2rem;
-                padding: 2rem 0;
             }
 
             .learning-path-card { 
@@ -162,7 +179,6 @@
                 color: var(--text-secondary);
                 font-size: 1.1rem;
                 padding: 2rem;
-                grid-column: 1 / -1;
             }
         </style>
     </head>
@@ -192,7 +208,7 @@
             </div>
             
             <!-- Dynamic Content Area -->
-            <div id="education-content-grid">
+            <div id="education-hub-container">
                 <div class="spinner-container">
                     <div class="spinner"></div>
                     <p>Loading All Subjects...</p>
@@ -210,15 +226,15 @@
         <script>
         document.addEventListener("DOMContentLoaded", () => {
             const initializeEducationPage = async () => {
-                const contentGrid = document.getElementById('education-content-grid');
-                if (!contentGrid) return;
+                const hubContainer = document.getElementById('education-hub-container');
+                if (!hubContainer) return;
 
                 try {
                     await window.GKApp.dataReady;
                     const allPosts = window.GKApp.searchData;
 
                     if (!allPosts || allPosts.length === 0) {
-                        contentGrid.innerHTML = '<p class="no-posts-found">No educational content is available at the moment. Please check back later.</p>';
+                        hubContainer.innerHTML = '<p class="no-posts-found">No educational content is available at the moment. Please check back later.</p>';
                         return;
                     }
 
@@ -226,9 +242,7 @@
                     const postsByCategory = allPosts.reduce((acc, post) => {
                         const category = post.category;
                         if (category) {
-                            if (!acc[category]) {
-                                acc[category] = [];
-                            }
+                            if (!acc[category]) acc[category] = [];
                             acc[category].push(post);
                         }
                         return acc;
@@ -244,15 +258,29 @@
                         }
                     }
 
-                    contentGrid.innerHTML = '';
+                    hubContainer.innerHTML = '';
                     const pageFragment = document.createDocumentFragment();
 
-                    // 3. Iterate through the ordered categories and build cards
+                    // 3. Iterate through ordered categories to build distinct sections
                     for (const category of orderedCategories) {
                         const posts = postsByCategory[category];
                         if (!posts || posts.length === 0) continue;
 
-                        let categoryPostCounter = 1; // Reset counter for each new category
+                        // Create the main section for the category
+                        const categorySection = document.createElement('section');
+                        categorySection.className = 'category-section';
+
+                        // Create the title for the category
+                        const categoryTitleEl = document.createElement('h2');
+                        categoryTitleEl.className = 'category-title';
+                        categoryTitleEl.textContent = category;
+                        categorySection.appendChild(categoryTitleEl);
+                        
+                        // Create the grid for this category's cards
+                        const categoryCardGrid = document.createElement('div');
+                        categoryCardGrid.className = 'category-card-grid';
+
+                        let categoryPostCounter = 1;
                         const chunkSize = 4;
                         const totalChunks = Math.ceil(posts.length / chunkSize);
 
@@ -261,15 +289,16 @@
                             const card = document.createElement('div');
                             card.className = 'learning-path-card';
                             
-                            // Create Card Header
                             const cardHeader = document.createElement('div');
                             cardHeader.className = 'learning-path-header';
                             
-                            // Add "Section" to title if there's more than one card for the category
-                            const cardTitle = totalChunks > 1 ? `${category} - Section ${i / chunkSize + 1}` : category;
+                            // *** NEW NAMING LOGIC ***
+                            const cardTitle = totalChunks > 1 
+                                ? `${category} - Section ${i / chunkSize + 1}` 
+                                : category;
+                            
                             cardHeader.innerHTML = `<h3>${cardTitle}</h3>`;
                             
-                            // Create Card Body (List)
                             const stepsList = document.createElement('ul');
                             stepsList.className = 'learning-path-steps';
 
@@ -277,20 +306,23 @@
                                 const stepItem = document.createElement('li');
                                 stepItem.innerHTML = `<div class="step-number">${categoryPostCounter}</div><a href="${post.url}">${post.title}</a>`;
                                 stepsList.appendChild(stepItem);
-                                categoryPostCounter++; // Use the category-specific counter
+                                categoryPostCounter++;
                             });
 
                             card.appendChild(cardHeader);
                             card.appendChild(stepsList);
-                            pageFragment.appendChild(card);
+                            categoryCardGrid.appendChild(card);
                         }
+                        
+                        categorySection.appendChild(categoryCardGrid);
+                        pageFragment.appendChild(categorySection);
                     }
                     
-                    contentGrid.appendChild(pageFragment);
+                    hubContainer.appendChild(pageFragment);
 
                 } catch (error) {
                     console.error("Failed to initialize dynamic education page:", error);
-                    contentGrid.innerHTML = '<p class="no-posts-found" style="color: var(--danger-color);">Could not load educational content due to an error. Please try refreshing the page.</p>';
+                    hubContainer.innerHTML = '<p class="no-posts-found" style="color: var(--danger-color);">Could not load educational content due to an error. Please try refreshing the page.</p>';
                 }
             };
 
