@@ -42,8 +42,7 @@
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
+        <link rel="stylesheet" href="index.css">
        
         <script type="application/ld+json">
             {
@@ -70,7 +69,7 @@
         </script>
     </head>
     <body>
-        <svg style="display:none;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg class="hidden-svg-defs" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" />
@@ -197,100 +196,6 @@
 
         <main class="container">
             <div id="root">
-                <style>
-                    :root { --accent-color-rgb: 0, 95, 97; }
-                    html[data-theme=dark] { --accent-color-rgb: 255, 153, 219; }
-
-                    .logo-container { border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; gap: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); animation: fadeIn 1s ease-in-out; margin-bottom: 3rem; background-color: var(--card-bg); }
-                    .logo { flex: 1; display: flex; justify-content: center; align-items: center; }
-                    .text { flex: 2; display: flex; flex-direction: column; justify-content: center; animation: slideIn 1.2s ease-in-out; }
-                    .text h1 { text-align: left; font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
-                    .text p { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; }
-                    @media (max-width: 768px) { .logo-container { flex-direction: column; } .text h1 { font-size: 1.6rem; } .text p { font-size: 0.95rem; } }
-                    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-                    @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-                    .content-section { padding: 4rem 0; border-bottom: 1px solid var(--border-color); }
-                    .content-section:last-of-type { border-bottom: none; }
-                    .section-title { text-align: center; font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; position: relative; }
-                    .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
-                    .section-title::after { content: ''; display: block; width: 70%; height: 4px; background-color: var(--accent-color); margin: 0.5rem auto 0; border-radius: 2px; }
-                    .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
-                    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-                    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-                    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-                    .info-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid var(--border-color); }
-                    .info-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
-                    .info-card .icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; line-height: 1; }
-                    .info-card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
-                    .info-card p { color: var(--text-secondary); line-height: 1.6; }
-                    .learning-path-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
-                    .learning-path-header { padding: 1.5rem; background: linear-gradient(135deg, var(--accent-color), #008c90); color: white; display: flex; align-items: center; gap: 1rem; }
-                    .learning-path-header .header-icon { flex-shrink: 0; width: 48px; height: 48px; fill: rgba(255, 255, 255, 0.9); }
-                    .learning-path-header .header-content { flex-grow: 1; }
-                    .learning-path-header h3 { margin: 0; font-size: 1.5rem; }
-                    .learning-path-header p { margin: 0.5rem 0 0; opacity: 0.9; font-size: 0.95rem; }
-                    .learning-path-steps { list-style: none; padding: 1.5rem; margin: 0; flex-grow: 1; }
-                    .learning-path-steps li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 1rem; }
-                    .learning-path-steps li .step-number { background-color: var(--accent-color); color: white; border-radius: 50%; width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; font-weight: 600; flex-shrink: 0; }
-                    .learning-path-steps li a { text-decoration: none; color: var(--text-primary); font-weight: 500; transition: color 0.2s ease; }
-                    .learning-path-steps li a:hover { color: var(--accent-color); }
-                    .glossary-section details { background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); }
-                    .glossary-section summary { padding: 1rem 1.5rem; font-weight: 600; font-size: 1.1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-                    .glossary-section summary::-webkit-details-marker { display: none; }
-                    .glossary-section summary::after { content: '+'; font-size: 1.5rem; color: var(--accent-color); transition: transform 0.3s ease; }
-                    .glossary-section details[open] summary::after { transform: rotate(45deg); }
-                    .glossary-definition { padding: 0 1.5rem 1.5rem 3rem; line-height: 1.7; color: var(--text-secondary); }
-                    .philosophy-content { max-width: 800px; margin: 0 auto; text-align: left; }
-                    .philosophy-content h3 { font-size: 1.5rem; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; }
-                    .philosophy-content p, .philosophy-content li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-                    .cta-section { background: linear-gradient(135deg, #641ef9, #9f94ff); color: white; text-align: center; padding: 4rem 2rem; border-radius: var(--border-radius); margin: 4rem 0; }
-                    .cta-section h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; }
-                    .cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
-                    .cta-btn { background-color: white; color: #641ef9; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; display: inline-block; }
-                    .cta-btn:hover { background-color: #f0f0f0; transform: scale(1.05); }
-                    .featured-tool-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: center;  }
-                    .featured-tool-card .icon { font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--accent-color); }
-                    .featured-tool-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-                    .featured-tool-card p { color: var(--text-secondary); margin-bottom: 1.5rem; }
-                    .featured-tool-card .tool-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.8rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
-                    .featured-tool-card .tool-btn:hover { background-color: #004d4e; }
-                    .testimonial-card { background-color: var(--card-bg); border-left: 5px solid var(--accent-color); padding: 2rem; border-radius: 0 var(--border-radius) var(--border-radius) 0; box-shadow: var(--card-shadow); }
-                    .testimonial-text { font-style: italic; color: var(--text-secondary); line-height: 1.7; margin: 0 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
-                    .testimonial-author { font-weight: 600; color: var(--text-primary); }
-                    .founder-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
-                    .founder-avatar-svg { width: 120px; height: 120px; flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
-                    .founder-bio h3 { font-size: 1.8rem; margin-top: 0; }
-                    .founder-bio p { line-height: 1.8; color: var(--text-secondary); }
-                    .highlight-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
-                    .stats-section { background-color: var(--input-bg); padding: 4rem 2rem; border-radius: 16px; text-align: center; }
-                    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto; }
-                    .stat-item { padding: 1rem; }
-                    .stat-number { font-size: 3rem; font-weight: 700; color: var(--accent-color); line-height: 1.2; }
-                    .stat-label { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
-                    .current-affair-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color); box-shadow: var(--card-shadow); display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;}
-                    .current-affair-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
-                    .current-affair-card .affair-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
-                    .current-affair-card .affair-category { background-color: var(--accent-color); color: white; padding: .2rem .6rem; border-radius: 15px; font-size: .8rem; font-weight: 500; }
-                    .current-affair-card h3 { margin-top: 0; font-size: 1.3rem; margin-bottom: 0.5rem; flex-grow: 1; }
-                    .current-affair-card h3 a { text-decoration: none; color: var(--text-primary); }
-                    .current-affair-card h3 a:hover { color: var(--accent-color); }
-                    .current-affair-card .read-more-btn { align-self: flex-start; text-decoration: none; color: var(--accent-color); font-weight: 600; margin-top: auto; padding-top: 1rem; }
-                    .current-affair-card .read-more-btn:hover { text-decoration: underline; }
-                    .latest-article-list { max-width: 800px; margin: 0 auto; }
-                    .latest-article-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border-color); transition: background-color .2s ease; border-radius: 8px;}
-                    .latest-article-item:hover { background-color: var(--input-bg); }
-                    .latest-article-item:last-child { border-bottom: none; }
-                    .latest-article-item .category-tag { background-color: var(--accent-color); color: white; padding: .25rem .6rem; border-radius: 15px; font-size: .8rem; font-weight: 500; white-space: nowrap; }
-                    .latest-article-item .article-title { flex-grow: 1; margin: 0; font-size: 1.1rem; }
-                    .latest-article-item .article-title a { text-decoration: none; color: var(--text-primary); font-weight: 600; }
-                    .latest-article-item .article-title a:hover { color: var(--accent-color); }
-                    .latest-article-item .article-date { color: var(--text-secondary); font-size: .9rem; white-space: nowrap; }
-                     @media (min-width: 768px) { 
-                        .founder-section { flex-direction: row; text-align: left; } 
-                        .founder-avatar-svg { width: 160px; height: 160px; }
-                     }
-                </style>
-
                 <div class="logo-container">
                     <div class="logo">
                         <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
@@ -325,7 +230,7 @@
                 </section>
                 
                 <div class="categories-section sidebar-widget">
-                    <h2 class="section-title" style="font-size: 1.8rem; text-align: left; margin-bottom: 1.5rem;">Explore Our Articles</h2>
+                    <h2 class="section-title">Explore Our Articles</h2>
                     <ul class="category-list"></ul>
                 </div>
                 <div class="post-filter-container">
@@ -622,7 +527,7 @@
                         <div class="founder-bio">
                             <h3>Mr. Himanshu Tyagi</h3>
                             <p>GK Learn Study was founded by Mr. Himanshu Tyagi with a singular vision: to create a reliable and free educational platform for all. With a passion for teaching and a deep understanding of the challenges faced by students and learners, he has dedicated this platform to providing clear, accurate, and accessible knowledge. His commitment to the "Knowledge for All" principle is the driving force behind every article and guide we publish.</p>
-                            <a href="profile.html?author=Mr.%20Himanshu%20Tyagi" class="cta-btn" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">View Profile</a>
+                            <a href="profile.html?author=Mr.%20Himanshu%20Tyagi" class="cta-btn">View Profile</a>
                         </div>
                     </div>
                 </section>
@@ -708,7 +613,7 @@
                         <h2>Rate this Page</h2>
                         <div id="rating-display"><div class="average-summary"><div id="average-rating-value">0.0</div><div id="total-ratings-count">0 ratings</div></div><div class="rating-breakdown"><div class="breakdown-row" data-star-level="5"><span class="star-label">5 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="4"><span class="star-label">4 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="3"><span class="star-label">3 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="2"><span class="star-label">2 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="1"><span class="star-label">1 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div><span class="vote-count">0</span></div></div></div>
                         <div id="rating-stars"><svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-                        <div id="rating-login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p></div>
+                        <div id="rating-login-prompt"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p></div>
                     </div>
                 </div>
 
@@ -716,8 +621,8 @@
                     <div class="firebase-comments-widget" id="custom-comment-section">
                         <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
                         <div id="auth-container"><div id="user-info"></div><button id="login-btn" class="btn primary"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg> Sign in with Google</button><button id="logout-btn" class="btn">Logout</button></div>
-                        <div id="login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p></div>
-                        <div class="comment-form-shell" id="comment-form-shell" style="display: none;"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div><textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" /><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button></div></div></form></div>
+                        <div id="login-prompt"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p></div>
+                        <div class="comment-form-shell" id="comment-form-shell"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" aria-live="polite"></div><textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" /><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply">Cancel</button></div></div></form></div>
                         <div id="comments-list" class="comment-list"><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
                     </div>
                 </div>
@@ -733,39 +638,7 @@
         </footer>
         <script src="https://gklearnstudy.in/js/theme.js" defer></script>
         <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
-        <script>
-            // Script for animated stats counter
-            document.addEventListener("DOMContentLoaded", () => {
-                const counters = document.querySelectorAll('.stat-number');
-                const speed = 200; 
-
-                const animateCounter = (counter) => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText.replace('+', '');
-                    const inc = target / speed;
-
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + inc) + '+';
-                        setTimeout(() => animateCounter(counter), 10);
-                    } else {
-                        counter.innerText = target.toLocaleString() + '+';
-                    }
-                };
-
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            animateCounter(entry.target);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-
-                counters.forEach(counter => {
-                    observer.observe(counter);
-                });
-            });
-        </script>
+        
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
