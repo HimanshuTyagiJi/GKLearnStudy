@@ -1,17 +1,14 @@
-// ✅ Service Worker Register करो (Firebase Messaging के लिए)
-async function registerServiceWorker() {
+document.addEventListener('DOMContentLoaded', async () => {
+  // ✅ Step 1: Register the Service Worker (Firebase Messaging के लिए)
+  let swRegistration = null;
   try {
-    const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    swRegistration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
     await navigator.serviceWorker.ready;
-    console.log("✅ Service Worker registered successfully");
-    return registration;
+    console.log("✅ Service Worker registered successfully:", swRegistration);
   } catch (err) {
     console.error("❌ Service Worker registration failed:", err);
-    throw err;
   }
-}
 
-document.addEventListener('DOMContentLoaded', () => {
   const initButton = (notificationBtn) => {
     // --- State and Config ---
     let firebaseApp = null;
@@ -38,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pageId = (() => {
       const p = location.pathname;
-      return ['/','/index.html',''].includes(p) ? 'main_page'
+      return ['/','/index.html',''].includes(p)
+        ? 'main_page'
         : p.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, '_').replace(/\.html$/, '');
     })();
 
@@ -52,15 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const { getMessaging } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
         const { getFunctions } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
 
+        // ✅ Attach Firebase app
         firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         auth = getAuth(firebaseApp);
         db = getFirestore(firebaseApp);
+        functions = getFunctions(firebaseApp);
 
-        // ✅ Service worker registration fix
-        const swRegistration = await registerServiceWorker();
+        // ✅ Attach messaging to registered service worker
         messaging = getMessaging(firebaseApp, { serviceWorkerRegistration: swRegistration });
 
-        functions = getFunctions(firebaseApp);
         isFirebaseInitialized = true;
 
         onAuthStateChanged(auth, (user) => {
@@ -141,7 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
         notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
 
         const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
-        const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
+        const fcmToken = await getToken(messaging, {
+          vapidKey: VAPID_KEY,
+          serviceWorkerRegistration: swRegistration
+        });
 
         if (!fcmToken) throw new Error("Failed to get FCM token.");
         currentToken = fcmToken;
@@ -207,8 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       try {
-        const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
-        currentToken = await getToken(messaging, { vapidKey: VAPID_KEY });
+        if (!currentToken) {
+          const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
+          currentToken = await getToken(messaging, {
+            vapidKey: VAPID_KEY,
+            serviceWorkerRegistration: swRegistration
+          });
+        }
         if (!currentToken) return;
 
         const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
