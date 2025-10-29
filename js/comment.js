@@ -43,6 +43,8 @@ const commentCountSpan = document.getElementById('comment-count');
 const ratingStarsContainer = document.getElementById('rating-stars');
 const ratingLoginPrompt = document.getElementById('rating-login-prompt');
 const notificationBtn = document.getElementById('notification-btn');
+const averageRatingValue = document.getElementById('average-rating-value');
+const totalRatingsCount = document.getElementById('total-ratings-count');
 const originalLoginHTML = loginBtn ? loginBtn.innerHTML : '';
 
 // --- Helper Functions ---
