@@ -41,36 +41,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     })();
 
     // --- Firebase Initialization ---
-    async function initializeFirebase() {
-      if (isFirebaseInitialized) return;
-      try {
-        const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
-        const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js');
-        const { getFirestore } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
-        const { getMessaging } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
-        const { getFunctions } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
+   async function initializeFirebase() {
+  if (isFirebaseInitialized) return;
+  try {
+    const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+    const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js');
+    const { getFirestore } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+    const { getMessaging } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
+    const { getFunctions } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
 
-        // ✅ Attach Firebase app
-        firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-        auth = getAuth(firebaseApp);
-        db = getFirestore(firebaseApp);
-        functions = getFunctions(firebaseApp);
+    // ✅ Firebase app initialize karo
+    firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+    auth = getAuth(firebaseApp);
+    db = getFirestore(firebaseApp);
+    functions = getFunctions(firebaseApp);
 
-        // ✅ Attach messaging to registered service worker
-        messaging = getMessaging(firebaseApp, { serviceWorkerRegistration: swRegistration });
+    // ✅ Ye line sabse important hai:
+    // messaging ko registered Service Worker se explicitly link kar rahe hain
+    messaging = getMessaging(firebaseApp, { serviceWorkerRegistration: swRegistration });
 
-        isFirebaseInitialized = true;
-
-        onAuthStateChanged(auth, (user) => {
-          currentUser = user;
-          updateUIState();
-        });
-      } catch (error) {
-        console.error("Firebase initialization failed:", error);
-        notificationBtn.classList.add('disabled');
-        notificationBtn.title = "Notification service unavailable";
-      }
+    // ✅ Optional safety log
+    if (!swRegistration.pushManager) {
+      console.warn("⚠️ pushManager is undefined in this browser or context!");
     }
+
+    isFirebaseInitialized = true;
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      updateUIState();
+    });
+
+  } catch (error) {
+    console.error("Firebase initialization failed:", error);
+    notificationBtn.classList.add('disabled');
+    notificationBtn.title = "Notification service unavailable";
+  }
+}
 
     // --- Update Button State ---
     async function updateUIState() {
