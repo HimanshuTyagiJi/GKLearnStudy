@@ -1,191 +1,226 @@
-// --- Firebase SDK Imports ---
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-import { getMessaging, getToken, isSupported } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js";
+document.addEventListener('DOMContentLoaded', () => {
+    // This script now waits for the notification button to be added to the DOM
+    // before it initializes, making it compatible with dynamic UI changes.
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // --- State and Config ---
-    let auth, db, messaging;
-    let currentUser = null;
-    let isProcessing = false;
-    
-    const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2";
+    const initButton = (notificationBtn) => {
+        // --- State and Config ---
+        let firebaseApp = null;
+        let messaging = null;
+        let db = null;
+        let auth = null;
+        let functions = null;
+        let currentUser = null;
+        let currentToken = null;
+        let isFirebaseInitialized = false;
+        let isSubscribedOnThisPage = false;
+        let isProcessing = false;
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-        authDomain: "appcomment.firebaseapp.com",
-        projectId: "appcomment",
-        storageBucket: "appcomment.firebasestorage.app",
-        messagingSenderId: "156258808941",
-        appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-    };
-    
-    const VAPID_KEY = "BPSPa7nCW1nGok9peZQepk25VC1OxeFxFHtWVZsen2TnwVCya3Sq2Dtb4W0sX8u06fRsg-eAqgxEUoW2XP1Oyvo";
-    
-    const pageId = (() => {
-        const p = location.pathname;
-        if (p.includes('/comments.html')) return 'owner_dashboard';
-        return ['/', '/index.html', ''].includes(p) ? 'main_page' : p.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, '_').replace(/\.html$/, '');
-    })();
-
-    const isDashboard = pageId === 'owner_dashboard';
-
-    // --- DOM Elements ---
-    const notificationBtn = document.getElementById('notification-btn');
-    if (!notificationBtn) return;
-    
-    // --- Toast Notification Utility ---
-    const showToast = (message, type = 'info', duration = 4000) => {
-        let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            document.body.appendChild(container);
-        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+            authDomain: "appcomment.firebaseapp.com",
+            projectId: "appcomment",
+            storageBucket: "appcomment.firebasestorage.app",
+            messagingSenderId: "156258808941",
+            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+        };
         
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
+        const VAPID_KEY = "BPSPa7nCW1nGok9peZQepk25VC1OxeFxFHtWVZsen2TnwVCya3Sq2Dtb4W0sX8u06fRsg-eAqgxEUoW2XP1Oyvo";
         
-        container.appendChild(toast);
-        
-        setTimeout(() => toast.classList.add('show'), 10);
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-            toast.addEventListener('transitionend', () => toast.remove());
-        }, duration);
-    };
+        const pageId = (() => {
+            const p = location.pathname;
+            return ['/','/index.html',''].includes(p) ? 'main_page' : p.replace(/^\//,'').replace(/\/$/,'').replace(/\//g,'_').replace(/\.html$/,'');
+        })();
 
-    // --- Firebase Initialization ---
-    try {
-        const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-        auth = getAuth(app);
-        db = getFirestore(app);
-        messaging = (await isSupported()) ? getMessaging(app) : null;
+        // --- Firebase Initialization ---
+        async function initializeFirebase() {
+            if (isFirebaseInitialized) return;
+            try {
+                // Dynamically import Firebase modules to avoid race conditions
+                const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
+                const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js');
+                const { getFirestore } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+                const { getMessaging } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
+                const { getFunctions } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
 
-        if (!messaging) throw new Error("Firebase Messaging is not supported in this browser.");
+                if (getApps().length === 0) {
+                    firebaseApp = initializeApp(firebaseConfig);
+                } else {
+                    firebaseApp = getApp();
+                }
+                auth = getAuth(firebaseApp);
+                db = getFirestore(firebaseApp);
+                messaging = getMessaging(firebaseApp);
+                functions = getFunctions(firebaseApp);
+                isFirebaseInitialized = true;
+                
+                onAuthStateChanged(auth, user => {
+                    currentUser = user;
+                    updateUIState();
+                });
 
-        onAuthStateChanged(auth, user => {
-            currentUser = user;
-            initializeNotificationState();
-        });
-    } catch (error) {
-        console.error("Notification system failed to initialize:", error.message);
-        notificationBtn.style.display = 'none';
-    }
-
-    // --- UI & State Management ---
-    const setButtonState = (state, title = '') => {
-        notificationBtn.classList.remove('loading', 'subscribed', 'disabled');
-        notificationBtn.disabled = false;
-        notificationBtn.title = title;
-
-        switch(state) {
-            case 'loading':
-                notificationBtn.classList.add('loading');
-                break;
-            case 'subscribed':
-                notificationBtn.classList.add('subscribed');
-                notificationBtn.title = title || 'You are subscribed. Click to unsubscribe.';
-                break;
-            case 'unsubscribed':
-                 notificationBtn.title = title || 'Click to get notifications.';
-                 break;
-            case 'denied':
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
                 notificationBtn.classList.add('disabled');
-                notificationBtn.disabled = true;
-                notificationBtn.title = title || 'Notifications are blocked in your browser settings.';
-                break;
-        }
-    }
-    
-    const initializeNotificationState = async () => {
-        if (!currentUser || !messaging) {
-            notificationBtn.style.display = 'none';
-            return;
+                notificationBtn.title = "Notification service unavailable";
+            }
         }
 
-        if (isDashboard && currentUser.uid !== OWNER_UID) {
-            notificationBtn.style.display = 'none';
-            return;
-        }
-
-        notificationBtn.style.display = 'inline-flex';
-        setButtonState('loading');
-
-        try {
-            if (Notification.permission === 'denied') {
-                setButtonState('denied');
+        // --- UI Update Logic ---
+        async function updateUIState() {
+            isProcessing = false;
+            notificationBtn.classList.remove('loading');
+            
+            const permission = Notification.permission;
+            if (permission === 'denied') {
+                notificationBtn.classList.add('disabled');
+                notificationBtn.classList.remove('subscribed');
+                notificationBtn.title = 'Notifications are blocked in your browser settings.';
                 return;
             }
-            
-            let isSubscribed = false;
-            // Await service worker readiness to prevent race conditions with getToken
-            await navigator.serviceWorker.ready;
-            const currentToken = await getToken(messaging, { vapidKey: VAPID_KEY }).catch(() => null);
 
-            if (currentToken) {
-                if (isDashboard) { // Owner's global subscription
-                    const userTokenRef = doc(db, 'userTokens', OWNER_UID);
-                    const userTokenDoc = await getDoc(userTokenRef);
-                    isSubscribed = userTokenDoc.exists() && (userTokenDoc.data().tokens || []).includes(currentToken);
-                } else { // Page-specific subscription
-                    const pageSubRef = doc(db, 'pageSubscriptions', pageId);
-                    const docSnap = await getDoc(pageSubRef);
-                    isSubscribed = docSnap.exists() && (docSnap.data().tokens || []).includes(currentToken);
+            notificationBtn.classList.remove('disabled');
+
+            if (permission === 'granted' && currentUser) {
+                await checkCurrentPageSubscription();
+                if (isSubscribedOnThisPage) {
+                    notificationBtn.classList.add('subscribed');
+                    notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
+                } else {
+                    notificationBtn.classList.remove('subscribed');
+                    notificationBtn.title = 'Click to get notifications for this page.';
                 }
-            } else if (Notification.permission === 'granted') {
-                console.warn("Permission is granted, but could not retrieve FCM token.");
-            }
-            setButtonState(isSubscribed ? 'subscribed' : 'unsubscribed');
-        } catch (error) {
-            console.error("Error checking subscription status:", error);
-            setButtonState('unsubscribed', 'Could not check status.');
-        }
-    };
-    
-    // --- Core Subscription Logic ---
-    const handleSubscriptionRequest = async () => {
-        if (isProcessing || !messaging || !currentUser) return;
-        isProcessing = true;
-        setButtonState('loading');
-        
-        try {
-            if (Notification.permission === 'default') {
-                const permissionResult = await Notification.requestPermission();
-                if (permissionResult !== 'granted') throw new Error("Permission was not granted.");
-            }
-            if (Notification.permission === 'denied') throw new Error("Notifications are blocked by your browser.");
-            
-            await navigator.serviceWorker.ready;
-            const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
-            if (!fcmToken) throw new Error("Could not get a notification token from the browser. Please try again.");
-
-            const isCurrentlySubscribed = notificationBtn.classList.contains('subscribed');
-            const action = isCurrentlySubscribed ? 'unsubscribe' : 'subscribe';
-            const operation = action === 'subscribe' ? arrayUnion(fcmToken) : arrayRemove(fcmToken);
-
-            if (isDashboard) {
-                const userTokenRef = doc(db, 'userTokens', OWNER_UID);
-                await setDoc(userTokenRef, { tokens: operation }, { merge: true });
             } else {
-                const pageSubRef = doc(db, 'pageSubscriptions', pageId);
-                await setDoc(pageSubRef, { tokens: operation }, { merge: true });
+                isSubscribedOnThisPage = false;
+                notificationBtn.classList.remove('subscribed');
+                notificationBtn.title = 'Sign in and click to enable notifications.';
             }
-            
-            const successMessage = action === 'subscribe' ? "Notifications successfully turned ON." : "Notifications turned OFF.";
-            showToast(successMessage, 'success');
-
-        } catch (error) {
-            console.error("Subscription failed:", error);
-            showToast(error.message || "An unexpected error occurred. Please try again.", 'error');
-        } finally {
-            isProcessing = false;
-            await initializeNotificationState();
         }
+        
+        // --- Core Notification Logic ---
+        async function handleSubscriptionRequest() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            try {
+                await initializeFirebase();
+                if (!currentUser) {
+                    alert('Please sign in to subscribe to notifications.');
+                    isProcessing = false;
+                    return;
+                }
+
+                if (Notification.permission === 'denied') {
+                    alert('Notifications are blocked. Please enable them in your browser settings.');
+                    isProcessing = false;
+                    return;
+                }
+                
+                if (Notification.permission === 'default') {
+                    const permissionResult = await Notification.requestPermission();
+                    if (permissionResult !== 'granted') {
+                        alert('Permission was not granted for notifications.');
+                        isProcessing = false;
+                        return;
+                    }
+                }
+                
+                const wasSubscribed = isSubscribedOnThisPage;
+                isSubscribedOnThisPage = !wasSubscribed; 
+                notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
+                notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
+                notificationBtn.classList.add('loading');
+                
+                await navigator.serviceWorker.ready;
+                const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
+                const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
+                
+                if (fcmToken) {
+                    currentToken = fcmToken;
+                    await saveTokenForUser(fcmToken); 
+                    const success = await togglePageSubscription(fcmToken, wasSubscribed);
+
+                    if (!success) {
+                        isSubscribedOnThisPage = wasSubscribed;
+                        notificationBtn.classList.toggle('subscribed', wasSubscribed);
+                    }
+                } else {
+                    throw new Error("Could not retrieve FCM token.");
+                }
+            } catch (error) {
+                console.error('An error occurred during the subscription process:', error);
+                alert('Failed to manage subscription. Please try again.');
+                isSubscribedOnThisPage = !isSubscribedOnThisPage; 
+                notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
+            } finally {
+                await updateUIState(); 
+            }
+        }
+
+        async function saveTokenForUser(token) {
+            if (!currentUser || !db || !token) return;
+            try {
+                const { doc, setDoc, arrayUnion } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+                const userTokenRef = doc(db, 'userTokens', currentUser.uid);
+                await setDoc(userTokenRef, { tokens: arrayUnion(token) }, { merge: true });
+            } catch (error) {
+                console.error("Failed to save user-specific token:", error);
+            }
+        }
+        
+        async function togglePageSubscription(token, wasSubscribed) {
+            if (!currentUser || !functions || !token) return false;
+            const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
+            try {
+                const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
+                const manageSubscription = httpsCallable(functions, 'manageSubscription');
+                const result = await manageSubscription({ pageId: pageId, token: token, action: action });
+                return result.data.success;
+            } catch (error) {
+                console.error(`Error calling manageSubscription for ${action}:`, error);
+                alert(`Could not ${action}. Please try again.`);
+                return false;
+            }
+        }
+
+        async function checkCurrentPageSubscription() {
+            if (Notification.permission !== 'granted' || !currentUser || !db) {
+                isSubscribedOnThisPage = false;
+                return;
+            }
+            try {
+                if (!currentToken) {
+                    await navigator.serviceWorker.ready;
+                    const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
+                    currentToken = await getToken(messaging, { vapidKey: VAPID_KEY });
+                }
+                if (!currentToken) { isSubscribedOnThisPage = false; return; }
+
+                const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
+                const pageSubRef = doc(db, 'pageSubscriptions', pageId);
+                const docSnap = await getDoc(pageSubRef);
+                isSubscribedOnThisPage = docSnap.exists() && docSnap.data().tokens?.includes(currentToken);
+            } catch (error) {
+                console.error("Could not check subscription state:", error);
+                isSubscribedOnThisPage = false;
+            }
+        }
+        
+        // --- Attach Listener and Initialize State ---
+        notificationBtn.addEventListener('click', handleSubscriptionRequest);
+        initializeFirebase(); // Start initialization
     };
 
-    notificationBtn.addEventListener('click', handleSubscriptionRequest);
+    // --- Observer to find the button ---
+    // The button is now added dynamically by comment.js, so we must wait for it.
+    const authContainer = document.getElementById('auth-container');
+    if (authContainer) {
+        const observer = new MutationObserver((mutationsList, obs) => {
+            const notificationBtn = document.getElementById('notification-btn');
+            if (notificationBtn) {
+                initButton(notificationBtn);
+                obs.disconnect(); // Found it, no need to observe anymore
+            }
+        });
+        observer.observe(authContainer, { childList: true, subtree: true });
+    }
 });
