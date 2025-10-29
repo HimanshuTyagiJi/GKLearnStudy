@@ -1,13 +1,12 @@
 // --- Firebase SDK Imports ---
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-import { getMessaging, getToken, deleteToken, isSupported } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js";
+import { getFirestore, doc, getDoc, setDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getMessaging, getToken, isSupported } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     // --- State and Config ---
-    let auth, db, messaging, functions;
+    let auth, db, messaging;
     let currentUser = null;
     let isProcessing = false;
     
@@ -64,10 +63,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         auth = getAuth(app);
         db = getFirestore(app);
-        functions = getFunctions(app);
         messaging = (await isSupported()) ? getMessaging(app) : null;
 
-        if (!messaging) throw new Error("Firebase Messaging is not supported.");
+        if (!messaging) throw new Error("Firebase Messaging is not supported in this browser.");
 
         onAuthStateChanged(auth, user => {
             currentUser = user;
@@ -104,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     const initializeNotificationState = async () => {
-        if (!currentUser) {
+        if (!currentUser || !messaging) {
             notificationBtn.style.display = 'none';
             return;
         }
@@ -124,21 +122,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             
             let isSubscribed = false;
-            if (Notification.permission === 'granted') {
-                 await navigator.serviceWorker.ready;
-                 const currentToken = await getToken(messaging, { vapidKey: VAPID_KEY }).catch(() => null);
+            // Await service worker readiness to prevent race conditions with getToken
+            await navigator.serviceWorker.ready;
+            const currentToken = await getToken(messaging, { vapidKey: VAPID_KEY }).catch(() => null);
 
-                 if (currentToken) {
-                    if (isDashboard) { // Owner's global subscription
-                        const userTokenRef = doc(db, 'userTokens', OWNER_UID);
-                        const userTokenDoc = await getDoc(userTokenRef);
-                        isSubscribed = userTokenDoc.exists() && (userTokenDoc.data().tokens || []).includes(currentToken);
-                    } else { // Page-specific subscription
-                        const pageSubRef = doc(db, 'pageSubscriptions', pageId);
-                        const docSnap = await getDoc(pageSubRef);
-                        isSubscribed = docSnap.exists() && (docSnap.data().tokens || []).includes(currentToken);
-                    }
-                 }
+            if (currentToken) {
+                if (isDashboard) { // Owner's global subscription
+                    const userTokenRef = doc(db, 'userTokens', OWNER_UID);
+                    const userTokenDoc = await getDoc(userTokenRef);
+                    isSubscribed = userTokenDoc.exists() && (userTokenDoc.data().tokens || []).includes(currentToken);
+                } else { // Page-specific subscription
+                    const pageSubRef = doc(db, 'pageSubscriptions', pageId);
+                    const docSnap = await getDoc(pageSubRef);
+                    isSubscribed = docSnap.exists() && (docSnap.data().tokens || []).includes(currentToken);
+                }
+            } else if (Notification.permission === 'granted') {
+                console.warn("Permission is granted, but could not retrieve FCM token.");
             }
             setButtonState(isSubscribed ? 'subscribed' : 'unsubscribed');
         } catch (error) {
@@ -162,20 +161,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             await navigator.serviceWorker.ready;
             const fcmToken = await getToken(messaging, { vapidKey: VAPID_KEY });
-            if (!fcmToken) throw new Error("Could not get a notification token from the browser.");
+            if (!fcmToken) throw new Error("Could not get a notification token from the browser. Please try again.");
 
             const isCurrentlySubscribed = notificationBtn.classList.contains('subscribed');
             const action = isCurrentlySubscribed ? 'unsubscribe' : 'subscribe';
-            
+            const operation = action === 'subscribe' ? arrayUnion(fcmToken) : arrayRemove(fcmToken);
+
             if (isDashboard) {
                 const userTokenRef = doc(db, 'userTokens', OWNER_UID);
-                const operation = action === 'subscribe' ? arrayUnion(fcmToken) : arrayRemove(fcmToken);
-                await updateDoc(userTokenRef, { tokens: operation });
-                if (action === 'unsubscribe') await deleteToken(messaging).catch(() => {});
+                await setDoc(userTokenRef, { tokens: operation }, { merge: true });
             } else {
-                const manageSubscription = httpsCallable(functions, 'manageSubscription');
-                const result = await manageSubscription({ pageId, token: fcmToken, action });
-                if (!result.data.success) throw new Error(result.data.message || `Could not ${action}.`);
+                const pageSubRef = doc(db, 'pageSubscriptions', pageId);
+                await setDoc(pageSubRef, { tokens: operation }, { merge: true });
             }
             
             const successMessage = action === 'subscribe' ? "Notifications successfully turned ON." : "Notifications turned OFF.";
@@ -183,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         } catch (error) {
             console.error("Subscription failed:", error);
-            showToast(error.message || "An unexpected error occurred.", 'error');
+            showToast(error.message || "An unexpected error occurred. Please try again.", 'error');
         } finally {
             isProcessing = false;
             await initializeNotificationState();
