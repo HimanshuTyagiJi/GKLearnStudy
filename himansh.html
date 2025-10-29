@@ -379,10 +379,103 @@
         <main class="container">
             <div id="root">
              
-            <div class="education-hero">
-                <h1>The Education Hub</h1>
-                <p>Welcome to your centralized portal for structured learning. Dive into our comprehensive library of articles, guides, and resources, dynamically organized by subject to help you master new concepts and excel in your studies.</p>
-            </div>
+           <svg width="100%" height="100%" style="border-radius:30px" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1"></stop>
+      <stop offset="100%" style="stop-color:#f0f4f8;stop-opacity:1"></stop>
+    </linearGradient>
+
+    <radialGradient id="bookGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c7d2fe" stop-opacity="0.8"></stop>
+      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0"></stop>
+    </radialGradient>
+
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5"></stop>
+      <stop offset="50%" stop-color="#6366f1"></stop>
+      <stop offset="100%" stop-color="#818cf8"></stop>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="200" fill="url(#bgGrad)"></rect>
+
+  <!-- Glowing Book Halo -->
+  <g transform="translate(80,90)">
+    <circle r="60" fill="url(#bookGlow)">
+      <animate attributeName="r" values="55;65;55" dur="3s" repeatCount="indefinite"></animate>
+    </circle>
+    <circle r="40" fill="url(#bookGlow)">
+      <animate attributeName="r" values="35;45;35" dur="2.5s" repeatCount="indefinite"></animate>
+    </circle>
+  </g>
+
+  <!-- Animated Book -->
+  <g id="book" transform="translate(50,50)">
+    <rect x="0" y="0" width="60" height="80" fill="#4f46e5" rx="5" stroke="#6366f1" stroke-width="2"></rect>
+    <rect x="5" y="5" width="50" height="70" fill="#818cf8" rx="3"></rect>
+    <!-- Flipping lines -->
+    <line x1="15" y1="20" x2="45" y2="20" stroke="#fff" stroke-width="2">
+      <animate attributeName="x2" values="45;15;45" dur="1s" repeatCount="indefinite"></animate>
+    </line>
+    <line x1="15" y1="35" x2="45" y2="35" stroke="#fff" stroke-width="2">
+      <animate attributeName="x2" values="45;15;45" dur="1s" repeatCount="indefinite"></animate>
+    </line>
+    <line x1="15" y1="50" x2="45" y2="50" stroke="#fff" stroke-width="2">
+      <animate attributeName="x2" values="45;15;45" dur="1s" repeatCount="indefinite"></animate>
+    </line>
+  </g>
+
+  <!-- Orbiting Knowledge Icons -->
+  <g transform="translate(80,90)">
+    <!-- Pencil -->
+    <circle cx="0" cy="-50" r="5" fill="#fbbf24">
+      <animateTransform attributeName="transform" type="rotate" values="0 0 0;360 0 0" dur="6s" repeatCount="indefinite"></animateTransform>
+    </circle>
+    <!-- Lightbulb -->
+    <circle cx="0" cy="50" r="5" fill="#facc15">
+      <animateTransform attributeName="transform" type="rotate" values="360 0 0;0 0 0" dur="8s" repeatCount="indefinite"></animateTransform>
+    </circle>
+    <!-- Atom -->
+    <circle cx="50" cy="0" r="5" fill="#34d399">
+      <animateTransform attributeName="transform" type="rotate" values="0 0 0;360 0 0" dur="7s" repeatCount="indefinite"></animateTransform>
+    </circle>
+  </g>
+
+  <!-- Text: Education Hub with Gradient -->
+  <text x="130" y="60" font-family="Verdana" font-size="26" fill="url(#textGrad)" font-weight="bold">
+   Welcome to Education!
+    <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"></animate>
+    <animateTransform attributeName="transform" type="translate" values="0,0;0,-5;0,0" dur="3s" repeatCount="indefinite"></animateTransform>
+  </text>
+
+  <!-- Tagline (Multiline) -->
+  <text x="130" y="100" font-family="Verdana" font-size="12" fill="#374151">
+    <tspan x="130" dy="0">Your centralized portal for structured learning. </tspan>
+    <tspan x="130" dy="20">From Math to Languages, all subjects are here.</tspan>
+    <tspan x="130" dy="20">Simply select any subject card below to instantly</tspan>
+    <tspan x="130" dy="20">access the latest articles, guides, and resources.</tspan>
+     <tspan x="130" dy="20">Master every topic with ease!</tspan>
+  </text>
+
+  <!-- Floating Sparkles -->
+  <g>
+    <circle cx="220" cy="30" r="3" fill="#fcd34d">
+      <animate attributeName="cy" values="30;25;30" dur="1.5s" repeatCount="indefinite"></animate>
+      <animate attributeName="cx" values="220;225;220" dur="1.5s" repeatCount="indefinite"></animate>
+    </circle>
+    <circle cx="260" cy="60" r="2" fill="#fde68a">
+      <animate attributeName="cy" values="60;55;60" dur="1.2s" repeatCount="indefinite"></animate>
+      <animate attributeName="cx" values="260;265;260" dur="1.2s" repeatCount="indefinite"></animate>
+    </circle>
+    <circle cx="300" cy="40" r="2" fill="#fcd34d">
+      <animate attributeName="cy" values="40;35;40" dur="1.3s" repeatCount="indefinite"></animate>
+      <animate attributeName="cx" values="300;305;300" dur="1.3s" repeatCount="indefinite"></animate>
+    </circle>
+  </g>
+</svg>
+
 
 
 <div class="post-meta-container">
