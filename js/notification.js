@@ -45,10 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // --- Firebase Initialization ---
-    async function initializeFirebase() {
-      if (isFirebaseInitialized) return;
-
-      try {
+   async function initializeFirebase() {
+    if (isFirebaseInitialized) return;
+    try {
         const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js');
         const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js');
         const { getFirestore } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
@@ -58,23 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
         firebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
         auth = getAuth(firebaseApp);
         db = getFirestore(firebaseApp);
-        messaging = getMessaging(firebaseApp);
+
+        // 🟢 यहां बदलाव करो ↓↓↓
+        messaging = getMessaging(firebaseApp, {
+          serviceWorkerRegistration: await navigator.serviceWorker.ready
+        });
+        // 🟢 यहां तक
+
         functions = getFunctions(firebaseApp);
-        registration = await registerServiceWorker();
 
         isFirebaseInitialized = true;
-        console.log("✅ Firebase initialized");
 
         onAuthStateChanged(auth, (user) => {
-          currentUser = user;
-          updateUIState();
+            currentUser = user;
+            updateUIState();
         });
-      } catch (error) {
-        console.error("❌ Firebase initialization failed:", error);
+    } catch (error) {
+        console.error("Firebase initialization failed:", error);
         notificationBtn.classList.add('disabled');
         notificationBtn.title = "Notification service unavailable";
-      }
     }
+}
 
     // --- UI Update Function ---
     function updateUIState() {
