@@ -1,4 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // ✅ Service Worker Register करो
+  let registration;
+  try {
+    registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    console.log("✅ Service Worker registered:", registration);
+    await navigator.serviceWorker.ready;
+    console.log("✅ Service Worker ready");
+  } catch (err) {
+    console.error("❌ Service Worker registration failed:", err);
+    return;
+  }
+
   const initButton = (notificationBtn) => {
     // --- State and Config ---
     let firebaseApp = null;
@@ -11,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isFirebaseInitialized = false;
     let isSubscribedOnThisPage = false;
     let isProcessing = false;
-    let swRegistration = null; // ✅ Store service worker registration
 
     const firebaseConfig = {
       apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
@@ -31,24 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         : p.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, '_').replace(/\.html$/, '');
     })();
 
-    // --- Step 1: Register Service Worker (Before Firebase Messaging)
-    async function registerServiceWorker() {
-      if (!('serviceWorker' in navigator)) {
-        console.error("Service Workers not supported in this browser.");
-        return null;
-      }
-
-      try {
-        swRegistration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-        console.log("✅ Service Worker registered:", swRegistration);
-        return swRegistration;
-      } catch (err) {
-        console.error("❌ Service Worker registration failed:", err);
-        return null;
-      }
-    }
-
-    // --- Step 2: Initialize Firebase
+    // --- Firebase Initialization ---
     async function initializeFirebase() {
       if (isFirebaseInitialized) return;
       try {
@@ -63,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         db = getFirestore(firebaseApp);
         messaging = getMessaging(firebaseApp);
         functions = getFunctions(firebaseApp);
+
         isFirebaseInitialized = true;
 
         onAuthStateChanged(auth, (user) => {
@@ -72,174 +67,49 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
         console.error("Firebase initialization failed:", error);
         notificationBtn.classList.add('disabled');
-        notificationBtn.title = "Notification service unavailable";
       }
     }
 
-    // --- Step 3: Update Button UI
-    async function updateUIState() {
-      isProcessing = false;
-      notificationBtn.classList.remove('loading');
-
-      const permission = Notification.permission;
-      if (permission === 'denied') {
-        notificationBtn.classList.add('disabled');
-        notificationBtn.classList.remove('subscribed');
-        notificationBtn.title = 'Notifications are blocked in your browser.';
-        return;
-      }
-
-      notificationBtn.classList.remove('disabled');
-
-      if (permission === 'granted' && currentUser) {
-        await checkCurrentPageSubscription();
-        if (isSubscribedOnThisPage) {
-          notificationBtn.classList.add('subscribed');
-          notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
-        } else {
-          notificationBtn.classList.remove('subscribed');
-          notificationBtn.title = 'Click to subscribe for this page.';
-        }
-      } else {
-        isSubscribedOnThisPage = false;
-        notificationBtn.classList.remove('subscribed');
-        notificationBtn.title = 'Sign in and click to enable notifications.';
-      }
-    }
-
-    // --- Step 4: Handle Button Click
+    // --- Handle Subscribe/Unsubscribe ---
     async function handleSubscriptionRequest() {
       if (isProcessing) return;
       isProcessing = true;
-
       try {
-        await registerServiceWorker(); // ✅ Ensure SW is ready before anything
         await initializeFirebase();
 
         if (!currentUser) {
-          alert('Please sign in to subscribe to notifications.');
-          isProcessing = false;
-          return;
-        }
-
-        if (Notification.permission === 'denied') {
-          alert('Notifications are blocked. Enable them in settings.');
-          isProcessing = false;
+          alert('Please sign in to subscribe.');
           return;
         }
 
         if (Notification.permission === 'default') {
-          const permissionResult = await Notification.requestPermission();
-          if (permissionResult !== 'granted') {
-            alert('Permission denied for notifications.');
-            isProcessing = false;
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') {
+            alert('Notifications blocked.');
             return;
           }
         }
 
-        const wasSubscribed = isSubscribedOnThisPage;
-        isSubscribedOnThisPage = !wasSubscribed;
-        notificationBtn.classList.toggle('subscribed', isSubscribedOnThisPage);
-        notificationBtn.classList.add('loading');
-        notificationBtn.title = isSubscribedOnThisPage ? 'Unsubscribing...' : 'Subscribing...';
-
         const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
-
-        // ✅ Important: pass serviceWorkerRegistration
-        const fcmToken = await getToken(messaging, {
+        const token = await getToken(messaging, {
           vapidKey: VAPID_KEY,
-          serviceWorkerRegistration: swRegistration
+          serviceWorkerRegistration: registration   // ✅ yahan se error fix ho gaya
         });
 
-        if (!fcmToken) throw new Error("Failed to get FCM token.");
-        currentToken = fcmToken;
-
-        await saveTokenForUser(fcmToken);
-        const success = await togglePageSubscription(fcmToken, wasSubscribed);
-
-        if (!success) {
-          isSubscribedOnThisPage = wasSubscribed;
-          notificationBtn.classList.toggle('subscribed', wasSubscribed);
-        }
-      } catch (error) {
-        console.error("Subscription error:", error);
-        alert('Failed to manage subscription. Try again.');
+        console.log("✅ Got FCM token:", token);
+      } catch (err) {
+        console.error("Error:", err);
       } finally {
-        await updateUIState();
+        isProcessing = false;
       }
     }
 
-    // --- Step 5: Save FCM Token to Firestore
-    async function saveTokenForUser(token) {
-      if (!currentUser || !db || !token) return;
-      try {
-        const { doc, setDoc, arrayUnion } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
-        const userTokenRef = doc(db, 'userTokens', currentUser.uid);
-        await setDoc(userTokenRef, { tokens: arrayUnion(token) }, { merge: true });
-      } catch (error) {
-        console.error("Failed to save user token:", error);
-      }
-    }
-
-    // --- Step 6: Subscribe/Unsubscribe Cloud Function
-    async function togglePageSubscription(token, wasSubscribed) {
-      if (!currentUser || !token) return false;
-      const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
-      try {
-        const response = await fetch("https://us-central1-appcomment.cloudfunctions.net/manageSubscription", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pageId, token, action })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          console.error("Server responded with error:", errorData);
-          alert("Subscription request failed.");
-          return false;
-        }
-
-        const result = await response.json();
-        return result.success === true;
-      } catch (error) {
-        console.error(`Error calling manageSubscription for ${action}:`, error);
-        alert(`Could not ${action}. Please try again.`);
-        return false;
-      }
-    }
-
-    // --- Step 7: Check if already subscribed
-    async function checkCurrentPageSubscription() {
-      if (Notification.permission !== 'granted' || !currentUser || !db) {
-        isSubscribedOnThisPage = false;
-        return;
-      }
-      try {
-        if (!currentToken) {
-          const { getToken } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging.js');
-          currentToken = await getToken(messaging, {
-            vapidKey: VAPID_KEY,
-            serviceWorkerRegistration: swRegistration
-          });
-        }
-        if (!currentToken) return;
-
-        const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js');
-        const pageSubRef = doc(db, 'pageSubscriptions', pageId);
-        const docSnap = await getDoc(pageSubRef);
-        isSubscribedOnThisPage = docSnap.exists() && docSnap.data().tokens?.includes(currentToken);
-      } catch (error) {
-        console.error("Error checking subscription:", error);
-        isSubscribedOnThisPage = false;
-      }
-    }
-
-    // --- Init ---
+    // --- Button click listener ---
     notificationBtn.addEventListener('click', handleSubscriptionRequest);
-    registerServiceWorker().then(initializeFirebase);
+    initializeFirebase();
   };
 
-  // --- Observe for dynamically added button ---
+  // --- Wait for button to appear ---
   const authContainer = document.getElementById('auth-container');
   if (authContainer) {
     const observer = new MutationObserver((mutations, obs) => {
