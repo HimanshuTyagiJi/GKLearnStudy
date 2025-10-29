@@ -1,30 +1,25 @@
-// firebase-messaging-sw.js
-
 importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-    authDomain: "appcomment.firebaseapp.com",
-    projectId: "appcomment",
-    storageBucket: "appcomment.firebasestorage.app",
-    messagingSenderId: "156258808941",
-    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+  apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+  authDomain: "appcomment.firebaseapp.com",
+  projectId: "appcomment",
+  storageBucket: "appcomment.firebasestorage.app",
+  messagingSenderId: "156258808941",
+  appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
 };
 
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-// --- State for Smart Notifications ---
-let pageVisibilityState = {};
-
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'VISIBILITY_CHANGE') {
-        const { pageId, isVisible } = event.data;
-        console.log(`[SW] Visibility for page ${pageId} is now ${isVisible}`);
-        pageVisibilityState[pageId] = isVisible;
-    }
+// ✅ Add this to fix pushManager undefined error
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    self.registration.pushManager.getSubscription().catch(() => null)
+  );
 });
+
 
 
 messaging.onBackgroundMessage((payload) => {
