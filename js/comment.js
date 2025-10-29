@@ -40,10 +40,8 @@ const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const loginPrompt = document.getElementById('login-prompt');
 const commentCountSpan = document.getElementById('comment-count');
-const ratingWidget = document.getElementById('rating-widget');
 const ratingStarsContainer = document.getElementById('rating-stars');
 const ratingLoginPrompt = document.getElementById('rating-login-prompt');
-const notificationBtn = document.getElementById('notification-btn');
 const averageRatingValue = document.getElementById('average-rating-value');
 const totalRatingsCount = document.getElementById('total-ratings-count');
 const originalLoginHTML = loginBtn ? loginBtn.innerHTML : '';
@@ -79,43 +77,75 @@ function showErrorUI(targetElement, message, retryCallback) {
 }
 
 // ====== UNIFIED INITIALIZATION LOGIC ======
+
+/**
+ * Initializes Firebase services (App, Auth, Firestore) once.
+ */
 function initializeFirebaseServices() {
     if (app) return;
     try {
         app = initializeApp(firebaseConfig);
         auth = getAuth(app);
+        // Attempt to initialize Firestore with persistence, fallback to in-memory.
         try {
-            db = initializeFirestore(app, { localCache: persistentLocalCache({}) });
+            db = initializeFirestore(app, {
+                localCache: persistentLocalCache({})
+            });
         } catch (e) {
-            console.warn("Firestore persistence failed. Falling back to in-memory.", e);
+            console.warn("Firestore persistence failed to initialize. Falling back to in-memory.", e);
             db = getFirestore(app);
         }
     } catch (error) {
         console.error("Fatal: Firebase initialization failed.", error);
-        throw error;
+        throw error; // Propagate error to stop initialization
     }
 }
 
+/**
+ * Returns a promise that resolves once the initial authentication state is known.
+ * This is crucial for preventing race conditions on page load.
+ */
+function awaitInitialAuthState() {
+    return new Promise((resolve) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            unsubscribe(); // We only need the very first state emission.
+            resolve();
+        });
+    });
+}
+
+/**
+ * Sets up the persistent listener that reacts to subsequent sign-in/sign-out events.
+ */
+function setupPersistentAuthObserver() {
+    onAuthStateChanged(auth, (user) => {
+        const wasLoggedIn = !!currentUser;
+        currentUser = user;
+        // Only trigger a full UI update if the login state actually changes.
+        if (wasLoggedIn !== !!user) {
+            updateUIAfterAuthChange();
+        }
+    });
+}
+
+/**
+ * Main function to initialize the entire comment/rating system.
+ */
 async function initializeSystem() {
     if (isAppInitialized) return;
     isAppInitialized = true;
 
     try {
         initializeFirebaseServices();
-        
-        onAuthStateChanged(auth, (user) => {
-            const wasJustUpdated = currentUser?.uid === user?.uid;
-            currentUser = user;
-            if (!wasJustUpdated) {
-                updateUIAfterAuthChange();
-            }
-        });
+        await awaitInitialAuthState(); // Wait to know if user is logged in or not.
+        setupPersistentAuthObserver(); // Now, listen for future changes.
 
-        // Load data in parallel for speed
-        await Promise.all([loadComments(), loadRatings()]);
-        
+        // With the auth state known, we can safely load data and set up the UI.
+        loadComments();
+        loadRatings();
         setupAllEventListeners();
-        updateUIAfterAuthChange(); // Initial UI setup
+        updateUIAfterAuthChange(); // Perform the initial UI setup.
         handleCommentDeepLink();
         
     } catch (error) {
@@ -128,19 +158,36 @@ async function initializeSystem() {
 // ====== Auth Management & UI Updates ======
 
 function updateUIAfterAuthChange() {
+    // Owner dashboard link
     const dashboardLink = document.getElementById('dashboard-link');
     if (dashboardLink) {
         dashboardLink.style.display = (currentUser && currentUser.uid === OWNER_UID) ? 'list-item' : 'none';
     }
-
+    
+    // Auth container UI
     if (currentUser) {
-        userInfo.innerHTML = `<img src="${currentUser.photoURL}" alt="${escapeHTML(currentUser.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(currentUser.displayName)}</span>`;
+        const bellIconHTML = `
+            <button class="notification-btn" id="notification-btn" title="Enable notifications" aria-label="Toggle notifications">
+                <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <svg class="bell-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    <path d="M18.63 13A17.89 17.89 0 0 1 18 8a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <svg class="spinner-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                </svg>
+            </button>
+        `;
+        userInfo.innerHTML = `<img src="${currentUser.photoURL}" alt="${escapeHTML(currentUser.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(currentUser.displayName)}</span>${bellIconHTML}`;
         authContainer.classList.add('logged-in');
         mainFormShell.style.display = 'block';
         loginPrompt.style.display = 'none';
-        if (notificationBtn) notificationBtn.style.display = 'inline-flex';
     } else {
-        userInfo.innerHTML = '';
+        userInfo.innerHTML = ''; // Clear the user info, removing the bell icon
         authContainer.classList.remove('logged-in');
         mainFormShell.style.display = 'none';
         loginPrompt.style.display = 'block';
@@ -149,10 +196,11 @@ function updateUIAfterAuthChange() {
             loginBtn.innerHTML = originalLoginHTML;
         }
         closeActiveReplyForm();
-        if (notificationBtn) notificationBtn.style.display = 'none';
     }
     
+    // Re-render comments to show/hide user-specific controls (e.g., delete buttons).
     renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+    // Re-fetch user's rating and update the rating UI.
     if (currentRatingSummary) {
         fetchUserRatingAndUpdateUI(currentRatingSummary);
     }
@@ -164,40 +212,47 @@ async function signInWithGoogle() {
     try {
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider);
+        // The onAuthStateChanged listener will handle the UI update automatically.
     } catch (error) {
         console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
             alert("Could not sign in. Please check your connection and try again.");
         }
     } finally {
-        if (!currentUser) {
+        if (!currentUser) { // If sign-in was cancelled or failed, reset the button.
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
     }
 }
 
+async function signOutUser() {
+    await signOut(auth);
+}
+
 // ====== RATING SYSTEM LOGIC ======
+
 async function fetchUserRatingAndUpdateUI(summaryData) {
-    userRating = 0; // Reset for logged-out users
     if (currentUser) {
         const userRatingDocRef = doc(db, ...ratingsPath, currentUser.uid);
         const userDoc = await getDoc(userRatingDocRef);
         userRating = userDoc.exists() ? userDoc.data().rating : 0;
+    } else {
+        userRating = 0;
     }
     updateRatingUI(summaryData, userRating);
 }
 
 function updateRatingUI(summaryData, currentUserRating) {
-    if (!ratingWidgetWrapper || !averageRatingValue || !totalRatingsCount) return;
+    if (!ratingWidgetWrapper) return;
 
     const breakdown = summaryData?.breakdown || {};
     const totalCount = summaryData?.totalCount || 0;
     const totalSum = summaryData?.totalSum || 0;
     const average = totalCount > 0 ? (totalSum / totalCount) : 0;
 
-    averageRatingValue.textContent = average.toFixed(1);
-    totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
+    if (averageRatingValue) averageRatingValue.textContent = average.toFixed(1);
+    if (totalRatingsCount) totalRatingsCount.textContent = `${totalCount} rating${totalCount !== 1 ? 's' : ''}`;
 
     for (let i = 5; i >= 1; i--) {
         const row = ratingWidgetWrapper.querySelector(`.breakdown-row[data-star-level="${i}"]`);
@@ -227,21 +282,17 @@ function updateRatingUI(summaryData, currentUserRating) {
 }
 
 function loadRatings() {
-    return new Promise((resolve, reject) => {
-        if (unsubscribeRating) unsubscribeRating();
-        const summaryDocRef = doc(db, ...ratingsPath, '_summary');
-        
-        unsubscribeRating = onSnapshot(summaryDocRef, (doc) => {
-            const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-            currentRatingSummary = summaryData;
-            fetchUserRatingAndUpdateUI(summaryData);
-            ratingWidgetWrapper?.classList.remove('rating-loading');
-            resolve();
-        }, (error) => {
-            console.error("Error loading rating summary:", error);
-            if (ratingWidget) showErrorUI(ratingWidget, "Could not load ratings.", initializeSystem);
-            reject(error);
-        });
+    if (unsubscribeRating) unsubscribeRating();
+    const summaryDocRef = doc(db, ...ratingsPath, '_summary');
+    
+    unsubscribeRating = onSnapshot(summaryDocRef, (doc) => {
+        const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
+        currentRatingSummary = summaryData; // Cache the summary
+        fetchUserRatingAndUpdateUI(summaryData); // Fetch user-specific rating
+        ratingWidgetWrapper?.classList.remove('rating-loading');
+    }, (error) => {
+        console.error("Error loading rating summary:", error);
+        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings.", initializeSystem);
     });
 }
 
@@ -252,33 +303,50 @@ async function submitRating(newRating) {
     if (newRating === oldUserRating) return;
     isRatingSubmissionPending = true;
 
+    // Optimistic UI update
+    const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
+    if (oldUserRating > 0) {
+        optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
+        optimisticSummary.totalSum -= oldUserRating;
+        optimisticSummary.totalCount -= 1;
+    }
+    optimisticSummary.breakdown[String(newRating)] = (optimisticSummary.breakdown[String(newRating)] || 0) + 1;
+    optimisticSummary.totalSum += newRating;
+    optimisticSummary.totalCount += 1;
+    userRating = newRating;
+    updateRatingUI(optimisticSummary, newRating);
+
+    // Server update
     try {
         await runTransaction(db, async (transaction) => {
             const summaryRef = doc(db, ...ratingsPath, '_summary');
             const userRatingRef = doc(db, ...ratingsPath, currentUser.uid);
             const summaryDoc = await transaction.get(summaryRef);
+            const serverSummary = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
             
-            let { totalCount = 0, totalSum = 0, breakdown = {} } = summaryDoc.exists() ? summaryDoc.data() : {};
-            
-            // Adjust for old rating if it exists
+            const breakdown = { ...serverSummary.breakdown };
+            let newSum = serverSummary.totalSum || 0;
+            let newCount = serverSummary.totalCount || 0;
+
+            // Recalculate based on server state to avoid race conditions
             if (oldUserRating > 0) {
                 breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
-                totalSum -= oldUserRating;
-                totalCount -= 1;
+                newSum -= oldUserRating;
+                newCount -= 1;
             }
-            
-            // Add new rating
             breakdown[String(newRating)] = (breakdown[String(newRating)] || 0) + 1;
-            totalSum += newRating;
-            totalCount += 1;
+            newSum += newRating;
+            newCount += 1;
 
             transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestamp() });
-            transaction.set(summaryRef, { totalSum, totalCount, breakdown });
+            transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
         });
-        userRating = newRating; // Update local state on success
     } catch (error) {
         console.error("Rating submission failed:", error);
         alert("Could not save your rating. Please try again.");
+        // Rollback optimistic UI change
+        userRating = oldUserRating;
+        updateRatingUI(currentRatingSummary, oldUserRating);
     } finally {
         isRatingSubmissionPending = false;
     }
@@ -344,29 +412,25 @@ function renderFlatList(nodes, container){
 }
 
 function loadComments(){
-    return new Promise((resolve, reject) => {
-        if (unsubscribeComments) unsubscribeComments();
-        const q = query(collection(db, ...commentsPath), orderBy('timestamp','desc'));
-        unsubscribeComments = onSnapshot(q, (snapshot) => {
-            const newComments = [];
-            snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
-            const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
-            allComments = [...optimisticComments, ...newComments];
-            renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-            
-            const totalComments = allComments.length;
-            if (commentCountSpan) {
-                commentCountSpan.textContent = totalComments;
-                const plural = totalComments !== 1 ? 's' : '';
-                if(commentCountSpan.nextSibling) commentCountSpan.nextSibling.textContent = ` Comment${plural}`;
-            }
-            commentsWrapper?.classList.remove('comments-loading');
-            resolve();
-        }, (error) => {
-            console.error('Comment listener error:', error);
-            showErrorUI(commentsList, 'A network error occurred.', initializeSystem);
-            reject(error);
-        });
+    if (unsubscribeComments) unsubscribeComments();
+    const q = query(collection(db, ...commentsPath), orderBy('timestamp','desc'));
+    unsubscribeComments = onSnapshot(q, (snapshot) => {
+        const newComments = [];
+        snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
+        const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
+        allComments = [...optimisticComments, ...newComments];
+        renderFlatList(flattenTree(buildTree(allComments)), commentsList);
+        
+        const totalComments = allComments.length;
+        if (commentCountSpan) {
+            commentCountSpan.textContent = totalComments;
+            const plural = totalComments !== 1 ? 's' : '';
+            if(commentCountSpan.nextSibling) commentCountSpan.nextSibling.textContent = ` Comment${plural}`;
+        }
+        commentsWrapper?.classList.remove('comments-loading');
+    }, (error) => {
+        console.error('Comment listener error:', error);
+        showErrorUI(commentsList, 'A network error occurred.', initializeSystem);
     });
 }
 
@@ -391,24 +455,36 @@ function openReplyForm(commentId, authorName, targetSlot) {
 
 async function handleVote(commentId, voteType) {
     if (!currentUser) { signInWithGoogle(); return; }
+    
     const commentRef = doc(db, ...commentsPath, commentId);
+
     try {
         await runTransaction(db, async (transaction) => {
             const commentDoc = await transaction.get(commentRef);
             if (!commentDoc.exists()) throw "Document does not exist!";
             
-            let { likedBy = [], dislikedBy = [] } = commentDoc.data();
+            const data = commentDoc.data();
+            const likedBy = data.likedBy || [];
+            const dislikedBy = data.dislikedBy || [];
             const uid = currentUser.uid;
 
             const isLiked = likedBy.includes(uid);
             const isDisliked = dislikedBy.includes(uid);
             
             if (voteType === 'like') {
-                likedBy = isLiked ? likedBy.filter(id => id !== uid) : [...likedBy, uid];
-                dislikedBy = dislikedBy.filter(id => id !== uid);
-            } else { // dislike
-                dislikedBy = isDisliked ? dislikedBy.filter(id => id !== uid) : [...dislikedBy, uid];
-                likedBy = likedBy.filter(id => id !== uid);
+                if (isLiked) { // Unlike
+                    likedBy.splice(likedBy.indexOf(uid), 1);
+                } else { // Like
+                    likedBy.push(uid);
+                    if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1); // Remove from dislikes
+                }
+            } else if (voteType === 'dislike') {
+                if (isDisliked) { // Undislike
+                    dislikedBy.splice(dislikedBy.indexOf(uid), 1);
+                } else { // Dislike
+                    dislikedBy.push(uid);
+                    if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1); // Remove from likes
+                }
             }
             transaction.update(commentRef, { likedBy, dislikedBy, likes: likedBy.length, dislikes: dislikedBy.length });
         });
@@ -485,40 +561,59 @@ async function postComment(form) {
     }
 }
 
+
 // ====== Event Listeners Setup ======
 function setupAllEventListeners() {
+    // One-time setup for all interactive elements.
     loginBtn?.addEventListener('click', signInWithGoogle);
-    logoutBtn?.addEventListener('click', () => signOut(auth));
+    logoutBtn?.addEventListener('click', signOutUser);
 
     const container = document.getElementById('custom-comment-section');
     if (!container) return;
 
+    // Delegated click listener for all actions inside the comment section.
     container.addEventListener('click', (e) => {
-        const button = e.target.closest('button');
-        if (!button) return;
+        const target = e.target;
+        const button = target.closest('button');
 
-        if (button.id === 'cancel-reply') { closeActiveReplyForm(); return; }
-        
-        const action = button.dataset.action;
-        const commentItem = button.closest('.comment-item');
-        const commentId = button.closest('[data-comment-id]')?.dataset.commentId;
-        
-        if (action && commentId) {
-            const node = allComments.find(c => c.id === commentId);
-            if (!node) return;
-            if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) { signInWithGoogle(); return; }
+        if (button) {
+            if (button.id === 'cancel-reply') {
+                closeActiveReplyForm();
+                return;
+            }
+            const action = button.dataset.action;
+            const commentItem = button.closest('.comment-item');
+            const commentId = button.closest('[data-comment-id]')?.dataset.commentId;
+            
+            if (action && commentId) {
+                const node = allComments.find(c => c.id === commentId);
+                if (!node) return;
 
-            switch (action) {
-                case 'reply': openReplyForm(node.id, node.name, commentItem.querySelector('.inline-reply-slot')); break;
-                case 'delete': if (confirm('Delete this comment and all its replies?')) deleteWithDescendants(node.id); break;
-                case 'like': case 'dislike': handleVote(node.id, action); break;
+                if (!currentUser && ['like', 'dislike', 'reply', 'delete'].includes(action)) {
+                    signInWithGoogle();
+                    return;
+                }
+
+                switch (action) {
+                    case 'reply':
+                        openReplyForm(node.id, node.name, commentItem.querySelector('.inline-reply-slot'));
+                        break;
+                    case 'delete':
+                        if (confirm('Delete this comment and all its replies?')) deleteWithDescendants(node.id);
+                        break;
+                    case 'like':
+                    case 'dislike':
+                        handleVote(node.id, action);
+                        break;
+                }
             }
         }
     });
 
+    // Delegated submit listener for the main form and any reply forms.
     container.addEventListener('submit', (e) => {
+        e.preventDefault();
         if (e.target.matches('.comment-form')) {
-            e.preventDefault();
             postComment(e.target);
         }
     });
@@ -530,6 +625,7 @@ function setupAllEventListeners() {
         submitRating(parseInt(star.dataset.value, 10));
     });
 
+    // Character counter for the main comment form.
     const mainCommentInput = mainForm?.querySelector('#comment');
     if (mainCommentInput) {
         const mainCharCounter = mainForm.querySelector('#char-counter');
@@ -565,12 +661,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('comments-and-ratings-container');
     if (!container) return;
     
+    // Lazy load the system when it's scrolled into view for performance.
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
             initializeSystem();
-            observer.disconnect();
+            observer.disconnect(); // Initialize only once.
         }
-    }, { rootMargin: "200px" });
+    }, { rootMargin: "200px" }); // Start loading when it's 200px from the viewport.
     
     observer.observe(container);
 });
