@@ -162,21 +162,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Subscribe/Unsubscribe in Firestore via Cloud Function ---
-        async function togglePageSubscription(token, wasSubscribed) {
-            if (!currentUser || !functions || !token) return false;
-            const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
-            try {
-                const { httpsCallable } = await import('https://www.gstatic.com/firebasejs/9.22.1/firebase-functions.js');
-                const manageSubscription = httpsCallable(functions, 'manageSubscription');
-                const result = await manageSubscription({ pageId, token, action });
-                console.log("manageSubscription result:", result.data);
-                return result.data?.success === true;
-            } catch (error) {
-                console.error(`Error calling manageSubscription for ${action}:`, error);
-                alert(`Could not ${action}. Please try again.`);
-                return false;
-            }
-        }
+      async function togglePageSubscription(token, wasSubscribed) {
+  if (!currentUser || !token) return false;
+  const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
+  try {
+    const response = await fetch("https://us-central1-appcomment.cloudfunctions.net/manageSubscription", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pageId, token, action })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error("Server responded with error:", errorData);
+      alert("Subscription request failed.");
+      return false;
+    }
+
+    const result = await response.json();
+    return result.success === true;
+  } catch (error) {
+    console.error(`Error calling manageSubscription for ${action}:`, error);
+    alert(`Could not ${action}. Please try again.`);
+    return false;
+  }
+}
+
 
         // --- Check if user already subscribed ---
         async function checkCurrentPageSubscription() {
