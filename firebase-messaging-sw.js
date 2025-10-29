@@ -41,14 +41,10 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.data.body,
     icon: payload.data.icon,
-    actions: [
-        { action: 'open', title: 'Open Page' },
-        { action: 'unsubscribe', title: 'Unsubscribe' }
-    ],
+    // Store data needed for actions
     data: {
         url: payload.data.url,
-        commentId: payload.data.commentId,
-        pageId: payload.data.pageId // Pass pageId for potential future use in actions
+        commentId: payload.data.commentId
     }
   };
 
@@ -72,12 +68,11 @@ self.addEventListener('notificationclick', (event) => {
     const finalUrl = new URL(urlToOpen, self.location.origin);
     
     // If the main body (no action) or the 'open' button is clicked, scroll to the comment.
-    // For 'unsubscribe', we just open the page without a hash, letting the user manage it there.
+    // For 'unsubscribe', we just open the page without a hash.
     if ((!event.action || event.action === 'open') && commentId) {
         finalUrl.hash = `comment-${commentId}`;
     }
 
-    // This block tries to find an already open tab and focuses it, or opens a new one.
     event.waitUntil(
         clients.matchAll({
             type: "window",
