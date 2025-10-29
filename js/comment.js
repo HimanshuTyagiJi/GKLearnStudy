@@ -42,8 +42,7 @@ const loginPrompt = document.getElementById('login-prompt');
 const commentCountSpan = document.getElementById('comment-count');
 const ratingStarsContainer = document.getElementById('rating-stars');
 const ratingLoginPrompt = document.getElementById('rating-login-prompt');
-const averageRatingValue = document.getElementById('average-rating-value');
-const totalRatingsCount = document.getElementById('total-ratings-count');
+const notificationBtn = document.getElementById('notification-btn');
 const originalLoginHTML = loginBtn ? loginBtn.innerHTML : '';
 
 // --- Helper Functions ---
@@ -163,8 +162,6 @@ function updateUIAfterAuthChange() {
     if (dashboardLink) {
         dashboardLink.style.display = (currentUser && currentUser.uid === OWNER_UID) ? 'list-item' : 'none';
     }
-    
-    const notificationBtn = document.getElementById('notification-btn');
 
     // Auth container UI
     if (currentUser) {
