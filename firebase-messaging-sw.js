@@ -1,3 +1,4 @@
+
 // --- Firebase v9 Modular SDK Imports ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getMessaging, onBackgroundMessage } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-sw.js";
@@ -19,15 +20,10 @@ const messaging = getMessaging(app);
 onBackgroundMessage(messaging, (payload) => {
   console.log("[SW] Received background message:", payload);
 
-  // Only show if it's a comment notification
-  if (payload.data?.type !== "comment") {
-    console.log("[SW] Skipping non-comment notification");
-    return;
-  }
-
-  const notificationTitle = payload.data.title || "New Comment";
+  // Construct notification data from the payload
+  const notificationTitle = payload.data.title || "New Notification";
   const notificationOptions = {
-    body: payload.data.body || "You have a new comment",
+    body: payload.data.body || "You have a new message.",
     icon: payload.data.icon || "/favicon.ico",
     data: {
       url: payload.data.url || "/",
@@ -35,6 +31,7 @@ onBackgroundMessage(messaging, (payload) => {
     }
   };
 
+  // Display the notification
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
@@ -43,22 +40,19 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const data = event.notification.data;
-  const url = data.url || "/";
-  // The final URL is constructed to include the comment hash for direct navigation.
-  const finalUrl = data.commentId ? `${url}` : url; // The hash will be added on the client-side for smooth scrolling
+  // Construct the final URL, adding a hash for the comment if it exists.
+  const finalUrl = data.commentId ? `${data.url}#comment-${data.commentId}` : data.url;
 
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true })
       .then((clientList) => {
         // Check if a window for the target URL is already open.
         for (const client of clientList) {
-          // A simple URL check might not be enough if there are query parameters.
-          // We'll focus on the base URL and let the client-side JS handle the hash.
           const clientUrl = new URL(client.url);
-          const targetUrl = new URL(url, self.location.origin);
+          const targetUrl = new URL(data.url, self.location.origin);
 
           if (clientUrl.pathname === targetUrl.pathname && "focus" in client) {
-            // Navigate the existing client to the final URL and focus it.
+            // If found, navigate the existing client to the final URL (with hash) and focus it.
             client.navigate(finalUrl); 
             return client.focus();
           }
