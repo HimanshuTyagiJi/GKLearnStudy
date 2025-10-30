@@ -78,39 +78,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     notificationBtn.title = "Notification service unavailable";
   }
 }
+// --- Update Button State ---
+async function updateUIState() {
+  isProcessing = false;
+  notificationBtn.classList.remove('loading');
 
-    // --- Update Button State ---
-    async function updateUIState() {
-      isProcessing = false;
-      notificationBtn.classList.remove('loading');
+  const permission = Notification.permission;
+  if (permission === 'denied') {
+    notificationBtn.classList.add('disabled');
+    notificationBtn.classList.remove('subscribed');
+    notificationBtn.title = 'Notifications are blocked in your browser.';
+    notificationBtn.innerHTML = '🚫 Blocked';
+    return;
+  }
 
-      const permission = Notification.permission;
-      if (permission === 'denied') {
-        notificationBtn.classList.add('disabled');
-        notificationBtn.classList.remove('subscribed');
-        notificationBtn.title = 'Notifications are blocked in your browser.';
-        return;
-      }
+  notificationBtn.classList.remove('disabled');
 
-      notificationBtn.classList.remove('disabled');
-
-      if (permission === 'granted' && currentUser) {
-        await checkCurrentPageSubscription();
-        if (isSubscribedOnThisPage) {
-          notificationBtn.classList.add('subscribed');
-          notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
-        } else {
-          notificationBtn.classList.remove('subscribed');
-          notificationBtn.title = 'Click to subscribe for this page.';
-        }
-      } else {
-        isSubscribedOnThisPage = false;
-        notificationBtn.classList.remove('subscribed');
-        notificationBtn.title = 'Sign in and click to enable notifications.';
-      }
+  if (permission === 'granted' && currentUser) {
+    await checkCurrentPageSubscription();
+    if (isSubscribedOnThisPage) {
+      notificationBtn.classList.add('subscribed');
+      notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
+      notificationBtn.innerHTML = '🔔 Unsubscribe';
+    } else {
+      notificationBtn.classList.remove('subscribed');
+      notificationBtn.title = 'Click to subscribe for this page.';
+      notificationBtn.innerHTML = '🔕 Subscribe';
     }
+  } else {
+    isSubscribedOnThisPage = false;
+    notificationBtn.classList.remove('subscribed');
+    notificationBtn.title = 'Sign in and click to enable notifications.';
+    notificationBtn.innerHTML = '🔔 Subscribe';
+  }
+}
 
-    // --- Handle Button Click ---
     async function handleSubscriptionRequest() {
       if (isProcessing) return;
       isProcessing = true;
