@@ -88,17 +88,17 @@ async function updateUIState() {
     if (isSubscribedOnThisPage) {
       notificationBtn.classList.add('subscribed');
       notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
-      notificationBtn.innerHTML = '🔔 ';
+      notificationBtn.innerHTML = '"🔔"';
     } else {
       notificationBtn.classList.remove('subscribed');
       notificationBtn.title = 'Click to subscribe for this page.';
-      notificationBtn.innerHTML = '🔕 ';
+      notificationBtn.innerHTML = '🔕';
     }
   } else {
     isSubscribedOnThisPage = false;
     notificationBtn.classList.remove('subscribed');
     notificationBtn.title = 'Sign in and click to enable notifications.';
-    notificationBtn.innerHTML = '🔔 Subscribe';
+    notificationBtn.innerHTML = '🔔';
   }
 }
 
