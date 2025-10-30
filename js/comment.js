@@ -26,6 +26,7 @@ let unsubscribeComments = null;
 let unsubscribeRating = null;
 let isAppInitialized = false;
 let isRatingSubmissionPending = false;
+const votingInProgress = new Set();
 
 
 // --- DOM Element Selection ---
@@ -454,43 +455,125 @@ function openReplyForm(commentId, authorName, targetSlot) {
 }
 
 async function handleVote(commentId, voteType) {
-    if (!currentUser) { signInWithGoogle(); return; }
+    if (!currentUser) { 
+        signInWithGoogle(); 
+        return; 
+    }
     
-    const commentRef = doc(db, ...commentsPath, commentId);
+    if (votingInProgress.has(commentId)) {
+        return;
+    }
+    votingInProgress.add(commentId);
 
+    const commentRef = doc(db, ...commentsPath, commentId);
+    
+    const commentIndex = allComments.findIndex(c => c.id === commentId);
+    if (commentIndex === -1) {
+        votingInProgress.delete(commentId);
+        return;
+    }
+    const comment = allComments[commentIndex];
+    const commentElement = document.querySelector(`.comment-actions[data-comment-id="${commentId}"]`);
+    if (!commentElement) {
+        votingInProgress.delete(commentId);
+        return;
+    }
+    const likeBtn = commentElement.querySelector('.like-btn');
+    const likeCountSpan = likeBtn.querySelector('.count');
+    const dislikeBtn = commentElement.querySelector('.dislike-btn');
+    const dislikeCountSpan = dislikeBtn.querySelector('.count');
+
+    const originalState = {
+        likes: comment.likes || 0,
+        dislikes: comment.dislikes || 0,
+        likedBy: [...(comment.likedBy || [])],
+        dislikedBy: [...(comment.dislikedBy || [])]
+    };
+
+    const uid = currentUser.uid;
+    const isLiked = originalState.likedBy.includes(uid);
+    const isDisliked = originalState.dislikedBy.includes(uid);
+    
+    const newState = JSON.parse(JSON.stringify(originalState));
+
+    if (voteType === 'like') {
+        if (isLiked) {
+            newState.likes--;
+            newState.likedBy = newState.likedBy.filter(id => id !== uid);
+        } else {
+            newState.likes++;
+            newState.likedBy.push(uid);
+            if (isDisliked) {
+                newState.dislikes--;
+                newState.dislikedBy = newState.dislikedBy.filter(id => id !== uid);
+            }
+        }
+    } else if (voteType === 'dislike') {
+        if (isDisliked) {
+            newState.dislikes--;
+            newState.dislikedBy = newState.dislikedBy.filter(id => id !== uid);
+        } else {
+            newState.dislikes++;
+            newState.dislikedBy.push(uid);
+            if (isLiked) {
+                newState.likes--;
+                newState.likedBy = newState.likedBy.filter(id => id !== uid);
+            }
+        }
+    }
+
+    allComments[commentIndex] = { ...comment, ...newState };
+    
+    likeCountSpan.textContent = newState.likes;
+    dislikeCountSpan.textContent = newState.dislikes;
+    likeBtn.classList.toggle('voted', newState.likedBy.includes(uid));
+    dislikeBtn.classList.toggle('voted', newState.dislikedBy.includes(uid));
+    
     try {
         await runTransaction(db, async (transaction) => {
             const commentDoc = await transaction.get(commentRef);
             if (!commentDoc.exists()) throw "Document does not exist!";
             
             const data = commentDoc.data();
-            const likedBy = data.likedBy || [];
-            const dislikedBy = data.dislikedBy || [];
-            const uid = currentUser.uid;
+            const serverLikedBy = data.likedBy || [];
+            const serverDislikedBy = data.dislikedBy || [];
+            const serverIsLiked = serverLikedBy.includes(uid);
+            const serverIsDisliked = serverDislikedBy.includes(uid);
 
-            const isLiked = likedBy.includes(uid);
-            const isDisliked = dislikedBy.includes(uid);
-            
             if (voteType === 'like') {
-                if (isLiked) { // Unlike
-                    likedBy.splice(likedBy.indexOf(uid), 1);
-                } else { // Like
-                    likedBy.push(uid);
-                    if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1); // Remove from dislikes
+                if (serverIsLiked) {
+                    serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
+                } else {
+                    serverLikedBy.push(uid);
+                    if (serverIsDisliked) serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
                 }
             } else if (voteType === 'dislike') {
-                if (isDisliked) { // Undislike
-                    dislikedBy.splice(dislikedBy.indexOf(uid), 1);
-                } else { // Dislike
-                    dislikedBy.push(uid);
-                    if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1); // Remove from likes
+                if (serverIsDisliked) {
+                    serverDislikedBy.splice(serverDislikedBy.indexOf(uid), 1);
+                } else {
+                    serverDislikedBy.push(uid);
+                    if (serverIsLiked) serverLikedBy.splice(serverLikedBy.indexOf(uid), 1);
                 }
             }
-            transaction.update(commentRef, { likedBy, dislikedBy, likes: likedBy.length, dislikes: dislikedBy.length });
+            transaction.update(commentRef, { 
+                likedBy: serverLikedBy, 
+                dislikedBy: serverDislikedBy, 
+                likes: serverLikedBy.length, 
+                dislikes: serverDislikedBy.length 
+            });
         });
     } catch (e) {
         console.error("Vote transaction failed: ", e);
         alert("Could not process vote. Please try again.");
+
+        allComments[commentIndex] = { ...comment, ...originalState };
+        
+        likeCountSpan.textContent = originalState.likes;
+        dislikeCountSpan.textContent = originalState.dislikes;
+        likeBtn.classList.toggle('voted', originalState.likedBy.includes(uid));
+        dislikeBtn.classList.toggle('voted', originalState.dislikedBy.includes(uid));
+    } finally {
+        votingInProgress.delete(commentId);
     }
 }
 
