@@ -26,7 +26,6 @@ let unsubscribeComments = null;
 let unsubscribeRating = null;
 let isAppInitialized = false;
 let isRatingSubmissionPending = false;
-const votingInProgress = new Set();
 
 
 // --- DOM Element Selection ---
@@ -460,22 +459,15 @@ async function handleVote(commentId, voteType) {
         return; 
     }
     
-    if (votingInProgress.has(commentId)) {
-        return;
-    }
-    votingInProgress.add(commentId);
-
     const commentRef = doc(db, ...commentsPath, commentId);
     
     const commentIndex = allComments.findIndex(c => c.id === commentId);
     if (commentIndex === -1) {
-        votingInProgress.delete(commentId);
         return;
     }
     const comment = allComments[commentIndex];
     const commentElement = document.querySelector(`.comment-actions[data-comment-id="${commentId}"]`);
     if (!commentElement) {
-        votingInProgress.delete(commentId);
         return;
     }
     const likeBtn = commentElement.querySelector('.like-btn');
@@ -572,8 +564,6 @@ async function handleVote(commentId, voteType) {
         dislikeCountSpan.textContent = originalState.dislikes;
         likeBtn.classList.toggle('voted', originalState.likedBy.includes(uid));
         dislikeBtn.classList.toggle('voted', originalState.dislikedBy.includes(uid));
-    } finally {
-        votingInProgress.delete(commentId);
     }
 }
 
