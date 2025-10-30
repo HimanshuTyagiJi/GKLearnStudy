@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // This script now waits for the notification button to be added to the DOM
     // before it initializes, making it compatible with dynamic UI changes.
@@ -66,35 +67,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- UI Update Logic ---
-        async function updateUIState() {
-            isProcessing = false;
-            notificationBtn.classList.remove('loading');
-            
-            const permission = Notification.permission;
-            if (permission === 'denied') {
-                notificationBtn.classList.add('disabled');
-                notificationBtn.classList.remove('subscribed');
-                notificationBtn.title = 'Notifications are blocked in your browser settings.';
-                return;
-            }
+      // --- Update Button State ---
+async function updateUIState() {
+  isProcessing = false;
+  notificationBtn.classList.remove('loading');
 
-            notificationBtn.classList.remove('disabled');
+  const permission = Notification.permission;
+  if (permission === 'denied') {
+    notificationBtn.classList.add('disabled');
+    notificationBtn.classList.remove('subscribed');
+    notificationBtn.title = 'Notifications are blocked in your browser.';
+    notificationBtn.innerHTML = '🚫 Blocked';
+    return;
+  }
 
-            if (permission === 'granted' && currentUser) {
-                await checkCurrentPageSubscription();
-                if (isSubscribedOnThisPage) {
-                    notificationBtn.classList.add('subscribed');
-                    notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
-                } else {
-                    notificationBtn.classList.remove('subscribed');
-                    notificationBtn.title = 'Click to get notifications for this page.';
-                }
-            } else {
-                isSubscribedOnThisPage = false;
-                notificationBtn.classList.remove('subscribed');
-                notificationBtn.title = 'Sign in and click to enable notifications.';
-            }
-        }
+  notificationBtn.classList.remove('disabled');
+
+  if (permission === 'granted' && currentUser) {
+    await checkCurrentPageSubscription();
+    if (isSubscribedOnThisPage) {
+      notificationBtn.classList.add('subscribed');
+      notificationBtn.title = 'You are subscribed. Click to unsubscribe.';
+      notificationBtn.innerHTML = '🔔 Unsubscribe';
+    } else {
+      notificationBtn.classList.remove('subscribed');
+      notificationBtn.title = 'Click to subscribe for this page.';
+      notificationBtn.innerHTML = '🔕 Subscribe';
+    }
+  } else {
+    isSubscribedOnThisPage = false;
+    notificationBtn.classList.remove('subscribed');
+    notificationBtn.title = 'Sign in and click to enable notifications.';
+    notificationBtn.innerHTML = '🔔 Subscribe';
+  }
+}
+
         
         // --- Core Notification Logic ---
         async function handleSubscriptionRequest() {
