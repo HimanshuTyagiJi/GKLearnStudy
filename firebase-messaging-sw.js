@@ -1,5 +1,6 @@
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
+// --- Firebase v9 Modular SDK Imports ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getMessaging, onBackgroundMessage } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-sw.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
@@ -10,16 +11,12 @@ const firebaseConfig = {
   appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
 };
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+// --- Initialize Firebase ---
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 
-// ✅ Extra safety fix for pushManager undefined
-self.addEventListener("activate", (event) => {
-  event.waitUntil(self.registration.pushManager.getSubscription().catch(() => null));
-});
-
-// ✅ Background message handler
-messaging.onBackgroundMessage((payload) => {
+// ✅ Background message handler using the v9 modular syntax
+onBackgroundMessage(messaging, (payload) => {
   console.log("[SW] Received background message:", payload);
 
   // Only show if it's a comment notification
@@ -31,7 +28,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.data.title || "New Comment";
   const notificationOptions = {
     body: payload.data.body || "You have a new comment",
-    icon: payload.data.icon || "/comment-icon.png",
+    icon: payload.data.icon || "/favicon.ico",
     data: {
       url: payload.data.url || "/",
       commentId: payload.data.commentId || null,
@@ -47,17 +44,26 @@ self.addEventListener("notificationclick", (event) => {
 
   const data = event.notification.data;
   const url = data.url || "/";
-  const finalUrl = data.commentId ? `${url}#comment-${data.commentId}` : url;
+  // The final URL is constructed to include the comment hash for direct navigation.
+  const finalUrl = data.commentId ? `${url}` : url; // The hash will be added on the client-side for smooth scrolling
 
   event.waitUntil(
     clients.matchAll({ type: "window", includeUncontrolled: true })
       .then((clientList) => {
+        // Check if a window for the target URL is already open.
         for (const client of clientList) {
-          if (client.url === url && "focus" in client) {
-            client.navigate(finalUrl);
+          // A simple URL check might not be enough if there are query parameters.
+          // We'll focus on the base URL and let the client-side JS handle the hash.
+          const clientUrl = new URL(client.url);
+          const targetUrl = new URL(url, self.location.origin);
+
+          if (clientUrl.pathname === targetUrl.pathname && "focus" in client) {
+            // Navigate the existing client to the final URL and focus it.
+            client.navigate(finalUrl); 
             return client.focus();
           }
         }
+        // If no matching window is found, open a new one.
         return clients.openWindow(finalUrl);
       })
   );
