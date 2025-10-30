@@ -202,8 +202,8 @@ async function togglePageSubscription(token, wasSubscribed) {
     if (!currentUser || !token) return false;
     const action = wasSubscribed ? 'unsubscribe' : 'subscribe';
     try {
-        // IMPORTANT: Ensure this URL matches your deployed Cloud Function's name
-        const response = await fetch("https://us-central1-appcomment.cloudfunctions.net/manageSubscriptionV2", {
+        // ✅ UPDATED URL to match the new 1st Gen function name
+        const response = await fetch("https://us-central1-appcomment.cloudfunctions.net/manageSubscription", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ pageId, token, action })
