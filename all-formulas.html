@@ -378,76 +378,59 @@
  <img src="https://gklearnstudy.in/images/all-formula.jpg" alt="A collection of physics, chemistry, and math formulas" style="max-width: 100%;width:350px; height: auto; display: block; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
       
                 <header class="education-header"> <div class="header-logo-container">
-                    <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
-                        <style>
-                            .formula-text {
-                                font-family: "Georgia", serif;
-                                font-weight: bold;
-                                fill: #0058ad;
-                            }
-                            .atom-core {
-                                fill: #ad0000;
-                            }
-                            .electron {
-                                fill: #0039ad;
-                            }
-                            .beaker-glass {
-                                fill: #e9f5ff;
-                                stroke: #a2a2a2;
-                                stroke-width: 2;
-                            }
-                            .beaker-liquid {
-                                fill: #641ef9;
-                                fill-opacity: 0.7;
-                            }
-                            .bubble {
-                                fill: #c0a4fb;
-                            }
-                        </style>
-                        <!-- Physics Atom -->
-                        <g transform="translate(80, 75)">
-                            <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" stroke-dasharray="3 3">
-                                <animateTransform attributeName="transform" type="rotate" from="20" to="380" dur="8s" repeatCount="indefinite" />
-                            </ellipse>
-                            <ellipse cx="0" cy="0" rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" transform="rotate(-60)">
-                                <animateTransform attributeName="transform" type="rotate" from="-40" to="320" dur="8s" repeatCount="indefinite" />
-                            </ellipse>
-                            <circle class="atom-core" cx="0" cy="0" r="10" />
-                            <circle class="electron" r="5">
-                                <animateMotion dur="4s" repeatCount="indefinite" path="M-60,0 a60,20 0 1,0 120,0 a60,20 0 1,0 -120,0" />
-                            </circle>
-                        </g>
-                        <!-- Math Symbols -->
-                        <g transform="translate(200, 75)">
-                            <text class="formula-text" font-size="30" x="0" y="-20" text-anchor="middle">E=mc²</text>
-                            <text class="formula-text" font-size="45" x="0" y="30" text-anchor="middle" dominant-baseline="middle">
-                                π ≈ 3.14
-                                <animate attributeName="opacity" values="0.5;1;0.5" dur="4s" repeatCount="indefinite" />
-                            </text>
-                        </g>
-                        <!-- Chemistry Beaker -->
-                        <g transform="translate(320, 50)">
-                            <path class="beaker-glass" d="M0,0 h60 v90 a5,5 0 0,1 -5,5 h-50 a5,5 0 0,1 -5,-5 v-90 Z" />
-                            <path class="beaker-liquid" d="M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z">
-                                <animate
-                                    attributeName="d"
-                                    dur="5s"
-                                    repeatCount="indefinite"
-                                    values="M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z;
-                                         M5,50 h50 v40 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-40 Z;
-                                         M5,80 h50 v10 a5,5 0 0,1 -5,5 h-40 a5,5 0 0,1 -5,-5 v-10 Z"
-                                />
-                            </path>
-                            <circle class="bubble" cx="20" cy="75" r="3">
-                                <animate attributeName="cy" from="75" to="20" dur="3s" repeatCount="indefinite" begin="0s" />
-                                <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite" begin="0s" />
-                            </circle>
-                            <circle class="bubble" cx="40" cy="75" r="4">
-                                <animate attributeName="cy" from="75" to="15" dur="2.5s" repeatCount="indefinite" begin="0.5s" />
-                                <animate attributeName="opacity" from="1" to="0" dur="2.5s" repeatCount="indefinite" begin="0.5s" />
-                            </circle>
-                        </g>
-                    </svg>
+                 <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated science illustration showing atom, math formulas, and chemistry beaker.">
+  <title>All Formulas - Animated Science Illustration: Atom, Math, and Chemistry</title>
+  <style>
+    .t{font-family:Georgia,serif;font-weight:bold;fill:#0058ad}
+    .a{fill:#ad0000}.e{fill:#0039ad}
+    .g{fill:#e9f5ff;stroke:#a2a2a2;stroke-width:2}
+    .l{fill:#641ef9;fill-opacity:.7}
+    .b{fill:#c0a4fb}
+  </style>
+
+  <!-- Atom -->
+  <g transform="translate(80,75)">
+    <ellipse rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" stroke-dasharray="3 3">
+      <animateTransform attributeName="transform" type="rotate" from="20" to="380" dur="8s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse rx="60" ry="20" fill="none" stroke="#0039ad" stroke-width="2" transform="rotate(-60)">
+      <animateTransform attributeName="transform" type="rotate" from="-40" to="320" dur="8s" repeatCount="indefinite"/>
+    </ellipse>
+    <circle class="a" r="10"/>
+    <circle class="e" r="5">
+      <animateMotion dur="4s" repeatCount="indefinite" path="M-60,0 a60,20 0 1,0 120,0 a60,20 0 1,0 -120,0"/>
+    </circle>
+  </g>
+
+  <!-- Math -->
+  <g transform="translate(200,75)" text-anchor="middle">
+    <text class="t" font-size="30" y="-20">E=mc²</text>
+    <text class="t" font-size="45" y="30" dominant-baseline="middle" opacity=".8">
+      π ≈ 3.14
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="4s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- Beaker -->
+  <g transform="translate(320,50)">
+    <path class="g" d="M0,0h60v90a5,5 0 0,1-5,5h-50a5,5 0 0,1-5,-5v-90Z"/>
+    <path class="l">
+      <animate attributeName="d" dur="5s" repeatCount="indefinite"
+        values="M5,80h50v10a5,5 0 0,1-5,5h-40a5,5 0 0,1-5,-5v-10Z;
+                M5,50h50v40a5,5 0 0,1-5,5h-40a5,5 0 0,1-5,-5v-40Z;
+                M5,80h50v10a5,5 0 0,1-5,5h-40a5,5 0 0,1-5,-5v-10Z"/>
+    </path>
+    <circle class="b" cx="20" cy="75" r="3">
+      <animate attributeName="cy" from="75" to="20" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" from="1" to="0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="b" cx="40" cy="75" r="4">
+      <animate attributeName="cy" from="75" to="15" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+      <animate attributeName="opacity" from="1" to="0" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+    </circle>
+  </g>
+</svg>
+
                 </div>
                     <h1>All Formulas Hub</h1> <div class="post-meta-container">
                     <div class="byline">
