@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
@@ -25,20 +25,22 @@ async function loadPageData() {
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
-        // Fetch all scores for Hindi tests, ordered by score.
-        // NOTE: This query requires a composite index in Firestore. 
-        // The user must create it using the link provided in the console error.
-        const q = query(
-            collection(db, "quizScores"),
-            where("quizId", ">=", "hindi-test-"),
-            where("quizId", "<", "hindi-test-~"),
-            orderBy("score", "desc")
-        );
+        // Fetch ALL quiz scores from the collection.
+        const q = query(collection(db, "quizScores"));
         const querySnapshot = await getDocs(q);
 
+        const allScores = [];
+        querySnapshot.forEach(doc => {
+            allScores.push(doc.data());
+        });
+        
+        // Filter for only Hindi tests on the client side.
+        const hindiScores = allScores.filter(scoreData => 
+            scoreData.quizId && scoreData.quizId.startsWith('hindi-test-')
+        );
+
         const userBestScores = new Map();
-        querySnapshot.forEach((doc) => {
-            const scoreData = doc.data();
+        hindiScores.forEach((scoreData) => {
             // Store only the best score for each user for the leaderboard
             if (!userBestScores.has(scoreData.userId) || scoreData.score > userBestScores.get(scoreData.userId).score) {
                 userBestScores.set(scoreData.userId, scoreData);
@@ -46,7 +48,7 @@ async function loadPageData() {
         });
 
         const topScores = Array.from(userBestScores.values())
-            .sort((a, b) => b.score - a.score) // Re-sort as the map doesn't preserve order
+            .sort((a, b) => b.score - a.score) // Now sort by score on the client
             .slice(0, 10);
 
         renderLeaderboard(topScores);
@@ -126,6 +128,12 @@ async function updateUserTestStatus() {
                 window.location.href = originalLink.href;
             };
             box.querySelector('.review-btn').onclick = () => {
+                // Save the data needed for review mode before navigating
+                const reviewData = {
+                    questions: window.questions, // Assuming questions are globally available from test.js
+                    userAnswers: {} // This would be ideally fetched or stored post-quiz
+                };
+                sessionStorage.setItem(`reviewData_${quizId}`, JSON.stringify(reviewData));
                 sessionStorage.setItem(`review_${quizId}`, 'true');
                 window.location.href = originalLink.href;
             };
