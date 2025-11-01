@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, collection, query, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
@@ -15,69 +15,50 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const loginModal = document.getElementById('login-modal');
-const signInBtn = document.getElementById('sign-in-btn');
-const continueGuestBtn = document.getElementById('continue-guest-btn');
 const leaderboardContainer = document.getElementById('leaderboard-container');
-
-function showModal() {
-    if (loginModal && !sessionStorage.getItem('hideLoginModal')) {
-        loginModal.classList.add('active');
-    }
-}
-
-function hideModal() {
-    if (loginModal) {
-        loginModal.classList.remove('active');
-    }
-}
-
-async function signInWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    signInBtn.disabled = true;
-    signInBtn.textContent = "Connecting...";
-    try {
-        await signInWithPopup(auth, provider);
-        // onAuthStateChanged will handle hiding the modal
-    } catch (error) {
-        console.error("Sign in error", error);
-        alert("Could not sign in with Google. Please try again.");
-        signInBtn.disabled = false;
-        signInBtn.textContent = "गूगल से साइन-इन करें";
-    }
-}
+let currentUser = null;
 
 async function loadLeaderboard() {
     if (!leaderboardContainer) return;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
     try {
-        const q = query(
-            collection(db, "quizScores"),
-            where("timestamp", ">=", sevenDaysAgo),
-            orderBy("timestamp", "desc")
-        );
-
-        const querySnapshot = await getDocs(q);
-        const scores = [];
-        querySnapshot.forEach((doc) => {
-            scores.push(doc.data());
-        });
+        const querySnapshot = await getDocs(collection(db, "quizScores"));
         
-        const userBestScores = new Map();
-        scores.forEach(score => {
-            if (!userBestScores.has(score.userId) || score.score > userBestScores.get(score.userId).score) {
-                userBestScores.set(score.userId, score);
+        const userScores = new Map();
+        querySnapshot.forEach((doc) => {
+            const scoreData = doc.data();
+            if (!scoreData.userId || !scoreData.userName) return;
+
+            if (!userScores.has(scoreData.userId)) {
+                userScores.set(scoreData.userId, {
+                    totalScore: 0,
+                    totalPossible: 0,
+                    quizCount: 0,
+                    userName: scoreData.userName,
+                    userPhotoURL: scoreData.userPhotoURL,
+                    userId: scoreData.userId,
+                });
             }
+            
+            const userData = userScores.get(scoreData.userId);
+            userData.totalScore += scoreData.score;
+            userData.totalPossible += scoreData.totalQuestions;
+            userData.quizCount += 1;
         });
 
-        const topScores = Array.from(userBestScores.values())
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 10);
+        const leaderboardData = Array.from(userScores.values()).map(userData => {
+            const averagePercentage = userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0;
+            return {
+                ...userData,
+                averagePercentage,
+            };
+        });
 
-        renderLeaderboard(topScores);
+        leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
+        
+        renderLeaderboard(leaderboardData);
 
     } catch (error) {
         console.error("Error loading leaderboard:", error);
@@ -85,41 +66,51 @@ async function loadLeaderboard() {
     }
 }
 
-function renderLeaderboard(topScores) {
-    if (topScores.length === 0) {
-        leaderboardContainer.innerHTML = "<p>इस सप्ताह कोई स्कोर दर्ज नहीं किया गया। पहले बनें!</p>";
-        return;
-    }
+function renderLeaderboard(leaderboardData) {
+    const top50 = leaderboardData.slice(0, 50);
 
-    let leaderboardHTML = '<ol class="leaderboard">';
-    topScores.forEach((score, index) => {
+    let leaderboardHTML = '<h2>Top 50 Players</h2><ol class="leaderboard">';
+    top50.forEach((user, index) => {
+        const isCurrentUser = currentUser && currentUser.uid === user.userId;
+        const displayName = isCurrentUser ? "You" : user.userName;
         leaderboardHTML += `
-            <li>
+            <li class="${isCurrentUser ? 'current-user' : ''}">
                 <div class="rank">${index + 1}</div>
-                <img src="${score.userPhotoURL}" alt="${score.userName}" class="avatar">
-                <div class="name">${score.userName}</div>
-                <div class="score">${score.score} / ${score.totalQuestions}</div>
+                <img src="${user.userPhotoURL}" alt="${user.userName}" class="avatar">
+                <div class="name">${displayName}</div>
+                <div class="score">${user.averagePercentage.toFixed(2)}%</div>
             </li>
         `;
     });
     leaderboardHTML += '</ol>';
-    leaderboardContainer.innerHTML = leaderboardHTML;
+
+    let userRankHTML = '';
+    if (currentUser) {
+        const userRankIndex = leaderboardData.findIndex(user => user.userId === currentUser.uid);
+        if (userRankIndex !== -1 && userRankIndex >= 50) {
+            const userData = leaderboardData[userRankIndex];
+            userRankHTML = `
+                <div class="user-rank-display">
+                    <h2>Your Rank</h2>
+                    <ol class="leaderboard">
+                        <li class="current-user">
+                            <div class="rank">${userRankIndex + 1}</div>
+                            <img src="${userData.userPhotoURL}" alt="${userData.userName}" class="avatar">
+                            <div class="name">You</div>
+                            <div class="score">${userData.averagePercentage.toFixed(2)}%</div>
+                        </li>
+                    </ol>
+                </div>
+            `;
+        }
+    }
+
+    leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-            hideModal();
-        } else {
-            showModal();
-        }
+        currentUser = user;
+        loadLeaderboard();
     });
-
-    if(signInBtn) signInBtn.addEventListener('click', signInWithGoogle);
-    if(continueGuestBtn) continueGuestBtn.addEventListener('click', () => {
-        sessionStorage.setItem('hideLoginModal', 'true');
-        hideModal();
-    });
-
-    loadLeaderboard();
 });
