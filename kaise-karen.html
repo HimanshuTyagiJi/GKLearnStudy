@@ -83,6 +83,13 @@
         .tool-card p { color: var(--text-secondary); margin: 0 0 1rem 0; font-size: 0.95rem; }
         .tool-card a { color: var(--accent-color); font-weight: 600; text-decoration: none; }
         .tool-card a:hover { text-decoration: underline; }
+ .spotlight-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .spotlight-card { display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); }
+        .spotlight-card .spotlight-tag { background-color: var(--accent-color); color: white; padding: .3rem 1rem; border-radius: 20px; font-size: .9rem; font-weight: 500; margin-bottom: 1rem; }
+        .spotlight-card h3 { font-size: 2rem; margin: 0 0 1rem 0; }
+        .spotlight-card p { color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem; }
+        .spotlight-card .cta-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; }
+        .spotlight-card .cta-btn:hover { background-color: color-mix(in srgb, var(--accent-color) 80%, black); transform: scale(1.05); }
 
        
         .author-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
@@ -95,24 +102,106 @@
         
     </style>
 </head>
-<body>
-    <header class="header" id="header">
-        <nav class="navbar">
-            <div class="burger" id="burger">
-                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer"><rect width="100" height="7" rx="5"></rect><rect y="30" width="100" height="7" rx="5"></rect><rect y="60" width="100" height="7" rx="5"></rect></svg>
-            </div>
-            <a href="/index.html" class="brand" aria-label="GK Learn Study"><svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="150" fill="white" /><text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle">Learn Study</text></svg></a>
-            <div class="menu" id="menu">
-                <div class="mobile-menu-header"><a href="/" class="menu-brand-text">GK Learn Study</a><button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
-                <div class="menu-inner"></div>
-            </div>
-            <div class="header-actions">
-                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
-            </div>
-        </nav>
-    </header>
+ <body>
+       <svg style="display:none;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#641ef9;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#c0a4fb;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <header class="header" id="header">
+            <nav class="navbar">
+                <div class="burger" id="burger">
+                    <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                        <rect width="100" height="7" rx="5"></rect>
+                        <rect y="30" width="100" height="7" rx="5"></rect>
+                        <rect y="60" width="100" height="7" rx="5"></rect>
+                    </svg>
+                </div>
 
-    <main class="container">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+                            <title>GK Learn Study</title>
+                            <circle cx="150" cy="150" r="150" fill="white"></circle>
+                            <defs><clipPath id="circle-clip-main"><circle cx="150" cy="150" r="150"></circle></clipPath></defs>
+                            <g clip-path="url(#circle-clip-main)">
+                                <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                                <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
+                            </g>
+                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0"> GK <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform><animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform></text>
+                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0"> Learn Study <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze"></animateTransform></text>
+                            <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"></circle>
+                        </svg>
+                </a>
+
+                <div class="menu" id="menu">
+                    <div class="mobile-menu-header">
+                        <a href="/" class="menu-brand-text">GK Learn Study</a>
+                        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-inner">
+                        <!-- Menu links will be injected by header.js -->
+                    </div>
+                    <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                        <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                            <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                        </svg>
+                    </button>
+                    <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                        <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                            <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." />
+            <div class="overlay"></div>
+        </header>
+
+        <ul id="suggestions-list" class="suggestions"></ul>
+
+
+     
+  <main class="container">
+            <div id="root">
+                
         <!-- 1. Detailed Introduction with Logo -->
         <section class="intro-section">
             <div class="intro-logo">
@@ -375,8 +464,6 @@
         <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
     </footer>
 
-    <script src="https://gklearnstudy.in/js/theme.js" defer></script>
-    <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
     <script>
         // Script for animated stats counter
         document.addEventListener("DOMContentLoaded", () => {
@@ -410,5 +497,56 @@
             });
         });
     </script>
-</body>
+
+    
+<div id="comments-and-ratings-container">
+                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                    <div class="rating-skeleton"><div class="rating-skeleton-display"><div class="skeleton-summary"><div class="skeleton-circle"></div><div class="skeleton-line short" style="width: 80%; margin: 0 auto;"></div></div><div class="skeleton-breakdown"><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div></div></div></div>
+                    <div id="rating-widget" class="rating-content">
+                        <h2>Rate this Page</h2>
+                        <div id="rating-display"><div class="average-summary"><div id="average-rating-value">0.0</div><div id="total-ratings-count">0 ratings</div></div><div class="rating-breakdown"><div class="breakdown-row" data-star-level="5"><span class="star-label">5 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="4"><span class="star-label">4 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="3"><span class="star-label">3 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="2"><span class="star-label">2 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="1"><span class="star-label">1 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div><span class="vote-count">0</span></div></div></div>
+                        <div id="rating-stars"><svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                        <div id="rating-login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p></div>
+                    </div>
+                </div>
+
+                <div class="comments-wrapper comments-loading" id="comments-main-container">
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                        <div id="auth-container"><div id="user-info"></div><button id="login-btn" class="btn primary"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg> Sign in with Google</button><button id="logout-btn" class="btn">Logout</button></div>
+                        <div id="login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p></div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none;"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div><textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" /><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button></div></div></form></div>
+                        <div id="comments-list" class="comment-list"><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom">
+                &copy; 2024 GK Learn Study | All Rights Reserved
+            </div>
+        </footer>
+        <script src="https://gklearnstudy.in/js/theme.js" defer></script>
+        <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
+       
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                        .then(r => console.log('Firebase Messaging SW registered.', r.scope))
+                        .catch(e => console.error('Firebase Messaging SW registration failed:', e));
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(r => console.log('Caching SW registered.', r.scope))
+                        .catch(e => console.error('Caching SW registration failed:', e));
+                });
+            }
+        </script>
+       
+        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
+        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
+
+    </body>
 </html>
