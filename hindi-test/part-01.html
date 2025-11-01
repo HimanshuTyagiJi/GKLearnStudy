@@ -153,7 +153,201 @@
                     { question: "प्रयावाची: 'बड़ा'", options: [ { text: "A. विशाल", value: "a" }, { text: "B. लंबा", value: "b" }, { text: "C. छोटा", value: "c" }, ], correctOption: "a", explanation: "'बड़ा' का प्रयावाची शब्द 'विशाल' है।", },
                 ];
             </script>
-            <script type="module" src="/js/test.js"></script>
+            <script>import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+    authDomain: "appcomment.firebaseapp.com",
+    projectId: "appcomment",
+    storageBucket: "appcomment.firebasestorage.app",
+    messagingSenderId: "156258808941",
+    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+};
+
+let app, auth, db;
+try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+} catch (e) {
+    console.error("Firebase initialization error:", e);
+}
+
+
+let currentUser = null;
+let timerInterval;
+let userAnswers = {};
+let timeTaken = 0;
+
+const quizForm = document.getElementById("quiz-form");
+const questionsContainer = document.getElementById("questions-container");
+const startModal = document.getElementById("startModal");
+const resultModal = document.getElementById("resultModal");
+const resultContent = document.getElementById("resultContent");
+const submitBtn = document.querySelector(".submit-btn");
+const reviewContainer = document.getElementById("review-container");
+const reviewSection = document.getElementById("review-questions");
+const quizSection = document.getElementById("quiz-section");
+
+// --- Auth State ---
+onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    console.log("Auth state changed. Current user:", currentUser ? currentUser.displayName : "None");
+});
+
+// --- Quiz Logic ---
+window.startQuiz = () => {
+    startModal.style.display = "none";
+    quizSection.style.display = "block";
+    quizForm.style.display = "block";
+    displayQuestions();
+    startTimer();
+};
+
+function displayQuestions() {
+    let questionsHTML = "";
+    // Shuffle questions array for variety
+    questions.sort(() => Math.random() - 0.5); 
+    questions.forEach((q, index) => {
+        questionsHTML += `
+            <div class="question-block" id="question-${index}">
+                <p class="question">${index + 1}. ${q.question}</p>
+                <div class="options">
+                    ${q.options
+                        .map(
+                            (option) => `
+                        <label>
+                            <input type="radio" name="question${index}" value="${option.value}">
+                            ${option.text}
+                        </label>`
+                        )
+                        .join("")}
+                </div>
+            </div>
+        `;
+    });
+    questionsContainer.innerHTML = questionsHTML;
+    submitBtn.style.display = "block";
+}
+
+function startTimer() {
+    let seconds = 0;
+    const timerElement = document.getElementById("timer");
+    timerInterval = setInterval(() => {
+        seconds++;
+        timeTaken = seconds;
+        let min = Math.floor(seconds / 60);
+        let sec = seconds % 60;
+        timerElement.innerHTML = `<strong>समय:</strong> ${min}:${sec < 10 ? "0" + sec : sec}`;
+    }, 1000);
+}
+
+quizForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (confirm("क्या आप वाकई टेस्ट सबमिट करना चाहते हैं?")) {
+        calculateResult();
+    }
+});
+
+function calculateResult() {
+    clearInterval(timerInterval);
+    let score = 0;
+    questions.forEach((q, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        userAnswers[index] = selectedOption ? selectedOption.value : null;
+        if (selectedOption && selectedOption.value === q.correctOption) {
+            score++;
+        }
+    });
+
+    const totalQuestions = questions.length;
+    resultContent.innerHTML = `
+        <p>आपने ${totalQuestions} में से <strong>${score}</strong> अंक प्राप्त किए हैं।</p>
+        <p>कुल समय: ${Math.floor(timeTaken / 60)} मिनट ${timeTaken % 60} सेकंड</p>
+    `;
+    resultModal.style.display = "flex";
+    
+    if (currentUser) {
+        console.log("User is logged in, saving score...");
+        saveScore(score, totalQuestions);
+    } else {
+        console.log("User not logged in, score not saved.");
+    }
+}
+
+async function saveScore(score, totalQuestions) {
+    if (!currentUser || !db) {
+        console.log("Cannot save score: no user or db connection.");
+        return;
+    };
+
+    try {
+        const quizId = window.location.pathname.split('/').filter(Boolean).pop().replace('.html', '') || 'unknown-quiz';
+        await addDoc(collection(db, "quizScores"), {
+            userId: currentUser.uid,
+            userName: currentUser.displayName,
+            userPhotoURL: currentUser.photoURL,
+            score: score,
+            totalQuestions: totalQuestions,
+            quizId: quizId,
+            timestamp: serverTimestamp()
+        });
+        console.log("Score saved successfully!");
+    } catch (error) {
+        console.error("Error saving score: ", error);
+    }
+}
+
+window.retryQuiz = () => {
+    location.reload();
+};
+
+window.reviewQuestions = () => {
+    resultModal.style.display = "none";
+    quizSection.style.display = "none";
+
+    let reviewHTML = "";
+    questions.forEach((q, index) => {
+        const userAnswer = userAnswers[index];
+        const isCorrect = userAnswer === q.correctOption;
+        let resultClass = 'incorrect';
+        if (isCorrect) {
+            resultClass = 'correct';
+        } else if (userAnswer === null) {
+            resultClass = 'unanswered';
+        }
+
+        reviewHTML += `
+            <div class="question-block review ${resultClass}">
+                <p class="question">${index + 1}. ${q.question}</p>
+                <div class="options">
+                    ${q.options.map(opt => {
+                        const isUserAnswer = userAnswer === opt.value;
+                        const isCorrectAnswer = opt.value === q.correctOption;
+                        let className = '';
+
+                        if (isCorrectAnswer) {
+                            className = 'correct-option';
+                        } else if (isUserAnswer && !isCorrectAnswer) {
+                            className = 'incorrect-option';
+                        }
+                        
+                        return `<label class="${className}">
+                                    <input type="radio" name="review${index}" value="${opt.value}" ${isUserAnswer ? 'checked' : ''} disabled> 
+                                    ${opt.text}
+                                </label>`;
+                    }).join('')}
+                </div>
+                <div class="explanation"><strong>स्पष्टीकरण:</strong> ${q.explanation}</div>
+            </div>
+        `;
+    });
+    reviewContainer.innerHTML = reviewHTML;
+    reviewSection.style.display = "block";
+};</script>
         </main>
     </body>
 </html>
+
