@@ -169,6 +169,134 @@
             </main>
         </div>
 
-        <script type="module" src="/js/test-page.js"></script>
+        <script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+    authDomain: "appcomment.firebaseapp.com",
+    projectId: "appcomment",
+    storageBucket: "appcomment.firebasestorage.app",
+    messagingSenderId: "156258808941",
+    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+
+const loginModal = document.getElementById('login-modal');
+const signInBtn = document.getElementById('sign-in-btn');
+const continueGuestBtn = document.getElementById('continue-guest-btn');
+const leaderboardContainer = document.getElementById('leaderboard-container');
+
+function showModal() {
+    if (loginModal && !sessionStorage.getItem('hideLoginModal')) {
+        loginModal.classList.add('active');
+    }
+}
+
+function hideModal() {
+    if (loginModal) {
+        loginModal.classList.remove('active');
+    }
+}
+
+async function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    try {
+        await signInWithPopup(auth, provider);
+        // onAuthStateChanged will handle hiding the modal
+    } catch (error) {
+        console.error("Sign in error", error);
+        alert("Could not sign in with Google. Please try again.");
+    }
+}
+
+async function loadLeaderboard() {
+    if (!leaderboardContainer) return;
+
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    try {
+        const q = query(
+            collection(db, "quizScores"),
+            where("timestamp", ">=", sevenDaysAgo),
+            orderBy("timestamp", "desc")
+        );
+
+        const querySnapshot = await getDocs(q);
+        const scores = [];
+        querySnapshot.forEach((doc) => {
+            scores.push(doc.data());
+        });
+        
+        // Process scores to get the best score for each user
+        const userBestScores = new Map();
+        scores.forEach(score => {
+            if (!userBestScores.has(score.userId) || score.score > userBestScores.get(score.userId).score) {
+                userBestScores.set(score.userId, score);
+            }
+        });
+
+        const topScores = Array.from(userBestScores.values())
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 5); // Get top 5
+
+        renderLeaderboard(topScores);
+
+    } catch (error) {
+        console.error("Error loading leaderboard:", error);
+        leaderboardContainer.innerHTML = "<p>Could not load leaderboard. Please try again later.</p>";
+    }
+}
+
+function renderLeaderboard(topScores) {
+    if (topScores.length === 0) {
+        leaderboardContainer.innerHTML = "<p>No scores recorded this week. Be the first!</p>";
+        return;
+    }
+
+    let leaderboardHTML = '<ol class="leaderboard">';
+    topScores.forEach((score, index) => {
+        leaderboardHTML += `
+            <li>
+                <div class="rank">${index + 1}</div>
+                <img src="${score.userPhotoURL}" alt="${score.userName}" class="avatar">
+                <div class="name">${score.userName}</div>
+                <div class="score">${score.score} / ${score.totalQuestions}</div>
+            </li>
+        `;
+    });
+    leaderboardHTML += '</ol>';
+    leaderboardContainer.innerHTML = leaderboardHTML;
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            hideModal();
+        } else {
+            currentUser = null;
+            showModal();
+        }
+    });
+
+    signInBtn.addEventListener('click', signInWithGoogle);
+    continueGuestBtn.addEventListener('click', () => {
+        sessionStorage.setItem('hideLoginModal', 'true');
+        hideModal();
+    });
+
+    loadLeaderboard();
+});
+</script>
     </body>
 </html>
