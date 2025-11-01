@@ -1,3 +1,4 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, query, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -11,9 +12,17 @@ const firebaseConfig = {
     appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+let app, auth, db;
+try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+} catch (e) {
+    console.error("Firebase initialization error:", e);
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+    if(leaderboardContainer) leaderboardContainer.innerHTML = "<p>Error connecting to services.</p>";
+}
+
 
 const leaderboardContainer = document.getElementById('leaderboard-container');
 let currentUser = null;
@@ -62,21 +71,22 @@ async function loadLeaderboard() {
 
     } catch (error) {
         console.error("Error loading leaderboard:", error);
-        leaderboardContainer.innerHTML = "<p>लीडरबोर्ड लोड नहीं हो सका। कृपया बाद में पुनः प्रयास करें।</p>";
+        leaderboardContainer.innerHTML = "<p>Leaderboard could not be loaded. Please try again later.</p>";
     }
 }
 
 function renderLeaderboard(leaderboardData) {
     const top50 = leaderboardData.slice(0, 50);
 
-    let leaderboardHTML = '<h2>Top 50 Players</h2><ol class="leaderboard">';
+    let leaderboardHTML = '<ol class="leaderboard">';
     top50.forEach((user, index) => {
         const isCurrentUser = currentUser && currentUser.uid === user.userId;
-        const displayName = isCurrentUser ? "You" : user.userName;
+        const displayName = isCurrentUser ? "You (Your Rank)" : user.userName;
+        const avatar = user.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
         leaderboardHTML += `
             <li class="${isCurrentUser ? 'current-user' : ''}">
                 <div class="rank">${index + 1}</div>
-                <img src="${user.userPhotoURL}" alt="${user.userName}" class="avatar">
+                <img src="${avatar}" alt="${user.userName}" class="avatar">
                 <div class="name">${displayName}</div>
                 <div class="score">${user.averagePercentage.toFixed(2)}%</div>
             </li>
@@ -87,15 +97,16 @@ function renderLeaderboard(leaderboardData) {
     let userRankHTML = '';
     if (currentUser) {
         const userRankIndex = leaderboardData.findIndex(user => user.userId === currentUser.uid);
-        if (userRankIndex !== -1 && userRankIndex >= 50) {
+        if (userRankIndex !== -1 && userRankIndex >= 50) { // Only show if user is outside top 50
             const userData = leaderboardData[userRankIndex];
+             const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
             userRankHTML = `
                 <div class="user-rank-display">
-                    <h2>Your Rank</h2>
+                    <h2>Your Overall Rank</h2>
                     <ol class="leaderboard">
                         <li class="current-user">
                             <div class="rank">${userRankIndex + 1}</div>
-                            <img src="${userData.userPhotoURL}" alt="${userData.userName}" class="avatar">
+                            <img src="${avatar}" alt="${userData.userName}" class="avatar">
                             <div class="name">You</div>
                             <div class="score">${userData.averagePercentage.toFixed(2)}%</div>
                         </li>
@@ -109,8 +120,16 @@ function renderLeaderboard(leaderboardData) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    onAuthStateChanged(auth, (user) => {
-        currentUser = user;
+    // onAuthStateChanged from comment.js will handle the user state.
+    // We just need to listen for it here to reload the leaderboard with the correct user highlighted.
+    if(auth) {
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            // The auth container UI is handled by comment.js, we just need to re-render the leaderboard
+            loadLeaderboard();
+        });
+    } else {
+        // Fallback if Firebase fails to init
         loadLeaderboard();
-    });
+    }
 });
