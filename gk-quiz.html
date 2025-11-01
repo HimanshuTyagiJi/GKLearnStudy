@@ -117,10 +117,12 @@
             padding: 10px;
             border-radius: 8px;
             transition: background-color 0.2s ease-in-out;
-            border-bottom: 1px solid var(--card-border-color);
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-primary);
         }
         .topic-list li a:hover {
-            background-color: var(--card-hover-bg);
+            background-color: var(--input-bg);
             color: var(--accent-color);
         }
         @media (max-width: 600px) {
@@ -135,7 +137,7 @@
       .article-header {
         text-align: center;
         padding: 2rem 1rem;
-        border-top: 1px solid var(--card-border-color);
+        border-top: 1px solid var(--border-color);
         margin-top: 3rem;
       }
       .animated-logo {
@@ -149,7 +151,7 @@
       }
       .article-header p {
         font-size: 1.1rem;
-        color: var(--text-color-secondary);
+        color: var(--text-secondary);
         max-width: 700px;
         margin: 0.5rem auto 0;
       }
@@ -160,7 +162,7 @@
       }
       .qa-item {
         background: var(--card-bg);
-        border: 1px solid var(--card-border-color);
+        border: 1px solid var(--border-color);
         border-radius: 12px;
         margin-bottom: 1.5rem;
         padding: 1.5rem;
@@ -168,7 +170,7 @@
         transition: box-shadow 0.3s ease;
       }
       .qa-item:hover {
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 25px var(--shadow-color);
       }
       .question {
         font-size: 1.2rem;
@@ -190,11 +192,11 @@
         padding-left: 2rem;
       }
       .answer strong {
-        color: var(--accent-color-dark);
+        color: var(--accent-color);
       }
       details {
         border-radius: 8px;
-        background: var(--background-color);
+        background: var(--input-bg);
         padding: 0.5rem 1rem;
       }
       summary {
@@ -209,10 +211,48 @@
       }
       .explanation {
         padding-top: 0.5rem;
-        border-top: 1px solid var(--card-border-color);
+        border-top: 1px solid var(--border-color);
         margin-top: 0.5rem;
         line-height: 1.6;
       }
+      
+      /* NEW STYLES FOR ADDED SECTIONS */
+      .content-section { padding: 3rem 0; border-top: 1px solid var(--border-color); }
+      .section-title { text-align: center; font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; position: relative; }
+      .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
+      .section-title::after { content: ''; display: block; width: 70px; height: 4px; background-color: var(--accent-color); margin: 0.5rem auto 0; border-radius: 2px; }
+
+      .grid-3 { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+      .info-card { background-color: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid var(--border-color); }
+      .info-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
+      .info-card .icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; line-height: 1; }
+      .info-card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+      .info-card p { color: var(--text-secondary); line-height: 1.6; }
+
+      .quiz-week-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); margin: 3rem 0; }
+      .quiz-week-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .quiz-week-card .quiz-week-tag { background-color: var(--accent-color); color: white; padding: .3rem 1rem; border-radius: 20px; font-size: .9rem; font-weight: 500; margin-bottom: 1rem; }
+      .quiz-week-card h3 { font-size: 2rem; margin: 0 0 1rem 0; color: var(--text-primary); }
+      .quiz-week-card p { color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem; font-size: 1.1rem; }
+      .quiz-week-card .cta-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; }
+      .quiz-week-card .cta-btn:hover { background-color: color-mix(in srgb, var(--accent-color) 80%, black); transform: scale(1.05); }
+
+      .current-affair-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color); box-shadow: var(--card-shadow); display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease;}
+      .current-affair-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px var(--shadow-color); }
+      .current-affair-card .affair-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+      .current-affair-card .affair-category { background-color: var(--accent-color); color: white; padding: .2rem .6rem; border-radius: 15px; font-size: .8rem; font-weight: 500; }
+      .current-affair-card h3 { margin-top: 0; font-size: 1.3rem; margin-bottom: 0.5rem; flex-grow: 1; }
+      .current-affair-card h3 a { text-decoration: none; color: var(--text-primary); }
+      .current-affair-card h3 a:hover { color: var(--accent-color); }
+      .current-affair-card .read-more-btn { align-self: flex-start; text-decoration: none; color: var(--accent-color); font-weight: 600; margin-top: auto; padding-top: 1rem; }
+      .current-affair-card .read-more-btn:hover { text-decoration: underline; }
+
+      .cta-section { background: linear-gradient(135deg, #641ef9, #9f94ff); color: white; text-align: center; padding: 4rem 2rem; border-radius: var(--border-radius); margin: 3rem 0; }
+      .cta-section h2 { font-size: 2.5rem; margin-top: 0; margin-bottom: 1rem; }
+      .cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; }
+      .cta-section .cta-btn { background-color: white; color: #641ef9; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; display: inline-block; }
+      .cta-section .cta-btn:hover { background-color: #f0f0f0; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -337,8 +377,6 @@
             </div>
         </section>
            
-    
-
         <div class="language-content"> 
             <section class="english-content active">
                 <h3>Explore Quiz Topics</h3>
@@ -426,7 +464,8 @@ This is a useful resource for students and aspirants preparing for exams.</p>
                 </ul>
             </section>
         </div>
-
+        
+      
         <section class="important-questions-section">
             <header class="article-header">
                 <div class="animated-logo">
@@ -586,116 +625,232 @@ This is a useful resource for students and aspirants preparing for exams.</p>
                     <li class="qa-item"><p class="question">What is the highest civilian award in India?</p><p class="answer"><strong>Answer:</strong> Bharat Ratna</p><details><summary>View Explanation</summary><div class="explanation"><p>The Bharat Ratna is the highest civilian award in India. It is given for exceptional contributions in the fields of art, literature, science, and public service. It was established in 1954.</p></div></details></li>
                     <li class="qa-item"><p class="question">Which Mughal emperor was known as 'Zinda Pir' (Living Saint)?</p><p class="answer"><strong>Answer:</strong> Aurangzeb</p><details><summary>View Explanation</summary><div class="explanation"><p>The Mughal emperor Aurangzeb was known as 'Zinda Pir' (Living Saint) due to his simple lifestyle and religious orthodoxy. He used to make copies of the Quran and sew caps to earn his livelihood.</p></div></details></li>
                     <li class="qa-item"><p class="question">Which is the highest mountain peak in the world?</p><p class="answer"><strong>Answer:</strong> Mount Everest</p><details><summary>View Explanation</summary><div class="explanation"><p>Mount Everest is the world's highest mountain, with an elevation of 8,848.86 meters (29,031.7 feet) above sea level. It is part of the Himalayas and is located on the border between Nepal and China.</p></div></details></li>
-                    <li class="qa-item"><p class="question">Where is the headquarters of the Reserve Bank of India (RBI) located?</p><p class="answer"><strong>Answer:</strong> Mumbai</p><details><summary>View Explanation</summary><div class="explanation"><p>The Reserve Bank of India (RBI) is India's central bank. It was established on April 1, 1935. Initially, its headquarters was in Kolkata, but it was permanently moved to Mumbai in 1937.</p></div></details></li>
+                    <li class="qa-item"><p class="question">Where is the headquarters of the Reserve Bank of India (RBI) located?</p><p class="answer"><strong>Answer:</strong> Mumbai</p><details><summary>View Explanation</summary><div class="explanation"><p>The Reserve Bank of India (RBI) is India's central bank. It was established on April 1, 1935. Its headquarters is located in Mumbai, Maharashtra.</p></div></details></li>
                 </ol>
                 <ol class="qa-list hindi-content">
-                    <li class="qa-item"><p class="question">भारत के पहले प्रधानमंत्री कौन थे?</p><p class="answer"><strong>उत्तर:</strong> जवाहरलाल नेहरू</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>पंडित जवाहरलाल नेहरू भारत के पहले प्रधानमंत्री थे। उन्होंने 15 अगस्त 1947 को भारत की स्वतंत्रता के बाद यह पद संभाला और 1964 में अपनी मृत्यु तक इस पद पर बने रहे। उन्हें आधुनिक भारत का निर्माता भी कहा जाता है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">सूर्य के सबसे निकट कौन सा ग्रह है?</p><p class="answer"><strong>उत्तर:</strong> बुध (Mercury)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>बुध ग्रह सौर मंडल में सूर्य के सबसे करीब है। इसका कोई वायुमंडल नहीं है, जिसके कारण दिन में यह बहुत गर्म और रात में बहुत ठंडा हो जाता है। यह सौर मंडल का सबसे छोटा ग्रह भी है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">मानव शरीर में कुल कितनी हड्डियाँ होती हैं?</p><p class="answer"><strong>उत्तर:</strong> 206</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>एक वयस्क मानव शरीर में 206 हड्डियाँ होती हैं। जन्म के समय एक शिशु में लगभग 300 हड्डियाँ होती हैं, लेकिन जैसे-जैसे वह बड़ा होता है, कुछ हड्डियाँ आपस में जुड़ जाती हैं।</p></div></details></li>
-                    <li class="qa-item"><p class="question">भारत का संविधान कब लागू हुआ?</p><p class="answer"><strong>उत्तर:</strong> 26 जनवरी 1950</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारत का संविधान 26 नवंबर 1949 को संविधान सभा द्वारा अपनाया गया था, और इसे 26 जनवरी 1950 को पूरी तरह से लागू किया गया। इसी दिन को हम हर साल गणतंत्र दिवस के रूप में मनाते हैं।</p></div></details></li>
-                    <li class="qa-item"><p class="question">'गीत गोविंद' के लेखक कौन हैं?</p><p class="answer"><strong>उत्तर:</strong> जयदेव</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>'गीत गोविंद' 12वीं सदी के भारतीय कवि जयदेव द्वारा रचित एक काव्य ग्रंथ है। इसमें कृष्ण और गोपियों, विशेषकर राधा के बीच के प्रेम का वर्णन है। यह संस्कृत साहित्य की एक उत्कृष्ट कृति मानी जाती है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">पृथ्वी पर सबसे बड़ा महाद्वीप कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> एशिया</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>एशिया क्षेत्रफल और जनसंख्या दोनों ही दृष्टि से दुनिया का सबसे बड़ा महाद्वीप है। यह पृथ्वी के कुल भू-भाग का लगभग 30% हिस्सा कवर करता है और दुनिया की 60% से अधिक आबादी यहीं रहती है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">भारत की सबसे लंबी नदी कौन सी है?</p><p class="answer"><strong>उत्तर:</strong> गंगा</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>गंगा नदी भारत की सबसे लंबी और सबसे पवित्र नदी मानी जाती है। इसकी कुल लंबाई लगभग 2,525 किलोमीटर है। यह उत्तराखंड में गंगोत्री ग्लेशियर से निकलती है और बंगाल की खाड़ी में मिल जाती है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">किस विटामिन की कमी से रतौंधी (Night Blindness) होती है?</p><p class="answer"><strong>उत्तर:</strong> विटामिन ए (Vitamin A)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>विटामिन ए की कमी से रतौंधी नामक रोग होता है, जिसमें व्यक्ति को कम रोशनी में देखने में कठिनाई होती है। यह विटामिन आंखों के स्वास्थ्य के लिए बहुत आवश्यक है। गाजर, पालक और दूध इसके अच्छे स्रोत हैं।</p></div></details></li>
-                    <li class="qa-item"><p class="question">भारत का राष्ट्रीय पशु कौन है?</p><p class="answer"><strong>उत्तर:</strong> बाघ (Tiger)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>रॉयल बंगाल टाइगर को अप्रैल 1973 में भारत का राष्ट्रीय पशु घोषित किया गया था। यह अपनी शक्ति, चपलता और भव्यता के लिए जाना जाता है। इसके संरक्षण के लिए 'प्रोजेक्ट टाइगर' भी चलाया गया।</p></div></details></li>
-                    <li class="qa-item"><p class="question">गुलाम वंश का संस्थापक कौन था?</p><p class="answer"><strong>उत्तर:</strong> कुतुबुद्दीन ऐबक</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>कुतुबुद्दीन ऐबक ने 1206 ई. में दिल्ली सल्तनत के पहले राजवंश, गुलाम वंश की स्थापना की थी। वह मुहम्मद गोरी का एक गुलाम था और उसकी मृत्यु के बाद उसने खुद को सुल्तान घोषित कर दिया।</p></div></details></li>
-                    <li class="qa-item"><p class="question">प्रकाश वर्ष (Light Year) किसकी इकाई है?</p><p class="answer"><strong>उत्तर:</strong> दूरी (Distance)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>प्रकाश वर्ष खगोलीय दूरी को मापने की इकाई है। यह वह दूरी है जो प्रकाश एक वर्ष में निर्वात में तय करता है, जो लगभग 9.46 ट्रिलियन किलोमीटर के बराबर है। इसका उपयोग तारों और आकाशगंगाओं की दूरी बताने के लिए किया जाता है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">अजंता और एलोरा की गुफाएं किस राज्य में स्थित हैं?</p><p class="answer"><strong>उत्तर:</strong> महाराष्ट्र</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>अजंता और एलोरा की प्रसिद्ध गुफाएं महाराष्ट्र के औरंगाबाद जिले में स्थित हैं। ये चट्टानों को काटकर बनाई गई हैं और बौद्ध, हिंदू और जैन धर्म से संबंधित मूर्तिकला और चित्रकला के लिए विश्व प्रसिद्ध हैं। इन्हें यूनेस्को की विश्व धरोहर स्थल का दर्जा प्राप्त है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">टेलीफोन का आविष्कार किसने किया था?</p><p class="answer"><strong>उत्तर:</strong> अलेक्जेंडर ग्राहम बेल</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>अलेक्जेंडर ग्राहम बेल ने 1876 में टेलीफोन का आविष्कार किया था। इस आविष्कार ने संचार की दुनिया में क्रांति ला दी और लोगों को लंबी दूरी पर तुरंत बात करने में सक्षम बनाया।</p></div></details></li>
-                    <li class="qa-item"><p class="question">'भारत का नेपोलियन' किसे कहा जाता है?</p><p class="answer"><strong>उत्तर:</strong> समुद्रगुप्त</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>गुप्त वंश के शासक समुद्रगुप्त को उनकी सैन्य विजयों और साम्राज्य विस्तार के कारण इतिहासकार वी. ए. स्मिथ द्वारा 'भारत का नेपोलियन' कहा गया है। उन्होंने अपने शासनकाल में लगभग पूरे भारत को जीत लिया था।</p></div></details></li>
-                    <li class="qa-item"><p class="question">वायुमंडल में कौन सी गैस सबसे अधिक मात्रा में पाई जाती है?</p><p class="answer"><strong>उत्तर:</strong> नाइट्रोजन (78%)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>पृथ्वी के वायुमंडल में सबसे अधिक मात्रा में नाइट्रोजन गैस पाई जाती है, जो लगभग 78% है। इसके बाद ऑक्सीजन (लगभग 21%), आर्गन (0.93%) और कार्बन डाइऑक्साइड (0.04%) जैसी अन्य गैसें आती हैं।</p></div></details></li>
-                    <li class="qa-item"><p class="question">मौर्य साम्राज्य की स्थापना किसने की थी?</p><p class="answer"><strong>उत्तर:</strong> चंद्रगुप्त मौर्य</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>चंद्रगुप्त मौर्य ने अपने गुरु चाणक्य (कौटिल्य) की सहायता से 322 ईसा पूर्व में नंद वंश के शासक धनानंद को हराकर मौर्य साम्राज्य की स्थापना की थी। यह प्राचीन भारत का एक शक्तिशाली साम्राज्य था।</p></div></details></li>
-                    <li class="qa-item"><p class="question">महात्मा गांधी ने 'करो या मरो' का नारा किस आंदोलन में दिया था?</p><p class="answer"><strong>उत्तर:</strong> भारत छोड़ो आंदोलन (1942)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>महात्मा गांधी ने 8 अगस्त 1942 को बॉम्बे में अखिल भारतीय कांग्रेस कमेटी के सत्र में भारत छोड़ो आंदोलन की शुरुआत करते हुए 'करो या मरो' का प्रसिद्ध नारा दिया था। इसका उद्देश्य भारत से ब्रिटिश शासन को समाप्त करना था।</p></div></details></li>
-                    <li class="qa-item"><p class="question">कंप्यूटर का जनक किसे कहा जाता है?</p><p class="answer"><strong>उत्तर:</strong> चार्ल्स बैबेज</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>चार्ल्स बैबेज को 'कंप्यूटर का जनक' माना जाता है। उन्होंने 19वीं सदी में 'एनालिटिकल इंजन' नामक एक यांत्रिक कंप्यूटर की कल्पना की थी, जिसमें आधुनिक कंप्यूटरों के कई सिद्धांत शामिल थे।</p></div></details></li>
-                    <li class="qa-item"><p class="question">नोबेल पुरस्कार जीतने वाले पहले भारतीय कौन थे?</p><p class="answer"><strong>उत्तर:</strong> रवींद्रनाथ टैगोर</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>रवींद्रनाथ टैगोर को 1913 में साहित्य के लिए नोबेल पुरस्कार से सम्मानित किया गया था। उन्हें यह पुरस्कार उनकी काव्य-रचना 'गीतांजलि' के लिए मिला था। वह यह पुरस्कार जीतने वाले पहले भारतीय और पहले गैर-यूरोपीय व्यक्ति थे।</p></div></details></li>
-                    <li class="qa-item"><p class="question">हमारे सौर मंडल में सबसे बड़ा ग्रह कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> बृहस्पति (Jupiter)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>बृहस्पति हमारे सौर मंडल का सबसे बड़ा ग्रह है। यह इतना बड़ा है कि इसमें सौर मंडल के अन्य सभी ग्रह समा सकते हैं। यह एक गैस दानव है, जिसका अर्थ है कि इसकी कोई ठोस सतह नहीं है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">'डिस्कवरी ऑफ इंडिया' पुस्तक किसने लिखी है?</p><p class="answer"><strong>उत्तर:</strong> जवाहरलाल नेहरू</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>'डिस्कवरी ऑफ इंडिया' (भारत की खोज) पुस्तक भारत के पहले प्रधानमंत्री जवाहरलाल नेहरू द्वारा 1942-45 में अहमदनगर किले में अपने कारावास के दौरान लिखी गई थी। यह पुस्तक भारत के प्राचीन इतिहास से लेकर स्वतंत्रता तक की यात्रा का वर्णन करती है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">भारत का सर्वोच्च नागरिक सम्मान कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> भारत रत्न</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारत रत्न भारत का सर्वोच्च नागरिक सम्मान है। यह कला, साहित्य, विज्ञान और सार्वजनिक सेवा के क्षेत्र में असाधारण योगदान के लिए दिया जाता है। इसकी स्थापना 1954 में हुई थी।</p></div></details></li>
-                    <li class="qa-item"><p class="question">कौन सा मुगल सम्राट 'जिंदा पीर' के नाम से जाना जाता था?</p><p class="answer"><strong>उत्तर:</strong> औरंगजेब</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>मुगल सम्राट औरंगजेब को उसके सादे जीवन और धार्मिक कट्टरता के कारण 'जिंदा पीर' (जीवित संत) कहा जाता था। वह कुरान की नकलें बनाता था और टोपियाँ सिलकर अपनी आजीविका कमाता था।</p></div></details></li>
-                    <li class="qa-item"><p class="question">विश्व का सबसे ऊँचा पर्वत शिखर कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> माउंट एवरेस्ट</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>माउंट एवरेस्ट समुद्र तल से 8,848.86 मीटर (29,031.7 फीट) की ऊंचाई के साथ दुनिया का सबसे ऊंचा पर्वत है। यह नेपाल और चीन की सीमा पर स्थित हिमालय का हिस्सा है।</p></div></details></li>
-                    <li class="qa-item"><p class="question">भारतीय रिजर्व बैंक (RBI) का मुख्यालय कहाँ है?</p><p class="answer"><strong>उत्तर:</strong> मुंबई</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारतीय रिजर्व बैंक (RBI) भारत का केंद्रीय बैंक है। इसकी स्थापना 1 अप्रैल 1935 को हुई थी। शुरुआत में इसका मुख्यालय कोलकाता में था, लेकिन 1937 में इसे स्थायी रूप से मुंबई में स्थानांतरित कर दिया गया।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारत के पहले प्रधानमंत्री कौन थे?</p><p class="answer"><strong>उत्तर:</strong> जवाहरलाल नेहरू</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>पंडित जवाहरलाल नेहरू भारत के पहले प्रधानमंत्री थे। उन्होंने 15 अगस्त, 1947 को भारत की स्वतंत्रता के बाद पदभार ग्रहण किया और 1964 में अपनी मृत्यु तक पद पर बने रहे। उन्हें आधुनिक भारत का निर्माता भी माना जाता है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">सूर्य के सबसे निकट ग्रह कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> बुध</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>बुध सौरमंडल में सूर्य का सबसे निकटतम ग्रह है। इसका कोई वायुमंडल नहीं है, जिसके कारण यह दिन में अत्यधिक गर्म और रात में बहुत ठंडा हो जाता है। यह सौरमंडल का सबसे छोटा ग्रह भी है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">वयस्क मानव शरीर में कितनी हड्डियाँ होती हैं?</p><p class="answer"><strong>उत्तर:</strong> 206</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>एक वयस्क मानव शरीर में 206 हड्डियाँ होती हैं। जन्म के समय शिशु में लगभग 300 हड्डियाँ होती हैं, लेकिन व्यक्ति के बड़े होने पर उनमें से कुछ हड्डियाँ आपस में जुड़ जाती हैं।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारत का संविधान कब लागू हुआ?</p><p class="answer"><strong>उत्तर:</strong> 26 जनवरी, 1950</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारत का संविधान 26 नवंबर, 1949 को संविधान सभा द्वारा अपनाया गया था और यह 26 जनवरी, 1950 को पूर्ण रूप से लागू हुआ। हम इस दिन को हर साल गणतंत्र दिवस के रूप में मनाते हैं।</p></div></details></li>
+                    <li class="qa-item"><p class="question">'गीत गोविंद' के लेखक कौन हैं?</p><p class="answer"><strong>उत्तर:</strong> जयदेव</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>'गीत गोविंद' 12वीं सदी के भारतीय कवि जयदेव द्वारा रचित एक काव्य रचना है। इसमें कृष्ण और गोपियों, विशेषकर राधा के बीच संबंधों का वर्णन है। इसे संस्कृत साहित्य की एक उत्कृष्ट कृति माना जाता है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">पृथ्वी पर सबसे बड़ा महाद्वीप कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> एशिया</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>एशिया क्षेत्रफल और जनसंख्या दोनों के हिसाब से दुनिया का सबसे बड़ा महाद्वीप है। यह पृथ्वी के कुल भूमि क्षेत्र का लगभग 30% हिस्सा कवर करता है और दुनिया की 60% से अधिक आबादी का घर है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारत की सबसे लंबी नदी कौन सी है?</p><p class="answer"><strong>उत्तर:</strong> गंगा</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>गंगा को भारत की सबसे लंबी और सबसे पवित्र नदी माना जाता है। इसकी कुल लंबाई लगभग 2,525 किलोमीटर है। यह उत्तराखंड में गंगोत्री ग्लेशियर से निकलती है और बंगाल की खाड़ी में गिरती है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">किस विटामिन की कमी से रतौंधी रोग होता है?</p><p class="answer"><strong>उत्तर:</strong> विटामिन ए</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>विटामिन ए की कमी से रतौंधी नामक रोग होता है, जिसमें व्यक्ति को कम रोशनी में देखने में कठिनाई होती है। यह विटामिन आंखों के स्वास्थ्य के लिए आवश्यक है। गाजर, पालक और दूध इसके अच्छे स्रोत हैं।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारत का राष्ट्रीय पशु क्या है?</p><p class="answer"><strong>उत्तर:</strong> बाघ</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>रॉयल बंगाल टाइगर को अप्रैल 1973 में भारत का राष्ट्रीय पशु घोषित किया गया था। यह अपनी शक्ति, फुर्ती और कृपा के लिए जाना जाता है। इसके संरक्षण के लिए 'प्रोजेक्ट टाइगर' भी शुरू किया गया था।</p></div></details></li>
+                    <li class="qa-item"><p class="question">गुलाम वंश का संस्थापक कौन था?</p><p class="answer"><strong>उत्तर:</strong> कुतुब-उद-दीन ऐबक</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>कुतुब-उद-दीन ऐबक ने 1206 ईस्वी में दिल्ली सल्तनत के पहले राजवंश, गुलाम वंश की स्थापना की थी। वह मुहम्मद गोरी का गुलाम था और गोरी की मृत्यु के बाद उसने खुद को सुल्तान घोषित कर दिया।</p></div></details></li>
+                    <li class="qa-item"><p class="question">प्रकाश वर्ष किस मात्रा की इकाई है?</p><p class="answer"><strong>उत्तर:</strong> दूरी</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>प्रकाश वर्ष खगोलीय दूरियों को मापने की एक इकाई है। यह वह दूरी है जो प्रकाश एक वर्ष में निर्वात में तय करता है, जो लगभग 9.46 ट्रिलियन किलोमीटर है। इसका उपयोग सितारों और आकाशगंगाओं की दूरी व्यक्त करने के लिए किया जाता है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">अजंता और एलोरा की गुफाएँ किस राज्य में स्थित हैं?</p><p class="answer"><strong>उत्तर:</strong> महाराष्ट्र</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>प्रसिद्ध अजंता और एलोरा की गुफाएँ महाराष्ट्र के औरंगाबाद जिले में स्थित हैं। ये रॉक-कट स्मारक हैं और बौद्ध, हिंदू और जैन धर्म से संबंधित अपनी मूर्तियों और चित्रों के लिए विश्व प्रसिद्ध हैं। ये यूनेस्को की विश्व धरोहर स्थल हैं।</p></div></details></li>
+                    <li class="qa-item"><p class="question">टेलीफोन का आविष्कार किसने किया?</p><p class="answer"><strong>उत्तर:</strong> अलेक्जेंडर ग्राहम बेल</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>अलेक्जेंडर ग्राहम बेल ने 1876 में टेलीफोन का आविष्कार किया था। इस आविष्कार ने संचार की दुनिया में क्रांति ला दी और लोगों को लंबी दूरी पर तुरंत बात करने में सक्षम बनाया।</p></div></details></li>
+                    <li class="qa-item"><p class="question">'भारत का नेपोलियन' किसे कहा जाता है?</p><p class="answer"><strong>उत्तर:</strong> समुद्रगुप्त</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>गुप्त वंश के शासक समुद्रगुप्त को इतिहासकार वी. ए. स्मिथ ने उनकी सैन्य विजयों और साम्राज्य विस्तार के कारण 'भारत का नेपोलियन' कहा था। उन्होंने अपने शासनकाल में लगभग पूरे भारत पर विजय प्राप्त की थी।</p></div></details></li>
+                    <li class="qa-item"><p class="question">वायुमंडल में सबसे अधिक मात्रा में कौन सी गैस पाई जाती है?</p><p class="answer"><strong>उत्तर:</strong> नाइट्रोजन (78%)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>नाइट्रोजन पृथ्वी के वायुमंडल में सबसे प्रचुर मात्रा में पाई जाने वाली गैस है, जो लगभग 78% है। इसके बाद ऑक्सीजन (लगभग 21%), आर्गन (0.93%), और कार्बन डाइऑक्साइड (0.04%) हैं।</p></div></details></li>
+                    <li class="qa-item"><p class="question">मौर्य साम्राज्य की स्थापना किसने की?</p><p class="answer"><strong>उत्तर:</strong> चंद्रगुप्त मौर्य</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>चंद्रगुप्त मौर्य ने 322 ईसा पूर्व में अपने गुरु चाणक्य (कौटिल्य) की मदद से नंद वंश के शासक धनानंद को हराकर मौर्य साम्राज्य की स्थापना की। यह प्राचीन भारत का एक शक्तिशाली साम्राज्य था।</p></div></details></li>
+                    <li class="qa-item"><p class="question">महात्मा गांधी ने 'करो या मरो' का नारा किस आंदोलन में दिया था?</p><p class="answer"><strong>उत्तर:</strong> भारत छोड़ो आंदोलन (1942)</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>महात्मा गांधी ने 8 अगस्त, 1942 को बॉम्बे में अखिल भारतीय कांग्रेस कमेटी के सत्र में भारत छोड़ो आंदोलन शुरू करते हुए प्रसिद्ध नारा 'करो या मरो' दिया था। इसका उद्देश्य भारत में ब्रिटिश शासन को समाप्त करना था।</p></div></details></li>
+                    <li class="qa-item"><p class="question">'कंप्यूटर का जनक' किसे कहा जाता है?</p><p class="answer"><strong>उत्तर:</strong> चार्ल्स बैबेज</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>चार्ल्स बैबेज को 'कंप्यूटर का जनक' माना जाता है। 19वीं सदी में, उन्होंने 'एनालिटिकल इंजन' नामक एक यांत्रिक कंप्यूटर की अवधारणा दी, जिसमें आधुनिक कंप्यूटरों के कई सिद्धांत शामिल थे।</p></div></details></li>
+                    <li class="qa-item"><p class="question">नोबेल पुरस्कार जीतने वाले पहले भारतीय कौन थे?</p><p class="answer"><strong>उत्तर:</strong> रवींद्रनाथ टैगोर</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>रवींद्रनाथ टैगोर को 1913 में साहित्य का नोबेल पुरस्कार प्रदान किया गया था। उन्हें यह पुरस्कार उनके काव्य संग्रह 'गीतांजलि' के लिए मिला। वे यह पुरस्कार जीतने वाले पहले भारतीय और पहले गैर-यूरोपीय थे।</p></div></details></li>
+                    <li class="qa-item"><p class="question">हमारे सौरमंडल का सबसे बड़ा ग्रह कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> बृहस्पति</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>बृहस्पति हमारे सौरमंडल का सबसे बड़ा ग्रह है। यह इतना बड़ा है कि सौरमंडल के अन्य सभी ग्रह इसके अंदर समा सकते हैं। यह एक गैस विशाल है, जिसका अर्थ है कि इसकी कोई ठोस सतह नहीं है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">'डिस्कवरी ऑफ इंडिया' पुस्तक किसने लिखी?</p><p class="answer"><strong>उत्तर:</strong> जवाहरलाल नेहरू</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>'डिस्कवरी ऑफ इंडिया' पुस्तक भारत के पहले प्रधानमंत्री जवाहरलाल नेहरू ने 1942-45 में अहमदनगर किले में अपनी कैद के दौरान लिखी थी। यह पुस्तक प्राचीन काल से लेकर भारत की स्वतंत्रता तक के इतिहास का वर्णन करती है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारत का सर्वोच्च नागरिक पुरस्कार कौन सा है?</p><p class="answer"><strong>उत्तर:</strong> भारत रत्न</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारत रत्न भारत का सर्वोच्च नागरिक पुरस्कार है। यह कला, साहित्य, विज्ञान और सार्वजनिक सेवा के क्षेत्र में असाधारण योगदान के लिए दिया जाता है। इसकी स्थापना 1954 में हुई थी।</p></div></details></li>
+                    <li class="qa-item"><p class="question">किस मुगल बादशाह को 'जिंदा पीर' कहा जाता था?</p><p class="answer"><strong>उत्तर:</strong> औरंगजेब</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>मुगल बादशाह औरंगजेब को उसकी सादगी और धार्मिक कट्टरता के कारण 'जिंदा पीर' (जीवित संत) के रूप में जाना जाता था। वह अपनी आजीविका के लिए कुरान की प्रतियां बनाता और टोपियां सिलता था।</p></div></details></li>
+                    <li class="qa-item"><p class="question">विश्व की सबसे ऊँची पर्वत चोटी कौन सी है?</p><p class="answer"><strong>उत्तर:</strong> माउंट एवरेस्ट</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>माउंट एवरेस्ट समुद्र तल से 8,848.86 मीटर (29,031.7 फीट) की ऊंचाई के साथ दुनिया का सबसे ऊंचा पर्वत है। यह हिमालय का हिस्सा है और नेपाल और चीन के बीच की सीमा पर स्थित है।</p></div></details></li>
+                    <li class="qa-item"><p class="question">भारतीय रिजर्व बैंक (RBI) का मुख्यालय कहाँ स्थित है?</p><p class="answer"><strong>उत्तर:</strong> मुंबई</p><details><summary>स्पष्टीकरण देखें</summary><div class="explanation"><p>भारतीय रिजर्व बैंक (RBI) भारत का केंद्रीय बैंक है। इसकी स्थापना 1 अप्रैल, 1935 को हुई थी। इसका मुख्यालय मुंबई, महाराष्ट्र में स्थित है।</p></div></details></li>
                 </ol>
+            </div>
+        </section>  <section class="content-section">
+            <h2 class="section-title">Featured Quiz Categories</h2>
+            <p class="section-subtitle">Jump into our most popular categories and test your knowledge on a wide range of subjects.</p>
+            <div class="grid-3">
+                <div class="info-card">
+                    <div class="icon">📜</div>
+                    <h3>History</h3>
+                    <p>From ancient civilizations to modern world events, explore quizzes that cover the vast timeline of human history.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🌍</div>
+                    <h3>Geography</h3>
+                    <p>Test your knowledge of the world, from continents and oceans to countries, capitals, and natural wonders.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🔬</div>
+                    <h3>Science & Technology</h3>
+                    <p>Challenge yourself with questions on physics, chemistry, biology, and the latest technological innovations.</p>
+                </div>
             </div>
         </section>
 
-    </main>
+        <section class="content-section">
+            <h2 class="section-title">Exam Corner</h2>
+            <p class="section-subtitle">Get a competitive edge with quizzes specifically designed for popular government and competitive exams.</p>
+            <div class="grid-3">
+                <div class="info-card">
+                    <div class="icon">🏆</div>
+                    <h3>SSC Exams</h3>
+                    <p>Practice questions based on the latest syllabus for SSC CGL, CHSL, and other staff selection commission exams.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🏦</div>
+                    <h3>Banking Exams</h3>
+                    <p>Sharpen your GK for banking exams like IBPS PO, Clerk, and SBI with our specially curated question sets.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🚂</div>
+                    <h3>Railway Exams</h3>
+                    <p>Prepare for RRB NTPC, Group D, and other railway recruitment board exams with relevant GK quizzes.</p>
+                </div>
+            </div>
+        </section>
 
-    <div class="container related-posts-container">
+        <section class="quiz-week-section">
+            <div class="quiz-week-card">
+                <div class="quiz-week-tag">Quiz of the Week</div>
+                <h3>The Ultimate Constitution of India Challenge</h3>
+                <p>How well do you know the Indian Constitution? This challenging quiz covers fundamental rights, important articles, and key amendments. Test your knowledge now!</p>
+                <a href="#" class="cta-btn">Take the Challenge</a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Current Affairs Spotlight</h2>
+            <p class="section-subtitle">General knowledge is incomplete without current affairs. Stay updated with our quizzes on recent events.</p>
+            <div class="grid-3">
+                <div class="current-affair-card">
+                    <div class="affair-meta">
+                        <span class="affair-category">National</span>
+                        <span class="affair-date">This Month</span>
+                    </div>
+                    <h3><a href="#">Recent Government Schemes Quiz</a></h3>
+                    <a href="#" class="read-more-btn">Take Quiz →</a>
+                </div>
+                <div class="current-affair-card">
+                    <div class="affair-meta">
+                        <span class="affair-category">International</span>
+                        <span class="affair-date">This Month</span>
+                    </div>
+                    <h3><a href="#">Global Summits & Conferences</a></h3>
+                    <a href="#" class="read-more-btn">Take Quiz →</a>
+                </div>
+                <div class="current-affair-card">
+                    <div class="affair-meta">
+                        <span class="affair-category">Sports</span>
+                        <span class="affair-date">This Month</span>
+                    </div>
+                    <h3><a href="#">Major Sporting Events Quiz</a></h3>
+                    <a href="#" class="read-more-btn">Take Quiz →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Tips for Quiz Success</h2>
+            <p class="section-subtitle">Improve your scores and retention with these proven strategies for tackling GK questions.</p>
+            <div class="grid-3">
+                <div class="info-card">
+                    <div class="icon">🔄</div>
+                    <h3>Revise Regularly</h3>
+                    <p>Consistent revision is key to remembering facts. Spend a little time each day reviewing what you've learned.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">📰</div>
+                    <h3>Read Daily</h3>
+                    <p>Make a habit of reading newspapers or news apps daily to stay on top of current affairs effortlessly.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">✍️</div>
+                    <h3>Make Notes</h3>
+                    <p>Jotting down important points helps reinforce memory and makes for quick revision notes later.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Join Our Learning Community!</h2>
+            <p>Stay updated with our latest videos, tutorials, and quizzes. Follow us on YouTube for a more interactive learning experience.</p>
+            <a href="https://www.youtube.com/@GKLearnStudy" class="cta-btn" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
+        </section>
+
+    </main>  <div class="container related-posts-container">
         <h2 class="widget-title">Related Articles</h2>
         <div id="related-posts-grid" class="post-grid">
             <!-- Related posts will be injected here -->
         </div>
     </div>
-        
-   <div class="comments-wrapper">
-            <div class="firebase-comments-widget" id="custom-comment-section">
-                <!-- Form is now static HTML -->
-                <h2>Comments</h2>
-                <div class="comment-form-shell" id="comment-form-shell">
-                    <form class="comment-form" id="comment-form">
-                        <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                        <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-                        <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-                        <input type="hidden" id="parent-id" value="" />
-                        <div class="form-footer">
-                            <div id="char-counter">0 / 1000</div>
-                            <div class="actions">
-                                <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                            </div>
-                        </div>
-                    </form>
+
+     <div id="comments-and-ratings-container">
+                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                    <div class="rating-skeleton"><div class="rating-skeleton-display"><div class="skeleton-summary"><div class="skeleton-circle"></div><div class="skeleton-line short" style="width: 80%; margin: 0 auto;"></div></div><div class="skeleton-breakdown"><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div><div class="skeleton-line" style="height: 10px;"></div></div></div></div>
+                    <div id="rating-widget" class="rating-content">
+                        <h2>Rate this Page</h2>
+                        <div id="rating-display"><div class="average-summary"><div id="average-rating-value">0.0</div><div id="total-ratings-count">0 ratings</div></div><div class="rating-breakdown"><div class="breakdown-row" data-star-level="5"><span class="star-label">5 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="4"><span class="star-label">4 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="3"><span class="star-label">3 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="2"><span class="star-label">2 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div><span class="vote-count">0</span></div><div class="breakdown-row" data-star-level="1"><span class="star-label">1 star</span><div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div><span class="vote-count">0</span></div></div></div>
+                        <div id="rating-stars"><svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+                        <div id="rating-login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p></div>
+                    </div>
                 </div>
 
-                <!-- Comments go here -->
-                <div id="comments-list">
-                    <div class="spinner"></div>
-                    <p class="muted">Loading comments…</p>
+                <div class="comments-wrapper comments-loading" id="comments-main-container">
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                        <div id="auth-container"><div id="user-info"></div><button id="login-btn" class="btn primary"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path><path d="M1 1h22v22H1z" fill="none"></path></svg> Sign in with Google</button><button id="logout-btn" class="btn">Logout</button></div>
+                        <div id="login-prompt" style="display: none;"><p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p></div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none;"><form class="comment-form" id="comment-form"><div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div><textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" /><div class="form-footer"><div id="char-counter">0 / 1000</div><div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button></div></div></form></div>
+                        <div id="comments-list" class="comment-list"><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div><div class="skeleton-comment"><div class="skeleton-line header"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
+       
+        
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+        </footer>
 
-    <footer class="app-footer">  
-        <div class="footer-content"></div>
-        <div class="footer-bottom">
-            &copy; 2024 GK Learn Study | All Rights Reserved
-        </div>
-    </footer>
-    <script src="https://gklearnstudy.in/js/theme.js" defer></script>
-    <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
-    <script src="https://gklearnstudy.in/js/comment.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const langButtons = document.querySelectorAll('.language-switcher button');
-            const langContents = document.querySelectorAll('.language-content');
+        <script src="js/theme.js" defer></script>
+        <script src="js/search-data.js" defer></script>
+        
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                        .then(r => console.log('Firebase Messaging SW registered.', r.scope))
+                        .catch(e => console.error('Firebase Messaging SW registration failed:', e));
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(r => console.log('Caching SW registered.', r.scope))
+                        .catch(e => console.error('Caching SW registration failed:', e));
+                });
+            }
+        </script>
+       
+        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
+        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script> <script src="https://gklearnstudy.in/js/theme.js" defer></script>
+        <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
+     
 
-            langButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const selectedLang = button.dataset.lang;
+     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const switcher = document.querySelector('.language-switcher');
+            const contents = document.querySelectorAll('.language-content');
 
-                    // Update button styles
-                    langButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
+            switcher.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const lang = e.target.dataset.lang;
+                    
+                    // Update buttons
+                    switcher.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
 
-                    // Update content visibility
-                    langContents.forEach(content => {
-                        const englishVersion = content.querySelector('.english-content');
-                        const hindiVersion = content.querySelector('.hindi-content');
-
-                        if (englishVersion && hindiVersion) {
-                             if (selectedLang === 'en') {
-                                englishVersion.classList.add('active');
-                                hindiVersion.classList.remove('active');
-                            } else {
-                                englishVersion.classList.remove('active');
-                                hindiVersion.classList.add('active');
-                            }
+                    // Update content
+                    contents.forEach(content => {
+                        content.querySelectorAll('.english-content, .hindi-content').forEach(langContent => {
+                            langContent.classList.remove('active');
+                        });
+                        const activeContent = content.querySelector(lang === 'en' ? '.english-content' : '.hindi-content');
+                        if(activeContent) {
+                            activeContent.classList.add('active');
                         }
                     });
-                });
+                }
             });
         });
     </script>
+    
 </body>
 </html>
