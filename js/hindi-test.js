@@ -25,12 +25,13 @@ async function loadPageData() {
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
-        // Fetch all scores for Hindi tests
+        // Fetch all scores for Hindi tests, ordered by score.
+        // NOTE: This query requires a composite index in Firestore. 
+        // The user must create it using the link provided in the console error.
         const q = query(
             collection(db, "quizScores"),
             where("quizId", ">=", "hindi-test-"),
             where("quizId", "<", "hindi-test-~"),
-            orderBy("quizId"),
             orderBy("score", "desc")
         );
         const querySnapshot = await getDocs(q);
@@ -38,13 +39,14 @@ async function loadPageData() {
         const userBestScores = new Map();
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
+            // Store only the best score for each user for the leaderboard
             if (!userBestScores.has(scoreData.userId) || scoreData.score > userBestScores.get(scoreData.userId).score) {
                 userBestScores.set(scoreData.userId, scoreData);
             }
         });
 
         const topScores = Array.from(userBestScores.values())
-            .sort((a, b) => b.score - a.score)
+            .sort((a, b) => b.score - a.score) // Re-sort as the map doesn't preserve order
             .slice(0, 10);
 
         renderLeaderboard(topScores);
@@ -91,20 +93,30 @@ async function updateUserTestStatus() {
     );
 
     const userSnapshot = await getDocs(q);
-    const playedQuizzes = new Set();
+    const playedQuizzes = new Map();
     userSnapshot.forEach(doc => {
-        if(doc.data().quizId.startsWith('hindi-test-')) {
-            playedQuizzes.add(doc.data().quizId);
+        const scoreData = doc.data();
+        const quizId = scoreData.quizId;
+        if(quizId && quizId.startsWith('hindi-test-')) {
+            // If we haven't seen this quiz, or the new score is higher, update it
+            if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
+                playedQuizzes.set(quizId, scoreData);
+            }
         }
     });
 
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
-            const originalLink = box.querySelector('a');
+            const scoreData = playedQuizzes.get(quizId);
+            const originalLink = box.querySelector('a'); // Get href before overwriting
+            
             box.innerHTML = `
+                <div class="user-score-display">
+                    <h4>Your Score: ${scoreData.score} / ${scoreData.totalQuestions}</h4>
+                </div>
                 <div class="button-group">
-                    <button class="btn retry-btn">Try Again</button>
+                    <button class="btn retry-btn">Play Again</button>
                     <button class="btn review-btn">View Result</button>
                 </div>
             `;
