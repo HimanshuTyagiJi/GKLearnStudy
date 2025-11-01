@@ -3,70 +3,75 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <!-- Primary Meta Tags -->
         <title>Hindi Test Part - 1 | GK Learn Study</title>
-        <meta name="title" content="Hindi Test Part - 1 | GK Learn Study" />
         <meta name="description" content="GK Learn Study के इस भाग 1 हिंदी टेस्ट में बहुविकल्पीय प्रश्नों (MCQ) के माध्यम से अपनी तैयारी की जांच करें। सभी प्रतियोगी परीक्षाओं के लिए उपयोगी।" />
-        <meta name="keywords" content="हिंदी टेस्ट, Hindi Test, Hindi MCQ, बहुविकल्पीय प्रश्न, Hindi Quiz, Online Test, प्रतियोगी परीक्षा, GK Learn Study" />
-        <meta name="author" content="GK Learn Study" />
-        <meta name="robots" content="index, follow" />
-
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://gklearnstudy.in/hindi-test/part-01" />
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="hi_IN" />
-        <meta property="og:url" content="https://gklearnstudy.in/hindi-test/part-01" />
-        <meta property="og:title" content="Hindi Test Part - 1 | GK Learn Study" />
-        <meta property="og:description" content="GK Learn Study के इस हिंदी टेस्ट में भाग लें और महत्वपूर्ण बहुविकल्पीय प्रश्नों के उत्तर दें।" />
-        <meta property="og:image" content="https://gklearnstudy.in/images/hindi-test.png" />
-
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://gklearnstudy.in/hindi-test/part-01" />
-        <meta property="twitter:title" content="Hindi Test Part - 1 | GK Learn Study" />
-        <meta property="twitter:description" content="GK Learn Study द्वारा प्रस्तुत हिंदी टेस्ट भाग 1 - ऑनलाइन परीक्षा के लिए अभ्यास करें।" />
-        <meta property="twitter:image" content="https://gklearnstudy.in/images/hindi-test.png" />
-
-        <!-- Progressive Web App & Theme -->
-        <meta name="theme-color" content="#FFFFFF" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="GK Learn Study" />
-        <meta name="application-name" content="GK Learn Study" />
-        <meta name="msapplication-TileColor" content="#4CAF50" />
-        <meta name="msapplication-TileImage" content="https://gklearnstudy.in/GK-Learn-Study.png" />
-       
-        <!-- Icons and Manifest -->
         <link rel="icon" type="image/png" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://gklearnstudy.in/GK-Learn-Study.png" />
-        <link rel="manifest" href="https://gklearnstudy.in/manifest.json" />
-
-        <!-- Stylesheet -->
-        <link rel="stylesheet" href="/css/test.css" />
+        <style>
+            :root {
+                --primary-color: #007bff;
+                --light-primary: #e6f2ff;
+                --secondary-color: #6c757d;
+                --success-color: #28a745;
+                --danger-color: #dc3545;
+                --light-color: #f8f9fa;
+                --dark-color: #343a40;
+                --background-color: var(--body-bg, #fff);
+                --text-color: var(--text-primary, #212529);
+                --border-color: var(--border-color, #dee2e6);
+                --card-bg: var(--card-bg, #fff);
+            }
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; margin: 0; padding: 1rem; }
+            .container { max-width: 800px; margin: 1rem auto; }
+            header h1 { text-align: center; color: var(--accent-color, var(--primary-color)); }
+            .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+            .modal.active { display: flex; opacity: 1; }
+            .modal-content { background-color: var(--card-bg); padding: 2.5rem; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transform: scale(0.95); transition: transform 0.3s ease; }
+            .modal.active .modal-content { transform: scale(1); }
+            .modal-content h2 { margin-top: 0; color: var(--accent-color, var(--primary-color)); }
+            .modal-content ul { list-style-type: '✓ '; padding-left: 1.5rem; margin-bottom: 2rem; text-align: left; }
+            .modal-content li { margin-bottom: 0.5rem; }
+            .modal-actions { display: flex; justify-content: center; gap: 1rem; }
+            #quiz-form { background-color: var(--card-bg); padding: 2rem; border-radius: 8px; border: 1px solid var(--border-color); }
+            .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+            #timer { font-size: 1.1rem; font-weight: 500; background-color: var(--accent-color-transparent, var(--light-primary)); color: var(--accent-color, var(--primary-color)); padding: 0.5rem 1rem; border-radius: 20px; }
+            .question-block { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border-color); }
+            .question-block:last-child { border-bottom: none; }
+            .question { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; }
+            .options { display: flex; flex-direction: column; gap: 0.75rem; }
+            .options label { display: block; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
+            .options label:hover { background-color: var(--accent-color-transparent, var(--light-primary)); }
+            .options input[type="radio"]:checked + span { font-weight: bold; color: var(--accent-color, var(--primary-color)); }
+            .options input[type="radio"] { margin-right: 0.75rem; }
+            .start-btn, .submit-btn, .retry-btn, .review-btn { display: inline-block; padding: 0.8rem 1.8rem; font-size: 1rem; font-weight: 600; text-align: center; cursor: pointer; border-radius: 25px; transition: all 0.2s ease; border: none; }
+            .start-btn, .submit-btn { background-color: var(--accent-color, var(--primary-color)); color: white; }
+            .start-btn:hover, .submit-btn:hover { background-color: #0056b3; }
+            .review-btn, .retry-btn { background-color: var(--secondary-color); color: white; }
+            .review-btn:hover, .retry-btn:hover { background-color: #5a6268; }
+            .submit-btn { display: block; width: 100%; margin-top: 2rem; }
+            #review-questions h2 { text-align: center; color: var(--accent-color, var(--primary-color)); margin-bottom: 2rem; }
+            .review .options label { cursor: default; }
+            .review .options label:hover { background-color: transparent; }
+            .review .options .correct-option { background-color: #d4edda; border-color: #c3e6cb; color: #155724; font-weight: bold; }
+            .review .options .incorrect-option { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; text-decoration: line-through; }
+            .explanation { margin-top: 1rem; padding: 1rem; background-color: var(--input-bg, var(--light-color)); border-radius: 6px; font-size: 0.95rem; border: 1px solid var(--border-color); }
+            .spinner-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; color: var(--secondary-color); }
+            .spinner { border: 4px solid var(--border-color); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary-color); margin-bottom: 1rem; animation: spin 1s ease infinite; }
+            @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
     </head>
-
     <body>
         <main class="container">
-            <header>
-                <h1 style="text-align: center;">Hindi Test Part - 01</h1>
-            </header>
-
-            <section id="quiz-section">
-                <form id="quiz-form" style="display: none;">
+            <header><h1>Hindi Test Part - 01</h1></header>
+            <section id="quiz-section" style="display:none;">
+                <form id="quiz-form">
                     <div class="quiz-header">
                         <h2>Hindi Test Part - 01</h2>
                         <div id="timer"><strong>समय:</strong> 0:00</div>
                     </div>
-                    <div id="questions-container">
-                         <div class="spinner-container"><div class="spinner"></div><p>प्रश्न लोड हो रहे हैं...</p></div>
-                    </div>
+                    <div id="questions-container"><div class="spinner-container"><div class="spinner"></div><p>प्रश्न लोड हो रहे हैं...</p></div></div>
                     <button type="submit" class="submit-btn" style="display: none;">सबमिट करें</button>
                 </form>
             </section>
-
-            <!-- Start Modal -->
             <section id="startModal" class="modal active" role="dialog" aria-labelledby="rulesHeading">
                 <div class="modal-content">
                     <h2 id="rulesHeading">टेस्ट के नियम</h2>
@@ -75,279 +80,80 @@
                         <li>टाइमर पूरे टेस्ट का समय ट्रैक करेगा।</li>
                         <li>एक बार उत्तर सबमिट करने के बाद बदला नहीं जा सकता।</li>
                         <li>टेस्ट को बीच में नहीं छोड़ा जा सकता।</li>
-                        <li>सही उत्तरों पर अंक मिलेंगे।</li>
+                        <li>लॉग-इन करने पर आपका स्कोर लीडरबोर्ड के लिए सहेजा जाएगा।</li>
                     </ul>
-                    <button class="start-btn" onclick="startQuiz()">टेस्ट शुरू करें</button>
+                    <button id="start-btn" class="start-btn">टेस्ट शुरू करें</button>
                 </div>
             </section>
-
-            <!-- Result Modal -->
             <section id="resultModal" class="modal" role="dialog" aria-labelledby="resultHeading">
                 <div class="modal-content">
                     <h2 id="resultHeading">आपका परिणाम</h2>
                     <div id="resultContent"></div>
                     <div class="modal-actions">
-                        <button class="review-btn" onclick="reviewQuestions()">प्रश्न देखें</button>
-                        <button class="retry-btn" onclick="retryQuiz()">पुनः प्रयास करें</button>
+                        <button id="review-btn" class="review-btn">जवाब देखें</button>
+                        <button id="retry-btn" class="retry-btn">पुनः प्रयास करें</button>
                     </div>
                 </div>
             </section>
-
-            <!-- Review Section -->
             <section id="review-questions" style="display:none;" aria-label="Review Questions">
                  <h2>सवालों की समीक्षा</h2>
                  <div id="review-container"></div>
-                 <button class="retry-btn" onclick="retryQuiz()">पुनः प्रयास करें</button>
+                 <button id="review-retry-btn" class="retry-btn" style="display:block; margin: 2rem auto;">पुनः प्रयास करें</button>
             </section>
-
-            <script>
-                var questions = [
-                    { question: "‘गोदान’ उपन्यास में प्रमुख पात्र कौन है?", options: [ { text: "A. सूरदास", value: "a" }, { text: "B. होरी", value: "b" }, { text: "C. गोबर", value: "c" }, ], correctOption: "b", explanation: "‘गोदान’ उपन्यास में प्रमुख पात्र होरी है।", },
-                    { question: "‘प्रिय प्रवास’ किस प्रकार की रचना है?", options: [ { text: "A. खंडकाव्य", value: "a" }, { text: "B. महाकाव्य", value: "b" }, { text: "C. गीत संग्रह", value: "c" }, ], correctOption: "b", explanation: "‘प्रिय प्रवास’ एक महाकाव्य है।", },
-                    { question: "‘गबन’ उपन्यास में किसकी कहानी है?", options: [ { text: "A. सामाजिक जीवन", value: "a" }, { text: "B. पारिवारिक समस्याएँ", value: "b" }, { text: "C. आर्थिक और नैतिक पतन", value: "c" }, ], correctOption: "c", explanation: "‘गबन’ उपन्यास में आर्थिक और नैतिक पतन की कहानी है।", },
-                    { question: "‘पुष्प की अभिलाषा’ कविता के रचयिता कौन हैं?", options: [ { text: "A. रामधारी सिंह दिनकर", value: "a" }, { text: "B. सुमित्रानंदन पंत", value: "b" }, { text: "C. माखनलाल चतुर्वेदी", value: "c" }, ], correctOption: "c", explanation: "‘पुष्प की अभिलाषा’ कविता के रचयिता माखनलाल चतुर्वेदी हैं।", },
-                    { question: "‘चंद्रगुप्त’ नाटक के लेखक कौन हैं?", options: [ { text: "A. जयशंकर प्रसाद", value: "a" }, { text: "B. रामधारी सिंह दिनकर", value: "b" }, { text: "C. भारतेंदु हरिश्चंद्र", value: "c" }, ], correctOption: "a", explanation: "‘चंद्रगुप्त’ नाटक के लेखक जयशंकर प्रसाद हैं।", },
-                    { question: "‘रश्मिरथी’ किसकी प्रसिद्ध रचना है?", options: [ { text: "A. सुमित्रानंदन पंत", value: "a" }, { text: "B. रामधारी सिंह दिनकर", value: "b" }, { text: "C. सुभद्रा कुमारी चौहान", value: "c" }, ], correctOption: "b", explanation: "‘रश्मिरथी’ रामधारी सिंह दिनकर की प्रसिद्ध रचना है।", },
-                    { question: "किस हिंदी साहित्यकार को 'महाकवि' कहा जाता है?", options: [ { text: "A. जयशंकर प्रसाद", value: "a" }, { text: "B. सूरदास", value: "b" }, { text: "C. तुलसीदास", value: "c" }, ], correctOption: "c", explanation: "तुलसीदास को 'महाकवि' कहा जाता है।", },
-                    { question: "सूरदास की रचनाओं का मुख्य विषय क्या है?", options: [ { text: "A. प्रेम", value: "a" }, { text: "B. भक्ति", value: "b" }, { text: "C. समाज सुधार", value: "c" }, ], correctOption: "b", explanation: "सूरदास की रचनाओं का मुख्य विषय भक्ति है।", },
-                    { question: "किस काव्य को 'हिंदी का बाइबिल' कहा जाता है?", options: [ { text: "A. रामचरितमानस", value: "a" }, { text: "B. गीत गोविंद", value: "b" }, { text: "C. साकेत", value: "c" }, ], correctOption: "a", explanation: "रामचरितमानस को 'हिंदी का बाइबिल' कहा जाता है।", },
-                    { question: "जयशंकर प्रसाद की प्रसिद्ध रचना कौन सी है?", options: [ { text: "A. कामायनी", value: "a" }, { text: "B. गोदान", value: "b" }, { text: "C. भारत भारती", value: "c" }, ], correctOption: "a", explanation: "कामायनी जयशंकर प्रसाद की प्रसिद्ध रचना है।", },
-                    { question: "संधि का उदाहरण: 'नदीनदी'", options: [ { text: "A. नदी+नदी", value: "a" }, { text: "B. नदीनदी", value: "b" }, { text: "C. नदी+इनदी", value: "c" }, ], correctOption: "a", explanation: "'नदीनदी' में 'नदी' और 'नदी' का संधि रूप है।", },
-                    { question: "अनेकार्थी शब्द का उदाहरण: 'पढ़ना'", options: [ { text: "A. अध्ययन करना", value: "a" }, { text: "B. बोलना", value: "b" }, { text: "C. अध्ययन करना और शब्दों का ज्ञात करना", value: "c" }, ], correctOption: "a", explanation: "'पढ़ना' का अनेकार्थी शब्द 'अध्यान करना' है।", },
-                    { question: "Homonym का उदाहरण: 'Bark'", options: [ { text: "A. पेड़ की छाल", value: "a" }, { text: "B. कुत्ते की आवाज़", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'Bark' एक Homonym है, जो 'पेड़ की छाल' और 'कुत्ते की आवाज़' दोनों के रूप में प्रयोग होता है।", },
-                    { question: "उपसर्ग का उदाहरण: 'अविकसित'", options: [ { text: "A. विकसीत", value: "a" }, { text: "B. विकसित + अव", value: "b" }, { text: "C. अव + विकसित", value: "c" }, ], correctOption: "c", explanation: "'अविकसित' में 'अव' उपसर्ग है, जो विपरीत अर्थ देता है।", },
-                    { question: "पारस्परिक शब्द का उदाहरण: 'सपना'", options: [ { text: "A. सत्य", value: "a" }, { text: "B. काल्पनिक", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "a", explanation: "'सपना' का पारस्परिक शब्द 'सत्य' है, जो वास्तविकता के विपरीत है।", },
-                    { question: "संधि का उदाहरण: 'द्रष्टव्य'", options: [ { text: "A. द्रष्ट+व्य", value: "a" }, { text: "B. दर्श+व्य", value: "b" }, { text: "C. द्रष्ट+व्यव", value: "c" }, ], correctOption: "a", explanation: "'द्रष्टव्य' में 'द्रष्ट' और 'व्य' का संधि रूप है।", },
-                    { question: "अनेकार्थी शब्द का उदाहरण: 'सहारा'", options: [ { text: "A. समर्थन", value: "a" }, { text: "B. सहायक", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'सहारा' का अनेकार्थी शब्द 'समर्थन' और 'सहायक' दोनों हो सकते हैं।", },
-                    { question: "Homonym का उदाहरण: 'Tear'", options: [ { text: "A. आँसू", value: "a" }, { text: "B. फाड़ना", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'Tear' एक Homonym है, जिसका अर्थ 'आँसू' और 'फाड़ना' दोनों हो सकता है।", },
-                    { question: "उपसर्ग का उदाहरण: 'अधिकार'", options: [ { text: "A. अधि+कार", value: "a" }, { text: "B. अधिकार+का", value: "b" }, { text: "C. अधिकार और अध", value: "c" }, ], correctOption: "a", explanation: "'अधिकार' में 'अधि' उपसर्ग है, जो शक्ति का प्रतीक है।", },
-                    { question: "विलोम: 'सुख'", options: [ { text: "A. दुःख", value: "a" }, { text: "B. संतोष", value: "b" }, { text: "C. शांति", value: "c" }, ], correctOption: "a", explanation: "'सुख' का विलोम 'दुःख' है।", },
-                    { question: "विलोम: 'बड़ा'", options: [ { text: "A. छोटा", value: "a" }, { text: "B. विशाल", value: "b" }, { text: "C. लंबा", value: "c" }, ], correctOption: "a", explanation: "'बड़ा' का विलोम 'छोटा' है।", },
-                    { question: "विलोम: 'जीत'", options: [ { text: "A. हार", value: "a" }, { text: "B. संघर्ष", value: "b" }, { text: "C. विजय", value: "c" }, ], correctOption: "a", explanation: "'जीत' का विलोम 'हार' है।", },
-                    { question: "विलोम: 'गर्म'", options: [ { text: "A. ठंडा", value: "a" }, { text: "B. उष्ण", value: "b" }, { text: "C. मधुर", value: "c" }, ], correctOption: "a", explanation: "'गर्म' का विलोम 'ठंडा' है।", },
-                    { question: "विलोम: 'सपना'", options: [ { text: "A. सत्य", value: "a" }, { text: "B. वास्तविकता", value: "b" }, { text: "C. भ्रामक", value: "c" }, ], correctOption: "b", explanation: "'सपना' का विलोम 'वास्तविकता' है।", },
-                    { question: "विलोम: 'उदास'", options: [ { text: "A. खुश", value: "a" }, { text: "B. निराश", value: "b" }, { text: "C. गुस्से में", value: "c" }, ], correctOption: "a", explanation: "'उदास' का विलोम 'खुश' है।", },
-                    { question: "विलोम: 'दूसरा'", options: [ { text: "A. पहला", value: "a" }, { text: "B. अंतिम", value: "b" }, { text: "C. विशेष", value: "c" }, ], correctOption: "a", explanation: "'दूसरा' का विलोम 'पहला' है।", },
-                    { question: "विलोम: 'नम्र'", options: [ { text: "A. घमंडी", value: "a" }, { text: "B. विनम्र", value: "b" }, { text: "C. आश्रित", value: "c" }, ], correctOption: "a", explanation: "'नम्र' का विलोम 'घमंडी' है।", },
-                    { question: "विलोम: 'शांत'", options: [ { text: "A. उग्र", value: "a" }, { text: "B. गुस्सा", value: "b" }, { text: "C. दुःखी", value: "c" }, ], correctOption: "a", explanation: "'शांत' का विलोम 'उग्र' है।", },
-                    { question: "विलोम: 'सफल'", options: [ { text: "A. असफल", value: "a" }, { text: "B. विजय", value: "b" }, { text: "C. संजीव", value: "c" }, ], correctOption: "a", explanation: "'सफल' का विलोम 'असफल' है।", },
-                    { question: "मुहावरा: 'आँखों का तारा'", options: [ { text: "A. प्रिय व्यक्ति", value: "a" }, { text: "B. दुखी व्यक्ति", value: "b" }, { text: "C. अज्ञानी व्यक्ति", value: "c" }, ], correctOption: "a", explanation: "'आँखों का तारा' का अर्थ है प्रिय व्यक्ति।", },
-                    { question: "मुहावरा: 'नकली घोड़े की तरह खड़ा होना'", options: [ { text: "A. डरना", value: "a" }, { text: "B. आलस्य करना", value: "b" }, { text: "C. काम से भागना", value: "c" }, ], correctOption: "b", explanation: "'नकली घोड़े की तरह खड़ा होना' का अर्थ है आलस्य करना।", },
-                    { question: "मुहावरा: 'दूध का दूध, पानी का पानी'", options: [ { text: "A. धोखा देना", value: "a" }, { text: "B. स्पष्ट करना", value: "b" }, { text: "C. परिश्रम करना", value: "c" }, ], correctOption: "b", explanation: "'दूध का दूध, पानी का पानी' का अर्थ है किसी चीज़ को स्पष्ट करना।", },
-                    { question: "मुहावरा: 'हाथी के दांत दिखाने के और, खाने के और'", options: [ { text: "A. झूठ बोलना", value: "a" }, { text: "B. दिखावा करना", value: "b" }, { text: "C. चुप रहना", value: "c" }, ], correctOption: "b", explanation: "'हाथी के दांत दिखाने के और, खाने के और' का अर्थ है दिखावा करना।", },
-                    { question: "मुहावरा: 'चोर की दाढ़ी में तिनका'", options: [ { text: "A. दोषी होना", value: "a" }, { text: "B. छिपाना", value: "b" }, { text: "C. ग़लत करना", value: "c" }, ], correctOption: "a", explanation: "'चोर की दाढ़ी में तिनका' का अर्थ है दोषी होना।", },
-                    { question: "मुहावरा: 'बिल्ली के भाग से छींका टूटना'", options: [ { text: "A. किस्मत का साथ देना", value: "a" }, { text: "B. शरारत करना", value: "b" }, { text: "C. किसी से मित्रता करना", value: "c" }, ], correctOption: "a", explanation: "'बिल्ली के भाग से छींका टूटना' का अर्थ है किस्मत का साथ देना।", },
-                    { question: "मुहावरा: 'अंधे के हाथ बटेर लगना'", options: [ { text: "A. कुछ बेकार प्राप्त करना", value: "a" }, { text: "B. शुद्ध लाभ होना", value: "b" }, { text: "C. किसी के काम आना", value: "c" }, ], correctOption: "a", explanation: "'अंधे के हाथ बटेर लगना' का अर्थ है कुछ बेकार प्राप्त करना।", },
-                    { question: "मुहावरा: 'मुँह में राम, बगल में छुरी'", options: [ { text: "A. धोखा देना", value: "a" }, { text: "B. चुप रहना", value: "b" }, { text: "C. झूठ बोलना", value: "c" }, ], correctOption: "a", explanation: "'मुँह में राम, बगल में छुरी' का अर्थ है धोखा देना।", },
-                    { question: "मुहावरा: 'आसमान से गिरी और खजूर पर अटकी'", options: [ { text: "A. कठिन परिस्थिति में फँसना", value: "a" }, { text: "B. सफलता प्राप्त करना", value: "b" }, { text: "C. निराश होना", value: "c" }, ], correctOption: "a", explanation: "'आसमान से गिरी और खजूर पर अटकी' का अर्थ है कठिन परिस्थिति में फँसना।", },
-                    { question: "मुहावरा: 'नाच न जाने आंगन टेढ़ा'", options: [ { text: "A. दोष दूसरों पर डालना", value: "a" }, { text: "B. खुद पर दोष लेना", value: "b" }, { text: "C. आलोचना करना", value: "c" }, ], correctOption: "a", explanation: "'नाच न जाने आंगन टेढ़ा' का अर्थ है दोष दूसरों पर डालना।", },
-                    { question: "प्रयावाची: 'सुरक्षा'", options: [ { text: "A. रक्षा", value: "a" }, { text: "B. सुरक्षा", value: "b" }, { text: "C. शांति", value: "c" }, ], correctOption: "a", explanation: "'सुरक्षा' का प्रयावाची शब्द 'रक्षा' है।", },
-                    { question: "प्रयावाची: 'मित्र'", options: [ { text: "A. सखा", value: "a" }, { text: "B. दोस्त", value: "b" }, { text: "C. साथी", value: "c" }, ], correctOption: "a", explanation: "'मित्र' का प्रयावाची शब्द 'सखा' है।", },
-                    { question: "प्रयावाची: 'जल्दी'", options: [ { text: "A. शीघ्र", value: "a" }, { text: "B. समय", value: "b" }, { text: "C. मंद", value: "c" }, ], correctOption: "a", explanation: "'जल्दी' का प्रयावाची शब्द 'शीघ्र' है।", },
-                    { question: "प्रयावाची: 'साफ'", options: [ { text: "A. स्वच्छ", value: "a" }, { text: "B. सुंदर", value: "b" }, { text: "C. प्रकट", value: "c" }, ], correctOption: "a", explanation: "'साफ' का प्रयावाची शब्द 'स्वच्छ' है।", },
-                    { question: "प्रयावाची: 'सभी'", options: [ { text: "A. सब", value: "a" }, { text: "B. एक", value: "b" }, { text: "C. कोई", value: "c" }, ], correctOption: "a", explanation: "'सभी' का प्रयावाची शब्द 'सब' है।", },
-                    { question: "प्रयावाची: 'धन'", options: [ { text: "A. सम्पत्ति", value: "a" }, { text: "B. दौलत", value: "b" }, { text: "C. संपत्ति और दौलत", value: "c" }, ], correctOption: "c", explanation: "'धन' का प्रयावाची शब्द 'सम्पत्ति' और 'दौलत' दोनों हो सकते हैं।", },
-                    { question: "प्रयावाची: 'शरीर'", options: [ { text: "A. देह", value: "a" }, { text: "B. अंग", value: "b" }, { text: "C. आत्मा", value: "c" }, ], correctOption: "a", explanation: "'शरीर' का प्रयावाची शब्द 'देह' है।", },
-                    { question: "प्रयावाची: 'अच्छा'", options: [ { text: "A. श्रेष्ठ", value: "a" }, { text: "B. उच्च", value: "b" }, { text: "C. बेहतरीन", value: "c" }, ], correctOption: "a", explanation: "'अच्छा' का प्रयावाची शब्द 'श्रेष्ठ' है।", },
-                    { question: "प्रयावाची: 'सपना'", options: [ { text: "A. स्वप्न", value: "a" }, { text: "B. काल्पनिक", value: "b" }, { text: "C. झूठ", value: "c" }, ], correctOption: "a", explanation: "'सपना' का प्रयावाची शब्द 'स्वप्न' है।", },
-                    { question: "प्रयावाची: 'बड़ा'", options: [ { text: "A. विशाल", value: "a" }, { text: "B. लंबा", value: "b" }, { text: "C. छोटा", value: "c" }, ], correctOption: "a", explanation: "'बड़ा' का प्रयावाची शब्द 'विशाल' है।", },
-                ];
-            </script>
-            <script>import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-    authDomain: "appcomment.firebaseapp.com",
-    projectId: "appcomment",
-    storageBucket: "appcomment.firebasestorage.app",
-    messagingSenderId: "156258808941",
-    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-};
-
-let app, auth, db;
-try {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-} catch (e) {
-    console.error("Firebase initialization error:", e);
-}
-
-
-let currentUser = null;
-let timerInterval;
-let userAnswers = {};
-let timeTaken = 0;
-
-const quizForm = document.getElementById("quiz-form");
-const questionsContainer = document.getElementById("questions-container");
-const startModal = document.getElementById("startModal");
-const resultModal = document.getElementById("resultModal");
-const resultContent = document.getElementById("resultContent");
-const submitBtn = document.querySelector(".submit-btn");
-const reviewContainer = document.getElementById("review-container");
-const reviewSection = document.getElementById("review-questions");
-const quizSection = document.getElementById("quiz-section");
-
-// --- Auth State ---
-onAuthStateChanged(auth, (user) => {
-    currentUser = user;
-    console.log("Auth state changed. Current user:", currentUser ? currentUser.displayName : "None");
-});
-
-// --- Quiz Logic ---
-window.startQuiz = () => {
-    startModal.style.display = "none";
-    quizSection.style.display = "block";
-    quizForm.style.display = "block";
-    displayQuestions();
-    startTimer();
-};
-
-function displayQuestions() {
-    let questionsHTML = "";
-    // Shuffle questions array for variety
-    questions.sort(() => Math.random() - 0.5); 
-    questions.forEach((q, index) => {
-        questionsHTML += `
-            <div class="question-block" id="question-${index}">
-                <p class="question">${index + 1}. ${q.question}</p>
-                <div class="options">
-                    ${q.options
-                        .map(
-                            (option) => `
-                        <label>
-                            <input type="radio" name="question${index}" value="${option.value}">
-                            ${option.text}
-                        </label>`
-                        )
-                        .join("")}
-                </div>
-            </div>
-        `;
-    });
-    questionsContainer.innerHTML = questionsHTML;
-    submitBtn.style.display = "block";
-}
-
-function startTimer() {
-    let seconds = 0;
-    const timerElement = document.getElementById("timer");
-    timerInterval = setInterval(() => {
-        seconds++;
-        timeTaken = seconds;
-        let min = Math.floor(seconds / 60);
-        let sec = seconds % 60;
-        timerElement.innerHTML = `<strong>समय:</strong> ${min}:${sec < 10 ? "0" + sec : sec}`;
-    }, 1000);
-}
-
-quizForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (confirm("क्या आप वाकई टेस्ट सबमिट करना चाहते हैं?")) {
-        calculateResult();
-    }
-});
-
-function calculateResult() {
-    clearInterval(timerInterval);
-    let score = 0;
-    questions.forEach((q, index) => {
-        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-        userAnswers[index] = selectedOption ? selectedOption.value : null;
-        if (selectedOption && selectedOption.value === q.correctOption) {
-            score++;
-        }
-    });
-
-    const totalQuestions = questions.length;
-    resultContent.innerHTML = `
-        <p>आपने ${totalQuestions} में से <strong>${score}</strong> अंक प्राप्त किए हैं।</p>
-        <p>कुल समय: ${Math.floor(timeTaken / 60)} मिनट ${timeTaken % 60} सेकंड</p>
-    `;
-    resultModal.style.display = "flex";
-    
-    if (currentUser) {
-        console.log("User is logged in, saving score...");
-        saveScore(score, totalQuestions);
-    } else {
-        console.log("User not logged in, score not saved.");
-    }
-}
-
-async function saveScore(score, totalQuestions) {
-    if (!currentUser || !db) {
-        console.log("Cannot save score: no user or db connection.");
-        return;
-    };
-
-    try {
-        const quizId = window.location.pathname.split('/').filter(Boolean).pop().replace('.html', '') || 'unknown-quiz';
-        await addDoc(collection(db, "quizScores"), {
-            userId: currentUser.uid,
-            userName: currentUser.displayName,
-            userPhotoURL: currentUser.photoURL,
-            score: score,
-            totalQuestions: totalQuestions,
-            quizId: quizId,
-            timestamp: serverTimestamp()
-        });
-        console.log("Score saved successfully!");
-    } catch (error) {
-        console.error("Error saving score: ", error);
-    }
-}
-
-window.retryQuiz = () => {
-    location.reload();
-};
-
-window.reviewQuestions = () => {
-    resultModal.style.display = "none";
-    quizSection.style.display = "none";
-
-    let reviewHTML = "";
-    questions.forEach((q, index) => {
-        const userAnswer = userAnswers[index];
-        const isCorrect = userAnswer === q.correctOption;
-        let resultClass = 'incorrect';
-        if (isCorrect) {
-            resultClass = 'correct';
-        } else if (userAnswer === null) {
-            resultClass = 'unanswered';
-        }
-
-        reviewHTML += `
-            <div class="question-block review ${resultClass}">
-                <p class="question">${index + 1}. ${q.question}</p>
-                <div class="options">
-                    ${q.options.map(opt => {
-                        const isUserAnswer = userAnswer === opt.value;
-                        const isCorrectAnswer = opt.value === q.correctOption;
-                        let className = '';
-
-                        if (isCorrectAnswer) {
-                            className = 'correct-option';
-                        } else if (isUserAnswer && !isCorrectAnswer) {
-                            className = 'incorrect-option';
-                        }
-                        
-                        return `<label class="${className}">
-                                    <input type="radio" name="review${index}" value="${opt.value}" ${isUserAnswer ? 'checked' : ''} disabled> 
-                                    ${opt.text}
-                                </label>`;
-                    }).join('')}
-                </div>
-                <div class="explanation"><strong>स्पष्टीकरण:</strong> ${q.explanation}</div>
-            </div>
-        `;
-    });
-    reviewContainer.innerHTML = reviewHTML;
-    reviewSection.style.display = "block";
-};</script>
         </main>
+        <script>
+            var questions = [
+                { question: "‘गोदान’ उपन्यास में प्रमुख पात्र कौन है?", options: [ { text: "A. सूरदास", value: "a" }, { text: "B. होरी", value: "b" }, { text: "C. गोबर", value: "c" }, ], correctOption: "b", explanation: "‘गोदान’ उपन्यास में प्रमुख पात्र होरी है।", },
+                { question: "‘प्रिय प्रवास’ किस प्रकार की रचना है?", options: [ { text: "A. खंडकाव्य", value: "a" }, { text: "B. महाकाव्य", value: "b" }, { text: "C. गीत संग्रह", value: "c" }, ], correctOption: "b", explanation: "‘प्रिय प्रवास’ एक महाकाव्य है।", },
+                { question: "‘गबन’ उपन्यास में किसकी कहानी है?", options: [ { text: "A. सामाजिक जीवन", value: "a" }, { text: "B. पारिवारिक समस्याएँ", value: "b" }, { text: "C. आर्थिक और नैतिक पतन", value: "c" }, ], correctOption: "c", explanation: "‘गबन’ उपन्यास में आर्थिक और नैतिक पतन की कहानी है।", },
+                { question: "‘पुष्प की अभिलाषा’ कविता के रचयिता कौन हैं?", options: [ { text: "A. रामधारी सिंह दिनकर", value: "a" }, { text: "B. सुमित्रानंदन पंत", value: "b" }, { text: "C. माखनलाल चतुर्वेदी", value: "c" }, ], correctOption: "c", explanation: "‘पुष्प की अभिलाषा’ कविता के रचयिता माखनलाल चतुर्वेदी हैं।", },
+                { question: "‘चंद्रगुप्त’ नाटक के लेखक कौन हैं?", options: [ { text: "A. जयशंकर प्रसाद", value: "a" }, { text: "B. रामधारी सिंह दिनकर", value: "b" }, { text: "C. भारतेंदु हरिश्चंद्र", value: "c" }, ], correctOption: "a", explanation: "‘चंद्रगुप्त’ नाटक के लेखक जयशंकर प्रसाद हैं।", },
+                { question: "‘रश्मिरथी’ किसकी प्रसिद्ध रचना है?", options: [ { text: "A. सुमित्रानंदन पंत", value: "a" }, { text: "B. रामधारी सिंह दिनकर", value: "b" }, { text: "C. सुभद्रा कुमारी चौहान", value: "c" }, ], correctOption: "b", explanation: "‘रश्मिरथी’ रामधारी सिंह दिनकर की प्रसिद्ध रचना है।", },
+                { question: "किस हिंदी साहित्यकार को 'महाकवि' कहा जाता है?", options: [ { text: "A. जयशंकर प्रसाद", value: "a" }, { text: "B. सूरदास", value: "b" }, { text: "C. तुलसीदास", value: "c" }, ], correctOption: "c", explanation: "तुलसीदास को 'महाकवि' कहा जाता है।", },
+                { question: "सूरदास की रचनाओं का मुख्य विषय क्या है?", options: [ { text: "A. प्रेम", value: "a" }, { text: "B. भक्ति", value: "b" }, { text: "C. समाज सुधार", value: "c" }, ], correctOption: "b", explanation: "सूरदास की रचनाओं का मुख्य विषय भक्ति है।", },
+                { question: "किस काव्य को 'हिंदी का बाइबिल' कहा जाता है?", options: [ { text: "A. रामचरितमानस", value: "a" }, { text: "B. गीत गोविंद", value: "b" }, { text: "C. साकेत", value: "c" }, ], correctOption: "a", explanation: "रामचरितमानस को 'हिंदी का बाइबिल' कहा जाता है।", },
+                { question: "जयशंकर प्रसाद की प्रसिद्ध रचना कौन सी है?", options: [ { text: "A. कामायनी", value: "a" }, { text: "B. गोदान", value: "b" }, { text: "C. भारत भारती", value: "c" }, ], correctOption: "a", explanation: "कामायनी जयशंकर प्रसाद की प्रसिद्ध रचना है।", },
+                { question: "संधि का उदाहरण: 'नदीनदी'", options: [ { text: "A. नदी+नदी", value: "a" }, { text: "B. नदीनदी", value: "b" }, { text: "C. नदी+इनदी", value: "c" }, ], correctOption: "a", explanation: "'नदीनदी' में 'नदी' और 'नदी' का संधि रूप है।", },
+                { question: "अनेकार्थी शब्द का उदाहरण: 'पढ़ना'", options: [ { text: "A. अध्ययन करना", value: "a" }, { text: "B. बोलना", value: "b" }, { text: "C. अध्ययन करना और शब्दों का ज्ञात करना", value: "c" }, ], correctOption: "a", explanation: "'पढ़ना' का अनेकार्थी शब्द 'अध्यान करना' है।", },
+                { question: "Homonym का उदाहरण: 'Bark'", options: [ { text: "A. पेड़ की छाल", value: "a" }, { text: "B. कुत्ते की आवाज़", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'Bark' एक Homonym है, जो 'पेड़ की छाल' और 'कुत्ते की आवाज़' दोनों के रूप में प्रयोग होता है।", },
+                { question: "उपसर्ग का उदाहरण: 'अविकसित'", options: [ { text: "A. विकसीत", value: "a" }, { text: "B. विकसित + अव", value: "b" }, { text: "C. अव + विकसित", value: "c" }, ], correctOption: "c", explanation: "'अविकसित' में 'अव' उपसर्ग है, जो विपरीत अर्थ देता है।", },
+                { question: "पारस्परिक शब्द का उदाहरण: 'सपना'", options: [ { text: "A. सत्य", value: "a" }, { text: "B. काल्पनिक", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "a", explanation: "'सपना' का पारस्परिक शब्द 'सत्य' है, जो वास्तविकता के विपरीत है।", },
+                { question: "संधि का उदाहरण: 'द्रष्टव्य'", options: [ { text: "A. द्रष्ट+व्य", value: "a" }, { text: "B. दर्श+व्य", value: "b" }, { text: "C. द्रष्ट+व्यव", value: "c" }, ], correctOption: "a", explanation: "'द्रष्टव्य' में 'द्रष्ट' और 'व्य' का संधि रूप है।", },
+                { question: "अनेकार्थी शब्द का उदाहरण: 'सहारा'", options: [ { text: "A. समर्थन", value: "a" }, { text: "B. सहायक", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'सहारा' का अनेकार्थी शब्द 'समर्थन' और 'सहायक' दोनों हो सकते हैं।", },
+                { question: "Homonym का उदाहरण: 'Tear'", options: [ { text: "A. आँसू", value: "a" }, { text: "B. फाड़ना", value: "b" }, { text: "C. दोनों", value: "c" }, ], correctOption: "c", explanation: "'Tear' एक Homonym है, जिसका अर्थ 'आँसू' और 'फाड़ना' दोनों हो सकता है।", },
+                { question: "उपसर्ग का उदाहरण: 'अधिकार'", options: [ { text: "A. अधि+कार", value: "a" }, { text: "B. अधिकार+का", value: "b" }, { text: "C. अधिकार और अध", value: "c" }, ], correctOption: "a", explanation: "'अधिकार' में 'अधि' उपसर्ग है, जो शक्ति का प्रतीक है।", },
+                { question: "विलोम: 'सुख'", options: [ { text: "A. दुःख", value: "a" }, { text: "B. संतोष", value: "b" }, { text: "C. शांति", value: "c" }, ], correctOption: "a", explanation: "'सुख' का विलोम 'दुःख' है।", },
+                { question: "विलोम: 'बड़ा'", options: [ { text: "A. छोटा", value: "a" }, { text: "B. विशाल", value: "b" }, { text: "C. लंबा", value: "c" }, ], correctOption: "a", explanation: "'बड़ा' का विलोम 'छोटा' है।", },
+                { question: "विलोम: 'जीत'", options: [ { text: "A. हार", value: "a" }, { text: "B. संघर्ष", value: "b" }, { text: "C. विजय", value: "c" }, ], correctOption: "a", explanation: "'जीत' का विलोम 'हार' है।", },
+                { question: "विलोम: 'गर्म'", options: [ { text: "A. ठंडा", value: "a" }, { text: "B. उष्ण", value: "b" }, { text: "C. मधुर", value: "c" }, ], correctOption: "a", explanation: "'गर्म' का विलोम 'ठंडा' है।", },
+                { question: "विलोम: 'सपना'", options: [ { text: "A. सत्य", value: "a" }, { text: "B. वास्तविकता", value: "b" }, { text: "C. भ्रामक", value: "c" }, ], correctOption: "b", explanation: "'सपना' का विलोम 'वास्तविकता' है।", },
+                { question: "विलोम: 'उदास'", options: [ { text: "A. खुश", value: "a" }, { text: "B. निराश", value: "b" }, { text: "C. गुस्से में", value: "c" }, ], correctOption: "a", explanation: "'उदास' का विलोम 'खुश' है।", },
+                { question: "विलोम: 'दूसरा'", options: [ { text: "A. पहला", value: "a" }, { text: "B. अंतिम", value: "b" }, { text: "C. विशेष", value: "c" }, ], correctOption: "a", explanation: "'दूसरा' का विलोम 'पहला' है।", },
+                { question: "विलोम: 'नम्र'", options: [ { text: "A. घमंडी", value: "a" }, { text: "B. विनम्र", value: "b" }, { text: "C. आश्रित", value: "c" }, ], correctOption: "a", explanation: "'नम्र' का विलोम 'घमंडी' है।", },
+                { question: "विलोम: 'शांत'", options: [ { text: "A. उग्र", value: "a" }, { text: "B. गुस्सा", value: "b" }, { text: "C. दुःखी", value: "c" }, ], correctOption: "a", explanation: "'शांत' का विलोम 'उग्र' है।", },
+                { question: "विलोम: 'सफल'", options: [ { text: "A. असफल", value: "a" }, { text: "B. विजय", value: "b" }, { text: "C. संजीव", value: "c" }, ], correctOption: "a", explanation: "'सफल' का विलोम 'असफल' है।", },
+                { question: "मुहावरा: 'आँखों का तारा'", options: [ { text: "A. प्रिय व्यक्ति", value: "a" }, { text: "B. दुखी व्यक्ति", value: "b" }, { text: "C. अज्ञानी व्यक्ति", value: "c" }, ], correctOption: "a", explanation: "'आँखों का तारा' का अर्थ है प्रिय व्यक्ति।", },
+                { question: "मुहावरा: 'नकली घोड़े की तरह खड़ा होना'", options: [ { text: "A. डरना", value: "a" }, { text: "B. आलस्य करना", value: "b" }, { text: "C. काम से भागना", value: "c" }, ], correctOption: "b", explanation: "'नकली घोड़े की तरह खड़ा होना' का अर्थ है आलस्य करना।", },
+                { question: "मुहावरा: 'दूध का दूध, पानी का पानी'", options: [ { text: "A. धोखा देना", value: "a" }, { text: "B. स्पष्ट करना", value: "b" }, { text: "C. परिश्रम करना", value: "c" }, ], correctOption: "b", explanation: "'दूध का दूध, पानी का पानी' का अर्थ है किसी चीज़ को स्पष्ट करना।", },
+                { question: "मुहावरा: 'हाथी के दांत दिखाने के और, खाने के और'", options: [ { text: "A. झूठ बोलना", value: "a" }, { text: "B. दिखावा करना", value: "b" }, { text: "C. चुप रहना", value: "c" }, ], correctOption: "b", explanation: "'हाथी के दांत दिखाने के और, खाने के और' का अर्थ है दिखावा करना।", },
+                { question: "मुहावरा: 'चोर की दाढ़ी में तिनका'", options: [ { text: "A. दोषी होना", value: "a" }, { text: "B. छिपाना", value: "b" }, { text: "C. ग़लत करना", value: "c" }, ], correctOption: "a", explanation: "'चोर की दाढ़ी में तिनका' का अर्थ है दोषी होना।", },
+                { question: "मुहावरा: 'बिल्ली के भाग से छींका टूटना'", options: [ { text: "A. किस्मत का साथ देना", value: "a" }, { text: "B. शरारत करना", value: "b" }, { text: "C. किसी से मित्रता करना", value: "c" }, ], correctOption: "a", explanation: "'बिल्ली के भाग से छींका टूटना' का अर्थ है किस्मत का साथ देना।", },
+                { question: "मुहावरा: 'अंधे के हाथ बटेर लगना'", options: [ { text: "A. कुछ बेकार प्राप्त करना", value: "a" }, { text: "B. शुद्ध लाभ होना", value: "b" }, { text: "C. किसी के काम आना", value: "c" }, ], correctOption: "a", explanation: "'अंधे के हाथ बटेर लगना' का अर्थ है कुछ बेकार प्राप्त करना।", },
+                { question: "मुहावरा: 'मुँह में राम, बगल में छुरी'", options: [ { text: "A. धोखा देना", value: "a" }, { text: "B. चुप रहना", value: "b" }, { text: "C. झूठ बोलना", value: "c" }, ], correctOption: "a", explanation: "'मुँह में राम, बगल में छुरी' का अर्थ है धोखा देना।", },
+                { question: "मुहावरा: 'आसमान से गिरी और खजूर पर अटकी'", options: [ { text: "A. कठिन परिस्थिति में फँसना", value: "a" }, { text: "B. सफलता प्राप्त करना", value: "b" }, { text: "C. निराश होना", value: "c" }, ], correctOption: "a", explanation: "'आसमान से गिरी और खजूर पर अटकी' का अर्थ है कठिन परिस्थिति में फँसना।", },
+                { question: "मुहावरा: 'नाच न जाने आंगन टेढ़ा'", options: [ { text: "A. दोष दूसरों पर डालना", value: "a" }, { text: "B. खुद पर दोष लेना", value: "b" }, { text: "C. आलोचना करना", value: "c" }, ], correctOption: "a", explanation: "'नाच न जाने आंगन टेढ़ा' का अर्थ है दोष दूसरों पर डालना।", },
+                { question: "प्रयावाची: 'सुरक्षा'", options: [ { text: "A. रक्षा", value: "a" }, { text: "B. सुरक्षा", value: "b" }, { text: "C. शांति", value: "c" }, ], correctOption: "a", explanation: "'सुरक्षा' का प्रयावाची शब्द 'रक्षा' है।", },
+                { question: "प्रयावाची: 'मित्र'", options: [ { text: "A. सखा", value: "a" }, { text: "B. दोस्त", value: "b" }, { text: "C. साथी", value: "c" }, ], correctOption: "a", explanation: "'मित्र' का प्रयावाची शब्द 'सखा' है।", },
+                { question: "प्रयावाची: 'जल्दी'", options: [ { text: "A. शीघ्र", value: "a" }, { text: "B. समय", value: "b" }, { text: "C. मंद", value: "c" }, ], correctOption: "a", explanation: "'जल्दी' का प्रयावाची शब्द 'शीघ्र' है।", },
+                { question: "प्रयावाची: 'साफ'", options: [ { text: "A. स्वच्छ", value: "a" }, { text: "B. सुंदर", value: "b" }, { text: "C. प्रकट", value: "c" }, ], correctOption: "a", explanation: "'साफ' का प्रयावाची शब्द 'स्वच्छ' है।", },
+                { question: "प्रयावाची: 'सभी'", options: [ { text: "A. सब", value: "a" }, { text: "B. एक", value: "b" }, { text: "C. कोई", value: "c" }, ], correctOption: "a", explanation: "'सभी' का प्रयावाची शब्द 'सब' है।", },
+                { question: "प्रयावाची: 'धन'", options: [ { text: "A. सम्पत्ति", value: "a" }, { text: "B. दौलत", value: "b" }, { text: "C. संपत्ति और दौलत", value: "c" }, ], correctOption: "c", explanation: "'धन' का प्रयावाची शब्द 'सम्पत्ति' और 'दौलत' दोनों हो सकते हैं।", },
+                { question: "प्रयावाची: 'शरीर'", options: [ { text: "A. देह", value: "a" }, { text: "B. अंग", value: "b" }, { text: "C. आत्मा", value: "c" }, ], correctOption: "a", explanation: "'शरीर' का प्रयावाची शब्द 'देह' है।", },
+                { question: "प्रयावाची: 'अच्छा'", options: [ { text: "A. श्रेष्ठ", value: "a" }, { text: "B. उच्च", value: "b" }, { text: "C. बेहतरीन", value: "c" }, ], correctOption: "a", explanation: "'अच्छा' का प्रयावाची शब्द 'श्रेष्ठ' है।", },
+                { question: "प्रयावाची: 'सपना'", options: [ { text: "A. स्वप्न", value: "a" }, { text: "B. काल्पनिक", value: "b" }, { text: "C. झूठ", value: "c" }, ], correctOption: "a", explanation: "'सपना' का प्रयावाची शब्द 'स्वप्न' है।", },
+                { question: "प्रयावाची: 'बड़ा'", options: [ { text: "A. विशाल", value: "a" }, { text: "B. लंबा", value: "b" }, { text: "C. छोटा", value: "c" }, ], correctOption: "a", explanation: "'बड़ा' का प्रयावाची शब्द 'विशाल' है।", },
+            ];
+        </script>
+        <script type="module" src="/js/test.js"></script>
     </body>
 </html>
-
