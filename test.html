@@ -1,26 +1,39 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Global Leaderboard - GK Learn Study</title>
-        <meta name="description" content="Check out the global leaderboard for all competitive exams on GK Learn Study. See the top 50 players based on average performance and track your own rank." />
+        <title>Test Center &amp; Global Leaderboard - GK Learn Study</title>
+        <meta name="description" content="Challenge yourself with quizzes on Hindi, History, Computer, and more. Track your progress on the global leaderboard and prepare for competitive exams on GK Learn Study." />
         <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
-
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
         <style>
-            .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-            header { text-align: center; margin-bottom: 2rem; }
-            header h1 { font-size: 2.5rem; color: var(--accent-color); }
-            header h2 { font-size: 1.2rem; color: var(--text-secondary); font-weight: 400; }
-            .leaderboard-section { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; }
-            .leaderboard-section h2 { text-align: center; margin-top: 0; color: var(--accent-color); }
+            .test-hero { text-align: center; padding: 3rem 1rem; background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); border-radius: var(--border-radius); margin-bottom: 3rem; border: 1px solid var(--border-color); }
+            .test-hero h1 { font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 700; color: var(--text-primary); margin: 0 0 0.5rem 0; }
+            .test-hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
+            .section-title { text-align: center; font-size: 2.2rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; position: relative; }
+            .section-subtitle { text-align: center; font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.7; }
+            .section-title::after { content: ''; display: block; width: 70px; height: 4px; background-color: var(--accent-color); margin: 0.5rem auto 0; border-radius: 2px; }
+            .test-category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+            .category-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; overflow: hidden; }
+            .category-card:hover { transform: translateY(-5px); box-shadow: var(--card-shadow); }
+            .category-card .icon { font-size: 3rem; margin-bottom: 1rem; line-height: 1; color: var(--accent-color); }
+            .category-card h3 { margin: 0 0 0.5rem 0; font-size: 1.4rem; }
+            .category-card p { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+            .category-card .btn-start-test { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 0.7rem 1.8rem; border-radius: 25px; font-weight: 500; transition: background-color 0.2s ease; }
+            .category-card .btn-start-test:hover { background-color: #004d4e; }
+            .category-card.disabled { opacity: 0.6; cursor: not-allowed; }
+            .category-card.disabled .btn-start-test { background-color: var(--text-secondary); pointer-events: none; }
+            .coming-soon-badge { position: absolute; top: 10px; right: -40px; background-color: #f57c00; color: white; padding: 4px 40px; font-size: 0.8rem; font-weight: bold; transform: rotate(45deg); }
+            .leaderboard-section { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: clamp(1rem, 5vw, 2rem); margin-top: 2rem; }
             .leaderboard { list-style: none; padding: 0; }
             .leaderboard li { display: flex; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border-color); transition: background-color .2s; }
             .leaderboard li:last-child { border-bottom: none; }
-            .leaderboard li.current-user { background-color: var(--accent-color-transparent); }
-            .leaderboard .rank { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); min-width: 40px; }
-            .leaderboard .avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 1rem; object-fit: cover; }
+            .leaderboard li.current-user { background-color: var(--accent-color-transparent); border-left: 3px solid var(--accent-color); }
+            .leaderboard .rank { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); min-width: 40px; text-align: center; }
+            .leaderboard .avatar { width: 40px; height: 40px; border-radius: 50%; margin: 0 1rem; object-fit: cover; }
             .leaderboard .name { font-weight: 500; flex-grow: 1; color: var(--text-primary); }
             .leaderboard .score { font-weight: bold; color: var(--text-primary); text-align: right; min-width: 80px; }
             .spinner-container { display: flex; justify-content: center; padding: 2rem; }
@@ -28,19 +41,132 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <header>
-                <h1>Global Leaderboard</h1>
-                <h2>Top 50 Players Across All Quizzes</h2>
-            </header>
-            <main>
-                <section class="leaderboard-section">
-                    <div id="leaderboard-container">
-                        <div class="spinner-container"><div class="spinner"></div></div>
-                    </div>
-                </section>
-            </main>
-        </div>
-        <script type="module" src="/js/test-page.js"></script>
+        <header class="header" id="header"></header>
+
+        <main class="container">
+            <div class="test-hero">
+                <h1>Test Center</h1>
+                <p>Welcome to the GK Learn Study Test Center. Challenge yourself, track your progress, and climb the global leaderboard. Your journey to mastery starts here!</p>
+            </div>
+
+            <section>
+                <h2 class="section-title">Choose Your Subject</h2>
+                <p class="section-subtitle">Select a category to begin your practice test. Each quiz is designed to sharpen your skills for competitive exams.</p>
+                <div class="test-category-grid">
+                    <a href="hindi-test.html" class="category-card" style="text-decoration:none;">
+                        <div class="icon">🇮🇳</div>
+                        <h3>Hindi Vyakaran</h3>
+                        <p>Test your knowledge of Hindi grammar, idioms, and literature with our comprehensive quizzes.</p>
+                        <span class="btn-start-test">View Tests</span>
+                    </a>
+                    <a href="#" class="category-card" style="text-decoration:none;">
+                        <div class="icon">📜</div>
+                        <h3>History</h3>
+                        <p>From ancient civilizations to modern India, challenge your historical knowledge.</p>
+                        <span class="btn-start-test">View Tests</span>
+                    </a>
+                    <a href="#" class="category-card" style="text-decoration:none;">
+                        <div class="icon">💻</div>
+                        <h3>Computer</h3>
+                        <p>Quizzes on computer fundamentals, software, and the latest technology trends.</p>
+                        <span class="btn-start-test">View Tests</span>
+                    </a>
+                     <a href="#" class="category-card disabled" style="text-decoration:none;" onclick="event.preventDefault();">
+                        <div class="coming-soon-badge">Soon</div>
+                        <div class="icon">🧮</div>
+                        <h3>Maths</h3>
+                        <p>Sharpen your quantitative aptitude with tests on various mathematical concepts.</p>
+                        <span class="btn-start-test">Coming Soon</span>
+                    </a>
+                </div>
+            </section>
+            
+            <section class="leaderboard-section">
+                <h2 class="section-title">Global Leaderboard</h2>
+                <p class="section-subtitle">See how you stack up against the best. The leaderboard shows the top 50 players based on their average performance across all quizzes.</p>
+                 <div id="auth-container" style="max-width: 600px; margin: -1.5rem auto 1.5rem auto;">
+                    <p id="login-prompt" style="text-align: center; display: none;">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to see your rank on the leaderboard!</p>
+                    <div id="user-info" style="display: none;"></div>
+                    <button id="login-btn" class="btn primary" style="display: none; margin: 0 auto;">Sign in with Google</button>
+                    <button id="logout-btn" class="btn" style="display: none;">Logout</button>
+                </div>
+                <div id="leaderboard-container">
+                    <div class="spinner-container"><div class="spinner"></div></div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Why Practice Here?</h2>
+                <div class="grid-3" style="max-width: 900px; margin: 0 auto;">
+                    <div class="info-card"><div class="icon">🎯</div><h3>Exam-Oriented</h3><p>Our questions are designed based on the patterns of major competitive exams to give you a real-world edge.</p></div>
+                    <div class="info-card"><div class="icon">📊</div><h3>Performance Tracking</h3><p>Log in to save your scores, track your performance over time, and see your global ranking on the leaderboard.</p></div>
+                    <div class="info-card"><div class="icon">✅</div><h3>Detailed Explanations</h3><p>Don't just know the right answer, understand 'why' it's correct with detailed explanations for each question.</p></div>
+                </div>
+            </section>
+
+            <section class="faq-section content-section">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <details>
+                    <summary>How is the global leaderboard rank calculated?</summary>
+                    <div class="faq-answer"><p>Your rank is based on your average percentage score across all the quizzes you've attempted while logged in. The higher your average, the higher your rank!</p></div>
+                </details>
+                <details>
+                    <summary>Do I need to sign in to take a test?</summary>
+                    <div class="faq-answer"><p>No, you can take any test without signing in. However, if you want to save your scores, track your progress, and appear on the leaderboard, you will need to sign in with your Google account.</p></div>
+                </details>
+                <details>
+                    <summary>Are the tests free?</summary>
+                    <div class="faq-answer"><p>Yes, absolutely! All tests and quizzes on GK Learn Study are 100% free to access for everyone. Our mission is to make quality education accessible to all.</p></div>
+                </details>
+            </section>
+            
+            <div id="comments-and-ratings-container"></div>
+        </main>
+        
+        <footer class="app-footer"></footer>
+
+        <script src="js/theme.js" defer></script>
+        <script src="js/search-data.js" defer></script>
+        <script type="module" src="js/test-page.js"></script>
+        <script type="module" src="js/comment.js"></script>
+        <script type="module" src="js/notification.js"></script>
+        <script>
+            // Simple script to inject shared components after the main scripts load.
+            document.addEventListener('DOMContentLoaded', () => {
+                const header = document.getElementById('header');
+                const footer = document.querySelector('.app-footer');
+                const commentsContainer = document.getElementById('comments-and-ratings-container');
+                
+                // Fetch and inject header
+                fetch('index.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data, 'text/html');
+                        
+                        // Inject Header
+                        const headerContent = doc.querySelector('.header');
+                        if (headerContent) {
+                            header.innerHTML = headerContent.innerHTML;
+                            // Re-initialize header scripts if necessary or ensure they are delegated
+                            // Note: theme.js should handle this via DOMContentLoaded
+                        }
+
+                        // Inject Footer
+                        const footerContent = doc.querySelector('.app-footer');
+                         if (footerContent) {
+                            footer.innerHTML = footerContent.innerHTML;
+                        }
+
+                        // Inject Comments and Ratings
+                        const commentsAndRatingsContent = doc.getElementById('comments-and-ratings-container');
+                        if (commentsAndRatingsContent) {
+                            commentsContainer.innerHTML = commentsAndRatingsContent.innerHTML;
+                        }
+                    })
+                    .catch(error => console.error('Error loading shared components:', error));
+            });
+        </script>
     </body>
 </html>
+      
