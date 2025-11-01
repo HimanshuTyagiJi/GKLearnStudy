@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,7 +14,6 @@
         />
         <meta name="author" content="GK Learn Study" />
         <link rel="canonical" href="https://gklearnstudy.in/test" />
-        <link rel="sitemap" type="application/xml" href="https://gklearnstudy.in/sitemap.xml" />
 
         <!-- Social Meta -->
         <meta property="og:type" content="website" />
@@ -26,104 +26,149 @@
         <meta property="twitter:title" content="Comprehensive Test Preparation - GK Learn Study" />
         <meta property="twitter:description" content="Prepare for various competitive exams with GK Learn Study." />
         <meta property="twitter:image" content="https://gklearnstudy.in/images/test.png" />
-        <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
 
         <!-- Icons -->
         <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <link rel="apple-touch-icon" href="https://gklearnstudy.in/GK-Learn-Study.png" />
         <meta name="theme-color" content="#00a652" />
-        <meta name="msapplication-TileColor" content="#4CAF50" />
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css" />
-        <link rel="stylesheet" href="https://gklearnstudy.in/css/button.css" />
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
 
-        <!-- JSON-LD Structured Data -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "WebPage",
-                "name": "Comprehensive Test Preparation - GK Learn Study",
-                "url": "https://gklearnstudy.in/test",
-                "description": "Prepare for various competitive exams with GK Learn Study.",
-                "inLanguage": "en",
-                "publisher": {
-                    "@type": "Organization",
-                    "name": "GK Learn Study",
-                    "logo": {
-                        "@type": "ImageObject",
-                        "url": "https://gklearnstudy.in/GK-Learn-Study.png"
-                    }
-                }
+        <style>
+            body {
+                background-color: var(--body-bg);
+                color: var(--text-primary);
             }
-        </script>
+            .container {
+                max-width: 900px;
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+            header { text-align: center; margin-bottom: 2rem; }
+            header h1 { font-size: 2.5rem; color: var(--accent-color); }
+            header h2 { font-size: 1.2rem; color: var(--text-secondary); font-weight: 400; }
+
+            .box-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .box {
+                background-color: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: 2rem;
+                text-align: center;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .box:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--card-shadow);
+            }
+            .box a {
+                text-decoration: none;
+                color: var(--text-primary);
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+            .box a:hover { color: var(--accent-color); }
+
+            /* Leaderboard Styles */
+            .leaderboard-section {
+                background-color: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: 2rem;
+                margin-top: 3rem;
+            }
+            .leaderboard-section h2 { text-align: center; margin-top: 0; color: var(--accent-color); }
+            .leaderboard { list-style: none; padding: 0; }
+            .leaderboard li {
+                display: flex;
+                align-items: center;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .leaderboard li:last-child { border-bottom: none; }
+            .leaderboard .rank { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); min-width: 40px; }
+            .leaderboard .avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 1rem; }
+            .leaderboard .name { font-weight: 500; flex-grow: 1; }
+            .leaderboard .score { font-weight: bold; color: var(--text-primary); }
+            .spinner-container { display: flex; justify-content: center; padding: 2rem; }
+            .spinner { border: 4px solid var(--spinner-border); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary-color); animation: spin 1s ease infinite; }
+            @keyframes spin { to { transform: rotate(360deg); } }
+
+
+            /* Modal Styles */
+            .modal-overlay {
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            .modal-overlay.active { opacity: 1; visibility: visible; }
+            .modal-content {
+                background-color: var(--card-bg);
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                max-width: 500px;
+                width: 90%;
+                text-align: center;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            .modal-content h2 { margin-top: 0; color: var(--accent-color); }
+            .modal-content p { color: var(--text-secondary); margin-bottom: 2rem; }
+            .modal-actions { display: flex; gap: 1rem; justify-content: center; }
+        </style>
+
     </head>
 
     <body>
-        <div class="search-container">
-            <button class="search-icon" id="searchBtn">
-                <span style="display: inline-block; transform: rotate(270deg);">⌕</span>
-            </button>
-            <button class="back-icon" id="backBtn">←</button>
-            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." required oninput="showSuggestions(event)" />
+        <div id="login-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h2>टेस्ट दें!</h2>
+                <p>अपना स्कोर सहेजने, अपनी प्रगति देखने और लीडरबोर्ड पर प्रतिस्पर्धा करने के लिए साइन इन करें!</p>
+                <div class="modal-actions">
+                    <button id="sign-in-btn" class="btn primary">गूगल से साइन-इन करें</button>
+                    <button id="continue-guest-btn" class="btn">बिना लॉग-इन के जारी रखें</button>
+                </div>
+            </div>
         </div>
-        <ul id="suggestions" class="suggestions"></ul>
-        <div id="results"></div>
-
+        
         <div class="container">
             <header>
                 <h1>Comprehensive Test Preparation</h1>
                 <h2>Prepare for Competitive Exams with Ease</h2>
-                <h3>SSC, UPSC, Banking, and More</h3>
             </header>
 
-            <!-- SVG Optimized -->
-            <svg viewBox="0 0 800 150" preserveAspectRatio="xMinYMin meet">
-                <rect width="100%" height="100%" fill="#f1f8e9" />
-                <rect x="30" y="30" width="70" height="100" rx="8" ry="8" fill="#ffffff" stroke="#43a047" stroke-width="2" />
-                <rect x="45" y="20" width="40" height="12" rx="3" ry="3" fill="#aed581" />
-                <polyline points="45,70 55,80 70,60" fill="none" stroke="#4CAF50" stroke-width="4" />
-                <g transform="translate(120, 55)">
-                    <rect x="0" y="0" width="12" height="50" fill="#e53935" />
-                    <polygon points="0,0 6,-12 12,0" fill="#ffeb3b" />
-                    <rect x="3" y="50" width="6" height="6" fill="#5d4037" />
-                </g>
-                <text x="160" y="60" font-family="Arial, sans-serif" font-size="28" fill="#2e7d32">Gk Learn Study</text>
-                <text x="160" y="95" font-family="Verdana, sans-serif" font-size="17" fill="#1b5e20">Online Test / Mock Exam</text>
-            </svg>
-
             <main>
-                <div class="contained">
+                <div class="box-grid">
                     <div class="box">
-                        <a href="https://gklearnstudy.in/hindi-test"><div class="link-name">Hindi Test Preparation</div></a>
+                        <a href="https://gklearnstudy.in/hindi-test">Hindi Test Preparation</a>
                     </div>
                     <div class="box">
-                        <a href="https://gklearnstudy.in/computer-test"><div class="link-name">Computer Basics Test Preparation</div></a>
+                        <a href="https://gklearnstudy.in/computer-test">Computer Basics Test Preparation</a>
                     </div>
                 </div>
-                <hr />
-                <aside id="right-sidebar">
-                    <strong>Important Links</strong>
-                    <ul id="link-list"></ul>
-                </aside>
+                
+                <section class="leaderboard-section">
+                    <h2>Weekly Top Scorers</h2>
+                    <div id="leaderboard-container">
+                        <div class="spinner-container"><div class="spinner"></div></div>
+                    </div>
+                </section>
             </main>
-
-            <footer>
-                <div class="custom-row">
-                    <div class="custom-column">
-                        <b>Follow Us</b>
-                        <div id="social-links"></div>
-                    </div>
-                    <div class="custom-column"><button onclick="goToUrl()">Contact</button></div>
-                    <div class="custom-column"><p id="my-paragraph"></p></div>
-                </div>
-            </footer>
         </div>
 
-        <!-- JS Defer -->
-        <script src="https://gklearnstudy.in/js/menu.js" defer></script>
-        <script src="https://gklearnstudy.in/js/rightside.js" defer></script>
-        <script src="https://gklearnstudy.in/js/search.js" defer></script>
+        <script type="module" src="/js/test-page.js"></script>
     </body>
 </html>
