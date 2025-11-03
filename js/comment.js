@@ -1,6 +1,4 @@
 // --- Firebase SDK Imports ---
-// Using modern, static ES module imports for reliability and performance.
-// The browser will handle loading these efficiently.
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, addDoc, collection, deleteDoc, query, orderBy, serverTimestamp, doc, runTransaction, onSnapshot, getDoc, setDoc, persistentLocalCache, initializeFirestore, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -24,9 +22,7 @@ let currentRatingSummary = null;
 let activeReplyForm = null;
 let unsubscribeComments = null;
 let unsubscribeRating = null;
-let isAppInitialized = false;
-let isRatingSubmissionPending = false;
-
+let isCoreInitialized = false;
 
 // --- DOM Element Selection ---
 const commentsWrapper = document.getElementById('comments-main-container');
@@ -76,137 +72,122 @@ function showErrorUI(targetElement, message, retryCallback) {
     });
 }
 
-// ====== UNIFIED INITIALIZATION LOGIC ======
 
-/**
- * Initializes Firebase services (App, Auth, Firestore) once.
- */
+// ====== UNIFIED INITIALIZATION LOGIC ======
 function initializeFirebaseServices() {
     if (app) return;
     try {
         app = getApps().length ? getApp() : initializeApp(firebaseConfig);
         auth = getAuth(app);
-        // Attempt to initialize Firestore with persistence, fallback to in-memory.
         try {
-            db = initializeFirestore(app, {
-                localCache: persistentLocalCache({})
-            });
+            db = initializeFirestore(app, { localCache: persistentLocalCache({}) });
         } catch (e) {
-            console.warn("Firestore persistence failed to initialize. Falling back to in-memory.", e);
+            console.warn("Firestore persistence failed. Using in-memory.", e);
             db = getFirestore(app);
         }
     } catch (error) {
         console.error("Fatal: Firebase initialization failed.", error);
-        throw error; // Propagate error to stop initialization
+        throw error;
     }
 }
 
-/**
- * Returns a promise that resolves once the initial authentication state is known.
- * This is crucial for preventing race conditions on page load.
- */
 function awaitInitialAuthState() {
     return new Promise((resolve) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             currentUser = user;
-            unsubscribe(); // We only need the very first state emission.
+            unsubscribe();
             resolve();
         });
     });
 }
 
-/**
- * Sets up the persistent listener that reacts to subsequent sign-in/sign-out events.
- */
 function setupPersistentAuthObserver() {
     onAuthStateChanged(auth, (user) => {
         const wasLoggedIn = !!currentUser;
         currentUser = user;
-        // Only trigger a full UI update if the login state actually changes.
         if (wasLoggedIn !== !!user) {
             updateUIAfterAuthChange();
-            if (document.getElementById('leaderboard-container')) {
-                loadLeaderboard(); // Re-load leaderboard to highlight current user
+            if (window.location.pathname.includes('/test.html') && document.getElementById('leaderboard-container')) {
+                 loadLeaderboard(); // Re-load global leaderboard on auth change
             }
         }
     });
 }
 
-/**
- * Main function to initialize the entire comment/rating system.
- */
-async function initializeSystem() {
-    if (isAppInitialized) return;
-    isAppInitialized = true;
+// This function initializes components that should load early.
+async function initializeGlobalComponents() {
+    if (isCoreInitialized) return;
+    isCoreInitialized = true;
 
     try {
         initializeFirebaseServices();
-        await awaitInitialAuthState(); // Wait to know if user is logged in or not.
-        setupPersistentAuthObserver(); // Now, listen for future changes.
-
-        // With the auth state known, we can safely load data and set up the UI.
-        loadComments();
-        loadRatings();
-        if (document.getElementById('leaderboard-container')) {
+        await awaitInitialAuthState();
+        setupPersistentAuthObserver();
+        
+        // Load the GLOBAL leaderboard only if on the main test.html page.
+        if (window.location.pathname.includes('/test.html') && document.getElementById('leaderboard-container')) {
             loadLeaderboard();
         }
-        setupAllEventListeners();
-        updateUIAfterAuthChange(); // Perform the initial UI setup.
-        handleCommentDeepLink();
         
+        updateUIAfterAuthChange();
+
     } catch (error) {
-        console.error("Failed to initialize the comment system:", error);
-        if (commentsWrapper) showErrorUI(commentsWrapper, 'Could not connect. Please try again.', initializeSystem);
-        if (ratingWidgetWrapper) showErrorUI(ratingWidgetWrapper, 'Could not connect. Please try again.', initializeSystem);
+        console.error("Failed to initialize global components:", error);
+    }
+}
+
+// This function lazy-loads the heavy comment/rating parts.
+async function initializeCommentComponents() {
+    try {
+        if (!isCoreInitialized) {
+            await initializeGlobalComponents();
+        }
+        loadComments();
+        loadRatings();
+        setupAllEventListeners();
+        handleCommentDeepLink();
+    } catch (error) {
+        console.error("Failed to initialize comments/ratings:", error);
+        if (commentsWrapper) showErrorUI(commentsWrapper, 'Could not connect.', initializeCommentComponents);
+        if (ratingWidgetWrapper) showErrorUI(ratingWidgetWrapper, 'Could not connect.', initializeCommentComponents);
     }
 }
 
 // ====== Auth Management & UI Updates ======
 
 function updateUIAfterAuthChange() {
-    // Owner dashboard link
     const dashboardLink = document.getElementById('dashboard-link');
     if (dashboardLink) {
         dashboardLink.style.display = (currentUser && currentUser.uid === OWNER_UID) ? 'list-item' : 'none';
     }
     
-    // Auth container UI
-    if (currentUser) {
-        const bellIconHTML = `
-            <button class="notification-btn" id="notification-btn" title="Enable notifications" aria-label="Toggle notifications">
-                <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
-                <svg class="bell-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    <path d="M18.63 13A17.89 17.89 0 0 1 18 8a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                </svg>
-                <svg class="spinner-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
-                </svg>
-            </button>
-        `;
-        userInfo.innerHTML = `<img src="${currentUser.photoURL}" alt="${escapeHTML(currentUser.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(currentUser.displayName)}</span>${bellIconHTML}`;
-        authContainer.classList.add('logged-in');
-        mainFormShell.style.display = 'block';
-        loginPrompt.style.display = 'none';
-    } else {
-        userInfo.innerHTML = ''; // Clear the user info, removing the bell icon
-        authContainer.classList.remove('logged-in');
-        mainFormShell.style.display = 'none';
-        loginPrompt.style.display = 'block';
-        if (loginBtn) {
-            loginBtn.disabled = false;
-            loginBtn.innerHTML = originalLoginHTML;
+    if (authContainer && userInfo && mainFormShell && loginPrompt) {
+        if (currentUser) {
+            const bellIconHTML = `
+                <button class="notification-btn" id="notification-btn" title="Enable notifications" aria-label="Toggle notifications">
+                    <svg class="bell-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <svg class="bell-off-icon" viewBox="0 0 24 24"><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M18.63 13A17.89 17.89 0 0 1 18 8a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 7-3 9-3 9h18s-3-2-3-9"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                    <svg class="spinner-icon" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                </button>
+            `;
+            userInfo.innerHTML = `<img src="${currentUser.photoURL}" alt="${escapeHTML(currentUser.displayName)}" class="user-avatar"><span class="user-name">${escapeHTML(currentUser.displayName)}</span>${bellIconHTML}`;
+            authContainer.classList.add('logged-in');
+            mainFormShell.style.display = 'block';
+            loginPrompt.style.display = 'none';
+        } else {
+            userInfo.innerHTML = '';
+            authContainer.classList.remove('logged-in');
+            mainFormShell.style.display = 'none';
+            loginPrompt.style.display = 'block';
+            if (loginBtn) {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = originalLoginHTML;
+            }
+            closeActiveReplyForm();
         }
-        closeActiveReplyForm();
     }
     
-    // Re-render comments to show/hide user-specific controls (e.g., delete buttons).
     renderFlatList(flattenTree(buildTree(allComments)), commentsList);
-    // Re-fetch user's rating and update the rating UI.
     if (currentRatingSummary) {
         fetchUserRatingAndUpdateUI(currentRatingSummary);
     }
@@ -218,14 +199,13 @@ async function signInWithGoogle() {
     try {
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider);
-        // The onAuthStateChanged listener will handle the UI update automatically.
     } catch (error) {
         console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
-            alert("Could not sign in. Please check your connection and try again.");
+            alert("Could not sign in. Please try again.");
         }
     } finally {
-        if (!currentUser) { // If sign-in was cancelled or failed, reset the button.
+        if (!currentUser) {
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalLoginHTML;
         }
@@ -236,8 +216,7 @@ async function signOutUser() {
     await signOut(auth);
 }
 
-// ====== GLOBAL LEADERBOARD LOGIC (from test-page.js) ======
-
+// ====== GLOBAL LEADERBOARD LOGIC ======
 async function loadLeaderboard() {
     const leaderboardContainer = document.getElementById('leaderboard-container');
     if (!leaderboardContainer) return;
@@ -271,16 +250,11 @@ async function loadLeaderboard() {
 
         const leaderboardData = Array.from(userScores.values()).map(userData => {
             const averagePercentage = userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0;
-            return {
-                ...userData,
-                averagePercentage,
-            };
+            return { ...userData, averagePercentage };
         });
 
         leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
-        
         renderLeaderboard(leaderboardData);
-
     } catch (error) {
         console.error("Error loading leaderboard:", error);
         leaderboardContainer.innerHTML = "<p>Leaderboard could not be loaded. Please try again later.</p>";
@@ -312,31 +286,23 @@ function renderLeaderboard(leaderboardData) {
     let userRankHTML = '';
     if (currentUser) {
         const userRankIndex = leaderboardData.findIndex(user => user.userId === currentUser.uid);
-        if (userRankIndex !== -1 && userRankIndex >= 50) { // Only show if user is outside top 50
+        if (userRankIndex !== -1 && userRankIndex >= 50) {
             const userData = leaderboardData[userRankIndex];
-             const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
+            const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
             userRankHTML = `
                 <div class="user-rank-display">
                     <h2>Your Overall Rank</h2>
-                    <ol class="leaderboard">
-                        <li class="current-user">
-                            <div class="rank">${userRankIndex + 1}</div>
-                            <img src="${avatar}" alt="${userData.userName}" class="avatar">
-                            <div class="name">You</div>
-                            <div class="score">${userData.averagePercentage.toFixed(2)}%</div>
-                        </li>
-                    </ol>
+                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
                 </div>
             `;
         }
     }
-
     leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
 
+// ... (Rest of the file: RATING, COMMENT, EVENT LISTENERS, etc. remains the same) ...
 
 // ====== RATING SYSTEM LOGIC ======
-
 async function fetchUserRatingAndUpdateUI(summaryData) {
     if (currentUser) {
         const userRatingDocRef = doc(db, ...ratingsPath, currentUser.uid);
@@ -388,16 +354,17 @@ function updateRatingUI(summaryData, currentUserRating) {
 
 function loadRatings() {
     if (unsubscribeRating) unsubscribeRating();
+    if (!ratingWidgetWrapper) return;
     const summaryDocRef = doc(db, ...ratingsPath, '_summary');
     
     unsubscribeRating = onSnapshot(summaryDocRef, (doc) => {
         const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
-        currentRatingSummary = summaryData; // Cache the summary
-        fetchUserRatingAndUpdateUI(summaryData); // Fetch user-specific rating
-        ratingWidgetWrapper?.classList.remove('rating-loading');
+        currentRatingSummary = summaryData;
+        fetchUserRatingAndUpdateUI(summaryData);
+        ratingWidgetWrapper.classList.remove('rating-loading');
     }, (error) => {
         console.error("Error loading rating summary:", error);
-        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings.", initializeSystem);
+        showErrorUI(document.getElementById('rating-widget'), "Could not load ratings.", loadRatings);
     });
 }
 
@@ -408,7 +375,6 @@ async function submitRating(newRating) {
     if (newRating === oldUserRating) return;
     isRatingSubmissionPending = true;
 
-    // Optimistic UI update
     const optimisticSummary = JSON.parse(JSON.stringify(currentRatingSummary || { totalCount: 0, totalSum: 0, breakdown: {} }));
     if (oldUserRating > 0) {
         optimisticSummary.breakdown[String(oldUserRating)] = Math.max(0, (optimisticSummary.breakdown[String(oldUserRating)] || 0) - 1);
@@ -421,7 +387,6 @@ async function submitRating(newRating) {
     userRating = newRating;
     updateRatingUI(optimisticSummary, newRating);
 
-    // Server update
     try {
         await runTransaction(db, async (transaction) => {
             const summaryRef = doc(db, ...ratingsPath, '_summary');
@@ -433,7 +398,6 @@ async function submitRating(newRating) {
             let newSum = serverSummary.totalSum || 0;
             let newCount = serverSummary.totalCount || 0;
 
-            // Recalculate based on server state to avoid race conditions
             if (oldUserRating > 0) {
                 breakdown[String(oldUserRating)] = Math.max(0, (breakdown[String(oldUserRating)] || 0) - 1);
                 newSum -= oldUserRating;
@@ -449,7 +413,6 @@ async function submitRating(newRating) {
     } catch (error) {
         console.error("Rating submission failed:", error);
         alert("Could not save your rating. Please try again.");
-        // Rollback optimistic UI change
         userRating = oldUserRating;
         updateRatingUI(currentRatingSummary, oldUserRating);
     } finally {
@@ -518,6 +481,7 @@ function renderFlatList(nodes, container){
 
 function loadComments(){
     if (unsubscribeComments) unsubscribeComments();
+    if (!commentsWrapper) return;
     const q = query(collection(db, ...commentsPath), orderBy('timestamp','desc'));
     unsubscribeComments = onSnapshot(q, (snapshot) => {
         const newComments = [];
@@ -532,10 +496,10 @@ function loadComments(){
             const plural = totalComments !== 1 ? 's' : '';
             if(commentCountSpan.nextSibling) commentCountSpan.nextSibling.textContent = ` Comment${plural}`;
         }
-        commentsWrapper?.classList.remove('comments-loading');
+        commentsWrapper.classList.remove('comments-loading');
     }, (error) => {
         console.error('Comment listener error:', error);
-        showErrorUI(commentsList, 'A network error occurred.', initializeSystem);
+        showErrorUI(commentsList, 'A network error occurred.', loadComments);
     });
 }
 
@@ -577,19 +541,11 @@ async function handleVote(commentId, voteType) {
             const isDisliked = dislikedBy.includes(uid);
             
             if (voteType === 'like') {
-                if (isLiked) { // Unlike
-                    likedBy.splice(likedBy.indexOf(uid), 1);
-                } else { // Like
-                    likedBy.push(uid);
-                    if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1); // Remove from dislikes
-                }
+                if (isLiked) { likedBy.splice(likedBy.indexOf(uid), 1); } 
+                else { likedBy.push(uid); if (isDisliked) dislikedBy.splice(dislikedBy.indexOf(uid), 1); }
             } else if (voteType === 'dislike') {
-                if (isDisliked) { // Undislike
-                    dislikedBy.splice(dislikedBy.indexOf(uid), 1);
-                } else { // Dislike
-                    dislikedBy.push(uid);
-                    if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1); // Remove from likes
-                }
+                if (isDisliked) { dislikedBy.splice(dislikedBy.indexOf(uid), 1); } 
+                else { dislikedBy.push(uid); if (isLiked) likedBy.splice(likedBy.indexOf(uid), 1); }
             }
             transaction.update(commentRef, { likedBy, dislikedBy, likes: likedBy.length, dislikes: dislikedBy.length });
         });
@@ -643,10 +599,7 @@ async function postComment(form) {
             comment: commentText, 
             timestamp: serverTimestamp(), 
             parentId, 
-            likes: 0, 
-            dislikes: 0, 
-            likedBy: [], 
-            dislikedBy: [] 
+            likes: 0, dislikes: 0, likedBy: [], dislikedBy: [] 
         });
         if (form.closest('.inline-reply-slot')) {
             closeActiveReplyForm();
@@ -669,14 +622,12 @@ async function postComment(form) {
 
 // ====== Event Listeners Setup ======
 function setupAllEventListeners() {
-    // One-time setup for all interactive elements.
     loginBtn?.addEventListener('click', signInWithGoogle);
     logoutBtn?.addEventListener('click', signOutUser);
 
     const container = document.getElementById('custom-comment-section');
     if (!container) return;
 
-    // Delegated click listener for all actions inside the comment section.
     container.addEventListener('click', (e) => {
         const target = e.target;
         const button = target.closest('button');
@@ -715,7 +666,6 @@ function setupAllEventListeners() {
         }
     });
 
-    // Delegated submit listener for the main form and any reply forms.
     container.addEventListener('submit', (e) => {
         e.preventDefault();
         if (e.target.matches('.comment-form')) {
@@ -730,7 +680,6 @@ function setupAllEventListeners() {
         submitRating(parseInt(star.dataset.value, 10));
     });
 
-    // Character counter for the main comment form.
     const mainCommentInput = mainForm?.querySelector('#comment');
     if (mainCommentInput) {
         const mainCharCounter = mainForm.querySelector('#char-counter');
@@ -755,7 +704,7 @@ function handleCommentDeepLink() {
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             el.classList.add('highlighted');
             setTimeout(() => el.classList.remove('highlighted'), 2500);
-        } else if (attempts++ > 50) { // Stop after 10 seconds
+        } else if (attempts++ > 50) {
             clearInterval(interval);
         }
     }, 200);
@@ -763,16 +712,17 @@ function handleCommentDeepLink() {
 
 // ====== Entry Point ======
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('comments-and-ratings-container');
-    if (!container) return;
+    initializeGlobalComponents();
     
-    // Lazy load the system when it's scrolled into view for performance.
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            initializeSystem();
-            observer.disconnect(); // Initialize only once.
-        }
-    }, { rootMargin: "200px" }); // Start loading when it's 200px from the viewport.
-    
-    observer.observe(container);
+    const commentsContainer = document.getElementById('comments-and-ratings-container');
+    if (commentsContainer) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                initializeCommentComponents();
+                observer.disconnect();
+            }
+        }, { rootMargin: "200px" });
+        
+        observer.observe(commentsContainer);
+    }
 });
