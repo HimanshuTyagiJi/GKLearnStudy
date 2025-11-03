@@ -107,8 +107,9 @@ function setupPersistentAuthObserver() {
         currentUser = user;
         if (wasLoggedIn !== !!user) {
             updateUIAfterAuthChange();
-            if (window.location.pathname.includes('/test.html') && document.getElementById('leaderboard-container')) {
-                 loadLeaderboard(); // Re-load global leaderboard on auth change
+            // This now correctly triggers the global leaderboard load on auth change.
+            if (document.getElementById('leaderboard-container')) {
+                 loadLeaderboard(); 
             }
         }
     });
@@ -128,8 +129,8 @@ async function initializeGlobalComponents() {
         await awaitInitialAuthState();
         setupPersistentAuthObserver();
         
-        // Load the GLOBAL leaderboard only if on the main test.html page.
-        if (window.location.pathname.includes('/test.html') && document.getElementById('leaderboard-container')) {
+        // Load the GLOBAL leaderboard only if on a page with the leaderboard container.
+        if (document.getElementById('leaderboard-container')) {
             loadLeaderboard();
         }
         
@@ -220,10 +221,11 @@ async function signOutUser() {
     await signOut(auth);
 }
 
-// ====== GLOBAL LEADERBOARD LOGIC ======
+// ====== GLOBAL LEADERBOARD LOGIC (MOVED FROM test-page.js) ======
 async function loadLeaderboard() {
     const leaderboardContainer = document.getElementById('leaderboard-container');
-    if (!leaderboardContainer) return;
+    // Only proceed if this is the test.html page, not hindi-test.html
+    if (!leaderboardContainer || leaderboardContainer.closest('main').querySelector('h1')?.textContent.includes('Hindi')) return;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
@@ -303,8 +305,6 @@ function renderLeaderboard(leaderboardData) {
     }
     leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
-
-// ... (Rest of the file: RATING, COMMENT, EVENT LISTENERS, etc. remains the same) ...
 
 // ====== RATING SYSTEM LOGIC ======
 async function fetchUserRatingAndUpdateUI(summaryData) {
