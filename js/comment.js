@@ -23,6 +23,23 @@ let activeReplyForm = null;
 let unsubscribeComments = null;
 let unsubscribeRating = null;
 let isCoreInitialized = false;
+let isRatingSubmissionPending = false;
+
+
+// --- IMMEDIATE FIREBASE INITIALIZATION ---
+// This block runs as soon as the script is loaded, before DOMContentLoaded.
+try {
+    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    try {
+        db = initializeFirestore(app, { localCache: persistentLocalCache({}) });
+    } catch (e) {
+        console.warn("Firestore persistence failed. Using in-memory.", e);
+        db = getFirestore(app);
+    }
+} catch (error) {
+    console.error("Fatal: Firebase initialization failed.", error);
+}
 
 // --- DOM Element Selection ---
 const commentsWrapper = document.getElementById('comments-main-container');
@@ -74,23 +91,6 @@ function showErrorUI(targetElement, message, retryCallback) {
 
 
 // ====== UNIFIED INITIALIZATION LOGIC ======
-function initializeFirebaseServices() {
-    if (app) return;
-    try {
-        app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        try {
-            db = initializeFirestore(app, { localCache: persistentLocalCache({}) });
-        } catch (e) {
-            console.warn("Firestore persistence failed. Using in-memory.", e);
-            db = getFirestore(app);
-        }
-    } catch (error) {
-        console.error("Fatal: Firebase initialization failed.", error);
-        throw error;
-    }
-}
-
 function awaitInitialAuthState() {
     return new Promise((resolve) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -114,13 +114,17 @@ function setupPersistentAuthObserver() {
     });
 }
 
-// This function initializes components that should load early.
+// This function initializes components that depend on auth state or DOM.
 async function initializeGlobalComponents() {
     if (isCoreInitialized) return;
     isCoreInitialized = true;
 
+    if (!auth) {
+        console.error("Authentication service failed to initialize. Cannot proceed with global components.");
+        return;
+    }
+
     try {
-        initializeFirebaseServices();
         await awaitInitialAuthState();
         setupPersistentAuthObserver();
         
