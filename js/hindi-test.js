@@ -113,7 +113,8 @@ async function updateUserTestStatus() {
             const scoreData = playedQuizzes.get(quizId);
             const originalLink = box.querySelector('a');
             
-            const partName = "Part-01"; // You can make this dynamic if needed
+            // Dynamically get the part name from the link's text content
+            const partName = originalLink.textContent;
 
             box.innerHTML = `
                 <div class="user-score-display">
