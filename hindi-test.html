@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>हिंदी टेस्ट | परीक्षा की तैयारी - GK Learn Study</title>
-        <meta name="description" content="GK Learn Study पर हिंदी टेस्ट की तैयारी करें। मॉक टेस्ट, ऑनलाइन ट्यूटोरियल और प्रतियोगी परीक्षाओं के लिए अध्ययन सामग्री प्राप्त करें।" />
+        <title>Hindi Test Hub | Exam Preparation - GK Learn Study</title>
+        <meta name="description" content="Prepare for Hindi tests on GK Learn Study. Take mock tests, get online tutorials, and access study materials for competitive exams." />
         <link rel="icon" href="https://gklearnstudy.in/GK-Learn-Study.png" type="image/png" />
         <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css" />
         <style>
@@ -24,13 +24,18 @@
             .leaderboard .name { font-weight: 500; flex-grow: 1; color: var(--text-primary); }
             .leaderboard .score { font-weight: bold; color: var(--text-secondary); }
             .button-group { display: flex; gap: 1rem; justify-content: center; align-items: center; margin-top: 1rem; }
-            .user-score-display h4 { margin: 0 0 1rem 0; color: var(--accent-color); font-size: 1.1rem; }
+            .user-score-display h4 { margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.2rem; font-weight: 600; }
+            .user-score-display p { margin: 0; font-size: 1.1rem; }
+            .btn { display: inline-flex; align-items: center; gap: .5rem; justify-content: center; font-weight: 600; color: var(--text-primary); text-align: center; vertical-align: middle; cursor: pointer; user-select: none; background-color: transparent; border: 1px solid var(--border-color); padding: .5rem 1rem; font-size: .9rem; border-radius: var(--border-radius); transition: all .2s ease-in-out; }
+            .btn:hover { background-color: var(--button-hover-bg); }
+            .retry-btn { background-color: var(--accent-color); color: white; }
+            .review-btn { background-color: var(--secondary-color, #6c757d); color: white; }
         </style>
     </head>
     <body>
         <main class="container">
             <h1>Hindi Test Hub</h1>
-            <p class="section-subtitle">अपनी हिंदी भाषा की দক্ষতা का परीक्षण करें। नीचे दिए गए टेस्ट भागों में से चुनें और अपनी तैयारी को मापें।</p>
+            <p class="section-subtitle">Test your Hindi language skills. Choose from the test parts below and measure your preparation.</p>
             
             <div id="test-parts-container" class="box-grid">
                 <div class="box" data-quiz-id="hindi-test-part-01">
@@ -46,7 +51,7 @@
 
             <section class="leaderboard-section">
                 <h2>Hindi Tests - Top Scorers</h2>
-                <p class="section-subtitle" style="margin-bottom: 2rem;">यहां हिंदी टेस्ट के शीर्ष स्कोरर हैं। अपना सर्वश्रेष्ठ स्कोर प्राप्त करें और लीडरबोर्ड पर चढ़ें!</p>
+                <p class="section-subtitle" style="margin-bottom: 2rem;">Here are the top scorers for the Hindi tests. Achieve your best score and climb the leaderboard!</p>
                 <div id="leaderboard-container">
                     <div class="spinner-container"><div class="spinner"></div></div>
                 </div>
