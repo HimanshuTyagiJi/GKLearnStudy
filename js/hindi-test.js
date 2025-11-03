@@ -25,7 +25,6 @@ async function loadPageData() {
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
-        // Fetch ALL quiz scores from the collection.
         const q = query(collection(db, "quizScores"));
         const querySnapshot = await getDocs(q);
 
@@ -34,21 +33,19 @@ async function loadPageData() {
             allScores.push(doc.data());
         });
         
-        // Filter for only Hindi tests on the client side.
         const hindiScores = allScores.filter(scoreData => 
             scoreData.quizId && scoreData.quizId.startsWith('hindi-test-')
         );
 
         const userBestScores = new Map();
         hindiScores.forEach((scoreData) => {
-            // Store only the best score for each user for the leaderboard
             if (!userBestScores.has(scoreData.userId) || scoreData.score > userBestScores.get(scoreData.userId).score) {
                 userBestScores.set(scoreData.userId, scoreData);
             }
         });
 
         const topScores = Array.from(userBestScores.values())
-            .sort((a, b) => b.score - a.score) // Now sort by score on the client
+            .sort((a, b) => b.score - a.score)
             .slice(0, 10);
 
         renderLeaderboard(topScores);
@@ -100,7 +97,6 @@ async function updateUserTestStatus() {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
         if(quizId && quizId.startsWith('hindi-test-')) {
-            // If we haven't seen this quiz, or the new score is higher, update it
             if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
                 playedQuizzes.set(quizId, scoreData);
             }
@@ -111,8 +107,8 @@ async function updateUserTestStatus() {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
             const scoreData = playedQuizzes.get(quizId);
-            const originalLink = box.querySelector('a'); // Get the original link element
-            const originalLinkText = originalLink.textContent; // Extract the text (e.g., "Part-01")
+            const originalLink = box.querySelector('a');
+            const originalLinkText = originalLink.textContent;
             
             box.innerHTML = `
                 <div class="user-score-display">
@@ -126,14 +122,18 @@ async function updateUserTestStatus() {
             `;
             box.querySelector('.retry-btn').onclick = () => {
                 sessionStorage.removeItem(`review_${quizId}`);
-                sessionStorage.removeItem(`reviewData_${quizId}`);
+                sessionStorage.removeItem(`reviewDataForNextPage`);
                 window.location.href = originalLink.href;
             };
             box.querySelector('.review-btn').onclick = () => {
-                // This assumes the questions data is available in session storage after a test is taken
-                // In a real scenario, this data would need to be reliably stored or fetched
-                sessionStorage.setItem(`review_${quizId}`, 'true');
-                window.location.href = originalLink.href;
+                const scoreDataForReview = playedQuizzes.get(quizId);
+                if (scoreDataForReview && scoreDataForReview.questions && scoreDataForReview.userAnswers) {
+                    sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreDataForReview));
+                    sessionStorage.setItem(`review_${quizId}`, 'true');
+                    window.location.href = originalLink.href;
+                } else {
+                    alert('No review data found. Please play the test again to generate and save a review.');
+                }
             };
         }
     });
