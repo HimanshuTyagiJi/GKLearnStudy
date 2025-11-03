@@ -1,17 +1,11 @@
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+// The Firebase services are initialized by comment.js which is loaded before this script.
+// We just need to import the functions and get the initialized instances.
+import { getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
-    authDomain: "appcomment.firebaseapp.com",
-    projectId: "appcomment",
-    storageBucket: "appcomment.firebasestorage.app",
-    messagingSenderId: "156258808941",
-    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
-};
-
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+// Get the already initialized instances
+const app = getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -118,7 +112,6 @@ async function updateUserTestStatus() {
         if (playedQuizzes.has(quizId)) {
             const scoreData = playedQuizzes.get(quizId);
             const originalLink = box.querySelector('a');
-            const originalLinkText = originalLink.textContent;
             
             const partName = "Part-01"; // You can make this dynamic if needed
 
