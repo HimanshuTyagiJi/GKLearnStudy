@@ -25,27 +25,31 @@ async function loadPageData() {
 
     try {
         const categoryPrefix = `${testCategory}-test-`;
-        const q = query(collection(db, "quizScores"), where("quizId", ">=", categoryPrefix), where("quizId", "<", categoryPrefix + "~"));
-        const querySnapshot = await getDocs(q);
+        // Fetch all scores and filter on the client to avoid needing a specific index.
+        const allScoresQuery = query(collection(db, "quizScores"));
+        const querySnapshot = await getDocs(allScoresQuery);
 
         const userAggregates = new Map();
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
-            if (!scoreData.userId || !scoreData.userName) return;
+            // Client-side filtering for the specific category
+            if (scoreData.quizId && scoreData.quizId.startsWith(categoryPrefix)) {
+                if (!scoreData.userId || !scoreData.userName) return;
 
-            if (!userAggregates.has(scoreData.userId)) {
-                userAggregates.set(scoreData.userId, {
-                    totalScore: 0,
-                    totalPossible: 0,
-                    userName: scoreData.userName,
-                    userPhotoURL: scoreData.userPhotoURL,
-                    userId: scoreData.userId,
-                });
+                if (!userAggregates.has(scoreData.userId)) {
+                    userAggregates.set(scoreData.userId, {
+                        totalScore: 0,
+                        totalPossible: 0,
+                        userName: scoreData.userName,
+                        userPhotoURL: scoreData.userPhotoURL,
+                        userId: scoreData.userId,
+                    });
+                }
+                
+                const userData = userAggregates.get(scoreData.userId);
+                userData.totalScore += scoreData.score;
+                userData.totalPossible += scoreData.totalQuestions;
             }
-            
-            const userData = userAggregates.get(scoreData.userId);
-            userData.totalScore += scoreData.score;
-            userData.totalPossible += scoreData.totalQuestions;
         });
 
         const leaderboardData = Array.from(userAggregates.values()).map(userData => {
@@ -65,7 +69,7 @@ async function loadPageData() {
         }
 
     } catch (error) {
-        console.error("Error loading page data:", error);
+        console.error(`Error loading page data:`, error);
         leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
     }
 }
@@ -98,19 +102,21 @@ async function updateUserTestStatus() {
     if (!currentUser) return;
     
     const categoryPrefix = `${testCategory}-test-`;
+    // Query for all of the current user's scores to filter client-side
     const q = query(
         collection(db, "quizScores"), 
-        where("userId", "==", currentUser.uid),
-        where("quizId", ">=", categoryPrefix),
-        where("quizId", "<", categoryPrefix + "~")
+        where("userId", "==", currentUser.uid)
     );
 
     const userSnapshot = await getDocs(q);
     const playedQuizzes = new Map();
+    
     userSnapshot.forEach(doc => {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
-        if(quizId) {
+        // Filter on the client for the current category
+        if(quizId && quizId.startsWith(categoryPrefix)) {
+            // If a quiz was played multiple times, keep the highest score
             if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
                 playedQuizzes.set(quizId, scoreData);
             }
