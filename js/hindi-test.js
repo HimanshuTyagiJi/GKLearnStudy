@@ -25,30 +25,40 @@ async function loadPageData() {
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
-        const q = query(collection(db, "quizScores"));
+        const q = query(collection(db, "quizScores"), where("quizId", ">=", "hindi-test-"), where("quizId", "<", "hindi-test-~"));
         const querySnapshot = await getDocs(q);
 
-        const allScores = [];
-        querySnapshot.forEach(doc => {
-            allScores.push(doc.data());
+        const userAggregates = new Map();
+        querySnapshot.forEach((doc) => {
+            const scoreData = doc.data();
+            if (!scoreData.userId || !scoreData.userName) return;
+
+            if (!userAggregates.has(scoreData.userId)) {
+                userAggregates.set(scoreData.userId, {
+                    totalScore: 0,
+                    totalPossible: 0,
+                    userName: scoreData.userName,
+                    userPhotoURL: scoreData.userPhotoURL,
+                    userId: scoreData.userId,
+                });
+            }
+            
+            const userData = userAggregates.get(scoreData.userId);
+            userData.totalScore += scoreData.score;
+            userData.totalPossible += scoreData.totalQuestions;
+        });
+
+        const leaderboardData = Array.from(userAggregates.values()).map(userData => {
+            const averagePercentage = userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0;
+            return {
+                ...userData,
+                averagePercentage,
+            };
         });
         
-        const hindiScores = allScores.filter(scoreData => 
-            scoreData.quizId && scoreData.quizId.startsWith('hindi-test-')
-        );
-
-        const userBestScores = new Map();
-        hindiScores.forEach((scoreData) => {
-            if (!userBestScores.has(scoreData.userId) || scoreData.score > userBestScores.get(scoreData.userId).score) {
-                userBestScores.set(scoreData.userId, scoreData);
-            }
-        });
-
-        const topScores = Array.from(userBestScores.values())
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 10);
-
-        renderLeaderboard(topScores);
+        leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
+        
+        renderLeaderboard(leaderboardData.slice(0, 10));
         
         if (currentUser) {
             await updateUserTestStatus();
@@ -67,15 +77,15 @@ function renderLeaderboard(topScores) {
     }
 
     let leaderboardHTML = '<ol class="leaderboard">';
-    topScores.forEach((score, index) => {
-        const isCurrentUser = currentUser && currentUser.uid === score.userId;
-        const displayName = isCurrentUser ? "You" : score.userName;
+    topScores.forEach((scoreData, index) => {
+        const isCurrentUser = currentUser && currentUser.uid === scoreData.userId;
+        const displayName = isCurrentUser ? "You" : scoreData.userName;
         leaderboardHTML += `
             <li class="${isCurrentUser ? 'current-user' : ''}">
                 <div class="rank">${index + 1}</div>
-                <img src="${score.userPhotoURL}" alt="${score.userName}" class="avatar">
+                <img src="${scoreData.userPhotoURL}" alt="${scoreData.userName}" class="avatar">
                 <div class="name">${displayName}</div>
-                <div class="score">${score.score} / ${score.totalQuestions}</div>
+                <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
             </li>
         `;
     });
@@ -110,9 +120,11 @@ async function updateUserTestStatus() {
             const originalLink = box.querySelector('a');
             const originalLinkText = originalLink.textContent;
             
+            const partName = "Part-01"; // You can make this dynamic if needed
+
             box.innerHTML = `
                 <div class="user-score-display">
-                    <h4>${originalLinkText.replace(' (Coming Soon)', '')}</h4>
+                    <h4>${partName}</h4>
                     <p><strong>Your Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p>
                 </div>
                 <div class="button-group">
