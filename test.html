@@ -71,7 +71,7 @@
             .info-card p { color: var(--text-secondary); line-height: 1.6; }
         </style>
     </head>
-    <body>
+    <body data-test-category="all">
        <svg style="display:none;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -344,8 +344,8 @@
             <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
         </footer>
 
-        <script src="js/theme.js" defer></script>
-        <script src="js/search-data.js" defer></script>
+        <script src="/js/theme.js" defer></script>
+        <script src="/js/search-data.js" defer></script>
         
         <script>
             if ('serviceWorker' in navigator) {
@@ -362,5 +362,6 @@
        
         <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
         <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
+        <script type="module" src="/js/test-hub.js"></script>
     </body>
 </html>
