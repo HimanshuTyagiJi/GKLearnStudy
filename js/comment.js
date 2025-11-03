@@ -458,7 +458,39 @@ function renderNode(node){
       }
   }
 
-  const ownerAvatarSVG = `<svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white">Learn Study</text></svg>`;
+  const ownerAvatarSVG = `
+  
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="40" height="40" aria-label="GK Learn Study">
+  <title>GK Learn Study</title>
+  <circle cx="150" cy="150" r="150" fill="white"/>
+  <defs><clipPath id="clip"><circle cx="150" cy="150" r="150"/></clipPath></defs>
+  <g clip-path="url(#clip)">
+    <path fill="#c0a4fb">
+      <animate attributeName="d" dur="8s" repeatCount="indefinite"
+        values="M0 230 Q75 210 150 230 T300 210 L300 300 L0 300Z;
+                M0 240 Q75 260 150 240 T300 250 L300 300 L0 300Z;
+                M0 230 Q75 210 150 230 T300 210 L300 300 L0 300Z"/>
+    </path>
+    <path fill="#641ef9" fill-opacity="0.7">
+      <animate attributeName="d" dur="7s" repeatCount="indefinite"
+        values="M0 220 Q75 245 150 220 T300 235 L300 300 L0 300Z;
+                M0 250 Q75 220 150 250 T300 220 L300 300 L0 300Z;
+                M0 220 Q75 245 150 220 T300 235 L300 300 L0 300Z"/>
+    </path>
+  </g>
+  <text x="50%" y="35%" text-anchor="middle" font-size="90" font-weight="700" fill="#e53935" opacity="0" font-family="Arial">
+    GK
+    <animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="1.2s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.3s" dur="1.2s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="scale" from="0.55" to="1" begin="0.3s" dur="1.2s" fill="freeze"/>
+  </text>
+  <text x="50%" y="65%" text-anchor="middle" font-size="38" fill="#6a1b9a" opacity="0" font-family="Arial">
+    Learn Study
+    <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="scale" from="0.75" to="1" begin="0.8s" dur="1.2s" fill="freeze"/>
+  </text>
+  <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
+</svg>  `;
   const authorAvatar = isCommentOwner ? ownerAvatarSVG : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
   const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
