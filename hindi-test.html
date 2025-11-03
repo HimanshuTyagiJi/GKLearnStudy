@@ -9,12 +9,11 @@
         <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css" />
         <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css" />
         <style>
-           .container { max-width: 900px; }
+            .container { max-width: 900px; }
             .box-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
             .box { 
-                background: linear-gradient(135deg, var(--accent-color-transparent), var(--card-bg));
+                background: linear-gradient(145deg, #641ef9, #9f94ff);
                 border: 1px solid var(--border-color);
-                border-left: 4px solid var(--accent-color);
                 border-radius: var(--border-radius); 
                 padding: 2rem; 
                 text-align: center; 
@@ -24,12 +23,15 @@
                 justify-content: center; 
                 align-items: center; 
             }
+             html[data-theme=dark] .box {
+                background: linear-gradient(145deg, #1e1a3b, #3c357d);
+            }
             .box:hover { 
                 transform: translateY(-5px) scale(1.02); 
                 box-shadow: 0 8px 25px var(--shadow-color);
             }
-            .box a { text-decoration: none; color: var(--text-primary); font-size: 1.2rem; font-weight: 600; }
-            .box a:hover { color: var(--accent-color); }
+            .box a { text-decoration: none; color: white; font-size: 1.2rem; font-weight: 600; }
+            .box a:hover { text-decoration: underline; }
             .leaderboard-section { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; margin-top: 3rem; }
             .leaderboard-section h2 { text-align: center; margin-top: 0; color: var(--accent-color); }
             .leaderboard { list-style: none; padding: 0; }
@@ -38,16 +40,18 @@
             .leaderboard .rank { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); min-width: 40px; }
             .leaderboard .avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 1rem; object-fit: cover; }
             .leaderboard .name { font-weight: 500; flex-grow: 1; color: var(--text-primary); }
-            .leaderboard .score { font-weight: bold; color: var(--text-secondary); }
+            .leaderboard .score { font-weight: bold; color: var(--text-primary); }
             .button-group { display: flex; gap: 1rem; justify-content: center; align-items: center; margin-top: 1rem; }
-            .user-score-display h4 { margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.2rem; font-weight: 600; }
-            .user-score-display p { margin: 0; font-size: 1.1rem; }
-            .btn { display: inline-flex; align-items: center; gap: .5rem; justify-content: center; font-weight: 600; color: var(--text-primary); text-align: center; vertical-align: middle; cursor: pointer; user-select: none; background-color: transparent; border: 1px solid var(--border-color); padding: .5rem 1rem; font-size: .9rem; border-radius: var(--border-radius); transition: all .2s ease-in-out; }
+            .user-score-display h4 { margin: 0 0 0.5rem 0; color: white; font-size: 1.2rem; font-weight: 600; }
+            .user-score-display p { margin: 0; font-size: 1.1rem; color: #f0f0f0; }
+             html[data-theme=dark] .user-score-display p { color: #ccc; }
+            .btn { display: inline-flex; align-items: center; gap: .5rem; justify-content: center; font-weight: 600; text-align: center; vertical-align: middle; cursor: pointer; user-select: none; background-color: transparent; border: 1px solid var(--border-color); padding: .5rem 1rem; font-size: .9rem; border-radius: var(--border-radius); transition: all .2s ease-in-out; }
             .btn:hover { background-color: var(--button-hover-bg); }
-            .retry-btn { background-color: var(--accent-color); color: white; }
-            .review-btn { background-color: var(--secondary-color, #6c757d); color: white; }   </style>
+            .retry-btn { background-color: #fff; color: #641ef9; border-color: #fff; }
+            .review-btn { background-color: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.5); }
+        </style>
     </head>
-    <body>
+    <body data-test-category="hindi">
        <header class="header" id="header">
             <nav class="navbar">
                 <div class="burger" id="burger">
@@ -164,6 +168,6 @@
         <script src="/js/search-data.js" defer></script>
         <script type="module" src="/js/comment.js" defer></script>
         <script type="module" src="/js/notification.js" defer></script>
-        <script type="module" src="/js/hindi-test.js"></script>
+        <script type="module" src="/js/test-hub.js"></script>
     </body>
 </html>
