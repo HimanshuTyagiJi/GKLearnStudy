@@ -1,23 +1,31 @@
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-// Use the globally initialized Firebase instances from comment.js
-const auth = window.firebaseAuth;
-const db = window.firebaseDb;
+const firebaseConfig = {
+    apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+    authDomain: "appcomment.firebaseapp.com",
+    projectId: "appcomment",
+    storageBucket: "appcomment.firebasestorage.app",
+    messagingSenderId: "156258808941",
+    appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 const leaderboardContainer = document.getElementById('leaderboard-container');
 const testPartsContainer = document.getElementById('test-parts-container');
 let currentUser = null;
 
 async function loadPageData() {
-    if (!leaderboardContainer || !testPartsContainer || !db) {
-        if (leaderboardContainer) leaderboardContainer.innerHTML = "<p>सेवाओं से कनेक्ट करने में त्रुटि।</p>";
-        return;
-    };
+    if (!leaderboardContainer || !testPartsContainer) return;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
+        // Fetch ALL quiz scores from the collection.
         const q = query(collection(db, "quizScores"));
         const querySnapshot = await getDocs(q);
 
@@ -26,43 +34,24 @@ async function loadPageData() {
             allScores.push(doc.data());
         });
         
+        // Filter for only Hindi tests on the client side.
         const hindiScores = allScores.filter(scoreData => 
             scoreData.quizId && scoreData.quizId.startsWith('hindi-test-')
         );
-        
-        // --- NEW LEADERBOARD LOGIC (AVERAGE PERCENTAGE) ---
-        const userAggregates = new Map();
-        hindiScores.forEach(score => {
-            if (!userAggregates.has(score.userId)) {
-                userAggregates.set(score.userId, {
-                    userName: score.userName,
-                    userPhotoURL: score.userPhotoURL,
-                    userId: score.userId,
-                    bestScores: new Map() // To store best score for each quiz part
-                });
-            }
-            const user = userAggregates.get(score.userId);
-            // If this quiz part is not recorded yet, or the new score is higher, update it
-            if (!user.bestScores.has(score.quizId) || score.score > user.bestScores.get(score.quizId).score) {
-                user.bestScores.set(score.quizId, { score: score.score, total: score.totalQuestions });
+
+        const userBestScores = new Map();
+        hindiScores.forEach((scoreData) => {
+            // Store only the best score for each user for the leaderboard
+            if (!userBestScores.has(scoreData.userId) || scoreData.score > userBestScores.get(scoreData.userId).score) {
+                userBestScores.set(scoreData.userId, scoreData);
             }
         });
 
-        const leaderboardData = [];
-        userAggregates.forEach(user => {
-            let totalBestScore = 0;
-            let totalPossibleScore = 0;
-            user.bestScores.forEach(quiz => {
-                totalBestScore += quiz.score;
-                totalPossibleScore += quiz.total;
-            });
-            const averagePercentage = totalPossibleScore > 0 ? (totalBestScore / totalPossibleScore) * 100 : 0;
-            leaderboardData.push({ ...user, averagePercentage });
-        });
-        
-        leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
-        
-        renderLeaderboard(leaderboardData.slice(0, 10));
+        const topScores = Array.from(userBestScores.values())
+            .sort((a, b) => b.score - a.score) // Now sort by score on the client
+            .slice(0, 10);
+
+        renderLeaderboard(topScores);
         
         if (currentUser) {
             await updateUserTestStatus();
@@ -74,22 +63,22 @@ async function loadPageData() {
     }
 }
 
-function renderLeaderboard(leaderboardData) {
-    if (leaderboardData.length === 0) {
+function renderLeaderboard(topScores) {
+    if (topScores.length === 0) {
         leaderboardContainer.innerHTML = "<p>इस श्रेणी में कोई स्कोर दर्ज नहीं किया गया है।</p>";
         return;
     }
 
     let leaderboardHTML = '<ol class="leaderboard">';
-    leaderboardData.forEach((user, index) => {
-        const isCurrentUser = currentUser && currentUser.uid === user.userId;
-        const displayName = isCurrentUser ? "You" : user.userName;
+    topScores.forEach((score, index) => {
+        const isCurrentUser = currentUser && currentUser.uid === score.userId;
+        const displayName = isCurrentUser ? "You" : score.userName;
         leaderboardHTML += `
             <li class="${isCurrentUser ? 'current-user' : ''}">
                 <div class="rank">${index + 1}</div>
-                <img src="${user.userPhotoURL}" alt="${user.userName}" class="avatar">
+                <img src="${score.userPhotoURL}" alt="${score.userName}" class="avatar">
                 <div class="name">${displayName}</div>
-                <div class="score">${user.averagePercentage.toFixed(2)}%</div>
+                <div class="score">${score.score} / ${score.totalQuestions}</div>
             </li>
         `;
     });
@@ -98,7 +87,7 @@ function renderLeaderboard(leaderboardData) {
 }
 
 async function updateUserTestStatus() {
-    if (!currentUser || !db) return;
+    if (!currentUser) return;
     
     const q = query(
         collection(db, "quizScores"), 
@@ -111,7 +100,7 @@ async function updateUserTestStatus() {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
         if(quizId && quizId.startsWith('hindi-test-')) {
-            // Store only the HIGHEST score for each quiz part
+            // If we haven't seen this quiz, or the new score is higher, update it
             if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
                 playedQuizzes.set(quizId, scoreData);
             }
@@ -122,12 +111,11 @@ async function updateUserTestStatus() {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
             const scoreData = playedQuizzes.get(quizId);
-            const originalLink = box.querySelector('a');
+            const originalLink = box.querySelector('a'); // Get href before overwriting
             
             box.innerHTML = `
-                <h3>${originalLink.textContent.replace(' (Coming Soon)', '')}</h3>
                 <div class="user-score-display">
-                    <h4>Your Best Score: ${scoreData.score} / ${scoreData.totalQuestions}</h4>
+                    <h4>Your Score: ${scoreData.score} / ${scoreData.totalQuestions}</h4>
                 </div>
                 <div class="button-group">
                     <button class="btn retry-btn">Play Again</button>
@@ -140,9 +128,10 @@ async function updateUserTestStatus() {
                 window.location.href = originalLink.href;
             };
             box.querySelector('.review-btn').onclick = () => {
+                // Save the data needed for review mode before navigating
                 const reviewData = {
-                    questions: window.questions, 
-                    userAnswers: {} 
+                    questions: window.questions, // Assuming questions are globally available from test.js
+                    userAnswers: {} // This would be ideally fetched or stored post-quiz
                 };
                 sessionStorage.setItem(`reviewData_${quizId}`, JSON.stringify(reviewData));
                 sessionStorage.setItem(`review_${quizId}`, 'true');
@@ -154,13 +143,8 @@ async function updateUserTestStatus() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (auth) {
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            loadPageData();
-        });
-    } else {
-        console.error("Firebase auth is not initialized. Leaderboard cannot function.");
-        if (leaderboardContainer) leaderboardContainer.innerHTML = "<p>सेवाओं से कनेक्ट करने में त्रुटि।</p>";
-    }
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        loadPageData();
+    });
 });
