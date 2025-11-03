@@ -23,11 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    const quizId = document.body.dataset.quizId;
+    if (!quizId) {
+        alert("Quiz configuration error: Quiz ID is missing.");
+        document.body.innerHTML = "<h1>Error: Quiz ID not found.</h1>";
+        return;
+    }
+
     let currentUser = null;
     let timerInterval;
     let userAnswers = {};
     let timeTaken = 0;
-    const quizId = "hindi-test-part-01";
     
     const quizForm = document.getElementById("quiz-form");
     const questionsContainer = document.getElementById("questions-container");
