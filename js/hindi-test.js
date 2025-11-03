@@ -59,13 +59,13 @@ async function loadPageData() {
 
     } catch (error) {
         console.error("Error loading page data:", error);
-        leaderboardContainer.innerHTML = "<p>लीडरबोर्ड लोड नहीं हो सका। कृपया बाद में पुनः प्रयास करें।</p>";
+        leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
     }
 }
 
 function renderLeaderboard(topScores) {
     if (topScores.length === 0) {
-        leaderboardContainer.innerHTML = "<p>इस श्रेणी में कोई स्कोर दर्ज नहीं किया गया है।</p>";
+        leaderboardContainer.innerHTML = "<p>No scores have been recorded in this category yet.</p>";
         return;
     }
 
@@ -111,11 +111,13 @@ async function updateUserTestStatus() {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
             const scoreData = playedQuizzes.get(quizId);
-            const originalLink = box.querySelector('a'); // Get href before overwriting
+            const originalLink = box.querySelector('a'); // Get the original link element
+            const originalLinkText = originalLink.textContent; // Extract the text (e.g., "Part-01")
             
             box.innerHTML = `
                 <div class="user-score-display">
-                    <h4>Your Score: ${scoreData.score} / ${scoreData.totalQuestions}</h4>
+                    <h4>${originalLinkText.replace(' (Coming Soon)', '')}</h4>
+                    <p><strong>Your Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p>
                 </div>
                 <div class="button-group">
                     <button class="btn retry-btn">Play Again</button>
@@ -128,12 +130,8 @@ async function updateUserTestStatus() {
                 window.location.href = originalLink.href;
             };
             box.querySelector('.review-btn').onclick = () => {
-                // Save the data needed for review mode before navigating
-                const reviewData = {
-                    questions: window.questions, // Assuming questions are globally available from test.js
-                    userAnswers: {} // This would be ideally fetched or stored post-quiz
-                };
-                sessionStorage.setItem(`reviewData_${quizId}`, JSON.stringify(reviewData));
+                // This assumes the questions data is available in session storage after a test is taken
+                // In a real scenario, this data would need to be reliably stored or fetched
                 sessionStorage.setItem(`review_${quizId}`, 'true');
                 window.location.href = originalLink.href;
             };
