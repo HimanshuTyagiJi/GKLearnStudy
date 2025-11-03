@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerInterval;
     let userAnswers = {};
     let timeTaken = 0;
+    const quizId = "hindi-test-part-01"; // Hardcoded for this specific test part
     
     const quizForm = document.getElementById("quiz-form");
     const questionsContainer = document.getElementById("questions-container");
@@ -45,6 +46,22 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
     });
+
+    // Check for review mode on page load
+    const isInReviewMode = sessionStorage.getItem(`review_${quizId}`);
+    if (isInReviewMode === 'true') {
+        const reviewData = JSON.parse(sessionStorage.getItem(`reviewData_${quizId}`));
+        if (reviewData) {
+            questions = reviewData.questions;
+            userAnswers = reviewData.userAnswers;
+            renderReviewMode();
+        } else {
+            startModal.classList.add('active'); // Fallback if data is missing
+        }
+    } else {
+        startModal.classList.add('active');
+    }
+
 
     function startQuiz() {
         startModal.classList.remove('active');
@@ -89,26 +106,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculateResult() {
         clearInterval(timerInterval);
-        let score = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+
         questions.forEach((q, index) => {
             const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
             userAnswers[index] = selectedOption ? selectedOption.value : null;
-            if (selectedOption && selectedOption.value === q.correctOption) {
-                score++;
+            if (userAnswers[index]) {
+                if (userAnswers[index] === q.correctOption) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
             }
         });
 
         const totalQuestions = questions.length;
+        const skippedCount = totalQuestions - correctCount - incorrectCount;
+        const percentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
+
+        // Save results for review mode
+        const reviewData = { questions: questions, userAnswers: userAnswers };
+        sessionStorage.setItem(`reviewData_${quizId}`, JSON.stringify(reviewData));
+
+        // SVG donut chart calculations
+        const correctPercentageForSVG = percentage;
+        const incorrectPercentageForSVG = totalQuestions > 0 ? (incorrectCount / totalQuestions) * 100 : 0;
+
+        const greenDashArray = `${correctPercentageForSVG}, 100`;
+        const redDashArray = `${incorrectPercentageForSVG}, 100`;
+        const redDashOffset = `-${correctPercentageForSVG}`;
+
         if (resultContent) {
             resultContent.innerHTML = `
-                <p>आपने ${totalQuestions} में से <strong>${score}</strong> अंक प्राप्त किए हैं।</p>
-                <p>कुल समय: ${Math.floor(timeTaken / 60)} मिनट ${timeTaken % 60} सेकंड</p>
+                <div style="text-align: center;">
+                    <div style="position: relative; width: 150px; height: 150px; margin: 1rem auto;">
+                        <svg viewBox="0 0 36 36" style="transform: rotate(-90deg); width: 100%; height: 100%;">
+                            <!-- Background Circle -->
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                  fill="none" stroke="#e6e6e6" stroke-width="3"></path>
+                            <!-- Green Part (Correct) -->
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                  fill="none" stroke="var(--success-color, #28a745)" stroke-width="3" 
+                                  stroke-dasharray="${greenDashArray}"></path>
+                            <!-- Red Part (Incorrect) -->
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                  fill="none" stroke="var(--danger-color, #dc3545)" stroke-width="3" 
+                                  stroke-dasharray="${redDashArray}" stroke-dashoffset="${redDashOffset}"></path>
+                        </svg>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: bold; color: var(--text-color);">
+                            ${percentage.toFixed(2)}%
+                        </div>
+                    </div>
+                    <p>कुल प्रश्न: ${totalQuestions}</p>
+                    <p style="color: var(--success-color, #28a745); font-weight: bold;">सही: ${correctCount}</p>
+                    <p style="color: var(--danger-color, #dc3545); font-weight: bold;">गलत: ${incorrectCount}</p>
+                    <p style="color: var(--secondary-color, #6c757d);">छोड़े गए: ${skippedCount}</p>
+                    <p>कुल समय: ${Math.floor(timeTaken / 60)} मिनट ${timeTaken % 60} सेकंड</p>
+                </div>
             `;
         }
+        
         if (resultModal) resultModal.classList.add('active');
         
         if (currentUser) {
-            saveScore(score, totalQuestions);
+            saveScore(correctCount, totalQuestions);
         }
     }
 
@@ -116,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentUser || !db) return;
 
         try {
-            const quizId = "hindi-test-part-01";
             await addDoc(collection(db, "quizScores"), {
                 userId: currentUser.uid,
                 userName: currentUser.displayName,
@@ -132,23 +193,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function retryQuiz() {
+        sessionStorage.removeItem(`review_${quizId}`);
+        sessionStorage.removeItem(`reviewData_${quizId}`);
         location.reload();
     }
 
     function reviewQuestions() {
-        if (resultModal) resultModal.classList.remove('active');
-        if (quizSection) quizSection.style.display = "none";
+       sessionStorage.setItem(`review_${quizId}`, 'true');
+       location.reload();
+    }
 
+    function renderReviewMode() {
+        startModal.classList.remove('active');
+        quizSection.style.display = "none";
+        
         let reviewHTML = "";
         questions.forEach((q, index) => {
             const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === q.correctOption;
-            let resultClass = 'incorrect';
-            if (isCorrect) resultClass = 'correct';
-            else if (userAnswer === null) resultClass = 'unanswered';
-
             reviewHTML += `
-                <div class="question-block review ${resultClass}">
+                <div class="question-block review">
                     <p class="question">${index + 1}. ${q.question}</p>
                     <div class="options">
                         ${q.options.map(opt => {
@@ -167,8 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="explanation"><strong>स्पष्टीकरण:</strong> ${q.explanation}</div>
                 </div>`;
         });
+
         if (reviewContainer) reviewContainer.innerHTML = reviewHTML;
         if (reviewSection) reviewSection.style.display = "block";
+
+        sessionStorage.removeItem(`review_${quizId}`);
     }
 
     // Event Listeners
