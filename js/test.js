@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let app, auth, db;
     try {
-        app = initializeApp(firebaseConfig);
+        app = getApps().length ? getApp() : initializeApp(firebaseConfig);
         auth = getAuth(app);
         db = getFirestore(app);
     } catch (e) {
