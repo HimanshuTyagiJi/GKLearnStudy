@@ -11,29 +11,40 @@ const db = getFirestore(app);
 
 const leaderboardContainer = document.getElementById('leaderboard-container');
 const testPartsContainer = document.getElementById('test-parts-container');
-const testCategory = document.body.dataset.testCategory; // e.g., 'hindi', 'history'
+// *** KEY CHANGE: Read the category from the body tag. Falls back to 'all' for test.html ***
+const testCategory = document.body.dataset.testCategory || 'all'; 
 let currentUser = null;
 
 async function loadPageData() {
-    if (!leaderboardContainer || !testPartsContainer || !testCategory) {
-        console.error("Required elements or data-test-category attribute is missing.");
-        if (leaderboardContainer) leaderboardContainer.innerHTML = "<p>Page configuration error.</p>";
-        return;
-    }
+    if (!leaderboardContainer) return;
+
+    // The testPartsContainer might not exist on the global test.html page, so we check for it conditionally.
+    const isCategoryPage = testCategory !== 'all' && testPartsContainer;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
     try {
-        const categoryPrefix = `${testCategory}-test-`;
-        // Fetch all scores and filter on the client to avoid needing a specific index.
+        // Fetch all scores once. This is more efficient and avoids complex Firestore indexes.
         const allScoresQuery = query(collection(db, "quizScores"));
         const querySnapshot = await getDocs(allScoresQuery);
 
         const userAggregates = new Map();
+
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
-            // Client-side filtering for the specific category
-            if (scoreData.quizId && scoreData.quizId.startsWith(categoryPrefix)) {
+            
+            // *** KEY CHANGE: Dynamically decide whether to include the score based on the page's category ***
+            let shouldInclude = false;
+            if (testCategory === 'all') { // For the global test.html page
+                shouldInclude = true;
+            } else { // For specific category pages like hindi-test.html
+                const categoryPrefix = `${testCategory}-test-`;
+                if (scoreData.quizId && scoreData.quizId.startsWith(categoryPrefix)) {
+                    shouldInclude = true;
+                }
+            }
+            
+            if (shouldInclude) {
                 if (!scoreData.userId || !scoreData.userName) return;
 
                 if (!userAggregates.has(scoreData.userId)) {
@@ -62,21 +73,25 @@ async function loadPageData() {
         
         leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
         
-        renderLeaderboard(leaderboardData.slice(0, 10));
+        // On global page, show top 50. On category pages, show top 10.
+        renderLeaderboard(leaderboardData.slice(0, testCategory === 'all' ? 50 : 10), leaderboardData);
         
-        if (currentUser) {
+        if (currentUser && isCategoryPage) {
             await updateUserTestStatus();
         }
 
     } catch (error) {
-        console.error(`Error loading page data:`, error);
+        console.error(`Error loading page data for category '${testCategory}':`, error);
         leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
     }
 }
 
-function renderLeaderboard(topScores) {
+function renderLeaderboard(topScores, fullLeaderboardData) {
     if (topScores.length === 0) {
-        leaderboardContainer.innerHTML = "<p>No scores have been recorded in this category yet.</p>";
+        const message = testCategory === 'all' 
+            ? "No scores have been recorded yet. Be the first to take a test!"
+            : "No scores have been recorded in this category yet.";
+        leaderboardContainer.innerHTML = `<p>${message}</p>`;
         return;
     }
 
@@ -95,13 +110,30 @@ function renderLeaderboard(topScores) {
         `;
     });
     leaderboardHTML += '</ol>';
-    leaderboardContainer.innerHTML = leaderboardHTML;
+
+    // Show user's own rank if they are logged in and outside the top list on the global page
+    let userRankHTML = '';
+    if (currentUser && testCategory === 'all') {
+        const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
+        if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
+            const userData = fullLeaderboardData[userRankIndex];
+            const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
+            userRankHTML = `
+                <div class="user-rank-display">
+                    <h2>Your Overall Rank</h2>
+                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
+                </div>
+            `;
+        }
+    }
+    
+    leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
 
+
 async function updateUserTestStatus() {
-    if (!currentUser) return;
+    if (!currentUser || !testPartsContainer || testCategory === 'all') return;
     
-    const categoryPrefix = `${testCategory}-test-`;
     // Query for all of the current user's scores to filter client-side
     const q = query(
         collection(db, "quizScores"), 
@@ -110,14 +142,15 @@ async function updateUserTestStatus() {
 
     const userSnapshot = await getDocs(q);
     const playedQuizzes = new Map();
+    const categoryPrefix = `${testCategory}-test-`;
     
     userSnapshot.forEach(doc => {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
         // Filter on the client for the current category
         if(quizId && quizId.startsWith(categoryPrefix)) {
-            // If a quiz was played multiple times, keep the highest score
-            if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
+            // If a quiz was played multiple times, keep the highest score's data
+            if (!playedQuizzes.has(quizId) || scoreData.timestamp.toMillis() > playedQuizzes.get(quizId).timestamp.toMillis()) {
                 playedQuizzes.set(quizId, scoreData);
             }
         }
@@ -159,7 +192,6 @@ async function updateUserTestStatus() {
         }
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
