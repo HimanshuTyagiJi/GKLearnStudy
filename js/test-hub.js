@@ -9,16 +9,17 @@ const app = getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const leaderboardContainer = document.getElementById('leaderboard-container');
-const testPartsContainer = document.getElementById('test-parts-container');
-// *** KEY CHANGE: Read the category from the body tag. Falls back to 'all' for test.html ***
-const testCategory = document.body.dataset.testCategory || 'all'; 
 let currentUser = null;
 
 async function loadPageData() {
+    // *** BUG FIX: Read the category from the body tag *inside* the function. ***
+    // This guarantees it runs after the DOM is ready and the body tag exists.
+    const testCategory = document.body.dataset.testCategory || 'all'; 
+    
+    const leaderboardContainer = document.getElementById('leaderboard-container');
     if (!leaderboardContainer) return;
 
-    // The testPartsContainer might not exist on the global test.html page, so we check for it conditionally.
+    const testPartsContainer = document.getElementById('test-parts-container');
     const isCategoryPage = testCategory !== 'all' && testPartsContainer;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
@@ -33,7 +34,7 @@ async function loadPageData() {
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
             
-            // *** KEY CHANGE: Dynamically decide whether to include the score based on the page's category ***
+            // Dynamically decide whether to include the score based on the page's category
             let shouldInclude = false;
             if (testCategory === 'all') { // For the global test.html page
                 shouldInclude = true;
@@ -77,7 +78,7 @@ async function loadPageData() {
         renderLeaderboard(leaderboardData.slice(0, testCategory === 'all' ? 50 : 10), leaderboardData);
         
         if (currentUser && isCategoryPage) {
-            await updateUserTestStatus();
+            await updateUserTestStatus(testCategory); // Pass category for robustness
         }
 
     } catch (error) {
@@ -87,6 +88,9 @@ async function loadPageData() {
 }
 
 function renderLeaderboard(topScores, fullLeaderboardData) {
+    const testCategory = document.body.dataset.testCategory || 'all'; 
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+
     if (topScores.length === 0) {
         const message = testCategory === 'all' 
             ? "No scores have been recorded yet. Be the first to take a test!"
@@ -131,7 +135,8 @@ function renderLeaderboard(topScores, fullLeaderboardData) {
 }
 
 
-async function updateUserTestStatus() {
+async function updateUserTestStatus(testCategory) {
+    const testPartsContainer = document.getElementById('test-parts-container');
     if (!currentUser || !testPartsContainer || testCategory === 'all') return;
     
     // Query for all of the current user's scores to filter client-side
@@ -149,7 +154,7 @@ async function updateUserTestStatus() {
         const quizId = scoreData.quizId;
         // Filter on the client for the current category
         if(quizId && quizId.startsWith(categoryPrefix)) {
-            // If a quiz was played multiple times, keep the highest score's data
+            // If a quiz was played multiple times, keep the most recent score's data
             if (!playedQuizzes.has(quizId) || scoreData.timestamp.toMillis() > playedQuizzes.get(quizId).timestamp.toMillis()) {
                 playedQuizzes.set(quizId, scoreData);
             }
