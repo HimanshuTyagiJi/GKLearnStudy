@@ -13,8 +13,7 @@ let currentUser = null;
 
 // The main function that orchestrates everything for the current page.
 async function initializeTestHub() {
-    // CRITICAL: Read category from the body tag INSIDE the main function.
-    // This ensures the DOM is ready and the attribute is available.
+    // CRITICAL: Read category from the body tag. This is the reliable source of truth.
     const testCategory = document.body.dataset.testCategory;
 
     if (!testCategory) {
@@ -34,12 +33,12 @@ async function initializeTestHub() {
         let scoresQuery;
         const categoryPrefix = `${testCategory}-test-`;
 
-        // Create the correct Firestore query based on the page's category for the leaderboard.
+        // Create the correct Firestore query based on the page's category.
         if (testCategory === 'all') {
-            // Global page: fetch all scores.
+            // Global page ('test.html'): fetch all scores.
             scoresQuery = query(collection(db, "quizScores"));
         } else {
-            // Category page: fetch only scores for that specific category using a prefix query.
+            // Category page (e.g., 'hindi-test.html'): fetch only scores for that specific category.
             scoresQuery = query(
                 collection(db, "quizScores"),
                 where("quizId", ">=", categoryPrefix),
@@ -54,7 +53,6 @@ async function initializeTestHub() {
             const scoreData = doc.data();
             if (!scoreData.userId || !scoreData.userName) return;
 
-            // Aggregate scores for the leaderboard.
             if (!userAggregates.has(scoreData.userId)) {
                 userAggregates.set(scoreData.userId, {
                     totalScore: 0,
@@ -70,10 +68,10 @@ async function initializeTestHub() {
             userData.totalPossible += scoreData.totalQuestions;
         });
 
-        const leaderboardData = Array.from(userAggregates.values()).map(userData => {
-            const averagePercentage = userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0;
-            return { ...userData, averagePercentage };
-        });
+        const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
+            ...userData,
+            averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
+        }));
         
         leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
         
@@ -91,7 +89,6 @@ async function initializeTestHub() {
 
 function renderLeaderboard(fullLeaderboardData, category) {
     const leaderboardContainer = document.getElementById('leaderboard-container');
-    // On global page, show top 50. On category pages, show top 10.
     const topCount = (category === 'all') ? 50 : 10;
     const topScores = fullLeaderboardData.slice(0, topCount);
 
@@ -120,7 +117,6 @@ function renderLeaderboard(fullLeaderboardData, category) {
     leaderboardHTML += '</ol>';
 
     let userRankHTML = '';
-    // Only show the user's rank separately on the global page if they are logged in and outside the top list.
     if (currentUser && category === 'all') {
         const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
         if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
@@ -144,8 +140,7 @@ async function updateUserTestStatus(category) {
 
     const categoryPrefix = `${category}-test-`;
     
-    // Fetch ALL scores for the user, then filter client-side.
-    // This is more robust against missing Firestore composite indexes.
+    // This is the robust method you provided: Fetch all user scores, then filter client-side.
     const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
     const userSnapshot = await getDocs(q);
     
@@ -153,16 +148,16 @@ async function updateUserTestStatus(category) {
     userSnapshot.forEach(doc => {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
-        // Filter client-side for the current category.
+        // Filter for the current page's category.
         if (quizId && quizId.startsWith(categoryPrefix)) {
-            // Store the HIGHEST score for each quiz part.
+            // Store only the highest score for each quiz.
             if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
                 playedQuizzes.set(quizId, scoreData);
             }
         }
     });
 
-    // Update the DOM with the scores.
+    // Update the DOM.
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
@@ -193,11 +188,10 @@ async function updateUserTestStatus(category) {
     });
 }
 
-// Entry point: Wait for the DOM to be ready, then listen for auth changes.
+// Entry point: Listen for auth changes and re-initialize the page.
 document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
-        // Call the main function every time auth state changes to reload data.
         initializeTestHub();
     });
 });
