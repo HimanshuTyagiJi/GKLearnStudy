@@ -34,7 +34,7 @@ async function initializeTestHub() {
         let scoresQuery;
         const categoryPrefix = `${testCategory}-test-`;
 
-        // Create the correct Firestore query based on the page's category.
+        // Create the correct Firestore query based on the page's category for the leaderboard.
         if (testCategory === 'all') {
             // Global page: fetch all scores.
             scoresQuery = query(collection(db, "quizScores"));
@@ -143,24 +143,26 @@ async function updateUserTestStatus(category) {
     if (!currentUser || !testPartsContainer) return;
 
     const categoryPrefix = `${category}-test-`;
-    const q = query(
-        collection(db, "quizScores"),
-        where("userId", "==", currentUser.uid),
-        where("quizId", ">=", categoryPrefix),
-        where("quizId", "<", categoryPrefix + '\uf8ff')
-    );
-    const userSnapshot = await getDocs(q);
-    const playedQuizzes = new Map();
     
+    // Fetch ALL scores for the user, then filter client-side.
+    // This is more robust against missing Firestore composite indexes.
+    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
+    const userSnapshot = await getDocs(q);
+    
+    const playedQuizzes = new Map();
     userSnapshot.forEach(doc => {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
-        // If a quiz was played multiple times, keep only the most recent score's data
-        if (!playedQuizzes.has(quizId) || scoreData.timestamp.toMillis() > playedQuizzes.get(quizId).timestamp.toMillis()) {
-            playedQuizzes.set(quizId, scoreData);
+        // Filter client-side for the current category.
+        if (quizId && quizId.startsWith(categoryPrefix)) {
+            // Store the HIGHEST score for each quiz part.
+            if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
+                playedQuizzes.set(quizId, scoreData);
+            }
         }
     });
 
+    // Update the DOM with the scores.
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
         if (playedQuizzes.has(quizId)) {
