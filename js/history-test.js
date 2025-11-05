@@ -74,10 +74,11 @@ function renderLeaderboard(topScores) {
     topScores.forEach((scoreData, index) => {
         const isCurrentUser = currentUser && currentUser.uid === scoreData.userId;
         const displayName = isCurrentUser ? "You" : scoreData.userName;
+        const avatar = scoreData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
         leaderboardHTML += `
             <li class="${isCurrentUser ? 'current-user' : ''}">
                 <div class="rank">${index + 1}</div>
-                <img src="${scoreData.userPhotoURL}" alt="${scoreData.userName}" class="avatar">
+                <img src="${avatar}" alt="${scoreData.userName}" class="avatar">
                 <div class="name">${displayName}</div>
                 <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
             </li>
