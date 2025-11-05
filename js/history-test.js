@@ -14,7 +14,7 @@ const testPartsContainer = document.getElementById('test-parts-container');
 let currentUser = null;
 
 async function loadPageData() {
-    if (!leaderboardContainer || !testPartsContainer) return;
+    if (!leaderboardContainer) return;
 
     leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
@@ -89,7 +89,7 @@ function renderLeaderboard(topScores) {
 }
 
 async function updateUserTestStatus() {
-    if (!currentUser) return;
+    if (!currentUser || !testPartsContainer) return;
     
     const q = query(
         collection(db, "quizScores"), 
