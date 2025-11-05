@@ -9,7 +9,7 @@ const db = getFirestore(app);
 const leaderboardContainer = document.getElementById('leaderboard-container');
 const testPartsContainer = document.getElementById('test-parts-container');
 let currentUser = null;
-const CATEGORY_PREFIX = 'history-test-';
+const CATEGORY_PREFIX = 'hindi-test-';
 
 async function loadCategoryData() {
     if (!leaderboardContainer) return;
