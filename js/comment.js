@@ -363,7 +363,29 @@ function renderNode(node){
       }
   }
 
-  const ownerAvatarSVG = `<svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white">Learn Study</text></svg>`;
+  const ownerAvatarSVG = `<svg class="founder-avatar-svg" viewBox="0 0 300 300" width="40px"                          >
+                            <circle cx="150" cy="150" r="150" fill="white"></circle>
+                            <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                GK
+                                <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze"></animate>
+                                <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"></animateTransform>
+                                <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"></animateTransform>
+                            </text>
+                            <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle" style="transform-origin: center center;" opacity="0">
+                                Learn Study
+                                <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze"></animate>
+                                <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s" dur="1.2s" fill="freeze"></animateTransform>
+                            </text>
+                            <clipPath id="circleClipFounder"><circle cx="150" cy="150" r="150"></circle></clipPath>
+                            <g clip-path="url(#circleClipFounder)">
+                                <path fill="#ff9f80" fill-opacity="0.8">
+                                    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z; M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z; M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z"></animate>
+                                </path>
+                                <path fill="#6a4cff" fill-opacity="0.5">
+                                    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z; M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z; M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z"></animate>
+                                </path>
+                            </g>
+                        </svg>`;
   const authorAvatar = isCommentOwner ? ownerAvatarSVG : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
   const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
