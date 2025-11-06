@@ -107,10 +107,6 @@ function setupPersistentAuthObserver() {
         currentUser = user;
         if (wasLoggedIn !== !!user) {
             updateUIAfterAuthChange();
-            // This now correctly triggers the global leaderboard load on auth change.
-            if (document.getElementById('leaderboard-container')) {
-                 loadLeaderboard(); 
-            }
         }
     });
 }
@@ -128,12 +124,6 @@ async function initializeGlobalComponents() {
     try {
         await awaitInitialAuthState();
         setupPersistentAuthObserver();
-        
-        // Load the GLOBAL leaderboard only if on a page with the leaderboard container.
-        if (document.getElementById('leaderboard-container')) {
-            loadLeaderboard();
-        }
-        
         updateUIAfterAuthChange();
 
     } catch (error) {
@@ -219,91 +209,6 @@ async function signInWithGoogle() {
 
 async function signOutUser() {
     await signOut(auth);
-}
-
-// ====== GLOBAL LEADERBOARD LOGIC (MOVED FROM test-page.js) ======
-async function loadLeaderboard() {
-    const leaderboardContainer = document.getElementById('leaderboard-container');
-    // Only proceed if this is the test.html page, not hindi-test.html
-    if (!leaderboardContainer || leaderboardContainer.closest('main').querySelector('h1')?.textContent.includes('Hindi')) return;
-
-    leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
-
-    try {
-        const querySnapshot = await getDocs(collection(db, "quizScores"));
-        
-        const userScores = new Map();
-        querySnapshot.forEach((doc) => {
-            const scoreData = doc.data();
-            if (!scoreData.userId || !scoreData.userName) return;
-
-            if (!userScores.has(scoreData.userId)) {
-                userScores.set(scoreData.userId, {
-                    totalScore: 0,
-                    totalPossible: 0,
-                    quizCount: 0,
-                    userName: scoreData.userName,
-                    userPhotoURL: scoreData.userPhotoURL,
-                    userId: scoreData.userId,
-                });
-            }
-            
-            const userData = userScores.get(scoreData.userId);
-            userData.totalScore += scoreData.score;
-            userData.totalPossible += scoreData.totalQuestions;
-            userData.quizCount += 1;
-        });
-
-        const leaderboardData = Array.from(userScores.values()).map(userData => {
-            const averagePercentage = userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0;
-            return { ...userData, averagePercentage };
-        });
-
-        leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
-        renderLeaderboard(leaderboardData);
-    } catch (error) {
-        console.error("Error loading leaderboard:", error);
-        leaderboardContainer.innerHTML = "<p>Leaderboard could not be loaded. Please try again later.</p>";
-    }
-}
-
-function renderLeaderboard(leaderboardData) {
-    const leaderboardContainer = document.getElementById('leaderboard-container');
-    if (!leaderboardContainer) return;
-    
-    const top50 = leaderboardData.slice(0, 50);
-
-    let leaderboardHTML = '<ol class="leaderboard">';
-    top50.forEach((user, index) => {
-        const isCurrentUser = currentUser && currentUser.uid === user.userId;
-        const displayName = isCurrentUser ? "You" : user.userName;
-        const avatar = user.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
-        leaderboardHTML += `
-            <li class="${isCurrentUser ? 'current-user' : ''}">
-                <div class="rank">${index + 1}</div>
-                <img src="${avatar}" alt="${user.userName}" class="avatar">
-                <div class="name">${displayName}</div>
-                <div class="score">${user.averagePercentage.toFixed(2)}%</div>
-            </li>
-        `;
-    });
-    leaderboardHTML += '</ol>';
-
-    let userRankHTML = '';
-    if (currentUser) {
-        const userRankIndex = leaderboardData.findIndex(user => user.userId === currentUser.uid);
-        if (userRankIndex !== -1 && userRankIndex >= 50) {
-            const userData = leaderboardData[userRankIndex];
-            const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
-            userRankHTML = `
-                <div class="user-rank-display">
-                    <h2>Your Overall Rank</h2>
-                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
-                </div>
-            `;
-        }
-    }
-    leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
 
 // ====== RATING SYSTEM LOGIC ======
@@ -458,39 +363,7 @@ function renderNode(node){
       }
   }
 
-  const ownerAvatarSVG = `
-  
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="40" height="40" aria-label="GK Learn Study">
-  <title>GK Learn Study</title>
-  <circle cx="150" cy="150" r="150" fill="white"/>
-  <defs><clipPath id="clip"><circle cx="150" cy="150" r="150"/></clipPath></defs>
-  <g clip-path="url(#clip)">
-    <path fill="#c0a4fb">
-      <animate attributeName="d" dur="8s" repeatCount="indefinite"
-        values="M0 230 Q75 210 150 230 T300 210 L300 300 L0 300Z;
-                M0 240 Q75 260 150 240 T300 250 L300 300 L0 300Z;
-                M0 230 Q75 210 150 230 T300 210 L300 300 L0 300Z"/>
-    </path>
-    <path fill="#641ef9" fill-opacity="0.7">
-      <animate attributeName="d" dur="7s" repeatCount="indefinite"
-        values="M0 220 Q75 245 150 220 T300 235 L300 300 L0 300Z;
-                M0 250 Q75 220 150 250 T300 220 L300 300 L0 300Z;
-                M0 220 Q75 245 150 220 T300 235 L300 300 L0 300Z"/>
-    </path>
-  </g>
-  <text x="50%" y="35%" text-anchor="middle" font-size="90" font-weight="700" fill="#e53935" opacity="0" font-family="Arial">
-    GK
-    <animate attributeName="opacity" from="0" to="1" begin="0.3s" dur="1.2s" fill="freeze"/>
-    <animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.3s" dur="1.2s" fill="freeze"/>
-    <animateTransform attributeName="transform" type="scale" from="0.55" to="1" begin="0.3s" dur="1.2s" fill="freeze"/>
-  </text>
-  <text x="50%" y="65%" text-anchor="middle" font-size="38" fill="#6a1b9a" opacity="0" font-family="Arial">
-    Learn Study
-    <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"/>
-    <animateTransform attributeName="transform" type="scale" from="0.75" to="1" begin="0.8s" dur="1.2s" fill="freeze"/>
-  </text>
-  <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"/>
-</svg>  `;
+  const ownerAvatarSVG = `<svg class="comment-avatar owner-avatar" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" fill="url(#avatar-grad)"/><text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="12" font-weight="bold" fill="white">GK</text><text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="white">Learn Study</text></svg>`;
   const authorAvatar = isCommentOwner ? ownerAvatarSVG : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
   const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
