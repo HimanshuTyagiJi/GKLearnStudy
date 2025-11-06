@@ -363,7 +363,7 @@ function renderNode(node){
       }
   }
 
-  const ownerAvatarSVG = `<svg class="founder-avatar-svg" viewBox="0 0 300 300" width="40px"                          >
+  const ownerAvatarSVG = `<svg  viewBox="0 0 300 300" width="40px"                          >
                             <circle cx="150" cy="150" r="150" fill="white"></circle>
                             <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
                                 GK
