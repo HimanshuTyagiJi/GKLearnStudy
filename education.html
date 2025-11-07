@@ -305,10 +305,32 @@
                 
             <!-- Dynamic Content Area -->
             <div id="education-hub-container">
-                <div class="spinner-container">
-                    <div class="spinner"></div>
-                    <p>Loading All Subjects...</p>
-                </div>
+                <!-- Skeleton Loader to prevent CLS -->
+                <section class="category-section skeleton">
+                    <div class="skeleton-line title"></div>
+                    <div class="skeleton-line text"></div>
+                    <div class="category-card-grid">
+                        <div class="learning-path-card skeleton-card">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
+                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
+                        </div>
+                        <div class="learning-path-card skeleton-card">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-section skeleton">
+                    <div class="skeleton-line title"></div>
+                    <div class="skeleton-line text"></div>
+                    <div class="category-card-grid">
+                        <div class="learning-path-card skeleton-card">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <!-- Existing Content Sections -->
