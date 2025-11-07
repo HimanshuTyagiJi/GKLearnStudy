@@ -1,8 +1,3 @@
-// --- Firebase SDK Imports ---
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, addDoc, collection, deleteDoc, query, orderBy, serverTimestamp, doc, runTransaction, onSnapshot, getDoc, setDoc, persistentLocalCache, initializeFirestore, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
 // --- Configuration & State ---
 const firebaseConfig = {
     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
@@ -14,6 +9,7 @@ const firebaseConfig = {
 };
 const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; 
 
+// --- Global State ---
 let app, auth, db;
 let currentUser = null;
 let allComments = [];
@@ -22,24 +18,9 @@ let currentRatingSummary = null;
 let activeReplyForm = null;
 let unsubscribeComments = null;
 let unsubscribeRating = null;
-let isCoreInitialized = false;
+let isSystemInitialized = false;
 let isRatingSubmissionPending = false;
-
-
-// --- IMMEDIATE FIREBASE INITIALIZATION ---
-// This block runs as soon as the script is loaded, before DOMContentLoaded.
-try {
-    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    try {
-        db = initializeFirestore(app, { localCache: persistentLocalCache({}) });
-    } catch (e) {
-        console.warn("Firestore persistence failed. Using in-memory.", e);
-        db = getFirestore(app);
-    }
-} catch (error) {
-    console.error("Fatal: Firebase initialization failed.", error);
-}
+let firebaseModules = {}; // To store dynamically imported modules
 
 // --- DOM Element Selection ---
 const commentsWrapper = document.getElementById('comments-main-container');
@@ -89,66 +70,82 @@ function showErrorUI(targetElement, message, retryCallback) {
     });
 }
 
+// ====== ASYNCHRONOUS INITIALIZATION LOGIC ======
 
-// ====== UNIFIED INITIALIZATION LOGIC ======
-function awaitInitialAuthState() {
-    return new Promise((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            unsubscribe();
-            resolve();
-        });
-    });
-}
-
-function setupPersistentAuthObserver() {
-    onAuthStateChanged(auth, (user) => {
-        const wasLoggedIn = !!currentUser;
-        currentUser = user;
-        if (wasLoggedIn !== !!user) {
-            updateUIAfterAuthChange();
-        }
-    });
-}
-
-// This function initializes components that depend on auth state or DOM.
-async function initializeGlobalComponents() {
-    if (isCoreInitialized) return;
-    isCoreInitialized = true;
-
-    if (!auth) {
-        console.error("Authentication service failed to initialize. Cannot proceed with global components.");
-        return;
-    }
+/**
+ * Dynamically imports Firebase modules and initializes the app.
+ * This function is designed to run only once.
+ */
+async function initializeFirebaseOnce() {
+    if (app) return; // Already initialized
 
     try {
-        await awaitInitialAuthState();
-        setupPersistentAuthObserver();
-        updateUIAfterAuthChange();
+        const [appModule, authModule, firestoreModule] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"),
+            import("https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js")
+        ]);
 
+        firebaseModules = { ...appModule, ...authModule, ...firestoreModule };
+        
+        app = firebaseModules.getApps().length ? firebaseModules.getApp() : firebaseModules.initializeApp(firebaseConfig);
+        auth = firebaseModules.getAuth(app);
+        
+        try {
+            db = firebaseModules.initializeFirestore(app, { localCache: firebaseModules.persistentLocalCache({}) });
+        } catch (e) {
+            console.warn("Firestore persistence failed. Using in-memory.", e);
+            db = firebaseModules.getFirestore(app);
+        }
     } catch (error) {
-        console.error("Failed to initialize global components:", error);
+        console.error("Fatal: Firebase initialization failed.", error);
+        const container = document.getElementById('comments-and-ratings-container');
+        if (container) {
+            container.innerHTML = `<p class="muted error">Could not connect to the comment service. Please refresh the page.</p>`;
+        }
+        throw error; // Stop further execution if Firebase fails
     }
 }
 
-// This function lazy-loads the heavy comment/rating parts.
-async function initializeCommentComponents() {
+/**
+ * Main initialization function for the entire comment and rating system.
+ * Triggered by the IntersectionObserver.
+ */
+async function initializeSystem() {
+    if (isSystemInitialized) return;
+    isSystemInitialized = true;
+
     try {
-        if (!isCoreInitialized) {
-            await initializeGlobalComponents();
-        }
+        await initializeFirebaseOnce();
+        
+        // This runs once auth is confirmed available, even if user is null.
+        const authUser = await new Promise(resolve => firebaseModules.onAuthStateChanged(auth, user => resolve(user)));
+        currentUser = authUser;
+        updateUIAfterAuthChange(); // Initial UI update based on login state
+        
+        // Now that Firebase is ready, set up everything else.
+        setupPersistentAuthObserver();
         loadComments();
         loadRatings();
         setupAllEventListeners();
         handleCommentDeepLink();
+
     } catch (error) {
-        console.error("Failed to initialize comments/ratings:", error);
-        if (commentsWrapper) showErrorUI(commentsWrapper, 'Could not connect.', initializeCommentComponents);
-        if (ratingWidgetWrapper) showErrorUI(ratingWidgetWrapper, 'Could not connect.', initializeCommentComponents);
+        console.error("Failed to initialize comment system:", error);
     }
 }
 
 // ====== Auth Management & UI Updates ======
+
+function setupPersistentAuthObserver() {
+    firebaseModules.onAuthStateChanged(auth, (user) => {
+        const wasLoggedIn = !!currentUser;
+        currentUser = user;
+        if (wasLoggedIn !== !!user) { // Only update UI if state *actually* changes
+            updateUIAfterAuthChange();
+        }
+    });
+}
 
 function updateUIAfterAuthChange() {
     const dashboardLink = document.getElementById('dashboard-link');
@@ -192,8 +189,8 @@ async function signInWithGoogle() {
     loginBtn.disabled = true;
     loginBtn.innerHTML = `<span class="spinner-small"></span> Connecting...`;
     try {
-        const provider = new GoogleAuthProvider();
-        await signInWithPopup(auth, provider);
+        const provider = new firebaseModules.GoogleAuthProvider();
+        await firebaseModules.signInWithPopup(auth, provider);
     } catch (error) {
         console.error("Google Sign-In Error:", error);
         if (error.code !== 'auth/popup-closed-by-user') {
@@ -208,14 +205,14 @@ async function signInWithGoogle() {
 }
 
 async function signOutUser() {
-    await signOut(auth);
+    await firebaseModules.signOut(auth);
 }
 
 // ====== RATING SYSTEM LOGIC ======
 async function fetchUserRatingAndUpdateUI(summaryData) {
     if (currentUser) {
-        const userRatingDocRef = doc(db, ...ratingsPath, currentUser.uid);
-        const userDoc = await getDoc(userRatingDocRef);
+        const userRatingDocRef = firebaseModules.doc(db, ...ratingsPath, currentUser.uid);
+        const userDoc = await firebaseModules.getDoc(userRatingDocRef);
         userRating = userDoc.exists() ? userDoc.data().rating : 0;
     } else {
         userRating = 0;
@@ -264,9 +261,9 @@ function updateRatingUI(summaryData, currentUserRating) {
 function loadRatings() {
     if (unsubscribeRating) unsubscribeRating();
     if (!ratingWidgetWrapper) return;
-    const summaryDocRef = doc(db, ...ratingsPath, '_summary');
+    const summaryDocRef = firebaseModules.doc(db, ...ratingsPath, '_summary');
     
-    unsubscribeRating = onSnapshot(summaryDocRef, (doc) => {
+    unsubscribeRating = firebaseModules.onSnapshot(summaryDocRef, (doc) => {
         const summaryData = doc.exists() ? doc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
         currentRatingSummary = summaryData;
         fetchUserRatingAndUpdateUI(summaryData);
@@ -297,9 +294,9 @@ async function submitRating(newRating) {
     updateRatingUI(optimisticSummary, newRating);
 
     try {
-        await runTransaction(db, async (transaction) => {
-            const summaryRef = doc(db, ...ratingsPath, '_summary');
-            const userRatingRef = doc(db, ...ratingsPath, currentUser.uid);
+        await firebaseModules.runTransaction(db, async (transaction) => {
+            const summaryRef = firebaseModules.doc(db, ...ratingsPath, '_summary');
+            const userRatingRef = firebaseModules.doc(db, ...ratingsPath, currentUser.uid);
             const summaryDoc = await transaction.get(summaryRef);
             const serverSummary = summaryDoc.exists() ? summaryDoc.data() : { totalCount: 0, totalSum: 0, breakdown: {} };
             
@@ -316,7 +313,7 @@ async function submitRating(newRating) {
             newSum += newRating;
             newCount += 1;
 
-            transaction.set(userRatingRef, { rating: newRating, timestamp: serverTimestamp() });
+            transaction.set(userRatingRef, { rating: newRating, timestamp: firebaseModules.serverTimestamp() });
             transaction.set(summaryRef, { totalSum: newSum, totalCount: newCount, breakdown: breakdown });
         });
     } catch (error) {
@@ -363,29 +360,7 @@ function renderNode(node){
       }
   }
 
-  const ownerAvatarSVG = `<svg  viewBox="0 0 300 300" width="40px"                          >
-                            <circle cx="150" cy="150" r="150" fill="white"></circle>
-                            <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                                GK
-                                <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze"></animate>
-                                <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"></animateTransform>
-                                <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s" dur="1.2s" fill="freeze" additive="sum"></animateTransform>
-                            </text>
-                            <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle" style="transform-origin: center center;" opacity="0">
-                                Learn Study
-                                <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze"></animate>
-                                <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s" dur="1.2s" fill="freeze"></animateTransform>
-                            </text>
-                            <clipPath id="circleClipFounder"><circle cx="150" cy="150" r="150"></circle></clipPath>
-                            <g clip-path="url(#circleClipFounder)">
-                                <path fill="#ff9f80" fill-opacity="0.8">
-                                    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z; M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z; M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z"></animate>
-                                </path>
-                                <path fill="#6a4cff" fill-opacity="0.5">
-                                    <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z; M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z; M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z"></animate>
-                                </path>
-                            </g>
-                        </svg>`;
+  const ownerAvatarSVG = `<svg viewBox="0 0 300 300" width="40px"><circle cx="150" cy="150" r="150" fill="white"></circle><text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle">Learn Study</text></svg>`;
   const authorAvatar = isCommentOwner ? ownerAvatarSVG : (node.photoURL ? `<img src="${escapeHTML(node.photoURL)}" alt="${escapeHTML(authorName)}" class="comment-avatar" loading="lazy">` : `<div class="comment-avatar default-avatar">${escapeHTML(node.name?.charAt(0) || 'A')}</div>`);
   const headerHTML = `<div class="comment-header"><div class="comment-author-info">${authorAvatar}<div class="comment-author">${authorName}${verificationBadge}</div></div><div class="comment-date">${fmtDate(safeToDate(node.timestamp))}</div></div>`;
   const hasLiked = currentUser && node.likedBy?.includes(currentUser.uid);
@@ -413,8 +388,8 @@ function renderFlatList(nodes, container){
 function loadComments(){
     if (unsubscribeComments) unsubscribeComments();
     if (!commentsWrapper) return;
-    const q = query(collection(db, ...commentsPath), orderBy('timestamp','desc'));
-    unsubscribeComments = onSnapshot(q, (snapshot) => {
+    const q = firebaseModules.query(firebaseModules.collection(db, ...commentsPath), firebaseModules.orderBy('timestamp','desc'));
+    unsubscribeComments = firebaseModules.onSnapshot(q, (snapshot) => {
         const newComments = [];
         snapshot.forEach(d => newComments.push({id: d.id, ...d.data()}));
         const optimisticComments = allComments.filter(c => c.isOptimistic && !newComments.some(nc => nc.uid === c.uid && nc.comment === c.comment));
@@ -456,10 +431,10 @@ function openReplyForm(commentId, authorName, targetSlot) {
 async function handleVote(commentId, voteType) {
     if (!currentUser) { signInWithGoogle(); return; }
     
-    const commentRef = doc(db, ...commentsPath, commentId);
+    const commentRef = firebaseModules.doc(db, ...commentsPath, commentId);
 
     try {
-        await runTransaction(db, async (transaction) => {
+        await firebaseModules.runTransaction(db, async (transaction) => {
             const commentDoc = await transaction.get(commentRef);
             if (!commentDoc.exists()) throw "Document does not exist!";
             
@@ -496,7 +471,7 @@ async function deleteWithDescendants(rootId){
     renderFlatList(flattenTree(buildTree(allComments)), commentsList);
 
     try {
-        const deletePromises = [...toDeleteIds].map(id => deleteDoc(doc(db, ...commentsPath, id)));
+        const deletePromises = [...toDeleteIds].map(id => firebaseModules.deleteDoc(firebaseModules.doc(db, ...commentsPath, id)));
         await Promise.all(deletePromises);
     } catch (error) {
         console.error("Failed to delete comments:", error);
@@ -523,12 +498,12 @@ async function postComment(form) {
     renderFlatList(flattenTree(buildTree(allComments)), commentsList);
 
     try {
-        await addDoc(collection(db, ...commentsPath), { 
+        await firebaseModules.addDoc(firebaseModules.collection(db, ...commentsPath), { 
             name: currentUser.displayName, 
             uid: currentUser.uid, 
             photoURL: currentUser.photoURL, 
             comment: commentText, 
-            timestamp: serverTimestamp(), 
+            timestamp: firebaseModules.serverTimestamp(), 
             parentId, 
             likes: 0, dislikes: 0, likedBy: [], dislikedBy: [] 
         });
@@ -549,7 +524,6 @@ async function postComment(form) {
         submitButton.textContent = 'Submit';
     }
 }
-
 
 // ====== Event Listeners Setup ======
 function setupAllEventListeners() {
@@ -641,19 +615,20 @@ function handleCommentDeepLink() {
     }, 200);
 }
 
-// ====== Entry Point ======
+// ====== ENTRY POINT ======
 document.addEventListener('DOMContentLoaded', () => {
-    initializeGlobalComponents();
-    
     const commentsContainer = document.getElementById('comments-and-ratings-container');
-    if (commentsContainer) {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                initializeCommentComponents();
-                observer.disconnect();
-            }
-        }, { rootMargin: "200px" });
-        
-        observer.observe(commentsContainer);
-    }
+    if (!commentsContainer) return;
+
+    // Use IntersectionObserver to lazy-load the entire system.
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            // When the user scrolls near the comment section, initialize everything.
+            initializeSystem();
+            // We only need to do this once, so disconnect the observer.
+            observer.disconnect();
+        }
+    }, { rootMargin: "250px" }); // Start loading when the container is 250px away.
+    
+    observer.observe(commentsContainer);
 });
