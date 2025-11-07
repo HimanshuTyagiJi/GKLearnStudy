@@ -1,6 +1,4 @@
-
-
-const CACHE_NAME = 'gklearnstudy-cache-v3';
+const CACHE_NAME = 'gklearnstudy-cache-v6';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -8,6 +6,7 @@ const URLS_TO_CACHE = [
   '/css/notification.css',
   '/css/profile.css',
   '/css/kaise-karen.css',
+  '/css/main-theme.css',
   '/js/theme.js',
   '/js/search-data.js',
   '/js/comment.js',
