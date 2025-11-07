@@ -1,22 +1,41 @@
 
-const CACHE_NAME = 'gklearnstudy-cache-v1';
+
+const CACHE_NAME = 'gklearnstudy-cache-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
   '/css/theme.css',
   '/css/notification.css',
+  '/css/main-theme.css',
+  '/css/profile.css',
+  '/css/kaise-karen.css',
   '/js/theme.js',
   '/js/search-data.js',
   '/js/comment.js',
   '/js/notification.js',
+  '/js/profile.js',
+  '/js/categories.js',
+  '/js/comments-dashboard.js',
+  '/js/test-page.js',
+  '/js/test.js',
+  '/js/hindi-test.js',
   '/js/search-data.json',
   '/favicon.ico',
   '/favicon.svg',
   '/profile.html',
-  '/css/profile.css',
-  '/js/profile.js',
   '/categories.html',
-  '/js/categories.js'
+  '/kaise-karen.html',
+  '/excel-me-vlookup-kaise-kare.html',
+  '/kaise-karen/how-to-write-formal-letter.html',
+  '/kaise-karen/interview-preparation-guide.html',
+  '/kaise-karen/online-safety-tips.html',
+  '/comments.html',
+  '/svg.html',
+  '/education.html',
+  '/gk-quiz.html',
+  '/test.html',
+  '/hindi-test.html',
+  '/hindi-test/part-01.html'
 ];
 
 self.addEventListener('install', event => {
