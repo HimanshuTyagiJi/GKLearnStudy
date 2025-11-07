@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -49,19 +48,13 @@
         <meta name="msapplication-TileColor" content="#FFFFFF" />
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
+        <link rel="stylesheet" href="css/theme.css" />
+<link rel="stylesheet" href="css/education.css" />
+         <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
+     
+       
+ 
         
-        <!-- Non-render-blocking CSS to fix critical request chain -->
-        <link rel="preload" href="css/theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="css/theme.css"></noscript>
-        
-        <link rel="preload" href="css/education.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="css/education.css"></noscript>
-        
-        <link rel="preload" href="https://gklearnstudy.in/css/notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css"></noscript>
-
-        <!-- Preload critical data to shorten the chain -->
-        <link rel="preload" href="js/search-data.json" as="fetch" crossorigin>
     </head>
     <body>
        <svg style="display:none;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -305,32 +298,10 @@
                 
             <!-- Dynamic Content Area -->
             <div id="education-hub-container">
-                <!-- Skeleton Loader to prevent CLS -->
-                <section class="category-section skeleton">
-                    <div class="skeleton-line title"></div>
-                    <div class="skeleton-line text"></div>
-                    <div class="category-card-grid">
-                        <div class="learning-path-card skeleton-card">
-                            <div class="skeleton-line header"></div>
-                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
-                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
-                        </div>
-                        <div class="learning-path-card skeleton-card">
-                            <div class="skeleton-line header"></div>
-                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
-                        </div>
-                    </div>
-                </section>
-                <section class="category-section skeleton">
-                    <div class="skeleton-line title"></div>
-                    <div class="skeleton-line text"></div>
-                    <div class="category-card-grid">
-                        <div class="learning-path-card skeleton-card">
-                            <div class="skeleton-line header"></div>
-                            <div class="skeleton-line"></div><div class="skeleton-line short"></div>
-                        </div>
-                    </div>
-                </section>
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <p>Loading All Subjects...</p>
+                </div>
             </div>
 
             <!-- Existing Content Sections -->
