@@ -34,6 +34,9 @@
         <meta name="application-name" content="GK Learn Study" />
         <meta name="msapplication-TileColor" content="#FFFFFF" />
         <meta name="msapplication-TileImage" content="https://gklearnstudy.in/favicon.ico" />
+        
+        <!-- LCP Image Preload for performance optimization -->
+        <link rel="preload" fetchpriority="high" as="image" href="https://gklearnstudy.in/images/all-formula.jpg" imagesrcset="https://gklearnstudy.in/images/all-formula-400.jpg 400w, https://gklearnstudy.in/images/all-formula.jpg 1200w" imagesizes="(max-width:600px) 100vw, 1200px">
 
         <link rel="canonical" href="https://gklearnstudy.in/all-formulas" />
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -158,13 +161,12 @@
              <img
   src="https://gklearnstudy.in/images/all-formula.jpg"
   srcset="https://gklearnstudy.in/images/all-formula-400.jpg 400w,
-          
           https://gklearnstudy.in/images/all-formula.jpg 1200w"
   sizes="(max-width:600px) 100vw, 1200px"
   alt="A collection of physics, chemistry, and math formulas"
   class="formula-hero-image"
   width="1200" height="450"
-  loading="lazy"
+  fetchpriority="high"
   decoding="async"
   style="display:block; width:100%; height:auto; object-fit:cover;">
 
