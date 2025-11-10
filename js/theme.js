@@ -1,5 +1,17 @@
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
+    // --- AdSense Script Injection ---
+    function injectAdSenseScript() {
+        const adSenseScript = document.createElement('script');
+        adSenseScript.async = true;
+        adSenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503';
+        adSenseScript.crossOrigin = 'anonymous';
+        document.head.appendChild(adSenseScript);
+    }
+    injectAdSenseScript();
+
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
         let timeoutId;
@@ -32,31 +44,25 @@ document.addEventListener("DOMContentLoaded", () => {
     function initMenuItems() {
         if (!menuInner) return;
         const menuItems = [
-            { href: "https://gklearnstudy.in", text: "Home" },
-            { href: "https://gklearnstudy.in/education", text: "Education" },
-            { href: "https://gklearnstudy.in/all-formulas", text: "All Formula" },
-            { href: "https://gklearnstudy.in/computer", text: "Computer" },
-            { href: "https://gklearnstudy.in/kaise-karen", text: "How to" },
-            { href: "https://gklearnstudy.in/gk-quiz", text: "GK Quiz" },
-            { href: "https://gklearnstudy.in/test", text: "Test" },
+            { href: "https://gklearnstudy.in/index.html", text: "Home" },
+            { href: "https://gklearnstudy.in/education.html", text: "Education" },
+            { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
+            { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
+            { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
+            { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
+            { href: "https://gklearnstudy.in/test.html", text: "Test" },
         ];
         menuInner.innerHTML = menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
         
-        const currentUrl = window.location.href;
+        const currentPath = window.location.pathname.split('/').pop();
         const links = menuInner.querySelectorAll('a');
-        let bestMatch = null;
-
+        
         links.forEach(link => {
-            if (currentUrl.startsWith(link.href)) {
-                if (!bestMatch || link.href.length > bestMatch.href.length) {
-                    bestMatch = link;
-                }
+            const linkPath = link.getAttribute('href').split('/').pop();
+            if (currentPath === linkPath || (currentPath === '' && linkPath === 'index.html')) {
+                link.classList.add('active');
             }
         });
-
-        if (bestMatch) {
-            bestMatch.classList.add('active');
-        }
     }
 
     function initFooterContent() {
