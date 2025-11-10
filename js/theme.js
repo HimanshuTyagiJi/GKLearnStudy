@@ -1,7 +1,5 @@
 
-
-
-
+document.addEventListener("DOMContentLoaded", () => {
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
         let timeoutId;
