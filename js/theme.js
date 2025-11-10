@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
 
- document.addEventListener("DOMContentLoaded", function() {
+ 
 
    document.addEventListener("DOMContentLoaded", function() {
   // --- 📢 Manual AdSense Ads (No AdBlock logic) ---
