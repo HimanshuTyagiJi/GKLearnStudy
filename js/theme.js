@@ -274,24 +274,50 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
 
-// --- ADS LOGIC ---
-document.addEventListener("DOMContentLoaded", function() {
-  const adContainer = document.getElementById("top-ad");
-  
-  if (adContainer) {
-    adContainer.innerHTML = `
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-7067722696020503"
-           data-ad-slot="9133141216"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    `;
-    
-    try {
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.warn("AdSense load failed:", e);
-    }
-  }
-});
+ document.addEventListener("DOMContentLoaded", function() {
+
+    // --- 🔒 AdBlock Detection ---
+    const adTest = document.createElement('div');
+    adTest.className = 'adsbygoogle';
+    adTest.style.display = 'none';
+    document.body.appendChild(adTest);
+
+    setTimeout(() => {
+      if (adTest.offsetHeight === 0) {
+        document.body.innerHTML = `
+          <div style="text-align:center;margin-top:100px;">
+            <h2>🚫 Please disable AdBlock</h2>
+            <p>Ads help keep this website free. Kindly disable your AdBlock and refresh the page.</p>
+          </div>
+        `;
+        return;
+      }
+    }, 800);
+
+    // --- 📢 Manual Ads Setup ---
+    const manualAds = [
+      { id: "top-ad", slot: "9133141216" },   // top banner
+      { id: "mid-ad", slot: "9133141225" },   // middle content ad
+      { id: "bottom-ad", slot: "9133141234" } // footer ad
+    ];
+
+    manualAds.forEach(ad => {
+      const container = document.getElementById(ad.id);
+      if (container) {
+        container.innerHTML = `
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-7067722696020503"
+               data-ad-slot="${ad.slot}"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        `;
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.warn("AdSense load failed:", e);
+        }
+      }
+    });
+
+  });
