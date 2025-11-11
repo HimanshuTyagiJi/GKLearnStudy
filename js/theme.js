@@ -280,8 +280,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // --- 📢 Manual AdSense Ads (No AdBlock logic) ---
   const manualAds = [
     { id: "top-ad", slot: "9133141216" },
-    { id: "mid-ad", slot: "9133141225" },
-    { id: "bottom-ad", slot: "9133141234" }
+    { id: "medium-ad", slot: "7002636040" },
+    { id: "bottom-ad", slot: "8118909613" }
   ];
 
   manualAds.forEach(ad => {
