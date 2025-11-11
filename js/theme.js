@@ -273,3 +273,31 @@ document.addEventListener("DOMContentLoaded", function() {
     // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
     window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
 });
+
+// Google AdSense Ad Blocking Recovery Full Script
+(function() {
+  // Step 1: Dynamically load the Google funding choices script
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = "https://fundingchoicesmessages.google.com/i/pub-7067722696020503?ers=1";
+  script.crossOrigin = "anonymous";
+  document.head.appendChild(script);
+
+  // Step 2: Signal presence (official Google function)
+  function signalGooglefcPresent() {
+    if (!window.frames['googlefcPresent']) {
+      if (document.body) {
+        const iframe = document.createElement('iframe');
+        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+        iframe.style.display = 'none';
+        iframe.name = 'googlefcPresent';
+        document.body.appendChild(iframe);
+      } else {
+        setTimeout(signalGooglefcPresent, 0);
+      }
+    }
+  }
+
+  // Step 3: Call it after short delay (to ensure body loaded)
+  window.addEventListener('load', signalGooglefcPresent);
+})();
