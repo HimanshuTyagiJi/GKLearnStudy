@@ -8,99 +8,9 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
     <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
-    <style>
-       /* INLINE CSS as requested */
-        
-        /* UPDATED: Intro section with logo */
-        .intro-section {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            text-align: left;
-            padding: 3rem;
-            background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 4%, var(--card-bg)), var(--card-bg));
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-color);
-        }
-        .intro-logo {
-            flex-shrink: 0;
-            width: 150px;
-        }
-        .intro-logo svg {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 4px 6px var(--shadow-color));
-        }
-        .intro-text-content {
-            flex-grow: 1;
-        }
-        .intro-section h1 {
-            text-align: left;
-            font-size: 2.8rem;
-            color: var(--text-primary);
-            margin: 0 0 0.5rem 0;
-        }
-        .intro-section .intro-content {
-            margin: 0;
-            max-width: none;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        @media (max-width: 768px) {
-            .intro-section {
-                flex-direction: column;
-                text-align: center;
-                padding: 2rem 1.5rem;
-            }
-            .intro-section h1 {
-                text-align: center;
-            }
-            .intro-logo {
-                width: 100px;
-                margin-bottom: 1rem;
-            }
-        }
-
-
-        .featured-guide-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .featured-guide-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px var(--shadow-color); }
-        .featured-guide-card .thumbnail { position: relative; padding-top: 56.25%; background-color: var(--input-bg); }
-        .featured-guide-card .thumbnail img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; padding: 1rem; box-sizing: border-box; }
-        .featured-guide-card .thumbnail .category-tag { position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.6); color: white; padding: .3rem .8rem; border-radius: 15px; font-size: .8rem; }
-        .featured-guide-card .card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .featured-guide-card .card-body h3 { font-size: 1.4rem; margin: 0 0 0.5rem 0; color: var(--text-primary); }
-        .featured-guide-card .card-body p { color: var(--text-secondary); line-height: 1.6; margin: 0 0 1rem 0; flex-grow: 1; }
-        .featured-guide-card .card-body .read-more { color: var(--accent-color); font-weight: 600; text-decoration: none; margin-top: auto; }
-        .featured-guide-card .card-body .read-more:hover { text-decoration: underline; }
-
-      
-        
-        .tool-card { text-align: center; }
-        .tool-card .icon svg { width: 48px; height: 48px; color: var(--accent-color); }
-        .tool-card h4 { font-size: 1.3rem; margin: 1rem 0 0.5rem 0; }
-        .tool-card p { color: var(--text-secondary); margin: 0 0 1rem 0; font-size: 0.95rem; }
-        .tool-card a { color: var(--accent-color); font-weight: 600; text-decoration: none; }
-        .tool-card a:hover { text-decoration: underline; }
- .spotlight-section { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
-        .spotlight-card { display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--card-shadow); }
-        .spotlight-card .spotlight-tag { background-color: var(--accent-color); color: white; padding: .3rem 1rem; border-radius: 20px; font-size: .9rem; font-weight: 500; margin-bottom: 1rem; }
-        .spotlight-card h3 { font-size: 2rem; margin: 0 0 1rem 0; }
-        .spotlight-card p { color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem; }
-        .spotlight-card .cta-btn { display: inline-block; background-color: var(--accent-color); color: white; text-decoration: none; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease; }
-        .spotlight-card .cta-btn:hover { background-color: color-mix(in srgb, var(--accent-color) 80%, black); transform: scale(1.05); }
-
-       
-        .author-section { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; max-width: 800px; margin: 0 auto; }
-        .author-avatar-svg { width: 120px; height: 120px; flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 5px var(--card-bg), 0 0 0 7px var(--accent-color); }
-        .author-bio h3 { font-size: 1.8rem; margin-top: 0; }
-        .author-bio p { line-height: 1.8; color: var(--text-secondary); }
-        @media (min-width: 768px) { .author-section { flex-direction: row; text-align: left; } }
-        
-        
-        
-    </style>
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
+ 
+   
 </head>
  <body>
        <svg style="display:none;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -232,7 +142,47 @@
                 </div>
             </div>
         </section>
-
+  <div class="byline">
+                        <div class="author-avatar">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 300 300" role="img" aria-label="GK Learn Study logo">
+                            <title>GK Learn Study</title>
+                            <circle cx="150" cy="150" r="150" fill="white"></circle>
+                            <defs><clipPath id="circle-clip-main"><circle cx="150" cy="150" r="150"></circle></clipPath></defs>
+                            <g clip-path="url(#circle-clip-main)">
+                                <path fill="#c0a4fb" fill-opacity="1"><animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z; M0 240 Q 75 260, 150 240 T 300 250 L 300 300 L 0 300 Z; M0 230 Q 75 210, 150 230 T 300 210 L 300 300 L 0 300 Z"></animate></path>
+                                <path fill="#641ef9" fill-opacity="0.7"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z; M0 250 Q 75 220, 150 250 T 300 220 L 300 300 L 0 300 Z; M0 220 Q 75 245, 150 220 T 300 235 L 300 300 L 0 300 Z"></animate></path>
+                            </g>
+                            <text x="50%" y="35%" font-size="90" font-weight="700" fill="#e53935" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 90px;" opacity="0"> GK <animate attributeName="opacity" from="0" to="1" begin="0.35s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="rotate" from="-15 150 90" to="0 150 90" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform><animateTransform attributeName="transform" type="scale" from="0.55 0.55" to="1 1" begin="0.35s" dur="1.2s" fill="freeze" additive="sum"></animateTransform></text>
+                            <text x="50%" y="65%" font-size="38" fill="#6a1b9a" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" style="transform-origin: 150px 195px;" opacity="0"> Learn Study <animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="1.2s" fill="freeze"></animate><animateTransform attributeName="transform" type="scale" from="0.75 0.75" to="1 1" begin="0.8s" dur="1.2s" fill="freeze"></animateTransform></text>
+                            <circle cx="150" cy="150" r="145" fill="none" stroke="#f0e6ff" stroke-width="4" opacity="0.6"></circle>
+                        </svg>
+                        </div>
+                        <div class="author-details">
+                            <span class="author vcard">
+                                by
+                                <span class="name">
+                                    <a class="url fn n" href="#" rel="author" title="GK Learn Study">GK Learn Study</a>
+                                </span>
+                                <span class="author-status verified">
+                                    <a class="verified-author" title="Verified Author" href="#" aria-label="Verified Author">
+                                        <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"></path>
+                                        </svg>
+                                    </a>
+                                </span>
+                            </span>
+                            <span class="entry-modified-date"> | Updated on <time class="entry-date updated" datetime="2025-09-09T10:45:02+05:30">Oct 28, 2025</time> </span>
+                        </div>
+                    </div>
+                    <div class="share-button-wrapper">
+                        <button id="shareButton" class="share-button" title="Share this page">
+                            <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                
         <!-- 2. Featured Guides -->
         <section class="content-section">
             <h2 class="section-title">Featured Guides</h2>
@@ -272,7 +222,15 @@
                     </div>
                 </a>
             </div>
-        </section>
+        </section><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7067722696020503"
+     data-ad-slot="9133141216"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
         <!-- 3. The Complete How-To Library (MAIN POST GRID) -->
         <section class="content-section">
@@ -425,22 +383,7 @@
             </div>
         </section>
 
-        <!-- 14. Glossary -->
-        <section class="content-section glossary-section">
-            <h2 class="section-title">Glossary of Common Terms</h2>
-            <details>
-                <summary>Syntax</summary>
-                <div class="glossary-definition"><p>In programming and formulas, "syntax" refers to the set of rules that dictates the correct structure of expressions. For VLOOKUP, the syntax is <code>=VLOOKUP(value, table, column, match_type)</code>.</p></div>
-            </details>
-            <details>
-                <summary>Phishing</summary>
-                <div class="glossary-definition"><p>A type of online scam where criminals impersonate legitimate organizations via email, text, or other means to trick you into providing sensitive information.</p></div>
-            </details>
-             <details>
-                <summary>Two-Factor Authentication (2FA)</summary>
-                <div class="glossary-definition"><p>A security process where users provide two different authentication factors to verify themselves, adding a critical second layer of security to an account.</p></div>
-            </details>
-        </section>
+       
 
         <!-- 15. Expanded FAQ Section -->
         <section class="faq-section content-section">
@@ -494,7 +437,15 @@
             });
         });
     </script>
-
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7067722696020503"
+     data-ad-slot="7002636040"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
     
 <div id="comments-and-ratings-container">
                 <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
