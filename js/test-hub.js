@@ -1,7 +1,8 @@
 
+
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- Configuration ---
 const firebaseConfig = {
@@ -149,19 +150,20 @@ async function updateUserTestStatus(category) {
 
     const categoryPrefix = `${category}-test-`;
     
-    // This query fetches all scores for the current user.
-    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
+    // Fetch user scores, ordered by most recent first.
+    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid), orderBy("timestamp", "desc"));
     const userSnapshot = await getDocs(q);
     
-    const playedQuizzes = new Map();
+    const latestPlayedQuizzes = new Map();
     userSnapshot.forEach(doc => {
         const scoreData = doc.data();
         const quizId = scoreData.quizId;
         // Filter client-side for the current page's category.
         if (quizId && quizId.startsWith(categoryPrefix)) {
-            // Store only the highest score for each quiz to display.
-            if (!playedQuizzes.has(quizId) || scoreData.score > playedQuizzes.get(quizId).score) {
-                playedQuizzes.set(quizId, scoreData);
+            // Since the query is ordered by timestamp descending, the first one we find for a quizId is the latest.
+            if (!latestPlayedQuizzes.has(quizId)) {
+                // Store the entire score document data.
+                latestPlayedQuizzes.set(quizId, scoreData);
             }
         }
     });
@@ -169,28 +171,32 @@ async function updateUserTestStatus(category) {
     // Update the DOM for each test part.
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
-        if (playedQuizzes.has(quizId)) {
-            const scoreData = playedQuizzes.get(quizId);
+        if (latestPlayedQuizzes.has(quizId)) {
+            const scoreData = latestPlayedQuizzes.get(quizId);
             const originalLink = box.querySelector('a');
+            if (!originalLink) return; // Skip if the box is already updated
+
+            const originalHref = originalLink.href;
             const partName = originalLink.textContent;
 
             box.innerHTML = `
-                <div class="user-score-display"><h4>${partName}</h4><p><strong>Your Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p></div>
+                <div class="user-score-display"><h4>${partName}</h4><p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p></div>
                 <div class="button-group"><button class="btn retry-btn">Play Again</button><button class="btn review-btn">View Result</button></div>
             `;
             box.querySelector('.retry-btn').onclick = () => {
                 sessionStorage.removeItem(`review_${quizId}`);
-                sessionStorage.removeItem(`reviewData_${quizId}`);
-                window.location.href = originalLink.href;
+                sessionStorage.removeItem('reviewDataForNextPage');
+                window.location.href = originalHref;
             };
             box.querySelector('.review-btn').onclick = () => {
-                // Corrected logic: The actual review data is saved by the test page itself in sessionStorage.
-                // We just need to check if it exists and then set the flag to enter review mode.
-                if (sessionStorage.getItem(`reviewData_${quizId}`)) {
+                const scoreDataForReview = latestPlayedQuizzes.get(quizId);
+                // Check for the persisted review data in the Firestore document
+                if (scoreDataForReview && scoreDataForReview.questions && scoreDataForReview.userAnswers) {
+                    sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreDataForReview));
                     sessionStorage.setItem(`review_${quizId}`, 'true');
-                    window.location.href = originalLink.href;
+                    window.location.href = originalHref;
                 } else {
-                    alert('No review data found. Please play the test again to generate and save a review.');
+                    alert('No review data found for this attempt. Please play the test again to generate a review.');
                 }
             };
         }
