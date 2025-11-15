@@ -11,7 +11,7 @@
         <style>
             .container { max-width: 900px; }
             .box-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-            .box { background: linear-gradient(145deg, #641ef9, #9f94ff); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+            .box {linear-gradient(135deg, color-mix(in srgb, var(--accent-color) 8%, var(--card-bg)), var(--card-bg)); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 2rem; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; }
             html[data-theme=dark] .box { background: linear-gradient(145deg, #1e1a3b, #3c357d); }
             .box:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px var(--shadow-color); }
             .box a { text-decoration: none; color: white; font-size: 1.2rem; font-weight: 600; }
