@@ -1,8 +1,7 @@
 
-
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- Configuration ---
 const firebaseConfig = {
@@ -23,7 +22,6 @@ let currentUser = null;
 
 // The main function that orchestrates everything for the current page.
 async function initializeTestHub() {
-    // CRITICAL: Read category from the body tag. This is the reliable source of truth.
     const testCategory = document.body.dataset.testCategory;
 
     if (!testCategory) {
@@ -43,12 +41,9 @@ async function initializeTestHub() {
         let scoresQuery;
         const categoryPrefix = `${testCategory}-test-`;
 
-        // Create the correct Firestore query based on the page's category.
         if (testCategory === 'all') {
-            // Global page ('test.html'): fetch all scores.
             scoresQuery = query(collection(db, "quizScores"));
         } else {
-            // Category page (e.g., 'hindi-test.html'): fetch only scores for that specific category.
             scoresQuery = query(
                 collection(db, "quizScores"),
                 where("quizId", ">=", categoryPrefix),
@@ -57,33 +52,29 @@ async function initializeTestHub() {
         }
 
         const querySnapshot = await getDocs(scoresQuery);
-        const userAggregates = new Map();
-
+        
+        // Find the single LATEST score for each user within the category.
+        const userLatestScores = new Map();
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
-            if (!scoreData.userId || !scoreData.userName) return;
+            if (!scoreData.userId || !scoreData.userName || !scoreData.timestamp) return;
 
-            if (!userAggregates.has(scoreData.userId)) {
-                userAggregates.set(scoreData.userId, {
-                    totalScore: 0,
-                    totalPossible: 0,
-                    userName: scoreData.userName,
-                    userPhotoURL: scoreData.userPhotoURL,
-                    userId: scoreData.userId,
-                });
+            // If we haven't seen this user, or if the current score is newer than the one stored, update it.
+            if (!userLatestScores.has(scoreData.userId) || scoreData.timestamp.toMillis() > userLatestScores.get(scoreData.userId).timestamp.toMillis()) {
+                userLatestScores.set(scoreData.userId, scoreData);
             }
-            
-            const userData = userAggregates.get(scoreData.userId);
-            userData.totalScore += scoreData.score;
-            userData.totalPossible += scoreData.totalQuestions;
         });
 
-        const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
-            ...userData,
-            averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
+        // Map the latest scores to the format needed for the leaderboard.
+        const leaderboardData = Array.from(userLatestScores.values()).map(latestScore => ({
+            userId: latestScore.userId,
+            userName: latestScore.userName,
+            userPhotoURL: latestScore.userPhotoURL,
+            // Calculate percentage from that single latest score for ranking.
+            percentage: latestScore.totalQuestions > 0 ? (latestScore.score / latestScore.totalQuestions) * 100 : 0,
         }));
         
-        leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
+        leaderboardData.sort((a, b) => b.percentage - a.percentage);
         
         renderLeaderboard(leaderboardData, testCategory);
         
@@ -120,7 +111,7 @@ function renderLeaderboard(fullLeaderboardData, category) {
                 <div class="rank">${index + 1}</div>
                 <img src="${avatar}" alt="${scoreData.userName}" class="avatar">
                 <div class="name">${displayName}</div>
-                <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
+                <div class="score">${scoreData.percentage.toFixed(2)}%</div>
             </li>
         `;
     });
@@ -135,7 +126,7 @@ function renderLeaderboard(fullLeaderboardData, category) {
             userRankHTML = `
                 <div class="user-rank-display">
                     <h2>Your Overall Rank</h2>
-                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
+                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.percentage.toFixed(2)}%</div></li></ol>
                 </div>
             `;
         }
@@ -150,34 +141,45 @@ async function updateUserTestStatus(category) {
 
     const categoryPrefix = `${category}-test-`;
     
-    // Fetch user scores, ordered by most recent first.
-    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid), orderBy("timestamp", "desc"));
+    // Query for all user scores without ordering to avoid index requirement.
+    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
     const userSnapshot = await getDocs(q);
     
-    const latestPlayedQuizzes = new Map();
-    userSnapshot.forEach(doc => {
-        const scoreData = doc.data();
-        const quizId = scoreData.quizId;
-        // Filter client-side for the current page's category.
-        if (quizId && quizId.startsWith(categoryPrefix)) {
-            // Since the query is ordered by timestamp descending, the first one we find for a quizId is the latest.
-            if (!latestPlayedQuizzes.has(quizId)) {
-                // Store the entire score document data.
-                latestPlayedQuizzes.set(quizId, scoreData);
-            }
-        }
-    });
+    const userScores = [];
+    userSnapshot.forEach(doc => userScores.push(doc.data()));
 
-    // Update the DOM for each test part.
+    // Group scores by quizId on the client-side.
+    const scoresByQuiz = userScores
+        .filter(score => score.quizId && score.quizId.startsWith(categoryPrefix) && score.timestamp)
+        .reduce((acc, score) => {
+            if (!acc[score.quizId]) {
+                acc[score.quizId] = [];
+            }
+            acc[score.quizId].push(score);
+            return acc;
+        }, {});
+
+    const latestPlayedQuizzes = new Map();
+    // For each quiz the user played in this category, find the latest score by sorting.
+    for (const quizId in scoresByQuiz) {
+        const scores = scoresByQuiz[quizId];
+        if (scores.length > 0) {
+            scores.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
+            latestPlayedQuizzes.set(quizId, scores[0]);
+        }
+    }
+
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
         if (latestPlayedQuizzes.has(quizId)) {
             const scoreData = latestPlayedQuizzes.get(quizId);
             const originalLink = box.querySelector('a');
-            if (!originalLink) return; // Skip if the box is already updated
+            if (!originalLink) return;
 
             const originalHref = originalLink.href;
-            const partName = originalLink.textContent;
+            const partNameMatch = originalLink.textContent.match(/.*(भाग \d+|Part \d+)/);
+            const partName = partNameMatch ? partNameMatch[0] : box.querySelector('h3').textContent;
+
 
             box.innerHTML = `
                 <div class="user-score-display"><h4>${partName}</h4><p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p></div>
@@ -190,7 +192,6 @@ async function updateUserTestStatus(category) {
             };
             box.querySelector('.review-btn').onclick = () => {
                 const scoreDataForReview = latestPlayedQuizzes.get(quizId);
-                // Check for the persisted review data in the Firestore document
                 if (scoreDataForReview && scoreDataForReview.questions && scoreDataForReview.userAnswers) {
                     sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreDataForReview));
                     sessionStorage.setItem(`review_${quizId}`, 'true');
