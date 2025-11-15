@@ -1,7 +1,7 @@
 
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- Configuration ---
 const firebaseConfig = {
@@ -42,25 +42,27 @@ async function initializeTestHub() {
         const categoryPrefix = `${testCategory}-test-`;
 
         if (testCategory === 'all') {
-            scoresQuery = query(collection(db, "quizScores"));
+            // Global page ('test.html'): fetch all scores, ordered by timestamp to efficiently find the latest.
+            scoresQuery = query(collection(db, "quizScores"), orderBy("timestamp", "desc"));
         } else {
+            // Category page (e.g., 'hindi-test.html'): fetch only scores for that specific category.
             scoresQuery = query(
                 collection(db, "quizScores"),
                 where("quizId", ">=", categoryPrefix),
-                where("quizId", "<", categoryPrefix + '\uf8ff') 
+                where("quizId", "<", categoryPrefix + '\uf8ff'),
+                orderBy("quizId"), // Order by quizId first to satisfy Firestore query constraints
+                orderBy("timestamp", "desc") // Then order by timestamp to get the latest first
             );
         }
 
         const querySnapshot = await getDocs(scoresQuery);
         
-        // Find the single LATEST score for each user within the category.
+        // This map will store the single LATEST score for each user.
         const userLatestScores = new Map();
         querySnapshot.forEach((doc) => {
             const scoreData = doc.data();
-            if (!scoreData.userId || !scoreData.userName || !scoreData.timestamp) return;
-
-            // If we haven't seen this user, or if the current score is newer than the one stored, update it.
-            if (!userLatestScores.has(scoreData.userId) || scoreData.timestamp.toMillis() > userLatestScores.get(scoreData.userId).timestamp.toMillis()) {
+            // Since the query is ordered by timestamp descending, the first score we see for a user is their latest one.
+            if (scoreData.userId && !userLatestScores.has(scoreData.userId)) {
                 userLatestScores.set(scoreData.userId, scoreData);
             }
         });
@@ -84,7 +86,12 @@ async function initializeTestHub() {
 
     } catch (error) {
         console.error(`Error loading page data for category '${testCategory}':`, error);
-        leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
+        // Provide a user-friendly error, which might include the Firestore index creation link from the error message.
+        let errorMessage = "The leaderboard could not be loaded. Please try again later.";
+        if (error.message && error.message.includes('indexes?create_composite=')) {
+            errorMessage = `A database index is required. Please ask the site administrator to create it using the link in the developer console. Error: ${error.message}`;
+        }
+        leaderboardContainer.innerHTML = `<p style="color: var(--danger-color);">${errorMessage}</p>`;
     }
 }
 
@@ -139,35 +146,27 @@ async function updateUserTestStatus(category) {
     const testPartsContainer = document.getElementById('test-parts-container');
     if (!currentUser || !testPartsContainer) return;
 
-    const categoryPrefix = `${category}-test-`;
-    
-    // Query for all user scores without ordering to avoid index requirement.
-    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
+    // This query fetches only the scores for the current user and current category, ordered by time.
+    // It requires a composite index, but is far more efficient than fetching all user scores.
+    // Firestore will provide a link in the console to create this index if it doesn't exist.
+    const q = query(
+        collection(db, "quizScores"), 
+        where("userId", "==", currentUser.uid),
+        where("quizId", ">=", `${category}-test-`),
+        where("quizId", "<", `${category}-test-\uf8ff`),
+        orderBy("quizId"),
+        orderBy("timestamp", "desc")
+    );
     const userSnapshot = await getDocs(q);
     
-    const userScores = [];
-    userSnapshot.forEach(doc => userScores.push(doc.data()));
-
-    // Group scores by quizId on the client-side.
-    const scoresByQuiz = userScores
-        .filter(score => score.quizId && score.quizId.startsWith(categoryPrefix) && score.timestamp)
-        .reduce((acc, score) => {
-            if (!acc[score.quizId]) {
-                acc[score.quizId] = [];
-            }
-            acc[score.quizId].push(score);
-            return acc;
-        }, {});
-
+    // Since the query is ordered by timestamp desc, the first one we find for each quizId is the latest.
     const latestPlayedQuizzes = new Map();
-    // For each quiz the user played in this category, find the latest score by sorting.
-    for (const quizId in scoresByQuiz) {
-        const scores = scoresByQuiz[quizId];
-        if (scores.length > 0) {
-            scores.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
-            latestPlayedQuizzes.set(quizId, scores[0]);
+    userSnapshot.forEach(doc => {
+        const scoreData = doc.data();
+        if (scoreData.quizId && !latestPlayedQuizzes.has(scoreData.quizId)) {
+            latestPlayedQuizzes.set(scoreData.quizId, scoreData);
         }
-    }
+    });
 
     testPartsContainer.querySelectorAll('.box').forEach(box => {
         const quizId = box.dataset.quizId;
@@ -177,9 +176,7 @@ async function updateUserTestStatus(category) {
             if (!originalLink) return;
 
             const originalHref = originalLink.href;
-            const partNameMatch = originalLink.textContent.match(/.*(भाग \d+|Part \d+)/);
-            const partName = partNameMatch ? partNameMatch[0] : box.querySelector('h3').textContent;
-
+            const partName = box.querySelector('h3').textContent;
 
             box.innerHTML = `
                 <div class="user-score-display"><h4>${partName}</h4><p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p></div>
