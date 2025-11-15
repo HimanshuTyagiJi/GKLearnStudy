@@ -26,29 +26,21 @@ async function initializeTestHub() {
         return;
     }
 
-    const leaderboardContainer = document.getElementById('leaderboard-container');
-    if (!leaderboardContainer) return;
+    const leaderboardSection = document.querySelector('.leaderboard-section');
 
-    leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
+    if (testCategory === 'all') {
+        // --- GLOBAL LEADERBOARD LOGIC ---
+        if (!leaderboardSection) return;
+        const leaderboardContainer = document.getElementById('leaderboard-container');
+        if (!leaderboardContainer) return;
+        
+        leaderboardSection.style.display = 'block'; // Ensure it's visible
+        leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
 
-    try {
-        let scoresQuery;
-        if (testCategory === 'all') {
-            scoresQuery = query(collection(db, "quizScores"));
-        } else {
-            const categoryPrefix = `${testCategory}-test-`;
-            scoresQuery = query(
-                collection(db, "quizScores"),
-                where("quizId", ">=", categoryPrefix),
-                where("quizId", "<", categoryPrefix + '\uf8ff')
-            );
-        }
+        try {
+            const scoresQuery = query(collection(db, "quizScores"));
+            const querySnapshot = await getDocs(scoresQuery);
 
-        const querySnapshot = await getDocs(scoresQuery);
-        let leaderboardData;
-
-        if (testCategory === 'all') {
-            // GLOBAL PAGE ('test.html'): Calculate average score for leaderboard.
             const userAggregates = new Map();
             querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
@@ -68,57 +60,39 @@ async function initializeTestHub() {
                 userData.totalPossible += scoreData.totalQuestions;
             });
 
-            leaderboardData = Array.from(userAggregates.values()).map(userData => ({
+            const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
                 ...userData,
                 averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
             }));
             
             leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
-        } else {
-            // CATEGORY PAGE (e.g., 'hindi-test.html'): Find latest score for leaderboard.
-            const userLatestScores = new Map();
-            querySnapshot.forEach((doc) => {
-                const scoreData = doc.data();
-                if (!scoreData.userId || !scoreData.userName || !scoreData.timestamp) return;
-
-                const existing = userLatestScores.get(scoreData.userId);
-                if (!existing || scoreData.timestamp.toMillis() > existing.timestamp.toMillis()) {
-                    userLatestScores.set(scoreData.userId, scoreData);
-                }
-            });
-            
-            leaderboardData = Array.from(userLatestScores.values());
-            
-            // Sort by the percentage of that single latest score for ranking fairness
-            leaderboardData.sort((a, b) => {
-                const percA = a.totalQuestions > 0 ? (a.score / a.totalQuestions) : 0;
-                const percB = b.totalQuestions > 0 ? (b.score / b.totalQuestions) : 0;
-                return percB - percA;
-            });
+            renderLeaderboard(leaderboardData, 'all');
+        } catch (error) {
+            console.error(`Error loading global leaderboard:`, error);
+            if (leaderboardContainer) leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
         }
-        
-        renderLeaderboard(leaderboardData, testCategory);
-        
-        if (currentUser && testCategory !== 'all') {
+
+    } else {
+        // --- CATEGORY PAGE LOGIC ---
+        // Hide the leaderboard section entirely as requested.
+        if (leaderboardSection) {
+            leaderboardSection.style.display = 'none';
+        }
+
+        // Only run the user status update logic to show scores in boxes.
+        if (currentUser) {
             await updateUserTestStatus(testCategory);
         }
-
-    } catch (error) {
-        console.error(`Error loading page data for category '${testCategory}':`, error);
-        leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
     }
 }
 
 function renderLeaderboard(fullLeaderboardData, category) {
     const leaderboardContainer = document.getElementById('leaderboard-container');
-    const topCount = (category === 'all') ? 50 : 10;
+    const topCount = 50; // Always top 50 for global leaderboard
     const topScores = fullLeaderboardData.slice(0, topCount);
 
     if (topScores.length === 0) {
-        const message = category === 'all' 
-            ? "No scores have been recorded yet. Be the first to take a test!"
-            : "No scores have been recorded in this category yet.";
-        leaderboardContainer.innerHTML = `<p>${message}</p>`;
+        leaderboardContainer.innerHTML = `<p>No scores have been recorded yet. Be the first to take a test!</p>`;
         return;
     }
 
@@ -128,10 +102,7 @@ function renderLeaderboard(fullLeaderboardData, category) {
         const displayName = isCurrentUser ? "You" : scoreData.userName;
         const avatar = scoreData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
         
-        // Conditional score display based on the page type
-        const scoreDisplay = category === 'all'
-            ? `${scoreData.averagePercentage.toFixed(2)}%`
-            : `${scoreData.score} / ${scoreData.totalQuestions}`;
+        const scoreDisplay = `${scoreData.averagePercentage.toFixed(2)}%`;
 
         leaderboardHTML += `
             <li class="${isCurrentUser ? 'current-user' : ''}">
@@ -145,8 +116,7 @@ function renderLeaderboard(fullLeaderboardData, category) {
     leaderboardHTML += '</ol>';
 
     let userRankHTML = '';
-    // User's own rank display only appears on the global page
-    if (currentUser && category === 'all') {
+    if (currentUser) {
         const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
         if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
             const userData = fullLeaderboardData[userRankIndex];
