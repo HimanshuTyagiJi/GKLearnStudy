@@ -1,8 +1,9 @@
 
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
+// --- Configuration & Initialization ---
 const firebaseConfig = {
     apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
     authDomain: "appcomment.firebaseapp.com",
@@ -11,246 +12,251 @@ const firebaseConfig = {
     messagingSenderId: "156258808941",
     appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
 };
-
-// Initialize Firebase at the module level using a singleton pattern to prevent errors.
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-document.addEventListener('DOMContentLoaded', () => {
-    let currentUser = null;
-    let timerInterval;
-    let userAnswers = {};
-    let timeTaken = 0;
-    const quizId = "hindi-test-part-01"; // Hardcoded for this specific test part
-    
-    const quizForm = document.getElementById("quiz-form");
-    const questionsContainer = document.getElementById("questions-container");
-    const startModal = document.getElementById("startModal");
-    const resultModal = document.getElementById("resultModal");
-    const resultContent = document.getElementById("resultContent");
-    const submitBtn = document.querySelector(".submit-btn");
-    const reviewContainer = document.getElementById("review-container");
-    const reviewSection = document.getElementById("review-questions");
-    const quizSection = document.getElementById("quiz-section");
-    const startBtn = document.getElementById("start-btn");
-    const reviewBtn = document.getElementById("review-btn");
-    const retryBtn = document.getElementById("retry-btn");
-    const reviewRetryBtn = document.getElementById("review-retry-btn");
+let currentUser = null;
 
-    onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-    });
+// Converts various timestamp formats to milliseconds for reliable comparison.
+function getSafeTimestampMillis(ts) {
+    if (!ts) return 0;
+    if (typeof ts.toMillis === "function") return ts.toMillis();
+    if (ts instanceof Date) return ts.getTime();
+    if (typeof ts === "number") return ts > 2000000000 ? ts : ts * 1000;
+    if (typeof ts === "string") {
+        const d = new Date(ts);
+        return isNaN(d) ? 0 : d.getTime();
+    }
+    return 0;
+}
 
-    // Check for review mode on page load
-    const isInReviewMode = sessionStorage.getItem(`review_${quizId}`);
-    if (isInReviewMode === 'true') {
-        const reviewData = JSON.parse(sessionStorage.getItem('reviewDataForNextPage'));
-        if (reviewData) {
-            // Important: Clear the data and flag so a normal refresh doesn't re-trigger review mode.
-            sessionStorage.removeItem(`review_${quizId}`);
-            sessionStorage.removeItem('reviewDataForNextPage');
-            
-            questions = reviewData.questions;
-            userAnswers = reviewData.userAnswers;
-            renderReviewMode();
-        } else {
-            // If data is missing for some reason, clear the flag and show the start modal.
-            sessionStorage.removeItem(`review_${quizId}`);
-            startModal.classList.add('active');
+// Resets the UI of test boxes to their original "Start Test" state.
+function resetCategoryPageUI() {
+    const testPartsContainer = document.getElementById('test-parts-container');
+    if (!testPartsContainer) return;
+    testPartsContainer.querySelectorAll('.box[data-quiz-id]').forEach(box => {
+        if (box.dataset.originalHtml) {
+            box.innerHTML = box.dataset.originalHtml;
         }
-    } else {
-        startModal.classList.add('active');
+    });
+}
+
+// Main initialization function for both global and category test pages.
+async function initializeTestHub() {
+    const testCategory = document.body.dataset.testCategory;
+    if (!testCategory) {
+        console.error("Fatal: 'data-test-category' attribute is missing from <body>.");
+        return;
     }
 
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+    const testPartsContainer = document.getElementById('test-parts-container');
+    const isCategoryPage = testCategory !== 'all';
 
-    function startQuiz() {
-        startModal.classList.remove('active');
-        quizSection.style.display = "block";
-        displayQuestions();
-        startTimer();
-    }
+    // --- Part 1: Handle Leaderboard ---
+    // This part now correctly runs for BOTH global and category pages.
+    if (leaderboardContainer) {
+        leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
+        try {
+            let scoresQuery;
+            const categoryPrefix = `${testCategory}-test-`;
 
-    function displayQuestions() {
-        let questionsHTML = "";
-        questions.sort(() => Math.random() - 0.5); 
-        questions.forEach((q, index) => {
-            questionsHTML += `
-                <div class="question-block" id="question-${index}">
-                    <p class="question">${index + 1}. ${q.question}</p>
-                    <div class="options">
-                        ${q.options.map(option => `
-                            <label>
-                                <input type="radio" name="question${index}" value="${option.value}">
-                                <span>${option.text}</span>
-                            </label>`).join("")}
-                    </div>
-                </div>`;
-        });
-        questionsContainer.innerHTML = questionsHTML;
-        submitBtn.style.display = "block";
-    }
-
-    function startTimer() {
-        let seconds = 0;
-        const timerElement = document.getElementById("timer");
-        timerInterval = setInterval(() => {
-            seconds++;
-            timeTaken = seconds;
-            let min = Math.floor(seconds / 60);
-            let sec = seconds % 60;
-            if (timerElement) {
-                timerElement.innerHTML = `<strong>समय:</strong> ${min}:${sec < 10 ? "0" + sec : sec}`;
+            if (testCategory === 'all') {
+                // Global page ('test.html'): fetch all scores.
+                scoresQuery = query(collection(db, "quizScores"));
+            } else {
+                // Category page (e.g., 'hindi-test.html'): fetch scores for this category.
+                scoresQuery = query(
+                    collection(db, "quizScores"),
+                    where("quizId", ">=", categoryPrefix),
+                    where("quizId", "<", categoryPrefix + '\uf8ff')
+                );
             }
-        }, 1000);
+
+            const querySnapshot = await getDocs(scoresQuery);
+            const userAggregates = new Map();
+            querySnapshot.forEach((doc) => {
+                const scoreData = doc.data();
+                if (!scoreData.userId || !scoreData.userName) return;
+
+                if (!userAggregates.has(scoreData.userId)) {
+                    userAggregates.set(scoreData.userId, {
+                        totalScore: 0,
+                        totalPossible: 0,
+                        userName: scoreData.userName,
+                        userPhotoURL: scoreData.userPhotoURL,
+                        userId: scoreData.userId,
+                    });
+                }
+                const userData = userAggregates.get(scoreData.userId);
+                userData.totalScore += scoreData.score;
+                userData.totalPossible += scoreData.totalQuestions;
+            });
+
+            const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
+                ...userData,
+                averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
+            }));
+            
+            leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
+            
+            renderLeaderboard(leaderboardData, testCategory);
+        } catch (error) {
+            console.error(`Error loading leaderboard for '${testCategory}':`, error);
+            leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded. Please try again later.</p>";
+        }
     }
 
-    async function calculateResult() {
-        clearInterval(timerInterval);
-        let correctCount = 0;
-        let incorrectCount = 0;
+    // --- Part 2: Handle User-Specific Score Boxes ---
+    // This only runs on category pages (like hindi-test.html).
+    if (isCategoryPage && testPartsContainer) {
+        resetCategoryPageUI();
+        if (currentUser) {
+            await updateUserTestStatus(testCategory);
+        }
+    }
+}
 
-        questions.forEach((q, index) => {
-            const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-            userAnswers[index] = selectedOption ? selectedOption.value : null;
-            if (userAnswers[index]) {
-                if (userAnswers[index] === q.correctOption) {
-                    correctCount++;
-                } else {
-                    incorrectCount++;
+// Renders the leaderboard, adapting for global vs. category view.
+function renderLeaderboard(fullLeaderboardData, category) {
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+    if(!leaderboardContainer) return;
+
+    const topCount = (category === 'all') ? 50 : 10;
+    const topScores = fullLeaderboardData.slice(0, topCount);
+
+    if (topScores.length === 0) {
+        const message = category === 'all' 
+            ? "No scores have been recorded yet. Be the first to take a test!"
+            : "No scores have been recorded in this category yet.";
+        leaderboardContainer.innerHTML = `<p>${message}</p>`;
+        return;
+    }
+
+    let leaderboardHTML = '<ol class="leaderboard">';
+    topScores.forEach((scoreData, index) => {
+        const isCurrentUser = currentUser && currentUser.uid === scoreData.userId;
+        const displayName = isCurrentUser ? "You" : scoreData.userName;
+        const avatar = scoreData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
+        leaderboardHTML += `
+            <li class="${isCurrentUser ? 'current-user' : ''}">
+                <div class="rank">${index + 1}</div>
+                <img src="${avatar}" alt="${scoreData.userName}" class="avatar">
+                <div class="name">${displayName}</div>
+                <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
+            </li>
+        `;
+    });
+    leaderboardHTML += '</ol>';
+
+    let userRankHTML = '';
+    // Show the user's rank separately only on the global page if they aren't in the top list.
+    if (currentUser && category === 'all') {
+        const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
+        if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
+            const userData = fullLeaderboardData[userRankIndex];
+            const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
+            userRankHTML = `
+                <div class="user-rank-display">
+                    <h2>Your Overall Rank</h2>
+                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
+                </div>
+            `;
+        }
+    }
+    
+    leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
+}
+
+// Fetches and displays the user's LATEST scores on category pages.
+async function updateUserTestStatus(category) {
+    const testPartsContainer = document.getElementById('test-parts-container');
+    if (!currentUser || !testPartsContainer) return;
+
+    try {
+        const categoryPrefix = `${category}-test-`;
+        const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
+        const userSnapshot = await getDocs(q);
+
+        const latestScores = new Map();
+        userSnapshot.forEach(doc => {
+            const scoreData = doc.data();
+            const quizId = scoreData.quizId;
+
+            if (quizId && quizId.startsWith(categoryPrefix)) {
+                const existing = latestScores.get(quizId);
+                const newTime = getSafeTimestampMillis(scoreData.timestamp);
+                if (!existing || newTime > getSafeTimestampMillis(existing.timestamp)) {
+                    latestScores.set(quizId, scoreData);
                 }
             }
         });
 
-        const totalQuestions = questions.length;
-        const skippedCount = totalQuestions - correctCount - incorrectCount;
-        const percentage = totalQuestions > 0 ? (correctCount / totalQuestions) * 100 : 0;
+        testPartsContainer.querySelectorAll('.box[data-quiz-id]').forEach(box => {
+            const quizId = box.dataset.quizId;
+            if (latestScores.has(quizId)) {
+                const scoreData = latestScores.get(quizId);
+                const originalLink = box.querySelector('a');
+                if (!originalLink) return;
+                
+                const partName = box.querySelector('h3')?.textContent || "Test Part";
 
-        // Save results for review mode using the generic key
-        const reviewData = { questions: questions, userAnswers: userAnswers, score: correctCount, totalQuestions: totalQuestions };
-        sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(reviewData));
-
-        // SVG donut chart calculations
-        const correctPercentageForSVG = percentage;
-        const incorrectPercentageForSVG = totalQuestions > 0 ? (incorrectCount / totalQuestions) * 100 : 0;
-
-        const greenDashArray = `${correctPercentageForSVG}, 100`;
-        const redDashArray = `${incorrectPercentageForSVG}, 100`;
-        const redDashOffset = `-${correctPercentageForSVG}`;
-
-        if (resultContent) {
-            resultContent.innerHTML = `
-                <div style="text-align: center;">
-                    <div style="position: relative; width: 150px; height: 150px; margin: 1rem auto;">
-                        <svg viewBox="0 0 36 36" style="transform: rotate(-90deg); width: 100%; height: 100%;">
-                            <!-- Background Circle -->
-                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
-                                  fill="none" stroke="#e6e6e6" stroke-width="3"></path>
-                            <!-- Green Part (Correct) -->
-                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
-                                  fill="none" stroke="var(--success-color, #28a745)" stroke-width="3" 
-                                  stroke-dasharray="${greenDashArray}"></path>
-                            <!-- Red Part (Incorrect) -->
-                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
-                                  fill="none" stroke="var(--danger-color, #dc3545)" stroke-width="3" 
-                                  stroke-dasharray="${redDashArray}" stroke-dashoffset="${redDashOffset}"></path>
-                        </svg>
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: bold; color: var(--text-color);">
-                            ${percentage.toFixed(2)}%
-                        </div>
+                box.innerHTML = `
+                    <div class="user-score-display">
+                        <h4>${partName}</h4>
+                        <p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p>
                     </div>
-                    <p>कुल प्रश्न: ${totalQuestions}</p>
-                    <p style="color: var(--success-color, #28a745); font-weight: bold;">सही: ${correctCount}</p>
-                    <p style="color: var(--danger-color, #dc3545); font-weight: bold;">गलत: ${incorrectCount}</p>
-                    <p style="color: var(--secondary-color, #6c757d);">छोड़े गए: ${skippedCount}</p>
-                    <p>कुल समय: ${Math.floor(timeTaken / 60)} मिनट ${timeTaken % 60} सेकंड</p>
-                </div>
-            `;
-        }
-        
-        if (currentUser) {
-            // Wait for the score to be saved before showing the result modal
-            await saveScore(correctCount, totalQuestions, questions, userAnswers);
-        }
-
-        if (resultModal) resultModal.classList.add('active');
-    }
-
-    async function saveScore(score, totalQuestions, questions, userAnswers) {
-        if (!currentUser || !db) return;
-
-        try {
-            await addDoc(collection(db, "quizScores"), {
-                userId: currentUser.uid,
-                userName: currentUser.displayName,
-                userPhotoURL: currentUser.photoURL,
-                score: score,
-                totalQuestions: totalQuestions,
-                quizId: quizId,
-                timestamp: serverTimestamp(),
-                // Persist review data in Firestore
-                questions: questions,
-                userAnswers: userAnswers
-            });
-            console.log("Score saved successfully!");
-        } catch (error) {
-            console.error("Error saving score: ", error);
-        }
-    }
-
-    function retryQuiz() {
-        sessionStorage.removeItem(`review_${quizId}`);
-        sessionStorage.removeItem('reviewDataForNextPage');
-        location.reload();
-    }
-
-    function reviewQuestions() {
-       sessionStorage.setItem(`review_${quizId}`, 'true');
-       // Data is already in 'reviewDataForNextPage' from calculateResult()
-       location.reload();
-    }
-
-    function renderReviewMode() {
-        startModal.classList.remove('active');
-        quizSection.style.display = "none";
-        
-        let reviewHTML = "";
-        questions.forEach((q, index) => {
-            const userAnswer = userAnswers[index];
-            reviewHTML += `
-                <div class="question-block review">
-                    <p class="question">${index + 1}. ${q.question}</p>
-                    <div class="options">
-                        ${q.options.map(opt => {
-                            const isUserAnswer = userAnswer === opt.value;
-                            const isCorrectAnswer = opt.value === q.correctOption;
-                            let className = '';
-                            if (isCorrectAnswer) className = 'correct-option';
-                            else if (isUserAnswer && !isCorrectAnswer) className = 'incorrect-option';
-                            
-                            return `<label class="${className}">
-                                        <input type="radio" name="review${index}" value="${opt.value}" ${isUserAnswer ? 'checked' : ''} disabled> 
-                                        <span>${opt.text}</span>
-                                    </label>`;
-                        }).join('')}
+                    <div class="button-group">
+                        <button class="btn retry-btn">Play Again</button>
+                        <button class="btn review-btn">View Result</button>
                     </div>
-                    <div class="explanation"><strong>स्पष्टीकरण:</strong> ${q.explanation}</div>
-                </div>`;
+                `;
+
+                box.querySelector('.retry-btn').onclick = () => {
+                    sessionStorage.removeItem(`review_${quizId}`);
+                    sessionStorage.removeItem('reviewDataForNextPage');
+                    window.location.href = originalLink.href;
+                };
+
+                box.querySelector('.review-btn').onclick = () => {
+                    if (scoreData && scoreData.questions && scoreData.userAnswers) {
+                        sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreData));
+                        sessionStorage.setItem(`review_${quizId}`, 'true');
+                        window.location.href = originalLink.href;
+                    } else {
+                        alert('No review data found for this attempt. Please play the test again.');
+                    }
+                };
+            }
         });
-
-        if (reviewContainer) reviewContainer.innerHTML = reviewHTML;
-        if (reviewSection) reviewSection.style.display = "block";
+    } catch (error) {
+        console.error("Error updating user test status:", error);
     }
+}
 
-    // Event Listeners
-    if (startBtn) startBtn.addEventListener('click', startQuiz);
-    if (quizForm) quizForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        if (confirm("क्या आप वाकई टेस्ट सबमिट करना चाहते हैं?")) {
-            await calculateResult();
+// --- Entry Point & Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+    // On first load, save the original HTML of each test box for easy UI reset on logout.
+    document.querySelectorAll('#test-parts-container .box[data-quiz-id]').forEach(box => {
+        if (!box.dataset.originalHtml) {
+            box.dataset.originalHtml = box.innerHTML;
         }
     });
-    if (reviewBtn) reviewBtn.addEventListener('click', reviewQuestions);
-    if (retryBtn) retryBtn.addEventListener('click', retryQuiz);
-    if (reviewRetryBtn) reviewRetryBtn.addEventListener('click', retryQuiz);
+
+    // Main auth listener. Triggers the page logic on initial load and on login/logout.
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        initializeTestHub();
+    });
+});
+
+// CRITICAL: This event fires when navigating back from the browser's back/forward cache (bfcache).
+// It forces the page to re-run the logic and fetch the latest score from Firestore.
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        console.log("Page loaded from BFCache. Forcing data refresh.");
+        currentUser = auth.currentUser;
+        initializeTestHub();
+    }
 });
