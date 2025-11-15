@@ -1,6 +1,7 @@
+
 import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- Configuration & Initialization ---
 const firebaseConfig = {
@@ -17,196 +18,215 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-
-// ⭐ UNIVERSAL TIMESTAMP FIX
-function getSafeTimestampMillis(ts) {
-    if (!ts) return 0;
-
-    if (typeof ts.toMillis === "function") return ts.toMillis();   // Firestore timestamp
-    if (typeof ts === "number") {
-        if (ts < 2000000000) return ts * 1000;  // seconds → ms
-        return ts;                               // already ms
-    }
-    if (typeof ts === "string") {
-        const d = new Date(ts);
-        return d.getTime() || 0;
-    }
-    return 0;
-}
-
-
-// The main function that orchestrates everything for the current page.
+// The main function that fetches data and updates the UI.
 async function initializeTestHub() {
     const testCategory = document.body.dataset.testCategory;
     if (!testCategory) {
-        console.error("Fatal: 'data-test-category' attribute is missing.");
+        console.error("Fatal: 'data-test-category' attribute is missing from the <body> tag.");
         return;
     }
 
     const leaderboardSection = document.querySelector('.leaderboard-section');
+    const isGlobalPage = testCategory === 'all';
 
-    if (testCategory === 'all') {
+    // Conditionally show or hide the leaderboard section based on the page type.
+    if (leaderboardSection) {
+        leaderboardSection.style.display = isGlobalPage ? 'block' : 'none';
+    }
 
-        if (!leaderboardSection) return;
+    if (isGlobalPage) {
         const leaderboardContainer = document.getElementById('leaderboard-container');
         if (!leaderboardContainer) return;
-
-        leaderboardSection.style.display = 'block';
+        
         leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
-
         try {
             const scoresQuery = query(collection(db, "quizScores"));
             const querySnapshot = await getDocs(scoresQuery);
 
             const userAggregates = new Map();
-
-            querySnapshot.forEach(doc => {
+            querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
                 if (!scoreData.userId || !scoreData.userName) return;
 
                 if (!userAggregates.has(scoreData.userId)) {
                     userAggregates.set(scoreData.userId, {
-                        totalScore: 0,
-                        totalPossible: 0,
-                        userName: scoreData.userName,
-                        userPhotoURL: scoreData.userPhotoURL,
-                        userId: scoreData.userId,
+                        totalScore: 0, totalPossible: 0,
+                        userName: scoreData.userName, userPhotoURL: scoreData.userPhotoURL, userId: scoreData.userId,
                     });
                 }
-
                 const userData = userAggregates.get(scoreData.userId);
                 userData.totalScore += scoreData.score;
                 userData.totalPossible += scoreData.totalQuestions;
             });
 
-            const leaderboardData = Array.from(userAggregates.values()).map(u => ({
-                ...u,
-                averagePercentage: u.totalPossible > 0 ? (u.totalScore / u.totalPossible) * 100 : 0,
+            const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
+                ...userData,
+                averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
             }));
-
+            
             leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
-
             renderLeaderboard(leaderboardData);
-
         } catch (error) {
-            console.error("Error loading leaderboard:", error);
-            leaderboardContainer.innerHTML = "<p>Error loading leaderboard.</p>";
+            console.error(`Error loading global leaderboard:`, error);
+            if(leaderboardContainer) leaderboardContainer.innerHTML = "<p>The leaderboard could not be loaded.</p>";
         }
-
-    } else {
-
-        if (leaderboardSection) leaderboardSection.style.display = 'none';
-
-        if (currentUser) await updateUserTestStatus(testCategory);
+    } else { // This is a category page
+        // The updateUserTestStatus function will handle both logged-in and logged-out states.
+        await updateUserTestStatus(testCategory);
     }
 }
 
-
+// Renders the global leaderboard (only used on test.html).
 function renderLeaderboard(fullLeaderboardData) {
     const leaderboardContainer = document.getElementById('leaderboard-container');
-    const topCount = 50;
-    const topScores = fullLeaderboardData.slice(0, topCount);
+    const top50 = fullLeaderboardData.slice(0, 50);
 
-    if (topScores.length === 0) {
-        leaderboardContainer.innerHTML = `<p>No scores yet. Be first!</p>`;
+    if (top50.length === 0) {
+        leaderboardContainer.innerHTML = `<p>No scores have been recorded yet. Be the first to take a test!</p>`;
         return;
     }
 
-    let html = '<ol class="leaderboard">';
-    topScores.forEach((s, i) => {
-        const isCurrent = currentUser && currentUser.uid === s.userId;
-        html += `
-            <li class="${isCurrent ? 'current-user' : ''}">
-                <div class="rank">${i + 1}</div>
-                <img src="${s.userPhotoURL || ''}" class="avatar">
-                <div class="name">${isCurrent ? "You" : s.userName}</div>
-                <div class="score">${s.averagePercentage.toFixed(2)}%</div>
+    let leaderboardHTML = '<ol class="leaderboard">';
+    top50.forEach((scoreData, index) => {
+        const isCurrentUser = currentUser && currentUser.uid === scoreData.userId;
+        const displayName = isCurrentUser ? "You" : scoreData.userName;
+        const avatar = scoreData.userPhotoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random`;
+        
+        leaderboardHTML += `
+            <li class="${isCurrentUser ? 'current-user' : ''}">
+                <div class="rank">${index + 1}</div>
+                <img src="${avatar}" alt="${scoreData.userName}" class="avatar">
+                <div class="name">${displayName}</div>
+                <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
             </li>
         `;
     });
-    html += "</ol>";
+    leaderboardHTML += '</ol>';
 
-    leaderboardContainer.innerHTML = html;
+    let userRankHTML = '';
+    if (currentUser) {
+        const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
+        if (userRankIndex !== -1 && userRankIndex >= top50.length) {
+            const userData = fullLeaderboardData[userRankIndex];
+            const avatar = userData.userPhotoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.userName)}&background=random`;
+            userRankHTML = `
+                <div class="user-rank-display">
+                    <h2>Your Overall Rank</h2>
+                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
+                </div>
+            `;
+        }
+    }
+    leaderboardContainer.innerHTML = leaderboardHTML + userRankHTML;
 }
 
-
-// ⭐ FINAL FIXED: ALWAYS SHOW LATEST ATTEMPT (NOT HIGHEST)
+// Fetches the user's latest scores for a category and updates the test part boxes.
 async function updateUserTestStatus(category) {
-    const container = document.getElementById('test-parts-container');
-    if (!currentUser || !container) return;
+    const testPartsContainer = document.getElementById('test-parts-container');
+    if (!testPartsContainer) return;
 
-    const prefix = `${category}-test-`;
+    // First, reset all test boxes to their initial HTML state to handle logout or prepare for fresh data.
+    testPartsContainer.querySelectorAll('.box[data-quiz-id]').forEach(box => {
+        const partName = box.querySelector('h3')?.textContent || `Test Part`;
+        const description = box.querySelector('p')?.textContent || `Test your knowledge.`;
+        const originalLinkHref = box.querySelector('a')?.href || '#';
+        const isComingSoon = box.classList.contains('disabled');
+        const iconNumber = box.querySelector('.icon')?.textContent || '?';
 
-    const q = query(collection(db, "quizScores"), where("userId", "==", currentUser.uid));
-    const snap = await getDocs(q);
-
-    const latestScoresForParts = new Map();
-
-    snap.forEach(doc => {
-        const data = doc.data();
-        const quizId = data.quizId;
-
-        if (quizId && quizId.startsWith(prefix)) {
-
-            const existing = latestScoresForParts.get(quizId);
-
-            const newTime = getSafeTimestampMillis(data.timestamp);
-            const oldTime = existing ? getSafeTimestampMillis(existing.timestamp) : -1;
-
-            // ALWAYS TAKE NEWEST TIMESTAMP
-            if (!existing || newTime > oldTime) {
-                latestScoresForParts.set(quizId, data);
-            }
+        if (isComingSoon) {
+            box.innerHTML = `
+                <div class="coming-soon-badge">Soon</div>
+                <div class="icon">${iconNumber}</div>
+                <h3>${partName}</h3>
+                <p>${description}</p>
+                <a href="#" class="btn-start-test" onclick="event.preventDefault();">Coming Soon</a>
+            `;
+        } else {
+            box.innerHTML = `
+                <div class="icon">${iconNumber}</div>
+                <h3>${partName}</h3>
+                <p>${description}</p>
+                <a href="${originalLinkHref}" class="btn-start-test">Start Test</a>
+            `;
         }
     });
 
+    // If the user is not logged in, we stop here. The boxes are now in their default state.
+    if (!currentUser) return;
 
-    // Update DOM
-    container.querySelectorAll('.box').forEach(box => {
+    const categoryPrefix = `${category}-test-`;
+    
+    // ⭐ EFFICIENT QUERY: Order by timestamp descending to get the newest scores first.
+    const q = query(
+        collection(db, "quizScores"), 
+        where("userId", "==", currentUser.uid),
+        orderBy("timestamp", "desc")
+    );
+    
+    const userSnapshot = await getDocs(q);
+    
+    const latestScoresForParts = new Map();
+
+    userSnapshot.forEach(doc => {
+        const scoreData = doc.data();
+        const quizId = scoreData.quizId;
+        
+        // Since results are ordered by newest first, the first one we see for each quizId IS the latest one.
+        // We only add it to the map if it's not already there.
+        if (quizId && quizId.startsWith(categoryPrefix) && !latestScoresForParts.has(quizId)) {
+            latestScoresForParts.set(quizId, scoreData);
+        }
+    });
+
+    // Update the DOM again, this time with the user's latest score.
+    testPartsContainer.querySelectorAll('.box[data-quiz-id]').forEach(box => {
         const quizId = box.dataset.quizId;
-
-        if (latestScoresForParts.has(quizId)) {
+        const originalLinkHref = box.querySelector('a')?.href; // Get href again from the reset HTML
+        
+        if (latestScoresForParts.has(quizId) && originalLinkHref) {
             const scoreData = latestScoresForParts.get(quizId);
-            const link = box.querySelector('a');
-            if (!link) return;
-
-            const partName = box.querySelector('h3')?.textContent || "Test";
+            const partName = box.querySelector('h3')?.textContent;
 
             box.innerHTML = `
-                <div class="user-score-display">
-                    <h4>${partName}</h4>
-                    <p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p>
-                </div>
-                <div class="button-group">
-                    <button class="btn retry-btn">Play Again</button>
-                    <button class="btn review-btn">View Result</button>
-                </div>
+                <div class="user-score-display"><h4>${partName}</h4><p><strong>Your Latest Score:</strong> ${scoreData.score} / ${scoreData.totalQuestions}</p></div>
+                <div class="button-group"><button class="btn retry-btn">Play Again</button><button class="btn review-btn">View Result</button></div>
             `;
-
             box.querySelector('.retry-btn').onclick = () => {
+                // Clear any review state before retrying
                 sessionStorage.removeItem(`review_${quizId}`);
-                sessionStorage.removeItem("reviewDataForNextPage");
-                window.location.href = link.href;
+                sessionStorage.removeItem('reviewDataForNextPage');
+                window.location.href = originalLinkHref;
             };
-
             box.querySelector('.review-btn').onclick = () => {
-                if (scoreData.questions && scoreData.userAnswers) {
-                    sessionStorage.setItem("reviewDataForNextPage", JSON.stringify(scoreData));
+                // The scoreData from our query contains the full review data saved by test.js
+                if (scoreData && scoreData.questions && scoreData.userAnswers) {
+                    sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreData));
                     sessionStorage.setItem(`review_${quizId}`, 'true');
-                    window.location.href = link.href;
+                    window.location.href = originalLinkHref;
                 } else {
-                    alert("No review data available. Please play again.");
+                    alert('No review data found for this attempt. Please play again to generate a review.');
                 }
             };
         }
     });
 }
 
+// --- ENTRY POINT LOGIC ---
 
-// Entry point
-document.addEventListener("DOMContentLoaded", () => {
+// Handles initial page load
+document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         initializeTestHub();
     });
+});
+
+// Handles navigation back to the page (e.g., using the browser's back button)
+window.addEventListener('pageshow', (event) => {
+    // event.persisted is true if the page is from the bfcache (Back-Forward Cache)
+    if (event.persisted) {
+        console.log("Page restored from bfcache. Re-fetching latest scores.");
+        // Re-run the main logic to get fresh data from Firestore and update the UI
+        initializeTestHub();
+    }
 });
