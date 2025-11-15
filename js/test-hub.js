@@ -1,4 +1,5 @@
 
+
 import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -32,11 +33,15 @@ function getSafeTimestampMillis(ts) {
     }
     // Number (seconds or milliseconds)
     if (typeof ts === "number") {
+        // Simple check: if it's a large number, it's likely ms. If small, it's likely seconds.
         return ts > 2000000000 ? ts : ts * 1000;
     }
     // String date
-    const d = new Date(ts);
-    return isNaN(d) ? 0 : d.getTime();
+    if (typeof ts === "string") {
+        const d = new Date(ts);
+        return isNaN(d) ? 0 : d.getTime();
+    }
+    return 0;
 }
 
 // Resets the UI of test boxes to their original "Start Test" state.
@@ -153,7 +158,7 @@ function renderLeaderboard(fullLeaderboardData) {
 
 
 // ⭐ ——————————————
-// ⭐ UPDATE USER TEST STATUS WITH LATEST SCORE (FIXED LOGIC)
+// ⭐ UPDATE USER TEST STATUS WITH LATEST SCORE (CORRECTED LOGIC)
 // ⭐ ——————————————
 async function updateUserTestStatus(category) {
     const testPartsContainer = document.getElementById('test-parts-container');
@@ -167,7 +172,7 @@ async function updateUserTestStatus(category) {
 
         const latestScores = new Map();
 
-        // Find the most recent score for each test part.
+        // Find the most recent score for each test part by comparing timestamps.
         userSnapshot.forEach(doc => {
             const scoreData = doc.data();
             const quizId = scoreData.quizId;
@@ -258,6 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
         console.log("Page loaded from BFCache. Forcing data refresh.");
+        // We need to know who the user is, but onAuthStateChanged might not fire again.
+        // Re-check the current user from auth.
+        currentUser = auth.currentUser;
         initializeTestHub();
     }
 });
