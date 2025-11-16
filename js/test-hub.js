@@ -55,7 +55,6 @@ async function initializeTestHub() {
     const isCategoryPage = testCategory !== 'all';
 
     // --- Part 1: Handle Leaderboard ---
-    // This part now correctly runs for BOTH global and category pages.
     if (leaderboardContainer) {
         leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
         try {
@@ -63,10 +62,8 @@ async function initializeTestHub() {
             const categoryPrefix = `${testCategory}-test-`;
 
             if (testCategory === 'all') {
-                // Global page ('test.html'): fetch all scores.
                 scoresQuery = query(collection(db, "quizScores"));
             } else {
-                // Category page (e.g., 'hindi-test.html'): fetch scores for this category.
                 scoresQuery = query(
                     collection(db, "quizScores"),
                     where("quizId", ">=", categoryPrefix),
@@ -75,9 +72,22 @@ async function initializeTestHub() {
             }
 
             const querySnapshot = await getDocs(scoresQuery);
-            const userAggregates = new Map();
+
+            // **FIX:** Filter scores to only include the latest attempt for each unique quiz per user.
+            const latestScoresMap = new Map();
             querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
+                if (!scoreData.userId || !scoreData.quizId) return;
+                const key = `${scoreData.userId}-${scoreData.quizId}`;
+                const existing = latestScoresMap.get(key);
+                if (!existing || getSafeTimestampMillis(scoreData.timestamp) > getSafeTimestampMillis(existing.timestamp)) {
+                    latestScoresMap.set(key, scoreData);
+                }
+            });
+
+            // **FIX:** Aggregate scores from the filtered list of latest attempts.
+            const userAggregates = new Map();
+            latestScoresMap.forEach((scoreData) => {
                 if (!scoreData.userId || !scoreData.userName) return;
 
                 if (!userAggregates.has(scoreData.userId)) {
@@ -109,7 +119,6 @@ async function initializeTestHub() {
     }
 
     // --- Part 2: Handle User-Specific Score Boxes ---
-    // This only runs on category pages (like hindi-test.html).
     if (isCategoryPage && testPartsContainer) {
         resetCategoryPageUI();
         if (currentUser) {
@@ -151,7 +160,6 @@ function renderLeaderboard(fullLeaderboardData, category) {
     leaderboardHTML += '</ol>';
 
     let userRankHTML = '';
-    // Show the user's rank separately only on the global page if they aren't in the top list.
     if (currentUser && category === 'all') {
         const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
         if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
@@ -197,11 +205,16 @@ async function updateUserTestStatus(category) {
             const quizId = box.dataset.quizId;
             if (latestScores.has(quizId)) {
                 const scoreData = latestScores.get(quizId);
-                const originalLink = box.querySelector('a');
+                
+                // **FIX:** Get the name from the reliable data-part-name attribute.
+                const partName = box.dataset.partName || "Test Part";
+
+                // Get the original link href from the stored original HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = box.dataset.originalHtml;
+                const originalLink = tempDiv.querySelector('a');
                 if (!originalLink) return;
                 
-                const partName = box.querySelector('h3')?.textContent || "Test Part";
-
                 box.innerHTML = `
                     <div class="user-score-display">
                         <h4>${partName}</h4>
@@ -244,15 +257,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Main auth listener. Triggers the page logic on initial load and on login/logout.
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         initializeTestHub();
     });
 });
 
-// CRITICAL: This event fires when navigating back from the browser's back/forward cache (bfcache).
-// It forces the page to re-run the logic and fetch the latest score from Firestore.
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
         console.log("Page loaded from BFCache. Forcing data refresh.");
