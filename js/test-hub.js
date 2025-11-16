@@ -1,4 +1,5 @@
 
+
 import { getApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
@@ -23,12 +24,7 @@ function getSafeTimestampMillis(ts) {
     if (!ts) return 0;
     if (typeof ts.toMillis === "function") return ts.toMillis();
     if (ts instanceof Date) return ts.getTime();
-    if (typeof ts === "number") return ts > 2000000000 ? ts : ts * 1000;
-    if (typeof ts === "string") {
-        const d = new Date(ts);
-        return isNaN(d) ? 0 : d.getTime();
-    }
-    return 0;
+    return 0; // Simplified for robustness
 }
 
 // Resets the UI of test boxes to their original "Start Test" state.
@@ -51,11 +47,9 @@ async function initializeTestHub() {
     }
 
     const leaderboardContainer = document.getElementById('leaderboard-container');
-    const testPartsContainer = document.getElementById('test-parts-container');
     const isCategoryPage = testCategory !== 'all';
 
-    // --- Part 1: Handle Leaderboard ---
-    // This part now correctly runs for BOTH global and category pages.
+    // Part 1: Handle Leaderboard (for both global and category pages)
     if (leaderboardContainer) {
         leaderboardContainer.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
         try {
@@ -63,10 +57,8 @@ async function initializeTestHub() {
             const categoryPrefix = `${testCategory}-test-`;
 
             if (testCategory === 'all') {
-                // Global page ('test.html'): fetch all scores.
                 scoresQuery = query(collection(db, "quizScores"));
             } else {
-                // Category page (e.g., 'hindi-test.html'): fetch scores for this category.
                 scoresQuery = query(
                     collection(db, "quizScores"),
                     where("quizId", ">=", categoryPrefix),
@@ -79,26 +71,15 @@ async function initializeTestHub() {
             querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
                 if (!scoreData.userId || !scoreData.userName) return;
-
                 if (!userAggregates.has(scoreData.userId)) {
-                    userAggregates.set(scoreData.userId, {
-                        totalScore: 0,
-                        totalPossible: 0,
-                        userName: scoreData.userName,
-                        userPhotoURL: scoreData.userPhotoURL,
-                        userId: scoreData.userId,
-                    });
+                    userAggregates.set(scoreData.userId, { totalScore: 0, totalPossible: 0, userName: scoreData.userName, userPhotoURL: scoreData.userPhotoURL, userId: scoreData.userId });
                 }
                 const userData = userAggregates.get(scoreData.userId);
                 userData.totalScore += scoreData.score;
                 userData.totalPossible += scoreData.totalQuestions;
             });
 
-            const leaderboardData = Array.from(userAggregates.values()).map(userData => ({
-                ...userData,
-                averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0,
-            }));
-            
+            const leaderboardData = Array.from(userAggregates.values()).map(userData => ({ ...userData, averagePercentage: userData.totalPossible > 0 ? (userData.totalScore / userData.totalPossible) * 100 : 0 }));
             leaderboardData.sort((a, b) => b.averagePercentage - a.averagePercentage);
             
             renderLeaderboard(leaderboardData, testCategory);
@@ -108,9 +89,8 @@ async function initializeTestHub() {
         }
     }
 
-    // --- Part 2: Handle User-Specific Score Boxes ---
-    // This only runs on category pages (like hindi-test.html).
-    if (isCategoryPage && testPartsContainer) {
+    // Part 2: Handle User-Specific Score Boxes (only on category pages)
+    if (isCategoryPage) {
         resetCategoryPageUI();
         if (currentUser) {
             await updateUserTestStatus(testCategory);
@@ -127,10 +107,7 @@ function renderLeaderboard(fullLeaderboardData, category) {
     const topScores = fullLeaderboardData.slice(0, topCount);
 
     if (topScores.length === 0) {
-        const message = category === 'all' 
-            ? "No scores have been recorded yet. Be the first to take a test!"
-            : "No scores have been recorded in this category yet.";
-        leaderboardContainer.innerHTML = `<p>${message}</p>`;
+        leaderboardContainer.innerHTML = `<p>No scores have been recorded yet. Be the first to take a test!</p>`;
         return;
     }
 
@@ -139,30 +116,17 @@ function renderLeaderboard(fullLeaderboardData, category) {
         const isCurrentUser = currentUser && currentUser.uid === scoreData.userId;
         const displayName = isCurrentUser ? "You" : scoreData.userName;
         const avatar = scoreData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
-        leaderboardHTML += `
-            <li class="${isCurrentUser ? 'current-user' : ''}">
-                <div class="rank">${index + 1}</div>
-                <img src="${avatar}" alt="${scoreData.userName}" class="avatar">
-                <div class="name">${displayName}</div>
-                <div class="score">${scoreData.averagePercentage.toFixed(2)}%</div>
-            </li>
-        `;
+        leaderboardHTML += `<li class="${isCurrentUser ? 'current-user' : ''}"><div class="rank">${index + 1}</div><img src="${avatar}" alt="${scoreData.userName}" class="avatar"><div class="name">${displayName}</div><div class="score">${scoreData.averagePercentage.toFixed(2)}%</div></li>`;
     });
     leaderboardHTML += '</ol>';
 
     let userRankHTML = '';
-    // Show the user's rank separately only on the global page if they aren't in the top list.
     if (currentUser && category === 'all') {
         const userRankIndex = fullLeaderboardData.findIndex(user => user.userId === currentUser.uid);
         if (userRankIndex !== -1 && userRankIndex >= topScores.length) {
             const userData = fullLeaderboardData[userRankIndex];
             const avatar = userData.userPhotoURL || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23ddd"/></svg>';
-            userRankHTML = `
-                <div class="user-rank-display">
-                    <h2>Your Overall Rank</h2>
-                    <ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol>
-                </div>
-            `;
+            userRankHTML = `<div class="user-rank-display"><h2>Your Overall Rank</h2><ol class="leaderboard"><li class="current-user"><div class="rank">${userRankIndex + 1}</div><img src="${avatar}" alt="${userData.userName}" class="avatar"><div class="name">You</div><div class="score">${userData.averagePercentage.toFixed(2)}%</div></li></ol></div>`;
         }
     }
     
@@ -187,7 +151,7 @@ async function updateUserTestStatus(category) {
             if (quizId && quizId.startsWith(categoryPrefix)) {
                 const existing = latestScores.get(quizId);
                 const newTime = getSafeTimestampMillis(scoreData.timestamp);
-                if (!existing || newTime > getSafeTimestampMillis(existing.timestamp)) {
+                if (!existing || newTime > getSafeTimestampMillis(existing?.timestamp)) {
                     latestScores.set(quizId, scoreData);
                 }
             }
@@ -197,10 +161,13 @@ async function updateUserTestStatus(category) {
             const quizId = box.dataset.quizId;
             if (latestScores.has(quizId)) {
                 const scoreData = latestScores.get(quizId);
-                const originalLink = box.querySelector('a');
-                if (!originalLink) return;
                 
-                const partName = box.querySelector('h3')?.textContent || "Test Part";
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = box.dataset.originalHtml;
+                const partName = tempDiv.querySelector('h3')?.textContent || "Test Part";
+                const originalLinkHref = tempDiv.querySelector('a')?.href;
+                
+                if (!originalLinkHref) return;
 
                 box.innerHTML = `
                     <div class="user-score-display">
@@ -216,14 +183,14 @@ async function updateUserTestStatus(category) {
                 box.querySelector('.retry-btn').onclick = () => {
                     sessionStorage.removeItem(`review_${quizId}`);
                     sessionStorage.removeItem('reviewDataForNextPage');
-                    window.location.href = originalLink.href;
+                    window.location.href = originalLinkHref;
                 };
 
                 box.querySelector('.review-btn').onclick = () => {
                     if (scoreData && scoreData.questions && scoreData.userAnswers) {
                         sessionStorage.setItem('reviewDataForNextPage', JSON.stringify(scoreData));
                         sessionStorage.setItem(`review_${quizId}`, 'true');
-                        window.location.href = originalLink.href;
+                        window.location.href = originalLinkHref;
                     } else {
                         alert('No review data found for this attempt. Please play the test again.');
                     }
@@ -244,18 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Main auth listener. Triggers the page logic on initial load and on login/logout.
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         initializeTestHub();
     });
 });
 
-// CRITICAL: This event fires when navigating back from the browser's back/forward cache (bfcache).
-// It forces the page to re-run the logic and fetch the latest score from Firestore.
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
-        console.log("Page loaded from BFCache. Forcing data refresh.");
         currentUser = auth.currentUser;
         initializeTestHub();
     }
