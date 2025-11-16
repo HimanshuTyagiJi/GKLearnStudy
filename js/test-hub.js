@@ -162,9 +162,11 @@ async function updateUserTestStatus(category) {
             if (latestScores.has(quizId)) {
                 const scoreData = latestScores.get(quizId);
                 
+                const partName = box.dataset.partName || "Test Part"; // Use data-part-name attribute
+                
+                // Get href from original HTML, as it gets overwritten
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = box.dataset.originalHtml;
-                const partName = tempDiv.querySelector('h3')?.textContent || "Test Part";
                 const originalLinkHref = tempDiv.querySelector('a')?.href;
                 
                 if (!originalLinkHref) return;
