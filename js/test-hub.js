@@ -73,7 +73,7 @@ async function initializeTestHub() {
 
             const querySnapshot = await getDocs(scoresQuery);
 
-            // **FIX:** Filter scores to only include the latest attempt for each unique quiz per user.
+            // FIX: Filter for latest scores before aggregating to prevent averaging all attempts.
             const latestScoresMap = new Map();
             querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
@@ -85,9 +85,8 @@ async function initializeTestHub() {
                 }
             });
 
-            // **FIX:** Aggregate scores from the filtered list of latest attempts.
             const userAggregates = new Map();
-            latestScoresMap.forEach((scoreData) => {
+            latestScoresMap.forEach((scoreData) => { // Iterate over the filtered map of latest scores
                 if (!scoreData.userId || !scoreData.userName) return;
 
                 if (!userAggregates.has(scoreData.userId)) {
@@ -206,15 +205,17 @@ async function updateUserTestStatus(category) {
             if (latestScores.has(quizId)) {
                 const scoreData = latestScores.get(quizId);
                 
-                // **FIX:** Get the name from the reliable data-part-name attribute.
+                // FIX: Use the reliable data-part-name attribute to get the test name.
                 const partName = box.dataset.partName || "Test Part";
-
-                // Get the original link href from the stored original HTML
+                
+                // Get the original link from the stored dataset to avoid issues after innerHTML is replaced.
                 const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = box.dataset.originalHtml;
+                if (box.dataset.originalHtml) {
+                    tempDiv.innerHTML = box.dataset.originalHtml;
+                }
                 const originalLink = tempDiv.querySelector('a');
                 if (!originalLink) return;
-                
+
                 box.innerHTML = `
                     <div class="user-score-display">
                         <h4>${partName}</h4>
@@ -257,12 +258,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Main auth listener. Triggers the page logic on initial load and on login/logout.
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         initializeTestHub();
     });
 });
 
+// CRITICAL: This event fires when navigating back from the browser's back/forward cache (bfcache).
+// It forces the page to re-run the logic and fetch the latest score from Firestore.
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
         console.log("Page loaded from BFCache. Forcing data refresh.");
