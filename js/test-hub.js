@@ -73,7 +73,7 @@ async function initializeTestHub() {
 
             const querySnapshot = await getDocs(scoresQuery);
 
-            // FIX: Filter for latest scores before aggregating to prevent averaging all attempts.
+            // FIX: Filter for latest scores for each user-quiz pair before aggregating.
             const latestScoresMap = new Map();
             querySnapshot.forEach((doc) => {
                 const scoreData = doc.data();
@@ -86,7 +86,7 @@ async function initializeTestHub() {
             });
 
             const userAggregates = new Map();
-            latestScoresMap.forEach((scoreData) => { // Iterate over the filtered map of latest scores
+            latestScoresMap.forEach((scoreData) => { // Iterate over the filtered map
                 if (!scoreData.userId || !scoreData.userName) return;
 
                 if (!userAggregates.has(scoreData.userId)) {
@@ -205,10 +205,11 @@ async function updateUserTestStatus(category) {
             if (latestScores.has(quizId)) {
                 const scoreData = latestScores.get(quizId);
                 
-                // FIX: Use the reliable data-part-name attribute to get the test name.
+                // **THE FIX IS HERE**
+                // Read the name from the permanent 'data-part-name' attribute. This is reliable.
                 const partName = box.dataset.partName || "Test Part";
                 
-                // Get the original link from the stored dataset to avoid issues after innerHTML is replaced.
+                // Get the original link href from the stored original HTML.
                 const tempDiv = document.createElement('div');
                 if (box.dataset.originalHtml) {
                     tempDiv.innerHTML = box.dataset.originalHtml;
