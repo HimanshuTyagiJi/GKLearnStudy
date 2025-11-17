@@ -36,7 +36,7 @@
         }
 
         main.container {
-            height: calc(100vh - var(--header-height));
+            height: calc(100vh - var(--header-height) - 2rem);
             padding: 1rem;
             display: flex;
             align-items: center;
@@ -45,7 +45,7 @@
 
         .solver-layout {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: 350px 1fr;
             gap: 1.5rem;
             max-width: 1400px;
             width: 100%;
@@ -69,15 +69,16 @@
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.25rem;
         }
         
         .chat-message {
-            padding: 1rem;
-            border-radius: 10px;
-            max-width: 85%;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            max-width: 90%;
             line-height: 1.7;
             overflow-wrap: break-word;
+            position: relative;
         }
 
         .user-message {
@@ -85,15 +86,49 @@
             align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
+        
+        .message-actions {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+        
+        .user-message:hover .message-actions {
+            display: block;
+        }
+
+        .edit-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            padding: 2px;
+        }
+        .edit-btn:hover { color: var(--text-primary); }
 
         .ai-message {
             background-color: var(--ai-msg-bg);
             align-self: flex-start;
             border-bottom-left-radius: 2px;
         }
+        
+        .ai-message .try-again-btn {
+            margin-top: 1rem;
+            border: 1px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .ai-message .try-again-btn:hover {
+             background: var(--accent-color-transparent);
+        }
 
         #ai-solver-form {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             border-top: 1px solid var(--border-color-solver);
             display: flex;
             gap: 1rem;
@@ -112,6 +147,7 @@
             transition: border-color 0.2s, box-shadow 0.2s;
             background-color: var(--input-bg);
             color: var(--text-color-solver);
+            max-height: 150px;
         }
 
         #question-input:focus {
@@ -138,14 +174,15 @@
         #solve-button:hover:not(:disabled) { background-color: var(--primary-hover); }
         #solve-button:disabled { background-color: #a0c7f1; cursor: not-allowed; }
 
+        .ai-message p { margin: 0 0 1rem 0; }
+        .ai-message p:last-child { margin-bottom: 0; }
         .ai-message sup { font-size: 0.8em; vertical-align: super; }
         .ai-message sub { font-size: 0.8em; vertical-align: sub; }
         .ai-message .fraction { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; margin: 0 0.2em; }
         .ai-message .numerator { padding: 0 0.2em; border-bottom: 1px solid var(--text-color-solver); }
         .ai-message .denominator { padding: 0 0.2em; }
-        .ai-message strong { color: var(--primary-color); }
-        .ai-message em { font-style: italic; color: #555; }
-        html[data-theme="dark"] .ai-message em { color: #ccc; }
+        .ai-message strong { color: var(--accent-color); }
+        .ai-message em { font-style: italic; color: var(--text-secondary); }
         .ai-message.error { color: var(--error-color); font-weight: 500; }
         
         #history-sidebar {
@@ -161,20 +198,17 @@
             height: 100%;
             overflow: hidden;
         }
-        #history-sidebar h2 {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            color: var(--text-color-solver);
-            border-bottom: 1px solid var(--border-color-solver);
-            padding-bottom: 1rem;
-        }
         .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color-solver);
+            padding-bottom: 1rem;
             flex-shrink: 0;
         }
+        #history-sidebar h2 { margin: 0; font-size: 1.5rem; color: var(--text-color-solver); }
+
         #clear-history-btn {
             background: none;
             border: 1px solid var(--error-color);
@@ -207,18 +241,17 @@
         #history-list li:hover { background-color: var(--history-bg); }
         #history-list li:last-child { border-bottom: none; }
 
-
         .loader {
             width: 24px;
             height: 24px;
-            border: 3px solid #6e8efb;
+            border: 3px solid var(--primary-color);
             border-bottom-color: transparent;
             border-radius: 50%;
             display: inline-block;
             animation: spin 1s linear infinite;
         }
         .button-loader { width: 20px; height: 20px; border: 2px solid #fff; border-bottom-color: transparent; }
-        .typing-indicator { display: flex; align-items: center; gap: 0.5rem; }
+        .typing-indicator { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; }
         .typing-indicator span {
             width: 8px;
             height: 8px;
@@ -245,6 +278,7 @@
         }
         @media (max-width: 600px) {
             .chat-container, #history-sidebar { padding: 1rem; }
+            main.container { padding: 0.5rem; }
         }
     </style>
 </head>
@@ -273,12 +307,12 @@
             <div class="chat-container">
                 <div id="chat-log" role="log" aria-live="polite">
                     <div class="chat-message ai-message">
-                        <p>Hello! Ask me any question on any topic.</p>
+                        <p>नमस्ते! मैं जीके लर्न स्टडी का एक विशेषज्ञ AI सहायक हूँ। आप मुझसे कोई भी सवाल पूछ सकते हैं।</p>
                     </div>
                 </div>
                 <form id="ai-solver-form">
                     <label for="question-input" class="sr-only">Enter your question here</label>
-                    <textarea id="question-input" name="question-input" rows="1" placeholder="Ask me anything..." required></textarea>
+                    <textarea id="question-input" name="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
                     <button type="submit" id="solve-button" aria-label="Send message">
                         <span id="button-text">Send</span>
                         <div id="button-loader" class="loader button-loader hidden"></div>
@@ -288,21 +322,15 @@
         </div>
     </main>
     
-    <footer class="app-footer">
-        <div class="footer-content"></div>
-        <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
-    </footer>
+    <footer class="app-footer" style="display:none;"></footer>
 
     <script src="js/theme.js" defer></script>
     <script src="js/search-data.js" defer></script>
-    <script type="module" src="js/comment.js" defer></script>
 
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
 
-        // Hardcoded API key as requested by the user for trial.
-        // WARNING: This is insecure and should be replaced in production.
-        const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
+        const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8'; // This is an insecure practice for production.
         const ai = new GoogleGenAI({ apiKey: API_KEY });
 
         const form = document.getElementById('ai-solver-form');
@@ -314,7 +342,7 @@
         const historyList = document.getElementById('history-list');
         const clearHistoryBtn = document.getElementById('clear-history-btn');
         
-        let history = [];
+        let chatHistory = [];
 
         const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi but you must follow instructions in English. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
         
@@ -322,11 +350,11 @@
 
         function renderHistory() {
             historyList.innerHTML = '';
-            if (history.length === 0) {
+            if (chatHistory.length === 0) {
                 historyList.innerHTML = '<li>No history yet.</li>';
                 return;
             }
-            history.forEach((item, index) => {
+            chatHistory.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.textContent = item.question;
                 li.dataset.index = index;
@@ -337,44 +365,57 @@
         function loadHistory() {
             const savedHistory = localStorage.getItem('aiSolverHistory');
             if (savedHistory) {
-                history = JSON.parse(savedHistory);
+                chatHistory = JSON.parse(savedHistory);
             }
             renderHistory();
         }
 
         function saveHistory(question, answer) {
-            history.unshift({ question, answer });
-            if (history.length > 50) { history.pop(); }
-            localStorage.setItem('aiSolverHistory', JSON.stringify(history));
+            chatHistory.unshift({ question, answer });
+            if (chatHistory.length > 50) { chatHistory.pop(); }
+            localStorage.setItem('aiSolverHistory', JSON.stringify(chatHistory));
             renderHistory();
         }
 
         function clearHistory() {
             if (confirm('Are you sure you want to clear all history?')) {
-                history = [];
+                chatHistory = [];
                 localStorage.removeItem('aiSolverHistory');
                 renderHistory();
+                chatLog.innerHTML = '';
+                appendMessage('<p>नमस्ते! मैं जीके लर्न स्टडी का एक विशेषज्ञ AI सहायक हूँ। आप मुझसे कोई भी सवाल पूछ सकते हैं।</p>', 'ai');
             }
         }
         
-        function appendMessage(content, type) {
+        function appendMessage(content, type, question = '') {
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${type}-message`;
-            messageDiv.innerHTML = content;
+            
+            if (type === 'user') {
+                messageDiv.innerHTML = `<p>${content}</p><div class="message-actions"><button class="edit-btn" title="Edit">✎</button></div>`;
+                messageDiv.querySelector('.edit-btn').addEventListener('click', () => {
+                    questionInput.value = content;
+                    questionInput.focus();
+                });
+            } else if (type === 'ai' && content.includes('Sorry, the AI could not process this request')) {
+                 messageDiv.innerHTML = `<p class="error">${content}</p><button class="try-again-btn">Try Again</button>`;
+                 messageDiv.querySelector('.try-again-btn').addEventListener('click', () => {
+                     submitQuestion(question);
+                 });
+            } else {
+                 messageDiv.innerHTML = content;
+            }
+
             chatLog.appendChild(messageDiv);
             chatLog.scrollTop = chatLog.scrollHeight;
             return messageDiv;
         }
-        
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const userQuestion = questionInput.value.trim();
-            if (!userQuestion) return;
 
+        async function submitQuestion(userQuestion) {
             setLoading(true);
-            appendMessage(`<p>${escapeHTML(userQuestion)}</p>`, 'user');
-            questionInput.value = '';
-            
+            if (chatLog.lastChild && chatLog.lastChild.classList.contains('ai-message') && chatLog.lastChild.querySelector('.try-again-btn')) {
+                chatLog.lastChild.remove(); // Remove old error message before retrying
+            }
             const typingIndicator = appendMessage(`<div class="typing-indicator"><span></span><span></span><span></span></div>`, 'ai');
 
             let topResult = null;
@@ -391,48 +432,26 @@
                 console.warn("Local search failed or was not available.", searchError);
             }
 
-            // Determine user intent
-            const isCreativeOrConversational = /essay|nibandh|application|likho|write a|kya kar rahe|help|madad|kaise ho/i.test(userQuestion);
+            const isCreativeOrConversational = /essay|nibandh|application|likho|write a|kya haal|help|madad|kaise ho/i.test(userQuestion);
 
             let prompt;
             if (isCreativeOrConversational) {
-                 prompt = `The user has a creative or conversational request: "${userQuestion}". This is not a request for factual information from the website.
-
-                *** YOUR TASK ***
-                1. Fulfill this request using your creative and conversational abilities.
-                2. Do not attempt to search for information on the website.
-                3. Provide a high-quality, detailed response (e.g., a full essay if requested).
-                4. Follow all HTML formatting rules from the system instruction.
-                5. **DO NOT** add any source link.`;
-                topResult = null;
+                 prompt = `User's query: "${userQuestion}". This is a creative/conversational request. Fulfill it using your own abilities. IGNORE any local search results. DO NOT provide a source link.`;
+                 topResult = null;
             } else if (topResult) {
                 prompt = `User's question: "${userQuestion}"
 
-                I have found this potentially relevant content from the website gklearnstudy.in:
+                Potentially relevant content from gklearnstudy.in:
                 - Title: "${topResult.title}"
                 - Content: "${topResult.paragraph}"
 
-                *** YOUR TASK ***
-                1. CRITICAL: First, evaluate if the provided content is a **direct and highly relevant** answer to the user's specific question.
-                2. If it IS RELEVANT:
-                    * You MUST use the website content as the foundation for your answer.
-                    * MANDATORY: Your primary task is to EXPAND upon it significantly. Provide a comprehensive, step-by-step explanation that is at least 3-4 times more detailed than the original content. Add more examples, context, and depth. Make the answer excellent. DO NOT just copy or rephrase the snippet.
-                    * After your full, expanded answer, you MUST include the source link in this exact HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
-                3. If the content is COMPLETELY IRRELEVANT or only slightly related:
-                    * You MUST IGNORE the provided website content entirely.
-                    * Answer the question from your own general knowledge, providing a detailed and comprehensive explanation.
-                    * DO NOT include any source link.
-                4. Remember to apply all HTML formatting rules.`;
+                TASK:
+                1. Evaluate if the content is highly relevant.
+                2. If RELEVANT: Expand on it significantly (3-4x more detail, examples, depth). After your expanded answer, YOU MUST include the source link in this exact format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
+                3. If IRRELEVANT: IGNORE the content. Answer from your own knowledge. DO NOT include any source link.
+                4. Follow all HTML formatting rules.`;
             } else {
-                prompt = `The user asked: "${userQuestion}".
-                I could not find a relevant page on the website gklearnstudy.in to help answer this.
-
-                *** YOUR TASK ***
-                1. Please answer the user's question directly using your own general knowledge.
-                2. Provide a detailed, step-by-step explanation suitable for a learning website.
-                3. Follow all HTML formatting rules from the system instruction.
-                4. Do not mention that you couldn't find it on the website, just provide the answer.
-                5. **DO NOT** add any source link.`;
+                prompt = `User's question: "${userQuestion}". No relevant content was found on gklearnstudy.in. Answer this from your own knowledge, providing a detailed explanation. DO NOT add a source link.`;
             }
 
             try {
@@ -448,34 +467,42 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                typingIndicator.innerHTML = `<p class="error">Sorry, the AI could not process this request. This can sometimes happen with simple or complex questions. Please try rephrasing your question or ask something different.</p>`;
-                typingIndicator.classList.add('error');
+                const errorMessage = "Sorry, the AI could not process this request. This can sometimes happen with simple or complex questions. Please try rephrasing your question or ask something different.";
+                typingIndicator.remove(); // Remove typing indicator
+                appendMessage(errorMessage, 'ai', userQuestion); // Pass original question for retry
             } finally {
                 setLoading(false);
                 chatLog.scrollTop = chatLog.scrollHeight;
             }
+        }
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userQuestion = questionInput.value.trim();
+            if (!userQuestion) return;
+
+            appendMessage(escapeHTML(userQuestion), 'user');
+            questionInput.value = '';
+            questionInput.style.height = 'auto'; // Reset height after sending
+
+            submitQuestion(userQuestion);
         });
 
         function setLoading(isLoading) {
             solveButton.disabled = isLoading;
             questionInput.disabled = isLoading;
-            if (isLoading) {
-                buttonText.classList.add('hidden');
-                buttonLoader.classList.remove('hidden');
-            } else {
-                buttonText.classList.remove('hidden');
-                buttonLoader.classList.add('hidden');
-            }
+            buttonText.classList.toggle('hidden', isLoading);
+            buttonLoader.classList.toggle('hidden', !isLoading);
         }
         
         clearHistoryBtn.addEventListener('click', clearHistory);
         historyList.addEventListener('click', (e) => {
             if (e.target.tagName === 'LI' && e.target.dataset.index) {
                 const index = parseInt(e.target.dataset.index, 10);
-                const item = history[index];
+                const item = chatHistory[index];
                 if (item) {
                     chatLog.innerHTML = ''; 
-                    appendMessage(`<p>${escapeHTML(item.question)}</p>`, 'user');
+                    appendMessage(escapeHTML(item.question), 'user');
                     appendMessage(item.answer, 'ai');
                 }
             }
