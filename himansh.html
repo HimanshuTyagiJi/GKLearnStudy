@@ -10,8 +10,7 @@
     <link rel="canonical" href="https://gklearnstudy.in/calculator.html" />
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="css/theme.css" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
-    <style>
+<style>
         :root {
             --primary-color: #4a90e2;
             --primary-hover: #357ABD;
@@ -21,16 +20,23 @@
             --border-color-solver: var(--border-color);
             --shadow-color-solver: var(--shadow-color);
             --error-color: #e53935;
+            --history-bg: var(--input-bg);
+        }
+
+        .solver-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            width: 100%;
         }
 
         .calculator-container {
-            width: 100%;
-            max-width: 800px;
             background-color: var(--container-bg-solver);
             border-radius: 12px;
             box-shadow: 0 4px 12px var(--shadow-color-solver);
             padding: 2rem;
-            margin: 2rem auto;
             border: 1px solid var(--border-color-solver);
             animation: fadeIn 0.5s ease-out;
         }
@@ -127,6 +133,64 @@
         #solution-output em { font-style: italic; color: #555; }
         html[data-theme="dark"] #solution-output em { color: #ccc; }
         #solution-output.error { color: var(--error-color); font-weight: 500; }
+        
+        /* History Sidebar */
+        #history-sidebar {
+            background-color: var(--container-bg-solver);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color-solver);
+            padding: 2rem;
+            border: 1px solid var(--border-color-solver);
+            animation: fadeIn 0.5s ease-out 0.2s;
+            animation-fill-mode: backwards;
+            display: flex;
+            flex-direction: column;
+        }
+        #history-sidebar h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-color-solver);
+            border-bottom: 1px solid var(--border-color-solver);
+            padding-bottom: 1rem;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #clear-history-btn {
+            background: none;
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        #clear-history-btn:hover { background-color: var(--error-color); color: white; }
+
+        #history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        #history-list li {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color-solver);
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: background-color 0.2s;
+            border-radius: 6px;
+        }
+        #history-list li:hover { background-color: var(--history-bg); }
+        #history-list li:last-child { border-bottom: none; }
+
 
         .loader {
             width: 24px;
@@ -144,8 +208,12 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .hidden { display: none; }
         
+        @media (max-width: 900px) {
+            .solver-layout { grid-template-columns: 1fr; }
+            #history-sidebar { max-height: 400px; }
+        }
         @media (max-width: 600px) {
-            .calculator-container { padding: 1.5rem; }
+            .calculator-container, #history-sidebar { padding: 1.5rem; }
             h1 { font-size: 1.8rem; }
         }
     </style>
@@ -166,21 +234,32 @@
     <ul id="suggestions-list" class="suggestions"></ul>
 
     <main class="container">
-        <div class="calculator-container">
-            <h1>AI Solver</h1>
-            <form id="ai-solver-form">
-                <label for="question-input" class="sr-only">Enter your question here</label>
-                <textarea id="question-input" name="question-input" rows="4" placeholder="Enter your question on any topic here... (e.g., 'What is a noun?', 'Explain the law of gravity', or 'Solve 2x + 5 = 15')" required></textarea>
-                <button type="submit" id="solve-button">
-                    <span id="button-text">Solve</span>
-                    <div id="button-loader" class="loader button-loader hidden"></div>
-                </button>
-            </form>
+        <div class="solver-layout">
+            <div class="calculator-container">
+                <h1>AI Solver</h1>
+                <form id="ai-solver-form">
+                    <label for="question-input" class="sr-only">Enter your question here</label>
+                    <textarea id="question-input" name="question-input" rows="4" placeholder="Enter your question on any topic here... (e.g., 'What is a noun?', 'Explain the law of gravity', or 'Solve 2x + 5 = 15')" required></textarea>
+                    <button type="submit" id="solve-button">
+                        <span id="button-text">Solve</span>
+                        <div id="button-loader" class="loader button-loader hidden"></div>
+                    </button>
+                </form>
 
-            <div id="solution-container" class="solution-container hidden">
-                <h2>Solution:</h2>
-                <div id="solution-output" role="status" aria-live="polite"></div>
+                <div id="solution-container" class="solution-container hidden">
+                    <h2>Solution:</h2>
+                    <div id="solution-output" role="status" aria-live="polite"></div>
+                </div>
             </div>
+            <aside id="history-sidebar">
+                <div class="history-header">
+                    <h2>History</h2>
+                    <button id="clear-history-btn">Clear History</button>
+                </div>
+                <ul id="history-list">
+                    <!-- History items will be populated here -->
+                </ul>
+            </aside>
         </div>
     </main>
     
@@ -203,11 +282,54 @@
         const buttonLoader = document.getElementById('button-loader');
         const solutionContainer = document.getElementById('solution-container');
         const solutionOutput = document.getElementById('solution-output');
+        const historyList = document.getElementById('history-list');
+        const clearHistoryBtn = document.getElementById('clear-history-btn');
         
-        const apiKey = "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU";
+        const apiKey = "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8";
         const ai = new GoogleGenAI({ apiKey });
 
+        let history = [];
+
         const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi but you must follow instructions in English. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
+
+        function renderHistory() {
+            historyList.innerHTML = '';
+            if (history.length === 0) {
+                historyList.innerHTML = '<li>No history yet.</li>';
+                return;
+            }
+            history.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = item.question;
+                li.dataset.index = index;
+                historyList.appendChild(li);
+            });
+        }
+
+        function loadHistory() {
+            const savedHistory = localStorage.getItem('aiSolverHistory');
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+            }
+            renderHistory();
+        }
+
+        function saveHistory(question, answer) {
+            history.unshift({ question, answer });
+            if (history.length > 20) { // Limit history size
+                history.pop();
+            }
+            localStorage.setItem('aiSolverHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all history?')) {
+                history = [];
+                localStorage.removeItem('aiSolverHistory');
+                renderHistory();
+            }
+        }
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -271,7 +393,13 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                showError("Sorry, an error occurred while getting the solution. Please try again later.");
+                // Fallback to local search result if API fails
+                if (topResult) {
+                    const fallbackHtml = `<p>${topResult.paragraph}</p><p><em>(Showing the most relevant result from gklearnstudy.in as the AI is currently unavailable)</em></p><p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>`;
+                    displaySolution(fallbackHtml);
+                } else {
+                    showError("Sorry, an error occurred while getting the solution. Please try again later.");
+                }
             }
         });
 
@@ -294,6 +422,7 @@
             solutionOutput.innerHTML = htmlText;
             solutionOutput.classList.remove('error');
             solutionContainer.classList.remove('hidden');
+            saveHistory(questionInput.value, htmlText);
         }
 
         function showError(message) {
@@ -301,7 +430,26 @@
             solutionOutput.textContent = message;
             solutionOutput.classList.add('error');
             solutionContainer.classList.remove('hidden');
+            // Do not save errors to history
         }
+
+        // Event Listeners for History
+        clearHistoryBtn.addEventListener('click', clearHistory);
+        historyList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI' && e.target.dataset.index) {
+                const index = parseInt(e.target.dataset.index, 10);
+                const item = history[index];
+                if (item) {
+                    questionInput.value = item.question;
+                    solutionOutput.innerHTML = item.answer;
+                    solutionContainer.classList.remove('hidden');
+                    solutionOutput.classList.remove('error');
+                }
+            }
+        });
+
+        // Initial Load
+        loadHistory();
     </script>
 </body>
 </html>
