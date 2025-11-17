@@ -10,7 +10,6 @@
     <link rel="canonical" href="https://gklearnstudy.in/calculator.html" />
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="css/theme.css" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -87,6 +86,7 @@
             display: flex;
             gap: 1rem;
             background-color: var(--container-bg-solver);
+            flex-shrink: 0; /* Prevents form from shrinking */
         }
 
         #question-input {
@@ -297,8 +297,7 @@
         const historyList = document.getElementById('history-list');
         const clearHistoryBtn = document.getElementById('clear-history-btn');
         
-        const apiKey = "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8";
-        const ai = new GoogleGenAI({ apiKey });
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
         let history = [];
 
