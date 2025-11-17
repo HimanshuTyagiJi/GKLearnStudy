@@ -10,64 +10,93 @@
     <link rel="canonical" href="https://gklearnstudy.in/calculator.html" />
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="css/theme.css" />
-<style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
+    <style>
         :root {
             --primary-color: #4a90e2;
             --primary-hover: #357ABD;
-            --background-color-solver: #f0f2f5;
+            --background-color-solver: var(--body-bg);
             --container-bg-solver: var(--card-bg);
             --text-color-solver: var(--text-primary);
             --border-color-solver: var(--border-color);
             --shadow-color-solver: var(--shadow-color);
             --error-color: #e53935;
             --history-bg: var(--input-bg);
+            --user-msg-bg: #e6f2ff;
+            --ai-msg-bg: var(--input-bg);
+        }
+
+        html[data-theme="dark"] {
+            --user-msg-bg: #2a3a5c;
+            --ai-msg-bg: #242a57;
         }
 
         .solver-layout {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 400px 1fr;
             gap: 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 2rem auto;
             width: 100%;
+            height: calc(100vh - var(--header-height) - 4rem); /* Full viewport height minus header and margin */
         }
 
-        .calculator-container {
+        .chat-container {
             background-color: var(--container-bg-solver);
             border-radius: 12px;
             box-shadow: 0 4px 12px var(--shadow-color-solver);
-            padding: 2rem;
             border: 1px solid var(--border-color-solver);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Important for chat layout */
             animation: fadeIn 0.5s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .calculator-container h1 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        #ai-solver-form {
+        #chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
+        
+        .chat-message {
+            padding: 1rem;
+            border-radius: 10px;
+            max-width: 85%;
+            line-height: 1.7;
+            overflow-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--user-msg-bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .ai-message {
+            background-color: var(--ai-msg-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        #ai-solver-form {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color-solver);
+            display: flex;
+            gap: 1rem;
+            background-color: var(--container-bg-solver);
+        }
 
         #question-input {
             width: 100%;
-            min-height: 100px;
             padding: 0.75rem;
             font-size: 1rem;
             font-family: inherit;
             border: 1px solid var(--border-color-solver);
             border-radius: 8px;
-            resize: vertical;
+            resize: none; /* No resize handle */
             transition: border-color 0.2s, box-shadow 0.2s;
             background-color: var(--input-bg);
             color: var(--text-color-solver);
@@ -81,7 +110,7 @@
 
         #solve-button {
             padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #fff;
             background-color: var(--primary-color);
@@ -94,47 +123,19 @@
             justify-content: center;
             gap: 0.5rem;
         }
-
         #solve-button:hover:not(:disabled) { background-color: var(--primary-hover); }
         #solve-button:disabled { background-color: #a0c7f1; cursor: not-allowed; }
 
-        .solution-container {
-            margin-top: 2rem;
-            border-top: 1px solid var(--border-color-solver);
-            padding-top: 2rem;
-        }
-
-        .solution-container h2 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            color: var(--text-color-solver);
-        }
-
-        #solution-output {
-            background-color: var(--input-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            min-height: 100px;
-            overflow-wrap: break-word;
-            line-height: 1.7;
-            border: 1px solid var(--border-color-solver);
-            color: var(--text-color-solver);
-        }
+        .ai-message sup { font-size: 0.8em; vertical-align: super; }
+        .ai-message sub { font-size: 0.8em; vertical-align: sub; }
+        .ai-message .fraction { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; margin: 0 0.2em; }
+        .ai-message .numerator { padding: 0 0.2em; border-bottom: 1px solid var(--text-color-solver); }
+        .ai-message .denominator { padding: 0 0.2em; }
+        .ai-message strong { color: var(--primary-color); }
+        .ai-message em { font-style: italic; color: #555; }
+        html[data-theme="dark"] .ai-message em { color: #ccc; }
+        .ai-message.error { color: var(--error-color); font-weight: 500; }
         
-        #solution-output p { margin-bottom: 1rem; }
-        #solution-output p:last-child { margin-bottom: 0; }
-
-        #solution-output sup { font-size: 0.8em; vertical-align: super; }
-        #solution-output sub { font-size: 0.8em; vertical-align: sub; }
-        #solution-output .fraction { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; margin: 0 0.2em; }
-        #solution-output .numerator { padding: 0 0.2em; border-bottom: 1px solid var(--text-color-solver); }
-        #solution-output .denominator { padding: 0 0.2em; }
-        #solution-output strong { color: var(--primary-color); }
-        #solution-output em { font-style: italic; color: #555; }
-        html[data-theme="dark"] #solution-output em { color: #ccc; }
-        #solution-output.error { color: var(--error-color); font-weight: 500; }
-        
-        /* History Sidebar */
         #history-sidebar {
             background-color: var(--container-bg-solver);
             border-radius: 12px;
@@ -145,6 +146,7 @@
             animation-fill-mode: backwards;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
         #history-sidebar h2 {
             margin-top: 0;
@@ -201,20 +203,32 @@
             display: inline-block;
             animation: spin 1s linear infinite;
         }
-        
         .button-loader { width: 20px; height: 20px; border: 2px solid #fff; border-bottom-color: transparent; }
-        .loader-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; min-height: 100px; color: var(--text-color-solver); opacity: 0.7; }
+        .typing-indicator { display: flex; align-items: center; gap: 0.5rem; }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #9ca3af;
+            animation: typing 1s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
+        @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .hidden { display: none; }
         
+        @media (max-width: 1200px) {
+            .solver-layout { grid-template-columns: 300px 1fr; }
+        }
         @media (max-width: 900px) {
-            .solver-layout { grid-template-columns: 1fr; }
-            #history-sidebar { max-height: 400px; }
+            .solver-layout { grid-template-columns: 1fr; height: auto; }
+            #history-sidebar { order: -1; max-height: 300px; }
         }
         @media (max-width: 600px) {
-            .calculator-container, #history-sidebar { padding: 1.5rem; }
-            h1 { font-size: 1.8rem; }
+            .chat-container, #history-sidebar { padding: 1rem; }
         }
     </style>
 </head>
@@ -235,22 +249,6 @@
 
     <main class="container">
         <div class="solver-layout">
-            <div class="calculator-container">
-                <h1>AI Solver</h1>
-                <form id="ai-solver-form">
-                    <label for="question-input" class="sr-only">Enter your question here</label>
-                    <textarea id="question-input" name="question-input" rows="4" placeholder="Enter your question on any topic here... (e.g., 'What is a noun?', 'Explain the law of gravity', or 'Solve 2x + 5 = 15')" required></textarea>
-                    <button type="submit" id="solve-button">
-                        <span id="button-text">Solve</span>
-                        <div id="button-loader" class="loader button-loader hidden"></div>
-                    </button>
-                </form>
-
-                <div id="solution-container" class="solution-container hidden">
-                    <h2>Solution:</h2>
-                    <div id="solution-output" role="status" aria-live="polite"></div>
-                </div>
-            </div>
             <aside id="history-sidebar">
                 <div class="history-header">
                     <h2>History</h2>
@@ -260,6 +258,21 @@
                     <!-- History items will be populated here -->
                 </ul>
             </aside>
+            <div class="chat-container">
+                <div id="chat-log" role="log" aria-live="polite">
+                    <div class="chat-message ai-message">
+                        <p>Hello! Ask me any question on any topic.</p>
+                    </div>
+                </div>
+                <form id="ai-solver-form">
+                    <label for="question-input" class="sr-only">Enter your question here</label>
+                    <textarea id="question-input" name="question-input" rows="1" placeholder="Ask me anything..." required></textarea>
+                    <button type="submit" id="solve-button" aria-label="Send message">
+                        <span id="button-text">Send</span>
+                        <div id="button-loader" class="loader button-loader hidden"></div>
+                    </button>
+                </form>
+            </div>
         </div>
     </main>
     
@@ -280,8 +293,7 @@
         const solveButton = document.getElementById('solve-button');
         const buttonText = document.getElementById('button-text');
         const buttonLoader = document.getElementById('button-loader');
-        const solutionContainer = document.getElementById('solution-container');
-        const solutionOutput = document.getElementById('solution-output');
+        const chatLog = document.getElementById('chat-log');
         const historyList = document.getElementById('history-list');
         const clearHistoryBtn = document.getElementById('clear-history-btn');
         
@@ -291,6 +303,8 @@
         let history = [];
 
         const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi but you must follow instructions in English. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
+        
+        const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
 
         function renderHistory() {
             historyList.innerHTML = '';
@@ -316,9 +330,7 @@
 
         function saveHistory(question, answer) {
             history.unshift({ question, answer });
-            if (history.length > 20) { // Limit history size
-                history.pop();
-            }
+            if (history.length > 50) { history.pop(); }
             localStorage.setItem('aiSolverHistory', JSON.stringify(history));
             renderHistory();
         }
@@ -331,12 +343,25 @@
             }
         }
         
+        function appendMessage(content, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message`;
+            messageDiv.innerHTML = content;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+            return messageDiv;
+        }
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const userQuestion = questionInput.value.trim();
             if (!userQuestion) return;
 
             setLoading(true);
+            appendMessage(`<p>${escapeHTML(userQuestion)}</p>`, 'user');
+            questionInput.value = '';
+            
+            const typingIndicator = appendMessage(`<div class="typing-indicator"><span></span><span></span><span></span></div>`, 'ai');
 
             let topResult = null;
             try {
@@ -353,32 +378,27 @@
             }
 
             let prompt;
-
             if (topResult) {
                 prompt = `User's question: "${userQuestion}"
 
-                PRIMARY CONTEXT from gklearnstudy.in:
+                I found this potentially related content on gklearnstudy.in:
                 - Title: "${topResult.title}"
                 - Content: "${topResult.paragraph}"
 
                 *** YOUR TASK ***
-                1.  Your primary goal is to provide a complete and detailed answer to the user's question.
-                2.  FIRST, use the "PRIMARY CONTEXT" provided above as the foundation of your answer.
-                3.  If the context is good but too short, you MUST EXPAND on it using your own knowledge to provide a full, step-by-step explanation.
-                4.  After your full answer, you MUST append the source link in this EXACT HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
-                5.  Apply all special HTML formatting rules (math, chemistry, grammar) as instructed in the system prompt.
-                6.  If the provided context is completely irrelevant to the user's question, ignore it, answer from your own knowledge, and DO NOT add the source link.
-                `;
+                1. CRITICAL: First, evaluate if the provided content is RELEVANT to the user's question.
+                2. If it IS RELEVANT, use it as the primary source. If the context is too short, EXPAND on it with your own knowledge to give a full answer. Then, at the very end, add the source link in this exact HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
+                3. If the context is COMPLETELY IRRELEVANT (e.g., user asks for HTML code and context is about Hindi grammar), you MUST IGNORE the context entirely. Answer the question from your own knowledge and DO NOT add any source link.
+                4. Apply all HTML formatting rules (math, chemistry, etc.) as instructed in the system prompt.`;
             } else {
                 prompt = `User's question: "${userQuestion}"
-
+                
                 *** YOUR TASK ***
                 1. No relevant content was found on the website gklearnstudy.in.
                 2. You MUST answer the user's question completely and in detail using your own general knowledge.
                 3. Provide a step-by-step explanation.
                 4. Apply all special HTML formatting rules (math, chemistry, grammar) as instructed in the system prompt.
-                5. **DO NOT** add any source link.
-                `;
+                5. **DO NOT** add any source link.`;
             }
 
             try {
@@ -389,63 +409,54 @@
                 });
                 
                 const solutionText = response.text;
-                displaySolution(solutionText);
+                typingIndicator.innerHTML = solutionText; // Replace typing indicator with the answer
+                saveHistory(userQuestion, solutionText);
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                // Fallback to local search result if API fails
                 if (topResult) {
                     const fallbackHtml = `<p>${topResult.paragraph}</p><p><em>(Showing the most relevant result from gklearnstudy.in as the AI is currently unavailable)</em></p><p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>`;
-                    displaySolution(fallbackHtml);
+                    typingIndicator.innerHTML = fallbackHtml;
+                    saveHistory(userQuestion, fallbackHtml);
                 } else {
-                    showError("Sorry, an error occurred while getting the solution. Please try again later.");
+                    typingIndicator.innerHTML = `<p class="error">Sorry, an error occurred while getting the solution. Please try again later.</p>`;
+                    typingIndicator.classList.add('error');
                 }
+            } finally {
+                setLoading(false);
+                chatLog.scrollTop = chatLog.scrollHeight;
             }
         });
 
         function setLoading(isLoading) {
             solveButton.disabled = isLoading;
+            questionInput.disabled = isLoading;
             if (isLoading) {
                 buttonText.classList.add('hidden');
                 buttonLoader.classList.remove('hidden');
-                solutionContainer.classList.remove('hidden');
-                solutionOutput.innerHTML = `<div class="loader-container"><div class="loader"></div><p>Solving...</p></div>`;
-                solutionOutput.classList.remove('error');
             } else {
                 buttonText.classList.remove('hidden');
                 buttonLoader.classList.add('hidden');
             }
         }
 
-        function displaySolution(htmlText) {
-            setLoading(false); 
-            solutionOutput.innerHTML = htmlText;
-            solutionOutput.classList.remove('error');
-            solutionContainer.classList.remove('hidden');
-            saveHistory(questionInput.value, htmlText);
-        }
-
-        function showError(message) {
-            setLoading(false);
-            solutionOutput.textContent = message;
-            solutionOutput.classList.add('error');
-            solutionContainer.classList.remove('hidden');
-            // Do not save errors to history
-        }
-
-        // Event Listeners for History
         clearHistoryBtn.addEventListener('click', clearHistory);
         historyList.addEventListener('click', (e) => {
             if (e.target.tagName === 'LI' && e.target.dataset.index) {
                 const index = parseInt(e.target.dataset.index, 10);
                 const item = history[index];
                 if (item) {
-                    questionInput.value = item.question;
-                    solutionOutput.innerHTML = item.answer;
-                    solutionContainer.classList.remove('hidden');
-                    solutionOutput.classList.remove('error');
+                    chatLog.innerHTML = ''; // Clear current chat
+                    appendMessage(`<p>${escapeHTML(item.question)}</p>`, 'user');
+                    appendMessage(item.answer, 'ai');
                 }
             }
+        });
+        
+        // Auto-resize textarea
+        questionInput.addEventListener('input', () => {
+            questionInput.style.height = 'auto';
+            questionInput.style.height = (questionInput.scrollHeight) + 'px';
         });
 
         // Initial Load
