@@ -42,6 +42,27 @@
             align-items: center;
             justify-content: center;
         }
+        
+        #api-key-prompt {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #select-api-key-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #select-api-key-btn:hover {
+             background-color: var(--primary-hover);
+        }
 
         .solver-layout {
             display: grid;
@@ -263,7 +284,11 @@
     <ul id="suggestions-list" class="suggestions"></ul>
 
     <main class="container">
-        <div class="solver-layout">
+        <div id="api-key-prompt">
+            <button id="select-api-key-btn">Select API Key to use AI Solver</button>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">For information on billing, see <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener">ai.google.dev/gemini-api/docs/billing</a>.</p>
+        </div>
+        <div class="solver-layout hidden">
             <aside id="history-sidebar">
                 <div class="history-header">
                     <h2>History</h2>
@@ -309,9 +334,10 @@
         const chatLog = document.getElementById('chat-log');
         const historyList = document.getElementById('history-list');
         const clearHistoryBtn = document.getElementById('clear-history-btn');
+        const apiKeyPrompt = document.getElementById('api-key-prompt');
+        const selectApiKeyBtn = document.getElementById('select-api-key-btn');
+        const solverLayout = document.querySelector('.solver-layout');
         
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
         let history = [];
 
         const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi but you must follow instructions in English. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
@@ -362,6 +388,17 @@
             chatLog.appendChild(messageDiv);
             chatLog.scrollTop = chatLog.scrollHeight;
             return messageDiv;
+        }
+        
+        function showMainApp() {
+            apiKeyPrompt.classList.add('hidden');
+            solverLayout.classList.remove('hidden');
+        }
+        
+        function showApiKeyPrompt() {
+            solverLayout.classList.add('hidden');
+            apiKeyPrompt.classList.remove('hidden');
+            apiKeyPrompt.style.display = 'block';
         }
 
         form.addEventListener('submit', async (e) => {
@@ -414,6 +451,9 @@
             }
 
             try {
+                // Create the AI instance just before the call
+                const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+                
                 const response = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
                     contents: prompt,
@@ -426,7 +466,11 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                if (topResult) {
+                if (apiError.message && apiError.message.includes('Requested entity was not found')) {
+                    typingIndicator.innerHTML = `<p class="error">The selected API Key is invalid or has been revoked. Please select a valid key to continue.</p>`;
+                    typingIndicator.classList.add('error');
+                    showApiKeyPrompt(); // Re-prompt for a key
+                } else if (topResult) {
                     const fallbackHtml = `<p>${topResult.paragraph}</p><p><em>(Showing the most relevant result from gklearnstudy.in as the AI is currently unavailable)</em></p><p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>`;
                     typingIndicator.innerHTML = fallbackHtml;
                     saveHistory(userQuestion, fallbackHtml);
@@ -451,6 +495,19 @@
                 buttonLoader.classList.add('hidden');
             }
         }
+        
+        async function checkApiKeyAndInit() {
+            try {
+                if (await window.aistudio.hasSelectedApiKey()) {
+                    showMainApp();
+                } else {
+                    showApiKeyPrompt();
+                }
+            } catch (e) {
+                console.error("aistudio API not available. Hiding API key prompt and hoping for the best.", e);
+                showMainApp(); // Fallback if aistudio API is missing
+            }
+        }
 
         clearHistoryBtn.addEventListener('click', clearHistory);
         historyList.addEventListener('click', (e) => {
@@ -465,12 +522,25 @@
             }
         });
         
+        selectApiKeyBtn.addEventListener('click', async () => {
+            try {
+                await window.aistudio.openSelectKey();
+                // Assume success and show the app to handle potential race conditions
+                showMainApp();
+            } catch (e) {
+                 console.error("Failed to open API key selection dialog:", e);
+                 alert("Could not open the API key selection dialog. Please ensure you are in a supported environment.");
+            }
+        });
+        
         questionInput.addEventListener('input', () => {
             questionInput.style.height = 'auto';
             questionInput.style.height = (questionInput.scrollHeight) + 'px';
         });
 
+        // Initial Load
         loadHistory();
+        checkApiKeyAndInit();
     </script>
 </body>
 </html>
