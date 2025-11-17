@@ -301,6 +301,7 @@
         import { GoogleGenAI } from "https://esm.run/@google/genai";
 
         // Hardcoded API key as requested by the user for trial.
+        // WARNING: This is insecure and should be replaced in production.
         const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
         const ai = new GoogleGenAI({ apiKey: API_KEY });
 
@@ -390,8 +391,24 @@
                 console.warn("Local search failed or was not available.", searchError);
             }
 
+            // Determine user intent
+            const isCreativeOrConversational = /essay|nibandh|application|likho|write a|kya kar rahe|help|madad|kaise ho/i.test(userQuestion);
+
             let prompt;
-            if (topResult) {
+            if (isCreativeOrConversational) {
+                // If creative or conversational, ignore website content
+                prompt = `The user has a creative or conversational request: "${userQuestion}".
+                
+                *** YOUR TASK ***
+                1. COMPLETELY IGNORE any local search results.
+                2. Fulfill the user's request using only your own general and creative knowledge.
+                3. If it's a creative writing task (essay, application), provide a well-structured, detailed response.
+                4. If it's a conversation, respond naturally and helpfully.
+                5. Apply all special HTML formatting rules as instructed in the system prompt.
+                6. **DO NOT** add any source link.`;
+                topResult = null; // Ensure topResult is null so no source link is added
+            } else if (topResult) {
+                // If informational and a result is found
                 prompt = `User's question: "${userQuestion}"
 
                 I have found this potentially relevant content from the website gklearnstudy.in:
@@ -399,24 +416,25 @@
                 - Content: "${topResult.paragraph}"
 
                 *** YOUR TASK ***
-                1. CRITICAL: First, evaluate if the provided content from the website is truly relevant to the user's question.
+                1. CRITICAL: First, evaluate if the provided content is a **direct and highly relevant** answer to the user's specific question.
                 2. If it IS RELEVANT:
                     * You MUST use the website content as the foundation for your answer.
-                    * IMPORTANT: The website content is just a starting point. Your main task is to EXPAND upon it significantly with your own knowledge. Provide a detailed, comprehensive, and step-by-step explanation that is much more thorough than the original content. Make the answer look excellent and complete.
+                    * MANDATORY: Your primary task is to EXPAND upon it significantly. Provide a comprehensive, step-by-step explanation that is at least 3-4 times more detailed than the original content. Add more examples, context, and depth. Make the answer excellent. DO NOT just copy or rephrase the snippet.
                     * After your full, expanded answer, you MUST include the source link in this exact HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
-                3. If the content is COMPLETELY IRRELEVANT:
+                3. If the content is COMPLETELY IRRELEVANT or only slightly related:
                     * You MUST IGNORE the provided website content entirely.
                     * Answer the question from your own general knowledge, providing a detailed and comprehensive explanation.
                     * DO NOT include any source link.
-                4. Remember to apply all HTML formatting rules (math, chemistry, etc.) as instructed in the system prompt.`;
+                4. Remember to apply all HTML formatting rules.`;
             } else {
+                // If informational and no result is found
                 prompt = `User's question: "${userQuestion}"
                 
                 *** YOUR TASK ***
                 1. No relevant content was found on the website gklearnstudy.in.
                 2. You MUST answer the user's question completely and in detail using your own general knowledge.
                 3. Provide a step-by-step explanation.
-                4. Apply all special HTML formatting rules (math, chemistry, grammar) as instructed in the system prompt.
+                4. Apply all special HTML formatting rules.
                 5. **DO NOT** add any source link.`;
             }
 
@@ -433,15 +451,9 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                // Fallback logic
-                if (topResult) {
-                    const fallbackHtml = `<p>${topResult.paragraph}</p><p><em>(Showing the most relevant result from gklearnstudy.in as the AI is currently unavailable)</em></p><p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>`;
-                    typingIndicator.innerHTML = fallbackHtml;
-                    saveHistory(userQuestion, fallbackHtml);
-                } else {
-                    typingIndicator.innerHTML = `<p class="error">Sorry, an error occurred while getting the solution. Please try again later.</p>`;
-                    typingIndicator.classList.add('error');
-                }
+                // IMPROVED ERROR HANDLING: Show a clear error message instead of a confusing fallback.
+                typingIndicator.innerHTML = `<p class="error">Sorry, an error occurred while connecting to the AI. Please check your connection or try again later.</p>`;
+                typingIndicator.classList.add('error');
             } finally {
                 setLoading(false);
                 chatLog.scrollTop = chatLog.scrollHeight;
