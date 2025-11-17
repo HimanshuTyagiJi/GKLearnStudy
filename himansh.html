@@ -207,7 +207,7 @@
         const apiKey = "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8";
         const ai = new GoogleGenAI({ apiKey });
 
-        const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
+        const systemInstruction = "You are an expert AI assistant for GK Learn Study. Your primary language is Hindi but you must follow instructions in English. Your job is: 1. To answer the user's question in a detailed, step-by-step, and easy-to-understand manner. 2. Format your response using specific HTML tags based on the subject: - For **Mathematics**: Use `<sup>` for exponents. For fractions, use this structure: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`. - For **Chemistry**: Use `<sub>` for chemical formulas (e.g., `H<sub>2</sub>O`). - For **Hindi Grammar** or other subjects: Use `<strong>` to highlight key terms or definitions and `<em>` for examples. 3. Wrap each paragraph in `<p>` tags and bold the final answer with `<strong>` tags. Make sure all UI text is in English, like 'Solving...', 'Solution:', etc.";
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -229,25 +229,35 @@
             } catch (searchError) {
                 console.warn("Local search failed or was not available.", searchError);
             }
-            
-            if (!topResult) {
-                // If no local result is found, don't call the AI. Directly inform the user.
-                displaySolution("<p>The answer to this question is not available on the website.</p>");
-                return;
+
+            let prompt;
+
+            if (topResult) {
+                prompt = `User's question: "${userQuestion}"
+
+                PRIMARY CONTEXT from gklearnstudy.in:
+                - Title: "${topResult.title}"
+                - Content: "${topResult.paragraph}"
+
+                *** YOUR TASK ***
+                1.  Your primary goal is to provide a complete and detailed answer to the user's question.
+                2.  FIRST, use the "PRIMARY CONTEXT" provided above as the foundation of your answer.
+                3.  If the context is good but too short, you MUST EXPAND on it using your own knowledge to provide a full, step-by-step explanation.
+                4.  After your full answer, you MUST append the source link in this EXACT HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
+                5.  Apply all special HTML formatting rules (math, chemistry, grammar) as instructed in the system prompt.
+                6.  If the provided context is completely irrelevant to the user's question, ignore it, answer from your own knowledge, and DO NOT add the source link.
+                `;
+            } else {
+                prompt = `User's question: "${userQuestion}"
+
+                *** YOUR TASK ***
+                1. No relevant content was found on the website gklearnstudy.in.
+                2. You MUST answer the user's question completely and in detail using your own general knowledge.
+                3. Provide a step-by-step explanation.
+                4. Apply all special HTML formatting rules (math, chemistry, grammar) as instructed in the system prompt.
+                5. **DO NOT** add any source link.
+                `;
             }
-
-            const prompt = `The user's question is: "${userQuestion}"
-
-            MANDATORY CONTEXT FROM gklearnstudy.in:
-            Title: "${topResult.title}"
-            Content: "${topResult.paragraph}"
-
-            *** YOUR TASK - VERY IMPORTANT ***
-            1. You MUST answer the user's question.
-            2. You MUST base your entire answer ONLY on the "MANDATORY CONTEXT" provided above. Do NOT use any other knowledge.
-            3. You MUST apply the special formatting rules (math, chemistry, grammar) as defined in the system instructions.
-            4. After your answer, you MUST append the source link using this EXACT HTML format: <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
-            5. If the provided context is not relevant to the user's question, you MUST respond ONLY with the exact HTML: "<p>The answer to this question is not available on the website.</p>"`;
 
             try {
                 const response = await ai.models.generateContent({
@@ -261,11 +271,7 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                // **FALLBACK LOGIC**
-                const fallbackHTML = `<p>${topResult.paragraph}</p>
-                                      <p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
-                                      <p><em>(Note: The AI solver is currently unavailable. Showing the most relevant result from the website directly.)</em></p>`;
-                displaySolution(fallbackHTML);
+                showError("Sorry, an error occurred while getting the solution. Please try again later.");
             }
         });
 
@@ -284,7 +290,7 @@
         }
 
         function displaySolution(htmlText) {
-            setLoading(false); // Turn off loading state when displaying any solution.
+            setLoading(false); 
             solutionOutput.innerHTML = htmlText;
             solutionOutput.classList.remove('error');
             solutionContainer.classList.remove('hidden');
