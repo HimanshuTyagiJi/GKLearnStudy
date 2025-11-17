@@ -1,108 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>GK Learn Study - AdSense Test Page</title>
-  <meta name="description" content="AdSense testing page for all approved GK Learn Study ad units.">
-  <meta name="robots" content="index,follow">
-  <style>
-    body {font-family: Arial, sans-serif; background:#f9f9fb; color:#111; margin:0; padding:0;}
-    .container {max-width:1000px; margin:auto; background:#fff; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.05);}
-    header, footer {text-align:center; padding:15px 0;}
-    h1 {color:#0066cc;}
-    .ad-box {margin:25px 0; text-align:center;}
-    main {line-height:1.7;}
-  </style>
+    <meta charset="UTF-8" />
+    <title>AI Solver - किसी भी विषय पर सवाल पूछें | GK Learn Study</title>
+    <meta name="description" content="एक उन्नत AI सहायक जो गणित, विज्ञान, व्याकरण, और अन्य विषयों के सवालों का स्टेप-बाय-स्टेप समाधान प्रदान करता है।" />
+    <meta name="keywords" content="AI solver, math solver, science helper, homework helper, gk learn study, AI सहायक, गणित सॉल्वर" />
+    <meta name="author" content="Mr. Himanshu Tyagi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://gklearnstudy.in/calculator.html" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --primary-hover: #357ABD;
+            --background-color-solver: #f0f2f5;
+            --container-bg-solver: var(--card-bg);
+            --text-color-solver: var(--text-primary);
+            --border-color-solver: var(--border-color);
+            --shadow-color-solver: var(--shadow-color);
+            --error-color: #e53935;
+        }
 
-  <!-- ✅ AdSense main script (only once per page) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
-          crossorigin="anonymous"></script>
+        .calculator-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--container-bg-solver);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px var(--shadow-color-solver);
+            padding: 2rem;
+            margin: 2rem auto;
+            border: 1px solid var(--border-color-solver);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .calculator-container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        #ai-solver-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #question-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 1px solid var(--border-color-solver);
+            border-radius: 8px;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: var(--input-bg);
+            color: var(--text-color-solver);
+        }
+
+        #question-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+
+        #solve-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        #solve-button:hover:not(:disabled) { background-color: var(--primary-hover); }
+        #solve-button:disabled { background-color: #a0c7f1; cursor: not-allowed; }
+
+        .solution-container {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color-solver);
+            padding-top: 2rem;
+        }
+
+        .solution-container h2 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-color-solver);
+        }
+
+        #solution-output {
+            background-color: var(--input-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 100px;
+            overflow-wrap: break-word;
+            line-height: 1.7;
+            border: 1px solid var(--border-color-solver);
+            color: var(--text-color-solver);
+        }
+        
+        #solution-output p { margin-bottom: 1rem; }
+        #solution-output p:last-child { margin-bottom: 0; }
+
+        #solution-output sup { font-size: 0.8em; vertical-align: super; }
+        #solution-output sub { font-size: 0.8em; vertical-align: sub; }
+        #solution-output .fraction { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; margin: 0 0.2em; }
+        #solution-output .numerator { padding: 0 0.2em; border-bottom: 1px solid var(--text-color-solver); }
+        #solution-output .denominator { padding: 0 0.2em; }
+        #solution-output strong { color: var(--primary-color); }
+        #solution-output em { font-style: italic; color: #555; }
+        html[data-theme="dark"] #solution-output em { color: #ccc; }
+        #solution-output.error { color: var(--error-color); font-weight: 500; }
+
+        .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #6e8efb;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        .button-loader { width: 20px; height: 20px; border: 2px solid #fff; border-bottom-color: transparent; }
+        .loader-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; min-height: 100px; color: var(--text-color-solver); opacity: 0.7; }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hidden { display: none; }
+        
+        @media (max-width: 600px) {
+            .calculator-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>GK Learn Study</h1>
-      <p>AdSense Testing Page</p>
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="burger" id="burger">
+                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer"><rect width="100" height="7" rx="5"></rect><rect y="30" width="100" height="7" rx="5"></rect><rect y="60" width="100" height="7" rx="5"></rect></svg>
+            </div>
+            <a href="index.html" class="brand" aria-label="GK Learn Study"><svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="150" r="150" fill="white" /><text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle">GK</text><text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle">Learn Study</text></svg></a>
+            <div class="menu" id="menu"><div class="mobile-menu-header"><a href="/" class="menu-brand-text">GK Learn Study</a><button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="menu-inner"></div><button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left"><svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" class="arrow-static"></polyline><polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline></svg></button><button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right"><svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" class="arrow-static"></polyline><polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline></svg></button></div>
+            <div class="header-actions"><div class="search-container"><button class="search-icon" id="searchBtn" aria-label="Open search bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button></div><button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div>
+        </nav>
+        <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." /><div class="overlay"></div>
     </header>
+    <ul id="suggestions-list" class="suggestions"></ul>
 
-    <!-- 🟢 1️⃣ Top GK_Article_Top_Square -->
-    <div class="ad-box">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-7067722696020503"
-           data-ad-slot="9133141216"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
+    <main class="container">
+        <div class="calculator-container">
+            <h1>ज्ञान सहायक (AI Solver)</h1>
+            <form id="ai-solver-form">
+                <label for="question-input" class="sr-only">Enter your question here</label>
+                <textarea id="question-input" name="question-input" rows="4" placeholder="Enter your question on any topic here... (e.g., 'What is a noun?', 'Explain the law of gravity', or 'Solve 2x + 5 = 15')" required></textarea>
+                <button type="submit" id="solve-button">
+                    <span id="button-text">Solve</span>
+                    <div id="button-loader" class="loader button-loader hidden"></div>
+                </button>
+            </form>
 
-    <main>
-      <h2>Sample Article</h2>
-      <p>Welcome to GK Learn Study’s AdSense test page. We’re testing different ad slots to confirm display performance.</p>
-
-      <!-- 🟢 2️⃣ In-article ad -->
-      <div class="ad-box">
-        <ins class="adsbygoogle"
-             style="display:block; text-align:center;"
-             data-ad-client="ca-pub-7067722696020503"
-             data-ad-slot="9613213867"
-             data-ad-format="fluid"
-             data-ad-layout="in-article"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-      <p>This section helps verify how in-article ads blend with paragraph content naturally.</p>
-
-      <!-- 🟢 3️⃣ Medium Display Ad -->
-      <div class="ad-box">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-7067722696020503"
-             data-ad-slot="7002636040"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-      <p>Medium display ads can fit automatically between sections or sidebars depending on your theme layout.</p>
-
-      <!-- 🟢 4️⃣ In-feed Ad -->
-      <div class="ad-box">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-7067722696020503"
-             data-ad-slot="6997399633"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-      <p>In-feed ads look perfect inside lists or post grids — they match native content structure.</p>
-
-      <!-- 🟢 5️⃣ Multiplex Ad (bottom area) -->
-      <div class="ad-box">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-7067722696020503"
-             data-ad-slot="8118909613"
-             data-ad-format="autorelaxed"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-      <p>Multiplex ads generally appear below articles for best engagement and impressions.</p>
+            <div id="solution-container" class="solution-container hidden">
+                <h2>Solution:</h2>
+                <div id="solution-output" role="status" aria-live="polite"></div>
+            </div>
+        </div>
     </main>
-
-    <footer>
-      <p>© <span id="year"></span> GK Learn Study | All rights reserved.</p>
+    
+    <footer class="app-footer">
+        <div class="footer-content"></div>
+        <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
     </footer>
-  </div>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+    <script src="js/theme.js" defer></script>
+    <script src="js/search-data.js" defer></script>
+    <script type="module" src="js/comment.js" defer></script>
+
+    <script type="module">
+        import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+        // --- DOM Elements ---
+        const form = document.getElementById('ai-solver-form');
+        const questionInput = document.getElementById('question-input');
+        const solveButton = document.getElementById('solve-button');
+        const buttonText = document.getElementById('button-text');
+        const buttonLoader = document.getElementById('button-loader');
+        const solutionContainer = document.getElementById('solution-container');
+        const solutionOutput = document.getElementById('solution-output');
+        
+        // --- Gemini API Initialization ---
+        const apiKey = "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8";
+        const ai = new GoogleGenAI({ apiKey });
+
+        // --- System Instruction for the AI ---
+        const systemInstruction = "आप GK Learn Study के लिए एक विशेषज्ञ एआई सहायक हैं। आपकी प्राथमिक भाषा हिंदी है। आपका काम है: 1. उपयोगकर्ता के प्रश्न का उत्तर एक विस्तृत, स्टेप-बाय-स्टेप और समझने में आसान तरीके से देना। 2. विषय के आधार पर अपने जवाब को विशिष्ट HTML टैग का उपयोग करके प्रारूपित करें: - **गणित** के लिए: घातांक (exponents) के लिए `<sup>` का उपयोग करें। भिन्नों (fractions) के लिए, इस संरचना का उपयोग करें: `<div class='fraction'><span class='numerator'>...</span><span class='denominator'>...</span></div>`। - **रसायन विज्ञान** के लिए: रासायनिक सूत्रों के लिए `<sub>` का उपयोग करें (जैसे, `H<sub>2</sub>O`)। - **हिंदी व्याकरण** या अन्य विषयों के लिए: प्रमुख शब्दों या परिभाषाओं को हाइलाइट करने के लिए `<strong>` का और उदाहरणों के लिए `<em>` का उपयोग करें। 3. प्रत्येक पैराग्राफ को `<p>` टैग में लपेटें और अंतिम उत्तर को `<strong>` टैग से बोल्ड करें।";
+
+        // --- Form Submission Handler ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userQuestion = questionInput.value.trim();
+            if (!userQuestion) return;
+
+            setLoading(true);
+
+            // --- Step 1: Search local website data first ---
+            let topResult = null;
+            try {
+                await window.GKApp.dataReady;
+                const searchData = window.GKApp?.searchData || [];
+                const fuzzySearch = window.GKApp?.fuzzySearch;
+                
+                if (fuzzySearch && searchData.length > 0) {
+                    const searchResults = fuzzySearch(userQuestion, searchData);
+                    topResult = searchResults.length > 0 ? searchResults[0] : null;
+                }
+            } catch (searchError) {
+                console.warn("Local search failed or data was not available. Proceeding with general knowledge.", searchError);
+            }
+            
+            // --- Step 2: Construct the prompt for the AI with stricter rules ---
+            let prompt;
+            if (topResult) {
+                prompt = `The user's question is: "${userQuestion}"
+
+                MANDATORY CONTEXT FROM gklearnstudy.in:
+                Title: "${topResult.title}"
+                Content: "${topResult.paragraph}"
+
+                *** YOUR TASK - VERY IMPORTANT ***
+                1. You MUST answer the user's question.
+                2. You MUST base your entire answer ONLY on the "MANDATORY CONTEXT" provided above. Do NOT use any other knowledge.
+                3. You MUST apply the special formatting rules (math, chemistry, grammar) as defined in the system instructions.
+                4. After your answer, you MUST append the source link using this EXACT HTML format: <p><strong>स्रोत (Source):</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>
+                5. If the provided context is not relevant to the user's question, you MUST respond ONLY with the exact phrase: "<p>इस विषय पर वेबसाइट पर कोई जानकारी उपलब्ध नहीं है।</p>"`;
+            } else {
+                prompt = `The user's question is: "${userQuestion}"
+
+                *** YOUR TASK - VERY IMPORTANT ***
+                1. Answer the user's question using your general knowledge.
+                2. You MUST apply the special formatting rules (math, chemistry, grammar) as defined in the system instructions.
+                3. You MUST NOT include any source link.`;
+            }
+
+            // --- Step 3: Call the Gemini API and display the result ---
+            try {
+                const response = await ai.models.generateContent({
+                    model: 'gemini-2.5-pro',
+                    contents: prompt,
+                    config: { systemInstruction: systemInstruction }
+                });
+                
+                const solutionText = response.text;
+                displaySolution(solutionText);
+
+            } catch (apiError) {
+                console.error("Gemini API Error:", apiError);
+                showError("Sorry, an error occurred while getting the solution. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // --- UI Helper Functions ---
+
+        function setLoading(isLoading) {
+            solveButton.disabled = isLoading;
+            if (isLoading) {
+                buttonText.classList.add('hidden');
+                buttonLoader.classList.remove('hidden');
+                solutionContainer.classList.remove('hidden');
+                solutionOutput.innerHTML = `<div class="loader-container"><div class="loader"></div><p>Solving...</p></div>`;
+                solutionOutput.classList.remove('error');
+            } else {
+                buttonText.classList.remove('hidden');
+                buttonLoader.classList.add('hidden');
+            }
+        }
+
+        function displaySolution(htmlText) {
+            solutionOutput.innerHTML = htmlText;
+            solutionOutput.classList.remove('error');
+            solutionContainer.classList.remove('hidden');
+        }
+
+        function showError(message) {
+            setLoading(false); // Make sure to turn off loading state on error
+            solutionOutput.textContent = message;
+            solutionOutput.classList.add('error');
+            solutionContainer.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
