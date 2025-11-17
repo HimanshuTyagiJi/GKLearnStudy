@@ -396,19 +396,16 @@
 
             let prompt;
             if (isCreativeOrConversational) {
-                // If creative or conversational, ignore website content
-                prompt = `The user has a creative or conversational request: "${userQuestion}".
-                
+                 prompt = `The user has a creative or conversational request: "${userQuestion}". This is not a request for factual information from the website.
+
                 *** YOUR TASK ***
-                1. COMPLETELY IGNORE any local search results.
-                2. Fulfill the user's request using only your own general and creative knowledge.
-                3. If it's a creative writing task (essay, application), provide a well-structured, detailed response.
-                4. If it's a conversation, respond naturally and helpfully.
-                5. Apply all special HTML formatting rules as instructed in the system prompt.
-                6. **DO NOT** add any source link.`;
-                topResult = null; // Ensure topResult is null so no source link is added
+                1. Fulfill this request using your creative and conversational abilities.
+                2. Do not attempt to search for information on the website.
+                3. Provide a high-quality, detailed response (e.g., a full essay if requested).
+                4. Follow all HTML formatting rules from the system instruction.
+                5. **DO NOT** add any source link.`;
+                topResult = null;
             } else if (topResult) {
-                // If informational and a result is found
                 prompt = `User's question: "${userQuestion}"
 
                 I have found this potentially relevant content from the website gklearnstudy.in:
@@ -427,14 +424,14 @@
                     * DO NOT include any source link.
                 4. Remember to apply all HTML formatting rules.`;
             } else {
-                // If informational and no result is found
-                prompt = `User's question: "${userQuestion}"
-                
+                prompt = `The user asked: "${userQuestion}".
+                I could not find a relevant page on the website gklearnstudy.in to help answer this.
+
                 *** YOUR TASK ***
-                1. No relevant content was found on the website gklearnstudy.in.
-                2. You MUST answer the user's question completely and in detail using your own general knowledge.
-                3. Provide a step-by-step explanation.
-                4. Apply all special HTML formatting rules.
+                1. Please answer the user's question directly using your own general knowledge.
+                2. Provide a detailed, step-by-step explanation suitable for a learning website.
+                3. Follow all HTML formatting rules from the system instruction.
+                4. Do not mention that you couldn't find it on the website, just provide the answer.
                 5. **DO NOT** add any source link.`;
             }
 
@@ -451,8 +448,7 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                // IMPROVED ERROR HANDLING: Show a clear error message instead of a confusing fallback.
-                typingIndicator.innerHTML = `<p class="error">Sorry, an error occurred while connecting to the AI. Please check your connection or try again later.</p>`;
+                typingIndicator.innerHTML = `<p class="error">Sorry, the AI could not process this request. This can sometimes happen with simple or complex questions. Please try rephrasing your question or ask something different.</p>`;
                 typingIndicator.classList.add('error');
             } finally {
                 setLoading(false);
