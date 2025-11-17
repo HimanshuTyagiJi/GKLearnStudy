@@ -229,43 +229,6 @@
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
-        #api-key-gate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--overlay-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(5px);
-        }
-        .gate-content {
-            background-color: var(--container-bg-solver);
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color-solver);
-            max-width: 500px;
-        }
-        .gate-content h2 { margin-top: 0; color: var(--primary-color); }
-        .gate-content p { margin-bottom: 1.5rem; line-height: 1.6; }
-        .billing-info { font-size: 0.9rem; color: var(--text-secondary); }
-        #select-key-btn {
-            padding: 0.8rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-        #select-key-btn:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
         .hidden { display: none !important; }
 
         @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
@@ -281,7 +244,7 @@
             .chat-container { height: 60vh; }
         }
         @media (max-width: 600px) {
-            .chat-container, #history-sidebar, .gate-content { padding: 1rem; }
+            .chat-container, #history-sidebar { padding: 1rem; }
         }
     </style>
 </head>
@@ -299,16 +262,7 @@
     <ul id="suggestions-list" class="suggestions"></ul>
 
     <main class="container">
-        <div id="api-key-gate">
-            <div class="gate-content">
-                <h2>AI Solver Access</h2>
-                <p>To use the AI Solver, you need to select a valid API key. This is a required one-time step for this session.</p>
-                <p class="billing-info">Billing is associated with your selected project. For more details, see the <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer">billing documentation</a>.</p>
-                <button id="select-key-btn">Select API Key</button>
-            </div>
-        </div>
-
-        <div class="solver-layout hidden">
+        <div class="solver-layout">
             <aside id="history-sidebar">
                 <div class="history-header">
                     <h2>History</h2>
@@ -346,9 +300,9 @@
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
 
-        const apiKeyGate = document.getElementById('api-key-gate');
-        const selectKeyBtn = document.getElementById('select-key-btn');
-        const solverLayout = document.querySelector('.solver-layout');
+        // Hardcoded API key as requested by the user for trial.
+        const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
+        const ai = new GoogleGenAI({ apiKey: API_KEY });
 
         const form = document.getElementById('ai-solver-form');
         const questionInput = document.getElementById('question-input');
@@ -411,41 +365,6 @@
             return messageDiv;
         }
         
-        function showSolver() {
-            apiKeyGate.classList.add('hidden');
-            solverLayout.classList.remove('hidden');
-        }
-
-        function showKeyGate() {
-            apiKeyGate.classList.remove('hidden');
-            solverLayout.classList.add('hidden');
-        }
-
-        async function initializeApp() {
-            try {
-                const hasKey = await window.aistudio.hasSelectedApiKey();
-                if (hasKey) {
-                    showSolver();
-                } else {
-                    showKeyGate();
-                }
-            } catch (e) {
-                console.error("aistudio is not available. Showing key gate by default.", e);
-                showKeyGate();
-            }
-        }
-
-        selectKeyBtn.addEventListener('click', async () => {
-            try {
-                await window.aistudio.openSelectKey();
-                // Assume success to handle race condition and show the solver immediately
-                showSolver();
-            } catch (e) {
-                console.error("Failed to open select key dialog", e);
-                alert("Could not open the API Key selection dialog. Please refresh the page.");
-            }
-        });
-        
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const userQuestion = questionInput.value.trim();
@@ -502,7 +421,6 @@
             }
 
             try {
-                const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
                 const response = await ai.models.generateContent({
                     model: 'gemini-2.5-flash',
                     contents: prompt,
@@ -515,12 +433,8 @@
 
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-
-                if (apiError.message && apiError.message.includes("Requested entity was not found")) {
-                    alert("The selected API Key appears to be invalid or has been revoked. Please select a valid key to continue.");
-                    showKeyGate(); // Force user to re-select a key
-                    typingIndicator.remove(); // Remove the typing indicator
-                } else if (topResult) {
+                // Fallback logic
+                if (topResult) {
                     const fallbackHtml = `<p>${topResult.paragraph}</p><p><em>(Showing the most relevant result from gklearnstudy.in as the AI is currently unavailable)</em></p><p><strong>Source:</strong> <a href="${topResult.url}" target="_blank" rel="noopener noreferrer">${topResult.title}</a></p>`;
                     typingIndicator.innerHTML = fallbackHtml;
                     saveHistory(userQuestion, fallbackHtml);
@@ -565,7 +479,6 @@
         });
 
         // Initial Load
-        initializeApp();
         loadHistory();
     </script>
 </body>
