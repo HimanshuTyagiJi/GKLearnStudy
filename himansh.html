@@ -9,198 +9,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="canonical" href="https://gklearnstudy.in/calculator.html" />
     <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="stylesheet" href="css/theme.css" />
     <style>
         :root {
-            --widget-width: 400px;
-            --widget-height: 70vh;
-            --widget-bottom: 20px;
-            --widget-right: 20px;
-            --header-height-widget: 60px;
-            --input-area-height: 80px;
+            --bg-color: #f7f7f8;
+            --card-bg-color: #ffffff;
+            --text-color: #202123;
+            --secondary-text-color: #6e6e80;
+            --border-color: #e5e5e5;
+            --primary-color: #4A90E2;
+            --hover-bg-color: #f0f4f9;
+            --code-bg-color: #1e1e1e;
+            --code-text-color: #d4d4d4;
+            --header-height: 60px;
         }
 
-        /* --- Floating Action Button --- */
-        #ai-widget-toggle-btn {
-            position: fixed;
-            bottom: var(--widget-bottom);
-            right: var(--widget-right);
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9998;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        #ai-widget-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        #ai-widget-toggle-btn svg {
-            width: 32px;
-            height: 32px;
-            color: white;
+        html[data-theme="dark"] {
+            --bg-color: #202123;
+            --card-bg-color: #343541;
+            --text-color: #ececf1;
+            --secondary-text-color: #a9a9be;
+            --border-color: #4d4d4f;
+            --primary-color: #6fa8dc;
+            --hover-bg-color: #2a2b32;
+            --code-bg-color: #0d1117;
         }
 
-        /* --- Main Widget Container --- */
-        #ai-chat-widget {
-            position: fixed;
-            z-index: 9999;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
-            flex-direction: column;
+            height: 100vh;
             overflow: hidden;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px) scale(0.95);
-            transition: opacity 0.3s ease, visibility 0.3s, transform 0.3s ease;
-        }
-        #ai-chat-widget.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
         }
 
-        /* Desktop Right Panel View */
-        @media (min-width: 769px) {
-            #ai-chat-widget {
-                width: var(--widget-width);
-                height: var(--widget-height);
-                bottom: calc(var(--widget-bottom) + 80px);
-                right: var(--widget-right);
-            }
-            #ai-chat-widget.full-view {
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 0;
-                right: auto;
-                bottom: auto;
-            }
-        }
-
-        /* Mobile Full Screen View */
-        @media (max-width: 768px) {
-            #ai-chat-widget {
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 0;
-            }
-        }
-
-        /* --- Widget Header --- */
-        .widget-header {
+        /* --- Main Layout --- */
+        .ai-container {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1rem;
-            height: var(--header-height-widget);
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            flex-shrink: 0;
-        }
-        .widget-header h2 { font-size: 1.25rem; margin: 0; color: var(--text-primary); }
-        .header-buttons { display: flex; align-items: center; gap: 0.5rem; }
-        .widget-control-btn { background: none; border: none; cursor: pointer; padding: 0.5rem; border-radius: 50%; display: flex; }
-        .widget-control-btn:hover { background-color: var(--button-hover-bg); }
-        .widget-control-btn svg { width: 20px; height: 20px; color: var(--text-secondary); }
-        #full-view-btn { display: none; }
-        @media (min-width: 769px) { #full-view-btn { display: flex; } }
-
-        /* --- Main Layout (History + Chat) --- */
-        .widget-main-layout {
-            flex-grow: 1;
-            display: flex;
-            overflow: hidden;
-            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         /* --- History Panel --- */
         #history-panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--card-bg);
+            width: 280px;
+            background-color: var(--card-bg-color);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 10;
-        }
-        #history-panel.active { transform: translateX(0); }
-        @media (min-width: 769px) {
-            #ai-chat-widget.full-view #history-panel {
-                position: static;
-                transform: translateX(0);
-                width: 320px;
-                flex-shrink: 0;
-            }
+            flex-shrink: 0;
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
         }
 
-        .history-header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
-        #clear-history-btn { font-size: 0.8rem; background: none; border: 1px solid var(--danger-color); color: var(--danger-color); border-radius: 5px; cursor: pointer; }
-        #history-list { list-style: none; padding: 0.5rem; margin: 0; flex-grow: 1; overflow-y: auto; }
-        #history-list li { padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        #history-list li:hover { background-color: var(--button-hover-bg); }
-        
-        /* --- Chat Container --- */
-        .chat-container {
-            width: 100%;
-            height: 100%;
+        .history-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+        }
+
+        .history-header h2 { font-size: 1.2rem; }
+
+        #clear-history-btn {
+            font-size: 0.8rem;
+            background: none;
+            border: 1px solid var(--danger-color, #e53935);
+            color: var(--danger-color, #e53935);
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        #history-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        #history-list li {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--secondary-text-color);
+        }
+
+        #history-list li:hover, #history-list li.active {
+            background-color: var(--hover-bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- Chat Area --- */
+        #chat-area {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
+            height: 100vh;
         }
-        #chat-log { flex-grow: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-        .chat-message { max-width: 85%; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.6; word-wrap: break-word; }
-        .user-message { background-color: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .ai-message { background-color: var(--input-bg); color: var(--text-primary); align-self: flex-start; border-bottom-left-radius: 2px; }
 
-        /* --- Input Area --- */
-        #ai-solver-form { padding: 0.75rem 1rem; border-top: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 0.75rem; }
-        #question-input { flex-grow: 1; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); resize: none; font-size: 1rem; max-height: 120px; background-color: var(--input-bg); color: var(--text-primary); }
-        #question-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--blue-transparent-focus); }
-        #solve-button { background-color: var(--primary-color); border: none; border-radius: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
-        #solve-button svg { color: white; width: 24px; height: 24px; }
-        
-        /* Placeholder Animation */
-        #question-input::placeholder {
-            animation: placeholder-fade 8s infinite;
+        .chat-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
         }
+        
+        #menu-toggle {
+            display: none; /* Hidden on desktop */
+            background: none; border: none; cursor: pointer; padding: 0.5rem;
+        }
+        #menu-toggle svg { width: 24px; height: 24px; color: var(--text-color); }
+        .chat-header h1 { font-size: 1.25rem; }
+
+        #chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 1rem;
+            max-width: 90%;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .message-content {
+            padding-top: 5px;
+        }
+        
+        .message-content p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .user-message { align-self: flex-end; }
+        .user-message .message-avatar { background-color: var(--primary-color); color: white; }
+
+        .ai-message { align-self: flex-start; }
+        .ai-message .message-avatar { background-color: #19c37d; }
+
+        .typing-indicator .message-avatar { animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+
+        /* --- Input Form --- */
+        .chat-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
+        }
+
+        #ai-solver-form {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.75rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg-color);
+        }
+
+        #question-input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            resize: none;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text-color);
+            max-height: 200px;
+            line-height: 1.5;
+            overflow-y: auto;
+        }
+        #question-input:focus { outline: none; }
+        #question-input::placeholder { animation: placeholder-fade 10s infinite; }
+
+        #solve-button {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.2s ease;
+        }
+        #solve-button:hover { background-color: #357ABD; }
+        #solve-button svg { color: white; width: 20px; height: 20px; }
+
         @keyframes placeholder-fade {
-            0%, 20% { content: '2+2 का हल करें...'; }
-            25%, 45% { content: 'होली पर निबंध लिखें...'; }
-            50%, 70% { content: 'What is photosynthesis?'; }
-            75%, 95% { content: 'Write HTML for a login form...'; }
+            0%, 15% { content: '2+2 का हल करें...'; }
+            20%, 35% { content: 'होली पर निबंध लिखें...'; }
+            40%, 55% { content: 'What is photosynthesis?'; }
+            60%, 75% { content: 'Write HTML for a login form...'; }
+            80%, 95% { content: 'vyakaran kya hai?'; }
             100% { content: '2+2 का हल करें...'; }
         }
-        #question-input::-webkit-input-placeholder { animation: placeholder-fade 8s infinite; }
-        #question-input::-moz-placeholder { animation: placeholder-fade 8s infinite; }
-        #question-input:-ms-input-placeholder { animation: placeholder-fade 8s infinite; }
-        #question-input:-moz-placeholder { animation: placeholder-fade 8s infinite; }
-
+        #question-input::-webkit-input-placeholder { animation: placeholder-fade 10s infinite; }
 
         /* --- Code Block Styles --- */
-        .ai-message pre {
-            background-color: #1e1e1e;
-            color: #d4d4d4;
+        .message-content pre {
+            background-color: var(--code-bg-color);
+            color: var(--code-text-color);
             padding: 1rem;
             border-radius: 8px;
-            overflow-x: auto; /* Horizontal Scroll */
+            overflow-x: auto;
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.9em;
             margin: 1rem 0;
@@ -216,196 +262,169 @@
             padding: 4px 8px;
             border-radius: 6px;
             opacity: 0;
+            visibility: hidden;
             transition: opacity 0.2s ease-in-out;
         }
-        pre:hover .code-toolbar { opacity: 1; }
-        .code-toolbar button {
-            background: none;
-            border: none;
-            color: #d4d4d4;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.8em;
-        }
+        pre:hover .code-toolbar { opacity: 1; visibility: visible; }
+        .code-toolbar button { background: none; border: none; color: #d4d4d4; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 0.8em; }
         .code-toolbar button:hover { color: white; }
         .code-toolbar button svg { width: 14px; height: 14px; }
+        .message-content a { color: var(--primary-color); text-decoration: none; }
+        .message-content a:hover { text-decoration: underline; }
 
         /* --- Code Preview Modal --- */
-        #preview-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
+        #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 10000; justify-content: center; align-items: center; }
         #preview-modal.active { display: flex; }
-        .preview-content {
-            background-color: white;
-            width: 90%;
-            height: 90%;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        .preview-content { background-color: white; width: 90%; height: 90%; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
         .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
-        #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
         #preview-iframe { width: 100%; height: 100%; border: none; }
-        
-        /* Code Editor Textarea */
-        .code-editor {
-            width: 100%;
-            height: 200px;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
-            margin-top: 0.5rem;
-        }
+        .code-editor { width: 100%; height: 200px; background-color: var(--code-bg-color); color: var(--code-text-color); border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; margin-top: 0.5rem; padding: 0.5rem; }
         .code-editor-actions { margin-top: 0.5rem; text-align: right; }
+        .code-editor-actions button { background-color: var(--primary-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            #history-panel {
+                position: fixed;
+                top: 0; left: 0; height: 100%;
+                z-index: 10001;
+                transform: translateX(-100%);
+                border-right: 1px solid var(--border-color);
+            }
+            #history-panel.active { transform: translateX(0); }
+            #menu-toggle { display: block; }
+            .chat-header h1 { margin-left: 1rem; }
+            #chat-log { padding: 1rem; }
+            .chat-input-area { padding: 0.5rem; }
+        }
     </style>
 </head>
-<body>
-    <header class="header" id="header"></header>
+<body data-theme="light">
 
-    <main class="container">
-        <!-- The floating widget will be injected here by JS, or you can place it here directly -->
-    </main>
-    
-    <footer class="app-footer"></footer>
+    <div class="ai-container">
+        <aside id="history-panel">
+            <div class="history-header">
+                <h2>History</h2>
+                <button id="clear-history-btn">Clear</button>
+            </div>
+            <ul id="history-list">
+                <li>No history yet.</li>
+            </ul>
+        </aside>
 
-    <!-- All scripts will be inline in the final single file -->
+        <section id="chat-area">
+            <header class="chat-header">
+                <button id="menu-toggle" aria-label="Toggle History Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+                </button>
+                <h1>AI Solver</h1>
+            </header>
+            <div id="chat-log" role="log" aria-live="polite">
+                <div class="chat-message ai-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <form id="ai-solver-form">
+                    <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
+                    <button type="submit" id="solve-button" aria-label="Send message">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div id="preview-modal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <h3>Code Preview</h3>
+                <button id="close-preview-btn">&times;</button>
+            </div>
+            <iframe id="preview-iframe"></iframe>
+        </div>
+    </div>
+
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
 
-        // --- DOM Elements & State ---
+        // --- State and Config ---
         let ai;
         let chatHistory = [];
+        let currentChatIndex = -1; // -1 means a new chat
         const placeholders = [
-            "2+2 का हल करें...",
-            "होली पर निबंध लिखें...",
-            "What is photosynthesis?",
-            "Write HTML for a login form...",
-            "vyakaran kya hai?",
-            "Tell me a story about a lion."
+            "2+2 का हल करें...", "होली पर निबंध लिखें...", "What is photosynthesis?", "Write HTML for a login form...", "vyakaran kya hai?", "Tell me a story about a lion."
         ];
         let placeholderIndex = 0;
 
-        // --- Initialize UI and Logic ---
-        function initializeWidget() {
-            // Inject Widget HTML into the body
-            document.body.insertAdjacentHTML('beforeend', `
-                <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path></svg>
-                </button>
-                <div id="ai-chat-widget">
-                    <div class="widget-header">
-                        <h2>AI Assistant</h2>
-                        <div class="header-buttons">
-                            <button id="full-view-btn" class="widget-control-btn" aria-label="Toggle Full View">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
-                            </button>
-                            <button id="history-btn" class="widget-control-btn" aria-label="Toggle History">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="widget-main-layout">
-                        <aside id="history-panel">
-                            <div class="history-header">
-                                <h3>History</h3>
-                                <button id="clear-history-btn">Clear</button>
-                            </div>
-                            <ul id="history-list"></ul>
-                        </aside>
-                        <div class="chat-container">
-                            <div id="chat-log" role="log" aria-live="polite">
-                                <div class="chat-message ai-message">नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?</div>
-                            </div>
-                            <form id="ai-solver-form">
-                                <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
-                                <button type="submit" id="solve-button" aria-label="Send message">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div id="preview-modal">
-                    <div class="preview-content">
-                        <div class="preview-header">
-                            <h3>Code Preview</h3>
-                            <button id="close-preview-btn">&times;</button>
-                        </div>
-                        <iframe id="preview-iframe"></iframe>
-                    </div>
-                </div>
-            `);
+        // --- DOM Elements ---
+        const historyPanel = document.getElementById('history-panel');
+        const chatLog = document.getElementById('chat-log');
+        const questionInput = document.getElementById('question-input');
+        const historyList = document.getElementById('history-list');
 
-            // Attach all event listeners
-            attachEventListeners();
-            loadHistory();
-
-            // Start animated placeholder
-            setInterval(updatePlaceholder, 4000);
+        // --- Initialization ---
+        function initializeApp() {
+            try {
+                // IMPORTANT: In a real app, this key should come from a secure backend or environment variable.
+                const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
+                ai = new GoogleGenAI({ apiKey: API_KEY });
+                
+                attachEventListeners();
+                loadHistory();
+                setInterval(updatePlaceholder, 4000);
+            } catch (error) {
+                console.error("Failed to initialize AI or App:", error);
+                document.body.innerHTML = "<h2>Failed to load AI Assistant. Please check the console for errors.</h2>";
+            }
         }
-        
-        function attachEventListeners() {
-            document.getElementById('ai-widget-toggle-btn').addEventListener('click', toggleWidget);
-            document.getElementById('history-btn').addEventListener('click', toggleHistory);
-            document.getElementById('full-view-btn').addEventListener('click', toggleFullScreen);
-            document.getElementById('ai-solver-form').addEventListener('submit', handleFormSubmit);
-            document.getElementById('question-input').addEventListener('keydown', handleInputKeyDown);
-            document.getElementById('clear-history-btn').addEventListener('click', clearHistory);
-            document.getElementById('history-list').addEventListener('click', handleHistoryClick);
-            document.getElementById('close-preview-btn').addEventListener('click', () => document.getElementById('preview-modal').classList.remove('active'));
 
-            // Use event delegation for code block buttons
-            document.getElementById('chat-log').addEventListener('click', handleChatLogClicks);
+        function attachEventListeners() {
+            document.getElementById('menu-toggle').addEventListener('click', () => historyPanel.classList.toggle('active'));
+            document.getElementById('ai-solver-form').addEventListener('submit', handleFormSubmit);
+            questionInput.addEventListener('keydown', handleInputKeyDown);
+            questionInput.addEventListener('input', autoResizeTextarea);
+            document.getElementById('clear-history-btn').addEventListener('click', clearHistory);
+            historyList.addEventListener('click', handleHistoryClick);
+            document.getElementById('close-preview-btn').addEventListener('click', () => document.getElementById('preview-modal').classList.remove('active'));
+            chatLog.addEventListener('click', handleChatLogClicks);
         }
 
         // --- Event Handlers ---
-        function toggleWidget() { document.getElementById('ai-chat-widget').classList.toggle('active'); }
-        function toggleHistory() { document.getElementById('history-panel').classList.toggle('active'); }
-        function toggleFullScreen() { document.getElementById('ai-chat-widget').classList.toggle('full-view'); }
-        
         function handleFormSubmit(e) {
             e.preventDefault();
-            const input = document.getElementById('question-input');
-            const userQuestion = input.value.trim();
+            const userQuestion = questionInput.value.trim();
             if (userQuestion) {
-                appendMessage(escapeHTML(userQuestion), 'user');
+                if (currentChatIndex !== -1) {
+                    // If we were viewing an old chat, this new question starts a fork.
+                    // So, create a new history item instead of appending.
+                    currentChatIndex = -1; 
+                }
+                appendMessage(userQuestion, 'user');
                 submitQuestionToAI(userQuestion);
-                input.value = '';
-                input.style.height = 'auto';
+                questionInput.value = '';
+                autoResizeTextarea();
             }
         }
-        
+
         function handleInputKeyDown(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 handleFormSubmit(e);
             }
         }
-        
+
         function handleHistoryClick(e) {
-            if (e.target.tagName === 'LI' && e.target.dataset.index) {
-                const index = parseInt(e.target.dataset.index, 10);
-                const item = chatHistory[index];
-                if (item) {
-                    const chatLog = document.getElementById('chat-log');
-                    chatLog.innerHTML = '';
-                    appendMessage(escapeHTML(item.question), 'user');
-                    renderResponse(item.answer, chatLog);
-                    if (window.innerWidth <= 768) { // Close history on mobile after selection
-                       toggleHistory();
-                    }
+            const li = e.target.closest('li');
+            if (li && li.dataset.index) {
+                const index = parseInt(li.dataset.index, 10);
+                loadChatFromHistory(index);
+                if (window.innerWidth <= 768) {
+                    historyPanel.classList.remove('active');
                 }
             }
         }
@@ -415,160 +434,206 @@
             if (!button) return;
 
             const pre = button.closest('pre');
+            if(!pre) return;
+
+            const codeEl = pre.querySelector('code');
             const action = button.dataset.action;
 
             if (action === 'copy') {
-                const code = pre.querySelector('code').textContent;
-                navigator.clipboard.writeText(code).then(() => {
+                navigator.clipboard.writeText(codeEl.textContent).then(() => {
                     button.textContent = 'Copied!';
                     setTimeout(() => button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy', 2000);
                 });
             } else if (action === 'preview') {
-                const code = pre.querySelector('code').textContent;
-                document.getElementById('preview-iframe').srcdoc = code;
+                document.getElementById('preview-iframe').srcdoc = codeEl.textContent;
                 document.getElementById('preview-modal').classList.add('active');
             } else if (action === 'edit') {
-                const codeContent = pre.querySelector('code').textContent;
-                const editorTextarea = document.createElement('textarea');
-                editorTextarea.className = 'code-editor';
+                 const codeContent = codeEl.textContent;
+                const editorContainer = document.createElement('div');
+                editorContainer.innerHTML = `<textarea class="code-editor"></textarea><div class="code-editor-actions"><button>Save & Preview</button></div>`;
+                const editorTextarea = editorContainer.querySelector('textarea');
                 editorTextarea.value = codeContent;
 
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'code-editor-actions';
-                
-                const saveButton = document.createElement('button');
-                saveButton.textContent = 'Save & Preview';
-                saveButton.onclick = () => {
+                editorContainer.querySelector('button').onclick = () => {
                     document.getElementById('preview-iframe').srcdoc = editorTextarea.value;
                     document.getElementById('preview-modal').classList.add('active');
                 };
 
-                pre.innerHTML = ''; // Clear the original content
-                pre.appendChild(editorTextarea);
-                actionsDiv.appendChild(saveButton);
-                pre.appendChild(actionsDiv);
-                pre.querySelector('.code-toolbar')?.remove(); // Remove old toolbar
+                pre.parentNode.replaceChild(editorContainer, pre);
             }
         }
 
-        // --- Core AI & Rendering Logic ---
+        // --- Core AI & Rendering ---
         function appendMessage(content, type) {
-            const chatLog = document.getElementById('chat-log');
+            const isUser = type === 'user';
+            const avatarChar = isUser ? 'You' : '🤖';
+            const avatarColor = isUser ? 'var(--primary-color)' : '#19c37d';
+            
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${type}-message`;
-            messageDiv.innerHTML = `<p>${content}</p>`;
+            messageDiv.innerHTML = `
+                <div class="message-avatar" style="background-color: ${avatarColor};">${avatarChar}</div>
+                <div class="message-content"><p>${escapeHTML(content)}</p></div>
+            `;
             chatLog.appendChild(messageDiv);
             chatLog.scrollTop = chatLog.scrollHeight;
             return messageDiv;
         }
 
-        async function submitQuestionToAI(userQuestion) {
-            const chatLog = document.getElementById('chat-log');
-            const typingIndicator = appendMessage('...', 'ai');
-            typingIndicator.innerHTML = 'Thinking...';
+        function appendResponse(htmlContent) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message ai-message';
+            messageDiv.innerHTML = `
+                <div class="message-avatar" style="background-color: #19c37d;">🤖</div>
+                <div class="message-content">${htmlContent}</div>
+            `;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'chat-message ai-message typing-indicator';
+            indicator.innerHTML = `
+                <div class="message-avatar" style="background-color: #19c37d;">🤖</div>
+                <div class="message-content"><p>Thinking...</p></div>
+            `;
+            chatLog.appendChild(indicator);
+            chatLog.scrollTop = chatLog.scrollHeight;
+            return indicator;
+        }
 
-            // Very simple prompt, could be improved with search grounding later
-            const prompt = `User's question: "${userQuestion}". Please answer clearly. If the user asks for code, wrap it in markdown code fences, e.g., \`\`\`html ... \`\`\`.`;
+        async function submitQuestionToAI(userQuestion) {
+            const indicator = showTypingIndicator();
+
+            // *** CRITICAL: Added the website grounding instruction ***
+            const systemInstruction = `You are an expert assistant for the website gklearnstudy.in. Your primary goal is to provide helpful, accurate, and relevant information to users.
             
+            Follow these rules strictly:
+            1.  **Prioritize Website Content:** When a user asks a question, your FIRST step is to determine if the content on gklearnstudy.in can answer it. Think of yourself as an expert on the site.
+            2.  **Provide Links:** If you find relevant information on gklearnstudy.in, you MUST base your answer on that information and ALWAYS include a direct markdown link to the specific page(s) you used. For example: "आप इस बारे में और जानकारी [इस पेज पर](https://gklearnstudy.in/your-page-url.html) पढ़ सकते हैं।"
+            3.  **Use General Knowledge as a Fallback:** If and ONLY IF you cannot find any relevant information on gklearnstudy.in after a thorough conceptual search, then you should use your general knowledge to provide a comprehensive answer. Do NOT mention that you searched the site and found nothing. Just answer the question directly.
+            4.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
+
             try {
                 const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: prompt
+                    model: 'gemini-2.5-pro', // Using Pro for better instruction following
+                    contents: userQuestion,
+                    config: { systemInstruction: systemInstruction }
                 });
                 
                 const solutionText = response.text;
-                typingIndicator.remove();
-                renderResponse(solutionText, chatLog);
-                saveHistory(userQuestion, solutionText);
+                indicator.remove();
+                renderResponse(solutionText);
+
+                // Save or update history
+                if (currentChatIndex === -1) {
+                    saveNewHistory(userQuestion, solutionText);
+                } else {
+                    updateHistory(currentChatIndex, userQuestion, solutionText);
+                }
+                
             } catch (apiError) {
                 console.error("Gemini API Error:", apiError);
-                typingIndicator.innerHTML = "<p>Sorry, an error occurred. Please try again.</p>";
+                indicator.querySelector('.message-content').innerHTML = "<p>Sorry, an error occurred. Please try again.</p>";
             }
         }
-        
-        function renderResponse(text, container) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message ai-message';
 
-            const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
+        function renderResponse(text) {
+            // Convert markdown links to HTML links
+            let htmlContent = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
             
+            const parts = htmlContent.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
+            let finalHTML = '';
+
             parts.forEach(part => {
                 if (part.startsWith('```')) {
                     const lang = part.match(/^```(\w*)/)?.[1] || '';
-                    const code = part.replace(/^```\w*\n|```$/g, '');
+                    const code = escapeHTML(part.replace(/^```\w*\n|```$/g, ''));
 
-                    const pre = document.createElement('pre');
-                    const codeEl = document.createElement('code');
-                    codeEl.textContent = code;
-                    
-                    pre.innerHTML = `
-                        <div class="code-toolbar">
-                            <button data-action="copy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy</button>
-                            <button data-action="preview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> Preview</button>
-                            <button data-action="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z"></path></svg> Edit</button>
-                        </div>
+                    finalHTML += `
+                        <pre>
+                            <div class="code-toolbar">
+                                <button data-action="copy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy</button>
+                                <button data-action="preview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> Preview</button>
+                                <button data-action="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z"></path></svg> Edit</button>
+                            </div>
+                            <code>${code}</code>
+                        </pre>
                     `;
-                    pre.appendChild(codeEl);
-                    messageDiv.appendChild(pre);
                 } else {
-                    const p = document.createElement('p');
-                    p.textContent = part.trim();
-                    if (p.textContent) {
-                        messageDiv.appendChild(p);
-                    }
+                    finalHTML += `<p>${part.trim().replace(/\n/g, '<br>')}</p>`;
                 }
             });
-
-            container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
+            appendResponse(finalHTML);
         }
-
 
         // --- History & Utility ---
         const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
+
         function loadHistory() {
             const saved = localStorage.getItem('aiChatHistory');
             chatHistory = saved ? JSON.parse(saved) : [];
-            renderHistory();
-        }
-        function saveHistory(question, answer) {
-            chatHistory.unshift({ question, answer });
-            if (chatHistory.length > 30) chatHistory.pop();
-            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-            renderHistory();
-        }
-        function renderHistory() {
-            const list = document.getElementById('history-list');
-            list.innerHTML = chatHistory.map((item, index) => `<li data-index="${index}">${escapeHTML(item.question)}</li>`).join('') || '<li>No history yet.</li>';
-        }
-        function clearHistory() {
-            if (confirm('Are you sure you want to clear the chat history?')) {
-                chatHistory = [];
-                localStorage.removeItem('aiChatHistory');
-                renderHistory();
-                document.getElementById('chat-log').innerHTML = '<div class="chat-message ai-message">नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?</div>';
-            }
-        }
-        function updatePlaceholder() {
-            const input = document.getElementById('question-input');
-            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-            input.placeholder = placeholders[placeholderIndex];
+            renderHistoryList();
         }
 
+        function saveNewHistory(question, answer) {
+            chatHistory.unshift({ conversation: [{ question, answer }] });
+            if (chatHistory.length > 50) chatHistory.pop();
+            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+            renderHistoryList();
+            currentChatIndex = 0; // The new chat is now the active one at the top.
+        }
+        
+        function updateHistory(index, question, answer) {
+             if (chatHistory[index]) {
+                chatHistory[index].conversation.push({ question, answer });
+                localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+            }
+        }
+
+        function renderHistoryList() {
+            historyList.innerHTML = chatHistory.map((item, index) => {
+                const firstQuestion = item.conversation[0]?.question || 'Empty Chat';
+                return `<li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">${escapeHTML(firstQuestion)}</li>`;
+            }).join('') || '<li>No history yet.</li>';
+        }
+
+        function loadChatFromHistory(index) {
+            if (chatHistory[index]) {
+                currentChatIndex = index;
+                const conversation = chatHistory[index].conversation;
+                chatLog.innerHTML = '';
+                conversation.forEach(turn => {
+                    appendMessage(turn.question, 'user');
+                    renderResponse(turn.answer);
+                });
+                renderHistoryList(); // To update the 'active' class
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all chat history?')) {
+                chatHistory = [];
+                currentChatIndex = -1;
+                localStorage.removeItem('aiChatHistory');
+                renderHistoryList();
+                chatLog.innerHTML = `<div class="chat-message ai-message"><div class="message-avatar">🤖</div><div class="message-content"><p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?</p></div></div>`;
+            }
+        }
+
+        function updatePlaceholder() {
+            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+            questionInput.placeholder = placeholders[placeholderIndex];
+        }
+
+        function autoResizeTextarea() {
+            questionInput.style.height = 'auto';
+            questionInput.style.height = (questionInput.scrollHeight) + 'px';
+        }
 
         // --- Entry Point ---
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                // IMPORTANT: This key should be in a secure environment variable, not hardcoded.
-                // For this example, it's inline.
-                const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
-                ai = new GoogleGenAI({ apiKey: API_KEY });
-                initializeWidget();
-            } catch (error) {
-                console.error("Failed to initialize AI or Widget:", error);
-                document.body.innerHTML = "<h2>Failed to load AI Assistant. Please check the console for errors.</h2>";
-            }
-        });
+        document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
 </html>
