@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -370,16 +371,19 @@
         // --- Initialization ---
         function initializeApp() {
             try {
-                // IMPORTANT: In a real app, this key should come from a secure backend or environment variable.
-                const API_KEY = 'AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8';
-                ai = new GoogleGenAI({ apiKey: API_KEY });
+                // WARNING: Hardcoded API key for trial/practice as requested by the user.
+                // This should be replaced with a secure method (e.g., environment variables) in production.
+                ai = new GoogleGenAI({ apiKey: "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8" });
                 
                 attachEventListeners();
                 loadHistory();
                 setInterval(updatePlaceholder, 4000);
             } catch (error) {
                 console.error("Failed to initialize AI or App:", error);
-                document.body.innerHTML = "<h2>Failed to load AI Assistant. Please check the console for errors.</h2>";
+                const errorMessage = error.message.includes("API key not valid") 
+                    ? "The provided API key is invalid. Please check the key."
+                    : "Failed to load AI Assistant. Please check the console for errors.";
+                document.body.innerHTML = `<h2>${errorMessage}</h2>`;
             }
         }
 
