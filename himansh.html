@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -47,9 +46,83 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+        }
+
+        /* --- Floating AI Button --- */
+        #ai-widget-toggle-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4A90E2, #6fa8dc);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;
-            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        #ai-widget-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        #ai-widget-toggle-btn svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        /* --- AI Chat Widget Container --- */
+        #ai-chat-widget {
+            position: fixed;
+            z-index: 9999;
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #ai-chat-widget.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Desktop: pop-up on right */
+        @media (min-width: 769px) {
+            #ai-chat-widget {
+                width: 400px;
+                height: 70vh;
+                min-height: 500px;
+                bottom: 2rem;
+                right: 2rem;
+            }
+             #ai-chat-widget.full-view {
+                top: 0; left: 0; width: 100%; height: 100%; border-radius: 0; right: auto; bottom: auto;
+            }
+        }
+        
+        /* Mobile: full-screen */
+        @media (max-width: 768px) {
+            #ai-chat-widget {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                bottom: auto;
+                right: auto;
+            }
         }
 
         /* --- Main Layout --- */
@@ -68,7 +141,15 @@
             flex-direction: column;
             flex-shrink: 0;
             transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            transform: translateX(-100%);
+            z-index: 10002;
         }
+        #history-panel.active { transform: translateX(0); }
+
 
         .history-header {
             padding: 1rem;
@@ -97,7 +178,7 @@
         }
         
         #close-history-btn {
-            display: none;
+            display: block; /* Always show close on panel */
             background: none;
             border: none;
             font-size: 1.8rem;
@@ -118,10 +199,37 @@
             padding: 0.75rem 1rem;
             border-radius: 6px;
             cursor: pointer;
+            color: var(--secondary-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .history-item-text {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            flex-grow: 1;
+        }
+        
+        .history-item-delete-btn {
+            background: none;
+            border: none;
             color: var(--secondary-text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 0 0 0.5rem;
+            flex-shrink: 0;
+            display: none;
+        }
+        
+        #history-list li:hover .history-item-delete-btn {
+            display: block;
+        }
+        
+        .history-item-delete-btn:hover {
+            color: var(--danger-color);
         }
 
         #history-list li:hover, #history-list li.active {
@@ -134,23 +242,55 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
+            width: 100%;
         }
 
         .chat-header {
             height: var(--header-height);
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 1rem;
             border-bottom: 1px solid var(--border-color);
             background-color: var(--card-bg-color);
         }
-        
-        #menu-toggle {
-            display: none; /* Hidden on desktop */
-            background: none; border: none; cursor: pointer; padding: 0.5rem;
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-grow: 1;
         }
-        #menu-toggle svg { width: 24px; height: 24px; color: var(--text-color); }
+        
+        #menu-toggle, #full-view-btn, #close-widget-btn {
+            background: none; border: none; cursor: pointer; padding: 0.5rem;
+            color: var(--secondary-text-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+         #menu-toggle:hover, #full-view-btn:hover, #close-widget-btn:hover {
+            background-color: var(--hover-bg-color);
+         }
+
+        #new-chat-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--secondary-text-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: auto;
+        }
+        #new-chat-btn:hover {
+            background-color: var(--hover-bg-color);
+            color: var(--text-color);
+        }
+
+        #menu-toggle svg, #full-view-btn svg, #close-widget-btn svg { width: 24px; height: 24px; color: var(--text-color); }
         .chat-header h1 { font-size: 1.25rem; }
 
         #chat-log {
@@ -162,129 +302,94 @@
             gap: 1.5rem;
         }
 
-        .chat-message {
-            display: flex;
-            gap: 1rem;
-            max-width: 90%;
-        }
-
-        .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .message-content {
-            padding-top: 5px;
-            position: relative;
-        }
-        
-        .message-content p {
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
+        .chat-message { display: flex; gap: 1rem; max-width: 90%; }
+        .message-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--border-color); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .message-content { padding-top: 5px; position: relative; width: 100%;}
+        .message-content p { line-height: 1.7; margin-bottom: 1rem; }
         .user-message { align-self: flex-end; }
         .user-message .message-avatar { background-color: var(--primary-color); color: white; }
-
         .ai-message { align-self: flex-start; }
         .ai-message .message-avatar { background-color: #19c37d; }
-
         .typing-indicator .message-avatar { animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
+        /* --- Rich Content Formatting --- */
+        .ai-message .message-content h1, 
+        .ai-message .message-content h2, 
+        .ai-message .message-content h3 {
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.3em;
+        }
+        .ai-message .message-content h1 { font-size: 1.4em; }
+        .ai-message .message-content h2 { font-size: 1.2em; }
+        .ai-message .message-content h3 { font-size: 1.1em; }
+
+        .ai-message .message-content ul, 
+        .ai-message .message-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .ai-message .message-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-message .message-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9em;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .ai-message .message-content th, 
+        .ai-message .message-content td {
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+        }
+        .ai-message .message-content th {
+            background-color: var(--hover-bg-color);
+            font-weight: 600;
+        }
+         .ai-message .message-content tr:nth-child(even) {
+            background-color: var(--hover-bg-color);
+        }
+        html[data-theme="dark"] .ai-message .message-content tr:nth-child(even) {
+             background-color: rgba(255,255,255,0.05);
+        }
+
+
+        .ai-message .message-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 1rem;
+            color: var(--secondary-text-color);
+            font-style: italic;
+        }
+        .ai-message .message-content p:last-child { margin-bottom: 0; }
 
         /* --- Input Form --- */
-        .chat-input-area {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg-color);
-        }
-
-        #ai-solver-form {
-            display: flex;
-            align-items: flex-end;
-            gap: 0.75rem;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0.75rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg-color);
-        }
-
-        #question-input {
-            flex-grow: 1;
-            border: none;
-            background: transparent;
-            resize: none;
-            font-size: 1rem;
-            font-family: inherit;
-            color: var(--text-color);
-            max-height: 200px;
-            line-height: 1.5;
-            overflow-y: auto;
-        }
+        .chat-input-area { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); background-color: var(--card-bg-color); }
+        #ai-solver-form { display: flex; align-items: flex-end; gap: 0.75rem; max-width: 800px; margin: 0 auto; padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--card-bg-color); }
+        #question-input { flex-grow: 1; border: none; background: transparent; resize: none; font-size: 1rem; font-family: inherit; color: var(--text-color); max-height: 200px; line-height: 1.5; overflow-y: auto; }
         #question-input:focus { outline: none; }
         #question-input::placeholder { animation: placeholder-fade 10s infinite; }
-
-        #solve-button {
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: background-color 0.2s ease;
-        }
+        #solve-button { background-color: var(--primary-color); border: none; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background-color 0.2s ease; }
         #solve-button:hover { background-color: #357ABD; }
         #solve-button svg { color: white; width: 20px; height: 20px; }
-
-        @keyframes placeholder-fade {
-            0%, 15% { content: '2+2 का हल करें...'; }
-            20%, 35% { content: 'होली पर निबंध लिखें...'; }
-            40%, 55% { content: 'What is photosynthesis?'; }
-            60%, 75% { content: 'Write HTML for a login form...'; }
-            80%, 95% { content: 'vyakaran kya hai?'; }
-            100% { content: '2+2 का हल करें...'; }
-        }
+        @keyframes placeholder-fade { 0%, 15% { content: '2+2 का हल करें...'; } 20%, 35% { content: 'होली पर निबंध लिखें...'; } 40%, 55% { content: 'What is photosynthesis?'; } 60%, 75% { content: 'Write HTML for a login form...'; } 80%, 95% { content: 'vyakaran kya hai?'; } 100% { content: '2+2 का हल करें...'; } }
         #question-input::-webkit-input-placeholder { animation: placeholder-fade 10s infinite; }
 
         /* --- Code Block Styles --- */
-        .message-content pre {
-            background-color: var(--code-bg-color);
-            color: var(--code-text-color);
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
-            margin: 1rem 0;
-            position: relative;
-        }
-        .code-toolbar {
-            display: flex;
-            gap: 0.5rem;
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background-color: rgba(40, 40, 40, 0.8);
-            padding: 4px 8px;
-            border-radius: 6px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease-in-out;
-        }
+        .message-content pre { background-color: var(--code-bg-color); color: var(--code-text-color); padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; margin: 1rem 0; position: relative; }
+        .code-toolbar { display: flex; gap: 0.5rem; position: absolute; top: 8px; right: 8px; background-color: rgba(40, 40, 40, 0.8); padding: 4px 8px; border-radius: 6px; opacity: 0; visibility: hidden; transition: opacity 0.2s ease-in-out; }
         pre:hover .code-toolbar { opacity: 1; visibility: visible; }
         .code-toolbar button { background: none; border: none; color: #d4d4d4; cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 0.8em; }
         .code-toolbar button:hover { color: white; }
@@ -292,107 +397,88 @@
         .message-content a { color: var(--primary-color); text-decoration: none; }
         .message-content a:hover { text-decoration: underline; }
 
-        /* --- Code Preview Modal --- */
+        /* --- Code Editor & Preview Modal --- */
         #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 10000; justify-content: center; align-items: center; }
         #preview-modal.active { display: flex; }
         .preview-content { background-color: white; width: 90%; height: 90%; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
         .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
         #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
         #preview-iframe { width: 100%; height: 100%; border: none; }
-        .code-editor { width: 100%; height: 200px; background-color: var(--code-bg-color); color: var(--code-text-color); border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; margin-top: 0.5rem; padding: 0.5rem; }
-        .code-editor-actions { margin-top: 0.5rem; text-align: right; }
-        .code-editor-actions button { background-color: var(--primary-color); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
         
-        .edit-btn {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background: var(--card-bg-color); 
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            cursor: pointer;
-            color: var(--secondary-text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s, box-shadow 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+        .code-editor-wrapper { margin: 1rem 0; border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; }
+        .code-editor { width: 100%; height: 200px; background-color: var(--code-bg-color); color: var(--code-text-color); border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; padding: 0.5rem; resize: vertical; }
+        .code-editor-actions { margin-top: 0.75rem; text-align: right; display: flex; gap: 0.5rem; justify-content: flex-end; }
+        .code-editor-actions button { background-color: var(--primary-color); color: white; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 0.9em; }
+        .code-editor-actions .cancel-edit-btn { background-color: var(--secondary-text-color); }
+        
+        .edit-btn { position: absolute; top: -5px; right: -10px; background: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 50%; width: 28px; height: 28px; cursor: pointer; color: var(--secondary-text-color); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s, box-shadow 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .user-message .message-content:hover .edit-btn { opacity: 1; }
         .edit-btn:hover { box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .edit-btn svg { width: 16px; height: 16px; }
+        .btn-try-again { background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; }
 
-        .btn-try-again {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            #history-panel {
-                position: fixed;
-                top: 0; left: 0; height: 100%;
-                z-index: 10001;
-                transform: translateX(-100%);
-                border-right: 1px solid var(--border-color);
-            }
-            #history-panel.active { transform: translateX(0); }
-            #close-history-btn { display: block; }
-            #menu-toggle { display: block; }
-            .chat-header h1 { margin-left: 1rem; }
-            #chat-log { padding: 1rem; }
-            .chat-input-area { padding: 0.5rem; }
-        }
+        /* --- Responsive Design Tweaks --- */
+        @media (min-width: 769px) { #ai-chat-widget.full-view #history-panel { position: static; transform: translateX(0); } }
+        @media (max-width: 768px) { #full-view-btn { display: none; } #chat-log { padding: 1rem; } .chat-input-area { padding: 0.5rem; } }
     </style>
 </head>
 <body data-theme="light">
 
-    <div class="ai-container">
-        <aside id="history-panel">
-            <div class="history-header">
-                <h2>History</h2>
-                <div class="history-header-actions">
-                    <button id="clear-history-btn">Clear</button>
-                    <button id="close-history-btn" aria-label="Close History">&times;</button>
-                </div>
-            </div>
-            <ul id="history-list">
-                <li>No history yet.</li>
-            </ul>
-        </aside>
-
-        <section id="chat-area">
-            <header class="chat-header">
-                <button id="menu-toggle" aria-label="Toggle History Menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
-                </button>
-                <h1>AI Solver</h1>
-            </header>
-            <div id="chat-log" role="log" aria-live="polite">
-                <div class="chat-message ai-message">
-                    <div class="message-avatar">🤖</div>
-                    <div class="message-content">
-                        <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+    <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path></svg>
+    </button>
+    
+    <div id="ai-chat-widget">
+        <div class="ai-container">
+            <aside id="history-panel">
+                <div class="history-header">
+                    <h2>History</h2>
+                    <div class="history-header-actions">
+                        <button id="clear-history-btn">Clear</button>
+                        <button id="close-history-btn" aria-label="Close History">&times;</button>
                     </div>
                 </div>
-            </div>
-            <div class="chat-input-area">
-                <form id="ai-solver-form">
-                    <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
-                    <button type="submit" id="solve-button" aria-label="Send message">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
-                    </button>
-                </form>
-            </div>
-        </section>
+                <ul id="history-list">
+                    <li>No history yet.</li>
+                </ul>
+            </aside>
+
+            <section id="chat-area">
+                <header class="chat-header">
+                     <div class="chat-header-left">
+                        <button id="menu-toggle" aria-label="Toggle History Menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+                        </button>
+                        <h1>AI Solver</h1>
+                        <button id="new-chat-btn" aria-label="Start New Chat">New Chat</button>
+                    </div>
+                    <div class="chat-header-right">
+                        <button id="full-view-btn" aria-label="Toggle Full View">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
+                        </button>
+                        <button id="close-widget-btn" aria-label="Close Chat">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+                        </button>
+                    </div>
+                </header>
+                <div id="chat-log" role="log" aria-live="polite">
+                    <div class="chat-message ai-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <form id="ai-solver-form">
+                        <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
+                        <button type="submit" id="solve-button" aria-label="Send message">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
     </div>
 
     <div id="preview-modal">
@@ -407,6 +493,8 @@
 
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
+        import { marked } from "https://esm.run/marked@12.0.2";
+        import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
         // --- State and Config ---
         let ai;
@@ -422,12 +510,17 @@
         const chatLog = document.getElementById('chat-log');
         const questionInput = document.getElementById('question-input');
         const historyList = document.getElementById('history-list');
+        const widgetToggleBtn = document.getElementById('ai-widget-toggle-btn');
+        const chatWidget = document.getElementById('ai-chat-widget');
+        const closeWidgetBtn = document.getElementById('close-widget-btn');
+        const fullViewBtn = document.getElementById('full-view-btn');
+        const newChatBtn = document.getElementById('new-chat-btn');
 
         // --- Initialization ---
         function initializeApp() {
             try {
                 // WARNING: Hardcoded API key for trial/practice.
-                ai = new GoogleGenAI({ apiKey: "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8" });
+                ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
                 
                 attachEventListeners();
                 loadHistory();
@@ -440,6 +533,11 @@
         }
 
         function attachEventListeners() {
+            widgetToggleBtn.addEventListener('click', openWidget);
+            closeWidgetBtn.addEventListener('click', closeWidget);
+            fullViewBtn.addEventListener('click', () => chatWidget.classList.toggle('full-view'));
+            newChatBtn.addEventListener('click', startNewChat);
+            
             document.getElementById('menu-toggle').addEventListener('click', () => historyPanel.classList.toggle('active'));
             document.getElementById('close-history-btn').addEventListener('click', () => historyPanel.classList.remove('active'));
             document.getElementById('ai-solver-form').addEventListener('submit', handleFormSubmit);
@@ -450,15 +548,37 @@
             document.getElementById('close-preview-btn').addEventListener('click', () => document.getElementById('preview-modal').classList.remove('active'));
             chatLog.addEventListener('click', handleChatLogClicks);
         }
+        
+        function openWidget() {
+            chatWidget.classList.add('active');
+            widgetToggleBtn.style.display = 'none';
+        }
+
+        function closeWidget() {
+            chatWidget.classList.remove('active');
+            widgetToggleBtn.style.display = 'flex';
+        }
+
+        function startNewChat() {
+            currentChatIndex = -1;
+            chatLog.innerHTML = `
+                <div class="chat-message ai-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+                    </div>
+                </div>`;
+            questionInput.value = '';
+            autoResizeTextarea();
+            renderHistoryList(); // To remove the 'active' class
+            historyPanel.classList.remove('active');
+        }
 
         // --- Event Handlers ---
         function handleFormSubmit(e) {
             e.preventDefault();
             const userQuestion = questionInput.value.trim();
             if (userQuestion) {
-                if (currentChatIndex !== -1) {
-                    currentChatIndex = -1; // Start a new chat branch
-                }
                 appendMessage(userQuestion, 'user');
                 submitQuestionToAI(userQuestion);
                 questionInput.value = '';
@@ -474,99 +594,104 @@
         }
 
         function handleHistoryClick(e) {
+            // Handle delete button click
+            const deleteBtn = e.target.closest('.history-item-delete-btn');
+            if (deleteBtn) {
+                e.stopPropagation(); // Prevent the li click from firing
+                const li = deleteBtn.closest('li');
+                if (li && li.dataset.index) {
+                    const indexToDelete = parseInt(li.dataset.index, 10);
+                    if (confirm('Are you sure you want to delete this chat? This action cannot be undone.')) {
+                        deleteHistoryItem(indexToDelete);
+                    }
+                }
+                return; // Exit after handling delete
+            }
+
+            // Handle li click for loading chat
             const li = e.target.closest('li');
             if (li && li.dataset.index) {
                 const index = parseInt(li.dataset.index, 10);
                 loadChatFromHistory(index);
-                if (window.innerWidth <= 768) {
-                    historyPanel.classList.remove('active');
-                }
+                historyPanel.classList.remove('active');
             }
         }
         
         function handleChatLogClicks(e) {
-            const tryAgainButton = e.target.closest('.btn-try-again');
-            if (tryAgainButton) {
-                const questionToRetry = tryAgainButton.dataset.question;
-                tryAgainButton.closest('.chat-message').remove();
-                submitQuestionToAI(questionToRetry);
+            const button = e.target.closest('button[data-action]');
+            if (!button) {
+                 const tryAgainButton = e.target.closest('.btn-try-again');
+                 if (tryAgainButton) {
+                    const questionToRetry = tryAgainButton.dataset.question;
+                    tryAgainButton.closest('.chat-message').remove();
+                    submitQuestionToAI(questionToRetry);
+                }
                 return;
             }
-            
-            const button = e.target.closest('button[data-action]');
-            if (!button) return;
 
-            if (button.dataset.action === 'edit') {
-                const userMessageDiv = button.closest('.user-message');
-                const aiMessageDiv = userMessageDiv.nextElementSibling;
-                const messageText = userMessageDiv.querySelector('p').textContent;
+            const action = button.dataset.action;
+            const aiMessage = button.closest('.ai-message');
+            const pre = button.closest('pre');
 
-                questionInput.value = messageText;
-                questionInput.focus();
-                autoResizeTextarea();
-
-                userMessageDiv.remove();
-                if (aiMessageDiv && aiMessageDiv.classList.contains('ai-message')) {
-                    aiMessageDiv.remove();
-                }
-
-                if (currentChatIndex !== -1) {
-                    chatHistory[currentChatIndex].conversation.pop();
-                    if (chatHistory[currentChatIndex].conversation.length === 0) {
-                        chatHistory.splice(currentChatIndex, 1);
-                        currentChatIndex = -1;
+            switch (action) {
+                case 'copy':
+                    if (pre) {
+                        const codeEl = pre.querySelector('code');
+                        navigator.clipboard.writeText(codeEl.textContent).then(() => {
+                            button.textContent = 'Copied!';
+                            setTimeout(() => button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy', 2000);
+                        });
                     }
-                } else {
-                    const lastChat = chatHistory[0];
-                    if (lastChat && lastChat.conversation.length > 0) {
-                        lastChat.conversation.pop();
-                        if (lastChat.conversation.length === 0) {
-                            chatHistory.shift();
+                    break;
+                case 'preview':
+                    if (aiMessage) {
+                        showCombinedPreview(aiMessage);
+                    }
+                    break;
+                case 'edit':
+                    if (pre) {
+                       enterEditMode(pre);
+                    } else {
+                        // Handle user message edit
+                        const userMessageDiv = button.closest('.user-message');
+                        if (userMessageDiv) {
+                            const aiMessageDiv = userMessageDiv.nextElementSibling;
+                            const messageText = userMessageDiv.querySelector('p').textContent;
+
+                            questionInput.value = messageText;
+                            questionInput.focus();
+                            autoResizeTextarea();
+
+                            userMessageDiv.remove();
+                            if (aiMessageDiv && aiMessageDiv.classList.contains('ai-message')) {
+                                aiMessageDiv.remove();
+                            }
+                            
+                            let chatToUpdate = (currentChatIndex !== -1) ? chatHistory[currentChatIndex] : chatHistory[0];
+                            if (chatToUpdate && chatToUpdate.conversation.length > 0) {
+                                chatToUpdate.conversation.pop(); // Remove last turn
+                                if (chatToUpdate.conversation.length === 0) {
+                                    chatHistory = chatHistory.filter(c => c !== chatToUpdate);
+                                    currentChatIndex = -1;
+                                }
+                            }
+                            
+                            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+                            renderHistoryList();
                         }
                     }
-                }
-                localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-                renderHistoryList();
-                return;
-            }
-            
-            const pre = button.closest('pre');
-            if (!pre) return;
-
-            const codeEl = pre.querySelector('code');
-            const action = button.dataset.action;
-
-            if (action === 'copy') {
-                navigator.clipboard.writeText(codeEl.textContent).then(() => {
-                    button.textContent = 'Copied!';
-                    setTimeout(() => button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy', 2000);
-                });
-            } else if (action === 'preview') {
-                document.getElementById('preview-iframe').srcdoc = codeEl.textContent;
-                document.getElementById('preview-modal').classList.add('active');
-            } else if (action === 'edit') {
-                 const codeContent = codeEl.textContent;
-                const editorContainer = document.createElement('div');
-                editorContainer.innerHTML = `<textarea class="code-editor"></textarea><div class="code-editor-actions"><button>Save & Preview</button></div>`;
-                const editorTextarea = editorContainer.querySelector('textarea');
-                editorTextarea.value = codeContent;
-
-                editorContainer.querySelector('button').onclick = () => {
-                    document.getElementById('preview-iframe').srcdoc = editorTextarea.value;
-                    document.getElementById('preview-modal').classList.add('active');
-                };
-
-                pre.parentNode.replaceChild(editorContainer, pre);
+                    break;
             }
         }
 
         // --- Core AI & Rendering ---
+        const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
+
         function appendMessage(content, type) {
             const isUser = type === 'user';
             const avatarChar = isUser ? 'You' : '🤖';
             const avatarColor = isUser ? 'var(--primary-color)' : '#19c37d';
             
-            // Remove edit button from previous user message
             const lastUserEditBtn = chatLog.querySelector('.user-message:last-of-type .edit-btn');
             if (lastUserEditBtn) lastUserEditBtn.remove();
             
@@ -622,10 +747,11 @@
             const systemInstruction = `You are an expert assistant for the website gklearnstudy.in. Your primary goal is to provide helpful, accurate, and relevant information to users.
             
             Follow these rules strictly:
-            1.  **Prioritize Website Content:** When a user asks a question, your FIRST step is to determine if the content on gklearnstudy.in can answer it. Think of yourself as an expert on the site.
-            2.  **Provide Links:** If you find relevant information on gklearnstudy.in, you MUST base your answer on that information and ALWAYS include a direct markdown link to the specific page(s) you used. For example: "आप इस बारे में और जानकारी [इस पेज पर](https://gklearnstudy.in/your-page-url.html) पढ़ सकते हैं।"
-            3.  **Use General Knowledge as a Fallback:** If and ONLY IF you cannot find any relevant information on gklearnstudy.in after a thorough conceptual search, then you should use your general knowledge to provide a comprehensive answer. Do NOT mention that you searched the site and found nothing. Just answer the question directly.
-            4.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
+            1.  **Format your response using Markdown.** Use headings (#, ##), lists (*, 1.), bold (**text**), tables, etc., to structure your answer clearly.
+            2.  **Prioritize Website Content:** When a user asks a question, your FIRST step is to determine if the content on gklearnstudy.in can answer it. Think of yourself as an expert on the site.
+            3.  **Provide Links:** If you find relevant information on gklearnstudy.in, you MUST base your answer on that information and ALWAYS include a direct markdown link to the specific page(s) you used. For example: "आप इस बारे में और जानकारी [इस पेज पर](https://gklearnstudy.in/your-page-url.html) पढ़ सकते हैं।"
+            4.  **Use General Knowledge as a Fallback:** If and ONLY IF you cannot find any relevant information on gklearnstudy.in after a thorough conceptual search, then you should use your general knowledge to provide a comprehensive answer. Do NOT mention that you searched the site and found nothing. Just answer the question directly.
+            5.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
 
             try {
                 const response = await ai.models.generateContent({
@@ -655,36 +781,117 @@
         }
 
         function renderResponse(text) {
-            let htmlContent = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
-            
-            const parts = htmlContent.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
+            const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
             let finalHTML = '';
 
             parts.forEach(part => {
                 if (part.startsWith('```')) {
-                    const lang = part.match(/^```(\w*)/)?.[1] || '';
+                    const lang = (part.match(/^```(\w*)/)?.[1] || '').toLowerCase();
                     const code = escapeHTML(part.replace(/^```\w*\n|```$/g, ''));
 
                     finalHTML += `
-                        <pre>
+                        <pre data-lang="${lang}">
                             <div class="code-toolbar">
                                 <button data-action="copy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy</button>
-                                ${lang.toLowerCase() === 'html' ? `<button data-action="preview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> Preview</button>` : ''}
+                                <button data-action="preview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> Preview</button>
                                 <button data-action="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z"></path></svg> Edit</button>
                             </div>
                             <code>${code}</code>
-                        </pre>
-                    `;
-                } else {
-                    finalHTML += `<p>${part.trim().replace(/\n/g, '<br>')}</p>`;
+                        </pre>`;
+                } else if (part.trim()){
+                    const unsafeHtml = marked.parse(part);
+                    finalHTML += DOMPurify.sanitize(unsafeHtml);
                 }
             });
             appendResponse(finalHTML);
         }
+        
+        function showCombinedPreview(aiMessageElement) {
+            let htmlCode = '', cssCode = '', jsCode = '';
+            const codeBlocks = aiMessageElement.querySelectorAll('pre');
+
+            codeBlocks.forEach(block => {
+                const lang = block.dataset.lang || '';
+                const codeContent = block.querySelector('code').textContent;
+                if (lang === 'html') {
+                    htmlCode += codeContent + '\n';
+                } else if (lang === 'css') {
+                    cssCode += codeContent + '\n';
+                } else if (lang === 'javascript' || lang === 'js') {
+                    jsCode += codeContent + '\n';
+                }
+            });
+
+            if (!htmlCode && !cssCode && !jsCode) return; // Nothing to preview
+
+            if (!htmlCode) { 
+                htmlCode = `<!DOCTYPE html><html><head><title>Preview</title></head><body><p>No HTML code found to preview, but CSS/JS may be applied.</p></body></html>`;
+            }
+            
+            if (cssCode) {
+                const styleTag = `<style>${cssCode}</style>`;
+                if (htmlCode.includes('</head>')) {
+                    htmlCode = htmlCode.replace('</head>', `${styleTag}</head>`);
+                } else {
+                    htmlCode = styleTag + htmlCode;
+                }
+            }
+
+            if (jsCode) {
+                const scriptTag = `<script>${jsCode}<\/script>`;
+                if (htmlCode.includes('</body>')) {
+                    htmlCode = htmlCode.replace('</body>', `${scriptTag}</body>`);
+                } else {
+                    htmlCode += scriptTag;
+                }
+            }
+
+            document.getElementById('preview-iframe').srcdoc = htmlCode;
+            document.getElementById('preview-modal').classList.add('active');
+        }
+        
+        function enterEditMode(preElement) {
+            const originalCode = preElement.querySelector('code').textContent;
+            const editorWrapper = document.createElement('div');
+            editorWrapper.className = 'code-editor-wrapper';
+            
+            editorWrapper.innerHTML = `
+                <textarea class="code-editor"></textarea>
+                <div class="code-editor-actions">
+                    <button class="cancel-edit-btn">Cancel</button>
+                    <button class="save-preview-btn">Save & Preview</button>
+                </div>
+            `;
+            
+            const textarea = editorWrapper.querySelector('textarea');
+            textarea.value = originalCode;
+            
+            preElement.replaceWith(editorWrapper);
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+            textarea.focus();
+            textarea.addEventListener('input', () => {
+                 textarea.style.height = 'auto';
+                 textarea.style.height = (textarea.scrollHeight) + 'px';
+            });
+
+            editorWrapper.querySelector('.cancel-edit-btn').addEventListener('click', () => {
+                editorWrapper.replaceWith(preElement);
+            });
+
+            editorWrapper.querySelector('.save-preview-btn').addEventListener('click', () => {
+                const newCode = textarea.value;
+                preElement.querySelector('code').textContent = newCode;
+                editorWrapper.replaceWith(preElement);
+                
+                const aiMessage = preElement.closest('.ai-message');
+                if (aiMessage) {
+                    showCombinedPreview(aiMessage);
+                }
+            });
+        }
+
 
         // --- History & Utility ---
-        const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
-
         function loadHistory() {
             try {
                 const saved = localStorage.getItem('aiChatHistory');
@@ -699,8 +906,8 @@
             chatHistory.unshift({ conversation: [{ question, answer }] });
             if (chatHistory.length > 50) chatHistory.pop();
             localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+            currentChatIndex = 0; // Set the current chat to the new one
             renderHistoryList();
-            currentChatIndex = 0;
         }
         
         function updateHistory(index, question, answer) {
@@ -713,7 +920,10 @@
         function renderHistoryList() {
             historyList.innerHTML = chatHistory.map((item, index) => {
                 const firstQuestion = item?.conversation?.[0]?.question || 'Empty Chat';
-                return `<li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">${escapeHTML(firstQuestion)}</li>`;
+                return `<li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">
+                           <span class="history-item-text">${escapeHTML(firstQuestion)}</span>
+                           <button class="history-item-delete-btn" aria-label="Delete this chat">&times;</button>
+                        </li>`;
             }).join('') || '<li>No history yet.</li>';
         }
 
@@ -724,13 +934,28 @@
                 chatLog.innerHTML = '';
                 conversation.forEach((turn, turnIndex) => {
                     const msgDiv = appendMessage(turn.question, 'user');
-                    // Only add edit button to the very last user message of the loaded chat
                     if (turnIndex !== conversation.length - 1) {
                          const editBtn = msgDiv.querySelector('.edit-btn');
                          if(editBtn) editBtn.remove();
                     }
                     renderResponse(turn.answer);
                 });
+                renderHistoryList();
+            }
+        }
+
+        function deleteHistoryItem(index) {
+            if (index < 0 || index >= chatHistory.length) return;
+
+            chatHistory.splice(index, 1);
+            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+
+            if (currentChatIndex === index) {
+                startNewChat();
+            } else {
+                if (currentChatIndex > index) {
+                    currentChatIndex--;
+                }
                 renderHistoryList();
             }
         }
