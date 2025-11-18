@@ -372,7 +372,6 @@
         function initializeApp() {
             try {
                 // WARNING: Hardcoded API key for trial/practice as requested by the user.
-                // This should be replaced with a secure method (e.g., environment variables) in production.
                 ai = new GoogleGenAI({ apiKey: "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8" });
                 
                 attachEventListeners();
@@ -380,10 +379,8 @@
                 setInterval(updatePlaceholder, 4000);
             } catch (error) {
                 console.error("Failed to initialize AI or App:", error);
-                const errorMessage = error.message.includes("API key not valid") 
-                    ? "The provided API key is invalid. Please check the key."
-                    : "Failed to load AI Assistant. Please check the console for errors.";
-                document.body.innerHTML = `<h2>${errorMessage}</h2>`;
+                const errorMessage = "Failed to load AI Assistant. Please check the console for errors.";
+                chatLog.innerHTML = `<div class="chat-message ai-message"><div class="message-avatar">🤖</div><div class="message-content"><p style="color:red;">${errorMessage}</p></div></div>`;
             }
         }
 
@@ -404,8 +401,6 @@
             const userQuestion = questionInput.value.trim();
             if (userQuestion) {
                 if (currentChatIndex !== -1) {
-                    // If we were viewing an old chat, this new question starts a fork.
-                    // So, create a new history item instead of appending.
                     currentChatIndex = -1; 
                 }
                 appendMessage(userQuestion, 'user');
@@ -510,7 +505,6 @@
         async function submitQuestionToAI(userQuestion) {
             const indicator = showTypingIndicator();
 
-            // *** CRITICAL: Added the website grounding instruction ***
             const systemInstruction = `You are an expert assistant for the website gklearnstudy.in. Your primary goal is to provide helpful, accurate, and relevant information to users.
             
             Follow these rules strictly:
@@ -521,7 +515,7 @@
 
             try {
                 const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-pro', // Using Pro for better instruction following
+                    model: 'gemini-2.5-pro',
                     contents: userQuestion,
                     config: { systemInstruction: systemInstruction }
                 });
@@ -576,8 +570,25 @@
         const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
 
         function loadHistory() {
-            const saved = localStorage.getItem('aiChatHistory');
-            chatHistory = saved ? JSON.parse(saved) : [];
+            try {
+                const saved = localStorage.getItem('aiChatHistory');
+                if (saved) {
+                    const parsedHistory = JSON.parse(saved);
+                    // VITAL CHECK: ensure it's an array and every item has the right structure.
+                    if (Array.isArray(parsedHistory) && parsedHistory.every(item => item && item.conversation && Array.isArray(item.conversation))) {
+                        chatHistory = parsedHistory;
+                    } else {
+                        throw new Error("History data is malformed.");
+                    }
+                } else {
+                    chatHistory = [];
+                }
+            } catch (error) {
+                // If ANYTHING goes wrong (parsing, validation, etc.), wipe the storage and start fresh.
+                console.error("Could not load or validate chat history. Resetting.", error);
+                localStorage.removeItem('aiChatHistory');
+                chatHistory = [];
+            }
             renderHistoryList();
         }
 
@@ -586,7 +597,7 @@
             if (chatHistory.length > 50) chatHistory.pop();
             localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
             renderHistoryList();
-            currentChatIndex = 0; // The new chat is now the active one at the top.
+            currentChatIndex = 0;
         }
         
         function updateHistory(index, question, answer) {
@@ -598,13 +609,14 @@
 
         function renderHistoryList() {
             historyList.innerHTML = chatHistory.map((item, index) => {
-                const firstQuestion = item.conversation[0]?.question || 'Empty Chat';
+                // This check prevents the crash.
+                const firstQuestion = item?.conversation?.[0]?.question || 'Empty Chat';
                 return `<li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">${escapeHTML(firstQuestion)}</li>`;
             }).join('') || '<li>No history yet.</li>';
         }
 
         function loadChatFromHistory(index) {
-            if (chatHistory[index]) {
+            if (chatHistory[index] && chatHistory[index].conversation) {
                 currentChatIndex = index;
                 const conversation = chatHistory[index].conversation;
                 chatLog.innerHTML = '';
