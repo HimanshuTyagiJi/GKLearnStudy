@@ -3,7 +3,7 @@
 <head> 
     <meta charset="UTF-8" />
     <title>AI Solver - किसी भी विषय पर सवाल पूछें | GK Learn Study</title>
-    <meta name="description" content="एक उन्नत AI सहायक जो गणित, विज्ञान, व्याकरण, और अन्य विषयों के सवालों का स्टेप-बाय-स्टेप समाधान प्रदान करता है।" />
+    <meta name="description" content="एक उन्नत AI सहायक जो गणित, विज्ञान, व्याकरण, और अन्य विषयों के सवालों का स्टेप-बाय-स्टेप समाधान प्रदान करता है." />
     <meta name="keywords" content="AI solver, math solver, science helper, homework helper, gk learn study, AI सहायक, गणित सॉल्वर" />
     <meta name="author" content="Mr. Himanshu Tyagi" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,7 +50,6 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-           
             color: var(--text-color);
         }
 
@@ -69,7 +68,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
+            z-index: 10000; /* FIXED: High Z-Index to be on top */
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         #ai-widget-toggle-btn:hover {
@@ -85,25 +84,24 @@
         /* --- AI Chat Widget Container --- */
         #ai-chat-widget {
             position: fixed;
-            z-index: 10001;
+            z-index: 10001; /* FIXED: Higher than button */
             background-color: var(--card-bg-color);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             
-            display: none; /* Hidden by default */
+            display: none; /* Hidden by default to prevent blocking clicks */
+            flex-direction: column; /* Important for layout */
             opacity: 0;
             transform: translateY(20px) scale(0.95);
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         #ai-chat-widget.active {
-            display: block;
+            display: flex; /* Show as flex when active */
             opacity: 1;
             transform: translateY(0) scale(1);
-            display: flex; /* Important for layout */
-            flex-direction: column;
         }
 
         /* Desktop: pop-up on right */
@@ -117,7 +115,6 @@
             }
              #ai-chat-widget.full-view {
                 top: 15px; left: 0; width: 100%; height: 100%; border-radius: 0; right: auto; bottom: auto;
-                z-index: 10002;
             }  
         }
         
@@ -139,8 +136,6 @@
             display: flex;
             width: 100%;
             height: 100%;
-            position: relative;
-            overflow: hidden;
         }
 
         /* --- History Panel --- */
@@ -171,7 +166,7 @@
             height: var(--header-height);
         }
 
-        .history-header h2 { font-size: 1.2rem; margin: 0; }
+        .history-header h2 { font-size: 1.2rem; }
         
         .history-header-actions {
             display: flex;
@@ -204,7 +199,6 @@
             flex-grow: 1;
             overflow-y: auto;
             padding: 0.5rem;
-            margin: 0;
         }
 
         #history-list li {
@@ -215,7 +209,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
         }
         
         .history-item-text {
@@ -241,7 +234,7 @@
             display: block;
         }
         
-        /* Mobile fix for delete button */
+        /* Mobile Fix for delete btn */
         @media (max-width: 768px) {
             .history-item-delete-btn {
                 display: block;
@@ -263,8 +256,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            width: 100%; /* Changed to 100% as it's flex container */
-            position: relative;
+            width: 100%;
         }
 
         .chat-header {
@@ -312,7 +304,7 @@
         }
 
         #menu-toggle svg, #full-view-btn svg, #close-widget-btn svg { width: 24px; height: 24px; color: var(--text-color); }
-        .chat-header h1 { font-size: 1.25rem; margin: 0; }
+        .chat-header h1 { font-size: 1.25rem; }
 
         #chat-log {
             flex-grow: 1;
@@ -321,23 +313,16 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            background-color: var(--bg-color);
         }
 
         .chat-message { display: flex; gap: 1rem; max-width: 90%; }
-        .message-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--border-color); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 0.9rem; }
-        .message-content { padding: 10px 15px; position: relative; width: 100%; border-radius: 12px; overflow-wrap: break-word;}
-        .message-content p { line-height: 1.6; margin: 0 0 0.5rem 0; }
-        .message-content p:last-child { margin-bottom: 0; }
-        
-        .user-message { align-self: flex-end; flex-direction: row-reverse; }
+        .message-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--border-color); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .message-content { padding-top: 5px; position: relative; width: 100%;}
+        .message-content p { line-height: 1.7; margin-bottom: 1rem; }
+        .user-message { align-self: flex-end; }
         .user-message .message-avatar { background-color: var(--primary-color); color: white; }
-        .user-message .message-content { background-color: var(--primary-color); color: white; }
-        
         .ai-message { align-self: flex-start; }
         .ai-message .message-avatar { background-color: #19c37d; }
-        .ai-message .message-content { background-color: var(--card-bg-color); border: 1px solid var(--border-color); color: var(--text-color); }
-        
         .typing-indicator .message-avatar { animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
@@ -401,7 +386,7 @@
             color: var(--secondary-text-color);
             font-style: italic;
         }
-        
+        .ai-message .message-content p:last-child { margin-bottom: 0; }
 
         /* --- Stylish Source Link Box --- */
         .source-box {
@@ -410,22 +395,24 @@
             background-color: var(--source-bg);
             border: 1px solid var(--source-border);
             border-radius: 8px;
-            display: inline-block;
+            display: block;
             font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .source-box:hover {
+            background-color: var(--hover-bg-color);
         }
         .source-box strong {
             color: var(--source-text);
             margin-right: 5px;
+            display: block;
+            margin-bottom: 4px;
         }
         .source-box a {
             color: var(--source-text);
             text-decoration: none;
             font-weight: 600;
-            border-bottom: 1px dotted var(--source-text);
-        }
-        .source-box a:hover {
-            text-decoration: none;
-            border-bottom: 1px solid var(--source-text);
         }
         .chat-header-right{display:flex;}
 
@@ -452,10 +439,10 @@
         .message-content a:hover { text-decoration: underline; }
 
         /* --- Code Editor & Preview Modal --- */
-        #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 20000; justify-content: center; align-items: center; }
+        #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 10000; justify-content: center; align-items: center; }
         #preview-modal.active { display: flex; }
         .preview-content { background-color: white; width: 90%; height: 90%; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
-        .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
         #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
         #preview-iframe { width: 100%; height: 100%; border: none; }
         
@@ -478,6 +465,11 @@
     </style>
 </head>
 <body data-theme="light">
+
+    <!-- Test Button (Hidden, just to show layout works) -->
+    <!-- <div style="padding: 20px;">
+        <button onclick="alert('Website Button Clicked!')" style="padding:10px 20px;cursor:pointer;">Test Button</button>
+    </div> -->
 
     <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path></svg>
@@ -801,21 +793,24 @@
 
         async function submitQuestionToAI(userQuestion) {
             const indicator = showTypingIndicator();
-            let contextPromptPart = "";
             
             try {
-                // 1. Check if window.GKApp exists and data is ready
+                // 1. Check if window.GKApp exists and data is ready (for search context OR fallback)
                 if (window.GKApp && window.GKApp.dataReady) {
                     await window.GKApp.dataReady;
                 }
-                
-                // 2. Perform Search
+
+                // --- Context Construction for API ---
+                let contextPromptPart = "";
+                let searchContextFound = false;
+                let topResults = [];
+
                 if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
                      const searchResults = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
                      
-                     // 3. Limit context to top 3 results to avoid overwhelming the context window
                      if (searchResults && searchResults.length > 0) {
-                        const topResults = searchResults.slice(0, 3);
+                        topResults = searchResults.slice(0, 3);
+                        searchContextFound = true;
                         contextPromptPart = `
 **WEBSITE SEARCH CONTEXT (from gklearnstudy.in):**
 ${topResults.map((item, idx) => `
@@ -843,26 +838,24 @@ Snippet: ${item.paragraph}
 **INSTRUCTION:** Answer the user's question using your own general knowledge. Provide a detailed, comprehensive answer. Do **NOT** include any source link.
 `;
                      }
-                }
-            } catch (e) {
-                console.warn("Search unavailable:", e);
-                contextPromptPart = `
+                } else {
+                    contextPromptPart = `
 **INSTRUCTION:** Answer the user's question using your own general knowledge. Provide a detailed, comprehensive answer. Do **NOT** include any source link.
 `;
-            }
+                }
 
-            const finalPrompt = `${contextPromptPart}\n\n**USER QUESTION:** ${userQuestion}`;
+                const finalPrompt = `${contextPromptPart}\n\n**USER QUESTION:** ${userQuestion}`;
 
-            const systemInstruction = `You are an expert AI assistant for the website gklearnstudy.in.
-            
-            **CORE BEHAVIORS:**
-            1. **Detailed Explanations:** Never give one-line answers. Always explain concepts in depth ("bada chada kar"). For Math/Science/Coding questions, provide step-by-step solutions, logic, and examples.
-            2. **Format:** Use Markdown (headings, bold, lists) for the main body. Use specific HTML for the source link as instructed.
-            3. **Strict Linking Logic:** Only link if you are *actually* using relevant info from the provided 'WEBSITE SEARCH CONTEXT'. If you answer from general knowledge (Math, Code, etc.), DO NOT fake a link.
-            4. **Language:** Reply primarily in the language of the user's query (Hindi/English mix is fine for Indian context).
-            5. **Coding:** If asked for code, wrap it in \`\`\`language blocks.`;
+                const systemInstruction = `You are an expert AI assistant for the website gklearnstudy.in.
+                
+                **CORE BEHAVIORS:**
+                1. **Detailed Explanations:** Never give one-line answers. Always explain concepts in depth ("bada chada kar"). For Math/Science/Coding questions, provide step-by-step solutions, logic, and examples.
+                2. **Format:** Use Markdown (headings, bold, lists) for the main body. Use specific HTML for the source link as instructed.
+                3. **Strict Linking Logic:** Only link if you are *actually* using relevant info from the provided 'WEBSITE SEARCH CONTEXT'. If you answer from general knowledge (Math, Code, etc.), DO NOT fake a link.
+                4. **Language:** Reply primarily in the language of the user's query (Hindi/English mix is fine for Indian context).
+                5. **Coding:** If asked for code, wrap it in \`\`\`language blocks.`;
 
-            try {
+                // --- API Call ---
                 const response = await ai.models.generateContent({
                     model: 'gemini-2.5-pro',
                     contents: finalPrompt,
@@ -880,12 +873,52 @@ Snippet: ${item.paragraph}
                 }
                 
             } catch (apiError) {
-                console.error("Gemini API Error:", apiError);
-                const errorContent = indicator.querySelector('.message-content');
-                errorContent.innerHTML = `
-                    <p style="color:var(--danger-color);">Sorry, an error occurred. Please try again.</p>
-                    <button class="btn-try-again" data-question="${escapeHTML(userQuestion)}">Try Again</button>
-                `;
+                console.error("Gemini API Error/Fallback Triggered:", apiError);
+                indicator.remove();
+
+                // --- FALLBACK LOGIC (If API fails) ---
+                if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
+                    const searchResults = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
+                    
+                    if (searchResults && searchResults.length > 0) {
+                        const bestMatch = searchResults[0]; // Take top result
+                        const fallbackHTML = `
+                            <p><strong>Note:</strong> AI service is currently unavailable. Here is a relevant result from our website database:</p>
+                            <p>${bestMatch.paragraph}</p>
+                            <div class="source-box">
+                                <strong>Source:</strong> <a href="${bestMatch.url}" target="_blank">${bestMatch.title}</a>
+                            </div>
+                        `;
+                        appendResponse(fallbackHTML);
+                        // Save fallback response to history
+                        if (currentChatIndex === -1) {
+                            saveNewHistory(userQuestion, "Local Search Result Provided");
+                        } else {
+                            updateHistory(currentChatIndex, userQuestion, "Local Search Result Provided");
+                        }
+                    } else {
+                        const errorHTML = `
+                            <p style="color:var(--danger-color);">Sorry, the AI service is unavailable and no relevant local content was found.</p>
+                            <button class="btn-try-again" data-question="${escapeHTML(userQuestion)}">Try Again</button>
+                        `;
+                        const msgDiv = document.createElement('div');
+                        msgDiv.className = 'chat-message ai-message';
+                        msgDiv.innerHTML = `<div class="message-avatar">🤖</div><div class="message-content">${errorHTML}</div>`;
+                        chatLog.appendChild(msgDiv);
+                    }
+                } else {
+                     // No search data available either
+                     const errorContent = document.createElement('div');
+                     errorContent.className = 'chat-message ai-message';
+                     errorContent.innerHTML = `
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p style="color:var(--danger-color);">Sorry, an error occurred and local search is unavailable. Please check your connection.</p>
+                            <button class="btn-try-again" data-question="${escapeHTML(userQuestion)}">Try Again</button>
+                        </div>`;
+                     chatLog.appendChild(errorContent);
+                }
+                chatLog.scrollTop = chatLog.scrollHeight;
             }
         }
 
