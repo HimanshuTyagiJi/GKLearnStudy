@@ -1,0 +1,304 @@
+
+
+/* Variables matching theme.css to ensure consistency if loaded */
+:root {
+    --primary-color: #2f2eff;
+    --hover-bg-color: #f8f9fa;
+    --text-color: #000;
+    --secondary-text-color: #4f4f4f;
+    --card-bg-color: #fff;
+    --border-color: #e0e0e0;
+    --danger-color: #e53935;
+    --header-height: 60px;
+    --code-bg: #f4f4f4;
+}
+
+html[data-theme="dark"] {
+    --primary-color: #4f46e5;
+    --hover-bg-color: #1f2937;
+    --text-color: #fff;
+    --secondary-text-color: #9ca3af;
+    --card-bg-color: #111827;
+    --border-color: #374151;
+    --danger-color: #ef4444;
+    --code-bg: #1f2937;
+}
+
+/* --- FAB Button --- */
+#ai-widget-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 10000; /* High z-index */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+    pointer-events: auto; /* Allow clicks on button */
+}
+#ai-widget-toggle-btn:hover { transform: scale(1.1); }
+#ai-widget-toggle-btn svg { width: 30px; height: 30px; }
+
+/* --- Widget Container --- */
+#ai-chat-widget {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 380px;
+    height: 600px;
+    max-height: 80vh;
+    background: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    /* CRITICAL FIX: display: none prevents it from blocking clicks when closed */
+    display: none; 
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 10001;
+    border: 1px solid var(--border-color);
+    pointer-events: auto; /* Allow clicks inside widget */
+}
+
+/* Only visible when active */
+#ai-chat-widget.active { display: flex; }
+
+#ai-chat-widget.full-view {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+}
+
+.ai-container { display: flex; height: 100%; width: 100%; position: relative; overflow: hidden; }
+
+/* --- History Panel --- */
+#history-panel {
+    width: 250px;
+    background: var(--card-bg-color); /* Ensure background is opaque */
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 10;
+}
+#history-panel.active { transform: translateX(0); }
+
+.history-header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+.history-header h2 { margin: 0; font-size: 1rem; }
+.history-header-actions { display: flex; gap: 5px; align-items: center; }
+
+/* Ensure close button is visible */
+#close-history-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    display: block; /* Always visible */
+}
+
+#history-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
+#history-list li {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color);
+}
+#history-list li:hover { background: var(--hover-bg-color); }
+.history-item-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* History Delete Button */
+.history-item-delete-btn {
+    background: none; 
+    border: none; 
+    color: var(--danger-color); 
+    font-size: 1.2rem; 
+    cursor: pointer;
+    display: none; /* Hidden by default on desktop */
+    padding-left: 5px;
+}
+#history-list li:hover .history-item-delete-btn { display: block; }
+
+/* Mobile Fix: Always show delete button on small screens */
+@media (max-width: 768px) {
+    .history-item-delete-btn {
+        display: block;
+    }
+}
+
+/* --- Chat Area --- */
+#chat-area { flex: 1; display: flex; flex-direction: column; width: 100%; position: relative; }
+
+.chat-header {
+    padding: 10px 15px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-header-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+.chat-header-right { display: flex; align-items: center; gap: 5px; }
+
+.chat-header h1 { margin: 0; font-size: 1.1rem; }
+.chat-header button {
+    background: none; border: none; color: white; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center;
+}
+.chat-header svg { width: 20px; height: 20px; fill: currentColor; }
+#new-chat-btn { border: 1px solid white; border-radius: 4px; font-size: 0.8rem; padding: 2px 8px; margin-left: auto; }
+
+#chat-log {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--card-bg-color);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-message { display: flex; gap: 10px; max-width: 90%; }
+.chat-message.user-message { align-self: flex-end; flex-direction: row-reverse; }
+.chat-message.ai-message { align-self: flex-start; }
+
+.message-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; color: white; font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.message-content {
+    background: var(--hover-bg-color);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    position: relative;
+    overflow-wrap: break-word;
+}
+.user-message .message-content { background: var(--primary-color); color: white; }
+.ai-message .message-content { background: var(--hover-bg-color); color: var(--text-color); }
+
+/* Input Area */
+.chat-input-area {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    background: var(--card-bg-color);
+}
+#ai-solver-form { display: flex; gap: 10px; align-items: flex-end; }
+#question-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    resize: none;
+    max-height: 100px;
+    font-family: inherit;
+    background: var(--hover-bg-color);
+    color: var(--text-color);
+}
+#solve-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Markdown & Code */
+pre {
+    background: var(--code-bg);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    position: relative;
+    margin: 0.5rem 0;
+}
+.code-toolbar {
+    position: absolute; top: 5px; right: 5px; display: flex; gap: 5px; opacity: 0; transition: opacity 0.2s;
+}
+pre:hover .code-toolbar { opacity: 1; }
+.code-toolbar button {
+    background: rgba(255,255,255,0.2);
+    border: none; color: white; font-size: 0.7rem; padding: 2px 5px; cursor: pointer; border-radius: 3px;
+}
+.source-box {
+    font-size: 0.8rem; margin-top: 5px; padding: 5px;
+    background: rgba(46, 125, 50, 0.1); border-left: 3px solid #2e7d32;
+    margin-bottom: 5px;
+    border-radius: 0 5px 5px 0;
+}
+.source-box a { color: #2e7d32; font-weight: bold; text-decoration: none; }
+.source-box a:hover { text-decoration: underline; }
+
+/* Modal */
+#preview-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); z-index: 20000;
+    display: none; justify-content: center; align-items: center;
+}
+#preview-modal.active { display: flex; }
+.preview-content {
+    background: white; width: 90%; height: 90%;
+    display: flex; flex-direction: column; border-radius: 8px;
+}
+.preview-header {
+    padding: 10px; border-bottom: 1px solid #ccc;
+    display: flex; justify-content: space-between;
+    color: black;
+}
+#preview-iframe { flex: 1; border: none; }
+
+/* Edit Mode */
+.edit-btn {
+    background: none; border: none; color: #fff; cursor: pointer; margin-left: 5px;
+}
+.code-editor-wrapper { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+.code-editor { width: 100%; min-height: 100px; font-family: monospace; background: var(--code-bg); color: var(--text-color); border: 1px solid var(--border-color); }
+.code-editor-actions { display: flex; gap: 5px; justify-content: flex-end; }
+.code-editor-actions button { padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+.save-preview-btn { background: var(--primary-color); color: white; }
+
+@media (max-width: 600px) {
+    #ai-chat-widget { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; z-index: 10001;}
+    #ai-widget-toggle-btn { bottom: 20px; right: 20px; }
+}
