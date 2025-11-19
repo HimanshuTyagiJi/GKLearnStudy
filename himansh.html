@@ -747,62 +747,56 @@
         async function submitQuestionToAI(userQuestion) {
             const indicator = showTypingIndicator();
             
-            // --- INTELLIGENT SEARCH LOGIC START ---
-            let searchContext = "";
+            let searchContextInstructions = "";
+            
             try {
-                // Ensure GKApp is loaded
-                if(window.GKApp && window.GKApp.dataReady) {
+                // Wait for search data
+                if (window.GKApp && window.GKApp.dataReady) {
                     await window.GKApp.dataReady;
                 }
 
                 if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-                    const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
-                    // If we have a good match (fuzzySearch usually sorts by score)
-                    if (results && results.length > 0) {
-                        const topItem = results[0];
+                    // Get top 3 results to check context
+                    const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData).slice(0, 3);
+                    
+                    if (results.length > 0) {
+                        const contextString = results.map((r, i) => `[${i+1}] Title: ${r.title}\nURL: ${r.url}\nExcerpt: ${r.paragraph.substring(0, 200)}...`).join('\n\n');
                         
-                        // Construct context from the top result
-                        searchContext = `
-I found the following relevant information on the website 'gklearnstudy.in':
-Title: "${topItem.title}"
-Content: "${topItem.paragraph}"
-URL: "${topItem.url}"
+                        searchContextInstructions = `
+**CONTEXT FROM WEBSITE (gklearnstudy.in):**
+${contextString}
 
-INSTRUCTIONS:
-1. Answer the user's question using the information provided above as the primary source.
-2. You may expand on the answer to be more helpful, but base it on the source.
-3. At the VERY END of your response, strictly append a source link in this HTML format: 
-   <br><br><strong>Source:</strong> <a href="${topItem.url}" target="_blank">${topItem.title}</a>
+**CRITICAL INSTRUCTION ON LINKING:**
+1. **Analyze the Context:** Does the information above *directly* answer the user's question?
+2. **YES:** If yes, use the information to answer and append the source link at the bottom like this: <br><br><strong>Source:</strong> <a href="[URL]" target="_blank">[Title]</a>.
+3. **NO:** If the context is irrelevant (e.g. user asks for Math/Code but context is History), **IGNORE** the context entirely. Answer from your general knowledge and **DO NOT** include any source link.
 `;
                     } else {
-                        // Explicit instruction to NOT link if no data found
-                        searchContext = `
-INSTRUCTIONS:
-1. No specific information was found on the website 'gklearnstudy.in' for this query.
-2. Answer the user's question using your general knowledge.
-3. DO NOT include any source links or mention the website if you are answering from general knowledge.
+                         searchContextInstructions = `
+**CONTEXT:** No relevant data found on gklearnstudy.in.
+**INSTRUCTION:** Answer from general knowledge. **DO NOT** include any source link.
 `;
                     }
                 }
-            } catch (e) {
-                console.warn("Search integration failed:", e);
-                searchContext = "INSTRUCTIONS: Answer from general knowledge. Do not include source links.";
+            } catch (err) {
+                console.warn("Search failed:", err);
+                 searchContextInstructions = `
+**INSTRUCTION:** Answer from general knowledge. **DO NOT** include any source link.
+`;
             }
-            // --- INTELLIGENT SEARCH LOGIC END ---
 
-            const finalPrompt = `${searchContext}\n\nUser Question: ${userQuestion}`;
-
-            const systemInstruction = `You are an expert assistant for the website gklearnstudy.in. Your primary goal is to provide helpful, accurate, and relevant information to users.
+            const fullPrompt = `${searchContextInstructions}\n\n**USER QUESTION:** ${userQuestion}`;
             
-            Follow these rules strictly:
-            1.  **Format your response using Markdown.** Use headings (#, ##), lists (*, 1.), bold (**text**), tables, etc., to structure your answer clearly.
-            2.  **Follow the specific instructions provided in the prompt regarding source linking.** 
-            3.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
+            const systemInstruction = `You are a helpful assistant for the educational website 'GK Learn Study'.
+            Rules:
+            1. Use Markdown for formatting (headings, lists, code blocks).
+            2. If the user asks for code, wrap it in \`\`\`language code blocks.
+            3. Follow the **CRITICAL INSTRUCTION ON LINKING** provided in the prompt strictly. Never provide a fake link. Only link if the provided context is actually relevant.`;
 
             try {
                 const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-pro',
-                    contents: finalPrompt,
+                    model: 'gemini-2.5-flash',
+                    contents: fullPrompt,
                     config: { systemInstruction: systemInstruction }
                 });
                 
