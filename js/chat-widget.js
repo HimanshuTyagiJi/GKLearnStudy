@@ -134,13 +134,13 @@ function initializeApp() {
     const fullViewBtn = get('full-view-btn');
     const newChatBtn = get('new-chat-btn');
 
-    try {
-        // "Bracket" (Base64) Encoding for key protection
-        const k = atob("QUl6YVN5QURpZms1aTg3UVQycTVFYUNoeVBZbWZ1NE5hbEtjVWlV");
-        ai = new GoogleGenAI({ apiKey: k });
-        
-        attachEventListeners();
-        loadHistory();
+     function initializeApp() {
+            try {
+                // WARNING: Hardcoded API key for trial/practice.
+                ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
+                
+                attachEventListeners();
+                loadHistory();
         setInterval(updatePlaceholder, 4000);
     } catch (error) {
         console.error("Failed to initialize AI or App:", error);
