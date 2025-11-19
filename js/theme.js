@@ -306,35 +306,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-(function() {
-    // Force remove body background and color
-    document.body.style.setProperty("background", "transparent", "important");
-    document.body.style.setProperty("color", "transparent", "important");
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-    document.body.style.overflow = "hidden"; // optional: prevent scrolling
 
-    // Create full-page wrapper
-    var wrap = document.createElement("div");
-    wrap.id = "fullpage-wrap";
-    wrap.style.position = "fixed";
-    wrap.style.top = "0";
-    wrap.style.left = "0";
-    wrap.style.width = "100%";
-    wrap.style.height = "100%";
-    wrap.style.background = "transparent";
-    wrap.style.zIndex = "999999";
+document.addEventListener("DOMContentLoaded", function () {
 
-    // Create iframe
     var iframe = document.createElement("iframe");
     iframe.src = "https://gklearnstudy.in/aichat.html";
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "0";
-    iframe.style.background = "transparent";
-    iframe.allowTransparency = "true";
 
-    wrap.appendChild(iframe);
-    document.body.appendChild(wrap);
-})();
+    // Position bottom-right
+    iframe.style.position = "fixed";
+    iframe.style.right = "20px";
+    iframe.style.bottom = "20px";
+    iframe.style.width = "350px";
+    iframe.style.height = "500px";
+    iframe.style.border = "0";
+    iframe.style.borderRadius = "10px";
+    iframe.style.zIndex = "999999";
+
+    document.body.appendChild(iframe);
+});
 
