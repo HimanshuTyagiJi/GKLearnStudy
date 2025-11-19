@@ -301,8 +301,21 @@ document.addEventListener("DOMContentLoaded", function() {
   // Step 3: Call it after short delay (to ensure body loaded)
   window.addEventListener('load', signalGooglefcPresent);
 })();
-(function () {
+
+document.addEventListener("DOMContentLoaded", function () {
+
     var iframe = document.createElement("iframe");
     iframe.src = "https://gklearnstudy.in/aichat.html";
+
+    // Position bottom-right
+  
+    iframe.style.border = "0px";
+     iframe.style.background="unset";
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    
+   
     document.body.appendChild(iframe);
-})();
+});
+
+
