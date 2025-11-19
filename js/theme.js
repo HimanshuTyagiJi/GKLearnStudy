@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function() {
 })();
 (function() {
     var script = document.createElement("script");
-    script.src = "/js/solution.js"; 
+    script.src = "/aichat.html"; 
     script.type = "text/javascript";
     script.async = true;
     document.head.appendChild(script);
