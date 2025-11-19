@@ -491,6 +491,9 @@
         </div>
     </div>
 
+    <!-- Included search data script for functionality -->
+    <script src="js/search-data.js"></script>
+    
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
         import { marked } from "https://esm.run/marked@12.0.2";
@@ -710,7 +713,7 @@
             } else {
                  messageDiv.innerHTML = `
                     <div class="message-avatar" style="background-color: ${avatarColor};">${avatarChar}</div>
-                    <div class="message-content"><p>${escapeHTML(content)}</p></div>`;
+                    <div class="message-content">${content}</div>`; // Removed escapeHTML for AI to allow rendering
             }
 
             chatLog.appendChild(messageDiv);
@@ -743,20 +746,63 @@
 
         async function submitQuestionToAI(userQuestion) {
             const indicator = showTypingIndicator();
+            
+            // --- INTELLIGENT SEARCH LOGIC START ---
+            let searchContext = "";
+            try {
+                // Ensure GKApp is loaded
+                if(window.GKApp && window.GKApp.dataReady) {
+                    await window.GKApp.dataReady;
+                }
+
+                if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
+                    const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
+                    // If we have a good match (fuzzySearch usually sorts by score)
+                    if (results && results.length > 0) {
+                        const topItem = results[0];
+                        
+                        // Construct context from the top result
+                        searchContext = `
+I found the following relevant information on the website 'gklearnstudy.in':
+Title: "${topItem.title}"
+Content: "${topItem.paragraph}"
+URL: "${topItem.url}"
+
+INSTRUCTIONS:
+1. Answer the user's question using the information provided above as the primary source.
+2. You may expand on the answer to be more helpful, but base it on the source.
+3. At the VERY END of your response, strictly append a source link in this HTML format: 
+   <br><br><strong>Source:</strong> <a href="${topItem.url}" target="_blank">${topItem.title}</a>
+`;
+                    } else {
+                        // Explicit instruction to NOT link if no data found
+                        searchContext = `
+INSTRUCTIONS:
+1. No specific information was found on the website 'gklearnstudy.in' for this query.
+2. Answer the user's question using your general knowledge.
+3. DO NOT include any source links or mention the website if you are answering from general knowledge.
+`;
+                    }
+                }
+            } catch (e) {
+                console.warn("Search integration failed:", e);
+                searchContext = "INSTRUCTIONS: Answer from general knowledge. Do not include source links.";
+            }
+            // --- INTELLIGENT SEARCH LOGIC END ---
+
+            const finalPrompt = `${searchContext}\n\nUser Question: ${userQuestion}`;
 
             const systemInstruction = `You are an expert assistant for the website gklearnstudy.in. Your primary goal is to provide helpful, accurate, and relevant information to users.
             
             Follow these rules strictly:
             1.  **Format your response using Markdown.** Use headings (#, ##), lists (*, 1.), bold (**text**), tables, etc., to structure your answer clearly.
-            2.  **Prioritize Website Content:** When a user asks a question, your FIRST step is to determine if the content on gklearnstudy.in can answer it. Think of yourself as an expert on the site.
-            3.  **Provide Links:** If you find relevant information on gklearnstudy.in, you MUST base your answer on that information and ALWAYS include a direct markdown link to the specific page(s) you used. For example: "आप इस बारे में और जानकारी [इस पेज पर](https://gklearnstudy.in/your-page-url.html) पढ़ सकते हैं।"
-            4.  **Use General Knowledge as a Fallback:** If and ONLY IF you cannot find any relevant information on gklearnstudy.in after a thorough conceptual search, then you should use your general knowledge to provide a comprehensive answer. Do NOT mention that you searched the site and found nothing. Just answer the question directly.
-            5.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
+            2.  **Follow the specific instructions provided in the prompt regarding source linking.** 
+            3.  **Code Formatting:** If the user asks for code (like HTML, CSS, JavaScript), you MUST wrap the entire code block in markdown fences. Example: \`\`\`html ...code here... \`\`\``;
 
             try {
                 const response = await ai.models.generateContent({
                     model: 'gemini-2.5-pro',
-                    contents: userQuestion,
+                    contents: finalPrompt,
                     config: { systemInstruction: systemInstruction }
                 });
                 
@@ -800,7 +846,7 @@
                         </pre>`;
                 } else if (part.trim()){
                     const unsafeHtml = marked.parse(part);
-                    finalHTML += DOMPurify.sanitize(unsafeHtml);
+                    finalHTML += DOMPurify.sanitize(unsafeHtml, { ADD_ATTR: ['target'] }); // Allow target for links
                 }
             });
             appendResponse(finalHTML);
