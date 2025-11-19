@@ -450,7 +450,11 @@
         .btn-try-again { background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 0.5rem; }
 
         /* --- Responsive Design Tweaks --- */
-        @media (min-width: 769px) { #ai-chat-widget.full-view #history-panel { position: static; transform: translateX(0); } }
+        @media (min-width: 769px) { #ai-chat-widget.full-view #history-panel { position: static; transform: translateX(0); }  #close-history-btn {
+            display: none; /* Always show close on panel */
+        
+        }
+}
         @media (max-width: 768px) { #full-view-btn { display: none; } #chat-log { padding: 1rem; } .chat-input-area { padding: 0.5rem; } }
     </style>
 </head>
