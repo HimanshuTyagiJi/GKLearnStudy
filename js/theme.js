@@ -316,8 +316,8 @@ document.addEventListener("DOMContentLoaded", function () {
     iframe.style.position = "fixed";
     iframe.style.right = "20px";
     iframe.style.bottom = "20px";
-    iframe.style.width = "350px";
-    iframe.style.height = "500px";
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
     iframe.style.border = "0";
     iframe.style.borderRadius = "10px";
     iframe.style.zIndex = "999999";
