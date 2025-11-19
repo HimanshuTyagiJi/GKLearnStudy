@@ -134,7 +134,7 @@ function initializeApp() {
     const fullViewBtn = get('full-view-btn');
     const newChatBtn = get('new-chat-btn');
 
-     function initializeApp() {
+  
             try {
                 // WARNING: Hardcoded API key for trial/practice.
                 ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
