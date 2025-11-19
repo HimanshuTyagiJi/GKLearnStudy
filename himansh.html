@@ -22,6 +22,9 @@
             --code-text-color: #d4d4d4;
             --header-height: 60px;
             --danger-color: #e53935;
+            --source-bg: #e8f5e9;
+            --source-border: #c8e6c9;
+            --source-text: #2e7d32;
         }
 
         html[data-theme="dark"] {
@@ -34,6 +37,9 @@
             --hover-bg-color: #2a2b32;
             --code-bg-color: #0d1117;
             --danger-color: #ef9a9a;
+            --source-bg: #1b5e20;
+            --source-border: #2e7d32;
+            --source-text: #a5d6a7;
         }
 
         * {
@@ -375,6 +381,31 @@
         }
         .ai-message .message-content p:last-child { margin-bottom: 0; }
 
+        /* --- Stylish Source Link Box --- */
+        .source-box {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1rem;
+            background-color: var(--source-bg);
+            border: 1px solid var(--source-border);
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .source-box strong {
+            color: var(--source-text);
+            margin-right: 5px;
+        }
+        .source-box a {
+            color: var(--source-text);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--source-text);
+        }
+        .source-box a:hover {
+            text-decoration: none;
+            border-bottom: 1px solid var(--source-text);
+        }
+
         /* --- Input Form --- */
         .chat-input-area { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); background-color: var(--card-bg-color); }
         #ai-solver-form { display: flex; align-items: flex-end; gap: 0.75rem; max-width: 800px; margin: 0 auto; padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--card-bg-color); }
@@ -491,9 +522,9 @@
         </div>
     </div>
 
-    <!-- Included search data script for functionality -->
+    <!-- Include Search Data -->
     <script src="js/search-data.js"></script>
-    
+
     <script type="module">
         import { GoogleGenAI } from "https://esm.run/@google/genai";
         import { marked } from "https://esm.run/marked@12.0.2";
@@ -626,7 +657,7 @@
                  const tryAgainButton = e.target.closest('.btn-try-again');
                  if (tryAgainButton) {
                     const questionToRetry = tryAgainButton.dataset.question;
-                    tryAgainButton.closest('.chat-message').remove();
+                    tryAgainButton.closest('.chat-message').remove(); // Remove previous error message
                     submitQuestionToAI(questionToRetry);
                 }
                 return;
@@ -713,7 +744,7 @@
             } else {
                  messageDiv.innerHTML = `
                     <div class="message-avatar" style="background-color: ${avatarColor};">${avatarChar}</div>
-                    <div class="message-content">${content}</div>`; // Removed escapeHTML for AI to allow rendering
+                    <div class="message-content"><p>${escapeHTML(content)}</p></div>`;
             }
 
             chatLog.appendChild(messageDiv);
@@ -746,57 +777,71 @@
 
         async function submitQuestionToAI(userQuestion) {
             const indicator = showTypingIndicator();
-            
-            let searchContextInstructions = "";
+            let contextPromptPart = "";
             
             try {
-                // Wait for search data
+                // 1. Check if window.GKApp exists and data is ready
                 if (window.GKApp && window.GKApp.dataReady) {
                     await window.GKApp.dataReady;
                 }
-
+                
+                // 2. Perform Search
                 if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-                    // Get top 3 results to check context
-                    const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData).slice(0, 3);
-                    
-                    if (results.length > 0) {
-                        const contextString = results.map((r, i) => `[${i+1}] Title: ${r.title}\nURL: ${r.url}\nExcerpt: ${r.paragraph.substring(0, 200)}...`).join('\n\n');
-                        
-                        searchContextInstructions = `
-**CONTEXT FROM WEBSITE (gklearnstudy.in):**
-${contextString}
+                     const searchResults = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
+                     
+                     // 3. Limit context to top 3 results to avoid overwhelming the context window
+                     if (searchResults && searchResults.length > 0) {
+                        const topResults = searchResults.slice(0, 3);
+                        contextPromptPart = `
+**WEBSITE SEARCH CONTEXT (from gklearnstudy.in):**
+${topResults.map((item, idx) => `
+[Result ${idx+1}]
+Title: ${item.title}
+URL: ${item.url}
+Snippet: ${item.paragraph}
+`).join('\n')}
 
-**CRITICAL INSTRUCTION ON LINKING:**
-1. **Analyze the Context:** Does the information above *directly* answer the user's question?
-2. **YES:** If yes, use the information to answer and append the source link at the bottom like this: <br><br><strong>Source:</strong> <a href="[URL]" target="_blank">[Title]</a>.
-3. **NO:** If the context is irrelevant (e.g. user asks for Math/Code but context is History), **IGNORE** the context entirely. Answer from your general knowledge and **DO NOT** include any source link.
+**INSTRUCTION FOR USING CONTEXT:**
+1. **Analyze:** Does the user's question relate *directly* to the content provided in the search results above?
+2. **IF RELEVANT:**
+   - Use the context as a *foundation*.
+   - **EXPAND** on it significantly using your own internal knowledge. Do not just copy-paste a short snippet. Provide a detailed, comprehensive answer.
+   - **MANDATORY LINKING:** At the very end of your response, append a styled source link using this EXACT HTML format:
+     <div class="source-box"><strong>Source:</strong> <a href="{URL_FROM_CONTEXT}" target="_blank">{TITLE_FROM_CONTEXT}</a></div>
+3. **IF IRRELEVANT OR NOT HELPFUL (e.g. User asks for Code, Math solution, or general facts not in context):**
+   - **IGNORE** the search context completely.
+   - Provide a detailed, step-by-step explanation using ONLY your own knowledge.
+   - **DO NOT** include any source link or mention the website context.
 `;
-                    } else {
-                         searchContextInstructions = `
-**CONTEXT:** No relevant data found on gklearnstudy.in.
-**INSTRUCTION:** Answer from general knowledge. **DO NOT** include any source link.
+                     } else {
+                        contextPromptPart = `
+**WEBSITE SEARCH CONTEXT:** No relevant data found on the website.
+**INSTRUCTION:** Answer the user's question using your own general knowledge. Provide a detailed, comprehensive answer. Do **NOT** include any source link.
 `;
-                    }
+                     }
                 }
-            } catch (err) {
-                console.warn("Search failed:", err);
-                 searchContextInstructions = `
-**INSTRUCTION:** Answer from general knowledge. **DO NOT** include any source link.
+            } catch (e) {
+                console.warn("Search unavailable:", e);
+                contextPromptPart = `
+**INSTRUCTION:** Answer the user's question using your own general knowledge. Provide a detailed, comprehensive answer. Do **NOT** include any source link.
 `;
             }
 
-            const fullPrompt = `${searchContextInstructions}\n\n**USER QUESTION:** ${userQuestion}`;
+            const finalPrompt = `${contextPromptPart}\n\n**USER QUESTION:** ${userQuestion}`;
+
+            const systemInstruction = `You are an expert AI assistant for the website gklearnstudy.in.
             
-            const systemInstruction = `You are a helpful assistant for the educational website 'GK Learn Study'.
-            Rules:
-            1. Use Markdown for formatting (headings, lists, code blocks).
-            2. If the user asks for code, wrap it in \`\`\`language code blocks.
-            3. Follow the **CRITICAL INSTRUCTION ON LINKING** provided in the prompt strictly. Never provide a fake link. Only link if the provided context is actually relevant.`;
+            **CORE BEHAVIORS:**
+            1. **Detailed Explanations:** Never give one-line answers. Always explain concepts in depth ("bada chada kar"). For Math/Science/Coding questions, provide step-by-step solutions, logic, and examples.
+            2. **Format:** Use Markdown (headings, bold, lists) for the main body. Use specific HTML for the source link as instructed.
+            3. **Strict Linking Logic:** Only link if you are *actually* using relevant info from the provided 'WEBSITE SEARCH CONTEXT'. If you answer from general knowledge (Math, Code, etc.), DO NOT fake a link.
+            4. **Language:** Reply primarily in the language of the user's query (Hindi/English mix is fine for Indian context).
+            5. **Coding:** If asked for code, wrap it in \`\`\`language blocks.`;
 
             try {
                 const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: fullPrompt,
+                    model: 'gemini-2.5-pro',
+                    contents: finalPrompt,
                     config: { systemInstruction: systemInstruction }
                 });
                 
@@ -840,7 +885,8 @@ ${contextString}
                         </pre>`;
                 } else if (part.trim()){
                     const unsafeHtml = marked.parse(part);
-                    finalHTML += DOMPurify.sanitize(unsafeHtml, { ADD_ATTR: ['target'] }); // Allow target for links
+                    // Allow target attribute for the new styled links
+                    finalHTML += DOMPurify.sanitize(unsafeHtml, { ADD_ATTR: ['target'] });
                 }
             });
             appendResponse(finalHTML);
