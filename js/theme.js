@@ -302,20 +302,39 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener('load', signalGooglefcPresent);
 })();
 
-document.addEventListener("DOMContentLoaded", function () {
 
+
+
+
+(function() {
+    // Force remove body background and color
+    document.body.style.setProperty("background", "transparent", "important");
+    document.body.style.setProperty("color", "transparent", "important");
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.body.style.overflow = "hidden"; // optional: prevent scrolling
+
+    // Create full-page wrapper
+    var wrap = document.createElement("div");
+    wrap.id = "fullpage-wrap";
+    wrap.style.position = "fixed";
+    wrap.style.top = "0";
+    wrap.style.left = "0";
+    wrap.style.width = "100%";
+    wrap.style.height = "100%";
+    wrap.style.background = "transparent";
+    wrap.style.zIndex = "999999";
+
+    // Create iframe
     var iframe = document.createElement("iframe");
     iframe.src = "https://gklearnstudy.in/aichat.html";
-
-    // Position bottom-right
-  
-    iframe.style.border = "0px";
-     iframe.style.background="unset";
     iframe.style.width = "100%";
     iframe.style.height = "100%";
-    
-   
-    document.body.appendChild(iframe);
-});
+    iframe.style.border = "0";
+    iframe.style.background = "transparent";
+    iframe.allowTransparency = "true";
 
+    wrap.appendChild(iframe);
+    document.body.appendChild(wrap);
+})();
 
