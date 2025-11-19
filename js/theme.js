@@ -1,3 +1,5 @@
+
+
 document.addEventListener("DOMContentLoaded", function() {
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
@@ -34,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { href: "https://gklearnstudy.in/index.html", text: "Home" },
             { href: "https://gklearnstudy.in/education.html", text: "Education" },
             { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
+            { href: "https://gklearnstudy.in/calculator.html", text: "Calculator" },
             { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
             { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
             { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
@@ -82,7 +85,8 @@ document.addEventListener("DOMContentLoaded", function() {
                  title: "Science & Computer",
                  links: [
                     { href: "conversion.html", text: "Conversion" },
-                    { href: "all-formulas.html", text: "All formulas" }
+                    { href: "all-formulas.html", text: "All formulas" },
+                    { href: "calculator.html", text: "Calculator" }
                 ]
             },
             socials: {
@@ -104,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="footer-section"><h4>${footerData.socials.title}</h4><ul class="footer-socials">${createSocials(footerData.socials.links)}</ul></div>
         `;
     }
-
+    
     // --- Theme Switcher Logic ---
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     html.setAttribute('data-theme', savedTheme);
@@ -271,57 +275,15 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("resize", throttledUpdateArrows);
     
     // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
-    window.addEventListener("load", () => requestAnimationFrame(updateArrows)); 
-});
+    window.addEventListener("load", () => requestAnimationFrame(updateArrows));
 
-// Google AdSense Ad Blocking Recovery Full Script
-(function() {
-  // Step 1: Dynamically load the Google funding choices script
-  var script = document.createElement('script');
-  script.async = true;
-  script.src = "https://fundingchoicesmessages.google.com/i/pub-7067722696020503?ers=1";
-  script.crossOrigin = "anonymous";
-  document.head.appendChild(script);
-
-  // Step 2: Signal presence (official Google function)
-  function signalGooglefcPresent() {
-    if (!window.frames['googlefcPresent']) {
-      if (document.body) {
-        const iframe = document.createElement('iframe');
-        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
-        iframe.style.display = 'none';
-        iframe.name = 'googlefcPresent';
-        document.body.appendChild(iframe);
-      } else {
-        setTimeout(signalGooglefcPresent, 0);
-      }
+    // --- AI Chat Widget Loader (NO IFRAME) ---
+    // This injects the floating button and chat window directly into the DOM.
+    // This solves the "buttons not clickable" issue caused by full-screen iframes.
+    if (!document.getElementById('ai-chat-widget')) {
+        const script = document.createElement('script');
+        script.src = '/js/chat-widget.js'; // Load the widget module
+        script.type = 'module';
+        document.body.appendChild(script);
     }
-  }
-
-  // Step 3: Call it after short delay (to ensure body loaded)
-  window.addEventListener('load', signalGooglefcPresent);
-})();
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    var iframe = document.createElement("iframe");
-    iframe.src = "https://gklearnstudy.in/aichat.html";
-
-    // Position bottom-right
-    iframe.style.position = "fixed";
-    iframe.style.right = "20px";
-    iframe.style.bottom = "20px";
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "0";
-    iframe.style.borderRadius = "10px";
-  
-iframe.style.zIndex = "-1";
-    document.body.appendChild(iframe);
 });
-
