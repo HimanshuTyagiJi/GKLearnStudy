@@ -69,7 +69,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: -10;
+            z-index: 10000;
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         #ai-widget-toggle-btn:hover {
@@ -85,7 +85,7 @@
         /* --- AI Chat Widget Container --- */
         #ai-chat-widget {
             position: fixed;
-            z-index: -10;
+            z-index: 10001;
             background-color: var(--card-bg-color);
             border: 1px solid var(--border-color);
             border-radius: 16px;
@@ -102,6 +102,8 @@
             display: block;
             opacity: 1;
             transform: translateY(0) scale(1);
+            display: flex; /* Important for layout */
+            flex-direction: column;
         }
 
         /* Desktop: pop-up on right */
@@ -115,6 +117,7 @@
             }
              #ai-chat-widget.full-view {
                 top: 15px; left: 0; width: 100%; height: 100%; border-radius: 0; right: auto; bottom: auto;
+                z-index: 10002;
             }  
         }
         
@@ -136,6 +139,8 @@
             display: flex;
             width: 100%;
             height: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
         /* --- History Panel --- */
@@ -166,7 +171,7 @@
             height: var(--header-height);
         }
 
-        .history-header h2 { font-size: 1.2rem; }
+        .history-header h2 { font-size: 1.2rem; margin: 0; }
         
         .history-header-actions {
             display: flex;
@@ -199,6 +204,7 @@
             flex-grow: 1;
             overflow-y: auto;
             padding: 0.5rem;
+            margin: 0;
         }
 
         #history-list li {
@@ -209,6 +215,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .history-item-text {
@@ -234,6 +241,13 @@
             display: block;
         }
         
+        /* Mobile fix for delete button */
+        @media (max-width: 768px) {
+            .history-item-delete-btn {
+                display: block;
+            }
+        }
+        
         .history-item-delete-btn:hover {
             color: var(--danger-color);
         }
@@ -249,7 +263,8 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            width: 68%;
+            width: 100%; /* Changed to 100% as it's flex container */
+            position: relative;
         }
 
         .chat-header {
@@ -297,7 +312,7 @@
         }
 
         #menu-toggle svg, #full-view-btn svg, #close-widget-btn svg { width: 24px; height: 24px; color: var(--text-color); }
-        .chat-header h1 { font-size: 1.25rem; }
+        .chat-header h1 { font-size: 1.25rem; margin: 0; }
 
         #chat-log {
             flex-grow: 1;
@@ -306,16 +321,23 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            background-color: var(--bg-color);
         }
 
         .chat-message { display: flex; gap: 1rem; max-width: 90%; }
-        .message-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--border-color); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .message-content { padding-top: 5px; position: relative; width: 100%;}
-        .message-content p { line-height: 1.7; margin-bottom: 1rem; }
-        .user-message { align-self: flex-end; }
+        .message-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: var(--border-color); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 0.9rem; }
+        .message-content { padding: 10px 15px; position: relative; width: 100%; border-radius: 12px; overflow-wrap: break-word;}
+        .message-content p { line-height: 1.6; margin: 0 0 0.5rem 0; }
+        .message-content p:last-child { margin-bottom: 0; }
+        
+        .user-message { align-self: flex-end; flex-direction: row-reverse; }
         .user-message .message-avatar { background-color: var(--primary-color); color: white; }
+        .user-message .message-content { background-color: var(--primary-color); color: white; }
+        
         .ai-message { align-self: flex-start; }
         .ai-message .message-avatar { background-color: #19c37d; }
+        .ai-message .message-content { background-color: var(--card-bg-color); border: 1px solid var(--border-color); color: var(--text-color); }
+        
         .typing-indicator .message-avatar { animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
@@ -379,7 +401,7 @@
             color: var(--secondary-text-color);
             font-style: italic;
         }
-        .ai-message .message-content p:last-child { margin-bottom: 0; }
+        
 
         /* --- Stylish Source Link Box --- */
         .source-box {
@@ -430,10 +452,10 @@
         .message-content a:hover { text-decoration: underline; }
 
         /* --- Code Editor & Preview Modal --- */
-        #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 10000; justify-content: center; align-items: center; }
+        #preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 20000; justify-content: center; align-items: center; }
         #preview-modal.active { display: flex; }
         .preview-content { background-color: white; width: 90%; height: 90%; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
-        .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .preview-header { padding: 0.5rem 1rem; background-color: #f0f0f0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
         #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
         #preview-iframe { width: 100%; height: 100%; border: none; }
         
