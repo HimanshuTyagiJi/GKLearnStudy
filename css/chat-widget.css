@@ -1,3 +1,4 @@
+
 /* css/chat-widget.css */
 
 :root {
@@ -141,20 +142,23 @@ pre {
     background: var(--code-bg); color: var(--code-text); padding: 0; 
     border-radius: 6px; overflow-x: auto; margin: 10px 0; position: relative; 
     border: 1px solid var(--border-color); 
-    max-width: 100%; /* Prevent parent overflow */
+    max-width: 100%;
 }
 code { font-family: monospace; display: block; padding: 12px; }
 
+/* Force Toolbars to be visible and interactive */
 .code-toolbar {
     display: flex; justify-content: flex-end; gap: 6px;
     background: rgba(255,255,255,0.1); padding: 6px 10px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky; top: 0; /* Keeps it visible even if code scrolls vertically */
 }
 html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom: 1px solid #ccc; }
 
 .code-toolbar button {
     background: rgba(0,0,0,0.2); border: none; color: inherit;
     font-size: 0.75rem; cursor: pointer; padding: 4px 8px; border-radius: 4px;
+    z-index: 2;
 }
 .code-toolbar button:hover { background: rgba(0,0,0,0.4); }
 
@@ -171,12 +175,12 @@ html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom
 /* --- Split-Screen Code Editor Modal --- */
 #preview-modal {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); z-index: 100000000; justify-content: center; align-items: center;
+    background: rgba(0,0,0,0.85); z-index: 100000000; justify-content: center; align-items: center;
 }
 #preview-modal.active { display: flex; }
 
 .preview-content { 
-    background: var(--card-bg); width: 95%; height: 95%; 
+    background: var(--card-bg); width: 98%; height: 98%; 
     display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; 
 }
 .preview-header { 
@@ -200,38 +204,84 @@ html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom
 #run-code-btn:hover { background: #218838; }
 #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
 
-.preview-body { flex: 1; display: flex; height: 100%; overflow: hidden; }
+.preview-body { flex: 1; display: flex; height: 100%; overflow: hidden; background: #222; }
 
 /* Left Pane: Code Editor */
 .editor-pane { 
-    flex: 1; /* Default flex, overridden by JS resizer */
-    border-right: 1px solid var(--border-color); 
+    flex: 1; 
+    border-right: 1px solid #444; 
     display: flex; flex-direction: column; 
-    min-width: 200px; /* Min width limit */
+    min-width: 200px; 
+    background: #1e1e1e;
 }
 
 /* Resizer Handle */
 .resizer {
-    width: 8px;
+    width: 10px;
     cursor: col-resize;
-    background-color: var(--hover-bg);
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
+    background-color: #333;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
 }
 .resizer:hover { background-color: var(--primary-color); }
 
 /* Right Pane: Preview Wrapper */
 .preview-pane-wrapper {
-    flex: 1; display: flex; justify-content: center; background: #333; 
-    padding: 20px; overflow: auto;
+    flex: 1; display: flex; justify-content: center; align-items: center; 
+    background: #333; padding: 20px; overflow: auto;
 }
-.preview-pane { 
-    background: white; border: none; box-shadow: 0 0 20px rgba(0,0,0,0.5); 
-    transition: width 0.3s ease; width: 100%; display: flex;
+
+/* === REALISTIC DEVICE FRAMES === */
+
+/* Base Frame Container */
+.device-frame {
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Clip content to radius */
+}
+
+/* 1. Desktop Mode (Default) */
+.desktop-device {
+    width: 100%; height: 100%; border: none; border-radius: 0;
+}
+
+/* 2. Mobile Frame (iPhone style) */
+.mobile-device {
+    width: 375px;
+    height: 667px;
+    border: 16px solid #111;
+    border-radius: 36px;
+    margin: 20px auto;
+}
+
+/* Notch for Mobile */
+.mobile-device .camera-notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 20px; background: #111;
+    border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+    z-index: 10;
+}
+
+/* 3. Tablet Frame (iPad style) */
+.tablet-device {
+    width: 768px;
+    height: 1024px;
+    border: 20px solid #111;
+    border-radius: 24px;
+    margin: 20px auto;
+    max-height: 90vh; /* Prevent overflow on small screens */
+}
+
+/* The actual content area inside frame */
+.preview-pane {
+    width: 100%; height: 100%; background: white; display: flex;
 }
 
 #code-editor-textarea { 
@@ -241,14 +291,16 @@ html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom
 }
 #preview-iframe { flex: 1; border: none; width: 100%; height: 100%; background: white; }
 
-/* Mobile Responsive Editor */
+/* Mobile Responsive Editor Layout */
 @media (max-width: 768px) {
     .preview-body { flex-direction: column; }
-    .editor-pane { height: 40%; flex: none; border-right: none; border-bottom: 1px solid var(--border-color); width: 100% !important; }
-    .resizer { display: none; } /* Hide resizer on mobile */
-    .preview-pane-wrapper { padding: 0; background: white; }
-    .preview-pane { box-shadow: none; width: 100% !important; } /* Force full width on mobile modal */
-    .preview-controls { display: none; } /* Hide device toggles on mobile devices */
+    .editor-pane { height: 40%; flex: none; width: 100% !important; }
+    .resizer { display: none; }
+    .preview-pane-wrapper { padding: 5px; }
+    /* Force frames to fit on actual mobile screens */
+    .mobile-device, .tablet-device { width: 100%; height: 100%; border: none; border-radius: 0; margin: 0; }
+    .camera-notch { display: none; }
+    .preview-controls { display: none; }
 }
 
 /* --- Typing Animation --- */
