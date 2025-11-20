@@ -134,18 +134,17 @@ function initializeApp() {
     const fullViewBtn = get('full-view-btn');
     const newChatBtn = get('new-chat-btn');
 
-  
-            try {
-                // WARNING: Hardcoded API key for trial/practice.
-                ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
-                
-                attachEventListeners();
-                loadHistory();
-        setInterval(updatePlaceholder, 4000);
+    // Initialize UI and History *before* API setup
+    attachEventListeners();
+    loadHistory();
+    setInterval(updatePlaceholder, 4000);
+
+    try {
+        // Direct API key usage as requested
+        ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
     } catch (error) {
-        console.error("Failed to initialize AI or App:", error);
-        const errorMessage = "Failed to load AI Assistant. Please check the console for errors.";
-        if(chatLog) chatLog.innerHTML = `<div class="chat-message ai-message"><div class="message-avatar">🤖</div><div class="message-content"><p style="color:var(--danger-color);">${errorMessage}</p></div></div>`;
+        console.error("Failed to initialize AI:", error);
+        // Do not block UI; error will be shown when user attempts to chat
     }
 
     function attachEventListeners() {
@@ -403,8 +402,12 @@ Snippet: ${item.paragraph}
         4. **Coding:** If asked for code, wrap it in \`\`\`language blocks.`;
 
         try {
+            if (!ai) {
+                 throw new Error("AI client not initialized.");
+            }
+
             const response = await ai.models.generateContent({
-                model: 'gemini-2.5-pro',
+                model: 'gemini-2.5-flash',
                 contents: finalPrompt,
                 config: { systemInstruction: systemInstruction }
             });
