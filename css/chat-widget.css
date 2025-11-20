@@ -201,9 +201,30 @@ html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom
 #close-preview-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
 
 .preview-body { flex: 1; display: flex; height: 100%; overflow: hidden; }
-.editor-pane { flex: 1; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; min-width: 200px;}
 
-/* Preview Pane Wrapper for Center/Resizing */
+/* Left Pane: Code Editor */
+.editor-pane { 
+    flex: 1; /* Default flex, overridden by JS resizer */
+    border-right: 1px solid var(--border-color); 
+    display: flex; flex-direction: column; 
+    min-width: 200px; /* Min width limit */
+}
+
+/* Resizer Handle */
+.resizer {
+    width: 8px;
+    cursor: col-resize;
+    background-color: var(--hover-bg);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+.resizer:hover { background-color: var(--primary-color); }
+
+/* Right Pane: Preview Wrapper */
 .preview-pane-wrapper {
     flex: 1; display: flex; justify-content: center; background: #333; 
     padding: 20px; overflow: auto;
@@ -223,7 +244,8 @@ html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom
 /* Mobile Responsive Editor */
 @media (max-width: 768px) {
     .preview-body { flex-direction: column; }
-    .editor-pane { height: 40%; flex: none; border-right: none; border-bottom: 1px solid var(--border-color); }
+    .editor-pane { height: 40%; flex: none; border-right: none; border-bottom: 1px solid var(--border-color); width: 100% !important; }
+    .resizer { display: none; } /* Hide resizer on mobile */
     .preview-pane-wrapper { padding: 0; background: white; }
     .preview-pane { box-shadow: none; width: 100% !important; } /* Force full width on mobile modal */
     .preview-controls { display: none; } /* Hide device toggles on mobile devices */
