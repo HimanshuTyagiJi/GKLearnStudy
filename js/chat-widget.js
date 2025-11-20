@@ -8,31 +8,30 @@ import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max_V3", // Bumped version
+    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max_V4", // Version Bump
     MAX_HISTORY_ITEMS: 50,
     SYSTEM_INSTRUCTION: `
     You are an expert AI assistant for 'GK Learn Study'.
 
-    **STRICT RULES FOR CODE:**
+    **RULES FOR CODE GENERATION (When user asks for code):**
     1. **ALWAYS** use Markdown Code Blocks (\`\`\`language ... \`\`\`) for ANY code (HTML, CSS, JS, PHP, Python, etc.).
-    2. **NEVER** write raw HTML tags for code examples outside of code blocks. 
-       - **BAD:** "Here is a button: <button>Click</button>" (This renders a button, WHICH IS FORBIDDEN).
-       - **GOOD:** "Here is the code for a button:"
-         \`\`\`html
-         <button>Click Me</button>
-         \`\`\`
-    3. **NO** Auto-Preview in chat. The user wants to see the RAW CODE text in a black box.
+    2. **NEVER** write raw HTML tags for code examples outside of code blocks.
+    3. The user wants to see the **RAW CODE** text in a black box to copy/edit. Do NOT try to render it.
 
+    **RULES FOR DATA PRESENTATION (When user asks for lists, tables, or info):**
+    1. Use **Standard Markdown Tables** for structured data (e.g., lists of people, comparisons).
+       Example:
+       | Name | Age |
+       | --- | --- |
+       | Amit | 25 |
+    2. Do **NOT** use code blocks for data tables unless the user explicitly asks "Give me the HTML code for this table".
+    
     **RULES FOR MATH:**
     1. Use LaTeX formatting for all math.
     2. Inline math: Wrap in single dollar signs, e.g., $E=mc^2$.
     3. Block math: Wrap in double dollar signs, e.g., $$ \int x dx $$.
 
-    **RULES FOR RICH UI (Non-Code):**
-    - Only for summaries or definitions, you may use: <div class="chat-card"><h3>Title</h3><p>Content</p></div>.
-    - Use mermaid syntax for diagrams.
-
-    Your goal: Provide clean, raw code examples and correctly formatted math equations.
+    Your goal: Provide clean, raw code for coding questions, and beautifully rendered tables for data questions.
     `
 };
 
@@ -70,15 +69,25 @@ let state = {
     isResizing: false
 };
 
+// --- UTILITY: Escape HTML for Code Blocks ---
+const escapeHtml = (unsafe) => {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ };
+
 // --- CUSTOM MARKED RENDERER ---
 const renderer = new marked.Renderer();
-// Override code block rendering to handle Mermaid
+// Override code block rendering to handle Mermaid and Raw Code
 renderer.code = (code, language) => {
     if (language === 'mermaid') {
         return `<div class="mermaid">${code}</div>`;
     }
-    // Ensure raw code is returned in pre/code tags
-    return `<pre><code class="language-${language || 'plaintext'}">${code}</code></pre>`;
+    // CRITICAL FIX: Escape the code so it displays as text, not rendered HTML
+    return `<pre><code class="language-${language || 'plaintext'}">${escapeHtml(code)}</code></pre>`;
 };
 marked.use({ renderer });
 
@@ -616,7 +625,7 @@ function appendMessageToUI(role, content) {
         `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
         `<div class="message-avatar">🤖</div>`;
 
-    let processedContent = escapeHTML(content);
+    let processedContent = escapeHtml(content); // Fallback safe
     
     if (role === 'model') {
         // 1. Mask Math (Replace $E=mc^2$ with unique tokens)
@@ -625,14 +634,17 @@ function appendMessageToUI(role, content) {
         // 2. Parse Markdown (will handle code blocks etc.)
         let markdownProcessed = marked.parse(mathMasked);
         
-        // 3. Clean HTML (but allow MathML/SVG tags needed by KaTeX/Mermaid)
+        // 3. Clean HTML (but allow MathML/SVG/Tables needed by KaTeX/Mermaid)
         let sanitized = DOMPurify.sanitize(markdownProcessed, {
-            ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe'],
+            ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
             ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder', 'xmlns', 'display']
         });
         
         // 4. Restore Math (Replace tokens with KaTeX HTML)
         processedContent = restoreMath(sanitized);
+    } else {
+        // User messages are simple text
+        processedContent = `<p>${processedContent.replace(/\n/g, '<br>')}</p>`;
     }
 
     let contentHTML = role === 'user' ? 
@@ -685,7 +697,7 @@ function renderHistoryList() {
     if (state.chatHistory.length === 0) { list.innerHTML = '<li class="empty-history">No conversations.</li>'; return; }
     list.innerHTML = state.chatHistory.map(c => 
         `<li data-id="${c.id}" class="${state.currentChat && c.id === state.currentChat.id ? 'active' : ''}">
-            <span class="history-item-text">${escapeHTML(c.title || "Chat")}</span>
+            <span class="history-item-text">${escapeHtml(c.title || "Chat")}</span>
             <button class="history-item-delete-btn">&times;</button>
         </li>`
     ).join('');
@@ -705,4 +717,4 @@ function stopGeneration() {
 }
 
 function scrollToBottom() { const log = document.getElementById('chat-log'); setTimeout(() => log.scrollTop = log.scrollHeight, 50); }
-function escapeHTML(s) { return s ? s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]) : ''; }
+
