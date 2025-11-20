@@ -1,15 +1,11 @@
-
 import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
 // --- 1. HTML Injection (Only if missing) ---
 function injectWidgetHTML() {
-    // If the widget already exists in the HTML (like in calculator.html), DO NOTHING.
     if (document.getElementById('ai-chat-widget')) return;
 
-    // Otherwise, inject the structure. 
-    // Note: The CSS handles display:none to prevent blocking clicks.
     const widgetHTML = `
     <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat" style="z-index: 10000;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path></svg>
@@ -49,12 +45,7 @@ function injectWidgetHTML() {
                     </div>
                 </header>
                 <div id="chat-log" role="log" aria-live="polite">
-                    <div class="chat-message ai-message">
-                        <div class="message-avatar">🤖</div>
-                        <div class="message-content">
-                            <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
-                        </div>
-                    </div>
+                    <!-- Content injected via JS -->
                 </div>
                 <div class="chat-input-area">
                     <form id="ai-solver-form">
@@ -79,9 +70,7 @@ function injectWidgetHTML() {
     </div>
     `;
 
-    // Inject into body without blocking clicks
     const container = document.createElement('div');
-    // Ensure this wrapper doesn't block clicks
     container.style.position = 'absolute';
     container.style.top = '0';
     container.style.left = '0';
@@ -89,12 +78,8 @@ function injectWidgetHTML() {
     container.style.height = '0';
     container.style.pointerEvents = 'none'; 
     container.innerHTML = widgetHTML;
-    
-    // Make sure children react to pointers
-    // We rely on CSS (pointer-events: auto on buttons/widget) for interaction
     document.body.appendChild(container);
 
-    // Inject dependencies if missing
     if (!document.querySelector('link[href="css/chat-widget.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -112,7 +97,6 @@ function injectWidgetHTML() {
 function initializeApp() {
     injectWidgetHTML();
 
-    // Helper to safely get element
     const get = (id) => document.getElementById(id);
 
     let ai;
@@ -123,7 +107,6 @@ function initializeApp() {
     ];
     let placeholderIndex = 0;
 
-    // Get Elements (They exist now either via HTML or Injection)
     const historyPanel = get('history-panel');
     const chatLog = get('chat-log');
     const questionInput = get('question-input');
@@ -134,18 +117,25 @@ function initializeApp() {
     const fullViewBtn = get('full-view-btn');
     const newChatBtn = get('new-chat-btn');
 
-  
-            try {
-                // WARNING: Hardcoded API key for trial/practice.
-                ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
-                
-                attachEventListeners();
-                loadHistory();
+    try {
+        // API Key Hardcoded as requested
+        ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
+        
+        attachEventListeners();
+        
+        // Initialize History and Chat State
+        loadHistory();
+        if (chatHistory.length > 0) {
+            loadChatFromHistory(0); // Load most recent chat
+        } else {
+            startNewChat(); // Or start fresh
+        }
+
         setInterval(updatePlaceholder, 4000);
     } catch (error) {
         console.error("Failed to initialize AI or App:", error);
-        const errorMessage = "Failed to load AI Assistant. Please check the console for errors.";
-        if(chatLog) chatLog.innerHTML = `<div class="chat-message ai-message"><div class="message-avatar">🤖</div><div class="message-content"><p style="color:var(--danger-color);">${errorMessage}</p></div></div>`;
+        // Fallback
+        startNewChat();
     }
 
     function attachEventListeners() {
@@ -356,7 +346,6 @@ function initializeApp() {
         const indicator = showTypingIndicator();
         let contextPromptPart = "";
         
-        // Use context from website if available
         try {
             if (window.GKApp && window.GKApp.dataReady) {
                 await window.GKApp.dataReady;
@@ -364,7 +353,6 @@ function initializeApp() {
             
             if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
                  const searchResults = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
-                 
                  if (searchResults && searchResults.length > 0) {
                     const topResults = searchResults.slice(0, 3);
                     contextPromptPart = `
@@ -393,9 +381,7 @@ Snippet: ${item.paragraph}
         }
 
         const finalPrompt = `${contextPromptPart}\n\n**USER QUESTION:** ${userQuestion}`;
-
         const systemInstruction = `You are an expert AI assistant for the website gklearnstudy.in.
-        
         **CORE BEHAVIORS:**
         1. **Detailed Explanations:** Never give one-line answers. Always explain concepts in depth.
         2. **Format:** Use Markdown (headings, bold, lists).
@@ -418,10 +404,8 @@ Snippet: ${item.paragraph}
             console.error("Gemini API Error:", apiError);
             indicator.remove();
             
-            // --- FALLBACK TO LOCAL SEARCH IF API FAILS ---
-            console.log("Attempting local search fallback...");
+            // Fallback
             let fallbackHTML = `<p style="color:var(--danger-color);">Internet/API Error. Searching local database...</p>`;
-            
             if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
                  const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
                  if (results && results.length > 0) {
@@ -576,13 +560,6 @@ Snippet: ${item.paragraph}
         renderHistoryList();
     }
     
-    function updateHistory(index, question, answer) {
-         if (chatHistory[index]) {
-            chatHistory[index].conversation.push({ question, answer });
-            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-        }
-    }
-
     function renderHistoryList() {
         historyList.innerHTML = chatHistory.map((item, index) => {
             const firstQuestion = item?.conversation?.[0]?.question || 'Empty Chat';
