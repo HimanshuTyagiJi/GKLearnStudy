@@ -202,8 +202,13 @@ html[data-theme="dark"] {
 
 /* --- Code Blocks & Toolbar --- */
 pre { 
-    background: var(--code-bg); color: var(--code-text); padding: 0; 
-    border-radius: 6px; overflow-x: auto; margin: 10px 0; position: relative; 
+    background: #1e1e1e !important; /* Force dark background for code */
+    color: #f8f8f2 !important; 
+    padding: 0; 
+    border-radius: 6px; 
+    overflow-x: auto; 
+    margin: 10px 0; 
+    position: relative; 
     border: 1px solid var(--border-color); 
     max-width: 100%;
 }
@@ -211,19 +216,20 @@ code { font-family: monospace; display: block; padding: 12px; }
 
 /* Force Toolbars to be visible and interactive */
 .code-toolbar {
-    display: flex; justify-content: flex-end; gap: 6px;
-    background: rgba(255,255,255,0.1); padding: 6px 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    position: sticky; top: 0; /* Keeps it visible even if code scrolls vertically */
+    display: flex; justify-content: flex-end; gap: 8px;
+    background: #333; /* Darker header for code block */
+    padding: 6px 10px;
+    border-bottom: 1px solid #444;
+    position: sticky; top: 0; /* Keeps it visible */
+    z-index: 10;
 }
-html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom: 1px solid #ccc; }
 
 .code-toolbar button {
-    background: rgba(0,0,0,0.2); border: none; color: inherit;
-    font-size: 0.75rem; cursor: pointer; padding: 4px 8px; border-radius: 4px;
-    z-index: 2;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff;
+    font-size: 0.75rem; cursor: pointer; padding: 3px 8px; border-radius: 4px;
+    transition: background 0.2s;
 }
-.code-toolbar button:hover { background: rgba(0,0,0,0.4); }
+.code-toolbar button:hover { background: rgba(255,255,255,0.3); }
 
 /* --- Input Area --- */
 .chat-input-area { padding: 12px; border-top: 1px solid var(--border-color); background: var(--card-bg); flex-shrink: 0; }
