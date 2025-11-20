@@ -7,15 +7,12 @@ import DOMPurify from "https://esm.run/dompurify@3.0.8";
  * GK LEARN STUDY - AI CHAT WIDGET (ULTIMATE EDITION)
  * ====================================================================
  * 
- * Features Implemented:
- * 1. Auto New Chat on Open: Widget opens blank every time. History is saved separately.
- * 2. No Ghost History: Empty chats are never saved to local storage.
- * 3. Smart Links: 
- *    - Online: Appends links ONLY if they strictly match the topic. Ignores greetings.
- *    - Offline: Fallback to local search with clear messaging.
- * 4. Live Code Editor: Split-screen modal to Edit & Run HTML/CSS/JS instantly.
- * 5. Context-Preserving Edit: Editing a user message keeps the history BEFORE it.
- * 6. Refined UI: SVG Avatars, clean user bubbles, hover-only actions.
+ * Features:
+ * 1. Smart Link Injection: Checks local content using keyword matching.
+ * 2. Advanced Preview: Mobile/Tablet/Desktop view toggles.
+ * 3. Code Editor: Live editing of HTML/CSS/JS.
+ * 4. Persistent History: Saves chat sessions (excluding empty ones).
+ * 5. UI/UX: SVG Avatars, clean user bubbles, responsive design.
  * 
  * Author: GK Learn Study Dev Team
  */
@@ -31,11 +28,11 @@ const CONFIG = {
     You are a helpful, friendly, and knowledgeable AI assistant for 'GK Learn Study'. 
     
     GUIDELINES:
-    1. TONE: Be conversational, encouraging, and open-minded. Do not be robotic.
+    1. TONE: Be conversational, natural, and encouraging.
     2. FORMATTING: Use Markdown. ALWAYS use ## for main headings and bullet points for lists.
-    3. CONTENT: If the user asks for a topic (e.g., "Holi Essay"), provide a well-structured, detailed response.
-    4. CODE: If the user asks for code (HTML, CSS, JS), provide the code in separate blocks or a combined block.
-    5. LINKS: Do not invent links. The system will append real links from the website automatically if they exist.
+    3. CONTENT: If asked for a topic (e.g., "Holi Essay"), provide a structured response.
+    4. CODE: If providing code, separate HTML, CSS, and JS if possible.
+    5. LINKS: Do NOT invent links. If you don't know a URL, just answer the question. The system will append links automatically.
     `
 };
 
@@ -43,19 +40,18 @@ const CONFIG = {
 
 let state = {
     aiClient: null,
-    chatHistory: [],     // Array of saved chat objects from LocalStorage
-    currentChat: null,   // The active chat session
+    chatHistory: [],
+    currentChat: null,
     isGenerating: false,
     isWidgetOpen: false
 };
 
-// --- 3. INITIALIZATION SEQUENCE ---
+// --- 3. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeWidget();
 });
 
-// Fallback for async loading scenarios
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
     if (!document.getElementById('ai-chat-widget')) {
         initializeWidget();
@@ -63,22 +59,17 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
 }
 
 function initializeWidget() {
-    // console.log("Initializing GK AI Widget...");
     injectWidgetHTML();
     injectWidgetCSS();
 
-    // Initialize Gemini Client
     try {
         state.aiClient = new GoogleGenAI({ apiKey: CONFIG.API_KEY });
     } catch (error) {
-        console.error("AI Client Init Failed:", error);
+        console.error("AI Init Failed:", error);
     }
 
-    loadHistory(); // Load past chats from local storage
-    
-    // Initialize currentChat as null to ensure a fresh start logic
-    state.currentChat = null;
-
+    loadHistory();
+    state.currentChat = null; // Reset current chat on load
     attachEventListeners();
 }
 
@@ -86,34 +77,26 @@ function initializeWidget() {
 
 function injectWidgetHTML() {
     const widgetHTML = `
-    <!-- Toggle Button -->
     <button id="ai-widget-toggle-btn" aria-label="Open AI Chat">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path>
         </svg>
     </button>
 
-    <!-- Widget Container -->
     <div id="ai-chat-widget">
         <div class="ai-container">
-            
-            <!-- History Sidebar -->
             <aside id="history-panel">
                 <div class="history-header">
-                    <h2>History</h2>
+                    <h2>Conversations</h2>
                     <div class="history-header-actions">
-                        <button id="clear-history-btn" title="Delete all history">Clear All</button>
-                        <button id="close-history-btn" title="Close Menu">&times;</button>
+                        <button id="clear-history-btn">Clear All</button>
+                        <button id="close-history-btn">&times;</button>
                     </div>
                 </div>
-                <ul id="history-list">
-                    <!-- History items injected here -->
-                </ul>
+                <ul id="history-list"></ul>
             </aside>
 
-            <!-- Chat Interface -->
             <section id="chat-area">
-                <!-- Header -->
                 <header class="chat-header">
                      <div class="chat-header-left">
                         <button id="menu-toggle" title="Menu">
@@ -132,10 +115,8 @@ function injectWidgetHTML() {
                     </div>
                 </header>
                 
-                <!-- Messages Area -->
                 <div id="chat-log" role="log"></div>
 
-                <!-- Input Area -->
                 <div class="chat-input-area">
                     <div id="stop-generating-container" style="display:none;">
                         <button id="stop-generating-btn">Stop Generating</button>
@@ -151,22 +132,29 @@ function injectWidgetHTML() {
         </div>
     </div>
 
-    <!-- Split-Screen Code Editor / Preview Modal -->
+    <!-- Code Editor / Preview Modal -->
     <div id="preview-modal">
         <div class="preview-content">
             <div class="preview-header">
                 <h3>Code Editor & Preview</h3>
+                <div class="preview-controls">
+                    <button class="device-btn active" data-view="desktop" title="Desktop View">💻 Desktop</button>
+                    <button class="device-btn" data-view="tablet" title="Tablet View">📟 Tablet</button>
+                    <button class="device-btn" data-view="mobile" title="Mobile View">📱 Mobile</button>
+                </div>
                 <div class="preview-actions">
-                    <button id="run-code-btn">▶ Run / Update</button>
+                    <button id="run-code-btn">▶ Run</button>
                     <button id="close-preview-btn">&times;</button>
                 </div>
             </div>
             <div class="preview-body">
                 <div class="editor-pane">
-                    <textarea id="code-editor-textarea" spellcheck="false" placeholder="Edit HTML/CSS/JS here..."></textarea>
+                    <textarea id="code-editor-textarea" spellcheck="false" placeholder="HTML/CSS/JS code here..."></textarea>
                 </div>
-                <div class="preview-pane">
-                    <iframe id="preview-iframe"></iframe>
+                <div class="preview-pane-wrapper">
+                    <div class="preview-pane" id="preview-pane-container">
+                        <iframe id="preview-iframe"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -194,114 +182,70 @@ function attachEventListeners() {
     const input = document.getElementById('question-input');
     const form = document.getElementById('ai-solver-form');
 
-    // --- Global Click Delegation ---
     document.addEventListener('click', (e) => {
         const target = e.target;
 
-        // 1. Toggle Open: Always starts a NEW blank chat if not already active
+        // Widget Toggles
         if (target.closest('#ai-widget-toggle-btn')) {
             if (!widget.classList.contains('active')) {
-                startNewChat(true); // FORCE NEW SESSION
+                startNewChat(true);
                 widget.classList.add('active');
                 toggleBtn.style.display = 'none';
                 setTimeout(() => input.focus(), 300);
             }
         }
-
-        // 2. Close Widget
         if (target.closest('#close-widget-btn')) {
             widget.classList.remove('active');
             toggleBtn.style.display = 'flex';
         }
+        if (target.closest('#new-chat-btn')) startNewChat(true);
+        if (target.closest('#menu-toggle')) document.getElementById('history-panel').classList.toggle('active');
+        if (target.closest('#close-history-btn')) document.getElementById('history-panel').classList.remove('active');
+        if (target.closest('#full-view-btn')) widget.classList.toggle('full-view');
+        if (target.closest('#clear-history-btn') && confirm("Delete all history?")) clearAllHistory();
+        if (target.closest('#stop-generating-btn')) stopGeneration();
 
-        // 3. New Chat Button
-        if (target.closest('#new-chat-btn')) {
-            startNewChat(true);
-        }
-
-        // 4. History Menu Toggle
-        if (target.closest('#menu-toggle')) {
-            document.getElementById('history-panel').classList.toggle('active');
-        }
-        if (target.closest('#close-history-btn')) {
-            document.getElementById('history-panel').classList.remove('active');
-        }
-
-        // 5. Full View Toggle
-        if (target.closest('#full-view-btn')) {
-            widget.classList.toggle('full-view');
-        }
-
-        // 6. Clear History
-        if (target.closest('#clear-history-btn')) {
-            if (confirm("Are you sure you want to delete all conversation history?")) clearAllHistory();
-        }
-
-        // 7. Stop Generation
-        if (target.closest('#stop-generating-btn')) {
-            stopGeneration();
-        }
-
-        // --- Message Actions (Delegated) ---
-
-        // Edit User Message
+        // Message Actions
         if (target.closest('.msg-edit-btn')) {
-            const msgElement = target.closest('.chat-message');
-            const textDiv = msgElement.querySelector('.text-content');
-            handleEditMessage(msgElement, textDiv.innerText);
+            const msg = target.closest('.chat-message');
+            handleEditMessage(msg, msg.querySelector('.text-content').innerText);
         }
-
-        // Regenerate AI Response
-        if (target.closest('.msg-regen-btn')) {
-            handleRegenerate();
-        }
-
-        // Code: Copy Button
+        if (target.closest('.msg-regen-btn')) handleRegenerate();
         if (target.closest('.code-copy-btn')) {
             const btn = target.closest('.code-copy-btn');
-            const codeText = decodeURIComponent(btn.dataset.code);
-            navigator.clipboard.writeText(codeText).then(() => {
-                const originalText = btn.innerText;
-                btn.innerText = "Copied!";
-                setTimeout(() => btn.innerText = originalText, 2000);
+            navigator.clipboard.writeText(decodeURIComponent(btn.dataset.code)).then(() => {
+                const orig = btn.innerText; btn.innerText = "Copied!";
+                setTimeout(() => btn.innerText = orig, 2000);
             });
         }
-
-        // Code: Edit / Preview Button (Combined Logic)
         if (target.closest('.code-edit-btn') || target.closest('.code-preview-btn')) {
-            const msgElement = target.closest('.chat-message');
-            openMergedPreview(msgElement);
+            openMergedPreview(target.closest('.chat-message'));
         }
 
-        // Modal: Close
-        if (target.closest('#close-preview-btn')) {
-            document.getElementById('preview-modal').classList.remove('active');
-        }
+        // Modal Actions
+        if (target.closest('#close-preview-btn')) document.getElementById('preview-modal').classList.remove('active');
+        if (target.closest('#run-code-btn')) updatePreviewIframe();
         
-        // Modal: Run Code
-        if (target.closest('#run-code-btn')) {
-            updatePreviewIframe();
+        // Device View Toggles
+        if (target.closest('.device-btn')) {
+            const btn = target.closest('.device-btn');
+            document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            setPreviewDevice(btn.dataset.view);
         }
 
-        // History: Load specific chat
+        // History Navigation
         const historyItem = target.closest('#history-list li');
         if (historyItem && !target.closest('.history-item-delete-btn') && !target.closest('.empty-history')) {
             loadChatById(historyItem.dataset.id);
-            // Close sidebar on mobile for better UX
-            if (window.innerWidth < 768) {
-                document.getElementById('history-panel').classList.remove('active');
-            }
+            if (window.innerWidth < 768) document.getElementById('history-panel').classList.remove('active');
         }
-
-        // History: Delete specific chat
         if (target.closest('.history-item-delete-btn')) {
             e.stopPropagation();
-            const li = target.closest('li');
-            deleteSingleChat(li.dataset.id);
+            deleteSingleChat(target.closest('li').dataset.id);
         }
     });
 
-    // --- Input Handling ---
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const text = input.value.trim();
@@ -325,86 +269,42 @@ function attachEventListeners() {
     });
 }
 
-// --- 6. CHAT MANAGEMENT LOGIC ---
+// --- 6. CHAT LOGIC ---
 
-/**
- * Starts a new session.
- * IMPORTANT: Does NOT push to history array immediately.
- * This prevents "ghost" empty chats from appearing in the sidebar.
- */
 function startNewChat(forceUIUpdate = true) {
-    state.currentChat = {
-        id: Date.now().toString(),
-        title: "New Conversation",
-        messages: [],
-        timestamp: Date.now(),
-        isUnsaved: true // Flag to indicate it's not persistent yet
-    };
-
+    state.currentChat = { id: Date.now().toString(), title: "New Conversation", messages: [], timestamp: Date.now(), isUnsaved: true };
     if (forceUIUpdate) {
-        renderChatMessages([]); // Shows blank/welcome screen
-        renderHistoryList();    // Updates sidebar
+        renderChatMessages([]);
+        renderHistoryList();
     }
 }
 
-/**
- * Saves current chat to history ONLY if it has content.
- */
 function saveCurrentChatIfNeeded() {
     if (!state.currentChat || state.currentChat.messages.length === 0) return;
-
-    // Check if already in history array
-    const existingIndex = state.chatHistory.findIndex(c => c.id === state.currentChat.id);
-    
-    if (existingIndex === -1) {
-        // New chat, add to top
-        state.currentChat.isUnsaved = false;
-        state.chatHistory.unshift(state.currentChat);
-    } else {
-        // Update existing chat in place
-        state.chatHistory[existingIndex] = state.currentChat;
-    }
-
-    // Trim history to max limit
-    if (state.chatHistory.length > CONFIG.MAX_HISTORY_ITEMS) {
-        state.chatHistory.pop();
-    }
-
-    // Persist to LocalStorage
+    const idx = state.chatHistory.findIndex(c => c.id === state.currentChat.id);
+    if (idx === -1) { state.currentChat.isUnsaved = false; state.chatHistory.unshift(state.currentChat); }
+    else { state.chatHistory[idx] = state.currentChat; }
+    if (state.chatHistory.length > CONFIG.MAX_HISTORY_ITEMS) state.chatHistory.pop();
     localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.chatHistory));
     renderHistoryList();
 }
 
 function loadHistory() {
-    try {
-        const stored = localStorage.getItem(CONFIG.STORAGE_KEY);
-        state.chatHistory = stored ? JSON.parse(stored) : [];
-    } catch (e) {
-        console.error("Error loading history", e);
-        state.chatHistory = [];
-    }
+    try { state.chatHistory = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)) || []; } 
+    catch { state.chatHistory = []; }
 }
 
 function loadChatById(id) {
     const chat = state.chatHistory.find(c => c.id === id);
-    if (chat) {
-        state.currentChat = chat;
-        renderChatMessages(chat.messages);
-        renderHistoryList();
-    }
+    if (chat) { state.currentChat = chat; renderChatMessages(chat.messages); renderHistoryList(); }
 }
 
 function deleteSingleChat(id) {
     if (!confirm("Delete this chat?")) return;
     state.chatHistory = state.chatHistory.filter(c => c.id !== id);
     localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.chatHistory));
-    
-    // If the deleted chat was active, start a new one
-    if (state.currentChat && state.currentChat.id === id) {
-        startNewChat(true);
-    } else {
-        renderHistoryList();
-    }
+    if (state.currentChat && state.currentChat.id === id) startNewChat(true);
+    else renderHistoryList();
 }
 
 function clearAllHistory() {
@@ -413,259 +313,168 @@ function clearAllHistory() {
     startNewChat(true);
 }
 
-// --- 7. MESSAGE PROCESSING & AI LOGIC ---
+// --- 7. RESPONSE GENERATION & LINKS ---
 
 async function handleUserMessage(text) {
-    // 1. Render User Msg immediately
     appendMessageToUI('user', text);
-
-    // 2. Update State
     state.currentChat.messages.push({ role: 'user', content: text });
-    
-    // Generate a Title if it's the first message
-    if (state.currentChat.messages.length === 1) {
-        state.currentChat.title = text.substring(0, 25) + (text.length > 25 ? "..." : "");
-    }
-    
-    // Save to storage (now that it has data)
+    if (state.currentChat.messages.length === 1) state.currentChat.title = text.substring(0, 25) + (text.length > 25 ? "..." : "");
     saveCurrentChatIfNeeded();
-
-    // 3. Generate AI Response
     await generateResponse(text);
 }
 
 async function generateResponse(prompt) {
     state.isGenerating = true;
     updateUIControls();
-    
     const msgId = 'ai-' + Date.now();
     appendLoadingIndicator(msgId);
-
-    let responseText = "";
-    let linksHTML = "";
+    let responseText = "", linksHTML = "";
 
     try {
-        // Step A: Try Gemini API
-        if (!state.aiClient) throw new Error("AI Client not initialized");
-
+        if (!state.aiClient) throw new Error("No API");
         const result = await state.aiClient.models.generateContent({
             model: CONFIG.MODEL_NAME,
             contents: prompt,
-            config: {
-                systemInstruction: CONFIG.SYSTEM_INSTRUCTION
-            }
+            config: { systemInstruction: CONFIG.SYSTEM_INSTRUCTION }
         });
-        
         responseText = result.text;
-
-        // Step B: Smart Linking (Online)
-        // Only append links if the API call was successful AND we find RELEVANT local content.
-        // We avoid showing links for greetings like "Hi", "Hello".
-        linksHTML = getLocalLinksHTML(prompt, true); // true = strict mode
-        
-        if (linksHTML) {
-            responseText += `\n\n<div class='related-links-section'>${linksHTML}</div>`;
-        }
-
+        linksHTML = getLocalLinksHTML(prompt);
+        if (linksHTML) responseText += `\n\n<div class='related-links-section'>${linksHTML}</div>`;
     } catch (error) {
-        console.warn("API Failed/Offline:", error);
-        
-        // Step C: Offline Fallback Strategy
-        // If API fails, we check our local DB explicitly.
-        linksHTML = getLocalLinksHTML(prompt, false); // false = slightly looser mode for offline
-
-        if (linksHTML) {
-            responseText = `I am currently offline or cannot reach the server. However, I found these related resources in our library:\n\n<div class='related-links-section'>${linksHTML}</div>`;
-        } else {
-            // No API AND No Links found
-            responseText = `<span style="color:var(--danger-color)">Unable to connect to the server. Please check your internet connection and try again later. (थोड़ी देर बाद प्रयास करें)</span>`;
-        }
+        console.warn("API Offline/Error", error);
+        linksHTML = getLocalLinksHTML(prompt);
+        if (linksHTML) responseText = `I cannot connect to the server, but I found this in our library:\n\n<div class='related-links-section'>${linksHTML}</div>`;
+        else responseText = `<span style="color:var(--danger-color)">Unable to connect. Please check internet.</span>`;
     }
 
-    // Finalize
     removeLoadingIndicator(msgId);
     appendMessageToUI('model', responseText);
-
     state.currentChat.messages.push({ role: 'model', content: responseText });
     saveCurrentChatIfNeeded();
-
     state.isGenerating = false;
     updateUIControls();
 }
 
 /**
- * Searches local JSON data (window.GKApp.searchData).
- * @param {string} query - User's question.
- * @param {boolean} strictMode - If true, requires higher relevance score (for online mode).
+ * improved Link Matching Logic:
+ * Splits query into keywords and checks if they exist in titles.
  */
-function getLocalLinksHTML(query, strictMode) {
-    if (!window.GKApp || !window.GKApp.fuzzySearch || !window.GKApp.searchData) return "";
-
-    // 1. Filter out common greetings to avoid irrelevant links
-    const ignoreList = ['hi', 'hello', 'hey', 'namaste', 'help', 'hola', 'test', 'kaise ho', 'good morning', 'good evening'];
-    const cleanQuery = query.toLowerCase().trim().replace(/[?.!]/g, '');
+function getLocalLinksHTML(query) {
+    if (!window.GKApp || !window.GKApp.searchData) return "";
     
-    if (cleanQuery.length < 2 || ignoreList.includes(cleanQuery)) return "";
+    // Filter greetings/short queries
+    const ignore = ['hi','hello','hey','namaste','help','test','kaise','kya','good','morning'];
+    const qLower = query.toLowerCase().trim();
+    if (qLower.length < 3 || ignore.includes(qLower.split(' ')[0])) return "";
 
-    // 2. Perform Search
-    const results = window.GKApp.fuzzySearch(query, window.GKApp.searchData);
+    // Extract significant keywords (length > 2)
+    const keywords = qLower.replace(/[?.!]/g, '').split(/\s+/).filter(w => w.length > 2 && !ignore.includes(w));
     
-    if (results && results.length > 0) {
-        let finalResults = results;
+    if (keywords.length === 0) return "";
 
-        // 3. Apply Threshold logic
-        if (strictMode) {
-            // In online mode, only show links if there's a very strong match.
-            // Since our fuzzy search might not return a score property directly in the final array,
-            // we check if the title includes significant words from the query.
-            const queryWords = cleanQuery.split(' ').filter(w => w.length > 3);
-            if (queryWords.length > 0) {
-                 finalResults = results.filter(item => {
-                     const titleLower = item.title.toLowerCase();
-                     // Check if at least one significant word exists in title
-                     return queryWords.some(w => titleLower.includes(w));
-                 });
-            }
-        }
+    const allData = window.GKApp.searchData;
+    let matches = [];
 
-        if (finalResults.length === 0) return "";
+    // Search Strategy: Find items where title contains at least one strong keyword
+    matches = allData.filter(item => {
+        const titleLower = item.title.toLowerCase();
+        // Count how many keywords match
+        const hits = keywords.reduce((acc, kw) => acc + (titleLower.includes(kw) ? 1 : 0), 0);
+        return hits > 0;
+    });
 
-        // Limit to top 3
-        const topResults = finalResults.slice(0, 3);
-        const items = topResults.map(item => 
-            `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`
-        ).join('');
-        return `<strong>Related Links:</strong><ul>${items}</ul>`;
+    // Sort by number of keyword hits (relevance)
+    matches.sort((a, b) => {
+        const hitsA = keywords.reduce((acc, kw) => acc + (a.title.toLowerCase().includes(kw) ? 1 : 0), 0);
+        const hitsB = keywords.reduce((acc, kw) => acc + (b.title.toLowerCase().includes(kw) ? 1 : 0), 0);
+        return hitsB - hitsA;
+    });
+
+    if (matches.length > 0) {
+        const topResults = matches.slice(0, 4);
+        const items = topResults.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('');
+        return `<strong>Related Content:</strong><ul>${items}</ul>`;
     }
-    
+
     return "";
 }
 
-// --- 8. EDITING & PREVIEW LOGIC ---
+// --- 8. EDITOR & PREVIEW ---
 
-/**
- * Handles editing a user message.
- * Logic: Truncates chat history *after* the edited message so the context is preserved but the future path changes.
- */
+function openMergedPreview(msgElement) {
+    const codeBlocks = msgElement.querySelectorAll('code[class*="language-"]');
+    let html = "", css = "", js = "";
+
+    codeBlocks.forEach(block => {
+        const lang = Array.from(block.classList).find(c => c.startsWith('language-'))?.replace('language-', '');
+        const code = block.innerText;
+        if (lang === 'html' || lang === 'xml') html += code + "\n";
+        else if (lang === 'css') css += code + "\n";
+        else if (lang === 'javascript' || lang === 'js') js += code + "\n";
+    });
+
+    if (!html && !css && !js) html = "<!-- No code found -->";
+
+    const editor = document.getElementById('code-editor-textarea');
+    editor.value = `<!-- HTML -->\n${html}\n\n<style>\n/* CSS */\n${css}\n</style>\n\n<script>\n// JS\n${js}\n<\/script>`;
+
+    document.getElementById('preview-modal').classList.add('active');
+    // Reset to Desktop view by default
+    setPreviewDevice('desktop');
+    document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.device-btn[data-view="desktop"]').classList.add('active');
+    
+    updatePreviewIframe();
+}
+
+function setPreviewDevice(mode) {
+    const container = document.getElementById('preview-pane-container');
+    if (mode === 'mobile') container.style.width = '375px';
+    else if (mode === 'tablet') container.style.width = '768px';
+    else container.style.width = '100%';
+}
+
+function updatePreviewIframe() {
+    const rawCode = document.getElementById('code-editor-textarea').value;
+    const iframe = document.getElementById('preview-iframe');
+    const doc = iframe.contentWindow.document;
+    doc.open(); doc.write(rawCode); doc.close();
+}
+
+// --- 9. HELPERS ---
+
 function handleEditMessage(msgElement, oldText) {
-    // 1. Find index based on DOM
-    const allMsgs = Array.from(document.querySelectorAll('.chat-message'));
-    // Filter to match state messages (ignore typing indicator)
-    const validMsgs = allMsgs.filter(el => !el.classList.contains('typing-indicator')); 
-    
-    const domIndex = validMsgs.indexOf(msgElement);
-    
-    if (domIndex === -1 || !state.currentChat.messages[domIndex]) return;
+    const allMsgs = Array.from(document.querySelectorAll('.chat-message')).filter(el => !el.classList.contains('typing-indicator')); 
+    const domIndex = allMsgs.indexOf(msgElement);
+    if (domIndex === -1) return;
 
-    // 2. Set input box with old text
-    const input = document.getElementById('question-input');
-    input.value = state.currentChat.messages[domIndex].content; 
-    input.focus();
-
-    // 3. Slice history: Keep everything BEFORE this message index
+    document.getElementById('question-input').value = state.currentChat.messages[domIndex].content;
+    document.getElementById('question-input').focus();
+    
     state.currentChat.messages = state.currentChat.messages.slice(0, domIndex);
-    
-    // 4. Save & Re-render UI immediately
     saveCurrentChatIfNeeded();
     renderChatMessages(state.currentChat.messages);
 }
 
 function handleRegenerate() {
     if (!state.currentChat.messages.length) return;
-    
-    // Check if last message was AI
     const lastMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
     if (lastMsg.role === 'model') {
-        // Remove it
         state.currentChat.messages.pop();
         saveCurrentChatIfNeeded();
         renderChatMessages(state.currentChat.messages);
-        
-        // Get the user prompt immediately before it
         const lastUserMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
         if (lastUserMsg) generateResponse(lastUserMsg.content);
     }
 }
 
-/**
- * Merges all HTML, CSS, and JS blocks from a specific message bubble
- * and opens the Split-Screen Editor.
- */
-function openMergedPreview(msgElement) {
-    // 1. Extract code blocks
-    const codeBlocks = msgElement.querySelectorAll('code[class*="language-"]');
-    
-    let html = "";
-    let css = "";
-    let js = "";
-
-    codeBlocks.forEach(block => {
-        const langClass = Array.from(block.classList).find(c => c.startsWith('language-'));
-        const lang = langClass ? langClass.replace('language-', '') : '';
-        const code = block.innerText;
-
-        if (lang === 'html' || lang === 'xml') html += code + "\n";
-        else if (lang === 'css') css += code + "\n";
-        else if (lang === 'javascript' || lang === 'js') js += code + "\n";
-    });
-
-    // Fallback text if empty
-    if (!html && !css && !js) {
-        html = "<!-- No code found to preview -->";
-    }
-
-    // 2. Populate Editor Textarea
-    const editor = document.getElementById('code-editor-textarea');
-    const combinedSource = `<!-- HTML -->\n${html}\n\n<style>\n/* CSS */\n${css}\n</style>\n\n<script>\n// JavaScript\n${js}\n<\/script>`;
-    editor.value = combinedSource;
-
-    // 3. Show Modal
-    const modal = document.getElementById('preview-modal');
-    modal.classList.add('active');
-    
-    // 4. Run immediately
-    updatePreviewIframe();
-}
-
-/**
- * Reads content from the textarea and injects it into the iframe.
- */
-function updatePreviewIframe() {
-    const rawCode = document.getElementById('code-editor-textarea').value;
-    const iframe = document.getElementById('preview-iframe');
-    const doc = iframe.contentWindow.document;
-    
-    doc.open();
-    doc.write(rawCode);
-    doc.close();
-}
-
-function stopGeneration() {
-    state.isGenerating = false;
-    updateUIControls();
-    const loader = document.querySelector('.typing-indicator');
-    if (loader) {
-        loader.innerHTML = `<div class="message-content">Generation stopped.</div>`;
-        loader.classList.remove('typing-indicator');
-        loader.classList.add('chat-message', 'ai-message');
-    }
-}
-
-// --- 9. UI RENDERING HELPERS ---
-
 function renderChatMessages(messages) {
     const log = document.getElementById('chat-log');
-    log.innerHTML = ''; 
-
-    // Show welcome if empty
+    log.innerHTML = '';
     if (!messages || messages.length === 0) {
-        const welcome = document.createElement('div');
-        welcome.className = 'chat-message ai-message';
-        welcome.innerHTML = `<div class="message-avatar">🤖</div><div class="message-content"><p>नमस्ते! मैं GK AI हूँ। आप मुझसे कोई भी सवाल पूछ सकते हैं।</p></div>`;
-        log.appendChild(welcome);
+        log.innerHTML = `<div class="chat-message ai-message"><div class="message-avatar">🤖</div><div class="message-content"><p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?</p></div></div>`;
         return;
     }
-
     messages.forEach(msg => appendMessageToUI(msg.role, msg.content));
     scrollToBottom();
 }
@@ -674,151 +483,70 @@ function appendMessageToUI(role, content) {
     const log = document.getElementById('chat-log');
     const div = document.createElement('div');
     div.className = `chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+    
+    let avatarHTML = role === 'user' ? 
+        `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
+        `<div class="message-avatar">🤖</div>`;
 
-    let innerHTML = '';
-    let avatarHTML = '';
-
-    if (role === 'user') {
-        // USER: SVG Icon, Black text, Light Background
-        avatarHTML = `
-        <div class="message-avatar">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-        </div>`;
-        
-        innerHTML = `
-            <div class="message-content">
-                <div class="text-content">${escapeHTML(content)}</div>
-                <div class="msg-actions">
-                    <button class="msg-edit-btn" title="Edit Message">✎</button>
-                </div>
-            </div>
-            ${avatarHTML}
-        `;
-    } else {
-        // AI: Robot Icon, Markdown
-        avatarHTML = `<div class="message-avatar">🤖</div>`;
-        
-        const parsedHTML = DOMPurify.sanitize(marked.parse(content));
-        
-        innerHTML = `
-            ${avatarHTML}
-            <div class="message-content">
-                <div class="text-content">${parsedHTML}</div>
-                <div class="msg-actions">
-                    <button class="msg-regen-btn" title="Regenerate Response">↻</button>
-                </div>
-            </div>
-        `;
-    }
-
-    div.innerHTML = innerHTML;
+    let contentHTML = role === 'user' ? 
+        `<div class="message-content"><div class="text-content">${escapeHTML(content)}</div><div class="msg-actions"><button class="msg-edit-btn">✎</button></div></div>` :
+        `<div class="message-content"><div class="text-content">${DOMPurify.sanitize(marked.parse(content))}</div><div class="msg-actions"><button class="msg-regen-btn">↻</button></div></div>`;
+    
+    div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
     log.appendChild(div);
-    
-    // For AI messages, add code toolbar AFTER rendering
-    if (role === 'model') {
-        setTimeout(() => injectCodeToolbars(div), 0);
-    }
-    
+
+    if (role === 'model') setTimeout(() => injectCodeToolbars(div), 0);
     scrollToBottom();
 }
 
-/**
- * Adds Copy, Edit, Preview buttons to code blocks.
- */
 function injectCodeToolbars(messageDiv) {
-    const preBlocks = messageDiv.querySelectorAll('pre');
-    preBlocks.forEach(pre => {
-        const codeBlock = pre.querySelector('code');
-        // Prevent duplicate toolbars
-        if (codeBlock && !pre.querySelector('.code-toolbar')) {
-            const rawCode = codeBlock.innerText;
-            const encodedCode = encodeURIComponent(rawCode);
+    messageDiv.querySelectorAll('pre').forEach(pre => {
+        const code = pre.querySelector('code');
+        if (code && !pre.querySelector('.code-toolbar')) {
+            const encoded = encodeURIComponent(code.innerText);
+            const isCode = Array.from(code.classList).some(c => ['language-html','language-css','language-js','language-javascript'].includes(c));
             
-            // Check language to decide if Preview button is needed
-            const isRenderable = Array.from(codeBlock.classList).some(c => 
-                ['language-html', 'language-css', 'language-javascript', 'language-js', 'language-xml'].includes(c)
-            );
-
             const toolbar = document.createElement('div');
             toolbar.className = 'code-toolbar';
-            
-            let buttonsHTML = `<button class="code-copy-btn" data-code="${encodedCode}">Copy</button>`;
-            
-            if (isRenderable) {
-                buttonsHTML += `
-                    <button class="code-edit-btn">Edit</button>
-                    <button class="code-preview-btn">Preview</button>
-                `;
-            }
-            
-            toolbar.innerHTML = buttonsHTML;
-            
-            // Insert at top of PRE
+            toolbar.innerHTML = `<button class="code-copy-btn" data-code="${encoded}">Copy</button>` + 
+                                (isCode ? `<button class="code-edit-btn">Edit</button><button class="code-preview-btn">Preview</button>` : '');
             pre.insertBefore(toolbar, pre.firstChild);
         }
     });
 }
 
 function appendLoadingIndicator(id) {
-    const log = document.getElementById('chat-log');
-    const div = document.createElement('div');
-    div.id = id;
-    div.className = 'chat-message ai-message typing-indicator';
+    const div = document.createElement('div'); div.id = id; div.className = 'chat-message ai-message typing-indicator';
     div.innerHTML = `<div class="message-avatar">🤖</div><div class="message-content"><div class="typing-dots"><span>.</span><span>.</span><span>.</span></div></div>`;
-    log.appendChild(div);
-    scrollToBottom();
+    document.getElementById('chat-log').appendChild(div); scrollToBottom();
 }
 
-function removeLoadingIndicator(id) {
-    const el = document.getElementById(id);
-    if (el) el.remove();
-}
+function removeLoadingIndicator(id) { const el = document.getElementById(id); if(el) el.remove(); }
 
 function renderHistoryList() {
     const list = document.getElementById('history-list');
     if (!list) return;
-
-    const savedChats = state.chatHistory;
-
-    if (savedChats.length === 0) {
-        list.innerHTML = '<li class="empty-history">No saved conversations.</li>';
-        return;
-    }
-
-    list.innerHTML = savedChats.map(chat => {
-        const isActive = (state.currentChat && chat.id === state.currentChat.id) ? 'active' : '';
-        return `
-        <li data-id="${chat.id}" class="${isActive}">
-            <span class="history-item-text">${escapeHTML(chat.title || "Chat")}</span>
-            <button class="history-item-delete-btn" title="Delete">&times;</button>
-        </li>`;
-    }).join('');
+    if (state.chatHistory.length === 0) { list.innerHTML = '<li class="empty-history">No conversations.</li>'; return; }
+    list.innerHTML = state.chatHistory.map(c => 
+        `<li data-id="${c.id}" class="${state.currentChat && c.id === state.currentChat.id ? 'active' : ''}">
+            <span class="history-item-text">${escapeHTML(c.title || "Chat")}</span>
+            <button class="history-item-delete-btn">&times;</button>
+        </li>`
+    ).join('');
 }
 
 function updateUIControls() {
-    const stopBtn = document.getElementById('stop-generating-container');
-    const sendBtn = document.getElementById('solve-button');
-    if (state.isGenerating) {
-        stopBtn.style.display = 'block';
-        sendBtn.disabled = true;
-        sendBtn.style.opacity = '0.5';
-    } else {
-        stopBtn.style.display = 'none';
-        sendBtn.disabled = false;
-        sendBtn.style.opacity = '1';
-    }
+    const isGen = state.isGenerating;
+    document.getElementById('stop-generating-container').style.display = isGen ? 'block' : 'none';
+    const btn = document.getElementById('solve-button');
+    btn.disabled = isGen; btn.style.opacity = isGen ? '0.5' : '1';
 }
 
-// --- 10. UTILITIES ---
-
-function scrollToBottom() {
-    const log = document.getElementById('chat-log');
-    if (log) setTimeout(() => log.scrollTop = log.scrollHeight, 50);
+function stopGeneration() {
+    state.isGenerating = false; updateUIControls();
+    const loader = document.querySelector('.typing-indicator');
+    if (loader) { loader.innerHTML = `<div class="message-content">Stopped.</div>`; loader.classList.remove('typing-indicator'); }
 }
 
-function escapeHTML(str) {
-    if (!str) return '';
-    return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
-}
+function scrollToBottom() { const log = document.getElementById('chat-log'); setTimeout(() => log.scrollTop = log.scrollHeight, 50); }
+function escapeHTML(s) { return s ? s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]) : ''; }
