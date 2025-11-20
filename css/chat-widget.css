@@ -157,13 +157,12 @@ html[data-theme="dark"] {
     font-size: 1.2rem; 
     cursor: pointer;
     padding-left: 5px;
-    opacity: 1; /* Always show for touch */
+    opacity: 1;
 }
 @media (hover: hover) {
-    .history-item-delete-btn { opacity: 0; }
+    .history-item-delete-btn { opacity: 0; transition: opacity 0.2s; }
     #history-list li:hover .history-item-delete-btn { opacity: 1; }
 }
-
 
 /* --- Chat Area --- */
 #chat-area { flex: 1; display: flex; flex-direction: column; width: 100%; position: relative; }
@@ -261,6 +260,8 @@ html[data-theme="dark"] {
     color: var(--text-color);
     min-height: 44px;
 }
+#question-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
 #solve-button {
     background: var(--primary-color);
     color: white;
@@ -272,6 +273,25 @@ html[data-theme="dark"] {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#solve-button:disabled { background: var(--secondary-text-color); cursor: not-allowed; }
+
+#stop-generating-container {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+#stop-generating-btn {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* Markdown & Code */
