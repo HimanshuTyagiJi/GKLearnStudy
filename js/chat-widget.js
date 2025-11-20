@@ -2,19 +2,40 @@
 import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory_Ultimate_Pro",
+    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
     MAX_HISTORY_ITEMS: 50,
     SYSTEM_INSTRUCTION: `
-    You are a helpful, friendly AI assistant for 'GK Learn Study'.
+    You are a sophisticated AI assistant for 'GK Learn Study'.
     
-    CRITICAL RULES:
-    1. LINKS: If the user asks about a topic that exists in our database (like Noun, Sangya, Vlookup, History), you MUST acknowledge it.
-    2. FORMATTING: Use Markdown. Use code blocks for code.
-    3. TONE: Be encouraging and clear.
+    CAPABILITIES:
+    1. **RICH UI**: You can generate HTML cards. Use this format for summaries or profiles:
+       <div class="chat-card"><h3>Title</h3><p>Content...</p></div>
+    
+    2. **MATH**: Use LaTeX for math. 
+       - Block math: $$ \\int_0^\\infty x^2 dx $$
+       - Inline math: $ E = mc^2 $
+       - Fractions: $ \\frac{a}{b} $
+    
+    3. **TABLES**: Create detailed tables. Always use standard Markdown tables or HTML tables with borders.
+    
+    4. **DIAGRAMS**: Create flowcharts, sequence diagrams, or mindmaps using Mermaid syntax inside a code block.
+       Example:
+       \`\`\`mermaid
+       graph TD;
+       A-->B;
+       \`\`\`
+    
+    5. **GRAPHS**: If asked for a plot (e.g., parabola), generate raw SVG code directly within the response.
+    
+    6. **LINKS**: If the user asks about a topic in our database (Sangya, History, Excel, etc.), ACKNOWLEDGE it.
+
+    TONE: Educational, Encouraging, and Visual.
     `
 };
 
@@ -52,6 +73,17 @@ let state = {
     isResizing: false
 };
 
+// --- CUSTOM MARKED RENDERER ---
+const renderer = new marked.Renderer();
+// Override code block rendering to handle Mermaid
+renderer.code = (code, language) => {
+    if (language === 'mermaid') {
+        return `<div class="mermaid">${code}</div>`;
+    }
+    return `<pre><code class="language-${language}">${code}</code></pre>`;
+};
+marked.use({ renderer });
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeWidget();
 });
@@ -65,6 +97,9 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
 function initializeWidget() {
     injectWidgetHTML();
     injectWidgetCSS();
+    
+    // Initialize Mermaid
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
     try {
         state.aiClient = new GoogleGenAI({ apiKey: CONFIG.API_KEY });
@@ -178,11 +213,19 @@ function injectWidgetHTML() {
 }
 
 function injectWidgetCSS() {
-    if (document.querySelector('link[href*="chat-widget.css"]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/css/chat-widget.css';
-    document.head.appendChild(link);
+    if (!document.querySelector('link[href*="chat-widget.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/css/chat-widget.css';
+        document.head.appendChild(link);
+    }
+    // Inject KaTeX CSS
+    if (!document.querySelector('link[href*="katex.min.css"]')) {
+        const katexLink = document.createElement('link');
+        katexLink.rel = 'stylesheet';
+        katexLink.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css';
+        document.head.appendChild(katexLink);
+    }
 }
 
 function attachEventListeners() {
@@ -445,6 +488,23 @@ function getAggressiveLinks(query) {
     return "";
 }
 
+// --- MATH PROCESSING ---
+function processMath(text) {
+    // Replace block math $$...$$
+    text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, expr) => {
+        try {
+            return katex.renderToString(expr, { displayMode: true, throwOnError: false });
+        } catch (e) { return match; }
+    });
+    // Replace inline math $...$
+    text = text.replace(/\$([^$]+?)\$/g, (match, expr) => {
+        try {
+            return katex.renderToString(expr, { displayMode: false, throwOnError: false });
+        } catch (e) { return match; }
+    });
+    return text;
+}
+
 // --- EDITOR & PREVIEW ---
 
 function openMergedPreview(msgElement) {
@@ -551,17 +611,34 @@ function appendMessageToUI(role, content) {
         `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
         `<div class="message-avatar">🤖</div>`;
 
+    let processedContent = escapeHTML(content); // Default for user
+    
+    if (role === 'model') {
+        // 1. Process Math first (convert LaTeX to HTML)
+        let mathProcessed = processMath(content);
+        // 2. Parse Markdown (with custom Mermaid renderer)
+        let markdownProcessed = marked.parse(mathProcessed);
+        // 3. Sanitize (allow MathML, SVG, class attributes)
+        processedContent = DOMPurify.sanitize(markdownProcessed, {
+            ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe'],
+            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder']
+        });
+    }
+
     let contentHTML = role === 'user' ? 
-        `<div class="message-content"><div class="text-content">${escapeHTML(content)}</div><div class="msg-actions"><button class="msg-edit-btn">✎</button></div></div>` :
-        `<div class="message-content"><div class="text-content">${DOMPurify.sanitize(marked.parse(content))}</div><div class="msg-actions"><button class="msg-regen-btn">↻</button></div></div>`;
+        `<div class="message-content"><div class="text-content">${processedContent}</div><div class="msg-actions"><button class="msg-edit-btn">✎</button></div></div>` :
+        `<div class="message-content"><div class="text-content">${processedContent}</div><div class="msg-actions"><button class="msg-regen-btn">↻</button></div></div>`;
     
     div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
     log.appendChild(div);
 
-    // Re-inject code toolbars explicitly for every AI message
+    // Re-inject code toolbars and run Mermaid
     if (role === 'model') {
         setTimeout(() => {
             injectCodeToolbars(div);
+            try {
+                mermaid.run({ nodes: div.querySelectorAll('.mermaid') });
+            } catch (e) { console.warn("Mermaid error", e); }
         }, 100);
     }
     scrollToBottom();
