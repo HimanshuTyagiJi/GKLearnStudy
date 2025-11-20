@@ -1,44 +1,47 @@
+
 import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
-/**
- * ====================================================================
- * GK LEARN STUDY - AI CHAT WIDGET (ULTIMATE EDITION)
- * ====================================================================
- * 
- * AUTHOR: GK Learn Study Dev Team
- * 
- * FEATURES INCLUDED:
- * 1. Smart Link Injection: Deep search in window.GKApp.searchData
- * 2. Offline Mode: Falls back to local search if API fails.
- * 3. Advanced Code Editor: Split screen with HTML/CSS/JS merging.
- * 4. Draggable Preview: Resize the preview pane using a drag handle.
- * 5. Device Toggles: Quick switch between Mobile, Tablet, Desktop.
- * 6. Persistent History: Saves chats to LocalStorage.
- * 7. Clean UI: User messages have no background color, SVG avatars.
- */
-
-// --- 1. GLOBAL CONFIGURATION ---
-
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory_vFinal_Plus", // Changed key to ensure fresh start with new structure
+    STORAGE_KEY: "aiChatHistory_Ultimate_Pro",
     MAX_HISTORY_ITEMS: 50,
     SYSTEM_INSTRUCTION: `
-    You are a helpful, friendly, and knowledgeable AI assistant for 'GK Learn Study'. 
+    You are a helpful, friendly AI assistant for 'GK Learn Study'.
     
-    GUIDELINES:
-    1. TONE: Be conversational, natural, and encouraging.
-    2. FORMATTING: Use Markdown. ALWAYS use ## for main headings and bullet points for lists.
-    3. CONTENT: If asked for a topic (e.g., "Holi Essay"), provide a structured response.
-    4. CODE: If providing code, separate HTML, CSS, and JS if possible.
-    5. LINKS: Do NOT invent links. If you don't know a URL, just answer the question. The system will append links automatically from the database.
+    CRITICAL RULES:
+    1. LINKS: If the user asks about a topic that exists in our database (like Noun, Sangya, Vlookup, History), you MUST acknowledge it.
+    2. FORMATTING: Use Markdown. Use code blocks for code.
+    3. TONE: Be encouraging and clear.
     `
 };
 
-// --- 2. STATE MANAGEMENT ---
+// --- HINDI TO ENGLISH MAPPING FOR SEARCH ---
+const KEYWORD_MAP = {
+    'sangya': 'noun',
+    'sarvanam': 'pronoun',
+    'visheshan': 'adjective',
+    'kriya': 'verb',
+    'kaal': 'tense',
+    'alankar': 'alankar',
+    'samas': 'compound',
+    'sandhi': 'joining',
+    'upsarg': 'prefix',
+    'pratyay': 'suffix',
+    'muhavare': 'idioms',
+    'paryayvacchi': 'synonyms',
+    'vilom': 'antonyms',
+    'vyakaran': 'grammar',
+    'ganit': 'math',
+    'bhautik': 'physics',
+    'rasayan': 'chemistry',
+    'itihaas': 'history',
+    'bhugol': 'geography',
+    'samvidhan': 'constitution',
+    'vlookup': 'excel'
+};
 
 let state = {
     aiClient: null,
@@ -46,16 +49,13 @@ let state = {
     currentChat: null,
     isGenerating: false,
     isWidgetOpen: false,
-    isResizing: false // For the preview window drag handle
+    isResizing: false
 };
-
-// --- 3. INITIALIZATION ---
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeWidget();
 });
 
-// Fallback if DOMContentLoaded already fired
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
     if (!document.getElementById('ai-chat-widget')) {
         initializeWidget();
@@ -73,12 +73,10 @@ function initializeWidget() {
     }
 
     loadHistory();
-    state.currentChat = null; // Always start fresh UI-wise, but history is loaded in background
+    state.currentChat = null;
     attachEventListeners();
-    setupResizer(); // Initialize the drag handle logic
+    setupResizer();
 }
-
-// --- 4. DOM INJECTION ---
 
 function injectWidgetHTML() {
     const widgetHTML = `
@@ -92,9 +90,9 @@ function injectWidgetHTML() {
         <div class="ai-container">
             <aside id="history-panel">
                 <div class="history-header">
-                    <h2>Conversations</h2>
+                    <h2>History</h2>
                     <div class="history-header-actions">
-                        <button id="clear-history-btn">Clear All</button>
+                        <button id="clear-history-btn">Clear</button>
                         <button id="close-history-btn">&times;</button>
                     </div>
                 </div>
@@ -107,7 +105,7 @@ function injectWidgetHTML() {
                         <button id="menu-toggle" title="Menu">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
                         </button>
-                        <h1>GK AI Assistant</h1>
+                        <h1>AI Assistant</h1>
                     </div>
                     <div class="chat-header-right">
                         <button id="new-chat-btn" title="New Chat">New Chat</button>
@@ -120,19 +118,14 @@ function injectWidgetHTML() {
                     </div>
                 </header>
                 
-                <div id="chat-log" role="log">
-                     <div class="chat-message ai-message">
-                        <div class="message-avatar">🤖</div>
-                        <div class="message-content"><p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?</p></div>
-                    </div>
-                </div>
+                <div id="chat-log" role="log"></div>
 
                 <div class="chat-input-area">
                     <div id="stop-generating-container" style="display:none;">
                         <button id="stop-generating-btn">Stop Generating</button>
                     </div>
                     <form id="ai-solver-form">
-                        <textarea id="question-input" rows="1" placeholder="Ask me anything..." required></textarea>
+                        <textarea id="question-input" rows="1" placeholder="Ask me..." required></textarea>
                         <button type="submit" id="solve-button" title="Send">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
                         </button>
@@ -163,12 +156,15 @@ function injectWidgetHTML() {
                     <textarea id="code-editor-textarea" spellcheck="false" placeholder="HTML/CSS/JS code here..."></textarea>
                 </div>
                 
-                <!-- Draggable Resizer Handle -->
-                <div class="resizer" id="drag-resizer"></div>
+                <div class="resizer" id="drag-resizer" title="Drag to resize"></div>
                 
                 <div class="preview-pane-wrapper">
-                    <div class="preview-pane" id="preview-pane-container">
-                        <iframe id="preview-iframe"></iframe>
+                    <div class="device-frame" id="device-frame">
+                        <div class="camera-notch"></div>
+                        <div class="preview-pane" id="preview-pane-container">
+                            <iframe id="preview-iframe"></iframe>
+                        </div>
+                        <div class="home-button"></div>
                     </div>
                 </div>
             </div>
@@ -189,8 +185,6 @@ function injectWidgetCSS() {
     document.head.appendChild(link);
 }
 
-// --- 5. EVENT LISTENERS ---
-
 function attachEventListeners() {
     const widget = document.getElementById('ai-chat-widget');
     const toggleBtn = document.getElementById('ai-widget-toggle-btn');
@@ -200,12 +194,9 @@ function attachEventListeners() {
     document.addEventListener('click', (e) => {
         const target = e.target;
 
-        // Widget Toggles
         if (target.closest('#ai-widget-toggle-btn')) {
             if (!widget.classList.contains('active')) {
-                // Only start a new chat session concept, but don't clear screen if resuming
                 if(!state.currentChat) startNewChat(true);
-                
                 widget.classList.add('active');
                 toggleBtn.style.display = 'none';
                 setTimeout(() => input.focus(), 300);
@@ -215,37 +206,39 @@ function attachEventListeners() {
             widget.classList.remove('active');
             toggleBtn.style.display = 'flex';
         }
-        if (target.closest('#new-chat-btn')) {
-            startNewChat(true);
-        }
+        if (target.closest('#new-chat-btn')) startNewChat(true);
         if (target.closest('#menu-toggle')) document.getElementById('history-panel').classList.toggle('active');
         if (target.closest('#close-history-btn')) document.getElementById('history-panel').classList.remove('active');
         if (target.closest('#full-view-btn')) widget.classList.toggle('full-view');
         if (target.closest('#clear-history-btn') && confirm("Delete all history?")) clearAllHistory();
         if (target.closest('#stop-generating-btn')) stopGeneration();
 
-        // Message Actions
         if (target.closest('.msg-edit-btn')) {
             const msg = target.closest('.chat-message');
             handleEditMessage(msg, msg.querySelector('.text-content').innerText);
         }
         if (target.closest('.msg-regen-btn')) handleRegenerate();
+        
+        // --- FIXED COPY BUTTON ---
         if (target.closest('.code-copy-btn')) {
             const btn = target.closest('.code-copy-btn');
-            navigator.clipboard.writeText(decodeURIComponent(btn.dataset.code)).then(() => {
-                const orig = btn.innerText; btn.innerText = "Copied!";
+            const rawCode = decodeURIComponent(btn.dataset.code);
+            navigator.clipboard.writeText(rawCode).then(() => {
+                const orig = btn.innerText; 
+                btn.innerText = "Copied!";
                 setTimeout(() => btn.innerText = orig, 2000);
             });
         }
+        
+        // --- FIXED EDIT / PREVIEW BUTTONS ---
         if (target.closest('.code-edit-btn') || target.closest('.code-preview-btn')) {
             openMergedPreview(target.closest('.chat-message'));
         }
 
-        // Modal Actions
         if (target.closest('#close-preview-btn')) document.getElementById('preview-modal').classList.remove('active');
         if (target.closest('#run-code-btn')) updatePreviewIframe();
         
-        // Device View Toggles
+        // --- REALISTIC DEVICE SWITCHING ---
         if (target.closest('.device-btn')) {
             const btn = target.closest('.device-btn');
             document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
@@ -253,7 +246,6 @@ function attachEventListeners() {
             setPreviewDevice(btn.dataset.view);
         }
 
-        // History Navigation
         const historyItem = target.closest('#history-list li');
         if (historyItem && !target.closest('.history-item-delete-btn') && !target.closest('.empty-history')) {
             loadChatById(historyItem.dataset.id);
@@ -281,14 +273,8 @@ function attachEventListeners() {
             form.dispatchEvent(new Event('submit'));
         }
     });
-
-    input.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    });
 }
 
-// --- 5.5 RESIZER LOGIC (Drag Handle) ---
 function setupResizer() {
     const resizer = document.getElementById('drag-resizer');
     const editorPane = document.querySelector('.editor-pane');
@@ -300,24 +286,18 @@ function setupResizer() {
         state.isResizing = true;
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-        // Prevent text selection while resizing
         document.body.style.userSelect = 'none';
         document.body.style.cursor = 'col-resize';
     };
 
     const onMouseMove = (e) => {
         if (!state.isResizing) return;
-        
         const containerRect = container.getBoundingClientRect();
-        // Calculate new width relative to container
         let newWidth = e.clientX - containerRect.left;
-        
-        // Limits (min 15%, max 85%)
         if (newWidth < containerRect.width * 0.15) newWidth = containerRect.width * 0.15;
         if (newWidth > containerRect.width * 0.85) newWidth = containerRect.width * 0.85;
-
         editorPane.style.width = `${newWidth}px`;
-        editorPane.style.flex = 'none'; // Disable flex grow/shrink to respect fixed width
+        editorPane.style.flex = 'none';
     };
 
     const onMouseUp = () => {
@@ -330,8 +310,6 @@ function setupResizer() {
 
     resizer.addEventListener('mousedown', onMouseDown);
 }
-
-// --- 6. CHAT LOGIC ---
 
 function startNewChat(forceUIUpdate = true) {
     state.currentChat = { id: Date.now().toString(), title: "New Conversation", messages: [], timestamp: Date.now(), isUnsaved: true };
@@ -375,8 +353,6 @@ function clearAllHistory() {
     startNewChat(true);
 }
 
-// --- 7. RESPONSE GENERATION & LINKS ---
-
 async function handleUserMessage(text) {
     appendMessageToUI('user', text);
     state.currentChat.messages.push({ role: 'user', content: text });
@@ -401,20 +377,18 @@ async function generateResponse(prompt) {
         });
         responseText = result.text;
         
-        // --- LINK INJECTION LOGIC ---
-        linksHTML = getLocalLinksHTML(prompt);
+        linksHTML = getAggressiveLinks(prompt);
         if (linksHTML) {
             responseText += `\n\n<div class='related-links-section'>${linksHTML}</div>`;
         }
         
     } catch (error) {
         console.warn("API Offline/Error", error);
-        // Fallback to local search if API fails
-        linksHTML = getLocalLinksHTML(prompt);
+        linksHTML = getAggressiveLinks(prompt);
         if (linksHTML) {
-            responseText = `I cannot connect to the server right now, but I found these related topics in our library:\n\n<div class='related-links-section'>${linksHTML}</div>`;
+            responseText = `Internet issue, but I found this in the library:\n\n<div class='related-links-section'>${linksHTML}</div>`;
         } else {
-            responseText = `<span style="color:var(--danger-color)">Unable to connect. Please check your internet connection.</span>`;
+            responseText = `<span style="color:var(--danger-color)">Connection failed. Please check internet.</span>`;
         }
     }
 
@@ -426,130 +400,111 @@ async function generateResponse(prompt) {
     updateUIControls();
 }
 
-/**
- * ROBUST LINK MATCHING LOGIC
- * Matches keywords from user prompt against the `window.GKApp.searchData` JSON.
- * Returns HTML string of <ul> links or empty string.
- */
-function getLocalLinksHTML(query) {
+// --- IMPROVED LINK LOGIC ---
+function getAggressiveLinks(query) {
     if (!window.GKApp || !window.GKApp.searchData) return "";
     
-    // 1. Clean and Tokenize Query
-    const ignore = ['hi','hello','hey','namaste','help','test','kaise','kya','good','morning','what','is','the','how','to','in','hindi','define','explain'];
-    const qLower = query.toLowerCase().trim();
+    const qLower = query.toLowerCase();
+    const searchData = window.GKApp.searchData;
     
-    // If query is too short, ignore
-    if (qLower.length < 3) return "";
-
-    // Split into words, filter out ignore list and small words
-    const keywords = qLower.replace(/[?.!]/g, '').split(/\s+/).filter(w => w.length > 2 && !ignore.includes(w));
-    
-    if (keywords.length === 0) return "";
-
-    const allData = window.GKApp.searchData;
-    let matches = [];
-
-    // 2. Scoring System
-    // Title match = 5 points
-    // Paragraph match = 1 point
-    // Keyword match = 2 points
-
-    matches = allData.map(item => {
-        let score = 0;
-        const titleLower = item.title.toLowerCase();
-        const paraLower = (item.paragraph || "").toLowerCase();
-
-        // Exact phrase match in title (Bonus)
-        if (titleLower.includes(qLower)) score += 10;
-
-        keywords.forEach(kw => {
-            if (titleLower.includes(kw)) score += 5;
-            if (paraLower.includes(kw)) score += 1;
-        });
-
-        return { item, score };
+    // 1. Check direct keyword map (Sangya -> Noun, etc.)
+    let searchTerms = [qLower];
+    Object.keys(KEYWORD_MAP).forEach(hindiKey => {
+        if (qLower.includes(hindiKey)) {
+            searchTerms.push(KEYWORD_MAP[hindiKey]);
+        }
     });
 
-    // 3. Filter and Sort
-    // Must have a score > 0 to be relevant
-    matches = matches.filter(m => m.score > 0);
-    matches.sort((a, b) => b.score - a.score);
+    // 2. Filter data based on ANY match in title or URL
+    let matches = searchData.filter(item => {
+        const title = item.title.toLowerCase();
+        const url = item.url.toLowerCase();
+        const para = (item.paragraph || "").toLowerCase();
+        
+        return searchTerms.some(term => {
+            // Ignore very short terms to avoid false positives like 'is', 'to'
+            if (term.length < 3 && !KEYWORD_MAP[term]) return false;
+            
+            return title.includes(term) || url.includes(term) || para.includes(term);
+        });
+    });
 
-    // 4. Generate HTML
+    // 3. Prioritize matches
+    matches.sort((a, b) => {
+        const aTitleMatch = searchTerms.some(t => a.title.toLowerCase().includes(t));
+        const bTitleMatch = searchTerms.some(t => b.title.toLowerCase().includes(t));
+        return bTitleMatch - aTitleMatch; // Title matches come first
+    });
+
     if (matches.length > 0) {
-        // Take top 4 results
-        const topResults = matches.slice(0, 4).map(m => m.item);
-        
-        // If score is very low (weak match), maybe don't show? 
-        // But user asked to "Give links correctly", so even weak matches might be useful if context aligns.
-        
-        const items = topResults.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('');
-        return `<strong>Related Content from GK Learn Study:</strong><ul>${items}</ul>`;
+        // Deduplicate and limit
+        const uniqueItems = [...new Map(matches.map(item => [item.url, item])).values()].slice(0, 5);
+        const list = uniqueItems.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('');
+        return `<strong>Related Topics:</strong><ul>${list}</ul>`;
     }
-
     return "";
 }
 
-// --- 8. EDITOR & PREVIEW ---
+// --- EDITOR & PREVIEW ---
 
 function openMergedPreview(msgElement) {
     const codeBlocks = msgElement.querySelectorAll('code[class*="language-"]');
     let html = "", css = "", js = "";
 
     codeBlocks.forEach(block => {
-        const lang = Array.from(block.classList).find(c => c.startsWith('language-'))?.replace('language-', '');
+        const langClass = Array.from(block.classList).find(c => c.startsWith('language-'));
+        const lang = langClass ? langClass.replace('language-', '') : '';
         const code = block.innerText;
+        
         if (lang === 'html' || lang === 'xml') html += code + "\n";
         else if (lang === 'css') css += code + "\n";
         else if (lang === 'javascript' || lang === 'js') js += code + "\n";
     });
 
-    if (!html && !css && !js) html = "<!-- No code found in this message -->";
+    // If no specific language classes found, try to guess or dump in HTML
+    if (!html && !css && !js) {
+        const rawText = msgElement.querySelector('code').innerText;
+        if(rawText.includes('<html') || rawText.includes('<div')) html = rawText;
+        else html = "<!-- No specific code found. Paste code here. -->";
+    }
 
     const editor = document.getElementById('code-editor-textarea');
-    // Pre-format the editor content
-    editor.value = `<!-- HTML -->\n${html}\n\n<style>\n/* CSS */\n${css}\n</style>\n\n<script>\n// JS\n${js}\n<\/script>`;
+    editor.value = `${html}\n\n<style>\n${css}\n</style>\n\n<script>\n${js}\n<\/script>`;
 
     document.getElementById('preview-modal').classList.add('active');
     
-    // Reset UI state
+    // Default to Desktop
     setPreviewDevice('desktop');
     document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.device-btn[data-view="desktop"]').classList.add('active');
     
-    // Reset editor pane width in case it was resized previously
-    const editorPane = document.querySelector('.editor-pane');
-    if(editorPane) {
-        editorPane.style.width = ''; 
-        editorPane.style.flex = '1';
-    }
-
     updatePreviewIframe();
 }
 
 function setPreviewDevice(mode) {
+    const frame = document.getElementById('device-frame');
     const container = document.getElementById('preview-pane-container');
-    if (mode === 'mobile') container.style.width = '375px';
-    else if (mode === 'tablet') container.style.width = '768px';
-    else container.style.width = '100%';
+    
+    // Remove all device classes first
+    frame.className = 'device-frame'; 
+    
+    if (mode === 'mobile') {
+        frame.classList.add('mobile-device');
+    } else if (mode === 'tablet') {
+        frame.classList.add('tablet-device');
+    } else {
+        frame.classList.add('desktop-device');
+    }
 }
 
 function updatePreviewIframe() {
     const rawCode = document.getElementById('code-editor-textarea').value;
     const iframe = document.getElementById('preview-iframe');
     const doc = iframe.contentWindow.document;
-    
-    // Basic error handling for iframe
-    try {
-        doc.open(); 
-        doc.write(rawCode); 
-        doc.close();
-    } catch(e) {
-        console.error("Preview Error", e);
-    }
+    doc.open(); 
+    doc.write(rawCode); 
+    doc.close();
 }
-
-// --- 9. HELPERS ---
 
 function handleEditMessage(msgElement, oldText) {
     const allMsgs = Array.from(document.querySelectorAll('.chat-message')).filter(el => !el.classList.contains('typing-indicator')); 
@@ -559,7 +514,6 @@ function handleEditMessage(msgElement, oldText) {
     document.getElementById('question-input').value = state.currentChat.messages[domIndex].content;
     document.getElementById('question-input').focus();
     
-    // Truncate chat history up to this point so we can "rewrite" history
     state.currentChat.messages = state.currentChat.messages.slice(0, domIndex);
     saveCurrentChatIfNeeded();
     renderChatMessages(state.currentChat.messages);
@@ -568,14 +522,10 @@ function handleEditMessage(msgElement, oldText) {
 function handleRegenerate() {
     if (!state.currentChat.messages.length) return;
     const lastMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
-    
-    // Only regenerate if the last message was from the model
     if (lastMsg.role === 'model') {
-        state.currentChat.messages.pop(); // Remove last model response
+        state.currentChat.messages.pop();
         saveCurrentChatIfNeeded();
         renderChatMessages(state.currentChat.messages);
-        
-        // Find the user prompt that triggered it
         const lastUserMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
         if (lastUserMsg) generateResponse(lastUserMsg.content);
     }
@@ -601,8 +551,6 @@ function appendMessageToUI(role, content) {
         `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
         `<div class="message-avatar">🤖</div>`;
 
-    // For user messages: Simple text
-    // For AI messages: Markdown parsed + Code Toolbars
     let contentHTML = role === 'user' ? 
         `<div class="message-content"><div class="text-content">${escapeHTML(content)}</div><div class="msg-actions"><button class="msg-edit-btn">✎</button></div></div>` :
         `<div class="message-content"><div class="text-content">${DOMPurify.sanitize(marked.parse(content))}</div><div class="msg-actions"><button class="msg-regen-btn">↻</button></div></div>`;
@@ -610,8 +558,38 @@ function appendMessageToUI(role, content) {
     div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
     log.appendChild(div);
 
-    if (role === 'model') setTimeout(() => injectCodeToolbars(div), 0);
+    // Re-inject code toolbars explicitly for every AI message
+    if (role === 'model') {
+        setTimeout(() => {
+            injectCodeToolbars(div);
+        }, 100);
+    }
     scrollToBottom();
+}
+
+// --- FIX: EXPLICITLY ADD BUTTONS ---
+function injectCodeToolbars(messageDiv) {
+    const preTags = messageDiv.querySelectorAll('pre');
+    preTags.forEach(pre => {
+        // Don't double inject
+        if (pre.querySelector('.code-toolbar')) return;
+
+        const code = pre.querySelector('code');
+        const rawCode = code ? code.innerText : pre.innerText;
+        const encoded = encodeURIComponent(rawCode);
+        
+        const toolbar = document.createElement('div');
+        toolbar.className = 'code-toolbar';
+        
+        // Always show these buttons
+        toolbar.innerHTML = `
+            <button class="code-copy-btn" data-code="${encoded}" title="Copy Code">Copy</button>
+            <button class="code-edit-btn" title="Edit in Playground">Edit</button>
+            <button class="code-preview-btn" title="Preview Code">Preview</button>
+        `;
+        
+        pre.insertBefore(toolbar, pre.firstChild);
+    });
 }
 
 function appendLoadingIndicator(id) {
@@ -626,7 +604,6 @@ function renderHistoryList() {
     const list = document.getElementById('history-list');
     if (!list) return;
     if (state.chatHistory.length === 0) { list.innerHTML = '<li class="empty-history">No conversations.</li>'; return; }
-    
     list.innerHTML = state.chatHistory.map(c => 
         `<li data-id="${c.id}" class="${state.currentChat && c.id === state.currentChat.id ? 'active' : ''}">
             <span class="history-item-text">${escapeHTML(c.title || "Chat")}</span>
@@ -642,11 +619,11 @@ function updateUIControls() {
     btn.disabled = isGen; btn.style.opacity = isGen ? '0.5' : '1';
 }
 
+function stopGeneration() {
+    state.isGenerating = false; updateUIControls();
+    const loader = document.querySelector('.typing-indicator');
+    if (loader) { loader.innerHTML = `<div class="message-content">Stopped.</div>`; loader.classList.remove('typing-indicator'); }
+}
+
 function scrollToBottom() { const log = document.getElementById('chat-log'); setTimeout(() => log.scrollTop = log.scrollHeight, 50); }
 function escapeHTML(s) { return s ? s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]) : ''; }
-
-/* 
-   End of JS file. 
-   Logic handles all aspects of the chat, including history, API calls, 
-   UI rendering, and the new resizable preview window.
-*/
