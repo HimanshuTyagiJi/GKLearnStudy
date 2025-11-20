@@ -1,12 +1,23 @@
-
 import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
 /**
  * ====================================================================
- * GK LEARN STUDY - AI CHAT WIDGET (FINAL CORRECTED VERSION)
+ * GK LEARN STUDY - AI CHAT WIDGET (ULTIMATE EDITION)
  * ====================================================================
+ * 
+ * Features Implemented:
+ * 1. Auto New Chat on Open: Widget opens blank every time. History is saved separately.
+ * 2. No Ghost History: Empty chats are never saved to local storage.
+ * 3. Smart Links: 
+ *    - Online: Appends links ONLY if they strictly match the topic. Ignores greetings.
+ *    - Offline: Fallback to local search with clear messaging.
+ * 4. Live Code Editor: Split-screen modal to Edit & Run HTML/CSS/JS instantly.
+ * 5. Context-Preserving Edit: Editing a user message keeps the history BEFORE it.
+ * 6. Refined UI: SVG Avatars, clean user bubbles, hover-only actions.
+ * 
+ * Author: GK Learn Study Dev Team
  */
 
 // --- 1. GLOBAL CONFIGURATION ---
@@ -14,16 +25,26 @@ import DOMPurify from "https://esm.run/dompurify@3.0.8";
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory",
-    MAX_HISTORY_ITEMS: 50
+    STORAGE_KEY: "aiChatHistory_vFinal",
+    MAX_HISTORY_ITEMS: 50,
+    SYSTEM_INSTRUCTION: `
+    You are a helpful, friendly, and knowledgeable AI assistant for 'GK Learn Study'. 
+    
+    GUIDELINES:
+    1. TONE: Be conversational, encouraging, and open-minded. Do not be robotic.
+    2. FORMATTING: Use Markdown. ALWAYS use ## for main headings and bullet points for lists.
+    3. CONTENT: If the user asks for a topic (e.g., "Holi Essay"), provide a well-structured, detailed response.
+    4. CODE: If the user asks for code (HTML, CSS, JS), provide the code in separate blocks or a combined block.
+    5. LINKS: Do not invent links. The system will append real links from the website automatically if they exist.
+    `
 };
 
 // --- 2. STATE MANAGEMENT ---
 
 let state = {
     aiClient: null,
-    chatHistory: [],     // Array of saved chat objects
-    currentChat: null,   // The active chat object (might not be in history yet)
+    chatHistory: [],     // Array of saved chat objects from LocalStorage
+    currentChat: null,   // The active chat session
     isGenerating: false,
     isWidgetOpen: false
 };
@@ -34,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeWidget();
 });
 
-// Fallback for async loading
+// Fallback for async loading scenarios
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
     if (!document.getElementById('ai-chat-widget')) {
         initializeWidget();
@@ -42,17 +63,22 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
 }
 
 function initializeWidget() {
+    // console.log("Initializing GK AI Widget...");
     injectWidgetHTML();
     injectWidgetCSS();
 
+    // Initialize Gemini Client
     try {
         state.aiClient = new GoogleGenAI({ apiKey: CONFIG.API_KEY });
     } catch (error) {
         console.error("AI Client Init Failed:", error);
     }
 
-    loadHistory(); // Load past chats
-    startNewChat(false); // Prepare a fresh state, but don't render or save yet
+    loadHistory(); // Load past chats from local storage
+    
+    // Initialize currentChat as null to ensure a fresh start logic
+    state.currentChat = null;
+
     attachEventListeners();
 }
 
@@ -74,7 +100,7 @@ function injectWidgetHTML() {
             <!-- History Sidebar -->
             <aside id="history-panel">
                 <div class="history-header">
-                    <h2>Conversations</h2>
+                    <h2>History</h2>
                     <div class="history-header-actions">
                         <button id="clear-history-btn" title="Delete all history">Clear All</button>
                         <button id="close-history-btn" title="Close Menu">&times;</button>
@@ -125,14 +151,24 @@ function injectWidgetHTML() {
         </div>
     </div>
 
-    <!-- Preview Modal (For Code) -->
+    <!-- Split-Screen Code Editor / Preview Modal -->
     <div id="preview-modal">
         <div class="preview-content">
             <div class="preview-header">
-                <h3>Live Preview</h3>
-                <button id="close-preview-btn">&times;</button>
+                <h3>Code Editor & Preview</h3>
+                <div class="preview-actions">
+                    <button id="run-code-btn">▶ Run / Update</button>
+                    <button id="close-preview-btn">&times;</button>
+                </div>
             </div>
-            <iframe id="preview-iframe"></iframe>
+            <div class="preview-body">
+                <div class="editor-pane">
+                    <textarea id="code-editor-textarea" spellcheck="false" placeholder="Edit HTML/CSS/JS here..."></textarea>
+                </div>
+                <div class="preview-pane">
+                    <iframe id="preview-iframe"></iframe>
+                </div>
+            </div>
         </div>
     </div>
     `;
@@ -162,28 +198,28 @@ function attachEventListeners() {
     document.addEventListener('click', (e) => {
         const target = e.target;
 
-        // Toggle Open (Starts blank chat)
+        // 1. Toggle Open: Always starts a NEW blank chat if not already active
         if (target.closest('#ai-widget-toggle-btn')) {
             if (!widget.classList.contains('active')) {
-                startNewChat(true); // Always blank on open
+                startNewChat(true); // FORCE NEW SESSION
                 widget.classList.add('active');
                 toggleBtn.style.display = 'none';
                 setTimeout(() => input.focus(), 300);
             }
         }
 
-        // Close Widget
+        // 2. Close Widget
         if (target.closest('#close-widget-btn')) {
             widget.classList.remove('active');
             toggleBtn.style.display = 'flex';
         }
 
-        // New Chat
+        // 3. New Chat Button
         if (target.closest('#new-chat-btn')) {
             startNewChat(true);
         }
 
-        // History Menu
+        // 4. History Menu Toggle
         if (target.closest('#menu-toggle')) {
             document.getElementById('history-panel').classList.toggle('active');
         }
@@ -191,22 +227,22 @@ function attachEventListeners() {
             document.getElementById('history-panel').classList.remove('active');
         }
 
-        // Full View
+        // 5. Full View Toggle
         if (target.closest('#full-view-btn')) {
             widget.classList.toggle('full-view');
         }
 
-        // Clear History
+        // 6. Clear History
         if (target.closest('#clear-history-btn')) {
-            if (confirm("Delete all history?")) clearAllHistory();
+            if (confirm("Are you sure you want to delete all conversation history?")) clearAllHistory();
         }
 
-        // Stop Generation
+        // 7. Stop Generation
         if (target.closest('#stop-generating-btn')) {
             stopGeneration();
         }
 
-        // --- Message Actions ---
+        // --- Message Actions (Delegated) ---
 
         // Edit User Message
         if (target.closest('.msg-edit-btn')) {
@@ -215,12 +251,12 @@ function attachEventListeners() {
             handleEditMessage(msgElement, textDiv.innerText);
         }
 
-        // Regenerate
+        // Regenerate AI Response
         if (target.closest('.msg-regen-btn')) {
             handleRegenerate();
         }
 
-        // Code Copy
+        // Code: Copy Button
         if (target.closest('.code-copy-btn')) {
             const btn = target.closest('.code-copy-btn');
             const codeText = decodeURIComponent(btn.dataset.code);
@@ -231,27 +267,33 @@ function attachEventListeners() {
             });
         }
 
-        // Code Preview (The complex logic)
-        if (target.closest('.code-preview-btn')) {
+        // Code: Edit / Preview Button (Combined Logic)
+        if (target.closest('.code-edit-btn') || target.closest('.code-preview-btn')) {
             const msgElement = target.closest('.chat-message');
             openMergedPreview(msgElement);
         }
 
-        // Close Preview Modal
+        // Modal: Close
         if (target.closest('#close-preview-btn')) {
             document.getElementById('preview-modal').classList.remove('active');
         }
+        
+        // Modal: Run Code
+        if (target.closest('#run-code-btn')) {
+            updatePreviewIframe();
+        }
 
-        // History Item Click
+        // History: Load specific chat
         const historyItem = target.closest('#history-list li');
-        if (historyItem && !target.closest('.history-item-delete-btn')) {
+        if (historyItem && !target.closest('.history-item-delete-btn') && !target.closest('.empty-history')) {
             loadChatById(historyItem.dataset.id);
-            if (window.innerWidth < 600) {
+            // Close sidebar on mobile for better UX
+            if (window.innerWidth < 768) {
                 document.getElementById('history-panel').classList.remove('active');
             }
         }
 
-        // History Item Delete
+        // History: Delete specific chat
         if (target.closest('.history-item-delete-btn')) {
             e.stopPropagation();
             const li = target.closest('li');
@@ -287,8 +329,8 @@ function attachEventListeners() {
 
 /**
  * Starts a new session.
- * CRITICAL FIX: Does NOT save to history array immediately.
- * Prevents ghost empty chats.
+ * IMPORTANT: Does NOT push to history array immediately.
+ * This prevents "ghost" empty chats from appearing in the sidebar.
  */
 function startNewChat(forceUIUpdate = true) {
     state.currentChat = {
@@ -296,39 +338,39 @@ function startNewChat(forceUIUpdate = true) {
         title: "New Conversation",
         messages: [],
         timestamp: Date.now(),
-        isUnsaved: true // Mark as unsaved
+        isUnsaved: true // Flag to indicate it's not persistent yet
     };
 
     if (forceUIUpdate) {
         renderChatMessages([]); // Shows blank/welcome screen
-        renderHistoryList();    // Updates sidebar (won't show current chat yet)
+        renderHistoryList();    // Updates sidebar
     }
 }
 
 /**
- * Saves current chat to history ONLY if it has messages.
+ * Saves current chat to history ONLY if it has content.
  */
 function saveCurrentChatIfNeeded() {
     if (!state.currentChat || state.currentChat.messages.length === 0) return;
 
-    // Check if already in history
+    // Check if already in history array
     const existingIndex = state.chatHistory.findIndex(c => c.id === state.currentChat.id);
     
     if (existingIndex === -1) {
-        // New chat, push to history
+        // New chat, add to top
         state.currentChat.isUnsaved = false;
         state.chatHistory.unshift(state.currentChat);
     } else {
-        // Update existing
+        // Update existing chat in place
         state.chatHistory[existingIndex] = state.currentChat;
     }
 
-    // Trim history
+    // Trim history to max limit
     if (state.chatHistory.length > CONFIG.MAX_HISTORY_ITEMS) {
         state.chatHistory.pop();
     }
 
-    // Save to LocalStorage
+    // Persist to LocalStorage
     localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.chatHistory));
     renderHistoryList();
 }
@@ -338,6 +380,7 @@ function loadHistory() {
         const stored = localStorage.getItem(CONFIG.STORAGE_KEY);
         state.chatHistory = stored ? JSON.parse(stored) : [];
     } catch (e) {
+        console.error("Error loading history", e);
         state.chatHistory = [];
     }
 }
@@ -356,6 +399,7 @@ function deleteSingleChat(id) {
     state.chatHistory = state.chatHistory.filter(c => c.id !== id);
     localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state.chatHistory));
     
+    // If the deleted chat was active, start a new one
     if (state.currentChat && state.currentChat.id === id) {
         startNewChat(true);
     } else {
@@ -372,21 +416,21 @@ function clearAllHistory() {
 // --- 7. MESSAGE PROCESSING & AI LOGIC ---
 
 async function handleUserMessage(text) {
-    // 1. Render User Msg
+    // 1. Render User Msg immediately
     appendMessageToUI('user', text);
 
     // 2. Update State
     state.currentChat.messages.push({ role: 'user', content: text });
     
-    // Set title from first message
+    // Generate a Title if it's the first message
     if (state.currentChat.messages.length === 1) {
         state.currentChat.title = text.substring(0, 25) + (text.length > 25 ? "..." : "");
     }
     
-    // Save now that we have data
+    // Save to storage (now that it has data)
     saveCurrentChatIfNeeded();
 
-    // 3. Generate Response
+    // 3. Generate AI Response
     await generateResponse(text);
 }
 
@@ -401,35 +445,40 @@ async function generateResponse(prompt) {
     let linksHTML = "";
 
     try {
-        // Step A: Try API
-        if (!state.aiClient) throw new Error("No API Client");
+        // Step A: Try Gemini API
+        if (!state.aiClient) throw new Error("AI Client not initialized");
 
         const result = await state.aiClient.models.generateContent({
             model: CONFIG.MODEL_NAME,
-            contents: prompt
+            contents: prompt,
+            config: {
+                systemInstruction: CONFIG.SYSTEM_INSTRUCTION
+            }
         });
         
         responseText = result.text;
 
-        // Step B: Check Local Links (Contextual)
-        // If API worked, ONLY add links if we actually found good matches.
-        linksHTML = getLocalLinksHTML(prompt);
+        // Step B: Smart Linking (Online)
+        // Only append links if the API call was successful AND we find RELEVANT local content.
+        // We avoid showing links for greetings like "Hi", "Hello".
+        linksHTML = getLocalLinksHTML(prompt, true); // true = strict mode
         
         if (linksHTML) {
             responseText += `\n\n<div class='related-links-section'>${linksHTML}</div>`;
         }
 
     } catch (error) {
-        console.warn("API Failed/Offline", error);
+        console.warn("API Failed/Offline:", error);
         
-        // Step C: Offline Fallback
-        linksHTML = getLocalLinksHTML(prompt);
+        // Step C: Offline Fallback Strategy
+        // If API fails, we check our local DB explicitly.
+        linksHTML = getLocalLinksHTML(prompt, false); // false = slightly looser mode for offline
 
         if (linksHTML) {
-            responseText = `I cannot connect to the server right now, but I found this on our website:\n\n<div class='related-links-section'>${linksHTML}</div>`;
+            responseText = `I am currently offline or cannot reach the server. However, I found these related resources in our library:\n\n<div class='related-links-section'>${linksHTML}</div>`;
         } else {
-            // No API AND No Local results
-            responseText = `<span style="color:var(--danger-color)">Unable to connect. Please check your internet connection and try again later. (थोड़ी देर बाद प्रयास करें)</span>`;
+            // No API AND No Links found
+            responseText = `<span style="color:var(--danger-color)">Unable to connect to the server. Please check your internet connection and try again later. (थोड़ी देर बाद प्रयास करें)</span>`;
         }
     }
 
@@ -444,45 +493,79 @@ async function generateResponse(prompt) {
     updateUIControls();
 }
 
-function getLocalLinksHTML(query) {
-    if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-        const results = window.GKApp.fuzzySearch(query, window.GKApp.searchData);
-        if (results && results.length > 0) {
-            // Take top 3
-            const topResults = results.slice(0, 3);
-            const items = topResults.map(item => 
-                `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`
-            ).join('');
-            return `<strong>Related Links:</strong><ul>${items}</ul>`;
+/**
+ * Searches local JSON data (window.GKApp.searchData).
+ * @param {string} query - User's question.
+ * @param {boolean} strictMode - If true, requires higher relevance score (for online mode).
+ */
+function getLocalLinksHTML(query, strictMode) {
+    if (!window.GKApp || !window.GKApp.fuzzySearch || !window.GKApp.searchData) return "";
+
+    // 1. Filter out common greetings to avoid irrelevant links
+    const ignoreList = ['hi', 'hello', 'hey', 'namaste', 'help', 'hola', 'test', 'kaise ho', 'good morning', 'good evening'];
+    const cleanQuery = query.toLowerCase().trim().replace(/[?.!]/g, '');
+    
+    if (cleanQuery.length < 2 || ignoreList.includes(cleanQuery)) return "";
+
+    // 2. Perform Search
+    const results = window.GKApp.fuzzySearch(query, window.GKApp.searchData);
+    
+    if (results && results.length > 0) {
+        let finalResults = results;
+
+        // 3. Apply Threshold logic
+        if (strictMode) {
+            // In online mode, only show links if there's a very strong match.
+            // Since our fuzzy search might not return a score property directly in the final array,
+            // we check if the title includes significant words from the query.
+            const queryWords = cleanQuery.split(' ').filter(w => w.length > 3);
+            if (queryWords.length > 0) {
+                 finalResults = results.filter(item => {
+                     const titleLower = item.title.toLowerCase();
+                     // Check if at least one significant word exists in title
+                     return queryWords.some(w => titleLower.includes(w));
+                 });
+            }
         }
+
+        if (finalResults.length === 0) return "";
+
+        // Limit to top 3
+        const topResults = finalResults.slice(0, 3);
+        const items = topResults.map(item => 
+            `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`
+        ).join('');
+        return `<strong>Related Links:</strong><ul>${items}</ul>`;
     }
+    
     return "";
 }
 
 // --- 8. EDITING & PREVIEW LOGIC ---
 
 /**
- * Problem 3 Fix: Edit keeps context above.
+ * Handles editing a user message.
+ * Logic: Truncates chat history *after* the edited message so the context is preserved but the future path changes.
  */
 function handleEditMessage(msgElement, oldText) {
-    // 1. Find index based on DOM position (ignoring welcome msg if any)
+    // 1. Find index based on DOM
     const allMsgs = Array.from(document.querySelectorAll('.chat-message'));
-    // Filter out messages that might not correspond to state (like loading)
-    const validMsgs = allMsgs.filter(el => !el.classList.contains('typing-indicator') && !el.querySelector('p')?.textContent.includes('नमस्ते')); 
+    // Filter to match state messages (ignore typing indicator)
+    const validMsgs = allMsgs.filter(el => !el.classList.contains('typing-indicator')); 
     
     const domIndex = validMsgs.indexOf(msgElement);
     
     if (domIndex === -1 || !state.currentChat.messages[domIndex]) return;
 
-    // 2. Set input
+    // 2. Set input box with old text
     const input = document.getElementById('question-input');
-    input.value = state.currentChat.messages[domIndex].content; // Raw user text
+    input.value = state.currentChat.messages[domIndex].content; 
     input.focus();
 
-    // 3. Slice history: Keep everything BEFORE this message.
+    // 3. Slice history: Keep everything BEFORE this message index
     state.currentChat.messages = state.currentChat.messages.slice(0, domIndex);
     
-    // 4. Save & Render
+    // 4. Save & Re-render UI immediately
     saveCurrentChatIfNeeded();
     renderChatMessages(state.currentChat.messages);
 }
@@ -490,25 +573,26 @@ function handleEditMessage(msgElement, oldText) {
 function handleRegenerate() {
     if (!state.currentChat.messages.length) return;
     
-    // Remove last AI response
+    // Check if last message was AI
     const lastMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
     if (lastMsg.role === 'model') {
+        // Remove it
         state.currentChat.messages.pop();
         saveCurrentChatIfNeeded();
         renderChatMessages(state.currentChat.messages);
         
-        // Get last user prompt
+        // Get the user prompt immediately before it
         const lastUserMsg = state.currentChat.messages[state.currentChat.messages.length - 1];
         if (lastUserMsg) generateResponse(lastUserMsg.content);
     }
 }
 
 /**
- * Problem 3 (Preview) Logic:
- * Scans a specific message for ALL code blocks (HTML/CSS/JS) and merges them.
+ * Merges all HTML, CSS, and JS blocks from a specific message bubble
+ * and opens the Split-Screen Editor.
  */
 function openMergedPreview(msgElement) {
-    // 1. Get all code blocks in this specific message
+    // 1. Extract code blocks
     const codeBlocks = msgElement.querySelectorAll('code[class*="language-"]');
     
     let html = "";
@@ -520,35 +604,39 @@ function openMergedPreview(msgElement) {
         const lang = langClass ? langClass.replace('language-', '') : '';
         const code = block.innerText;
 
-        if (lang === 'html') html += code + "\n";
+        if (lang === 'html' || lang === 'xml') html += code + "\n";
         else if (lang === 'css') css += code + "\n";
         else if (lang === 'javascript' || lang === 'js') js += code + "\n";
     });
 
-    // 2. Construct full document
-    const fullDoc = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <style>${css}</style>
-        </head>
-        <body>
-            ${html}
-            <script>${js}<\/script>
-        </body>
-        </html>
-    `;
+    // Fallback text if empty
+    if (!html && !css && !js) {
+        html = "<!-- No code found to preview -->";
+    }
 
-    // 3. Inject into iframe
+    // 2. Populate Editor Textarea
+    const editor = document.getElementById('code-editor-textarea');
+    const combinedSource = `<!-- HTML -->\n${html}\n\n<style>\n/* CSS */\n${css}\n</style>\n\n<script>\n// JavaScript\n${js}\n<\/script>`;
+    editor.value = combinedSource;
+
+    // 3. Show Modal
     const modal = document.getElementById('preview-modal');
-    const iframe = document.getElementById('preview-iframe');
-    
     modal.classList.add('active');
     
+    // 4. Run immediately
+    updatePreviewIframe();
+}
+
+/**
+ * Reads content from the textarea and injects it into the iframe.
+ */
+function updatePreviewIframe() {
+    const rawCode = document.getElementById('code-editor-textarea').value;
+    const iframe = document.getElementById('preview-iframe');
     const doc = iframe.contentWindow.document;
+    
     doc.open();
-    doc.write(fullDoc);
+    doc.write(rawCode);
     doc.close();
 }
 
@@ -563,13 +651,13 @@ function stopGeneration() {
     }
 }
 
-// --- 9. UI RENDERING ---
+// --- 9. UI RENDERING HELPERS ---
 
 function renderChatMessages(messages) {
     const log = document.getElementById('chat-log');
     log.innerHTML = ''; 
 
-    // Always show welcome if empty
+    // Show welcome if empty
     if (!messages || messages.length === 0) {
         const welcome = document.createElement('div');
         welcome.className = 'chat-message ai-message';
@@ -588,72 +676,89 @@ function appendMessageToUI(role, content) {
     div.className = `chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
 
     let innerHTML = '';
+    let avatarHTML = '';
 
     if (role === 'user') {
+        // USER: SVG Icon, Black text, Light Background
+        avatarHTML = `
+        <div class="message-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </div>`;
+        
         innerHTML = `
-            <div class="text-content">${escapeHTML(content)}</div>
-            <div class="msg-actions">
-                <button class="msg-edit-btn" title="Edit">✎</button>
-            </div>`;
+            <div class="message-content">
+                <div class="text-content">${escapeHTML(content)}</div>
+                <div class="msg-actions">
+                    <button class="msg-edit-btn" title="Edit Message">✎</button>
+                </div>
+            </div>
+            ${avatarHTML}
+        `;
     } else {
-        // Parse Markdown
+        // AI: Robot Icon, Markdown
+        avatarHTML = `<div class="message-avatar">🤖</div>`;
+        
         const parsedHTML = DOMPurify.sanitize(marked.parse(content));
-        innerHTML = `<div class="text-content">${parsedHTML}</div>`;
         
-        // Add Regenerate Button
-        innerHTML += `
-            <div class="msg-actions">
-                <button class="msg-regen-btn" title="Regenerate">↻</button>
-            </div>`;
-        
-        // Inject Code Toolbar if code blocks exist
-        // Use a setTimeout to wait for DOM update, or construct string manually.
-        // Manual construction is safer for the innerHTML set.
-        innerHTML = injectCodeToolbars(innerHTML);
+        innerHTML = `
+            ${avatarHTML}
+            <div class="message-content">
+                <div class="text-content">${parsedHTML}</div>
+                <div class="msg-actions">
+                    <button class="msg-regen-btn" title="Regenerate Response">↻</button>
+                </div>
+            </div>
+        `;
     }
 
-    const avatar = `<div class="message-avatar">${role === 'user' ? 'You' : '🤖'}</div>`;
-    div.innerHTML = role === 'user' ? 
-        `<div class="message-content">${innerHTML}</div>${avatar}` : 
-        `${avatar}<div class="message-content">${innerHTML}</div>`;
-
+    div.innerHTML = innerHTML;
     log.appendChild(div);
+    
+    // For AI messages, add code toolbar AFTER rendering
+    if (role === 'model') {
+        setTimeout(() => injectCodeToolbars(div), 0);
+    }
+    
     scrollToBottom();
 }
 
 /**
- * Injects Copy and Preview buttons into <pre> blocks
+ * Adds Copy, Edit, Preview buttons to code blocks.
  */
-function injectCodeToolbars(htmlString) {
-    // Create a temp div to manipulate DOM
-    const temp = document.createElement('div');
-    temp.innerHTML = htmlString;
-
-    const preBlocks = temp.querySelectorAll('pre');
+function injectCodeToolbars(messageDiv) {
+    const preBlocks = messageDiv.querySelectorAll('pre');
     preBlocks.forEach(pre => {
         const codeBlock = pre.querySelector('code');
-        if (codeBlock) {
+        // Prevent duplicate toolbars
+        if (codeBlock && !pre.querySelector('.code-toolbar')) {
             const rawCode = codeBlock.innerText;
             const encodedCode = encodeURIComponent(rawCode);
             
-            // Determine if we should show Preview button (only for html/css/js)
+            // Check language to decide if Preview button is needed
             const isRenderable = Array.from(codeBlock.classList).some(c => 
                 ['language-html', 'language-css', 'language-javascript', 'language-js', 'language-xml'].includes(c)
             );
 
             const toolbar = document.createElement('div');
             toolbar.className = 'code-toolbar';
-            toolbar.innerHTML = `
-                <button class="code-copy-btn" data-code="${encodedCode}">Copy</button>
-                ${isRenderable ? '<button class="code-preview-btn">Preview</button>' : ''}
-            `;
             
-            // Insert toolbar before the <code> element inside <pre>
-            pre.insertBefore(toolbar, codeBlock);
+            let buttonsHTML = `<button class="code-copy-btn" data-code="${encodedCode}">Copy</button>`;
+            
+            if (isRenderable) {
+                buttonsHTML += `
+                    <button class="code-edit-btn">Edit</button>
+                    <button class="code-preview-btn">Preview</button>
+                `;
+            }
+            
+            toolbar.innerHTML = buttonsHTML;
+            
+            // Insert at top of PRE
+            pre.insertBefore(toolbar, pre.firstChild);
         }
     });
-
-    return temp.innerHTML;
 }
 
 function appendLoadingIndicator(id) {
@@ -675,7 +780,6 @@ function renderHistoryList() {
     const list = document.getElementById('history-list');
     if (!list) return;
 
-    // If there are no saved chats, or the only chat is the active blank one
     const savedChats = state.chatHistory;
 
     if (savedChats.length === 0) {
@@ -707,7 +811,7 @@ function updateUIControls() {
     }
 }
 
-// --- 10. UTILS ---
+// --- 10. UTILITIES ---
 
 function scrollToBottom() {
     const log = document.getElementById('chat-log');
