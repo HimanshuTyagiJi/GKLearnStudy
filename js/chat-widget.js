@@ -1,32 +1,68 @@
+
 import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
-// --- 1. HTML Injection (Only if missing) ---
+// --- Global Configuration & State ---
+const API_KEY = "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU"; // Hardcoded as per your setup
+let aiClient = null;
+let chatHistory = [];
+let currentChatIndex = -1;
+let isGenerating = false;
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inject HTML immediately
+    injectWidgetHTML();
+
+    // 2. Initialize AI Client
+    try {
+        aiClient = new GoogleGenAI({ apiKey: API_KEY });
+    } catch (error) {
+        console.error("AI Initialization Failed:", error);
+    }
+
+    // 3. Load History from LocalStorage
+    loadHistory();
+
+    // 4. Attach Event Listeners (using delegation for robustness)
+    attachGlobalEventListeners();
+
+    // 5. Check for URL params or deep links if any (optional)
+    // 6. Restore UI state
+    restoreUIState();
+});
+
+// --- 1. HTML Injection ---
 function injectWidgetHTML() {
-    // If the widget already exists, don't inject again
     if (document.getElementById('ai-chat-widget')) return;
 
     const widgetHTML = `
-    <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat" style="z-index: 10000;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path></svg>
+    <!-- Floating Toggle Button -->
+    <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 13.5C20 13.09 19.67 12.75 19.25 12.75C18.83 12.75 18.5 13.09 18.5 13.5V14.5C18.5 17.26 16.26 19.5 13.5 19.5C13.09 19.5 12.75 19.83 12.75 20.25C12.75 20.67 13.09 21 13.5 21C17.09 21 20 18.09 20 14.5V13.5M10.5 3C7.91 3 5.5 5.41 5.5 8V9C5.5 9.41 5.17 9.75 4.75 9.75C4.33 9.75 4 9.41 4 9V8C4 4.91 6.91 2 10.5 2C14.09 2 17 4.91 17 8V9C17 9.41 16.67 9.75 16.25 9.75C15.83 9.75 15.5 9.41 15.5 9V8C15.5 5.41 13.09 3 10.5 3M10.5 13.5C10.5 13.09 10.17 12.75 9.75 12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H9.75C10.17 11.25 10.5 10.91 10.5 10.5C10.5 10.09 10.17 9.75 9.75 9.75H8C6.75 9.75 5.75 10.75 5.75 12C5.75 13.25 6.75 14.25 8 14.25H9.75C10.17 14.25 10.5 13.91 10.5 13.5M16 12.75H14.25C13.83 12.75 13.5 13.09 13.5 13.5C13.5 13.91 13.83 14.25 14.25 14.25H16C17.25 14.25 18.25 13.25 18.25 12C18.25 10.75 17.25 9.75 16 9.75H14.25C13.83 9.75 13.5 10.09 13.5 10.5C13.5 10.91 13.83 11.25 14.25 11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"></path>
+        </svg>
     </button>
-    
+
+    <!-- Chat Widget Container -->
     <div id="ai-chat-widget">
         <div class="ai-container">
+            <!-- Sidebar: History -->
             <aside id="history-panel">
                 <div class="history-header">
                     <h2>History</h2>
                     <div class="history-header-actions">
-                        <button id="clear-history-btn">Clear</button>
+                        <button id="clear-history-btn" title="Clear All">Clear</button>
                         <button id="close-history-btn" aria-label="Close History">&times;</button>
                     </div>
                 </div>
                 <ul id="history-list">
-                    <li>No history yet.</li>
+                    <li class="empty-history">No history yet.</li>
                 </ul>
             </aside>
 
+            <!-- Main Chat Area -->
             <section id="chat-area">
                 <header class="chat-header">
                      <div class="chat-header-left">
@@ -34,20 +70,29 @@ function injectWidgetHTML() {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
                         </button>
                         <h1>AI Solver</h1>
-                        <button id="new-chat-btn" aria-label="Start New Chat">New Chat</button>
                     </div>
                     <div class="chat-header-right">
-                        <button id="full-view-btn" aria-label="Toggle Full View">
+                        <button id="new-chat-btn" title="Start New Chat">New Chat</button>
+                        <button id="full-view-btn" aria-label="Toggle Full View" title="Expand/Collapse">
                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17H7V14H5V19H10V17Z"></path></svg>
                         </button>
-                        <button id="close-widget-btn" aria-label="Close Chat">
+                        <button id="close-widget-btn" aria-label="Close Chat" title="Close">
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
                         </button>
                     </div>
                 </header>
+                
+                <!-- Chat Messages Log -->
                 <div id="chat-log" role="log" aria-live="polite">
-                    <!-- Initial message will be injected by logic -->
+                    <div class="chat-message ai-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Input Area -->
                 <div class="chat-input-area">
                     <form id="ai-solver-form">
                         <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
@@ -60,6 +105,7 @@ function injectWidgetHTML() {
         </div>
     </div>
 
+    <!-- Preview Modal (High Z-Index) -->
     <div id="preview-modal">
         <div class="preview-content">
             <div class="preview-header">
@@ -72,591 +118,511 @@ function injectWidgetHTML() {
     `;
 
     const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '0';
-    container.style.height = '0';
-    container.style.pointerEvents = 'none'; 
     container.innerHTML = widgetHTML;
-    
     document.body.appendChild(container);
 
-    // Inject CSS if missing
-    if (!document.querySelector('link[href="css/chat-widget.css"]')) {
+    // Inject CSS dynamically if not present
+    if (!document.querySelector('link[href*="chat-widget.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = '/css/chat-widget.css';
         document.head.appendChild(link);
     }
-    // Inject Search Data if missing
-    if (!document.querySelector('script[src="js/search-data.js"]')) {
-        const script = document.createElement('script');
-        script.src = '/js/search-data.js';
-        document.head.appendChild(script);
+}
+
+// --- 2. State Management & UI Restoration ---
+
+function restoreUIState() {
+    const chatLog = document.getElementById('chat-log');
+    
+    // If we have a selected chat index, load it. Otherwise start fresh or show welcome.
+    if (currentChatIndex !== -1 && chatHistory[currentChatIndex]) {
+        renderChatFromHistory(currentChatIndex);
+    } else if (chatHistory.length > 0) {
+        // Automatically load the most recent chat
+        currentChatIndex = 0;
+        renderChatFromHistory(0);
+    }
+    
+    renderHistoryList();
+}
+
+function loadHistory() {
+    try {
+        const saved = localStorage.getItem('aiChatHistory');
+        if (saved) {
+            chatHistory = JSON.parse(saved);
+        }
+    } catch (e) {
+        console.error("Failed to load history:", e);
+        chatHistory = [];
     }
 }
 
-// --- 2. Main App Logic ---
-function initializeApp() {
-    // Ensure HTML is present before we try to get elements
-    injectWidgetHTML();
-
-    // Helper to get elements safely
-    const get = (id) => document.getElementById(id);
-
-    // Variables
-    let ai;
-    let chatHistory = [];
-    let currentChatIndex = -1; 
-    const placeholders = [
-        "2+2 का हल करें...", "होली पर निबंध लिखें...", "What is photosynthesis?", "Write HTML for a login form...", "vyakaran kya hai?", "Tell me a story about a lion."
-    ];
-    let placeholderIndex = 0;
-
-    // Get Elements
-    const historyPanel = get('history-panel');
-    const chatLog = get('chat-log');
-    const questionInput = get('question-input');
-    const historyList = get('history-list');
-    const widgetToggleBtn = get('ai-widget-toggle-btn');
-    const chatWidget = get('ai-chat-widget');
-    const closeWidgetBtn = get('close-widget-btn');
-    const fullViewBtn = get('full-view-btn');
-    const newChatBtn = get('new-chat-btn');
-    const form = get('ai-solver-form');
-
-    // Initialize Sequence
+function saveHistoryToStorage() {
     try {
-        // 1. Initialize AI Client
-        ai = new GoogleGenAI({ apiKey: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU" });
-    } catch (error) {
-        console.error("AI Client Init Error:", error);
-        // We do NOT stop execution here, so the UI (search fallback) still works.
-    }
-
-    // 2. Attach Event Listeners (Critical step)
-    attachEventListeners();
-
-    // 3. Load History or Start New Chat
-    loadHistory();
-
-    // 4. Start Placeholder Animation
-    setInterval(updatePlaceholder, 4000);
-
-
-    // --- Functions ---
-
-    function attachEventListeners() {
-        if(widgetToggleBtn) widgetToggleBtn.addEventListener('click', openWidget);
-        if(closeWidgetBtn) closeWidgetBtn.addEventListener('click', closeWidget);
-        if(fullViewBtn) fullViewBtn.addEventListener('click', () => chatWidget.classList.toggle('full-view'));
-        if(newChatBtn) newChatBtn.addEventListener('click', startNewChat);
-        
-        get('menu-toggle')?.addEventListener('click', () => historyPanel.classList.toggle('active'));
-        get('close-history-btn')?.addEventListener('click', () => historyPanel.classList.remove('active'));
-        
-        // Send Logic
-        if(form) form.addEventListener('submit', handleFormSubmit);
-        if(questionInput) {
-            questionInput.addEventListener('keydown', handleInputKeyDown);
-            questionInput.addEventListener('input', autoResizeTextarea);
-        }
-
-        get('clear-history-btn')?.addEventListener('click', clearHistory);
-        historyList?.addEventListener('click', handleHistoryClick);
-        
-        get('close-preview-btn')?.addEventListener('click', () => get('preview-modal').classList.remove('active'));
-        
-        // Delegation for dynamic buttons (copy, preview, edit)
-        chatLog?.addEventListener('click', handleChatLogClicks);
-    }
-    
-    function openWidget() {
-        chatWidget.classList.add('active');
-        if(widgetToggleBtn) widgetToggleBtn.style.display = 'none';
-        // Auto scroll to bottom
-        setTimeout(() => {
-             chatLog.scrollTop = chatLog.scrollHeight;
-        }, 50);
-    }
-
-    function closeWidget() {
-        chatWidget.classList.remove('active');
-        if(widgetToggleBtn) widgetToggleBtn.style.display = 'flex';
-    }
-
-    function startNewChat() {
-        currentChatIndex = -1;
-        chatLog.innerHTML = `
-            <div class="chat-message ai-message">
-                <div class="message-avatar">🤖</div>
-                <div class="message-content">
-                    <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
-                </div>
-            </div>`;
-        questionInput.value = '';
-        autoResizeTextarea();
-        renderHistoryList(); 
-        historyPanel.classList.remove('active');
-    }
-
-    function handleFormSubmit(e) {
-        e.preventDefault(); // Stop page reload
-        const userQuestion = questionInput.value.trim();
-        if (userQuestion) {
-            appendMessage(userQuestion, 'user');
-            submitQuestionToAI(userQuestion);
-            questionInput.value = '';
-            autoResizeTextarea();
-        }
-    }
-
-    function handleInputKeyDown(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault(); // Prevent newline
-            handleFormSubmit(e); // Submit form
-        }
-    }
-
-    // --- Handling History Clicks (Load & Delete) ---
-    function handleHistoryClick(e) {
-        // Check for delete button first
-        const deleteBtn = e.target.closest('.history-item-delete-btn');
-        if (deleteBtn) {
-            e.stopPropagation(); // Prevent triggering loadChat
-            const li = deleteBtn.closest('li');
-            if (li && li.dataset.index) {
-                const indexToDelete = parseInt(li.dataset.index, 10);
-                if (confirm('Delete this chat?')) {
-                    deleteHistoryItem(indexToDelete);
-                }
-            }
-            return; 
-        }
-
-        // Load chat
-        const li = e.target.closest('li');
-        if (li && li.dataset.index) {
-            const index = parseInt(li.dataset.index, 10);
-            loadChatFromHistory(index);
-            historyPanel.classList.remove('active');
-        }
-    }
-    
-    // --- Handling Code Block Buttons (Copy, Preview, Edit) ---
-    function handleChatLogClicks(e) {
-        const button = e.target.closest('button[data-action]');
-        
-        // Handle "Try Again" or other non-toolbar buttons here if needed
-        if (!button) {
-             const tryAgainButton = e.target.closest('.btn-try-again');
-             if (tryAgainButton) {
-                const questionToRetry = tryAgainButton.dataset.question;
-                tryAgainButton.closest('.chat-message').remove(); 
-                submitQuestionToAI(questionToRetry);
-            }
-            return;
-        }
-
-        const action = button.dataset.action;
-        const aiMessage = button.closest('.ai-message');
-        // The pre block is usually next sibling or parent depending on layout, 
-        // but here buttons are inside .code-toolbar inside the pre/div wrapper.
-        const pre = button.closest('.code-toolbar').nextElementSibling; // Assuming structure <toolbar><pre>
-
-        switch (action) {
-            case 'copy':
-                if (pre) {
-                    const codeEl = pre.querySelector('code');
-                    navigator.clipboard.writeText(codeEl.textContent).then(() => {
-                        const originalText = button.innerHTML;
-                        button.textContent = 'Copied!';
-                        setTimeout(() => button.innerHTML = originalText, 2000);
-                    });
-                }
-                break;
-            case 'preview':
-                if (aiMessage) {
-                    showCombinedPreview(aiMessage);
-                }
-                break;
-            case 'edit':
-                if (pre) {
-                   enterEditMode(pre);
-                } else {
-                    // Edit user message logic
-                    const userMessageDiv = button.closest('.user-message');
-                    if (userMessageDiv) {
-                        const messageText = userMessageDiv.querySelector('p').textContent;
-                        questionInput.value = messageText;
-                        questionInput.focus();
-                        autoResizeTextarea();
-                        userMessageDiv.remove();
-                        // Remove subsequent AI response if exists
-                         if (userMessageDiv.nextElementSibling && userMessageDiv.nextElementSibling.classList.contains('ai-message')) {
-                            userMessageDiv.nextElementSibling.remove();
-                        }
-                        // Update history state logic (remove last interaction)
-                        if (currentChatIndex !== -1 && chatHistory[currentChatIndex]) {
-                            chatHistory[currentChatIndex].conversation.pop();
-                            localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
-    const escapeHTML = s => String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]);
-
-    function appendMessage(content, type) {
-        const isUser = type === 'user';
-        const avatarChar = isUser ? 'You' : '🤖';
-        const avatarColor = isUser ? 'var(--primary-color)' : '#19c37d';
-        
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `chat-message ${type}-message`;
-
-        if (isUser) {
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    <p>${escapeHTML(content)}</p>
-                    <button class="edit-btn" data-action="edit" aria-label="Edit message" style="display:none;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z"></path></svg>
-                    </button>
-                </div>
-                <div class="message-avatar" style="background-color: ${avatarColor};">${avatarChar}</div>`;
-        } else {
-             messageDiv.innerHTML = `
-                <div class="message-avatar" style="background-color: ${avatarColor};">${avatarChar}</div>
-                <div class="message-content"><p>${escapeHTML(content)}</p></div>`;
-        }
-
-        chatLog.appendChild(messageDiv);
-        chatLog.scrollTop = chatLog.scrollHeight;
-        return messageDiv;
-    }
-
-    function appendResponse(htmlContent) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-message ai-message';
-        messageDiv.innerHTML = `
-            <div class="message-avatar" style="background-color: #19c37d;">🤖</div>
-            <div class="message-content">${htmlContent}</div>
-        `;
-        chatLog.appendChild(messageDiv);
-        chatLog.scrollTop = chatLog.scrollHeight;
-    }
-    
-    function showTypingIndicator() {
-        const indicator = document.createElement('div');
-        indicator.className = 'chat-message ai-message typing-indicator';
-        indicator.innerHTML = `
-            <div class="message-avatar" style="background-color: #19c37d;">🤖</div>
-            <div class="message-content"><p>Thinking...</p></div>
-        `;
-        chatLog.appendChild(indicator);
-        chatLog.scrollTop = chatLog.scrollHeight;
-        return indicator;
-    }
-
-    async function submitQuestionToAI(userQuestion) {
-        const indicator = showTypingIndicator();
-        let contextPromptPart = "";
-        
-        // --- Website Search Context Integration ---
-        try {
-            if (window.GKApp && window.GKApp.dataReady) {
-                await window.GKApp.dataReady;
-            }
-            
-            if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-                 const searchResults = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
-                 
-                 if (searchResults && searchResults.length > 0) {
-                    const topResults = searchResults.slice(0, 3);
-                    contextPromptPart = `
-**WEBSITE CONTEXT (gklearnstudy.in):**
-${topResults.map((item, idx) => `
-[${idx+1}] Title: ${item.title}
-URL: ${item.url}
-Snippet: ${item.paragraph}
-`).join('\n')}
-
-**INSTRUCTION:** If the user's question matches the context, use it. Add a "Source" link at the end.
-`;
-                 }
-            }
-        } catch (e) {
-            console.warn("Search context unavailable:", e);
-        }
-
-        const finalPrompt = `${contextPromptPart}\n\n**QUESTION:** ${userQuestion}`;
-
-        const systemInstruction = `You are an expert AI assistant for GK Learn Study.
-        1. Answer in detail using Markdown.
-        2. If explaining code, use \`\`\`language blocks.
-        3. Be helpful and polite.`;
-
-        try {
-            if (!ai) throw new Error("AI Client not initialized.");
-
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.5-pro',
-                contents: finalPrompt,
-                config: { systemInstruction: systemInstruction }
-            });
-            
-            const solutionText = response.text;
-            indicator.remove();
-            renderResponse(solutionText);
-            saveNewHistory(userQuestion, solutionText);
-            
-        } catch (apiError) {
-            console.error("API Error:", apiError);
-            indicator.remove();
-            
-            // --- FALLBACK: Local Search if API fails ---
-            let fallbackHTML = `<p style="color:var(--danger-color);">Connection Issue. Searching local database...</p>`;
-            
-            if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-                 const results = window.GKApp.fuzzySearch(userQuestion, window.GKApp.searchData);
-                 if (results && results.length > 0) {
-                     fallbackHTML += `<p><strong>Here are some related articles:</strong></p>`;
-                     results.slice(0, 3).forEach(item => {
-                         fallbackHTML += `<div class="source-box">
-                            <strong><a href="${item.url}" target="_blank">${item.title}</a></strong><br>
-                            ${item.paragraph.substring(0, 100)}...
-                         </div>`;
-                     });
-                     appendResponse(fallbackHTML);
-                     saveNewHistory(userQuestion, "Local Search Results Provided (Offline Mode)");
-                 } else {
-                     appendResponse(`<p style="color:var(--danger-color);">No results found in local database.</p>`);
-                 }
-            } else {
-                 appendResponse(`<p style="color:var(--danger-color);">Service unavailable. Please check internet connection.</p>`);
-            }
-        }
-    }
-
-    function renderResponse(text) {
-        // Split by code blocks to handle formatting and toolbar injection
-        const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
-        let finalHTML = '';
-
-        parts.forEach(part => {
-            if (part.startsWith('```')) {
-                const lang = (part.match(/^```(\w*)/)?.[1] || '').toLowerCase();
-                // Remove ticks
-                const code = escapeHTML(part.replace(/^```\w*\n|```$/g, ''));
-
-                finalHTML += `
-                    <div class="code-wrapper-container" style="position: relative;">
-                        <div class="code-toolbar">
-                            <button data-action="copy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg> Copy</button>
-                            <button data-action="preview"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> Preview</button>
-                            <button data-action="edit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.13,5.12L18.88,8.87M3,17.25V21H6.75L17.81,9.94L14.06,6.19L3,17.25Z"></path></svg> Edit</button>
-                        </div>
-                        <pre data-lang="${lang}"><code>${code}</code></pre>
-                    </div>`;
-            } else if (part.trim()){
-                const unsafeHtml = marked.parse(part);
-                finalHTML += DOMPurify.sanitize(unsafeHtml, { ADD_ATTR: ['target'] });
-            }
-        });
-        appendResponse(finalHTML);
-    }
-    
-    function showCombinedPreview(aiMessageElement) {
-        let htmlCode = '', cssCode = '', jsCode = '';
-        const codeBlocks = aiMessageElement.querySelectorAll('pre');
-
-        codeBlocks.forEach(block => {
-            const lang = block.dataset.lang || '';
-            const codeContent = block.querySelector('code').textContent;
-            if (lang === 'html') {
-                htmlCode += codeContent + '\n';
-            } else if (lang === 'css') {
-                cssCode += codeContent + '\n';
-            } else if (lang === 'javascript' || lang === 'js') {
-                jsCode += codeContent + '\n';
-            }
-        });
-
-        if (!htmlCode && !cssCode && !jsCode) {
-             // If no specific blocks, try to render whatever code is there
-             if (codeBlocks.length > 0) {
-                 htmlCode = codeBlocks[0].querySelector('code').textContent;
-             } else {
-                 alert("No code found to preview.");
-                 return;
-             }
-        }
-
-        if (!htmlCode.includes('<html>')) { 
-             // Wrap snippets
-             const styleTag = cssCode ? `<style>${cssCode}</style>` : '';
-             const scriptTag = jsCode ? `<script>${jsCode}<\/script>` : '';
-             htmlCode = `<!DOCTYPE html><html><head><title>Preview</title>${styleTag}</head><body>${htmlCode}${scriptTag}</body></html>`;
-        }
-
-        document.getElementById('preview-iframe').srcdoc = htmlCode;
-        document.getElementById('preview-modal').classList.add('active');
-    }
-    
-    function enterEditMode(preElement) {
-        // Find the wrapper container (the parent div)
-        const container = preElement.closest('.code-wrapper-container');
-        const originalCode = preElement.querySelector('code').textContent;
-        
-        const editorWrapper = document.createElement('div');
-        editorWrapper.className = 'code-editor-wrapper';
-        
-        editorWrapper.innerHTML = `
-            <textarea class="code-editor"></textarea>
-            <div class="code-editor-actions">
-                <button class="cancel-edit-btn">Cancel</button>
-                <button class="save-preview-btn">Update & Preview</button>
-            </div>
-        `;
-        
-        const textarea = editorWrapper.querySelector('textarea');
-        textarea.value = originalCode;
-        
-        // Replace the pre element (or the whole container)
-        container.style.display = 'none';
-        container.parentNode.insertBefore(editorWrapper, container.nextSibling);
-        
-        textarea.style.height = (textarea.scrollHeight) + 'px';
-        textarea.focus();
-
-        editorWrapper.querySelector('.cancel-edit-btn').addEventListener('click', () => {
-            editorWrapper.remove();
-            container.style.display = 'block';
-        });
-
-        editorWrapper.querySelector('.save-preview-btn').addEventListener('click', () => {
-            const newCode = textarea.value;
-            // Update the original PRE
-            preElement.querySelector('code').textContent = newCode;
-            
-            editorWrapper.remove();
-            container.style.display = 'block';
-            
-            // Trigger preview immediately
-            const aiMessage = container.closest('.ai-message');
-            if (aiMessage) {
-                showCombinedPreview(aiMessage);
-            }
-        });
-    }
-
-    // --- History Management ---
-
-    function loadHistory() {
-        try {
-            const saved = localStorage.getItem('aiChatHistory');
-            chatHistory = (saved && Array.isArray(JSON.parse(saved))) ? JSON.parse(saved) : [];
-        } catch {
-            chatHistory = [];
-        }
-        renderHistoryList();
-
-        // AUTO LOAD: If history exists, load the first chat. If not, show new chat screen.
-        if (chatHistory.length > 0) {
-            loadChatFromHistory(0); 
-        } else {
-            startNewChat();
-        }
-    }
-
-    function saveNewHistory(question, answer) {
-        if (currentChatIndex === -1) {
-             chatHistory.unshift({ conversation: [{ question, answer }] });
-        } else if (chatHistory[currentChatIndex]) {
-             chatHistory[currentChatIndex].conversation.push({ question, answer });
-        }
-        
-        if (chatHistory.length > 50) chatHistory.pop();
+        // Limit history to last 50 conversations to prevent localStorage overflow
+        if (chatHistory.length > 50) chatHistory = chatHistory.slice(0, 50);
         localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-        if (currentChatIndex === -1) currentChatIndex = 0; 
         renderHistoryList();
+    } catch (e) {
+        console.error("Failed to save history:", e);
     }
+}
 
-    function renderHistoryList() {
-        if (!historyList) return;
-        historyList.innerHTML = chatHistory.map((item, index) => {
-            const firstQuestion = item?.conversation?.[0]?.question || 'Empty Chat';
-            return `<li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">
-                       <span class="history-item-text">${escapeHTML(firstQuestion)}</span>
-                       <button class="history-item-delete-btn" aria-label="Delete this chat">&times;</button>
-                    </li>`;
-        }).join('') || '<li>No history yet.</li>';
-    }
+// --- 3. Event Listeners ---
 
-    function loadChatFromHistory(index) {
-        if (chatHistory[index] && chatHistory[index].conversation) {
-            currentChatIndex = index;
-            const conversation = chatHistory[index].conversation;
-            chatLog.innerHTML = ''; // Clear current view
-            conversation.forEach((turn, turnIndex) => {
-                appendMessage(turn.question, 'user');
-                renderResponse(turn.answer);
-            });
-            renderHistoryList(); // Update active state in sidebar
+function attachGlobalEventListeners() {
+    // Using document delegation for buttons that might be dynamically added or removed
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+
+        // Toggle Widget Open
+        if (target.closest('#ai-widget-toggle-btn')) {
+            document.getElementById('ai-chat-widget').classList.add('active');
+            document.getElementById('ai-widget-toggle-btn').style.display = 'none';
+            scrollToBottom();
         }
-    }
 
-    function deleteHistoryItem(index) {
-        if (index < 0 || index >= chatHistory.length) return;
-        chatHistory.splice(index, 1);
-        localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
+        // Close Widget
+        if (target.closest('#close-widget-btn')) {
+            document.getElementById('ai-chat-widget').classList.remove('active');
+            document.getElementById('ai-widget-toggle-btn').style.display = 'flex';
+        }
 
-        if (currentChatIndex === index) {
-            // If we deleted the current chat, either load the previous one or start new
-            if (chatHistory.length > 0) {
-                loadChatFromHistory(0);
-            } else {
+        // Full Screen Toggle
+        if (target.closest('#full-view-btn')) {
+            document.getElementById('ai-chat-widget').classList.toggle('full-view');
+        }
+
+        // Menu/History Toggle
+        if (target.closest('#menu-toggle')) {
+            document.getElementById('history-panel').classList.toggle('active');
+        }
+        if (target.closest('#close-history-btn')) {
+            document.getElementById('history-panel').classList.remove('active');
+        }
+
+        // Clear History
+        if (target.closest('#clear-history-btn')) {
+            if (confirm("Are you sure you want to delete all history?")) {
+                chatHistory = [];
+                saveHistoryToStorage();
                 startNewChat();
             }
-        } else {
-            if (currentChatIndex > index) {
-                currentChatIndex--;
-            }
-            renderHistoryList();
         }
-    }
 
-    function clearHistory() {
-        if (confirm('Are you sure you want to clear all chat history?')) {
-            chatHistory = [];
-            currentChatIndex = -1;
-            localStorage.removeItem('aiChatHistory');
-            renderHistoryList();
+        // New Chat
+        if (target.closest('#new-chat-btn')) {
             startNewChat();
         }
+
+        // History Item Selection
+        const historyItem = target.closest('#history-list li');
+        if (historyItem && !target.closest('.history-item-delete-btn')) {
+            const index = parseInt(historyItem.dataset.index);
+            if (!isNaN(index)) {
+                currentChatIndex = index;
+                renderChatFromHistory(index);
+                document.getElementById('history-panel').classList.remove('active');
+                // Update active class in list
+                document.querySelectorAll('#history-list li').forEach(li => li.classList.remove('active'));
+                historyItem.classList.add('active');
+            }
+        }
+
+        // Delete Single History Item
+        const deleteHistoryBtn = target.closest('.history-item-delete-btn');
+        if (deleteHistoryBtn) {
+            e.stopPropagation();
+            const li = deleteHistoryBtn.closest('li');
+            const index = parseInt(li.dataset.index);
+            deleteChat(index);
+        }
+
+        // Message Actions: Copy Code
+        if (target.matches('button[data-action="copy"]')) {
+            const wrapper = target.closest('.code-wrapper');
+            const code = wrapper.querySelector('code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = target.innerText;
+                target.innerText = "Copied!";
+                setTimeout(() => target.innerText = originalText, 2000);
+            });
+        }
+
+        // Message Actions: Preview Code
+        if (target.matches('button[data-action="preview"]')) {
+            const wrapper = target.closest('.code-wrapper');
+            const code = wrapper.querySelector('code').innerText;
+            openPreviewModal(code);
+        }
+
+        // Close Preview Modal
+        if (target.closest('#close-preview-btn') || target.id === 'preview-modal') {
+            document.getElementById('preview-modal').classList.remove('active');
+        }
+
+        // --- NEW: Message Edit & Regenerate ---
+        
+        // Edit User Message
+        if (target.closest('.msg-edit-btn')) {
+            const msgDiv = target.closest('.chat-message');
+            const contentP = msgDiv.querySelector('.message-content p');
+            const text = contentP ? contentP.innerText : "";
+            
+            // Populate input
+            const input = document.getElementById('question-input');
+            input.value = text;
+            input.focus();
+            
+            // Remove this message and everything after it from the current conversation
+            // We need to find the index of this message in the current chat conversation array
+            const messageIndex = getMessageIndexInCurrentChat(msgDiv);
+            if (messageIndex !== -1) {
+                truncateConversationAt(messageIndex);
+            }
+        }
+
+        // Regenerate AI Response
+        if (target.closest('.msg-regen-btn')) {
+             // Find the AI message element
+             const msgDiv = target.closest('.chat-message');
+             const messageIndex = getMessageIndexInCurrentChat(msgDiv);
+             
+             if (messageIndex > 0) {
+                 // Get the user query immediately preceding this AI response
+                 const prevUserMsg = chatHistory[currentChatIndex].conversation[messageIndex - 1];
+                 if (prevUserMsg && prevUserMsg.role === 'user') {
+                     // Remove this AI response
+                     truncateConversationAt(messageIndex); 
+                     // Resubmit the previous user question
+                     submitQuestionToAI(prevUserMsg.text);
+                 }
+             }
+        }
+    });
+
+    // Form Submit
+    const form = document.getElementById('ai-solver-form');
+    const input = document.getElementById('question-input');
+
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleMessageSend();
+        });
     }
 
-    function updatePlaceholder() {
-        if (questionInput) {
-            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-            questionInput.placeholder = placeholders[placeholderIndex];
-        }
-    }
-
-    function autoResizeTextarea() {
-        if(questionInput) {
-            questionInput.style.height = 'auto';
-            questionInput.style.height = (questionInput.scrollHeight) + 'px';
-        }
+    if (input) {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleMessageSend();
+            }
+        });
+        input.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            if (this.value === '') this.style.height = 'auto';
+        });
     }
 }
 
-// Initialize on load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
-} else {
-    initializeApp();
+// --- 4. Chat Logic ---
+
+function startNewChat() {
+    currentChatIndex = -1;
+    const chatLog = document.getElementById('chat-log');
+    chatLog.innerHTML = `
+        <div class="chat-message ai-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
+            </div>
+        </div>`;
+    
+    // Unselect history items
+    document.querySelectorAll('#history-list li').forEach(li => li.classList.remove('active'));
+    if(window.innerWidth <= 768) document.getElementById('history-panel').classList.remove('active');
+}
+
+function handleMessageSend() {
+    const input = document.getElementById('question-input');
+    const text = input.value.trim();
+    
+    if (!text) return;
+    if (isGenerating) return; // Prevent double submit
+
+    // 1. Add User Message to UI
+    appendMessageToUI(text, 'user');
+    input.value = '';
+    input.style.height = 'auto';
+
+    // 2. Process Logic
+    submitQuestionToAI(text);
+}
+
+async function submitQuestionToAI(questionText) {
+    isGenerating = true;
+    const chatLog = document.getElementById('chat-log');
+    
+    // Add Thinking Indicator
+    const indicatorId = 'thinking-' + Date.now();
+    const indicatorHTML = `
+        <div class="chat-message ai-message typing-indicator" id="${indicatorId}">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="typing-dots"><span>.</span><span>.</span><span>.</span></div>
+            </div>
+        </div>`;
+    chatLog.insertAdjacentHTML('beforeend', indicatorHTML);
+    scrollToBottom();
+
+    try {
+        // API Call
+        const response = await aiClient.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: questionText
+        });
+
+        const responseText = response.text;
+        
+        // Remove indicator
+        const indicator = document.getElementById(indicatorId);
+        if (indicator) indicator.remove();
+
+        // Add AI Message to UI
+        appendMessageToUI(responseText, 'model');
+
+        // Save to History
+        saveToConversation(questionText, responseText);
+
+    } catch (error) {
+        console.error("API Error:", error);
+        const indicator = document.getElementById(indicatorId);
+        if (indicator) indicator.remove();
+
+        // Fallback: Local Search
+        if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
+            const results = window.GKApp.fuzzySearch(questionText, window.GKApp.searchData);
+            if (results && results.length > 0) {
+                let fallbackHTML = `<strong>नेटवर्क समस्या। स्थानीय डेटाबेस परिणाम:</strong><br>`;
+                results.slice(0, 3).forEach(item => {
+                    fallbackHTML += `<a href="${item.url}" class="source-box">
+                        <strong>${item.title}</strong><br>
+                        ${item.paragraph ? item.paragraph.substring(0, 80) + '...' : 'Click to read more'}
+                    </a>`;
+                });
+                appendMessageToUI(fallbackHTML, 'model', true); // true = raw HTML
+                saveToConversation(questionText, fallbackHTML);
+            } else {
+                const errorMsg = "क्षमा करें, मुझे इसका उत्तर नहीं मिला और इंटरनेट उपलब्ध नहीं है।";
+                appendMessageToUI(errorMsg, 'model');
+                saveToConversation(questionText, errorMsg);
+            }
+        } else {
+            const errorMsg = "त्रुटि: कृपया अपना इंटरनेट कनेक्शन जांचें।";
+            appendMessageToUI(errorMsg, 'model');
+            saveToConversation(questionText, errorMsg);
+        }
+    } finally {
+        isGenerating = false;
+    }
+}
+
+// --- 5. UI Rendering Helpers ---
+
+function appendMessageToUI(content, role, isRawHTML = false) {
+    const chatLog = document.getElementById('chat-log');
+    const div = document.createElement('div');
+    div.className = `chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+    
+    let innerContent = '';
+    
+    if (role === 'user') {
+        // Simple text for user, escape HTML
+        innerContent = `<p>${escapeHTML(content)}</p>`;
+        // Add Edit Button
+        innerContent += `
+            <div class="msg-actions">
+                <button class="msg-edit-btn" title="Edit Message">✏️</button>
+            </div>`;
+    } else {
+        // Markdown rendering for AI
+        if (isRawHTML) {
+            innerContent = content;
+        } else {
+            innerContent = renderMarkdown(content);
+        }
+        // Add Regenerate Button
+        innerContent += `
+            <div class="msg-actions">
+                 <button class="msg-regen-btn" title="Try Again">↻</button>
+            </div>`;
+    }
+
+    const avatarHTML = `<div class="message-avatar" style="background-color: ${role === 'user' ? 'var(--primary-color)' : '#19c37d'}">${role === 'user' ? 'You' : '🤖'}</div>`;
+    const contentWrapperHTML = `<div class="message-content">${innerContent}</div>`;
+
+    div.innerHTML = role === 'user' ? contentWrapperHTML + avatarHTML : avatarHTML + contentWrapperHTML;
+    
+    chatLog.appendChild(div);
+    scrollToBottom();
+}
+
+function renderMarkdown(text) {
+    // 1. Handle Code Blocks manually to insert toolbar
+    const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
+    let finalHTML = '';
+
+    parts.forEach(part => {
+        if (part.startsWith('```')) {
+            // Extract language
+            const firstLineEnd = part.indexOf('\n');
+            let lang = 'text';
+            let code = '';
+            
+            if (firstLineEnd > 3) {
+                lang = part.substring(3, firstLineEnd).trim().toLowerCase();
+                code = part.substring(firstLineEnd + 1, part.length - 3);
+            } else {
+                code = part.substring(3, part.length - 3);
+            }
+            
+            code = escapeHTML(code.trim()); // Escape code content
+
+            finalHTML += `
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>${lang}</span>
+                    <div class="code-toolbar">
+                        <button data-action="copy">Copy</button>
+                        <button data-action="preview">Preview</button>
+                    </div>
+                </div>
+                <pre><code>${code}</code></pre>
+            </div>`;
+        } else {
+            // Parse regular markdown
+            finalHTML += DOMPurify.sanitize(marked.parse(part));
+        }
+    });
+    return finalHTML;
+}
+
+function scrollToBottom() {
+    const chatLog = document.getElementById('chat-log');
+    if(chatLog) chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function openPreviewModal(code) {
+    const modal = document.getElementById('preview-modal');
+    const iframe = document.getElementById('preview-iframe');
+    if (modal && iframe) {
+        iframe.srcdoc = code;
+        modal.classList.add('active');
+    }
+}
+
+function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[tag]));
+}
+
+// --- 6. Data Management ---
+
+function saveToConversation(question, answer) {
+    if (currentChatIndex === -1) {
+        // Start new conversation
+        chatHistory.unshift({
+            title: question.substring(0, 30) + (question.length > 30 ? "..." : ""),
+            timestamp: Date.now(),
+            conversation: []
+        });
+        currentChatIndex = 0;
+    }
+    
+    // Add turn
+    chatHistory[currentChatIndex].conversation.push({ role: 'user', text: question });
+    chatHistory[currentChatIndex].conversation.push({ role: 'model', text: answer });
+    
+    saveHistoryToStorage();
+}
+
+function renderChatFromHistory(index) {
+    if (!chatHistory[index]) return;
+    
+    const chatLog = document.getElementById('chat-log');
+    chatLog.innerHTML = ''; // Clear current view
+    
+    chatHistory[index].conversation.forEach(msg => {
+        // Use isRawHTML=true if the stored text looks like our HTML fallback string, else false
+        const isRaw = msg.text.includes('source-box'); 
+        appendMessageToUI(msg.text, msg.role, isRaw);
+    });
+}
+
+function renderHistoryList() {
+    const list = document.getElementById('history-list');
+    if (!list) return;
+
+    if (chatHistory.length === 0) {
+        list.innerHTML = '<li class="empty-history">No history yet.</li>';
+        return;
+    }
+
+    list.innerHTML = chatHistory.map((chat, index) => `
+        <li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">
+            <span class="history-item-text">${escapeHTML(chat.title || 'Conversation')}</span>
+            <button class="history-item-delete-btn" aria-label="Delete Chat">&times;</button>
+        </li>
+    `).join('');
+}
+
+function deleteChat(index) {
+    if (confirm("Delete this chat?")) {
+        chatHistory.splice(index, 1);
+        saveHistoryToStorage();
+        if (index === currentChatIndex) {
+            startNewChat();
+        } else if (index < currentChatIndex) {
+            currentChatIndex--; // Adjust index
+        }
+        renderHistoryList();
+    }
+}
+
+// --- 7. Advanced History Modification (Edit/Regenerate Support) ---
+
+function getMessageIndexInCurrentChat(msgElement) {
+    // This creates a mapping between DOM nodes and the conversation array
+    // Since the chat log DOM order matches the array order exactly:
+    const chatLog = document.getElementById('chat-log');
+    const allMessages = Array.from(chatLog.querySelectorAll('.chat-message'));
+    const domIndex = allMessages.indexOf(msgElement);
+    
+    // Adjust for the initial "Welcome" message if it exists and isn't in history
+    // In startNewChat, we add a welcome message. But renderChatFromHistory clears it.
+    // If we are in a saved chat, the welcome message isn't there usually, or index 0 is the first history item.
+    // We rely on exact match.
+    
+    // However, the 'conversation' array stores {user, model, user, model}.
+    // The DOM has div.chat-message.
+    // If currentChatIndex is -1 (unsaved), array is empty.
+    if (currentChatIndex === -1) return -1;
+    
+    return domIndex;
+}
+
+function truncateConversationAt(index) {
+    if (currentChatIndex === -1 || !chatHistory[currentChatIndex]) return;
+    
+    // Remove elements from array starting at index
+    chatHistory[currentChatIndex].conversation.splice(index);
+    saveHistoryToStorage();
+    
+    // Re-render UI to reflect the truncation
+    renderChatFromHistory(currentChatIndex);
 }
