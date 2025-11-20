@@ -8,28 +8,31 @@ import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max_V2",
+    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max_V3", // Bumped version
     MAX_HISTORY_ITEMS: 50,
     SYSTEM_INSTRUCTION: `
     You are an expert AI assistant for 'GK Learn Study'.
 
-    **CRITICAL RULES FOR CODE GENERATION:**
-    1. **ALWAYS use Markdown Code Blocks**: When asked for code (HTML, CSS, JavaScript, PHP, Python, etc.), you MUST wrap it in triple backticks.
-       - **CORRECT:** 
+    **STRICT RULES FOR CODE:**
+    1. **ALWAYS** use Markdown Code Blocks (\`\`\`language ... \`\`\`) for ANY code (HTML, CSS, JS, PHP, Python, etc.).
+    2. **NEVER** write raw HTML tags for code examples outside of code blocks. 
+       - **BAD:** "Here is a button: <button>Click</button>" (This renders a button, WHICH IS FORBIDDEN).
+       - **GOOD:** "Here is the code for a button:"
          \`\`\`html
          <button>Click Me</button>
          \`\`\`
-       - **INCORRECT:** <button>Click Me</button> (Do not output raw HTML tags for code examples).
+    3. **NO** Auto-Preview in chat. The user wants to see the RAW CODE text in a black box.
 
-    2. **NO Auto-Rendering**: The user wants to SEE the code, not the result. Do not try to render buttons, forms, or interactive elements directly in the chat.
+    **RULES FOR MATH:**
+    1. Use LaTeX formatting for all math.
+    2. Inline math: Wrap in single dollar signs, e.g., $E=mc^2$.
+    3. Block math: Wrap in double dollar signs, e.g., $$ \int x dx $$.
 
-    **OTHER CAPABILITIES:**
-    - **Rich Cards**: Use <div class="chat-card"><h3>Title</h3><p>Content</p></div> ONLY for text summaries, profiles, or definitions. NOT for code.
-    - **Math**: Use LaTeX ($$ or $).
-    - **Diagrams**: Use Mermaid syntax in code blocks.
-    - **Graphs**: Generate raw SVG code if asked for a plot.
+    **RULES FOR RICH UI (Non-Code):**
+    - Only for summaries or definitions, you may use: <div class="chat-card"><h3>Title</h3><p>Content</p></div>.
+    - Use mermaid syntax for diagrams.
 
-    Your goal is to be an educational coding companion. Provide the code first, then explain it.
+    Your goal: Provide clean, raw code examples and correctly formatted math equations.
     `
 };
 
@@ -74,7 +77,8 @@ renderer.code = (code, language) => {
     if (language === 'mermaid') {
         return `<div class="mermaid">${code}</div>`;
     }
-    return `<pre><code class="language-${language}">${code}</code></pre>`;
+    // Ensure raw code is returned in pre/code tags
+    return `<pre><code class="language-${language || 'plaintext'}">${code}</code></pre>`;
 };
 marked.use({ renderer });
 
@@ -256,7 +260,6 @@ function attachEventListeners() {
         }
         if (target.closest('.msg-regen-btn')) handleRegenerate();
         
-        // --- FIXED COPY BUTTON ---
         if (target.closest('.code-copy-btn')) {
             const btn = target.closest('.code-copy-btn');
             const rawCode = decodeURIComponent(btn.dataset.code);
@@ -267,7 +270,6 @@ function attachEventListeners() {
             });
         }
         
-        // --- FIXED EDIT / PREVIEW BUTTONS ---
         if (target.closest('.code-edit-btn') || target.closest('.code-preview-btn')) {
             openMergedPreview(target.closest('.chat-message'));
         }
@@ -275,7 +277,6 @@ function attachEventListeners() {
         if (target.closest('#close-preview-btn')) document.getElementById('preview-modal').classList.remove('active');
         if (target.closest('#run-code-btn')) updatePreviewIframe();
         
-        // --- REALISTIC DEVICE SWITCHING ---
         if (target.closest('.device-btn')) {
             const btn = target.closest('.device-btn');
             document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
@@ -444,7 +445,6 @@ function getAggressiveLinks(query) {
     const qLower = query.toLowerCase();
     const searchData = window.GKApp.searchData;
     
-    // 1. Check direct keyword map (Sangya -> Noun, etc.)
     let searchTerms = [qLower];
     Object.keys(KEYWORD_MAP).forEach(hindiKey => {
         if (qLower.includes(hindiKey)) {
@@ -452,29 +452,24 @@ function getAggressiveLinks(query) {
         }
     });
 
-    // 2. Filter data based on ANY match in title or URL
     let matches = searchData.filter(item => {
         const title = item.title.toLowerCase();
         const url = item.url.toLowerCase();
         const para = (item.paragraph || "").toLowerCase();
         
         return searchTerms.some(term => {
-            // Ignore very short terms to avoid false positives like 'is', 'to'
             if (term.length < 3 && !KEYWORD_MAP[term]) return false;
-            
             return title.includes(term) || url.includes(term) || para.includes(term);
         });
     });
 
-    // 3. Prioritize matches
     matches.sort((a, b) => {
         const aTitleMatch = searchTerms.some(t => a.title.toLowerCase().includes(t));
         const bTitleMatch = searchTerms.some(t => b.title.toLowerCase().includes(t));
-        return bTitleMatch - aTitleMatch; // Title matches come first
+        return bTitleMatch - aTitleMatch;
     });
 
     if (matches.length > 0) {
-        // Deduplicate and limit
         const uniqueItems = [...new Map(matches.map(item => [item.url, item])).values()].slice(0, 5);
         const list = uniqueItems.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('');
         return `<strong>Related Topics:</strong><ul>${list}</ul>`;
@@ -482,21 +477,47 @@ function getAggressiveLinks(query) {
     return "";
 }
 
-// --- MATH PROCESSING ---
-function processMath(text) {
-    // Replace block math $$...$$
+// --- MATH PROCESSING PIPELINE ---
+// We use a placeholder strategy to prevent Markdown from mangling LaTeX
+let mathCache = {};
+let mathCounter = 0;
+
+function maskMath(text) {
+    mathCache = {};
+    mathCounter = 0;
+    
+    // Mask Block Math: $$...$$
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, expr) => {
+        const key = `___MATH_BLOCK_${mathCounter++}___`;
         try {
-            return katex.renderToString(expr, { displayMode: true, throwOnError: false });
-        } catch (e) { return match; }
+            // Generate valid HTML for the math
+            mathCache[key] = katex.renderToString(expr, { displayMode: true, throwOnError: false });
+        } catch (e) {
+            mathCache[key] = match; // Fallback to raw
+        }
+        return key;
     });
-    // Replace inline math $...$
-    text = text.replace(/\$([^$]+?)\$/g, (match, expr) => {
+
+    // Mask Inline Math: $...$ (Be careful with normal $)
+    // Look for $ not followed by space (usually)
+    text = text.replace(/\$([^$\n]+?)\$/g, (match, expr) => {
+        const key = `___MATH_INLINE_${mathCounter++}___`;
         try {
-            return katex.renderToString(expr, { displayMode: false, throwOnError: false });
-        } catch (e) { return match; }
+             mathCache[key] = katex.renderToString(expr, { displayMode: false, throwOnError: false });
+        } catch (e) {
+            mathCache[key] = match;
+        }
+        return key;
     });
+
     return text;
+}
+
+function restoreMath(html) {
+    // Replace placeholders with the stored HTML
+    return html.replace(/___MATH_(BLOCK|INLINE)_\d+___/g, (match) => {
+        return mathCache[match] || match;
+    });
 }
 
 // --- EDITOR & PREVIEW ---
@@ -515,10 +536,9 @@ function openMergedPreview(msgElement) {
         else if (lang === 'javascript' || lang === 'js') js += code + "\n";
     });
 
-    // If no specific language classes found, try to guess or dump in HTML
     if (!html && !css && !js) {
-        const rawText = msgElement.querySelector('code').innerText;
-        if(rawText.includes('<html') || rawText.includes('<div')) html = rawText;
+        const rawText = msgElement.querySelector('code')?.innerText;
+        if(rawText && (rawText.includes('<html') || rawText.includes('<div'))) html = rawText;
         else html = "<!-- No specific code found. Paste code here. -->";
     }
 
@@ -527,7 +547,6 @@ function openMergedPreview(msgElement) {
 
     document.getElementById('preview-modal').classList.add('active');
     
-    // Default to Desktop
     setPreviewDevice('desktop');
     document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.device-btn[data-view="desktop"]').classList.add('active');
@@ -537,17 +556,10 @@ function openMergedPreview(msgElement) {
 
 function setPreviewDevice(mode) {
     const frame = document.getElementById('device-frame');
-    
-    // Remove all device classes first
     frame.className = 'device-frame'; 
-    
-    if (mode === 'mobile') {
-        frame.classList.add('mobile-device');
-    } else if (mode === 'tablet') {
-        frame.classList.add('tablet-device');
-    } else {
-        frame.classList.add('desktop-device');
-    }
+    if (mode === 'mobile') frame.classList.add('mobile-device');
+    else if (mode === 'tablet') frame.classList.add('tablet-device');
+    else frame.classList.add('desktop-device');
 }
 
 function updatePreviewIframe() {
@@ -604,18 +616,23 @@ function appendMessageToUI(role, content) {
         `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
         `<div class="message-avatar">🤖</div>`;
 
-    let processedContent = escapeHTML(content); // Default for user
+    let processedContent = escapeHTML(content);
     
     if (role === 'model') {
-        // 1. Process Math first (convert LaTeX to HTML)
-        let mathProcessed = processMath(content);
-        // 2. Parse Markdown (with custom Mermaid renderer)
-        let markdownProcessed = marked.parse(mathProcessed);
-        // 3. Sanitize (allow MathML, SVG, class attributes)
-        processedContent = DOMPurify.sanitize(markdownProcessed, {
+        // 1. Mask Math (Replace $E=mc^2$ with unique tokens)
+        let mathMasked = maskMath(content);
+        
+        // 2. Parse Markdown (will handle code blocks etc.)
+        let markdownProcessed = marked.parse(mathMasked);
+        
+        // 3. Clean HTML (but allow MathML/SVG tags needed by KaTeX/Mermaid)
+        let sanitized = DOMPurify.sanitize(markdownProcessed, {
             ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe'],
-            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder']
+            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder', 'xmlns', 'display']
         });
+        
+        // 4. Restore Math (Replace tokens with KaTeX HTML)
+        processedContent = restoreMath(sanitized);
     }
 
     let contentHTML = role === 'user' ? 
@@ -625,7 +642,6 @@ function appendMessageToUI(role, content) {
     div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
     log.appendChild(div);
 
-    // Re-inject code toolbars and run Mermaid
     if (role === 'model') {
         setTimeout(() => {
             injectCodeToolbars(div);
@@ -637,27 +653,20 @@ function appendMessageToUI(role, content) {
     scrollToBottom();
 }
 
-// --- FIX: EXPLICITLY ADD BUTTONS ---
 function injectCodeToolbars(messageDiv) {
     const preTags = messageDiv.querySelectorAll('pre');
     preTags.forEach(pre => {
-        // Don't double inject
         if (pre.querySelector('.code-toolbar')) return;
-
         const code = pre.querySelector('code');
         const rawCode = code ? code.innerText : pre.innerText;
         const encoded = encodeURIComponent(rawCode);
-        
         const toolbar = document.createElement('div');
         toolbar.className = 'code-toolbar';
-        
-        // Always show these buttons
         toolbar.innerHTML = `
             <button class="code-copy-btn" data-code="${encoded}" title="Copy Code">Copy</button>
             <button class="code-edit-btn" title="Edit in Playground">Edit</button>
             <button class="code-preview-btn" title="Preview Code">Preview</button>
         `;
-        
         pre.insertBefore(toolbar, pre.firstChild);
     });
 }
