@@ -8,34 +8,28 @@ import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 const CONFIG = {
     API_KEY: "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU",
     MODEL_NAME: "gemini-2.5-flash",
-    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
+    STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max_V2",
     MAX_HISTORY_ITEMS: 50,
     SYSTEM_INSTRUCTION: `
-    You are a sophisticated AI assistant for 'GK Learn Study'.
-    
-    CAPABILITIES:
-    1. **RICH UI**: You can generate HTML cards. Use this format for summaries or profiles:
-       <div class="chat-card"><h3>Title</h3><p>Content...</p></div>
-    
-    2. **MATH**: Use LaTeX for math. 
-       - Block math: $$ \\int_0^\\infty x^2 dx $$
-       - Inline math: $ E = mc^2 $
-       - Fractions: $ \\frac{a}{b} $
-    
-    3. **TABLES**: Create detailed tables. Always use standard Markdown tables or HTML tables with borders.
-    
-    4. **DIAGRAMS**: Create flowcharts, sequence diagrams, or mindmaps using Mermaid syntax inside a code block.
-       Example:
-       \`\`\`mermaid
-       graph TD;
-       A-->B;
-       \`\`\`
-    
-    5. **GRAPHS**: If asked for a plot (e.g., parabola), generate raw SVG code directly within the response.
-    
-    6. **LINKS**: If the user asks about a topic in our database (Sangya, History, Excel, etc.), ACKNOWLEDGE it.
+    You are an expert AI assistant for 'GK Learn Study'.
 
-    TONE: Educational, Encouraging, and Visual.
+    **CRITICAL RULES FOR CODE GENERATION:**
+    1. **ALWAYS use Markdown Code Blocks**: When asked for code (HTML, CSS, JavaScript, PHP, Python, etc.), you MUST wrap it in triple backticks.
+       - **CORRECT:** 
+         \`\`\`html
+         <button>Click Me</button>
+         \`\`\`
+       - **INCORRECT:** <button>Click Me</button> (Do not output raw HTML tags for code examples).
+
+    2. **NO Auto-Rendering**: The user wants to SEE the code, not the result. Do not try to render buttons, forms, or interactive elements directly in the chat.
+
+    **OTHER CAPABILITIES:**
+    - **Rich Cards**: Use <div class="chat-card"><h3>Title</h3><p>Content</p></div> ONLY for text summaries, profiles, or definitions. NOT for code.
+    - **Math**: Use LaTeX ($$ or $).
+    - **Diagrams**: Use Mermaid syntax in code blocks.
+    - **Graphs**: Generate raw SVG code if asked for a plot.
+
+    Your goal is to be an educational coding companion. Provide the code first, then explain it.
     `
 };
 
@@ -160,7 +154,7 @@ function injectWidgetHTML() {
                         <button id="stop-generating-btn">Stop Generating</button>
                     </div>
                     <form id="ai-solver-form">
-                        <textarea id="question-input" rows="1" placeholder="Ask me..." required></textarea>
+                        <textarea id="question-input" rows="1" placeholder="Ask for code, explanations, or facts..." required></textarea>
                         <button type="submit" id="solve-button" title="Send">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path></svg>
                         </button>
@@ -543,7 +537,6 @@ function openMergedPreview(msgElement) {
 
 function setPreviewDevice(mode) {
     const frame = document.getElementById('device-frame');
-    const container = document.getElementById('preview-pane-container');
     
     // Remove all device classes first
     frame.className = 'device-frame'; 
