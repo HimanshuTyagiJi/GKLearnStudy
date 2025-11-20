@@ -1,3 +1,4 @@
+/* css/chat-widget.css */
 
 /* Variables */
 :root {
@@ -74,6 +75,7 @@ html[data-theme="dark"] {
     bottom: 0;
     right: 0;
     border-radius: 0;
+    top: 0;
 }
 
 .ai-container { display: flex; height: 100%; width: 100%; position: relative; overflow: hidden; }
