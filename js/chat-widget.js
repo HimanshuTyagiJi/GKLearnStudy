@@ -4,39 +4,58 @@ import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 
 // --- Global Configuration & State ---
-const API_KEY = "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU"; // Hardcoded as per your setup
+const API_KEY = "AIzaSyADifk5i87QT2q5EaChypYmfu4NalKcUiU"; // Hardcoded Key
+const LOCAL_STORAGE_KEY = 'aiChatHistory';
+
 let aiClient = null;
 let chatHistory = [];
-let currentChatIndex = -1;
+let currentChatId = null;
 let isGenerating = false;
+let abortController = null; // For cancelling requests
 
-// --- Initialization ---
+// --- 1. Initialization Logic ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inject HTML immediately
+    initWidget();
+});
+
+// Also run if DOM is already ready (handle async script loading issues)
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    initWidget();
+}
+
+function initWidget() {
+    // Prevent double initialization
+    if (document.getElementById('ai-chat-widget')) return;
+
+    console.log("Initializing AI Chat Widget...");
+
+    // 1. Inject HTML & CSS
     injectWidgetHTML();
 
     // 2. Initialize AI Client
     try {
         aiClient = new GoogleGenAI({ apiKey: API_KEY });
     } catch (error) {
-        console.error("AI Initialization Failed:", error);
+        console.error("AI Client Init Failed:", error);
     }
 
-    // 3. Load History from LocalStorage
-    loadHistory();
+    // 3. Load Data
+    loadHistoryFromStorage();
 
-    // 4. Attach Event Listeners (using delegation for robustness)
+    // 4. Setup UI State (Restore last chat or show new)
+    if (chatHistory.length > 0) {
+        // Restore the most recent chat by default
+        openChat(chatHistory[0].id);
+    } else {
+        startNewChat(false); // false = don't clear view yet, just setup state
+    }
+
+    // 5. Attach Listeners
     attachGlobalEventListeners();
+}
 
-    // 5. Check for URL params or deep links if any (optional)
-    // 6. Restore UI state
-    restoreUIState();
-});
-
-// --- 1. HTML Injection ---
+// --- 2. HTML Injection ---
 function injectWidgetHTML() {
-    if (document.getElementById('ai-chat-widget')) return;
-
     const widgetHTML = `
     <!-- Floating Toggle Button -->
     <button id="ai-widget-toggle-btn" aria-label="Toggle AI Chat">
@@ -84,16 +103,14 @@ function injectWidgetHTML() {
                 
                 <!-- Chat Messages Log -->
                 <div id="chat-log" role="log" aria-live="polite">
-                    <div class="chat-message ai-message">
-                        <div class="message-avatar">🤖</div>
-                        <div class="message-content">
-                            <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
-                        </div>
-                    </div>
+                    <!-- Messages will be injected here -->
                 </div>
 
                 <!-- Input Area -->
                 <div class="chat-input-area">
+                    <div id="stop-generating-container" style="display:none;">
+                        <button id="stop-generating-btn">Stop Generating ■</button>
+                    </div>
                     <form id="ai-solver-form">
                         <textarea id="question-input" rows="1" placeholder="अपना सवाल यहाँ पूछें..." required></textarea>
                         <button type="submit" id="solve-button" aria-label="Send message">
@@ -121,7 +138,7 @@ function injectWidgetHTML() {
     container.innerHTML = widgetHTML;
     document.body.appendChild(container);
 
-    // Inject CSS dynamically if not present
+    // Inject CSS dynamically
     if (!document.querySelector('link[href*="chat-widget.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -130,72 +147,40 @@ function injectWidgetHTML() {
     }
 }
 
-// --- 2. State Management & UI Restoration ---
-
-function restoreUIState() {
-    const chatLog = document.getElementById('chat-log');
-    
-    // If we have a selected chat index, load it. Otherwise start fresh or show welcome.
-    if (currentChatIndex !== -1 && chatHistory[currentChatIndex]) {
-        renderChatFromHistory(currentChatIndex);
-    } else if (chatHistory.length > 0) {
-        // Automatically load the most recent chat
-        currentChatIndex = 0;
-        renderChatFromHistory(0);
-    }
-    
-    renderHistoryList();
-}
-
-function loadHistory() {
-    try {
-        const saved = localStorage.getItem('aiChatHistory');
-        if (saved) {
-            chatHistory = JSON.parse(saved);
-        }
-    } catch (e) {
-        console.error("Failed to load history:", e);
-        chatHistory = [];
-    }
-}
-
-function saveHistoryToStorage() {
-    try {
-        // Limit history to last 50 conversations to prevent localStorage overflow
-        if (chatHistory.length > 50) chatHistory = chatHistory.slice(0, 50);
-        localStorage.setItem('aiChatHistory', JSON.stringify(chatHistory));
-        renderHistoryList();
-    } catch (e) {
-        console.error("Failed to save history:", e);
-    }
-}
-
-// --- 3. Event Listeners ---
+// --- 3. Core Logic & Event Listeners ---
 
 function attachGlobalEventListeners() {
-    // Using document delegation for buttons that might be dynamically added or removed
+    // 1. Toggle Widget Visibility
+    const widget = document.getElementById('ai-chat-widget');
+    const toggleBtn = document.getElementById('ai-widget-toggle-btn');
+
     document.addEventListener('click', (e) => {
         const target = e.target;
 
-        // Toggle Widget Open
+        // Open Widget
         if (target.closest('#ai-widget-toggle-btn')) {
-            document.getElementById('ai-chat-widget').classList.add('active');
-            document.getElementById('ai-widget-toggle-btn').style.display = 'none';
+            widget.classList.add('active');
+            toggleBtn.style.display = 'none';
             scrollToBottom();
         }
 
         // Close Widget
         if (target.closest('#close-widget-btn')) {
-            document.getElementById('ai-chat-widget').classList.remove('active');
-            document.getElementById('ai-widget-toggle-btn').style.display = 'flex';
+            widget.classList.remove('active');
+            toggleBtn.style.display = 'flex';
         }
 
-        // Full Screen Toggle
+        // Full Screen
         if (target.closest('#full-view-btn')) {
-            document.getElementById('ai-chat-widget').classList.toggle('full-view');
+            widget.classList.toggle('full-view');
         }
 
-        // Menu/History Toggle
+        // Stop Generation
+        if (target.closest('#stop-generating-btn')) {
+            stopGeneration();
+        }
+
+        // Menu Toggle
         if (target.closest('#menu-toggle')) {
             document.getElementById('history-panel').classList.toggle('active');
         }
@@ -203,326 +188,424 @@ function attachGlobalEventListeners() {
             document.getElementById('history-panel').classList.remove('active');
         }
 
+        // New Chat
+        if (target.closest('#new-chat-btn')) {
+            startNewChat();
+        }
+
         // Clear History
         if (target.closest('#clear-history-btn')) {
-            if (confirm("Are you sure you want to delete all history?")) {
+            if (confirm("Are you sure you want to delete all chat history?")) {
                 chatHistory = [];
                 saveHistoryToStorage();
                 startNewChat();
             }
         }
 
-        // New Chat
-        if (target.closest('#new-chat-btn')) {
-            startNewChat();
+        // --- Chat Item Actions ---
+        
+        // Edit Message
+        if (target.closest('.msg-edit-btn')) {
+            const msgDiv = target.closest('.chat-message');
+            const text = msgDiv.querySelector('.text-content').innerText;
+            editMessage(msgDiv, text);
         }
 
-        // History Item Selection
-        const historyItem = target.closest('#history-list li');
-        if (historyItem && !target.closest('.history-item-delete-btn')) {
-            const index = parseInt(historyItem.dataset.index);
-            if (!isNaN(index)) {
-                currentChatIndex = index;
-                renderChatFromHistory(index);
-                document.getElementById('history-panel').classList.remove('active');
-                // Update active class in list
-                document.querySelectorAll('#history-list li').forEach(li => li.classList.remove('active'));
-                historyItem.classList.add('active');
-            }
+        // Regenerate
+        if (target.closest('.msg-regen-btn')) {
+            const msgDiv = target.closest('.chat-message');
+            regenerateResponse(msgDiv);
         }
 
-        // Delete Single History Item
-        const deleteHistoryBtn = target.closest('.history-item-delete-btn');
-        if (deleteHistoryBtn) {
-            e.stopPropagation();
-            const li = deleteHistoryBtn.closest('li');
-            const index = parseInt(li.dataset.index);
-            deleteChat(index);
-        }
-
-        // Message Actions: Copy Code
+        // Copy Code
         if (target.matches('button[data-action="copy"]')) {
-            const wrapper = target.closest('.code-wrapper');
-            const code = wrapper.querySelector('code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = target.innerText;
-                target.innerText = "Copied!";
-                setTimeout(() => target.innerText = originalText, 2000);
-            });
+            const code = target.closest('.code-wrapper').querySelector('code').innerText;
+            navigator.clipboard.writeText(code);
+            const originalText = target.innerText;
+            target.innerText = "Copied!";
+            setTimeout(() => target.innerText = originalText, 2000);
         }
 
-        // Message Actions: Preview Code
+        // Preview Code
         if (target.matches('button[data-action="preview"]')) {
-            const wrapper = target.closest('.code-wrapper');
-            const code = wrapper.querySelector('code').innerText;
-            openPreviewModal(code);
+            const code = target.closest('.code-wrapper').querySelector('code').innerText;
+            openPreview(code);
         }
 
-        // Close Preview Modal
+        // Close Preview
         if (target.closest('#close-preview-btn') || target.id === 'preview-modal') {
             document.getElementById('preview-modal').classList.remove('active');
         }
 
-        // --- NEW: Message Edit & Regenerate ---
-        
-        // Edit User Message
-        if (target.closest('.msg-edit-btn')) {
-            const msgDiv = target.closest('.chat-message');
-            const contentP = msgDiv.querySelector('.message-content p');
-            const text = contentP ? contentP.innerText : "";
-            
-            // Populate input
-            const input = document.getElementById('question-input');
-            input.value = text;
-            input.focus();
-            
-            // Remove this message and everything after it from the current conversation
-            // We need to find the index of this message in the current chat conversation array
-            const messageIndex = getMessageIndexInCurrentChat(msgDiv);
-            if (messageIndex !== -1) {
-                truncateConversationAt(messageIndex);
-            }
+        // History Item Click
+        const historyItem = target.closest('#history-list li');
+        if (historyItem && !target.closest('.history-item-delete-btn')) {
+            const chatId = historyItem.dataset.id;
+            openChat(chatId);
+            document.getElementById('history-panel').classList.remove('active');
         }
 
-        // Regenerate AI Response
-        if (target.closest('.msg-regen-btn')) {
-             // Find the AI message element
-             const msgDiv = target.closest('.chat-message');
-             const messageIndex = getMessageIndexInCurrentChat(msgDiv);
-             
-             if (messageIndex > 0) {
-                 // Get the user query immediately preceding this AI response
-                 const prevUserMsg = chatHistory[currentChatIndex].conversation[messageIndex - 1];
-                 if (prevUserMsg && prevUserMsg.role === 'user') {
-                     // Remove this AI response
-                     truncateConversationAt(messageIndex); 
-                     // Resubmit the previous user question
-                     submitQuestionToAI(prevUserMsg.text);
-                 }
-             }
+        // Delete History Item
+        if (target.closest('.history-item-delete-btn')) {
+            e.stopPropagation();
+            const li = target.closest('li');
+            deleteChat(li.dataset.id);
         }
     });
 
-    // Form Submit
+    // Input Handling
+    const input = document.getElementById('question-input');
     const form = document.getElementById('ai-solver-form');
-    const input = document.getElementById('question-input');
 
-    if (form) {
-        form.addEventListener('submit', (e) => {
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleMessageSend();
-        });
-    }
+            form.dispatchEvent(new Event('submit'));
+        }
+    });
 
-    if (input) {
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleMessageSend();
-            }
-        });
-        input.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-            if (this.value === '') this.style.height = 'auto';
-        });
-    }
+    input.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text || isGenerating) return;
+        
+        input.value = '';
+        input.style.height = 'auto';
+        processUserMessage(text);
+    });
 }
 
-// --- 4. Chat Logic ---
+// --- 4. Chat Operations ---
 
-function startNewChat() {
-    currentChatIndex = -1;
-    const chatLog = document.getElementById('chat-log');
-    chatLog.innerHTML = `
-        <div class="chat-message ai-message">
-            <div class="message-avatar">🤖</div>
-            <div class="message-content">
-                <p>नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ? आप गणित, विज्ञान, इतिहास या किसी भी विषय पर सवाल पूछ सकते हैं।</p>
-            </div>
-        </div>`;
+function startNewChat(clearView = true) {
+    currentChatId = Date.now().toString();
+    const newChat = {
+        id: currentChatId,
+        title: "New Conversation",
+        messages: []
+    };
+    chatHistory.unshift(newChat);
+    saveHistoryToStorage();
     
-    // Unselect history items
-    document.querySelectorAll('#history-list li').forEach(li => li.classList.remove('active'));
-    if(window.innerWidth <= 768) document.getElementById('history-panel').classList.remove('active');
-}
-
-function handleMessageSend() {
-    const input = document.getElementById('question-input');
-    const text = input.value.trim();
+    if (clearView) {
+        renderChatView(newChat);
+        renderHistoryList();
+        document.getElementById('question-input').focus();
+    }
     
-    if (!text) return;
-    if (isGenerating) return; // Prevent double submit
-
-    // 1. Add User Message to UI
-    appendMessageToUI(text, 'user');
-    input.value = '';
-    input.style.height = 'auto';
-
-    // 2. Process Logic
-    submitQuestionToAI(text);
+    // Hide sidebar on mobile when starting new
+    if (window.innerWidth < 768) {
+        document.getElementById('history-panel').classList.remove('active');
+    }
 }
 
-async function submitQuestionToAI(questionText) {
+function openChat(chatId) {
+    currentChatId = chatId;
+    const chat = chatHistory.find(c => c.id === chatId);
+    if (chat) {
+        renderChatView(chat);
+        renderHistoryList(); // To update active state
+    } else {
+        startNewChat();
+    }
+}
+
+function deleteChat(chatId) {
+    if (!confirm("Delete this chat?")) return;
+    
+    chatHistory = chatHistory.filter(c => c.id !== chatId);
+    saveHistoryToStorage();
+    
+    if (currentChatId === chatId) {
+        if (chatHistory.length > 0) {
+            openChat(chatHistory[0].id);
+        } else {
+            startNewChat();
+        }
+    } else {
+        renderHistoryList();
+    }
+}
+
+// --- 5. Messaging Logic ---
+
+async function processUserMessage(text) {
+    // 1. Update UI
+    addMessageToUI('user', text);
+    
+    // 2. Update Data
+    const chat = getOrCreateCurrentChat();
+    chat.messages.push({ role: 'user', content: text });
+    
+    // Update Title if first message
+    if (chat.messages.length === 1) {
+        chat.title = text.substring(0, 30) + (text.length > 30 ? '...' : '');
+    }
+    saveHistoryToStorage();
+
+    // 3. Call AI
+    await generateAIResponse(text);
+}
+
+async function generateAIResponse(prompt) {
+    if (!aiClient) return;
+
     isGenerating = true;
-    const chatLog = document.getElementById('chat-log');
+    updateUIState();
     
-    // Add Thinking Indicator
-    const indicatorId = 'thinking-' + Date.now();
-    const indicatorHTML = `
-        <div class="chat-message ai-message typing-indicator" id="${indicatorId}">
-            <div class="message-avatar">🤖</div>
-            <div class="message-content">
-                <div class="typing-dots"><span>.</span><span>.</span><span>.</span></div>
-            </div>
-        </div>`;
-    chatLog.insertAdjacentHTML('beforeend', indicatorHTML);
-    scrollToBottom();
+    // Create Placeholder for AI response
+    const responseId = 'ai-response-' + Date.now();
+    addLoadingIndicator(responseId);
 
     try {
-        // API Call
         const response = await aiClient.models.generateContent({
             model: 'gemini-2.5-flash',
-            contents: questionText
+            contents: prompt
         });
 
-        const responseText = response.text;
+        const text = response.text;
         
-        // Remove indicator
-        const indicator = document.getElementById(indicatorId);
-        if (indicator) indicator.remove();
-
-        // Add AI Message to UI
-        appendMessageToUI(responseText, 'model');
-
-        // Save to History
-        saveToConversation(questionText, responseText);
+        // Replace loading with actual content
+        replaceLoadingWithContent(responseId, text);
+        
+        // Save to history
+        const chat = getOrCreateCurrentChat();
+        chat.messages.push({ role: 'model', content: text });
+        saveHistoryToStorage();
 
     } catch (error) {
-        console.error("API Error:", error);
-        const indicator = document.getElementById(indicatorId);
-        if (indicator) indicator.remove();
-
-        // Fallback: Local Search
+        console.error("Generation Error:", error);
+        replaceLoadingWithContent(responseId, "Sorry, I encountered an error or the connection was lost. Please try again.");
+        
+        // Try Local Search Fallback
         if (window.GKApp && window.GKApp.fuzzySearch && window.GKApp.searchData) {
-            const results = window.GKApp.fuzzySearch(questionText, window.GKApp.searchData);
-            if (results && results.length > 0) {
-                let fallbackHTML = `<strong>नेटवर्क समस्या। स्थानीय डेटाबेस परिणाम:</strong><br>`;
-                results.slice(0, 3).forEach(item => {
-                    fallbackHTML += `<a href="${item.url}" class="source-box">
-                        <strong>${item.title}</strong><br>
-                        ${item.paragraph ? item.paragraph.substring(0, 80) + '...' : 'Click to read more'}
-                    </a>`;
-                });
-                appendMessageToUI(fallbackHTML, 'model', true); // true = raw HTML
-                saveToConversation(questionText, fallbackHTML);
-            } else {
-                const errorMsg = "क्षमा करें, मुझे इसका उत्तर नहीं मिला और इंटरनेट उपलब्ध नहीं है।";
-                appendMessageToUI(errorMsg, 'model');
-                saveToConversation(questionText, errorMsg);
-            }
-        } else {
-            const errorMsg = "त्रुटि: कृपया अपना इंटरनेट कनेक्शन जांचें।";
-            appendMessageToUI(errorMsg, 'model');
-            saveToConversation(questionText, errorMsg);
+             const results = window.GKApp.fuzzySearch(prompt, window.GKApp.searchData);
+             if(results.length > 0) {
+                 const chat = getOrCreateCurrentChat();
+                 const fallbackText = `<strong>Network unavailable. Found locally:</strong><br><a href="${results[0].url}">${results[0].title}</a>`;
+                 chat.messages.push({ role: 'model', content: fallbackText, isRaw: true });
+                 // Update UI to show this instead
+                 const msgDiv = document.getElementById(responseId);
+                 if(msgDiv) msgDiv.querySelector('.message-content').innerHTML = fallbackText;
+                 saveHistoryToStorage();
+             }
         }
     } finally {
         isGenerating = false;
+        updateUIState();
     }
 }
 
-// --- 5. UI Rendering Helpers ---
+function stopGeneration() {
+    // Since simple REST calls can't easily be aborted without AbortController support in the SDK wrapper,
+    // we mainly handle the UI side here to allow the user to regain control.
+    isGenerating = false;
+    updateUIState();
+    const loading = document.querySelector('.typing-indicator');
+    if (loading) {
+        loading.innerHTML = '<div class="message-content">Stopped.</div>';
+        loading.classList.remove('typing-indicator');
+    }
+}
 
-function appendMessageToUI(content, role, isRawHTML = false) {
-    const chatLog = document.getElementById('chat-log');
-    const div = document.createElement('div');
-    div.className = `chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+function editMessage(msgElement, oldText) {
+    // 1. Find message index
+    const chat = getOrCreateCurrentChat();
+    // We need to map DOM index to array index. 
+    // The chat log contains a welcome message sometimes, so we filter by class.
+    const allMsgs = Array.from(document.querySelectorAll('.chat-message'));
+    const domIndex = allMsgs.indexOf(msgElement);
     
-    let innerContent = '';
+    // Adjust for welcome message if present (welcome message usually doesn't have edit buttons, so logic holds)
+    // Note: Our renderChatView clears log and re-renders from array.
+    // So domIndex should match array index IF array is in sync.
     
-    if (role === 'user') {
-        // Simple text for user, escape HTML
-        innerContent = `<p>${escapeHTML(content)}</p>`;
-        // Add Edit Button
-        innerContent += `
-            <div class="msg-actions">
-                <button class="msg-edit-btn" title="Edit Message">✏️</button>
-            </div>`;
-    } else {
-        // Markdown rendering for AI
-        if (isRawHTML) {
-            innerContent = content;
-        } else {
-            innerContent = renderMarkdown(content);
+    // Better approach: Check text content match
+    let msgIndex = -1;
+    for(let i=0; i<chat.messages.length; i++) {
+        if (chat.messages[i].role === 'user' && chat.messages[i].content === oldText) {
+             // We found a match, but what if duplicates? We assume the user clicks the relevant one.
+             // Ideally we store ID on the DOM element.
+             // Let's trust the user wants to edit *this* context.
+             // Simple truncation: remove this and everything after.
+             msgIndex = i;
+             break;
         }
-        // Add Regenerate Button
-        innerContent += `
-            <div class="msg-actions">
-                 <button class="msg-regen-btn" title="Try Again">↻</button>
-            </div>`;
     }
 
-    const avatarHTML = `<div class="message-avatar" style="background-color: ${role === 'user' ? 'var(--primary-color)' : '#19c37d'}">${role === 'user' ? 'You' : '🤖'}</div>`;
-    const contentWrapperHTML = `<div class="message-content">${innerContent}</div>`;
+    if (msgIndex !== -1) {
+        // 2. Populate Input
+        document.getElementById('question-input').value = oldText;
+        
+        // 3. Truncate History
+        chat.messages = chat.messages.slice(0, msgIndex);
+        saveHistoryToStorage();
+        
+        // 4. Re-render
+        renderChatView(chat);
+    }
+}
 
-    div.innerHTML = role === 'user' ? contentWrapperHTML + avatarHTML : avatarHTML + contentWrapperHTML;
+function regenerateResponse(aiMsgElement) {
+    const chat = getOrCreateCurrentChat();
+    // The AI message is the last one usually.
+    // We remove the last message (AI) and re-submit the one before it (User).
     
-    chatLog.appendChild(div);
+    const lastMsg = chat.messages[chat.messages.length - 1];
+    const prevMsg = chat.messages[chat.messages.length - 2];
+    
+    if (lastMsg && lastMsg.role === 'model' && prevMsg && prevMsg.role === 'user') {
+        chat.messages.pop(); // Remove AI response
+        saveHistoryToStorage();
+        renderChatView(chat); // Update UI
+        
+        // Re-trigger generation
+        generateAIResponse(prevMsg.content);
+    }
+}
+
+// --- 6. UI Rendering ---
+
+function renderChatView(chat) {
+    const log = document.getElementById('chat-log');
+    log.innerHTML = '';
+    
+    // Default Welcome Message if empty
+    if (chat.messages.length === 0) {
+        log.innerHTML = `
+        <div class="chat-message ai-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <p>नमस्ते! मैं AI Solver हूँ। आप मुझसे पढ़ाई, विज्ञान, गणित या इतिहास से जुड़ा कोई भी सवाल पूछ सकते हैं।</p>
+            </div>
+        </div>`;
+        return;
+    }
+
+    chat.messages.forEach(msg => {
+        addMessageToUI(msg.role, msg.content, msg.isRaw);
+    });
     scrollToBottom();
 }
 
-function renderMarkdown(text) {
-    // 1. Handle Code Blocks manually to insert toolbar
-    const parts = text.split(/(\`\`\`[\s\S]*?\`\`\`)/g);
-    let finalHTML = '';
+function addMessageToUI(role, content, isRaw = false) {
+    const log = document.getElementById('chat-log');
+    const div = document.createElement('div');
+    div.className = `chat-message ${role === 'user' ? 'user-message' : 'ai-message'}`;
+    
+    let innerHTML = '';
+    if (role === 'user') {
+        innerHTML = `<div class="text-content">${escapeHTML(content)}</div>
+                     <div class="msg-actions"><button class="msg-edit-btn" title="Edit">✏️</button></div>`;
+    } else {
+        const parsedContent = isRaw ? content : renderMarkdown(content);
+        innerHTML = `<div class="text-content">${parsedContent}</div>
+                     <div class="msg-actions"><button class="msg-regen-btn" title="Regenerate">↻</button></div>`;
+    }
 
-    parts.forEach(part => {
-        if (part.startsWith('```')) {
-            // Extract language
-            const firstLineEnd = part.indexOf('\n');
-            let lang = 'text';
-            let code = '';
-            
-            if (firstLineEnd > 3) {
-                lang = part.substring(3, firstLineEnd).trim().toLowerCase();
-                code = part.substring(firstLineEnd + 1, part.length - 3);
-            } else {
-                code = part.substring(3, part.length - 3);
-            }
-            
-            code = escapeHTML(code.trim()); // Escape code content
+    const avatar = `<div class="message-avatar" style="background-color:${role==='user'?'var(--primary-color)':'#10a37f'}">${role==='user'?'You':'🤖'}</div>`;
+    const body = `<div class="message-content">${innerHTML}</div>`;
+    
+    div.innerHTML = role === 'user' ? body + avatar : avatar + body;
+    log.appendChild(div);
+    scrollToBottom();
+}
 
-            finalHTML += `
-            <div class="code-wrapper">
-                <div class="code-header">
-                    <span>${lang}</span>
-                    <div class="code-toolbar">
-                        <button data-action="copy">Copy</button>
-                        <button data-action="preview">Preview</button>
-                    </div>
-                </div>
-                <pre><code>${code}</code></pre>
-            </div>`;
-        } else {
-            // Parse regular markdown
-            finalHTML += DOMPurify.sanitize(marked.parse(part));
-        }
-    });
-    return finalHTML;
+function addLoadingIndicator(id) {
+    const log = document.getElementById('chat-log');
+    const div = document.createElement('div');
+    div.className = 'chat-message ai-message typing-indicator';
+    div.id = id;
+    div.innerHTML = `
+        <div class="message-avatar" style="background-color:#10a37f">🤖</div>
+        <div class="message-content">
+            <div class="typing-dots"><span>.</span><span>.</span><span>.</span></div>
+        </div>`;
+    log.appendChild(div);
+    scrollToBottom();
+}
+
+function replaceLoadingWithContent(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    
+    el.classList.remove('typing-indicator');
+    const contentDiv = el.querySelector('.message-content');
+    contentDiv.innerHTML = `<div class="text-content">${renderMarkdown(text)}</div>
+                            <div class="msg-actions"><button class="msg-regen-btn" title="Regenerate">↻</button></div>`;
+    scrollToBottom();
+}
+
+function renderHistoryList() {
+    const list = document.getElementById('history-list');
+    if (!list) return;
+    
+    if (chatHistory.length === 0) {
+        list.innerHTML = '<li class="empty-history">No history yet.</li>';
+        return;
+    }
+
+    list.innerHTML = chatHistory.map(chat => `
+        <li data-id="${chat.id}" class="${chat.id === currentChatId ? 'active' : ''}">
+            <span class="history-item-text">${escapeHTML(chat.title || 'New Chat')}</span>
+            <button class="history-item-delete-btn" title="Delete">&times;</button>
+        </li>
+    `).join('');
+}
+
+function updateUIState() {
+    const stopBtn = document.getElementById('stop-generating-container');
+    const input = document.getElementById('question-input');
+    const sendBtn = document.getElementById('solve-button');
+    
+    if (isGenerating) {
+        stopBtn.style.display = 'flex';
+        input.disabled = true;
+        sendBtn.disabled = true;
+        sendBtn.style.opacity = '0.5';
+    } else {
+        stopBtn.style.display = 'none';
+        input.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.style.opacity = '1';
+        input.focus();
+    }
+}
+
+// --- 7. Utilities ---
+
+function getOrCreateCurrentChat() {
+    let chat = chatHistory.find(c => c.id === currentChatId);
+    if (!chat) {
+        startNewChat(false); // Create data but don't reset UI blindly
+        chat = chatHistory[0];
+    }
+    return chat;
+}
+
+function saveHistoryToStorage() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(chatHistory));
+    renderHistoryList();
+}
+
+function loadHistoryFromStorage() {
+    try {
+        const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (data) chatHistory = JSON.parse(data);
+    } catch (e) {
+        console.error("History Load Error", e);
+        chatHistory = [];
+    }
 }
 
 function scrollToBottom() {
-    const chatLog = document.getElementById('chat-log');
-    if(chatLog) chatLog.scrollTop = chatLog.scrollHeight;
-}
-
-function openPreviewModal(code) {
-    const modal = document.getElementById('preview-modal');
-    const iframe = document.getElementById('preview-iframe');
-    if (modal && iframe) {
-        iframe.srcdoc = code;
-        modal.classList.add('active');
-    }
+    const log = document.getElementById('chat-log');
+    if(log) log.scrollTop = log.scrollHeight;
 }
 
 function escapeHTML(str) {
@@ -531,98 +614,28 @@ function escapeHTML(str) {
     }[tag]));
 }
 
-// --- 6. Data Management ---
-
-function saveToConversation(question, answer) {
-    if (currentChatIndex === -1) {
-        // Start new conversation
-        chatHistory.unshift({
-            title: question.substring(0, 30) + (question.length > 30 ? "..." : ""),
-            timestamp: Date.now(),
-            conversation: []
-        });
-        currentChatIndex = 0;
-    }
-    
-    // Add turn
-    chatHistory[currentChatIndex].conversation.push({ role: 'user', text: question });
-    chatHistory[currentChatIndex].conversation.push({ role: 'model', text: answer });
-    
-    saveHistoryToStorage();
+function renderMarkdown(text) {
+    // Custom handling for code blocks to add Copy/Preview buttons
+    const renderer = new marked.Renderer();
+    renderer.code = (code, language) => {
+        return `
+        <div class="code-wrapper">
+            <div class="code-header">
+                <span>${language || 'code'}</span>
+                <div class="code-toolbar">
+                    <button data-action="copy">Copy</button>
+                    <button data-action="preview">Preview</button>
+                </div>
+            </div>
+            <pre><code>${code}</code></pre>
+        </div>`;
+    };
+    return DOMPurify.sanitize(marked.parse(text, { renderer: renderer }));
 }
 
-function renderChatFromHistory(index) {
-    if (!chatHistory[index]) return;
-    
-    const chatLog = document.getElementById('chat-log');
-    chatLog.innerHTML = ''; // Clear current view
-    
-    chatHistory[index].conversation.forEach(msg => {
-        // Use isRawHTML=true if the stored text looks like our HTML fallback string, else false
-        const isRaw = msg.text.includes('source-box'); 
-        appendMessageToUI(msg.text, msg.role, isRaw);
-    });
-}
-
-function renderHistoryList() {
-    const list = document.getElementById('history-list');
-    if (!list) return;
-
-    if (chatHistory.length === 0) {
-        list.innerHTML = '<li class="empty-history">No history yet.</li>';
-        return;
-    }
-
-    list.innerHTML = chatHistory.map((chat, index) => `
-        <li data-index="${index}" class="${index === currentChatIndex ? 'active' : ''}">
-            <span class="history-item-text">${escapeHTML(chat.title || 'Conversation')}</span>
-            <button class="history-item-delete-btn" aria-label="Delete Chat">&times;</button>
-        </li>
-    `).join('');
-}
-
-function deleteChat(index) {
-    if (confirm("Delete this chat?")) {
-        chatHistory.splice(index, 1);
-        saveHistoryToStorage();
-        if (index === currentChatIndex) {
-            startNewChat();
-        } else if (index < currentChatIndex) {
-            currentChatIndex--; // Adjust index
-        }
-        renderHistoryList();
-    }
-}
-
-// --- 7. Advanced History Modification (Edit/Regenerate Support) ---
-
-function getMessageIndexInCurrentChat(msgElement) {
-    // This creates a mapping between DOM nodes and the conversation array
-    // Since the chat log DOM order matches the array order exactly:
-    const chatLog = document.getElementById('chat-log');
-    const allMessages = Array.from(chatLog.querySelectorAll('.chat-message'));
-    const domIndex = allMessages.indexOf(msgElement);
-    
-    // Adjust for the initial "Welcome" message if it exists and isn't in history
-    // In startNewChat, we add a welcome message. But renderChatFromHistory clears it.
-    // If we are in a saved chat, the welcome message isn't there usually, or index 0 is the first history item.
-    // We rely on exact match.
-    
-    // However, the 'conversation' array stores {user, model, user, model}.
-    // The DOM has div.chat-message.
-    // If currentChatIndex is -1 (unsaved), array is empty.
-    if (currentChatIndex === -1) return -1;
-    
-    return domIndex;
-}
-
-function truncateConversationAt(index) {
-    if (currentChatIndex === -1 || !chatHistory[currentChatIndex]) return;
-    
-    // Remove elements from array starting at index
-    chatHistory[currentChatIndex].conversation.splice(index);
-    saveHistoryToStorage();
-    
-    // Re-render UI to reflect the truncation
-    renderChatFromHistory(currentChatIndex);
+function openPreview(code) {
+    const modal = document.getElementById('preview-modal');
+    const iframe = document.getElementById('preview-iframe');
+    iframe.srcdoc = code;
+    modal.classList.add('active');
 }
