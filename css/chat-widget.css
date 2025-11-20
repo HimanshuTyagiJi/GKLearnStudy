@@ -1,354 +1,289 @@
 
-/* Variables matching theme.css to ensure consistency if loaded */
-:root {
-    --primary-color: #2f2eff;
-    --hover-bg-color: #f8f9fa;
-    --text-color: #000;
-    --secondary-text-color: #4f4f4f;
-    --card-bg-color: #fff;
-    --border-color: #e0e0e0;
-    --danger-color: #e53935;
-    --header-height: 60px;
-    --code-bg: #f4f4f4;
-}
 
-html[data-theme="dark"] {
-    --primary-color: #4f46e5;
-    --hover-bg-color: #1f2937;
-    --text-color: #fff;
-    --secondary-text-color: #9ca3af;
-    --card-bg-color: #111827;
-    --border-color: #374151;
-    --danger-color: #ef4444;
-    --code-bg: #1f2937;
-}
+document.addEventListener("DOMContentLoaded", function() {
+    // --- UTILITY FUNCTIONS ---
+    const debounce = (func, delay = 250) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    };
 
-/* --- FAB Button --- */
-#ai-widget-toggle-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    border: none;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 10000; /* High z-index */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s;
-    pointer-events: auto; /* Allow clicks on button */
-}
-#ai-widget-toggle-btn:hover { transform: scale(1.1); }
-#ai-widget-toggle-btn svg { width: 30px; height: 30px; }
+    // --- DOM Elements ---
+    const themeSwitcher = document.getElementById('themeSwitcher');
+    const html = document.documentElement;
+    const burger = document.getElementById("burger");
+    const menu = document.getElementById("menu");
+    const menuInner = menu?.querySelector(".menu-inner");
+    const header = document.getElementById("header");
+    const searchBtn = document.getElementById("searchBtn");
+    const backBtn = document.getElementById("backBtn");
+    const searchInput = document.getElementById("searchInput");
+    const suggestionsList = document.getElementById("suggestions-list");
+    const overlay = document.querySelector(".overlay");
+    const leftArrow = document.getElementById('menuLeft');
+    const rightArrow = document.getElementById('menuRight');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const shareButton = document.getElementById("shareButton");
 
-/* --- Widget Container --- */
-#ai-chat-widget {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 380px;
-    height: 600px;
-    max-height: 80vh;
-    background: var(--card-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    /* CRITICAL FIX: display: none prevents it from blocking clicks when closed */
-    display: none; 
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 10001;
-    border: 1px solid var(--border-color);
-    pointer-events: auto; /* Allow clicks inside widget */
-}
-
-/* Only visible when active */
-#ai-chat-widget.active { display: flex; }
-
-#ai-chat-widget.full-view {
-    width: 100vw;
-    height: 100vh;
-    max-height: 100vh;
-    bottom: 0;
-    right: 0;
-    border-radius: 0;
-}
-
-.ai-container { display: flex; height: 100%; width: 100%; position: relative; overflow: hidden; }
-
-/* --- History Panel --- */
-#history-panel {
-    width: 250px;
-    background: var(--card-bg-color); /* Ensure background is opaque */
-    border-right: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 10005; /* Higher than chat area to overlay */
-}
-#history-panel.active { transform: translateX(0); }
-
-.history-header {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-color);
-}
-.history-header h2 { margin: 0; font-size: 1rem; }
-.history-header-actions { display: flex; gap: 5px; align-items: center; }
-
-/* Ensure close button is visible */
-#close-history-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--secondary-text-color);
-    cursor: pointer;
-    display: block; /* Always visible */
-}
-
-#history-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
-#history-list li {
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-color);
-}
-#history-list li:hover { background: var(--hover-bg-color); }
-.history-item-text {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* History Delete Button */
-.history-item-delete-btn {
-    background: none; 
-    border: none; 
-    color: var(--danger-color); 
-    font-size: 1.2rem; 
-    cursor: pointer;
-    display: none; /* Hidden by default on desktop */
-    padding-left: 5px;
-}
-#history-list li:hover .history-item-delete-btn { display: block; }
-
-/* Mobile Fix: Always show delete button on small screens */
-@media (max-width: 768px) {
-    .history-item-delete-btn {
-        display: block;
+    // --- Dynamic Content Injection ---
+    function initMenuItems() {
+        if (!menuInner) return;
+        const menuItems = [
+            { href: "https://gklearnstudy.in/index.html", text: "Home" },
+            { href: "https://gklearnstudy.in/education.html", text: "Education" },
+            { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
+            { href: "https://gklearnstudy.in/calculator.html", text: "Calculator" },
+            { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
+            { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
+            { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
+            { href: "https://gklearnstudy.in/test.html", text: "Test" },
+        ];
+        menuInner.innerHTML = menuItems.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+        
+        const currentPath = window.location.pathname.split('/').pop();
+        const links = menuInner.querySelectorAll('a');
+        
+        links.forEach(link => {
+            const linkPath = link.getAttribute('href').split('/').pop();
+            if (currentPath === linkPath || (currentPath === '' && linkPath === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
     }
-}
 
-/* --- Chat Area --- */
-#chat-area { flex: 1; display: flex; flex-direction: column; width: 100%; position: relative; }
+    function initFooterContent() {
+        const footerContent = document.querySelector('.app-footer .footer-content');
+        if (!footerContent) return;
+        
+        const footerData = {
+            about: {
+                title: "About GK Learn Study",
+                text: "Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone."
+            },
+            company: {
+                title: "About Us",
+                links: [
+                    { href: "/about.html", text: "About Us" },
+                    { href: "/contact.html", text: "Contact Us" },
+                    { href: "/privacy-policy.html", text: "Privacy Policy" },
+                    { href: "/terms.html", text: "Terms of Service" },
+                    { href: "/comments.html", text: "Owner Dashboard", id: "dashboard-link" }
+                ]
+            },
+            foryou: {
+                title: "For you",
+                links: [
+                     { href: "https://gklearnstudy.in/gk-quiz/ancient-indian-history", text: "Ancient Indian History" },
+                     { href: "https://gklearnstudy.in/gk-quiz/medieval-indian-history", text: "Medieval Indian History" },
+                ]
+            },
+            science: {
+                 title: "Science & Computer",
+                 links: [
+                    { href: "conversion.html", text: "Conversion" },
+                    { href: "all-formulas.html", text: "All formulas" },
+                    { href: "calculator.html", text: "Calculator" }
+                ]
+            },
+            socials: {
+                title: "Follow Us",
+                links: [
+                    { href: "https://www.youtube.com/@GKLearnStudy", label: "YouTube", svg: '<svg viewBox="0 0 24 24" style="width:28px; fill:currentColor;"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"/></svg>' }
+                ]
+            }
+        };
 
-.chat-header {
-    padding: 10px 15px;
-    background: var(--primary-color);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.chat-header-left { display: flex; align-items: center; gap: 10px; flex: 1; }
-.chat-header-right { display: flex; align-items: center; gap: 5px; }
+        const createLinks = (links) => links.map(l => `<li ${l.id ? `id="${l.id}"` : ''}><a href="${l.href}">${l.text}</a></li>`).join('');
+        const createSocials = (links) => links.map(l => `<li><a href="${l.href}" aria-label="${l.label}" target="_blank" rel="noopener noreferrer">${l.svg}</a></li>`).join('');
 
-.chat-header h1 { margin: 0; font-size: 1.1rem; }
-.chat-header button {
-    background: none; border: none; color: white; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center;
-}
-.chat-header svg { width: 20px; height: 20px; fill: currentColor; }
-#new-chat-btn { border: 1px solid white; border-radius: 4px; font-size: 0.8rem; padding: 2px 8px; margin-left: auto; }
+        footerContent.innerHTML = `
+            <div class="footer-section footer-about"><h3>${footerData.about.title}</h3><p>${footerData.about.text}</p></div>
+            <div class="footer-section"><h4>${footerData.company.title}</h4><ul>${createLinks(footerData.company.links)}</ul></div>
+            <div class="footer-section"><h4>${footerData.foryou.title}</h4><ul>${createLinks(footerData.foryou.links)}</ul></div>
+            <div class="footer-section"><h4>${footerData.science.title}</h4><ul>${createLinks(footerData.science.links)}</ul></div>
+            <div class="footer-section"><h4>${footerData.socials.title}</h4><ul class="footer-socials">${createSocials(footerData.socials.links)}</ul></div>
+        `;
+    }
+    
+    // --- Theme Switcher Logic ---
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    html.setAttribute('data-theme', savedTheme);
+    themeSwitcher?.addEventListener('click', () => {
+        const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
 
-#chat-log {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    background: var(--card-bg-color);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+    // --- Mobile Burger Menu Logic ---
+    const toggleMenu = (isActive) => {
+        menu?.classList.toggle("is-active", isActive);
+        overlay?.classList.toggle("is-active", isActive);
+    };
+    burger?.addEventListener("click", () => toggleMenu(!menu.classList.contains("is-active")));
+    closeMenuBtn?.addEventListener('click', () => toggleMenu(false));
 
-.chat-message { display: flex; gap: 10px; max-width: 90%; }
-.chat-message.user-message { align-self: flex-end; flex-direction: row-reverse; }
-.chat-message.ai-message { align-self: flex-start; }
+    // --- Search Bar Logic ---
+    const openSearch = (e) => {
+        e.stopPropagation();
+        const isMobile = window.innerWidth <= 850;
+        if (isMobile) {
+            header.classList.add('search-active');
+        } else {
+            header.classList.add('search-active-desktop');
+            overlay.classList.add('is-active');
+        }
+        // Defer focus to prevent forced reflow by allowing the browser to paint first.
+        setTimeout(() => searchInput.focus(), 0);
+    };
 
-.message-avatar {
-    width: 30px; height: 30px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: bold; color: white; font-size: 0.8rem;
-    flex-shrink: 0;
-}
+    const closeSearch = () => {
+        header.classList.remove('search-active', 'search-active-desktop');
+        overlay.classList.remove('is-active');
+        searchInput.value = '';
+        suggestionsList.style.display = 'none';
+    };
 
-.message-content {
-    background: var(--hover-bg-color);
-    color: var(--text-color);
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    position: relative;
-    overflow-wrap: break-word;
-}
-.user-message .message-content { background: var(--primary-color); color: white; }
-.ai-message .message-content { background: var(--hover-bg-color); color: var(--text-color); }
+    searchBtn?.addEventListener('click', openSearch);
+    backBtn?.addEventListener('click', closeSearch);
+    
+    const handleSearchInput = async () => {
+        const query = searchInput.value.toLowerCase().trim();
+        
+        if (query.length === 0) {
+            suggestionsList.style.display = 'none';
+            return;
+        }
 
-/* Input Area */
-.chat-input-area {
-    padding: 10px;
-    border-top: 1px solid var(--border-color);
-    background: var(--card-bg-color);
-}
-#ai-solver-form { display: flex; gap: 10px; align-items: flex-end; }
-#question-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    resize: none;
-    max-height: 100px;
-    font-family: inherit;
-    background: var(--hover-bg-color);
-    color: var(--text-color);
-}
-#solve-button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        await window.GKApp.dataReady;
 
-/* Markdown & Code */
-pre {
-    background: var(--code-bg);
-    color: var(--text-color);
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    position: relative;
-    margin: 0.5rem 0;
-    padding-top: 2.5rem; /* Space for toolbar */
-}
-.code-toolbar {
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    left: 0;
-    display: flex; 
-    gap: 8px; 
-    opacity: 1; /* ALWAYS VISIBLE as requested */
-    background: rgba(50, 50, 50, 0.9);
-    padding: 5px 10px;
-    border-radius: 5px 5px 0 0;
-    z-index: 5;
-    justify-content: flex-end;
-    border-bottom: 1px solid #555;
-}
-.code-toolbar button {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.3); 
-    color: #fff; 
-    font-size: 0.75rem; 
-    padding: 3px 8px; 
-    cursor: pointer; 
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.code-toolbar button:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: #fff;
-}
-.code-toolbar svg {
-    width: 14px;
-    height: 14px;
-}
+        const searchData = window.GKApp?.searchData || [];
+        const fuzzySearch = window.GKApp?.fuzzySearch;
+        const generateSVG = window.GKApp?.generatePlaceholderSVG;
 
-.source-box {
-    font-size: 0.8rem; margin-top: 5px; padding: 5px;
-    background: rgba(46, 125, 50, 0.1); border-left: 3px solid #2e7d32;
-    margin-bottom: 5px;
-    border-radius: 0 5px 5px 0;
-}
-.source-box a { color: #2e7d32; font-weight: bold; text-decoration: none; }
-.source-box a:hover { text-decoration: underline; }
+        if (!fuzzySearch || !generateSVG) {
+            suggestionsList.style.display = 'none';
+            return;
+        }
 
-/* Modal */
-#preview-modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); z-index: 20000;
-    display: none; justify-content: center; align-items: center;
-    pointer-events: auto;
-}
-#preview-modal.active { display: flex; }
-.preview-content {
-    background: white; width: 90%; height: 90%;
-    display: flex; flex-direction: column; border-radius: 8px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-.preview-header {
-    padding: 10px 15px; border-bottom: 1px solid #ccc;
-    display: flex; justify-content: space-between;
-    color: #333;
-    align-items: center;
-    background: #f0f0f0;
-    border-radius: 8px 8px 0 0;
-}
-#close-preview-btn {
-    background: #e53935; /* Red color to make it obvious */
-    border: none; 
-    font-size: 1.5rem; 
-    cursor: pointer;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    color: white;
-    display: flex; align-items: center; justify-content: center;
-    line-height: 1;
-    z-index: 20005; /* Very high z-index */
-}
-#close-preview-btn:hover { background: #c62828; }
-#preview-iframe { flex: 1; border: none; background: #fff; border-radius: 0 0 8px 8px; }
+        const filteredData = fuzzySearch(query, searchData);
+        
+        let suggestionsHTML = '';
+        if (filteredData.length > 0) {
+            suggestionsHTML = filteredData.slice(0, 10).map(item => `
+                <li>
+                    <a href="${item.url}" class="result-card">
+                        <div class="result-icon">${item.svg || generateSVG(item.title)}</div>
+                        <div class="result-text">
+                            <div class="result-title">${item.title}</div>
+                            <div class="result-description">${item.paragraph}</div>
+                        </div>
+                        <svg class="result-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+                    </a>
+                </li>
+            `).join('');
+        } else {
+            suggestionsHTML = `<li class="no-results">No results found</li>`;
+        }
 
-/* Edit Mode */
-.edit-btn {
-    background: none; border: none; color: #fff; cursor: pointer; margin-left: 5px; opacity: 0.7;
-}
-.edit-btn:hover { opacity: 1; }
+        suggestionsList.innerHTML = suggestionsHTML;
+        suggestionsList.style.display = 'block';
+    };
+    
+    searchInput?.addEventListener('input', debounce(handleSearchInput, 300));
 
-.code-editor-wrapper { display: flex; flex-direction: column; gap: 5px; width: 100%; }
-.code-editor { width: 100%; min-height: 100px; font-family: monospace; background: var(--code-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 10px; box-sizing: border-box; }
-.code-editor-actions { display: flex; gap: 5px; justify-content: flex-end; }
-.code-editor-actions button { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold;}
-.cancel-edit-btn { background: #666; color: white; }
-.save-preview-btn { background: var(--primary-color); color: white; }
 
-@media (max-width: 600px) {
-    #ai-chat-widget { width: 100%; height: 100%; bottom: 0; right: 0; border-radius: 0; z-index: 10001;}
-    #ai-widget-toggle-btn { bottom: 20px; right: 20px; }
-}
+    // --- Global Click/Key/Interaction Listeners ---
+    overlay?.addEventListener("click", () => {
+        toggleMenu(false);
+        closeSearch();
+    });
+    document.addEventListener('click', (e) => {
+        if (header && suggestionsList && !header.contains(e.target) && !suggestionsList.contains(e.target)) {
+            closeSearch();
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            closeSearch();
+            toggleMenu(false);
+        }
+    });
+    
+    if (shareButton) {
+        shareButton.addEventListener("click", async () => {
+            const shareData = {
+                title: document.title,
+                text: "Check out this comprehensive formula guide from GK Learn Study!",
+                url: window.location.href,
+            };
+            try {
+                if (navigator.share) {
+                    await navigator.share(shareData);
+                } else {
+                    alert("Sharing is not supported on this browser, but you can copy the link manually.");
+                }
+            } catch (err) {
+                console.error("Couldn't share content", err);
+            }
+        });
+    }
+
+    // --- Arrow Scroll Logic ---
+    let isUpdateArrowsScheduled = false;
+
+    const updateArrows = () => {
+        isUpdateArrowsScheduled = false;
+
+        if (!leftArrow || !rightArrow || !menuInner) return;
+        
+        // **PERFORMANCE FIX:** Batch all DOM reads first to avoid forced reflow (layout thrashing).
+        const isDesktop = window.innerWidth > 850;
+        const scrollWidth = menuInner.scrollWidth;
+        const clientWidth = menuInner.clientWidth;
+        const scrollLeft = menuInner.scrollLeft;
+        
+        // Now, perform calculations and DOM writes.
+        const maxScroll = scrollWidth - clientWidth;
+
+        if (!isDesktop || scrollWidth <= clientWidth) {
+            leftArrow.style.display = 'none';
+            rightArrow.style.display = 'none';
+        } else {
+            leftArrow.style.display = scrollLeft > 1 ? "flex" : "none";
+            rightArrow.style.display = scrollLeft < maxScroll - 1 ? "flex" : "none";
+        }
+    };
+
+    const throttledUpdateArrows = () => {
+        if (isUpdateArrowsScheduled) return;
+        isUpdateArrowsScheduled = true;
+        requestAnimationFrame(updateArrows);
+    };
+    
+    leftArrow?.addEventListener("click", () => menuInner.scrollBy({ left: -300, behavior: "smooth" }));
+    rightArrow?.addEventListener("click", () => menuInner.scrollBy({ left: 300, behavior: "smooth" }));
+
+    // --- INITIALIZATION ---
+    initMenuItems();
+    initFooterContent();
+
+    menuInner?.addEventListener("scroll", throttledUpdateArrows);
+    window.addEventListener("resize", throttledUpdateArrows);
+    
+    // Use requestAnimationFrame to ensure initial calculation happens after layout is stable.
+    window.addEventListener("load", () => requestAnimationFrame(updateArrows));
+
+    // --- AI Chat Widget Loader (NO IFRAME) ---
+    // This injects the floating button and chat window directly into the DOM.
+    // This solves the "buttons not clickable" issue caused by full-screen iframes.
+    if (!document.getElementById('ai-chat-widget')) {
+        const script = document.createElement('script');
+        script.src = '/js/chat-widget.js'; // Load the widget module
+        script.type = 'module';
+        document.body.appendChild(script);
+    }
+});
