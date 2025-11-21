@@ -14,26 +14,27 @@ const CONFIG = {
     You are a sophisticated AI assistant for 'GK Learn Study'.
     
     CAPABILITIES:
-    1. **RICH UI**: You can generate HTML cards. Use this format for summaries or profiles:
-       <div class="chat-card"><h3>Title</h3><p>Content...</p></div>
+    1. **RICH UI**: Use Markdown for structure.
+       - Use # for main headings.
+       - Use ## for subheadings.
+       - Use **bold** for emphasis.
+       - Use - or 1. for lists.
     
-    2. **MATH**: Use LaTeX for math. 
+    2. **CODE BLOCKS**: Always wrap code in triple backticks with the language name.
+       Example:
+       \`\`\`html
+       <div>Code here</div>
+       \`\`\`
+    
+    3. **MATH**: Use LaTeX for math. 
        - Block math: $$ \\int_0^\\infty x^2 dx $$
        - Inline math: $ E = mc^2 $
-       - Fractions: $ \\frac{a}{b} $
     
-    3. **TABLES**: Create detailed tables. Always use standard Markdown tables or HTML tables with borders.
-    
-    4. **DIAGRAMS**: Create flowcharts, sequence diagrams, or mindmaps using Mermaid syntax inside a code block.
-       Example:
+    4. **DIAGRAMS**: Create flowcharts using Mermaid syntax inside a code block.
        \`\`\`mermaid
        graph TD;
        A-->B;
        \`\`\`
-    
-    5. **GRAPHS**: If asked for a plot (e.g., parabola), generate raw SVG code directly within the response.
-    
-    6. **LINKS**: If the user asks about a topic in our database (Sangya, History, Excel, etc.), ACKNOWLEDGE it.
 
     TONE: Educational, Encouraging, and Visual.
     `
@@ -73,15 +74,34 @@ let state = {
     isResizing: false
 };
 
-// --- CUSTOM MARKED RENDERER ---
+// --- CUSTOM MARKED RENDERER (THE FIX) ---
 const renderer = new marked.Renderer();
-// Override code block rendering to handle Mermaid
+
+// 1. Code Block Handler: Escapes HTML to prevent execution, wraps in "Black Box"
 renderer.code = (code, language) => {
     if (language === 'mermaid') {
         return `<div class="mermaid">${code}</div>`;
     }
-    return `<pre><code class="language-${language}">${code}</code></pre>`;
+    // Manually escape characters to ensure browser treats it as text, not HTML tags
+    const escapedCode = code
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    const langClass = language ? `language-${language}` : '';
+    
+    return `
+    <div class="code-block-wrapper">
+        <div class="code-header">
+            <span class="code-lang">${language || 'code'}</span>
+            <button class="code-copy-btn" data-code="${encodeURIComponent(code)}">Copy</button>
+        </div>
+        <pre><code class="${langClass}">${escapedCode}</code></pre>
+    </div>`;
 };
+
 marked.use({ renderer });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -98,7 +118,6 @@ function initializeWidget() {
     injectWidgetHTML();
     injectWidgetCSS();
     
-    // Initialize Mermaid
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
     try {
@@ -262,7 +281,7 @@ function attachEventListeners() {
         }
         if (target.closest('.msg-regen-btn')) handleRegenerate();
         
-        // --- FIXED COPY BUTTON ---
+        // Code Copy Button
         if (target.closest('.code-copy-btn')) {
             const btn = target.closest('.code-copy-btn');
             const rawCode = decodeURIComponent(btn.dataset.code);
@@ -273,15 +292,14 @@ function attachEventListeners() {
             });
         }
         
-        // --- FIXED EDIT / PREVIEW BUTTONS ---
-        if (target.closest('.code-edit-btn') || target.closest('.code-preview-btn')) {
-            openMergedPreview(target.closest('.chat-message'));
+        // Edit Code Button (Opens Preview Modal)
+        if (target.closest('.code-edit-btn')) {
+             openMergedPreview(target.closest('.code-block-wrapper'));
         }
 
         if (target.closest('#close-preview-btn')) document.getElementById('preview-modal').classList.remove('active');
         if (target.closest('#run-code-btn')) updatePreviewIframe();
         
-        // --- REALISTIC DEVICE SWITCHING ---
         if (target.closest('.device-btn')) {
             const btn = target.closest('.device-btn');
             document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
@@ -443,14 +461,12 @@ async function generateResponse(prompt) {
     updateUIControls();
 }
 
-// --- IMPROVED LINK LOGIC ---
 function getAggressiveLinks(query) {
     if (!window.GKApp || !window.GKApp.searchData) return "";
     
     const qLower = query.toLowerCase();
     const searchData = window.GKApp.searchData;
     
-    // 1. Check direct keyword map (Sangya -> Noun, etc.)
     let searchTerms = [qLower];
     Object.keys(KEYWORD_MAP).forEach(hindiKey => {
         if (qLower.includes(hindiKey)) {
@@ -458,29 +474,24 @@ function getAggressiveLinks(query) {
         }
     });
 
-    // 2. Filter data based on ANY match in title or URL
     let matches = searchData.filter(item => {
         const title = item.title.toLowerCase();
         const url = item.url.toLowerCase();
         const para = (item.paragraph || "").toLowerCase();
         
         return searchTerms.some(term => {
-            // Ignore very short terms to avoid false positives like 'is', 'to'
             if (term.length < 3 && !KEYWORD_MAP[term]) return false;
-            
             return title.includes(term) || url.includes(term) || para.includes(term);
         });
     });
 
-    // 3. Prioritize matches
     matches.sort((a, b) => {
         const aTitleMatch = searchTerms.some(t => a.title.toLowerCase().includes(t));
         const bTitleMatch = searchTerms.some(t => b.title.toLowerCase().includes(t));
-        return bTitleMatch - aTitleMatch; // Title matches come first
+        return bTitleMatch - aTitleMatch; 
     });
 
     if (matches.length > 0) {
-        // Deduplicate and limit
         const uniqueItems = [...new Map(matches.map(item => [item.url, item])).values()].slice(0, 5);
         const list = uniqueItems.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('');
         return `<strong>Related Topics:</strong><ul>${list}</ul>`;
@@ -488,15 +499,12 @@ function getAggressiveLinks(query) {
     return "";
 }
 
-// --- MATH PROCESSING ---
 function processMath(text) {
-    // Replace block math $$...$$
     text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, expr) => {
         try {
             return katex.renderToString(expr, { displayMode: true, throwOnError: false });
         } catch (e) { return match; }
     });
-    // Replace inline math $...$
     text = text.replace(/\$([^$]+?)\$/g, (match, expr) => {
         try {
             return katex.renderToString(expr, { displayMode: false, throwOnError: false });
@@ -505,35 +513,35 @@ function processMath(text) {
     return text;
 }
 
-// --- EDITOR & PREVIEW ---
-
-function openMergedPreview(msgElement) {
-    const codeBlocks = msgElement.querySelectorAll('code[class*="language-"]');
-    let html = "", css = "", js = "";
-
-    codeBlocks.forEach(block => {
-        const langClass = Array.from(block.classList).find(c => c.startsWith('language-'));
-        const lang = langClass ? langClass.replace('language-', '') : '';
-        const code = block.innerText;
-        
-        if (lang === 'html' || lang === 'xml') html += code + "\n";
-        else if (lang === 'css') css += code + "\n";
-        else if (lang === 'javascript' || lang === 'js') js += code + "\n";
-    });
-
-    // If no specific language classes found, try to guess or dump in HTML
-    if (!html && !css && !js) {
-        const rawText = msgElement.querySelector('code').innerText;
-        if(rawText.includes('<html') || rawText.includes('<div')) html = rawText;
-        else html = "<!-- No specific code found. Paste code here. -->";
-    }
-
+function openMergedPreview(codeWrapper) {
+    const codeBlock = codeWrapper.querySelector('code');
+    if(!codeBlock) return;
+    
+    const rawText = codeBlock.innerText;
     const editor = document.getElementById('code-editor-textarea');
-    editor.value = `${html}\n\n<style>\n${css}\n</style>\n\n<script>\n${js}\n<\/script>`;
+    
+    // Simple heuristic: if it looks like complete code, use it. Else wrap it.
+    if(rawText.includes('<html') || rawText.includes('<!DOCTYPE')) {
+        editor.value = rawText;
+    } else {
+        editor.value = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* Add CSS here */
+</style>
+</head>
+<body>
+${rawText}
+<script>
+// Add JS here
+</script>
+</body>
+</html>`;
+    }
 
     document.getElementById('preview-modal').classList.add('active');
     
-    // Default to Desktop
     setPreviewDevice('desktop');
     document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.device-btn[data-view="desktop"]').classList.add('active');
@@ -543,18 +551,10 @@ function openMergedPreview(msgElement) {
 
 function setPreviewDevice(mode) {
     const frame = document.getElementById('device-frame');
-    const container = document.getElementById('preview-pane-container');
-    
-    // Remove all device classes first
     frame.className = 'device-frame'; 
-    
-    if (mode === 'mobile') {
-        frame.classList.add('mobile-device');
-    } else if (mode === 'tablet') {
-        frame.classList.add('tablet-device');
-    } else {
-        frame.classList.add('desktop-device');
-    }
+    if (mode === 'mobile') frame.classList.add('mobile-device');
+    else if (mode === 'tablet') frame.classList.add('tablet-device');
+    else frame.classList.add('desktop-device');
 }
 
 function updatePreviewIframe() {
@@ -611,17 +611,15 @@ function appendMessageToUI(role, content) {
         `<div class="message-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>` :
         `<div class="message-avatar">🤖</div>`;
 
-    let processedContent = escapeHTML(content); // Default for user
+    let processedContent = escapeHTML(content);
     
     if (role === 'model') {
-        // 1. Process Math first (convert LaTeX to HTML)
         let mathProcessed = processMath(content);
-        // 2. Parse Markdown (with custom Mermaid renderer)
         let markdownProcessed = marked.parse(mathProcessed);
-        // 3. Sanitize (allow MathML, SVG, class attributes)
+        // Sanitization is important, but we must allow the structure for our code blocks
         processedContent = DOMPurify.sanitize(markdownProcessed, {
-            ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe'],
-            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder']
+            ADD_TAGS: ['math', 'maction', 'maligngroup', 'malignmark', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph', 'mi', 'mlabeledtr', 'mlongdiv', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded', 'mphantom', 'mroot', 'mrow', 'ms', 'mscarries', 'mscarry', 'msgroup', 'msline', 'mspace', 'msqrt', 'msrow', 'mstack', 'mstyle', 'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder', 'munderover', 'semantics', 'annotation', 'annotation-xml', 'svg', 'path', 'rect', 'circle', 'line', 'iframe', 'button'],
+            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder', 'data-code']
         });
     }
 
@@ -632,41 +630,26 @@ function appendMessageToUI(role, content) {
     div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
     log.appendChild(div);
 
-    // Re-inject code toolbars and run Mermaid
     if (role === 'model') {
         setTimeout(() => {
-            injectCodeToolbars(div);
             try {
                 mermaid.run({ nodes: div.querySelectorAll('.mermaid') });
             } catch (e) { console.warn("Mermaid error", e); }
+            
+            // Inject Edit Buttons for Code Blocks
+            div.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
+                const header = wrapper.querySelector('.code-header');
+                if(header) {
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'code-edit-btn';
+                    editBtn.innerText = 'Edit / Run';
+                    header.appendChild(editBtn);
+                }
+            });
+
         }, 100);
     }
     scrollToBottom();
-}
-
-// --- FIX: EXPLICITLY ADD BUTTONS ---
-function injectCodeToolbars(messageDiv) {
-    const preTags = messageDiv.querySelectorAll('pre');
-    preTags.forEach(pre => {
-        // Don't double inject
-        if (pre.querySelector('.code-toolbar')) return;
-
-        const code = pre.querySelector('code');
-        const rawCode = code ? code.innerText : pre.innerText;
-        const encoded = encodeURIComponent(rawCode);
-        
-        const toolbar = document.createElement('div');
-        toolbar.className = 'code-toolbar';
-        
-        // Always show these buttons
-        toolbar.innerHTML = `
-            <button class="code-copy-btn" data-code="${encoded}" title="Copy Code">Copy</button>
-            <button class="code-edit-btn" title="Edit in Playground">Edit</button>
-            <button class="code-preview-btn" title="Preview Code">Preview</button>
-        `;
-        
-        pre.insertBefore(toolbar, pre.firstChild);
-    });
 }
 
 function appendLoadingIndicator(id) {
