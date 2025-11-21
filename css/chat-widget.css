@@ -201,25 +201,44 @@ html[data-theme="dark"] {
 .related-links-section a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
 
 /* --- Code Blocks & Toolbar --- */
+/* Force styles for <pre> to act as a code container */
 pre { 
-    background: #1e1e1e !important; /* Force dark background for code */
+    background: #1e1e1e !important; 
     color: #f8f8f2 !important; 
-    padding: 0; 
-    border-radius: 6px; 
+    padding: 0 !important; 
+    border-radius: 6px !important; 
     overflow-x: auto; 
-    margin: 10px 0; 
+    margin: 10px 0 !important; 
     position: relative; 
     border: 1px solid var(--border-color); 
     max-width: 100%;
+    white-space: pre-wrap; /* Handles wrapping if needed */
 }
-code { font-family: monospace; display: block; padding: 12px; }
+/* Code inside pre */
+code { 
+    font-family: 'Consolas', 'Monaco', monospace; 
+    display: block; 
+    padding: 12px; 
+    background: transparent !important; /* Prevents double background */
+    color: inherit !important;
+}
+/* Inline code (single backticks) */
+p > code, li > code {
+    background: rgba(0,0,0,0.1) !important;
+    color: #d63384 !important;
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline;
+}
 
 /* Force Toolbars to be visible and interactive */
 .code-toolbar {
     display: flex; justify-content: flex-end; gap: 8px;
-    background: #333; /* Darker header for code block */
+    background: #2d2d2d; /* Dark header */
     padding: 6px 10px;
     border-bottom: 1px solid #444;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     position: sticky; top: 0; /* Keeps it visible */
     z-index: 10;
 }
