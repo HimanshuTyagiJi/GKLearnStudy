@@ -6,7 +6,7 @@ import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 
 const CONFIG = {
-    API_KEY: "AIzaSyAlQLgoG7I8ieSp2RSQ3sgwxl5g0hDIQqA",
+    API_KEY: "null",
     MODEL_NAME: "gemini-2.5-flash",
     STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
     MAX_HISTORY_ITEMS: 50,
