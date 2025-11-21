@@ -7,7 +7,7 @@ import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 import hljs from "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js";
 
 const CONFIG = {
-    API_KEY: "AIzaSyAlQLgoG7I8ieSp2RSQ3sgwxl5g0hDIQqA",
+    API_KEY: "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8",
     MODEL_NAME: "gemini-2.5-flash",
     STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
     MAX_HISTORY_ITEMS: 50,
@@ -129,8 +129,8 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
 }
 
 function initializeWidget() {
+    injectWidgetCSS(); // This loads the CSS file
     injectWidgetHTML();
-    // injectWidgetCSS(); // Removed, CSS is now in separate file
     
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
@@ -144,6 +144,17 @@ function initializeWidget() {
     state.currentChat = null;
     attachEventListeners();
     setupResizer();
+}
+
+function injectWidgetCSS() {
+    // Check if CSS is already loaded to avoid duplicates
+    if (!document.querySelector('link[href*="chat-widget.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/css/chat-widget.css'; // Ensure this path is correct relative to your root
+        document.head.appendChild(link);
+    }
 }
 
 function injectWidgetHTML() {
