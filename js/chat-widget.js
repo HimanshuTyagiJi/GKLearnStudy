@@ -120,17 +120,14 @@ function initializeWidget() {
     
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-    try {
-        state.aiClient = new GoogleGenAI({ apiKey: CONFIG.API_KEY });
-    } catch (error) {
-        console.error("AI Init Failed:", error);
-    }
-
+    // AI client frontend se initialize NAHI karna (backend karega)
+    
     loadHistory();
     state.currentChat = null;
     attachEventListeners();
     setupResizer();
 }
+
 
 function injectWidgetHTML() {
     const widgetHTML = `
@@ -431,12 +428,15 @@ async function generateResponse(prompt) {
 
     try {
         if (!state.aiClient) throw new Error("No API");
-        const result = await state.aiClient.models.generateContent({
-            model: CONFIG.MODEL_NAME,
-            contents: prompt,
-            config: { systemInstruction: CONFIG.SYSTEM_INSTRUCTION }
-        });
-        responseText = result.text;
+       const result = await fetch("/api/gemini", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: prompt })
+});
+
+const data = await result.json();
+responseText = data.reply;
+
         
         linksHTML = getAggressiveLinks(prompt);
         if (linksHTML) {
