@@ -201,54 +201,29 @@ html[data-theme="dark"] {
 .related-links-section a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
 
 /* --- Code Blocks & Toolbar --- */
-/* Force styles for <pre> to act as a code container */
 pre { 
-    background: #1e1e1e !important; 
-    color: #f8f8f2 !important; 
-    padding: 0 !important; 
-    border-radius: 6px !important; 
-    overflow-x: auto; 
-    margin: 10px 0 !important; 
-    position: relative; 
+    background: var(--code-bg); color: var(--code-text); padding: 0; 
+    border-radius: 6px; overflow-x: auto; margin: 10px 0; position: relative; 
     border: 1px solid var(--border-color); 
     max-width: 100%;
-    white-space: pre-wrap; /* Handles wrapping if needed */
 }
-/* Code inside pre */
-code { 
-    font-family: 'Consolas', 'Monaco', monospace; 
-    display: block; 
-    padding: 12px; 
-    background: transparent !important; /* Prevents double background */
-    color: inherit !important;
-}
-/* Inline code (single backticks) */
-p > code, li > code {
-    background: rgba(0,0,0,0.1) !important;
-    color: #d63384 !important;
-    padding: 2px 4px;
-    border-radius: 4px;
-    display: inline;
-}
+code { font-family: monospace; display: block; padding: 12px; }
 
 /* Force Toolbars to be visible and interactive */
 .code-toolbar {
-    display: flex; justify-content: flex-end; gap: 8px;
-    background: #2d2d2d; /* Dark header */
-    padding: 6px 10px;
-    border-bottom: 1px solid #444;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    position: sticky; top: 0; /* Keeps it visible */
-    z-index: 10;
+    display: flex; justify-content: flex-end; gap: 6px;
+    background: rgba(255,255,255,0.1); padding: 6px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky; top: 0; /* Keeps it visible even if code scrolls vertically */
 }
+html:not([data-theme="dark"]) .code-toolbar { background: #e0e0e0; border-bottom: 1px solid #ccc; }
 
 .code-toolbar button {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff;
-    font-size: 0.75rem; cursor: pointer; padding: 3px 8px; border-radius: 4px;
-    transition: background 0.2s;
+    background: rgba(0,0,0,0.2); border: none; color: inherit;
+    font-size: 0.75rem; cursor: pointer; padding: 4px 8px; border-radius: 4px;
+    z-index: 2;
 }
-.code-toolbar button:hover { background: rgba(255,255,255,0.3); }
+.code-toolbar button:hover { background: rgba(0,0,0,0.4); }
 
 /* --- Input Area --- */
 .chat-input-area { padding: 12px; border-top: 1px solid var(--border-color); background: var(--card-bg); flex-shrink: 0; }
