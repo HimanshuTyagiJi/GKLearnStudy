@@ -74,7 +74,7 @@ let state = {
     isResizing: false
 };
 
-// --- CUSTOM MARKED RENDERER (THE FIX) ---
+// --- CUSTOM MARKED RENDERER ---
 const renderer = new marked.Renderer();
 
 // 1. Code Block Handler: Escapes HTML to prevent execution, wraps in "Black Box"
@@ -517,42 +517,53 @@ function openMergedPreview(codeWrapper) {
     const messageDiv = codeWrapper.closest('.chat-message');
     if (!messageDiv) return;
 
-    const clickedCodeEl = codeWrapper.querySelector('code');
-    const clickedLang = codeWrapper.querySelector('.code-lang')?.innerText.toLowerCase();
-    const clickedRaw = clickedCodeEl.innerText;
-
-    // 1. If specifically clicked block is full HTML, use it.
-    if (clickedRaw.includes('<!DOCTYPE html') || clickedRaw.includes('<html')) {
-        setEditorContent(clickedRaw);
-        return;
-    }
-
-    // 2. Gather all blocks in message
+    // 1. Scan the entire message for ANY code blocks
     const blocks = messageDiv.querySelectorAll('.code-block-wrapper');
+    
     let html = '';
     let css = '';
     let js = '';
-    let hasMerged = false;
+    let fullDoc = '';
 
     blocks.forEach(block => {
         const lang = block.querySelector('.code-lang')?.innerText.toLowerCase().trim();
         const code = block.querySelector('code').innerText;
 
         if (lang === 'html' || lang === 'xml') {
-            html += code + '\n';
-            hasMerged = true;
+            // Check if this block is already a full document
+            if (code.includes('<!DOCTYPE html') || code.includes('<html')) {
+                fullDoc = code;
+            } else {
+                html += code + '\n';
+            }
         } else if (lang === 'css') {
             css += code + '\n';
-            hasMerged = true;
         } else if (lang === 'javascript' || lang === 'js') {
             js += code + '\n';
-            hasMerged = true;
         }
     });
 
-    // 3. Merge
-    if (hasMerged) {
-        const mergedDoc = `<!DOCTYPE html>
+    // 2. Construct the merged result
+    let finalContent = '';
+
+    if (fullDoc) {
+        // If we found a full HTML document, try to inject CSS/JS if they aren't already there
+        // (Simple string injection for basic cases)
+        finalContent = fullDoc;
+        if (css && !fullDoc.includes(css.substring(0, 20))) { // Basic check to avoid duplication
+            finalContent = finalContent.replace('</head>', `<style>\n${css}\n</style>\n</head>`);
+        }
+        if (js && !fullDoc.includes(js.substring(0, 20))) {
+            finalContent = finalContent.replace('</body>', `<script>\n${js}\n</script>\n</body>`);
+        }
+    } else {
+        // Fallback: Wrap fragments
+        // If no HTML found but CSS/JS exists, create a skeleton
+        if (!html && (css || js)) {
+            html = '<h1>Preview</h1><p>See the result of your code below.</p>';
+        }
+
+        finalContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -568,19 +579,10 @@ ${js}
 </script>
 </body>
 </html>`;
-        setEditorContent(mergedDoc);
-    } else {
-        // Fallback
-        let content = '';
-        if (clickedLang === 'css') {
-            content = `<!DOCTYPE html><html><head><style>${clickedRaw}</style></head><body><!-- Add HTML here to test styles --></body></html>`;
-        } else if (clickedLang === 'js' || clickedLang === 'javascript') {
-            content = `<!DOCTYPE html><html><body><h1>JS Test</h1><script>${clickedRaw}</script></body></html>`;
-        } else {
-            content = `<!DOCTYPE html><html><body>${clickedRaw}</body></html>`;
-        }
-        setEditorContent(content);
     }
+
+    // 3. Populate Editor
+    setEditorContent(finalContent);
 }
 
 function setEditorContent(content) {
