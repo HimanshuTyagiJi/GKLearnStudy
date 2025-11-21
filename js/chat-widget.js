@@ -514,32 +514,78 @@ function processMath(text) {
 }
 
 function openMergedPreview(codeWrapper) {
-    const codeBlock = codeWrapper.querySelector('code');
-    if(!codeBlock) return;
-    
-    const rawText = codeBlock.innerText;
-    const editor = document.getElementById('code-editor-textarea');
-    
-    // Simple heuristic: if it looks like complete code, use it. Else wrap it.
-    if(rawText.includes('<html') || rawText.includes('<!DOCTYPE')) {
-        editor.value = rawText;
-    } else {
-        editor.value = `<!DOCTYPE html>
-<html>
+    const messageDiv = codeWrapper.closest('.chat-message');
+    if (!messageDiv) return;
+
+    const clickedCodeEl = codeWrapper.querySelector('code');
+    const clickedLang = codeWrapper.querySelector('.code-lang')?.innerText.toLowerCase();
+    const clickedRaw = clickedCodeEl.innerText;
+
+    // 1. If specifically clicked block is full HTML, use it.
+    if (clickedRaw.includes('<!DOCTYPE html') || clickedRaw.includes('<html')) {
+        setEditorContent(clickedRaw);
+        return;
+    }
+
+    // 2. Gather all blocks in message
+    const blocks = messageDiv.querySelectorAll('.code-block-wrapper');
+    let html = '';
+    let css = '';
+    let js = '';
+    let hasMerged = false;
+
+    blocks.forEach(block => {
+        const lang = block.querySelector('.code-lang')?.innerText.toLowerCase().trim();
+        const code = block.querySelector('code').innerText;
+
+        if (lang === 'html' || lang === 'xml') {
+            html += code + '\n';
+            hasMerged = true;
+        } else if (lang === 'css') {
+            css += code + '\n';
+            hasMerged = true;
+        } else if (lang === 'javascript' || lang === 'js') {
+            js += code + '\n';
+            hasMerged = true;
+        }
+    });
+
+    // 3. Merge
+    if (hasMerged) {
+        const mergedDoc = `<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* Add CSS here */
+${css}
 </style>
 </head>
 <body>
-${rawText}
+${html}
 <script>
-// Add JS here
+${js}
 </script>
 </body>
 </html>`;
+        setEditorContent(mergedDoc);
+    } else {
+        // Fallback
+        let content = '';
+        if (clickedLang === 'css') {
+            content = `<!DOCTYPE html><html><head><style>${clickedRaw}</style></head><body><!-- Add HTML here to test styles --></body></html>`;
+        } else if (clickedLang === 'js' || clickedLang === 'javascript') {
+            content = `<!DOCTYPE html><html><body><h1>JS Test</h1><script>${clickedRaw}</script></body></html>`;
+        } else {
+            content = `<!DOCTYPE html><html><body>${clickedRaw}</body></html>`;
+        }
+        setEditorContent(content);
     }
+}
 
+function setEditorContent(content) {
+    const editor = document.getElementById('code-editor-textarea');
+    editor.value = content;
     document.getElementById('preview-modal').classList.add('active');
     
     setPreviewDevice('desktop');
