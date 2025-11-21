@@ -7,7 +7,7 @@ import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 import hljs from "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js";
 
 const CONFIG = {
-    API_KEY: "AIzaSyAVEPlqyyOEMqDZkIqMcof7q0KEhWsiVp8",
+    API_KEY: "AIzaSyAlQLgoG7I8ieSp2RSQ3sgwxl5g0hDIQqA",
     MODEL_NAME: "gemini-2.5-flash",
     STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
     MAX_HISTORY_ITEMS: 50,
