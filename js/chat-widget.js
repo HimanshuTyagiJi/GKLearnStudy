@@ -4,30 +4,6 @@ import { marked } from "https://esm.run/marked@12.0.2";
 import DOMPurify from "https://esm.run/dompurify@3.0.8";
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
-function renderMathInChat(element) {
-    if (!element) return;
-
-    // Inline math: $...$
-    element.innerHTML = element.innerHTML.replace(/\$(.+?)\$/g, (match, math) => {
-        try {
-            return katex.renderToString(math, { throwOnError: false });
-        } catch {
-            return match;
-        }
-    });
-
-    // Block math: $$...$$
-    element.innerHTML = element.innerHTML.replace(/\$\$(.+?)\$\$/gs, (match, math) => {
-        try {
-            return katex.renderToString(math, {
-                throwOnError: false,
-                displayMode: true
-            });
-        } catch {
-            return match;
-        }
-    });
-}
 
 const CONFIG = {
     API_KEY: "AIzaSyAlQLgoG7I8ieSp2RSQ3sgwxl5g0hDIQqA",
@@ -700,32 +676,29 @@ function appendMessageToUI(role, content) {
         `<div class="message-content"><div class="text-content">${processedContent}</div><div class="msg-actions"><button class="msg-regen-btn">↻</button></div></div>`;
     
     div.innerHTML = role === 'user' ? (contentHTML + avatarHTML) : (avatarHTML + contentHTML);
-log.appendChild(div);
+    log.appendChild(div);
 
-// ✅ NEW: Render KaTeX math here
-renderMathInChat(div.querySelector(".text-content"));
+    if (role === 'model') {
+        setTimeout(() => {
+            try {
+                mermaid.run({ nodes: div.querySelectorAll('.mermaid') });
+            } catch (e) { console.warn("Mermaid error", e); }
+            
+            // Inject Edit Buttons for Code Blocks
+            div.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
+                const header = wrapper.querySelector('.code-header');
+                if(header) {
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'code-edit-btn';
+                    editBtn.innerText = 'Edit / Run';
+                    header.appendChild(editBtn);
+                }
+            });
 
-if (role === 'model') {
-    setTimeout(() => {
-        try {
-            mermaid.run({ nodes: div.querySelectorAll('.mermaid') });
-        } catch (e) { console.warn("Mermaid error", e); }
-        
-        // Inject Edit Buttons for Code Blocks
-        div.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
-            const header = wrapper.querySelector('.code-header');
-            if(header) {
-                const editBtn = document.createElement('button');
-                editBtn.className = 'code-edit-btn';
-                editBtn.innerText = 'Edit / Run';
-                header.appendChild(editBtn);
-            }
-        });
-
-    }, 100);
+        }, 100);
+    }
+    scrollToBottom();
 }
-scrollToBottom();
-
 
 function appendLoadingIndicator(id) {
     const div = document.createElement('div'); div.id = id; div.className = 'chat-message ai-message typing-indicator';
