@@ -6,7 +6,7 @@ import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 import katex from "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.mjs";
 
 const CONFIG = {
-    API_KEY: "null",
+    API_KEY: "AIzaSyAlQLgoG7I8ieSp2RSQ3sgwxl5g0hDIQqA",
     MODEL_NAME: "gemini-2.5-flash",
     STORAGE_KEY: "aiChatHistory_Ultimate_Pro_Max",
     MAX_HISTORY_ITEMS: 50,
@@ -120,14 +120,17 @@ function initializeWidget() {
     
     mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-    // AI client frontend se initialize NAHI karna (backend karega)
-    
+    try {
+        state.aiClient = new GoogleGenAI({ apiKey: CONFIG.API_KEY });
+    } catch (error) {
+        console.error("AI Init Failed:", error);
+    }
+
     loadHistory();
     state.currentChat = null;
     attachEventListeners();
     setupResizer();
 }
-
 
 function injectWidgetHTML() {
     const widgetHTML = `
@@ -428,15 +431,12 @@ async function generateResponse(prompt) {
 
     try {
         if (!state.aiClient) throw new Error("No API");
-       const result = await fetch("/api/gemini", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: prompt })
-});
-
-const data = await result.json();
-responseText = data.reply;
-
+        const result = await state.aiClient.models.generateContent({
+            model: CONFIG.MODEL_NAME,
+            contents: prompt,
+            config: { systemInstruction: CONFIG.SYSTEM_INSTRUCTION }
+        });
+        responseText = result.text;
         
         linksHTML = getAggressiveLinks(prompt);
         if (linksHTML) {
