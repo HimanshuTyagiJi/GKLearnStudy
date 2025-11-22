@@ -665,32 +665,12 @@ function appendMessageToUI(role, content) {
         let mathProcessed = processMath(content);
         let markdownProcessed = marked.parse(mathProcessed);
         // Sanitization is important, but we must allow the structure for our code blocks
-      processedContent = DOMPurify.sanitize(markdownProcessed, {
-    ALLOW_UNKNOWN_PROTOCOLS: true,
-
-    ADD_TAGS: [
-        // KaTeX
-        'span',
-
-        // MathML full set
-        'math','maction','maligngroup','malignmark','menclose','merror','mfenced',
-        'mfrac','mglyph','mi','mlabeledtr','mlongdiv','mmultiscripts','mn','mo',
-        'mover','mpadded','mphantom','mroot','mrow','ms','mscarries','mscarry',
-        'msgroup','msline','mspace','msqrt','msrow','mstack','mstyle','msub',
-        'msup','msubsup','mtable','mtd','mtext','mtr','munder','munderover',
-        'semantics','annotation','annotation-xml',
-
-        // SVG (KaTeX uses for parentheses)
-        'svg','path'
-    ],
-
-    ADD_ATTR: [
-        'class','style','viewBox','xmlns',
-        'width','height','d','fill','stroke',
-        'display','encoding'
-    ]
-});
-
+        processedContent = DOMPurify.sanitize(markdownProcessed, {
+            ADD_TAGS: ['math','maction','maligngroup','malignmark','menclose','merror','mfenced','mfrac','mglyph','mi','mlabeledtr','mlongdiv','mmultiscripts','mn','mo','mover','mpadded','mphantom','mroot','mrow','ms','mscarries','mscarry','msgroup','msline','mspace','msqrt','msrow','mstack','mstyle','msub','msup','msubsup','mtable','mtd','mtext','mtr','munder','munderover','semantics','annotation','annotation-xml','svg','path','rect','circle','line','iframe','button'],
+            ADD_ATTR: ['class', 'style', 'viewBox', 'd', 'fill', 'stroke', 'src', 'width', 'height', 'frameborder', 'data-code']
+           
+        });
+    }
 
     let contentHTML = role === 'user' ? 
         `<div class="message-content"><div class="text-content">${processedContent}</div><div class="msg-actions"><button class="msg-edit-btn">✎</button></div></div>` :
