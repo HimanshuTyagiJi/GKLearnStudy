@@ -38,14 +38,40 @@
 
   "shortcuts": [
     {
-      "name": "Start Practice",
-      "short_name": "Practice",
-      "url": "/practice?shortcut=true"
+      "name": "All Formulas",
+      "short_name": "Formulas",
+      "url": "https://gklearnstudy.in/all-formulas.html",
+      "icons": [
+        {
+          "src": "/GK-Learn-Study.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
-      "name": "My Notes",
-      "short_name": "Notes",
-      "url": "/notes?shortcut=true"
+      "name": "Start GK Quiz",
+      "short_name": "GK Quiz",
+      "url": "https://gklearnstudy.in/gk-quiz.html",
+      "icons": [
+        {
+          "src": "/GK-Learn-Study.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "My Test",
+      "short_name": "My Test",
+      "url": "https://gklearnstudy.in/test.html",
+      "icons": [
+        {
+          "src": "/GK-Learn-Study.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
 
