@@ -27,7 +27,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/GK-Learn-Study.png",
+      "src": "/gk_512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -38,8 +38,32 @@
 
   "shortcuts": [
     {
+      "name": "Computer",
+      "short_name": "Computer",
+      "url": "https://gklearnstudy.in/computer.html",
+      "icons": [
+        {
+          "src": "/GK-Learn-Study.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "short_name": "Education",
+      "url": "https://gklearnstudy.in/education.html",
+      "icons": [
+        {
+          "src": "/GK-Learn-Study.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "All Formulas",
-      "short_name": "Formulas",
+      "short_name": "All Formulas",
       "url": "https://gklearnstudy.in/all-formulas.html",
       "icons": [
         {
