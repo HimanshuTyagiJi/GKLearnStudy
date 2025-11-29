@@ -1247,6 +1247,53 @@
                 });
             }
         </script>
+        <script>
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+ 
+    if (!("Notification" in window)) {
+        console.log("Notifications not supported.");
+        return;
+    }
+
+ 
+    if (Notification.permission === "granted") {
+        console.log("Notifications already granted.");
+        return;
+    }
+
+  
+    if (Notification.permission === "denied") {
+        console.log("Notifications denied earlier.");
+        return;
+    }
+
+  
+    try {
+        const permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+            console.log("User allowed notifications");
+
+            // Service worker register kare bina token nahi banega
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("/firebase-messaging-sw.js")
+                    .then(() => {
+                        console.log("SW registered for FCM background notifications");
+                    })
+                    .catch(err => console.error("SW register error:", err));
+            }
+        } else {
+            console.log("User dismissed or denied notification popup");
+        }
+
+    } catch (err) {
+        console.error("Notification permission error:", err);
+    }
+});
+        </script>
         <script src="https://gklearnstudy.in/js/theme.js" defer></script>
         <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
         <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
