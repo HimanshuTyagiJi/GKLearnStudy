@@ -70,7 +70,6 @@ body{margin:0;padding:0;font-family:Arial, sans-serif;background:#0f172a;color:#
   <button class="btn" onclick="openQR('Cyber Security PDF','₹49')">Buy Now – ₹49</button>
 </div>
 
-
 <!-- 14 INACTIVE PRODUCTS -->
 <script>
 let inactiveProducts = [
@@ -137,16 +136,33 @@ document.write(
   </div>
 </div>
 
+<!-- JS FIXED FUNCTIONS -->
 <script>
 function openQR(prod, price){
+  // Close content modal if open
+  document.getElementById("contentModal").style.display = "none";
+
+  // Open QR modal
   document.getElementById("qrTitle").innerText = "Pay " + price;
   document.getElementById("qrInfo").innerText = prod;
   document.getElementById("qrModal").style.display="flex";
 }
-function closeQR(){ document.getElementById("qrModal").style.display="none"; }
 
-function openContent(){ document.getElementById("contentModal").style.display="flex"; }
-function closeContent(){ document.getElementById("contentModal").style.display="none"; }
+function closeQR(){
+  document.getElementById("qrModal").style.display="none";
+}
+
+function openContent(){
+  // Close QR if open
+  document.getElementById("qrModal").style.display = "none";
+
+  // Open content popup
+  document.getElementById("contentModal").style.display="flex";
+}
+
+function closeContent(){
+  document.getElementById("contentModal").style.display="none";
+}
 </script>
 
 </body>
