@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GK Learn Study – Digital Store</title>
+
+<style>
+body{margin:0;padding:0;font-family:Arial, sans-serif;background:#0f172a;color:#e5e7eb;}
+.wrapper{max-width:1150px;margin:auto;padding:18px;}
+
+.header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e293b;padding-bottom:12px;margin-bottom:20px;}
+.brand{font-size:1.6rem;font-weight:700;color:#38bdf8;}
+.brand span{color:#facc15;}
+.tagline{font-size:0.85rem;color:#94a3b8;text-align:right;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+
+.card{background:#111827;padding:15px;border:1px solid #1e293b;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.6);}
+.card-type{font-size:0.75rem;padding:3px 8px;border-radius:20px;border:1px solid #4b5563;color:#a5b4fc;display:inline-block;margin-bottom:6px;}
+.card h2{font-size:1rem;margin-bottom:6px;color:#fff;}
+.card p{font-size:0.85rem;color:#cbd5e1;}
+
+.price-box{margin-top:6px;}
+.old-price{text-decoration:line-through;color:#64748b;margin-right:5px;}
+.new-price{color:#f97316;font-size:1.05rem;font-weight:bold;}
+
+.btn{width:100%;padding:10px 0;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:30px;color:#052e16;font-weight:bold;margin-top:10px;text-align:center;cursor:pointer;}
+.btn:hover{filter:brightness(1.1);}
+
+.inactive-btn{width:100%;padding:10px 0;background:#475569;border-radius:30px;color:#cbd5e1;margin-top:10px;text-align:center;cursor:not-allowed;}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;}
+.modal{background:#0f172a;border-radius:14px;border:1px solid #1e293b;padding:15px;max-width:380px;width:90%;text-align:center;}
+.modal h3{font-size:1.1rem;margin-bottom:6px;color:#38bdf8;}
+.modal p{font-size:0.85rem;margin-bottom:10px;color:#cbd5e1;}
+
+.qr img{width:230px;border-radius:12px;border:1px solid #1e293b;}
+.preview-img{width:100%;border-radius:10px;margin:6px 0;border:1px solid #1e293b;}
+
+.close-btn{margin-top:10px;padding:8px 14px;border-radius:20px;border:1px solid #475569;background:transparent;color:#e5e7eb;cursor:pointer;}
+.close-btn:hover{background:#1e293b;}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="brand">GK <span>Learn Study</span></div>
+  <div class="tagline">Digital PDFs • Study Guides • Secure Manual Delivery</div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="grid">
+
+<!-- ACTIVE PRODUCT -->
+<div class="card">
+  <span class="card-type">PDF Guide</span>
+  <h2>Cyber Security Master PDF (50+ Pages)</h2>
+  <p>Complete guide covering: Scam Protection, Phone Safety, Hacking Prevention, OTP Safety & Online Security.</p>
+
+  <div class="price-box">
+    <span class="old-price">₹99</span>
+    <span class="new-price">₹49</span>
+  </div>
+
+  <button class="btn" onclick="openContent()">View Content</button>
+  <button class="btn" onclick="openQR('Cyber Security PDF','₹49')">Buy Now – ₹49</button>
+</div>
+
+
+<!-- 14 INACTIVE PRODUCTS -->
+<script>
+let inactiveProducts = [
+  "Static GK Full Notes",
+  "General Science 500+ MCQ",
+  "Monthly Current Affairs PDF",
+  "1000+ GK MCQ Pack",
+  "English Grammar Notes",
+  "Basic Maths Concepts",
+  "Indian Geography Notes",
+  "Indian Polity Summary",
+  "History (Ancient + Medieval)",
+  "Reasoning 400+ Questions",
+  "Indian Economy Notes",
+  "Computer Awareness Notes",
+  "World Geography Notes",
+  "Vocabulary Booster Pack"
+];
+</script>
+
+<script>
+document.write(
+  inactiveProducts.map(p => `
+    <div class="card">
+      <span class="card-type">PDF</span>
+      <h2>${p}</h2>
+      <p>Not Available</p>
+      <div class="price-box"><span class="new-price">Coming Soon</span></div>
+      <div class="inactive-btn">Not Available</div>
+    </div>
+  `).join("")
+);
+</script>
+
+</div>
+</div>
+
+<!-- QR POPUP -->
+<div class="modal-bg" id="qrModal">
+  <div class="modal">
+    <h3 id="qrTitle">Scan to Pay</h3>
+    <p id="qrInfo"></p>
+
+    <div class="qr">
+      <img src="/images/QRCode49.png">
+    </div>
+
+    <p style="font-size:0.8rem;margin-top:6px;color:#94a3b8;">After payment, send screenshot + product name.</p>
+    <button class="close-btn" onclick="closeQR()">Close</button>
+  </div>
+</div>
+
+<!-- CONTENT POPUP -->
+<div class="modal-bg" id="contentModal">
+  <div class="modal">
+    <h3>Cyber Security – Preview</h3>
+    <p>Sample preview pages:</p>
+
+    <img class="preview-img" src="/images/content.png">
+
+    <button class="btn" onclick="openQR('Cyber Security PDF','₹49')">Buy Now – ₹49</button>
+
+    <button class="close-btn" onclick="closeContent()">Close</button>
+  </div>
+</div>
+
+<script>
+function openQR(prod, price){
+  document.getElementById("qrTitle").innerText = "Pay " + price;
+  document.getElementById("qrInfo").innerText = prod;
+  document.getElementById("qrModal").style.display="flex";
+}
+function closeQR(){ document.getElementById("qrModal").style.display="none"; }
+
+function openContent(){ document.getElementById("contentModal").style.display="flex"; }
+function closeContent(){ document.getElementById("contentModal").style.display="none"; }
+</script>
+
+</body>
+</html>
