@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Learn - Premium Digital Store</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Libraries -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        /* --- AMAZON THEME & UTILITIES --- */
+        :root {
+            --amz-dark: #131921;
+            --amz-light: #232f3e;
+            --amz-orange: #ff9900;
+            --amz-blue: #007185;
+            --amz-btn-primary: #fa8900;
+            --bg-gray: #eaeded;
+            --text-main: #0F1111;
+        }
+
+        * { box-sizing: border-box; }
+        body { background-color: white; font-family: 'Roboto', sans-serif; color: var(--text-main); margin: 0; padding: 0; }
+        
+        /* Header */
+        header { background-color: var(--amz-dark); color: white; position: sticky; top: 0; z-index: 1000; }
+        .nav-belt { display: flex; align-items: center; padding: 10px 20px; gap: 20px; height: 60px; }
+        .logo { font-size: 1.5rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; white-space: nowrap; }
+        .logo span { color: var(--amz-orange); margin-left: 2px; }
+        
+        .search-container { flex: 1; display: flex; border-radius: 4px; overflow: hidden; height: 40px; max-width: 800px; }
+        .search-select { background: #f3f3f3; border: none; padding: 0 10px; border-right: 1px solid #cdcdcd; color: #555; cursor: pointer; font-size: 0.8rem; }
+        .search-input { flex: 1; padding: 0 10px; border: none; outline: none; font-size: 1rem; }
+        .search-btn { background: #febd69; border: none; padding: 0 15px; cursor: pointer; transition: 0.2s; color: #333; }
+        .search-btn:hover { background: #f3a847; }
+
+        .nav-right { display: flex; gap: 15px; align-items: center; font-size: 0.85rem; }
+        .nav-item { cursor: pointer; display: flex; flex-direction: column; justify-content: center; color: white; }
+        .nav-item:hover { border: 1px solid white; margin: -1px; border-radius: 2px; padding: 1px; }
+        .nav-line-1 { font-size: 0.75rem; color: #ccc; }
+        .nav-line-2 { font-weight: 700; color: white; }
+        
+        /* Subscription Button Style */
+        .sub-btn { 
+            background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+            border-color: #a88734 #9c7e31 #846a29;
+            color: #111;
+            font-weight: bold; 
+            padding: 8px 12px; 
+            border-radius: 3px; 
+            text-decoration: none; 
+            cursor: pointer; 
+            text-align: center; 
+            line-height: 1.2; 
+            font-size: 0.85rem; 
+            border: 1px solid;
+            box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
+        }
+        .sub-btn:hover { background: linear-gradient(to bottom, #f5d78e, #eeb933); }
+
+        .sub-nav { background: var(--amz-light); color: white; padding: 6px 20px; display: flex; gap: 20px; font-size: 0.9rem; font-weight: 500; overflow-x: auto; align-items: center; }
+        .sub-nav span { cursor: pointer; border: 1px solid transparent; padding: 4px 8px; }
+        .sub-nav span:hover { border: 1px solid white; border-radius: 2px; }
+        .sub-nav span.active { color: var(--amz-orange); font-weight: bold; }
+
+        /* Grid */
+        .amz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 15px; padding: 15px; background: var(--bg-gray); min-height: 80vh; }
+        .amz-card { background: white; border: 1px solid #ddd; padding: 15px; cursor: pointer; display: flex; flex-direction: column; transition: 0.2s; position: relative; height: 100%; border-radius: 4px; }
+        .amz-card:hover { box-shadow: 0 0 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        
+        .amz-img-box { height: 180px; display: flex; align-items: center; justify-content: center; background: #fff; margin-bottom: 10px; padding: 10px; }
+        .amz-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
+        
+        .amz-title { font-size: 1rem; font-weight: 500; line-height: 1.3; color: #0F1111; margin-bottom: 5px; height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
+        .amz-title:hover { color: #c7511f; }
+        
+        .amz-rating { display: flex; align-items: center; gap: 5px; font-size: 0.8rem; margin-bottom: 5px; }
+        .stars { color: #ffa41c; }
+        .count { color: #007185; }
+
+        .amz-price { font-size: 1.3rem; font-weight: 500; }
+        .amz-price sup { font-size: 0.7rem; top: -0.5em; }
+        .amz-mrp { font-size: 0.8rem; color: #565959; text-decoration: line-through; margin-left: 5px; }
+        
+        .prime-badge { color: #007185; font-weight: bold; font-size: 0.75rem; margin-top: auto; padding-top: 10px; }
+
+        /* PDP */
+        .pdp-wrapper { background: white; max-width: 1500px; margin: 0 auto; padding: 20px; min-height: 80vh; }
+        .pdp-grid { display: grid; grid-template-columns: 80px 40% 1fr 20%; gap: 30px; }
+        @media(max-width: 900px) { .pdp-grid { grid-template-columns: 1fr; } }
+
+        /* Gallery */
+        .gallery-thumbs { display: flex; flex-direction: column; gap: 10px; max-height: 500px; overflow-y: auto; }
+        .gallery-thumbs::-webkit-scrollbar { width: 0px; }
+        .gallery-thumbs img { width: 60px; height: 60px; object-fit: contain; border: 1px solid #a2a6ac; border-radius: 4px; cursor: pointer; padding: 2px; transition: 0.2s; }
+        .gallery-thumbs img.active-thumb { border: 2px solid #e77600; box-shadow: 0 0 5px rgba(231,118,0,0.3); }
+        .gallery-thumbs img:hover { border: 2px solid #e77600; }
+        
+        /* Mobile Horizontal Gallery */
+        @media(max-width: 900px) {
+            .gallery-thumbs { flex-direction: row; order: 2; overflow-x: auto; max-height: auto; width: 100%; justify-content: center; }
+            .gallery-thumbs img { width: 50px; height: 50px; }
+            .pdp-img-main { order: 1; }
+        }
+
+        .pdp-img-main { text-align: center; display: flex; align-items: center; justify-content: center; height: 500px; }
+        .pdp-main-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        /* Buy Box */
+        .buy-box { border: 1px solid #d5d9d9; border-radius: 8px; padding: 15px; background: white; }
+        .buy-price { font-size: 1.5rem; color: #B12704; font-weight: 500; margin-bottom: 5px; }
+        
+        .amz-btn { width: 100%; border: none; padding: 10px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        .btn-cart { background: #ffd814; border: 1px solid #fcd200; }
+        .btn-buy { background: #ffa41c; border: 1px solid #ff8f00; }
+        .btn-dl { background: #4CAF50; color: white; font-weight: bold; border: 1px solid #43A047; }
+        .amz-btn:hover { opacity: 0.9; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 5000; align-items: center; justify-content: center; }
+        .modal-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--amz-orange); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 10px auto; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Comments CSS */
+        .rating-widget-wrapper { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .firebase-comments-widget { margin-top: 30px; }
+        .comment-form textarea { width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 4px; min-height: 80px; }
+        .btn.primary { background: #007185; color: white; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; }
+
+        /* Suggestion Carousel */
+        .suggestion-box { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
+        .suggestion-grid { display: flex; overflow-x: auto; gap: 15px; padding: 10px 0; scrollbar-width: thin; }
+        .suggestion-card { min-width: 160px; max-width: 160px; border: 1px solid #eee; padding: 10px; cursor: pointer; border-radius: 4px; background: white; }
+        .suggestion-card:hover { border-color: #e77600; }
+        .suggestion-card img { height: 120px; margin: 0 auto 10px; display: block; object-fit: contain; }
+        
+        .hide-mobile { display: block; }
+        @media(max-width: 600px) { .hide-mobile { display: none; } }
+
+        .lang-switch-btn {
+            background: #f0f0f0; border: 1px solid #ccc; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 5px;
+        }
+        .lang-switch-btn:hover { background: #e0e0e0; }
+
+        /* Alert Box in Modal */
+        .alert-box {
+            font-size: 0.85rem; margin-bottom: 10px; padding: 10px; border-radius: 4px; text-align: left; line-height: 1.4;
+        }
+        .alert-warning { background: #fff4e5; border: 1px solid #ffe3c4; color: #b76e00; }
+        .alert-success { background: #edfff1; border: 1px solid #c3e6cb; color: #155724; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1",
+    "tesseract.js": "https://aistudiocdn.com/tesseract.js@^6.0.1",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+</head>
+<body>
+
+    <!-- FIREBASE INIT -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
+            authDomain: "appcomment.firebaseapp.com",
+            projectId: "appcomment",
+            storageBucket: "appcomment.firebasestorage.app",
+            messagingSenderId: "156258808941",
+            appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <!-- HEADER -->
+    <header>
+        <div class="nav-belt">
+            <div class="logo" onclick="goHome()">GK<span>Learn</span></div>
+            
+            <div class="search-container">
+                <select class="search-select" id="headerCategorySelect" onchange="applyFilter()">
+                    <option value="all">All</option>
+                    <option value="pdf">PDF</option>
+                    <option value="video">Video</option>
+                    <option value="svg">SVG</option>
+                </select>
+                <input type="text" class="search-input" id="headerSearchInput" placeholder="Search..." onkeyup="applyFilter()">
+                <button class="search-btn" onclick="applyFilter()"><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="nav-right">
+                <!-- SUBSCRIPTION BUTTON -->
+                <div class="sub-btn" onclick="openSubscriptionModal()">
+                    <i class="fas fa-crown"></i> <span id="txt-sub-btn">All Access @ ₹299</span>
+                </div>
+
+                <div class="nav-item" id="authBtn" onclick="handleAuth()">
+                    <span class="nav-line-1" id="txt-hello">Hello, Sign in</span>
+                    <span class="nav-line-2" id="txt-account">Account</span>
+                </div>
+                
+                <div class="nav-item" style="flex-direction: row; align-items: center; gap: 5px;">
+                    <i class="fas fa-shopping-cart" style="font-size: 1.5rem; color: white;"></i>
+                    <span class="nav-line-2" id="txt-cart">Cart</span>
+                </div>
+            </div>
+        </div>
+        <div class="sub-nav">
+            <span onclick="setCategory('all')" class="active" id="nav-all">All</span>
+            <span onclick="setCategory('pdf')" id="nav-pdf">PDF Notes</span>
+            <span onclick="setCategory('video')" id="nav-video">Video Courses</span>
+            <span onclick="setCategory('svg')" id="nav-svg">SVG Icons</span>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app"></div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-box">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <h3 style="font-weight:700; margin:0;" id="modalTitle">Complete Payment</h3>
+                <span style="cursor:pointer; font-size:1.5rem;" onclick="closeModal()">&times;</span>
+            </div>
+            
+            <!-- Language Toggle Inside Modal -->
+            <div style="text-align: left;">
+                <button class="lang-switch-btn" onclick="toggleLanguage()">
+                    <i class="fas fa-language"></i> A/अ (Change Language)
+                </button>
+            </div>
+
+            <div id="guestWarning" class="alert-box alert-warning" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> <span id="txt-guest-warn">You are not logged in. Payment will be saved in browser cache only. If you clear cache, you lose access. Login to Save Permanently.</span>
+            </div>
+
+            <div style="background: #fcfcfc; border: 1px dashed #ccc; padding: 10px; display: inline-block; margin: 10px 0;">
+                <img src="https://gklearnstudy.in/HIMANSHU1764854038759.jpg" style="width:180px; mix-blend-mode:multiply;">
+            </div>
+            
+            <!-- Removed UPI Text as requested -->
+            
+            <h2 style="margin:5px 0 10px; color:#B12704; font-size:1.8rem;" id="modalPrice">₹0</h2>
+            <p id="subNote" style="display:none; color:#007600; font-size:0.9rem; font-weight:bold; margin-bottom:15px;">🔓 Unlocks ALL Products for 30 Days</p>
+
+            <div style="text-align:left; margin-top:10px;">
+                <label style="font-size:0.85rem; font-weight:bold; color:#333;" id="txt-upload-lbl">Upload Payment Screenshot</label>
+                <input type="file" id="fileInput" accept="image/*" style="width:100%; margin-top:5px; padding:8px; border:1px solid #ccc; border-radius:4px; background:#f7f7f7;">
+            </div>
+
+            <button id="verifyBtn" onclick="startScan()" class="amz-btn btn-buy" style="margin-top:15px; border-radius:4px; font-weight:bold;">Verify & Download</button>
+            <div class="spinner" id="loader"></div>
+            <p id="statusMsg" style="font-size:0.85rem; margin-top:10px; font-weight:bold;"></p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="background: #232f3e; color: white; padding: 40px 0; margin-top: 40px; text-align: center; font-size: 0.85rem;">
+        <div style="margin-bottom: 20px;">
+            <div class="logo" style="justify-content: center; margin-bottom: 10px; font-size: 1.8rem;">GK<span>Learn</span></div>
+            <p style="color: #ddd;">&copy; 2025 GK Learn Premium Store. All Rights Reserved.</p>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 20px; color: #ccc;">
+            <span>Terms of Use</span>
+            <span>Privacy Notice</span>
+            <span>Interest-Based Ads</span>
+        </div>
+    </div>
+
+    <!-- MAIN LOGIC -->
+    <script>
+        // --- TRANSLATIONS ---
+        const TEXTS = {
+            en: {
+                hello: "Hello, Sign in", account: "Account", cart: "Cart",
+                subBtn: "All Access @ ₹299 (1 Month)",
+                guestWarn: "You are not logged in. Payment will be saved in browser cache only. If you clear cache, you lose access. Login to Save Permanently.",
+                uploadLbl: "Upload Payment Screenshot",
+                verifyBtn: "Verify & Download",
+                buyNow: "Buy Now",
+                addToCart: "Add to Cart",
+                download: "Download Now",
+                dealPrice: "Deal Price",
+                delivery: "Instant Delivery via Email/Download",
+                searchPH: "Search products...",
+                secure: "Secure transaction",
+                verifySub: "Verify Subscription",
+                subSuccess: "Subscription Activated! All Products Unlocked for 30 Days.",
+                paySuccess: "Payment Verified! Product Unlocked.",
+                subNote: "🔓 Unlocks ALL Products for 30 Days"
+            },
+            hi: {
+                hello: "नमस्ते, साइन इन करें", account: "खाता", cart: "कार्ट",
+                subBtn: "सभी एक्सेस @ ₹299 (1 महीना)",
+                guestWarn: "आप लॉग इन नहीं हैं। भुगतान केवल ब्राउज़र कैश में सहेजा जाएगा। यदि आप कैश साफ़ करते हैं, तो आप एक्सेस खो देंगे। स्थायी रूप से सहेजने के लिए लॉगिन करें।",
+                uploadLbl: "पेमेंट स्क्रीनशॉट अपलोड करें",
+                verifyBtn: "सत्यापित करें और डाउनलोड करें",
+                buyNow: "अभी खरीदें",
+                addToCart: "कार्ट में डालें",
+                download: "अभी डाउनलोड करें",
+                dealPrice: "डील मूल्य",
+                delivery: "ईमेल/डाउनलोड के माध्यम से तुरंत डिलीवरी",
+                searchPH: "उत्पाद खोजें...",
+                secure: "सुरक्षित लेनदेन",
+                verifySub: "सदस्यता सत्यापित करें",
+                subSuccess: "सदस्यता सक्रिय! सभी उत्पाद 30 दिनों के लिए अनलॉक हो गए।",
+                paySuccess: "भुगतान सत्यापित! उत्पाद अनलॉक हो गया।",
+                subNote: "🔓 30 दिनों के लिए सभी उत्पाद अनलॉक करें"
+            }
+        };
+
+        // --- STATE ---
+        let lang = 'en';
+        let currentUser = null;
+        let unlockedProducts = []; 
+        let subscriptionExpiry = 0; // Timestamp
+        let currentView = 'home';
+        let activeProduct = null;
+        let activeCategory = 'all';
+        let isSubscriptionMode = false;
+
+        // Sample Images for Gallery (Placeholder + Real Icons)
+        const sampleGallery = [
+            "https://cdn-icons-png.flaticon.com/512/337/337946.png",
+            "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+            "https://cdn-icons-png.flaticon.com/512/3068/3068327.png",
+            "https://cdn-icons-png.flaticon.com/512/2933/2933190.png",
+            "https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
+        ];
+
+        // Generate 30 Products
+        const products = Array.from({ length: 30 }, (_, i) => {
+            const id = i + 1;
+            let type = 'pdf';
+            let catName = 'PDF Notes';
+            
+            if (i % 3 === 0) { type = 'video'; catName = 'Video Course'; }
+            if (i >= 25) { type = 'svg'; catName = 'SVG Icon Pack'; }
+
+            // Create a randomized image set for gallery
+            // Use different base images to simulate variety
+            const baseIndex = i % sampleGallery.length;
+            const images = [];
+            // Add base image
+            images.push(sampleGallery[baseIndex]);
+            // Add 4 other images for gallery scroll
+            for(let j=0; j<4; j++) {
+                images.push(sampleGallery[(baseIndex + j + 1) % sampleGallery.length]);
+            }
+
+            return {
+                id: id,
+                title: type === 'svg' ? `Premium Vector Icon Pack Vol ${id}` : (type === 'video' ? `Complete Video Course Part ${id} - Full HD` : `Premium PDF Study Notes Volume ${id}`),
+                price: (i + 1) * 10 + 9,
+                mrp: (i + 1) * 10 + 99,
+                rating: (3.5 + Math.random() * 1.5).toFixed(1),
+                reviews: Math.floor(Math.random() * 500) + 10,
+                image: images[0],
+                images: images, // For gallery
+                category: type,
+                catDisplay: catName,
+                desc: `This is a high-quality ${catName} designed for students and professionals. Includes comprehensive details, examples, and expert insights. Instant digital delivery after payment.`,
+                link: "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xeWJpemR0ajlfRkFCZU00T2dOY084dTlPOEVidHhMZHAvdmlldz91c3A9ZHJpdmVzZGs="
+            };
+        });
+
+        // --- AUTH & INIT ---
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            updateAuthUI();
+            if (user) {
+                // Fetch Data
+                db.collection('users').doc(user.uid).get().then(doc => {
+                    if(doc.exists) {
+                        const data = doc.data();
+                        unlockedProducts = data.unlocked || [];
+                        subscriptionExpiry = data.subExpiry || 0;
+                    }
+                    syncLocalStorageToDB();
+                    renderApp(); 
+                });
+            } else {
+                loadLocalData();
+                renderApp();
+            }
+        });
+
+        function handleAuth() {
+            if (currentUser) {
+                auth.signOut();
+                alert(lang === 'en' ? "Logged Out" : "लॉग आउट किया गया");
+            } else {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider).catch(e => alert(e.message));
+            }
+        }
+
+        function updateAuthUI() {
+            const txt = TEXTS[lang];
+            const el = document.getElementById('authBtn');
+            if (currentUser) {
+                el.innerHTML = `<span class="nav-line-1">Hello, ${currentUser.displayName.split(' ')[0]}</span><span class="nav-line-2">Sign Out</span>`;
+            } else {
+                el.innerHTML = `<span class="nav-line-1">${txt.hello}</span><span class="nav-line-2">${txt.account}</span>`;
+            }
+        }
+
+        function toggleLanguage() {
+            lang = lang === 'en' ? 'hi' : 'en';
+            
+            // Re-render elements that need translation
+            updateTexts();
+            renderApp(); 
+        }
+
+        function updateTexts() {
+            const t = TEXTS[lang];
+            document.getElementById('txt-sub-btn').innerText = t.subBtn;
+            document.getElementById('txt-hello').innerText = currentUser ? `Hello, ${currentUser.displayName.split(' ')[0]}` : t.hello;
+            document.getElementById('txt-account').innerText = t.account;
+            document.getElementById('txt-cart').innerText = t.cart;
+            document.getElementById('txt-guest-warn').innerText = t.guestWarn;
+            document.getElementById('txt-upload-lbl').innerText = t.uploadLbl;
+            document.getElementById('verifyBtn').innerText = t.verifyBtn;
+            document.getElementById('headerSearchInput').placeholder = t.searchPH;
+            document.getElementById('subNote').innerText = t.subNote;
+        }
+
+        function loadLocalData() {
+            const sub = localStorage.getItem('sub_expiry');
+            subscriptionExpiry = sub ? parseInt(sub) : 0;
+            
+            const keys = Object.keys(localStorage);
+            unlockedProducts = keys
+                .filter(k => k.startsWith('unlocked_'))
+                .map(k => parseInt(k.replace('unlocked_', '')));
+        }
+
+        function syncLocalStorageToDB() {
+            if(!currentUser) return;
+            const batch = db.batch();
+            const ref = db.collection('users').doc(currentUser.uid);
+            
+            batch.set(ref, {
+                unlocked: firebase.firestore.FieldValue.arrayUnion(...unlockedProducts),
+                subExpiry: Math.max(subscriptionExpiry, 0)
+            }, { merge: true });
+            
+            batch.commit();
+        }
+
+        // --- ROUTING ---
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) renderPDP(parseInt(id));
+            else renderHome();
+        });
+
+        function goHome() {
+            window.history.pushState({}, "", window.location.pathname);
+            renderHome();
+        }
+
+        function goToProduct(id) {
+            window.history.pushState({}, "", `?id=${id}`);
+            renderPDP(id);
+            window.scrollTo(0, 0);
+        }
+
+        // --- RENDERERS ---
+        const app = document.getElementById('app');
+
+        function renderHome() {
+            currentView = 'home';
+            activeProduct = null;
+            const t = TEXTS[lang];
+
+            const searchTerm = document.getElementById('headerSearchInput').value.toLowerCase();
+            const filtered = products.filter(p => {
+                const matchCat = activeCategory === 'all' || p.category === activeCategory;
+                const matchSearch = p.title.toLowerCase().includes(searchTerm);
+                return matchCat && matchSearch;
+            });
+
+            document.querySelectorAll('.sub-nav span').forEach(el => el.classList.remove('active'));
+            const navId = `nav-${activeCategory}`;
+            if(document.getElementById(navId)) document.getElementById(navId).classList.add('active');
+
+            let html = `
+                <div class="amz-grid">
+            `;
+
+            if(filtered.length === 0) {
+                html += `<div style="grid-column: 1/-1; text-align:center; padding: 50px;"><h2>No products found</h2></div>`;
+            } else {
+                filtered.forEach(p => {
+                    const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+                    html += `
+                        <div class="amz-card" onclick="goToProduct(${p.id})">
+                            <div class="amz-img-box">
+                                <img src="${p.image}" alt="${p.title}">
+                            </div>
+                            <div class="amz-title">${p.title}</div>
+                            <div class="amz-rating">
+                                <span class="stars">${getStarHTML(p.rating)}</span>
+                                <span class="count">${p.reviews}</span>
+                            </div>
+                            <div style="margin-top:auto">
+                                <span class="amz-price"><sup style="font-size:0.75rem">₹</sup>${p.price}</span>
+                                <span class="amz-mrp">₹${p.mrp}</span>
+                                <span style="font-size:0.75rem; color:#B12704">(${discount}% off)</span>
+                            </div>
+                            <div class="prime-badge">✓ <i class="fas fa-check" style="color:#ffa41c"></i> Prime</div>
+                        </div>
+                    `;
+                });
+            }
+            html += `</div>`;
+            app.innerHTML = html;
+        }
+
+        function renderPDP(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) { renderHome(); return; }
+            activeProduct = p;
+            currentView = 'pdp';
+            const t = TEXTS[lang];
+
+            const hasSub = new Date().getTime() < subscriptionExpiry;
+            const isUnlocked = unlockedProducts.includes(id) || hasSub;
+            const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+
+            // Suggestions
+            const suggestions = products.filter(x => x.id !== id && x.category === p.category).slice(0, 10);
+
+            // Gallery HTML (Thumbnails)
+            const galleryThumbs = p.images.map((img, idx) => 
+                `<img src="${img}" onclick="changeMainImage('${img}', this)" class="${idx===0?'active-thumb':''}">`
+            ).join('');
+
+            let html = `
+                <div class="pdp-wrapper">
+                    <div class="pdp-grid">
+                        <!-- 1. Thumbnails -->
+                        <div class="gallery-thumbs">
+                            ${galleryThumbs}
+                        </div>
+
+                        <!-- 2. Main Image -->
+                        <div class="pdp-img-main">
+                            <img src="${p.image}" class="pdp-main-img" id="mainDisplayImg">
+                        </div>
+
+                        <!-- 3. Details -->
+                        <div class="pdp-center">
+                            <h1 style="font-size:1.6rem; font-weight:500; line-height:1.2; margin-bottom:10px; color:#333;">${p.title}</h1>
+                            <div class="amz-rating" style="padding-bottom:10px; border-bottom:1px solid #ddd; margin-bottom:10px;">
+                                <span class="stars" style="font-size:1rem;">${getStarHTML(p.rating)}</span>
+                                <span class="count" style="margin-left:5px; color:#007185;">${p.reviews} ratings</span>
+                            </div>
+                            
+                            <div style="margin-bottom:15px; background:#f9f9f9; padding:10px; border-radius:4px;">
+                                <span class="amz-mrp">M.R.P.: ₹${p.mrp}</span><br>
+                                <span style="font-size:1rem; color:#565959;">${t.dealPrice}:</span> 
+                                <span style="font-size:1.6rem; color:#B12704; font-weight:500;">₹${p.price}</span>
+                                <span style="font-weight:bold;"> (${discount}% off)</span>
+                                <div style="font-size:0.8rem; color:#555;">Inclusive of all taxes</div>
+                            </div>
+                            
+                            <div style="font-size:0.9rem; line-height:1.6; color:#333;">
+                                <p><strong>Category:</strong> ${p.catDisplay}</p>
+                                <ul style="margin-left:20px; margin-top:10px;">
+                                    <li>High Quality Content</li>
+                                    <li>Instant Download Access</li>
+                                    <li>Lifetime Validity (if purchased individually)</li>
+                                    <li>Verified Publisher</li>
+                                </ul>
+                                <p style="margin-top:10px;">${p.desc}</p>
+                            </div>
+                        </div>
+
+                        <!-- 4. Buy Box -->
+                        <div>
+                            <div class="buy-box">
+                                <div class="buy-price">₹${p.price}</div>
+                                <div style="font-size:0.85rem; color:#007185; margin-bottom:10px;">
+                                    ${t.delivery}
+                                </div>
+                                <div style="font-size:1.1rem; color:#007600; font-weight:500; margin-bottom:15px;">
+                                    In Stock.
+                                </div>
+                                
+                                ${isUnlocked ? 
+                                    `<button class="amz-btn btn-dl" onclick="downloadFile('${p.link}')"><i class="fas fa-download"></i> ${t.download}</button>` 
+                                    : 
+                                    `<button class="amz-btn btn-cart" onclick="alert('${t.addToCart} (Demo)')">${t.addToCart}</button>
+                                     <button class="amz-btn btn-buy" onclick="openProductPayment()">${t.buyNow}</button>
+                                     <div style="text-align:center; font-size:0.8rem; margin-top:10px; color:#565959;">
+                                        <i class="fas fa-lock"></i> ${t.secure}
+                                     </div>`
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUGGESTIONS -->
+                    <div class="suggestion-box">
+                        <h2 style="font-size:1.2rem; margin-bottom:10px;">Related Products</h2>
+                        <div class="suggestion-grid">
+                            ${suggestions.map(s => `
+                                <div class="suggestion-card" onclick="goToProduct(${s.id})">
+                                    <img src="${s.image}">
+                                    <div class="amz-title" style="font-size:0.85rem; height:40px;">${s.title}</div>
+                                    <div class="stars" style="font-size:0.75rem">${getStarHTML(s.rating)}</div>
+                                    <div style="color:#B12704; font-weight:700; font-size:1rem;">₹${s.price}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- COMMENTS (External Script) -->
+                    <div id="comments-and-ratings-container">
+                        <div class="firebase-comments-widget" style="padding-top:20px;">
+                            <h2 style="font-size:1.3rem;">Customer Reviews & Comments</h2>
+                            <div id="custom-comment-section">
+                                <p style="color:#666; margin-top:10px;">Loading community section...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            app.innerHTML = html;
+            loadCommentScript();
+        }
+
+        function changeMainImage(src, thumb) {
+            document.getElementById('mainDisplayImg').src = src;
+            document.querySelectorAll('.gallery-thumbs img').forEach(img => img.classList.remove('active-thumb'));
+            thumb.classList.add('active-thumb');
+        }
+
+        // --- PAYMENT & SUBSCRIPTION ---
+
+        function openSubscriptionModal() {
+            isSubscriptionMode = true;
+            const t = TEXTS[lang];
+            
+            document.getElementById('modalTitle').innerText = t.verifySub;
+            document.getElementById('modalPrice').innerText = "₹299";
+            document.getElementById('subNote').style.display = 'block';
+            document.getElementById('verifyBtn').innerText = t.verifyBtn;
+            
+            showModalCommon();
+        }
+
+        function openProductPayment() {
+            if(!activeProduct) return;
+            isSubscriptionMode = false;
+            const t = TEXTS[lang];
+            
+            document.getElementById('modalTitle').innerText = "Complete Payment";
+            document.getElementById('modalPrice').innerText = "₹" + activeProduct.price;
+            document.getElementById('subNote').style.display = 'none';
+            document.getElementById('verifyBtn').innerText = t.verifyBtn;
+
+            showModalCommon();
+        }
+
+        function showModalCommon() {
+            // Check auth status for guest warning
+            const warn = document.getElementById('guestWarning');
+            if(currentUser) {
+                warn.style.display = 'none';
+            } else {
+                warn.style.display = 'block';
+            }
+
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('statusMsg').innerText = '';
+            document.getElementById('verifyBtn').style.display = 'block';
+            document.getElementById('loader').style.display = 'none';
+            updateTexts(); // Ensure lang is correct
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        async function startScan() {
+            const fileInput = document.getElementById('fileInput');
+            const statusMsg = document.getElementById('statusMsg');
+            const loader = document.getElementById('loader');
+            const verifyBtn = document.getElementById('verifyBtn');
+
+            if (!fileInput.files[0]) {
+                statusMsg.innerText = "Please upload screenshot";
+                statusMsg.style.color = "red";
+                return;
+            }
+
+            // ADMIN BYPASS
+            if(fileInput.files[0].name.toLowerCase().includes('admin')) {
+                processSuccess();
+                return;
+            }
+
+            verifyBtn.style.display = 'none';
+            loader.style.display = 'block';
+            statusMsg.innerText = "Scanning... / जाँच हो रही है...";
+            statusMsg.style.color = "#333";
+
+            try {
+                const worker = await Tesseract.createWorker('eng', 1);
+                const { data: { text } } = await worker.recognize(fileInput.files[0]);
+                await worker.terminate();
+
+                const lowerText = text.toLowerCase();
+                const targetPrice = isSubscriptionMode ? "299" : activeProduct.price.toString();
+                
+                const hasPrice = lowerText.includes(targetPrice);
+                const hasSuccess = lowerText.includes("success") || lowerText.includes("paid") || lowerText.includes("payment");
+                const hasName = lowerText.includes("himanshu") || lowerText.includes("paytmqr");
+
+                if (hasPrice && (hasSuccess || hasName)) {
+                    statusMsg.innerText = "✅ Verified / सत्यापित!";
+                    statusMsg.style.color = "green";
+                    setTimeout(processSuccess, 1500);
+                } else {
+                    throw new Error("Details not matched");
+                }
+            } catch (e) {
+                loader.style.display = 'none';
+                verifyBtn.style.display = 'block';
+                statusMsg.innerText = "❌ Failed. Check Amount/Image.";
+                statusMsg.style.color = "red";
+            }
+        }
+
+        function processSuccess() {
+            const t = TEXTS[lang];
+            if (isSubscriptionMode) {
+                // Set 30 days expiry
+                const now = new Date();
+                subscriptionExpiry = now.setDate(now.getDate() + 30);
+                
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).set({ subExpiry: subscriptionExpiry }, { merge: true });
+                } else {
+                    localStorage.setItem('sub_expiry', subscriptionExpiry.toString());
+                }
+                
+                alert(t.subSuccess);
+            } else {
+                // Individual Unlock
+                const pid = activeProduct.id;
+                unlockedProducts.push(pid);
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({
+                        unlocked: firebase.firestore.FieldValue.arrayUnion(pid)
+                    });
+                } else {
+                    localStorage.setItem(`unlocked_${pid}`, 'true');
+                }
+                alert(t.paySuccess);
+            }
+            
+            closeModal();
+            renderApp(); // Refresh UI to show unlocked state
+        }
+
+        // --- UTILS ---
+        function getStarHTML(rating) {
+            const r = Math.round(rating);
+            let s = '';
+            for(let i=0; i<5; i++) {
+                s += i < r ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+            }
+            return s;
+        }
+
+        function setCategory(cat) {
+            activeCategory = cat;
+            document.getElementById('headerCategorySelect').value = cat;
+            renderHome();
+        }
+
+        function applyFilter() {
+            activeCategory = document.getElementById('headerCategorySelect').value;
+            renderHome();
+        }
+
+        function downloadFile(encodedLink) {
+            try {
+                const url = atob(encodedLink);
+                window.open(url, '_blank');
+            } catch(e) {
+                alert("Link Error");
+            }
+        }
+
+        function loadCommentScript() {
+            const oldScript = document.getElementById('external-comment-script');
+            if(oldScript) oldScript.remove();
+            const script = document.createElement('script');
+            script.id = 'external-comment-script';
+            script.src = "https://gklearnstudy.in/js/comment.js";
+            script.async = true;
+            document.body.appendChild(script);
+        }
+        
+        // Initial Render
+        renderApp = () => { if(currentView === 'pdp' && activeProduct) renderPDP(activeProduct.id); else renderHome(); };
+
+    </script>
+</body>
+</html>
