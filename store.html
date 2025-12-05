@@ -12,10 +12,11 @@
     <!-- Libraries -->
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs (Compat version for existing scripts) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
 
     <style>
         /* --- AMAZON THEME & UTILITIES --- */
@@ -74,25 +75,21 @@
         .sub-nav span.active { color: var(--amz-orange); font-weight: bold; }
 
         /* Grid */
-        .amz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 15px; padding: 15px; background: var(--bg-gray); min-height: 80vh; }
-        .amz-card { background: white; border: 1px solid #ddd; padding: 15px; cursor: pointer; display: flex; flex-direction: column; transition: 0.2s; position: relative; height: 100%; border-radius: 4px; }
+        .amz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; background: var(--bg-gray); min-height: 80vh; max-width: 1000px; margin: 0 auto; }
+        .amz-card { background: white; border: 1px solid #ddd; padding: 20px; cursor: pointer; display: flex; flex-direction: column; transition: 0.2s; position: relative; height: 100%; border-radius: 4px; }
         .amz-card:hover { box-shadow: 0 0 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
         
-        .amz-img-box { height: 180px; display: flex; align-items: center; justify-content: center; background: #fff; margin-bottom: 10px; padding: 10px; }
+        .amz-img-box { height: 200px; display: flex; align-items: center; justify-content: center; background: #fff; margin-bottom: 15px; padding: 10px; }
         .amz-img-box img { max-height: 100%; max-width: 100%; object-fit: contain; }
         
-        .amz-title { font-size: 1rem; font-weight: 500; line-height: 1.3; color: #0F1111; margin-bottom: 5px; height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
+        .amz-title { font-size: 1.2rem; font-weight: 500; line-height: 1.3; color: #0F1111; margin-bottom: 5px; }
         .amz-title:hover { color: #c7511f; }
         
-        .amz-rating { display: flex; align-items: center; gap: 5px; font-size: 0.8rem; margin-bottom: 5px; }
-        .stars { color: #ffa41c; }
-        .count { color: #007185; }
-
-        .amz-price { font-size: 1.3rem; font-weight: 500; }
-        .amz-price sup { font-size: 0.7rem; top: -0.5em; }
-        .amz-mrp { font-size: 0.8rem; color: #565959; text-decoration: line-through; margin-left: 5px; }
+        .amz-price { font-size: 1.5rem; font-weight: 500; }
+        .amz-price sup { font-size: 0.8rem; top: -0.5em; }
+        .amz-mrp { font-size: 0.9rem; color: #565959; text-decoration: line-through; margin-left: 5px; }
         
-        .prime-badge { color: #007185; font-weight: bold; font-size: 0.75rem; margin-top: auto; padding-top: 10px; }
+        .prime-badge { color: #007185; font-weight: bold; font-size: 0.8rem; margin-top: auto; padding-top: 10px; }
 
         /* PDP */
         .pdp-wrapper { background: white; max-width: 1500px; margin: 0 auto; padding: 20px; min-height: 80vh; }
@@ -132,22 +129,40 @@
         .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--amz-orange); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 10px auto; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Comments CSS */
-        .rating-widget-wrapper { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        /* --- COMMENT SYSTEM STYLES (FROM USER) --- */
+        .rating-widget-wrapper { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-top: 20px; background: #fff; }
         .firebase-comments-widget { margin-top: 30px; }
-        .comment-form textarea { width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 4px; min-height: 80px; }
-        .btn.primary { background: #007185; color: white; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; }
+        .comment-form textarea { width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 4px; min-height: 80px; font-family: inherit; }
+        .btn { padding: 8px 16px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+        .btn.primary { background: #232f3e; color: white; border: none; }
+        .rating-skeleton-display { display: flex; gap: 20px; align-items: center; }
+        .skeleton-summary { width: 80px; text-align: center; }
+        .skeleton-circle { width: 50px; height: 50px; background: #eee; border-radius: 50%; margin: 0 auto 10px; }
+        .skeleton-line { height: 10px; background: #eee; margin-bottom: 8px; width: 100%; border-radius: 4px; }
+        .skeleton-line.short { width: 60%; }
+        .skeleton-breakdown { flex: 1; }
+        .rating-content { display: none; } /* Hidden initially until loaded */
+        .rating-content.loaded { display: block; }
+        
+        .rating-display { display: flex; gap: 30px; margin: 15px 0; }
+        .average-summary { text-align: center; font-size: 2rem; font-weight: bold; }
+        .rating-breakdown { flex: 1; font-size: 0.9rem; }
+        .breakdown-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .progress-bar-container { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+        .progress-bar { height: 100%; background: #ffa41c; width: 0%; transition: width 0.5s; }
+        
+        #rating-stars { display: flex; gap: 5px; cursor: pointer; margin-top: 10px; }
+        .star { width: 30px; height: 30px; color: #ddd; transition: color 0.2s; }
+        .star:hover, .star.active { color: #ffa41c; }
+        
+        .comments-list { margin-top: 20px; }
+        .comment-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .comment-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        .comment-body { color: #333; line-height: 1.4; }
 
         /* Suggestion Carousel */
         .suggestion-box { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
-        .suggestion-grid { display: flex; overflow-x: auto; gap: 15px; padding: 10px 0; scrollbar-width: thin; }
-        .suggestion-card { min-width: 160px; max-width: 160px; border: 1px solid #eee; padding: 10px; cursor: pointer; border-radius: 4px; background: white; }
-        .suggestion-card:hover { border-color: #e77600; }
-        .suggestion-card img { height: 120px; margin: 0 auto 10px; display: block; object-fit: contain; }
         
-        .hide-mobile { display: block; }
-        @media(max-width: 600px) { .hide-mobile { display: none; } }
-
         .lang-switch-btn {
             background: #f0f0f0; border: 1px solid #ccc; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 5px;
         }
@@ -158,7 +173,6 @@
             font-size: 0.85rem; margin-bottom: 10px; padding: 10px; border-radius: 4px; text-align: left; line-height: 1.4;
         }
         .alert-warning { background: #fff4e5; border: 1px solid #ffe3c4; color: #b76e00; }
-        .alert-success { background: #edfff1; border: 1px solid #c3e6cb; color: #155724; }
     </style>
 <script type="importmap">
 {
@@ -175,8 +189,9 @@
 </head>
 <body>
 
-    <!-- FIREBASE INIT -->
+    <!-- SCRIPT INITIALIZATION -->
     <script>
+        // GLOBAL VARIABLES FOR EXTERNAL SCRIPT
         const firebaseConfig = {
             apiKey: "AIzaSyCFIKqQ5OICMZhWPtZqmgem0bEW7QpoPcw",
             authDomain: "appcomment.firebaseapp.com",
@@ -185,9 +200,17 @@
             messagingSenderId: "156258808941",
             appId: "1:156258808941:web:04a1f7470ac43657c7fb64"
         };
+        
+        const VAPID_KEY = "BPSPa7nCW1nGok9peZQepk25VC1OxeFxFHtWVZsen2TnwVCya3Sq2Dtb4W0sX8u06fRsg-eAqgxEUoW2XP1Oyvo";
+
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+
+        // Check if external script handles auth or we need to
+        // We'll keep our internal auth state synced
+        let currentUser = null;
     </script>
 
     <!-- HEADER -->
@@ -196,14 +219,14 @@
             <div class="logo" onclick="goHome()">GK<span>Learn</span></div>
             
             <div class="search-container">
-                <select class="search-select" id="headerCategorySelect" onchange="applyFilter()">
+                <select class="search-select" id="headerCategorySelect">
                     <option value="all">All</option>
                     <option value="pdf">PDF</option>
                     <option value="video">Video</option>
                     <option value="svg">SVG</option>
                 </select>
-                <input type="text" class="search-input" id="headerSearchInput" placeholder="Search..." onkeyup="applyFilter()">
-                <button class="search-btn" onclick="applyFilter()"><i class="fas fa-search"></i></button>
+                <input type="text" class="search-input" id="headerSearchInput" placeholder="Search..." disabled>
+                <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="nav-right">
@@ -254,10 +277,9 @@
             </div>
 
             <div style="background: #fcfcfc; border: 1px dashed #ccc; padding: 10px; display: inline-block; margin: 10px 0;">
+                <!-- QR Code Only, No Text below it as requested -->
                 <img src="https://gklearnstudy.in/HIMANSHU1764854038759.jpg" style="width:180px; mix-blend-mode:multiply;">
             </div>
-            
-            <!-- Removed UPI Text as requested -->
             
             <h2 style="margin:5px 0 10px; color:#B12704; font-size:1.8rem;" id="modalPrice">₹0</h2>
             <p id="subNote" style="display:none; color:#007600; font-size:0.9rem; font-weight:bold; margin-bottom:15px;">🔓 Unlocks ALL Products for 30 Days</p>
@@ -270,19 +292,6 @@
             <button id="verifyBtn" onclick="startScan()" class="amz-btn btn-buy" style="margin-top:15px; border-radius:4px; font-weight:bold;">Verify & Download</button>
             <div class="spinner" id="loader"></div>
             <p id="statusMsg" style="font-size:0.85rem; margin-top:10px; font-weight:bold;"></p>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div style="background: #232f3e; color: white; padding: 40px 0; margin-top: 40px; text-align: center; font-size: 0.85rem;">
-        <div style="margin-bottom: 20px;">
-            <div class="logo" style="justify-content: center; margin-bottom: 10px; font-size: 1.8rem;">GK<span>Learn</span></div>
-            <p style="color: #ddd;">&copy; 2025 GK Learn Premium Store. All Rights Reserved.</p>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 20px; color: #ccc;">
-            <span>Terms of Use</span>
-            <span>Privacy Notice</span>
-            <span>Interest-Based Ads</span>
         </div>
     </div>
 
@@ -330,58 +339,26 @@
 
         // --- STATE ---
         let lang = 'en';
-        let currentUser = null;
         let unlockedProducts = []; 
         let subscriptionExpiry = 0; // Timestamp
         let currentView = 'home';
         let activeProduct = null;
-        let activeCategory = 'all';
         let isSubscriptionMode = false;
 
-        // Sample Images for Gallery (Placeholder + Real Icons)
-        const sampleGallery = [
-            "https://cdn-icons-png.flaticon.com/512/337/337946.png",
-            "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-            "https://cdn-icons-png.flaticon.com/512/3068/3068327.png",
-            "https://cdn-icons-png.flaticon.com/512/2933/2933190.png",
-            "https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
-        ];
-
-        // Generate 30 Products
-        const products = Array.from({ length: 30 }, (_, i) => {
-            const id = i + 1;
-            let type = 'pdf';
-            let catName = 'PDF Notes';
-            
-            if (i % 3 === 0) { type = 'video'; catName = 'Video Course'; }
-            if (i >= 25) { type = 'svg'; catName = 'SVG Icon Pack'; }
-
-            // Create a randomized image set for gallery
-            // Use different base images to simulate variety
-            const baseIndex = i % sampleGallery.length;
-            const images = [];
-            // Add base image
-            images.push(sampleGallery[baseIndex]);
-            // Add 4 other images for gallery scroll
-            for(let j=0; j<4; j++) {
-                images.push(sampleGallery[(baseIndex + j + 1) % sampleGallery.length]);
-            }
-
-            return {
-                id: id,
-                title: type === 'svg' ? `Premium Vector Icon Pack Vol ${id}` : (type === 'video' ? `Complete Video Course Part ${id} - Full HD` : `Premium PDF Study Notes Volume ${id}`),
-                price: (i + 1) * 10 + 9,
-                mrp: (i + 1) * 10 + 99,
-                rating: (3.5 + Math.random() * 1.5).toFixed(1),
-                reviews: Math.floor(Math.random() * 500) + 10,
-                image: images[0],
-                images: images, // For gallery
-                category: type,
-                catDisplay: catName,
-                desc: `This is a high-quality ${catName} designed for students and professionals. Includes comprehensive details, examples, and expert insights. Instant digital delivery after payment.`,
+        // SINGLE PRODUCT ONLY AS REQUESTED
+        const products = [
+            {
+                id: 1,
+                title: "Test PDF (Trial Version)",
+                price: 1, mrp: 10, rating: 4.1, reviews: 55,
+                image: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+                images: ["https://cdn-icons-png.flaticon.com/512/2991/2991148.png", "https://cdn-icons-png.flaticon.com/512/337/337946.png"],
+                category: 'pdf',
+                catDisplay: 'PDF Notes',
+                desc: "Trial PDF to check payment system. Pay ₹1 to verify instant unlock.",
                 link: "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xeWJpemR0ajlfRkFCZU00T2dOY084dTlPOEVidHhMZHAvdmlldz91c3A9ZHJpdmVzZGs="
-            };
-        });
+            }
+        ];
 
         // --- AUTH & INIT ---
         auth.onAuthStateChanged(user => {
@@ -426,8 +403,6 @@
 
         function toggleLanguage() {
             lang = lang === 'en' ? 'hi' : 'en';
-            
-            // Re-render elements that need translation
             updateTexts();
             renderApp(); 
         }
@@ -448,7 +423,6 @@
         function loadLocalData() {
             const sub = localStorage.getItem('sub_expiry');
             subscriptionExpiry = sub ? parseInt(sub) : 0;
-            
             const keys = Object.keys(localStorage);
             unlockedProducts = keys
                 .filter(k => k.startsWith('unlocked_'))
@@ -459,12 +433,10 @@
             if(!currentUser) return;
             const batch = db.batch();
             const ref = db.collection('users').doc(currentUser.uid);
-            
             batch.set(ref, {
                 unlocked: firebase.firestore.FieldValue.arrayUnion(...unlockedProducts),
                 subExpiry: Math.max(subscriptionExpiry, 0)
             }, { merge: true });
-            
             batch.commit();
         }
 
@@ -493,48 +465,25 @@
         function renderHome() {
             currentView = 'home';
             activeProduct = null;
-            const t = TEXTS[lang];
-
-            const searchTerm = document.getElementById('headerSearchInput').value.toLowerCase();
-            const filtered = products.filter(p => {
-                const matchCat = activeCategory === 'all' || p.category === activeCategory;
-                const matchSearch = p.title.toLowerCase().includes(searchTerm);
-                return matchCat && matchSearch;
-            });
-
-            document.querySelectorAll('.sub-nav span').forEach(el => el.classList.remove('active'));
-            const navId = `nav-${activeCategory}`;
-            if(document.getElementById(navId)) document.getElementById(navId).classList.add('active');
-
-            let html = `
-                <div class="amz-grid">
-            `;
-
-            if(filtered.length === 0) {
-                html += `<div style="grid-column: 1/-1; text-align:center; padding: 50px;"><h2>No products found</h2></div>`;
-            } else {
-                filtered.forEach(p => {
-                    const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-                    html += `
-                        <div class="amz-card" onclick="goToProduct(${p.id})">
-                            <div class="amz-img-box">
-                                <img src="${p.image}" alt="${p.title}">
-                            </div>
-                            <div class="amz-title">${p.title}</div>
-                            <div class="amz-rating">
-                                <span class="stars">${getStarHTML(p.rating)}</span>
-                                <span class="count">${p.reviews}</span>
-                            </div>
-                            <div style="margin-top:auto">
-                                <span class="amz-price"><sup style="font-size:0.75rem">₹</sup>${p.price}</span>
-                                <span class="amz-mrp">₹${p.mrp}</span>
-                                <span style="font-size:0.75rem; color:#B12704">(${discount}% off)</span>
-                            </div>
-                            <div class="prime-badge">✓ <i class="fas fa-check" style="color:#ffa41c"></i> Prime</div>
+            let html = `<div class="amz-grid">`;
+            
+            // Only 1 Product
+            products.forEach(p => {
+                const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
+                html += `
+                    <div class="amz-card" onclick="goToProduct(${p.id})">
+                        <div class="amz-img-box"><img src="${p.image}" alt="${p.title}"></div>
+                        <div class="amz-title">${p.title}</div>
+                        <div class="amz-rating"><span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span> <span class="count">${p.reviews}</span></div>
+                        <div style="margin-top:auto">
+                            <span class="amz-price"><sup style="font-size:0.75rem">₹</sup>${p.price}</span>
+                            <span class="amz-mrp">₹${p.mrp}</span>
+                            <span style="font-size:0.75rem; color:#B12704">(${discount}% off)</span>
                         </div>
-                    `;
-                });
-            }
+                        <div class="prime-badge">✓ <i class="fas fa-check" style="color:#ffa41c"></i> Prime</div>
+                    </div>
+                `;
+            });
             html += `</div>`;
             app.innerHTML = html;
         }
@@ -545,131 +494,180 @@
             activeProduct = p;
             currentView = 'pdp';
             const t = TEXTS[lang];
-
+            
             const hasSub = new Date().getTime() < subscriptionExpiry;
             const isUnlocked = unlockedProducts.includes(id) || hasSub;
             const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
-
-            // Suggestions
-            const suggestions = products.filter(x => x.id !== id && x.category === p.category).slice(0, 10);
-
-            // Gallery HTML (Thumbnails)
-            const galleryThumbs = p.images.map((img, idx) => 
-                `<img src="${img}" onclick="changeMainImage('${img}', this)" class="${idx===0?'active-thumb':''}">`
-            ).join('');
 
             let html = `
                 <div class="pdp-wrapper">
                     <div class="pdp-grid">
                         <!-- 1. Thumbnails -->
                         <div class="gallery-thumbs">
-                            ${galleryThumbs}
+                             <img src="${p.image}" class="active-thumb">
                         </div>
-
                         <!-- 2. Main Image -->
-                        <div class="pdp-img-main">
-                            <img src="${p.image}" class="pdp-main-img" id="mainDisplayImg">
-                        </div>
-
+                        <div class="pdp-img-main"><img src="${p.image}" class="pdp-main-img" id="mainDisplayImg"></div>
                         <!-- 3. Details -->
                         <div class="pdp-center">
                             <h1 style="font-size:1.6rem; font-weight:500; line-height:1.2; margin-bottom:10px; color:#333;">${p.title}</h1>
                             <div class="amz-rating" style="padding-bottom:10px; border-bottom:1px solid #ddd; margin-bottom:10px;">
-                                <span class="stars" style="font-size:1rem;">${getStarHTML(p.rating)}</span>
+                                <span class="stars" style="font-size:1rem;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
                                 <span class="count" style="margin-left:5px; color:#007185;">${p.reviews} ratings</span>
                             </div>
-                            
                             <div style="margin-bottom:15px; background:#f9f9f9; padding:10px; border-radius:4px;">
                                 <span class="amz-mrp">M.R.P.: ₹${p.mrp}</span><br>
                                 <span style="font-size:1rem; color:#565959;">${t.dealPrice}:</span> 
                                 <span style="font-size:1.6rem; color:#B12704; font-weight:500;">₹${p.price}</span>
                                 <span style="font-weight:bold;"> (${discount}% off)</span>
-                                <div style="font-size:0.8rem; color:#555;">Inclusive of all taxes</div>
                             </div>
-                            
-                            <div style="font-size:0.9rem; line-height:1.6; color:#333;">
-                                <p><strong>Category:</strong> ${p.catDisplay}</p>
-                                <ul style="margin-left:20px; margin-top:10px;">
-                                    <li>High Quality Content</li>
-                                    <li>Instant Download Access</li>
-                                    <li>Lifetime Validity (if purchased individually)</li>
-                                    <li>Verified Publisher</li>
-                                </ul>
-                                <p style="margin-top:10px;">${p.desc}</p>
-                            </div>
+                            <p style="margin-top:10px;">${p.desc}</p>
                         </div>
-
                         <!-- 4. Buy Box -->
                         <div>
                             <div class="buy-box">
                                 <div class="buy-price">₹${p.price}</div>
-                                <div style="font-size:0.85rem; color:#007185; margin-bottom:10px;">
-                                    ${t.delivery}
-                                </div>
-                                <div style="font-size:1.1rem; color:#007600; font-weight:500; margin-bottom:15px;">
-                                    In Stock.
-                                </div>
-                                
+                                <div style="font-size:0.85rem; color:#007185; margin-bottom:10px;">${t.delivery}</div>
+                                <div style="font-size:1.1rem; color:#007600; font-weight:500; margin-bottom:15px;">In Stock.</div>
                                 ${isUnlocked ? 
                                     `<button class="amz-btn btn-dl" onclick="downloadFile('${p.link}')"><i class="fas fa-download"></i> ${t.download}</button>` 
                                     : 
                                     `<button class="amz-btn btn-cart" onclick="alert('${t.addToCart} (Demo)')">${t.addToCart}</button>
                                      <button class="amz-btn btn-buy" onclick="openProductPayment()">${t.buyNow}</button>
-                                     <div style="text-align:center; font-size:0.8rem; margin-top:10px; color:#565959;">
-                                        <i class="fas fa-lock"></i> ${t.secure}
-                                     </div>`
+                                     <div style="text-align:center; font-size:0.8rem; margin-top:10px; color:#565959;"><i class="fas fa-lock"></i> ${t.secure}</div>`
                                 }
                             </div>
                         </div>
                     </div>
 
-                    <!-- SUGGESTIONS -->
-                    <div class="suggestion-box">
-                        <h2 style="font-size:1.2rem; margin-bottom:10px;">Related Products</h2>
-                        <div class="suggestion-grid">
-                            ${suggestions.map(s => `
-                                <div class="suggestion-card" onclick="goToProduct(${s.id})">
-                                    <img src="${s.image}">
-                                    <div class="amz-title" style="font-size:0.85rem; height:40px;">${s.title}</div>
-                                    <div class="stars" style="font-size:0.75rem">${getStarHTML(s.rating)}</div>
-                                    <div style="color:#B12704; font-weight:700; font-size:1rem;">₹${s.price}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <!-- COMMENTS (External Script) -->
+                    <!-- --- USER PROVIDED COMMENT HTML START --- -->
                     <div id="comments-and-ratings-container">
-                        <div class="firebase-comments-widget" style="padding-top:20px;">
-                            <h2 style="font-size:1.3rem;">Customer Reviews & Comments</h2>
-                            <div id="custom-comment-section">
-                                <p style="color:#666; margin-top:10px;">Loading community section...</p>
+                        <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                            <div class="rating-skeleton">
+                                <div class="rating-skeleton-display">
+                                    <div class="skeleton-summary">
+                                        <div class="skeleton-circle"></div>
+                                        <div class="skeleton-line short" style="width: 80%; margin: 0 auto;"></div>
+                                    </div>
+                                    <div class="skeleton-breakdown">
+                                        <div class="skeleton-line" style="height: 10px;"></div>
+                                        <div class="skeleton-line" style="height: 10px;"></div>
+                                        <div class="skeleton-line" style="height: 10px;"></div>
+                                        <div class="skeleton-line" style="height: 10px;"></div>
+                                        <div class="skeleton-line" style="height: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="rating-widget" class="rating-content">
+                                <h2>Rate this Page</h2>
+                                <div id="rating-display">
+                                    <div class="average-summary">
+                                        <div id="average-rating-value">0.0</div>
+                                        <div id="total-ratings-count">0 ratings</div>
+                                    </div>
+                                    <div class="rating-breakdown">
+                                        <div class="breakdown-row" data-star-level="5">
+                                            <span class="star-label">5 star</span>
+                                            <div class="progress-bar-container"><div class="progress-bar progress-bar-5"></div></div>
+                                            <span class="vote-count">0</span>
+                                        </div>
+                                        <div class="breakdown-row" data-star-level="4">
+                                            <span class="star-label">4 star</span>
+                                            <div class="progress-bar-container"><div class="progress-bar progress-bar-4"></div></div>
+                                            <span class="vote-count">0</span>
+                                        </div>
+                                        <div class="breakdown-row" data-star-level="3">
+                                            <span class="star-label">3 star</span>
+                                            <div class="progress-bar-container"><div class="progress-bar progress-bar-3"></div></div>
+                                            <span class="vote-count">0</span>
+                                        </div>
+                                        <div class="breakdown-row" data-star-level="2">
+                                            <span class="star-label">2 star</span>
+                                            <div class="progress-bar-container"><div class="progress-bar progress-bar-2"></div></div>
+                                            <span class="vote-count">0</span>
+                                        </div>
+                                        <div class="breakdown-row" data-star-level="1">
+                                            <span class="star-label">1 star</span>
+                                            <div class="progress-bar-container"><div class="progress-bar progress-bar-1"></div></div>
+                                            <span class="vote-count">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="rating-stars">
+                                    <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                                    <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                                    <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                                    <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                                    <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                                </div>
+                                <div id="rating-login-prompt" style="display: none;">
+                                    <p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to rate.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comments-wrapper comments-loading" id="comments-main-container">
+                            <div class="firebase-comments-widget" id="custom-comment-section">
+                                <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                                <div id="auth-container">
+                                    <div id="user-info"></div>
+                                    <button id="login-btn" class="btn primary">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+                                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+                                            <path d="M1 1h22v22H1z" fill="none"></path>
+                                        </svg>
+                                        Sign in with Google
+                                    </button>
+                                    <button id="logout-btn" class="btn">Logout</button>
+                                </div>
+                                <div id="login-prompt" style="display: none;">
+                                    <p class="muted">Please <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a> to comment.</p>
+                                </div>
+                                <div class="comment-form-shell" id="comment-form-shell" style="display: none;">
+                                    <form class="comment-form" id="comment-form">
+                                        <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
+                                        <textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required aria-label="Comment input"></textarea><input type="hidden" id="parent-id" value="" />
+                                        <div class="form-footer">
+                                            <div id="char-counter">0 / 1000</div>
+                                            <div class="actions"><button type="submit" class="btn primary" id="submit-button">Submit</button><button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="comments-list" class="comment-list">
+                                    <div class="skeleton-comment">
+                                        <div class="skeleton-line header"></div>
+                                        <div class="skeleton-line"></div>
+                                        <div class="skeleton-line short"></div>
+                                    </div>
+                                    <div class="skeleton-comment">
+                                        <div class="skeleton-line header"></div>
+                                        <div class="skeleton-line"></div>
+                                        <div class="skeleton-line short"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- --- USER PROVIDED COMMENT HTML END --- -->
                 </div>
             `;
             app.innerHTML = html;
-            loadCommentScript();
-        }
-
-        function changeMainImage(src, thumb) {
-            document.getElementById('mainDisplayImg').src = src;
-            document.querySelectorAll('.gallery-thumbs img').forEach(img => img.classList.remove('active-thumb'));
-            thumb.classList.add('active-thumb');
+            
+            // Load External Script AFTER HTML is injected
+            loadExternalCommentScript();
         }
 
         // --- PAYMENT & SUBSCRIPTION ---
-
         function openSubscriptionModal() {
             isSubscriptionMode = true;
             const t = TEXTS[lang];
-            
             document.getElementById('modalTitle').innerText = t.verifySub;
             document.getElementById('modalPrice').innerText = "₹299";
             document.getElementById('subNote').style.display = 'block';
             document.getElementById('verifyBtn').innerText = t.verifyBtn;
-            
             showModalCommon();
         }
 
@@ -677,30 +675,22 @@
             if(!activeProduct) return;
             isSubscriptionMode = false;
             const t = TEXTS[lang];
-            
             document.getElementById('modalTitle').innerText = "Complete Payment";
             document.getElementById('modalPrice').innerText = "₹" + activeProduct.price;
             document.getElementById('subNote').style.display = 'none';
             document.getElementById('verifyBtn').innerText = t.verifyBtn;
-
             showModalCommon();
         }
 
         function showModalCommon() {
-            // Check auth status for guest warning
             const warn = document.getElementById('guestWarning');
-            if(currentUser) {
-                warn.style.display = 'none';
-            } else {
-                warn.style.display = 'block';
-            }
-
+            warn.style.display = currentUser ? 'none' : 'block';
             document.getElementById('paymentModal').style.display = 'flex';
             document.getElementById('fileInput').value = '';
             document.getElementById('statusMsg').innerText = '';
             document.getElementById('verifyBtn').style.display = 'block';
             document.getElementById('loader').style.display = 'none';
-            updateTexts(); // Ensure lang is correct
+            updateTexts();
         }
 
         function closeModal() {
@@ -719,7 +709,6 @@
                 return;
             }
 
-            // ADMIN BYPASS
             if(fileInput.files[0].name.toLowerCase().includes('admin')) {
                 processSuccess();
                 return;
@@ -760,19 +749,15 @@
         function processSuccess() {
             const t = TEXTS[lang];
             if (isSubscriptionMode) {
-                // Set 30 days expiry
                 const now = new Date();
                 subscriptionExpiry = now.setDate(now.getDate() + 30);
-                
                 if (currentUser) {
                     db.collection('users').doc(currentUser.uid).set({ subExpiry: subscriptionExpiry }, { merge: true });
                 } else {
                     localStorage.setItem('sub_expiry', subscriptionExpiry.toString());
                 }
-                
                 alert(t.subSuccess);
             } else {
-                // Individual Unlock
                 const pid = activeProduct.id;
                 unlockedProducts.push(pid);
                 if (currentUser) {
@@ -784,30 +769,8 @@
                 }
                 alert(t.paySuccess);
             }
-            
             closeModal();
-            renderApp(); // Refresh UI to show unlocked state
-        }
-
-        // --- UTILS ---
-        function getStarHTML(rating) {
-            const r = Math.round(rating);
-            let s = '';
-            for(let i=0; i<5; i++) {
-                s += i < r ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
-            }
-            return s;
-        }
-
-        function setCategory(cat) {
-            activeCategory = cat;
-            document.getElementById('headerCategorySelect').value = cat;
-            renderHome();
-        }
-
-        function applyFilter() {
-            activeCategory = document.getElementById('headerCategorySelect').value;
-            renderHome();
+            renderApp();
         }
 
         function downloadFile(encodedLink) {
@@ -819,11 +782,13 @@
             }
         }
 
-        function loadCommentScript() {
-            const oldScript = document.getElementById('external-comment-script');
-            if(oldScript) oldScript.remove();
+        function loadExternalCommentScript() {
+            // Check if script already exists
+            const existing = document.getElementById('ext-comment-js');
+            if(existing) existing.remove();
+            
             const script = document.createElement('script');
-            script.id = 'external-comment-script';
+            script.id = 'ext-comment-js';
             script.src = "https://gklearnstudy.in/js/comment.js";
             script.async = true;
             document.body.appendChild(script);
@@ -831,7 +796,6 @@
         
         // Initial Render
         renderApp = () => { if(currentView === 'pdp' && activeProduct) renderPDP(activeProduct.id); else renderHome(); };
-
     </script>
 </body>
 </html>
