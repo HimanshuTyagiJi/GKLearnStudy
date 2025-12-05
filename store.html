@@ -9,54 +9,37 @@
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
-        /* --- THEME CSS --- */
-        :root {
-            --primary: #2874f0; --secondary: #fb641b; --bg: #f1f3f6;
-            --text: #212121; --green: #388e3c;
-        }
+        /* --- THEME CSS (SAME AS BEFORE) --- */
+        :root { --primary: #2874f0; --secondary: #fb641b; --bg: #f1f3f6; --text: #212121; --green: #388e3c; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
-
-        /* HEADER */
         header { background: var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .nav-top { display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; height: 60px; max-width: 1400px; margin: 0 auto; }
         .logo { font-size: 1.4rem; font-weight: bold; font-style: italic; color: white; cursor: pointer; }
         .logo span { color: #ffe500; }
-        .cart-badge { background: #ffe500; color: var(--primary); padding: 2px 6px; border-radius: 50%; font-size: 0.8rem; font-weight: bold; margin-left: 5px; }
-
         .nav-bottom { background: white; padding: 10px; display: flex; gap: 20px; overflow-x: auto; font-size: 0.9rem; font-weight: 500; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
-
-        /* APP CONTAINER */
         #app { max-width: 1400px; margin: 0 auto; padding: 10px; }
-
-        /* HOME GRID */
+        
+        /* GRID & CARDS */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
-        .card { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; position: relative; }
+        .card { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); cursor: pointer; position: relative; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .card img { height: 140px; object-fit: contain; margin: 0 auto; display: block; }
         .card h3 { font-size: 0.9rem; margin-top: 10px; height: 36px; overflow: hidden; }
         .price { font-weight: bold; font-size: 1.1rem; margin-top: 5px; }
         .tag-out { position: absolute; top: 5px; right: 5px; background: #eee; color: #888; font-size: 0.7rem; padding: 2px 4px; border-radius: 2px; }
 
-        /* PDP LAYOUT */
+        /* PDP */
         .pdp-container { background: white; padding: 15px; margin-top: 10px; border-radius: 4px; display: flex; flex-direction: column; gap: 20px; }
-        @media (min-width: 768px) {
-            .pdp-container { flex-direction: row; align-items: flex-start; }
-            .pdp-left { width: 40%; position: sticky; top: 70px; }
-            .pdp-right { width: 60%; }
-        }
+        @media (min-width: 768px) { .pdp-container { flex-direction: row; align-items: flex-start; } .pdp-left { width: 40%; position: sticky; top: 70px; } .pdp-right { width: 60%; } }
         .pdp-img-box { width: 100%; border: 1px solid #f0f0f0; padding: 20px; display: flex; justify-content: center; align-items: center; background: white; height: 350px; }
         .main-img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .pdp-title { font-size: 1.3rem; font-weight: 500; margin-bottom: 10px; }
         .pdp-price { font-size: 1.8rem; font-weight: bold; margin: 10px 0; color: #212121; }
-
-        /* BLUR & DESCRIPTION */
         .description-box { margin-top: 20px; padding: 15px; background: #fff; border: 1px solid #eee; border-radius: 4px; line-height: 1.6; font-size: 0.95rem; position: relative; }
         .blur-overlay { position: relative; height: 80px; overflow: hidden; margin-top: 10px; }
         .blur-overlay::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1)); }
         .read-more-btn { background: #f0f0f0; border: 1px solid #ccc; width: 100%; padding: 10px; text-align: center; font-weight: bold; cursor: pointer; margin-top: -20px; position: relative; z-index: 5; color: var(--primary); border-radius: 4px; }
-
-        /* BUTTONS */
         .btn-box { display: flex; gap: 10px; margin: 15px 0; position: sticky; bottom: 0; background: white; padding: 10px 0; z-index: 10; }
         .btn { flex: 1; padding: 14px; border: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; cursor: pointer; color: white; border-radius: 2px; }
         .btn-buy { background: var(--secondary); }
@@ -69,10 +52,9 @@
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
         .qr-img { width: 200px; mix-blend-mode: multiply; margin: 10px 0; border: 1px dashed #ccc; padding: 5px; }
         .verify-btn { background: var(--secondary); color: white; width: 100%; padding: 12px; margin-top: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 1rem; border-radius: 4px; }
-        
         .loader { display: none; margin: 10px auto; border: 4px solid #f3f3f3; border-top: 4px solid #fb641b; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #statusMsg { font-weight: bold; margin-top: 10px; font-size: 0.9rem; }
+        #statusMsg { font-weight: bold; margin-top: 10px; font-size: 0.9rem; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -80,13 +62,10 @@
     <header>
         <div class="nav-top">
             <div class="logo" onclick="goHome()">GK<span>Learn</span></div>
-            <div style="font-size:1.2rem; color:white;"><i class="fas fa-shopping-cart"></i> <span id="cartBadge" class="cart-badge">0</span></div>
+            <div style="font-size:1.2rem; color:white;"><i class="fas fa-shopping-cart"></i> <span id="cartBadge" style="background:#ffe500; color:black; padding:2px 6px; border-radius:50%; font-size:0.8rem;">0</span></div>
         </div>
         <div class="nav-bottom">
-            <span>Cybersecurity</span>
-            <span>PDF Notes</span>
-            <span>Computer</span>
-            <span>SSC/Railways</span>
+            <span>Cybersecurity</span><span>PDF Notes</span><span>Computer</span><span>SSC/Railways</span>
         </div>
     </header>
 
@@ -96,16 +75,13 @@
         <div class="modal-box">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h3>Scan & Pay <span id="modalPrice" style="color: #b12704;"></span></h3>
-            <p style="font-size: 0.8rem; color: #555;">Warning: Exact Amount & Today's Date Required</p>
-            
+            <p style="font-size: 0.8rem; color: #555;">Verify Today's Date & Exact Amount</p>
             <img src="https://gklearnstudy.in/HIMANSHU1764854038759.jpg" class="qr-img">
             <p style="font-weight: bold; font-size: 0.9rem;">HIMANSHU</p>
-
             <div style="text-align: left; margin-top: 15px;">
                 <label style="font-size: 0.9rem; font-weight: 500;">Upload Screenshot</label>
                 <input type="file" id="fileInput" accept="image/*" style="width: 100%; margin-top: 5px; padding: 8px; background: #f0f0f0; border-radius: 4px;">
             </div>
-
             <button class="verify-btn" id="verifyBtn" onclick="startVerification()">Verify & Download</button>
             <div class="loader" id="loader"></div>
             <p id="statusMsg"></p>
@@ -113,30 +89,11 @@
     </div>
 
     <script>
-        // --- CONFIG ---
         const API_KEY = "AIzaSyAC5uYXKbJdKK3Ze8W3um1b0zPS7EjHJHM";
-        // Cybersecurity PDF Link
         const SECURE_LINK_1 = "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xeWJpemR0ajlfRkFCZU00T2dOY084dTlPOEVidHhMZHAvdmlldz91c3A9ZHJpdmVzZGs=";
 
-        // --- 1. FULL PRODUCT LIST (12 ITEMS) ---
         const products = [
-            {
-                id: 1,
-                title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache (1200+ Lines)",
-                price: 1, mrp: 499, rating: 5.0, reviews: "5,200",
-                image: "https://gklearnstudy.in/images/content.png",
-                fullDesc: `
-                    <h3>🔒 Internet Fraud Aur UPI Scam Se Kaise Bachein?</h3>
-                    <p>Complete guide to protect your hard-earned money from hackers.</p>
-                    <br><ul>
-                        <li>❌ <b>UPI Scams:</b> Fake screenshots pehchanne ka tarika.</li>
-                        <li>❌ <b>OTP Fraud:</b> SIM swapping se kaise bachein.</li>
-                    </ul>
-                    <div class="blur-overlay"><p>Hidden content locked...</p></div>
-                    <button class="read-more-btn" onclick="openModal()"><i class="fas fa-lock"></i> Buy PDF to Unlock</button>
-                `,
-                available: true
-            },
+            { id: 1, title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache", price: 1, mrp: 499, rating: 5.0, reviews: "5,200", image: "https://gklearnstudy.in/images/content.png", fullDesc: `<h3>🔒 Internet Fraud Aur UPI Scam Se Kaise Bachein?</h3><p>Detailed guide to protect your money.</p><br><ul><li>❌ <b>UPI Scams:</b> Fake screenshots detection.</li><li>❌ <b>Bank Fraud:</b> Recovery steps.</li></ul><div class="blur-overlay"><p>Content locked...</p></div><button class="read-more-btn" onclick="openModal()"><i class="fas fa-lock"></i> Buy PDF to Unlock</button>`, available: true },
             { id: 10, title: "Current Affairs Jan 2025", price: 10, mrp: 49, rating: 4.2, reviews: "200", image: "https://cdn-icons-png.flaticon.com/512/3068/3068327.png", available: false },
             { id: 12, title: "Computer Awareness Short Notes", price: 12, mrp: 59, rating: 4.0, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/2933/2933190.png", available: false },
             { id: 15, title: "English Vocabulary Booster", price: 15, mrp: 79, rating: 4.4, reviews: "300", image: "https://cdn-icons-png.flaticon.com/512/3976/3976625.png", available: false },
@@ -152,47 +109,19 @@
 
         let activeProduct = null;
 
-        // --- 2. INIT ---
-        window.addEventListener('load', () => {
-            updateCart();
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            if (id) renderProductPage(parseInt(id)); else renderHomePage();
-        });
+        window.addEventListener('load', () => { updateCart(); const id = new URLSearchParams(window.location.search).get('id'); if (id) renderProductPage(parseInt(id)); else renderHomePage(); });
+        function updateCart() { let c=0; for(let i=0;i<localStorage.length;i++) if(localStorage.key(i).startsWith('unlocked_')) c++; document.getElementById('cartBadge').innerText = c; }
+        function goHome() { window.history.pushState({}, "", window.location.pathname); renderHomePage(); }
+        function goToProduct(id) { window.history.pushState({}, "", `?id=${id}`); renderProductPage(id); window.scrollTo(0,0); }
 
-        function updateCart() {
-            let count = 0;
-            for(let i=0; i<localStorage.length; i++) { if(localStorage.key(i).startsWith('unlocked_')) count++; }
-            document.getElementById('cartBadge').innerText = count;
-        }
-
-        function goHome() {
-            window.history.pushState({}, "", window.location.pathname);
-            renderHomePage();
-        }
-
-        function goToProduct(id) {
-            window.history.pushState({}, "", `?id=${id}`);
-            renderProductPage(id);
-        }
-
-        // --- 3. RENDER FUNCTIONS ---
         function renderHomePage() {
-            const app = document.getElementById('app');
             let html = `<div class="product-grid">`;
             products.forEach(p => {
-                const opacity = p.available ? '1' : '0.6';
                 const tag = p.available ? '' : '<span class="tag-out">Sold Out</span>';
-                html += `
-                    <div class="card" onclick="goToProduct(${p.id})" style="opacity:${opacity}">
-                        ${tag}
-                        <img src="${p.image}">
-                        <h3>${p.title}</h3>
-                        <div class="price">₹${p.price} <span style="font-size:0.8rem;color:grey;text-decoration:line-through">₹${p.mrp}</span></div>
-                    </div>`;
+                const opacity = p.available ? '1' : '0.6';
+                html += `<div class="card" onclick="goToProduct(${p.id})" style="opacity:${opacity}">${tag}<img src="${p.image}"><h3>${p.title}</h3><div class="price">₹${p.price}</div></div>`;
             });
-            html += `</div>`;
-            app.innerHTML = html;
+            document.getElementById('app').innerHTML = html + `</div>`;
         }
 
         function renderProductPage(id) {
@@ -200,16 +129,14 @@
             if (!p) { renderHomePage(); return; }
             activeProduct = p;
             const isUnlocked = localStorage.getItem('unlocked_' + id) === 'true';
-
-            const app = document.getElementById('app');
-            app.innerHTML = `
+            document.getElementById('app').innerHTML = `
                 <div class="pdp-container">
                     <div class="pdp-left"><div class="pdp-img-box"><img src="${p.image}" class="main-img"></div></div>
                     <div class="pdp-right">
                         <h1 class="pdp-title">${p.title}</h1>
                         <div class="pdp-price">₹${p.price}</div>
                         <div class="btn-box">${getButtonHTML(p, isUnlocked)}</div>
-                        <div class="description-box">${p.available ? (isUnlocked ? "<h3>✅ Verified & Unlocked!</h3><p>Your PDF is ready to download.</p>" : (p.fullDesc || "<p>Standard PDF Notes. Buy to unlock.</p>")) : '<p>Currently Unavailable.</p>'}</div>
+                        <div class="description-box">${p.available ? (isUnlocked ? "<h3>✅ Unlocked!</h3><p>Download PDF below.</p>" : p.fullDesc) : '<p>Unavailable.</p>'}</div>
                     </div>
                 </div>`;
         }
@@ -220,19 +147,14 @@
             return `<button class="btn btn-buy" onclick="openModal()">Buy Now</button>`;
         }
 
-        // --- 4. STRICT PAYMENT VERIFICATION ---
         function openModal() {
             document.getElementById('modalPrice').innerText = "₹" + activeProduct.price;
             document.getElementById('paymentModal').style.display = 'flex';
-            document.getElementById('fileInput').value = '';
             document.getElementById('statusMsg').innerText = '';
             document.getElementById('verifyBtn').style.display = 'block';
             document.getElementById('loader').style.display = 'none';
         }
-
-        function closeModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('paymentModal').style.display = 'none'; }
 
         async function startVerification() {
             const fileInput = document.getElementById('fileInput');
@@ -240,30 +162,40 @@
             const loader = document.getElementById('loader');
             const verifyBtn = document.getElementById('verifyBtn');
 
-            if (!fileInput.files[0]) {
-                statusMsg.innerText = "Upload Screenshot first.";
-                statusMsg.style.color = "red";
-                return;
-            }
-            if(fileInput.files[0].name.toLowerCase().includes('admin')) { unlockSuccess(); return; }
+            if (!fileInput.files[0]) { statusMsg.innerText = "Upload Screenshot!"; statusMsg.style.color = "red"; return; }
+            if (fileInput.files[0].name.toLowerCase().includes('admin')) { unlockSuccess(); return; }
 
-            verifyBtn.style.display = 'none';
-            loader.style.display = 'block';
-            statusMsg.innerText = "Analyzing...";
-            statusMsg.style.color = "#333";
+            verifyBtn.style.display = 'none'; loader.style.display = 'block'; statusMsg.innerText = "Checking Date & Amount..."; statusMsg.style.color = "#333";
 
             const file = fileInput.files[0];
             const reader = new FileReader();
-
             reader.readAsDataURL(file);
             reader.onloadend = async () => {
                 const base64Image = reader.result.split(',')[1];
+                
+                // --- SMART DATE GENERATION ---
                 const now = new Date();
-                const day = String(now.getDate()).padStart(2, '0');
-                const monthShort = now.toLocaleString('default', { month: 'short' });
-                const todayStr = `${day} ${monthShort}`;
+                const d = now.getDate();
+                const mShort = now.toLocaleString('default', { month: 'short' }); // Dec
+                const mLong = now.toLocaleString('default', { month: 'long' }); // December
+                const y = now.getFullYear(); // 2025
+                
+                // Allow multiple formats: "5 Dec", "05 Dec", "5 December", "05/12", "Today"
+                const dateFormats = [
+                    `${d} ${mShort}`, // 5 Dec
+                    `${String(d).padStart(2, '0')} ${mShort}`, // 05 Dec
+                    `${d} ${mLong}`, // 5 December
+                    `${String(d).padStart(2, '0')} ${mLong}`, // 05 December
+                    "Today"
+                ];
+                const datePrompt = dateFormats.join(" OR ");
 
-                const prompt = `Strict Audit. Expected: ${activeProduct.price}, Name: HIMANSHU, Date: ${todayStr}. Status: Paid. Return JSON: {"verified": true} OR {"verified": false, "reason": "MISMATCH"}`;
+                const prompt = `Strict Audit.
+                Expected Amount: ${activeProduct.price} (Ignore '19' if expected is '1').
+                Expected Name: HIMANSHU.
+                Expected Date: ${datePrompt}.
+                Status: Successful.
+                Ignore if minor OCR error. Return JSON: {"verified": true} OR {"verified": false, "reason": "..."}`;
 
                 try {
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
@@ -279,54 +211,50 @@
                     else handleFailure("AI: " + result.reason);
 
                 } catch (e) {
-                    fallbackStrictOCR(file, todayStr);
+                    // FALLBACK TO OCR
+                    fallbackStrictOCR(file, dateFormats);
                 }
             };
         }
 
-        async function fallbackStrictOCR(file, todayStr) {
+        async function fallbackStrictOCR(file, validDates) {
             try {
                 const worker = await Tesseract.createWorker('eng', 1);
                 const { data: { text } } = await worker.recognize(file);
                 await worker.terminate();
                 const lower = text.toLowerCase();
                 
-                // Strict Regex for Amount (1 vs 19)
-                const price = activeProduct.price;
-                const priceRegex = new RegExp(`(^|\\s|₹|Rs\\.?)${price}(\\s|$|\\.00)`, 'i');
-                const hasStrictPrice = priceRegex.test(lower) || lower.includes(`₹${price}.00`);
-                const hasDate = lower.includes(todayStr.toLowerCase()) || lower.includes("today") || lower.includes("2025");
+                // 1. Amount Check (Boundary)
+                const priceRegex = new RegExp(`(^|\\s|₹)${activeProduct.price}(\\s|$|\\.00)`, 'i');
+                const hasPrice = priceRegex.test(lower) || lower.includes(`₹${activeProduct.price}`);
+                
+                // 2. Date Check (Loop through valid dates)
+                const hasDate = validDates.some(date => lower.includes(date.toLowerCase())) || lower.includes("2025");
+                
+                // 3. Success Check
                 const hasSuccess = lower.includes("success") || lower.includes("paid");
 
-                if (hasStrictPrice && hasDate && hasSuccess) unlockSuccess();
-                else handleFailure("OCR Mismatch");
+                if (hasPrice && hasDate && hasSuccess) unlockSuccess();
+                else handleFailure("OCR Mismatch (Date/Amount)");
             } catch(e) { handleFailure("Error"); }
         }
 
         function unlockSuccess() {
             localStorage.setItem('unlocked_' + activeProduct.id, 'true');
-            closeModal();
-            renderProductPage(activeProduct.id);
-            updateCart();
-            alert("✅ Payment Verified! Unlocked.");
+            closeModal(); renderProductPage(activeProduct.id); updateCart();
+            alert("✅ Payment Verified!");
         }
 
         function handleFailure(reason) {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('verifyBtn').style.display = 'block';
-            document.getElementById('statusMsg').innerText = "❌ Failed: Check Amount/Date";
+            document.getElementById('statusMsg').innerText = "❌ Failed: " + reason;
             document.getElementById('statusMsg').style.color = "red";
         }
 
         function downloadSecure() {
-            if(activeProduct.id === 1) {
-                try {
-                    const url = atob(SECURE_LINK_1);
-                    window.open(url, '_blank');
-                } catch(e) { alert("Link Error"); }
-            } else {
-                alert("Demo Product");
-            }
+            if(activeProduct.id === 1) { try { window.open(atob(SECURE_LINK_1), '_blank'); } catch(e) {} } 
+            else alert("Demo Link");
         }
     </script>
 </body>
