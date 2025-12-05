@@ -9,7 +9,7 @@
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
-        /* --- THEME CSS (SAME AS BEFORE) --- */
+        /* --- THEME CSS --- */
         :root { --primary: #2874f0; --secondary: #fb641b; --bg: #f1f3f6; --text: #212121; --green: #388e3c; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
@@ -20,10 +20,9 @@
         .nav-bottom { background: white; padding: 10px; display: flex; gap: 20px; overflow-x: auto; font-size: 0.9rem; font-weight: 500; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
         #app { max-width: 1400px; margin: 0 auto; padding: 10px; }
         
-        /* GRID & CARDS */
+        /* CARDS & GRID */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
         .card { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); cursor: pointer; position: relative; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .card img { height: 140px; object-fit: contain; margin: 0 auto; display: block; }
         .card h3 { font-size: 0.9rem; margin-top: 10px; height: 36px; overflow: hidden; }
         .price { font-weight: bold; font-size: 1.1rem; margin-top: 5px; }
@@ -54,7 +53,7 @@
         .verify-btn { background: var(--secondary); color: white; width: 100%; padding: 12px; margin-top: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 1rem; border-radius: 4px; }
         .loader { display: none; margin: 10px auto; border: 4px solid #f3f3f3; border-top: 4px solid #fb641b; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #statusMsg { font-weight: bold; margin-top: 10px; font-size: 0.9rem; white-space: pre-wrap; }
+        #statusMsg { font-weight: bold; margin-top: 10px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -65,7 +64,7 @@
             <div style="font-size:1.2rem; color:white;"><i class="fas fa-shopping-cart"></i> <span id="cartBadge" style="background:#ffe500; color:black; padding:2px 6px; border-radius:50%; font-size:0.8rem;">0</span></div>
         </div>
         <div class="nav-bottom">
-            <span>Cybersecurity</span><span>PDF Notes</span><span>Computer</span><span>SSC/Railways</span>
+            <span>Cybersecurity</span><span>PDF Notes</span><span>SVG Icons</span><span>Courses</span>
         </div>
     </header>
 
@@ -75,7 +74,7 @@
         <div class="modal-box">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h3>Scan & Pay <span id="modalPrice" style="color: #b12704;"></span></h3>
-            <p style="font-size: 0.8rem; color: #555;">Verify Today's Date & Exact Amount</p>
+            <p style="font-size: 0.8rem; color: #555;">Payment Verification System</p>
             <img src="https://gklearnstudy.in/HIMANSHU1764854038759.jpg" class="qr-img">
             <p style="font-weight: bold; font-size: 0.9rem;">HIMANSHU</p>
             <div style="text-align: left; margin-top: 15px;">
@@ -93,18 +92,18 @@
         const SECURE_LINK_1 = "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xeWJpemR0ajlfRkFCZU00T2dOY084dTlPOEVidHhMZHAvdmlldz91c3A9ZHJpdmVzZGs=";
 
         const products = [
-            { id: 1, title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache", price: 1, mrp: 499, rating: 5.0, reviews: "5,200", image: "https://gklearnstudy.in/images/content.png", fullDesc: `<h3>🔒 Internet Fraud Aur UPI Scam Se Kaise Bachein?</h3><p>Detailed guide to protect your money.</p><br><ul><li>❌ <b>UPI Scams:</b> Fake screenshots detection.</li><li>❌ <b>Bank Fraud:</b> Recovery steps.</li></ul><div class="blur-overlay"><p>Content locked...</p></div><button class="read-more-btn" onclick="openModal()"><i class="fas fa-lock"></i> Buy PDF to Unlock</button>`, available: true },
+            { id: 1, title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache", price: 1, mrp: 499, rating: 5.0, reviews: "5,200", image: "https://gklearnstudy.in/images/content.png", fullDesc: `<h3>🔒 Internet Fraud Aur UPI Scam Se Kaise Bachein?</h3><p>Complete guide to protect money.</p><br><ul><li>❌ <b>UPI Scams:</b> Detect fake payments.</li><li>❌ <b>Bank Fraud:</b> Recovery steps.</li></ul><div class="blur-overlay"><p>Content locked...</p></div><button class="read-more-btn" onclick="openModal()"><i class="fas fa-lock"></i> Buy PDF to Unlock</button>`, available: true },
             { id: 10, title: "Current Affairs Jan 2025", price: 10, mrp: 49, rating: 4.2, reviews: "200", image: "https://cdn-icons-png.flaticon.com/512/3068/3068327.png", available: false },
-            { id: 12, title: "Computer Awareness Short Notes", price: 12, mrp: 59, rating: 4.0, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/2933/2933190.png", available: false },
-            { id: 15, title: "English Vocabulary Booster", price: 15, mrp: 79, rating: 4.4, reviews: "300", image: "https://cdn-icons-png.flaticon.com/512/3976/3976625.png", available: false },
-            { id: 19, title: "Basic GK Notes (History & Geo)", price: 19, mrp: 99, rating: 4.5, reviews: "1,450", image: "https://cdn-icons-png.flaticon.com/512/337/337946.png", available: false },
+            { id: 12, title: "Computer Short Notes", price: 12, mrp: 59, rating: 4.0, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/2933/2933190.png", available: false },
+            { id: 15, title: "Vocabulary Booster", price: 15, mrp: 79, rating: 4.4, reviews: "300", image: "https://cdn-icons-png.flaticon.com/512/3976/3976625.png", available: false },
+            { id: 19, title: "Basic GK Notes", price: 19, mrp: 99, rating: 4.5, reviews: "1,450", image: "https://cdn-icons-png.flaticon.com/512/337/337946.png", available: false },
             { id: 20, title: "Indian Map Atlas", price: 20, mrp: 80, rating: 4.6, reviews: "400", image: "https://cdn-icons-png.flaticon.com/512/854/854878.png", available: false },
-            { id: 25, title: "Science Formulas (Phys+Chem)", price: 25, mrp: 120, rating: 4.7, reviews: "800", image: "https://cdn-icons-png.flaticon.com/512/1048/1048953.png", available: false },
-            { id: 29, title: "Hindi Vyakaran Complete", price: 29, mrp: 150, rating: 4.3, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/3665/3665939.png", available: false },
-            { id: 35, title: "SSC English Grammar Rules", price: 35, mrp: 199, rating: 4.8, reviews: "90", image: "https://cdn-icons-png.flaticon.com/512/2490/2490421.png", available: false },
-            { id: 40, title: "Advanced Maths Formulas", price: 40, mrp: 200, rating: 4.5, reviews: "65", image: "https://cdn-icons-png.flaticon.com/512/1739/1739515.png", available: false },
-            { id: 49, title: "Reasoning & Aptitude Tricks", price: 49, mrp: 250, rating: 4.6, reviews: "450", image: "https://cdn-icons-png.flaticon.com/512/3135/3135679.png", available: false },
-            { id: 99, title: "Mega Bundle (All Subjects)", price: 99, mrp: 999, rating: 4.9, reviews: "2,500", image: "https://cdn-icons-png.flaticon.com/512/888/888034.png", available: false }
+            { id: 25, title: "Science Formulas", price: 25, mrp: 120, rating: 4.7, reviews: "800", image: "https://cdn-icons-png.flaticon.com/512/1048/1048953.png", available: false },
+            { id: 29, title: "Hindi Vyakaran", price: 29, mrp: 150, rating: 4.3, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/3665/3665939.png", available: false },
+            { id: 35, title: "English Grammar", price: 35, mrp: 199, rating: 4.8, reviews: "90", image: "https://cdn-icons-png.flaticon.com/512/2490/2490421.png", available: false },
+            { id: 40, title: "Maths Formulas", price: 40, mrp: 200, rating: 4.5, reviews: "65", image: "https://cdn-icons-png.flaticon.com/512/1739/1739515.png", available: false },
+            { id: 49, title: "Reasoning Tricks", price: 49, mrp: 250, rating: 4.6, reviews: "450", image: "https://cdn-icons-png.flaticon.com/512/3135/3135679.png", available: false },
+            { id: 99, title: "Mega Bundle", price: 99, mrp: 999, rating: 4.9, reviews: "2,500", image: "https://cdn-icons-png.flaticon.com/512/888/888034.png", available: false }
         ];
 
         let activeProduct = null;
@@ -165,37 +164,25 @@
             if (!fileInput.files[0]) { statusMsg.innerText = "Upload Screenshot!"; statusMsg.style.color = "red"; return; }
             if (fileInput.files[0].name.toLowerCase().includes('admin')) { unlockSuccess(); return; }
 
-            verifyBtn.style.display = 'none'; loader.style.display = 'block'; statusMsg.innerText = "Checking Date & Amount..."; statusMsg.style.color = "#333";
+            verifyBtn.style.display = 'none'; loader.style.display = 'block'; statusMsg.innerText = "Verifying..."; statusMsg.style.color = "#333";
 
             const file = fileInput.files[0];
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = async () => {
                 const base64Image = reader.result.split(',')[1];
-                
-                // --- SMART DATE GENERATION ---
                 const now = new Date();
-                const d = now.getDate();
-                const mShort = now.toLocaleString('default', { month: 'short' }); // Dec
-                const mLong = now.toLocaleString('default', { month: 'long' }); // December
-                const y = now.getFullYear(); // 2025
-                
-                // Allow multiple formats: "5 Dec", "05 Dec", "5 December", "05/12", "Today"
-                const dateFormats = [
-                    `${d} ${mShort}`, // 5 Dec
-                    `${String(d).padStart(2, '0')} ${mShort}`, // 05 Dec
-                    `${d} ${mLong}`, // 5 December
-                    `${String(d).padStart(2, '0')} ${mLong}`, // 05 December
-                    "Today"
-                ];
-                const datePrompt = dateFormats.join(" OR ");
+                const todayStr = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })}`; // "5 Dec"
 
-                const prompt = `Strict Audit.
-                Expected Amount: ${activeProduct.price} (Ignore '19' if expected is '1').
-                Expected Name: HIMANSHU.
-                Expected Date: ${datePrompt}.
-                Status: Successful.
-                Ignore if minor OCR error. Return JSON: {"verified": true} OR {"verified": false, "reason": "..."}`;
+                // 1. SMART API PROMPT
+                const prompt = `
+                Check Receipt.
+                1. Look for Amount: ${activeProduct.price} (It must be EXACT. Reject if you see ${activeProduct.price}9 or 1${activeProduct.price}).
+                2. Look for Name: HIMANSHU or paytmqr.
+                3. Look for Date: ${todayStr} OR Today OR ${now.getFullYear()}.
+                4. Status: Successful.
+                Return JSON: {"verified": true} OR {"verified": false, "reason": "reason"}
+                `;
 
                 try {
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
@@ -211,44 +198,55 @@
                     else handleFailure("AI: " + result.reason);
 
                 } catch (e) {
-                    // FALLBACK TO OCR
-                    fallbackStrictOCR(file, dateFormats);
+                    console.log("API Error, Fallback OCR");
+                    fallbackSmartOCR(file);
                 }
             };
         }
 
-        async function fallbackStrictOCR(file, validDates) {
+        async function fallbackSmartOCR(file) {
             try {
                 const worker = await Tesseract.createWorker('eng', 1);
                 const { data: { text } } = await worker.recognize(file);
                 await worker.terminate();
                 const lower = text.toLowerCase();
-                
-                // 1. Amount Check (Boundary)
-                const priceRegex = new RegExp(`(^|\\s|₹)${activeProduct.price}(\\s|$|\\.00)`, 'i');
-                const hasPrice = priceRegex.test(lower) || lower.includes(`₹${activeProduct.price}`);
-                
-                // 2. Date Check (Loop through valid dates)
-                const hasDate = validDates.some(date => lower.includes(date.toLowerCase())) || lower.includes("2025");
-                
-                // 3. Success Check
-                const hasSuccess = lower.includes("success") || lower.includes("paid");
+                const price = activeProduct.price;
 
-                if (hasPrice && hasDate && hasSuccess) unlockSuccess();
-                else handleFailure("OCR Mismatch (Date/Amount)");
-            } catch(e) { handleFailure("Error"); }
+                // --- SMART BACKUP LOGIC (As per user request) ---
+                // 1. UPI/Name Check
+                const hasID = lower.includes("paytmqr") || lower.includes("himanshu");
+                
+                // 2. Exact Price Check (Avoids "1" matching "19")
+                // Search for "₹1" OR "1.00" OR " 1 "
+                // This prevents "1" being found inside "19"
+                let hasPrice = false;
+                if (price === 1) {
+                    // Specific check for ₹1 to avoid 19, 100 etc.
+                    hasPrice = lower.includes("₹1.00") || lower.includes("1.00") || lower.includes("rs.1") || lower.includes(" 1 ");
+                } else {
+                    hasPrice = lower.includes(price.toString());
+                }
+
+                // 3. NO DATE CHECK IN BACKUP (As requested)
+                
+                if (hasID && hasPrice) {
+                    unlockSuccess();
+                } else {
+                    handleFailure("OCR: Amount/ID Mismatch");
+                }
+            } catch(e) { handleFailure("Scan Error"); }
         }
 
         function unlockSuccess() {
             localStorage.setItem('unlocked_' + activeProduct.id, 'true');
             closeModal(); renderProductPage(activeProduct.id); updateCart();
-            alert("✅ Payment Verified!");
+            alert("✅ Payment Verified! PDF Unlocked.");
         }
 
         function handleFailure(reason) {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('verifyBtn').style.display = 'block';
-            document.getElementById('statusMsg').innerText = "❌ Failed: " + reason;
+            document.getElementById('statusMsg').innerText = "❌ Verification Failed.\n" + reason;
             document.getElementById('statusMsg').style.color = "red";
         }
 
