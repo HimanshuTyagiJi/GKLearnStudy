@@ -11,101 +11,68 @@
     <style>
         /* --- THEME CSS --- */
         :root {
-            --primary: #2874f0;
-            --secondary: #fb641b;
-            --bg-color: #f1f3f6;
-            --text-color: #212121;
-            --green: #388e3c;
+            --primary: #2874f0; --secondary: #fb641b; --bg: #f1f3f6;
+            --text: #212121; --green: #388e3c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 60px; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 60px; }
 
         /* HEADER */
         header { background: var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .nav-top { display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; height: 60px; max-width: 1400px; margin: 0 auto; }
-        .logo { font-size: 1.2rem; font-weight: bold; font-style: italic; color: white; cursor: pointer; }
+        .logo { font-size: 1.4rem; font-weight: bold; font-style: italic; color: white; cursor: pointer; }
         .logo span { color: #ffe500; }
-        
+        .cart-badge { background: #ffe500; color: var(--primary); padding: 2px 6px; border-radius: 50%; font-size: 0.8rem; font-weight: bold; margin-left: 5px; }
+
         .nav-bottom { background: white; padding: 10px; display: flex; gap: 20px; overflow-x: auto; font-size: 0.9rem; font-weight: 500; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 
         /* APP CONTAINER */
         #app { max-width: 1400px; margin: 0 auto; padding: 10px; }
 
-        /* --- HOME GRID --- */
+        /* HOME GRID */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
-        .card { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
+        .card { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; position: relative; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .card img { height: 140px; object-fit: contain; margin: 0 auto; display: block; }
         .card h3 { font-size: 0.9rem; margin-top: 10px; height: 36px; overflow: hidden; }
         .price { font-weight: bold; font-size: 1.1rem; margin-top: 5px; }
+        .tag-out { position: absolute; top: 5px; right: 5px; background: #eee; color: #888; font-size: 0.7rem; padding: 2px 4px; border-radius: 2px; }
 
-        /* --- PRODUCT DETAIL PAGE --- */
-        .pdp-container { 
-            background: white; padding: 15px; margin-top: 10px; border-radius: 4px;
-            display: flex; flex-direction: column; gap: 20px;
-        }
-
+        /* PDP LAYOUT */
+        .pdp-container { background: white; padding: 15px; margin-top: 10px; border-radius: 4px; display: flex; flex-direction: column; gap: 20px; }
         @media (min-width: 768px) {
             .pdp-container { flex-direction: row; align-items: flex-start; }
             .pdp-left { width: 40%; position: sticky; top: 70px; }
             .pdp-right { width: 60%; }
         }
-
-        /* FIXED IMAGE BOX */
-        .pdp-img-box {
-            width: 100%; border: 1px solid #f0f0f0; padding: 20px;
-            display: flex; justify-content: center; align-items: center;
-            background: white; height: 350px; 
-        }
+        .pdp-img-box { width: 100%; border: 1px solid #f0f0f0; padding: 20px; display: flex; justify-content: center; align-items: center; background: white; height: 350px; }
         .main-img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        /* DETAILS */
-        .pdp-title { font-size: 1.2rem; font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+        .pdp-title { font-size: 1.3rem; font-weight: 500; margin-bottom: 10px; }
         .pdp-price { font-size: 1.8rem; font-weight: bold; margin: 10px 0; color: #212121; }
-        
-        /* DESCRIPTION & READ MORE BLUR */
-        .description-box {
-            margin-top: 20px; padding: 15px; background: #fff;
-            border: 1px solid #eee; border-radius: 4px; line-height: 1.6;
-            font-size: 0.95rem; color: #333; position: relative;
-        }
-        
-        .blur-overlay {
-            position: relative;
-            height: 100px; /* Visible height of blurred text */
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        .blur-overlay::after {
-            content: ""; position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
-        }
-        
-        .read-more-btn {
-            background: #f0f0f0; border: 1px solid #ccc; width: 100%; padding: 10px;
-            text-align: center; font-weight: bold; cursor: pointer; margin-top: -20px;
-            position: relative; z-index: 5; color: var(--primary); border-radius: 4px;
-        }
-        .read-more-btn:hover { background: #e0e0e0; }
+
+        /* BLUR & DESCRIPTION */
+        .description-box { margin-top: 20px; padding: 15px; background: #fff; border: 1px solid #eee; border-radius: 4px; line-height: 1.6; font-size: 0.95rem; position: relative; }
+        .blur-overlay { position: relative; height: 80px; overflow: hidden; margin-top: 10px; }
+        .blur-overlay::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1)); }
+        .read-more-btn { background: #f0f0f0; border: 1px solid #ccc; width: 100%; padding: 10px; text-align: center; font-weight: bold; cursor: pointer; margin-top: -20px; position: relative; z-index: 5; color: var(--primary); border-radius: 4px; }
 
         /* BUTTONS */
         .btn-box { display: flex; gap: 10px; margin: 15px 0; position: sticky; bottom: 0; background: white; padding: 10px 0; z-index: 10; }
         .btn { flex: 1; padding: 14px; border: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; cursor: pointer; color: white; border-radius: 2px; }
-        .btn-buy { background: var(--secondary); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .btn-buy { background: var(--secondary); }
         .btn-dl { background: var(--green); display: none; text-align: center; }
         .btn-unavailable { background: #ccc; cursor: not-allowed; }
 
         /* MODAL */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-box { background: white; width: 90%; max-width: 400px; padding: 20px; border-radius: 8px; text-align: center; position: relative; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-box { background: white; width: 90%; max-width: 400px; padding: 25px; border-radius: 8px; text-align: center; position: relative; }
         .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; }
         .qr-img { width: 200px; mix-blend-mode: multiply; margin: 10px 0; border: 1px dashed #ccc; padding: 5px; }
         .verify-btn { background: var(--secondary); color: white; width: 100%; padding: 12px; margin-top: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 1rem; border-radius: 4px; }
+        
         .loader { display: none; margin: 10px auto; border: 4px solid #f3f3f3; border-top: 4px solid #fb641b; border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
+        #statusMsg { font-weight: bold; margin-top: 10px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -113,13 +80,13 @@
     <header>
         <div class="nav-top">
             <div class="logo" onclick="goHome()">GK<span>Learn</span></div>
-            <div style="font-size:1.2rem; color:white;"><i class="fas fa-shopping-cart"></i> <span id="cartBadge" style="font-size:0.8rem;">0</span></div>
+            <div style="font-size:1.2rem; color:white;"><i class="fas fa-shopping-cart"></i> <span id="cartBadge" class="cart-badge">0</span></div>
         </div>
         <div class="nav-bottom">
             <span>Cybersecurity</span>
             <span>PDF Notes</span>
-            <span>SVG Icons</span>
-            <span>Video Courses</span>
+            <span>Computer</span>
+            <span>SSC/Railways</span>
         </div>
     </header>
 
@@ -129,77 +96,58 @@
         <div class="modal-box">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <h3>Scan & Pay <span id="modalPrice" style="color: #b12704;"></span></h3>
-            <p style="font-size: 0.8rem; color: #555;">Verify Today's Date & Exact Amount</p>
+            <p style="font-size: 0.8rem; color: #555;">Warning: Exact Amount & Today's Date Required</p>
             
             <img src="https://gklearnstudy.in/HIMANSHU1764854038759.jpg" class="qr-img">
             <p style="font-weight: bold; font-size: 0.9rem;">HIMANSHU</p>
 
             <div style="text-align: left; margin-top: 15px;">
-                <label style="font-size: 0.9rem; font-weight: 500;">Upload Payment Screenshot</label>
+                <label style="font-size: 0.9rem; font-weight: 500;">Upload Screenshot</label>
                 <input type="file" id="fileInput" accept="image/*" style="width: 100%; margin-top: 5px; padding: 8px; background: #f0f0f0; border-radius: 4px;">
             </div>
 
             <button class="verify-btn" id="verifyBtn" onclick="startVerification()">Verify & Download</button>
             <div class="loader" id="loader"></div>
-            <p id="statusMsg" style="font-size: 0.9rem; margin-top: 10px; font-weight: bold;"></p>
+            <p id="statusMsg"></p>
         </div>
     </div>
 
     <script>
-        // --- API & LINKS ---
+        // --- CONFIG ---
         const API_KEY = "AIzaSyAC5uYXKbJdKK3Ze8W3um1b0zPS7EjHJHM";
-        // Product 1 Link (Cybersecurity PDF)
+        // Cybersecurity PDF Link
         const SECURE_LINK_1 = "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xeWJpemR0ajlfRkFCZU00T2dOY084dTlPOEVidHhMZHAvdmlldz91c3A9ZHJpdmVzZGs=";
 
-        // --- 1. PRODUCT DATA (HINDI CONTENT ADDED) ---
+        // --- 1. FULL PRODUCT LIST (12 ITEMS) ---
         const products = [
             {
                 id: 1,
-                title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache (Full Guide)",
-                price: 1,  // TESTING KE LIYE ₹1 HAI
-                mrp: 499, 
-                rating: 5.0, // 5 STAR
-                reviews: "5,200", // 5200 RATINGS
-                image: "https://gklearnstudy.in/images/content.png", 
-                
-                // HINDI TEASER CONTENT
+                title: "Ultimate Cybersecurity Guide: Internet Fraud Se Kaise Bache (1200+ Lines)",
+                price: 1, mrp: 499, rating: 5.0, reviews: "5,200",
+                image: "https://gklearnstudy.in/images/content.png",
                 fullDesc: `
                     <h3>🔒 Internet Fraud Aur UPI Scam Se Kaise Bachein?</h3>
-                    <p>Aajkal online fraud bahut badh gaya hai. PhonePe, Paytm ya Google Pay use karte waqt agar aap savdhan nahi hain, to aapka account khali ho sakta hai. Yahan kuch zaroori baatein hain jo aapko pata honi chahiye:</p>
-                    <br>
-                    <ul>
-                        <li>❌ <b>UPI PIN Scam:</b> Paise *lene* ke liye kabhi bhi PIN daalne ki zarurat nahi hoti. Agar koi kahe "Scan karo paise milenge", to wo 100% fraud hai.</li>
-                        <li>❌ <b>Fake Customer Care:</b> Google par mile numbers par bharosa na karein. Fraud log bank ke naam se apna number daal dete hain.</li>
-                        <li>❌ <b>Screen Sharing:</b> Kisi ke kehne par TeamViewer ya Anydesk download na karein, isse wo aapka phone control kar sakte hain.</li>
+                    <p>Complete guide to protect your hard-earned money from hackers.</p>
+                    <br><ul>
+                        <li>❌ <b>UPI Scams:</b> Fake screenshots pehchanne ka tarika.</li>
+                        <li>❌ <b>OTP Fraud:</b> SIM swapping se kaise bachein.</li>
                     </ul>
-                    <br>
-                    <p>Ye toh bas shuruaat hai. Hackers ab naye tarike use kar rahe hain jaise <b>Sim Swapping</b> aur <b>Call Forwarding Scam</b>...</p>
-
-                    <div class="blur-overlay">
-                        <p>Advanced Protection Method #1: Apne SIM card ko lock kaise karein taki OTP hack na ho.</p>
-                        <p>Method #2: Social Media 2-Step verification bypass hone se kaise rokein.</p>
-                        <p>Method #3: Agar paise kat gaye to 1930 par complaint karne ka sahi tarika kya hai.</p>
-                        <p>Full 1200+ Lines Detailed Strategy Guide...</p>
-                    </div>
-                    
-                    <button class="read-more-btn" onclick="openModal()">
-                        <i class="fas fa-lock"></i> Buy PDF to Read Full Guide
-                    </button>
+                    <div class="blur-overlay"><p>Hidden content locked...</p></div>
+                    <button class="read-more-btn" onclick="openModal()"><i class="fas fa-lock"></i> Buy PDF to Unlock</button>
                 `,
                 available: true
             },
-            {
-                id: 2, title: "Advanced Python Programming (Video Course)", price: 199, mrp: 999, rating: 4.5, reviews: "120",
-                image: "https://cdn-icons-png.flaticon.com/512/5968/5968350.png", available: false
-            },
-            {
-                id: 3, title: "1000+ SVG Icons Pack for Developers", price: 49, mrp: 299, rating: 4.7, reviews: "300",
-                image: "https://cdn-icons-png.flaticon.com/512/1005/1005141.png", available: false
-            },
-            {
-                id: 19, title: "Basic GK Notes - History & Geography", price: 19, mrp: 99, rating: 4.5, reviews: "1,450",
-                image: "https://cdn-icons-png.flaticon.com/512/337/337946.png", available: false
-            }
+            { id: 10, title: "Current Affairs Jan 2025", price: 10, mrp: 49, rating: 4.2, reviews: "200", image: "https://cdn-icons-png.flaticon.com/512/3068/3068327.png", available: false },
+            { id: 12, title: "Computer Awareness Short Notes", price: 12, mrp: 59, rating: 4.0, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/2933/2933190.png", available: false },
+            { id: 15, title: "English Vocabulary Booster", price: 15, mrp: 79, rating: 4.4, reviews: "300", image: "https://cdn-icons-png.flaticon.com/512/3976/3976625.png", available: false },
+            { id: 19, title: "Basic GK Notes (History & Geo)", price: 19, mrp: 99, rating: 4.5, reviews: "1,450", image: "https://cdn-icons-png.flaticon.com/512/337/337946.png", available: false },
+            { id: 20, title: "Indian Map Atlas", price: 20, mrp: 80, rating: 4.6, reviews: "400", image: "https://cdn-icons-png.flaticon.com/512/854/854878.png", available: false },
+            { id: 25, title: "Science Formulas (Phys+Chem)", price: 25, mrp: 120, rating: 4.7, reviews: "800", image: "https://cdn-icons-png.flaticon.com/512/1048/1048953.png", available: false },
+            { id: 29, title: "Hindi Vyakaran Complete", price: 29, mrp: 150, rating: 4.3, reviews: "150", image: "https://cdn-icons-png.flaticon.com/512/3665/3665939.png", available: false },
+            { id: 35, title: "SSC English Grammar Rules", price: 35, mrp: 199, rating: 4.8, reviews: "90", image: "https://cdn-icons-png.flaticon.com/512/2490/2490421.png", available: false },
+            { id: 40, title: "Advanced Maths Formulas", price: 40, mrp: 200, rating: 4.5, reviews: "65", image: "https://cdn-icons-png.flaticon.com/512/1739/1739515.png", available: false },
+            { id: 49, title: "Reasoning & Aptitude Tricks", price: 49, mrp: 250, rating: 4.6, reviews: "450", image: "https://cdn-icons-png.flaticon.com/512/3135/3135679.png", available: false },
+            { id: 99, title: "Mega Bundle (All Subjects)", price: 99, mrp: 999, rating: 4.9, reviews: "2,500", image: "https://cdn-icons-png.flaticon.com/512/888/888034.png", available: false }
         ];
 
         let activeProduct = null;
@@ -209,15 +157,12 @@
             updateCart();
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
-            if (id) renderProductPage(parseInt(id));
-            else renderHomePage();
+            if (id) renderProductPage(parseInt(id)); else renderHomePage();
         });
 
         function updateCart() {
             let count = 0;
-            for(let i=0; i<localStorage.length; i++) {
-                if(localStorage.key(i).startsWith('unlocked_')) count++;
-            }
+            for(let i=0; i<localStorage.length; i++) { if(localStorage.key(i).startsWith('unlocked_')) count++; }
             document.getElementById('cartBadge').innerText = count;
         }
 
@@ -229,91 +174,53 @@
         function goToProduct(id) {
             window.history.pushState({}, "", `?id=${id}`);
             renderProductPage(id);
-            window.scrollTo(0, 0);
         }
 
-        // --- 3. RENDER HOME ---
+        // --- 3. RENDER FUNCTIONS ---
         function renderHomePage() {
             const app = document.getElementById('app');
-            let html = `
-                <h2 style="padding:10px 0; border-bottom:1px solid #ddd; margin-bottom:10px;">Cybersecurity & Premium Notes</h2>
-                <div class="product-grid">
-            `;
-
+            let html = `<div class="product-grid">`;
             products.forEach(p => {
-                const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
                 const opacity = p.available ? '1' : '0.6';
-                const tag = p.available ? '' : '<span style="background:#eee; color:#888; font-size:0.7rem; padding:2px; position:absolute; top:5px; right:5px;">Sold Out</span>';
-
+                const tag = p.available ? '' : '<span class="tag-out">Sold Out</span>';
                 html += `
                     <div class="card" onclick="goToProduct(${p.id})" style="opacity:${opacity}">
                         ${tag}
-                        <img src="${p.image}" alt="${p.title}">
+                        <img src="${p.image}">
                         <h3>${p.title}</h3>
-                        <div>
-                            <span style="background:#388e3c; color:white; font-size:0.7rem; padding:2px 5px; border-radius:2px;">${p.rating} ★</span>
-                            <span style="color:#878787; font-size:0.8rem">(${p.reviews})</span>
-                        </div>
-                        <div class="price">₹${p.price} <span style="font-size:0.8rem; color:#878787; text-decoration:line-through; font-weight:normal;">₹${p.mrp}</span> <span style="font-size:0.8rem; color:#388e3c">${discount}% off</span></div>
-                    </div>
-                `;
+                        <div class="price">₹${p.price} <span style="font-size:0.8rem;color:grey;text-decoration:line-through">₹${p.mrp}</span></div>
+                    </div>`;
             });
             html += `</div>`;
             app.innerHTML = html;
         }
 
-        // --- 4. RENDER PRODUCT DETAIL ---
         function renderProductPage(id) {
             const p = products.find(x => x.id === id);
             if (!p) { renderHomePage(); return; }
             activeProduct = p;
-
             const isUnlocked = localStorage.getItem('unlocked_' + id) === 'true';
-            const discount = Math.round(((p.mrp - p.price) / p.mrp) * 100);
 
             const app = document.getElementById('app');
             app.innerHTML = `
                 <div class="pdp-container">
-                    
-                    <div class="pdp-left">
-                        <div class="pdp-img-box">
-                            <img src="${p.image}" class="main-img">
-                        </div>
-                    </div>
-
+                    <div class="pdp-left"><div class="pdp-img-box"><img src="${p.image}" class="main-img"></div></div>
                     <div class="pdp-right">
                         <h1 class="pdp-title">${p.title}</h1>
-                       
-                        
-                        <div class="pdp-price">
-                            ₹${p.price} 
-                            <span style="font-size:1rem; color:#878787; text-decoration:line-through; font-weight:normal;">₹${p.mrp}</span> 
-                            <span style="font-size:1rem; color:#388e3c">${discount}% off</span>
-                        </div>
-
-                        <div class="btn-box">
-                            ${getButtonHTML(p, isUnlocked)}
-                        </div>
-
-                        <div class="description-box">
-                            ${p.available ? (isUnlocked ? "<h3>✅ Full Content Unlocked!</h3><p>Download the PDF to read the full guide.</p>" : p.fullDesc) : '<p>Currently Unavailable.</p>'}
-                        </div>
+                        <div class="pdp-price">₹${p.price}</div>
+                        <div class="btn-box">${getButtonHTML(p, isUnlocked)}</div>
+                        <div class="description-box">${p.available ? (isUnlocked ? "<h3>✅ Verified & Unlocked!</h3><p>Your PDF is ready to download.</p>" : (p.fullDesc || "<p>Standard PDF Notes. Buy to unlock.</p>")) : '<p>Currently Unavailable.</p>'}</div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
         function getButtonHTML(p, isUnlocked) {
-            if (isUnlocked) {
-                return `<button class="btn btn-dl" style="display:block" onclick="downloadSecure()"><i class="fas fa-download"></i> Download PDF</button>`;
-            }
-            if (!p.available) {
-                return `<button class="btn btn-unavailable">Unavailable</button>`;
-            }
-            return `<button class="btn btn-buy" onclick="openModal()"><i class="fas fa-bolt"></i> Buy Now</button>`;
+            if (isUnlocked) return `<button class="btn btn-dl" style="display:block" onclick="downloadSecure()"><i class="fas fa-download"></i> Download PDF</button>`;
+            if (!p.available) return `<button class="btn btn-unavailable">Unavailable</button>`;
+            return `<button class="btn btn-buy" onclick="openModal()">Buy Now</button>`;
         }
 
-        // --- 5. PAYMENT LOGIC ---
+        // --- 4. STRICT PAYMENT VERIFICATION ---
         function openModal() {
             document.getElementById('modalPrice').innerText = "₹" + activeProduct.price;
             document.getElementById('paymentModal').style.display = 'flex';
@@ -338,16 +245,11 @@
                 statusMsg.style.color = "red";
                 return;
             }
-
-            // ADMIN PASS
-            if(fileInput.files[0].name.toLowerCase().includes('admin')) {
-                unlockSuccess();
-                return;
-            }
+            if(fileInput.files[0].name.toLowerCase().includes('admin')) { unlockSuccess(); return; }
 
             verifyBtn.style.display = 'none';
             loader.style.display = 'block';
-            statusMsg.innerText = "Verifying...";
+            statusMsg.innerText = "Analyzing...";
             statusMsg.style.color = "#333";
 
             const file = fileInput.files[0];
@@ -357,12 +259,11 @@
             reader.onloadend = async () => {
                 const base64Image = reader.result.split(',')[1];
                 const now = new Date();
-                const todayStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+                const day = String(now.getDate()).padStart(2, '0');
+                const monthShort = now.toLocaleString('default', { month: 'short' });
+                const todayStr = `${day} ${monthShort}`;
 
-                const prompt = `Strict Payment Audit.
-                Expected Amount: ${activeProduct.price}
-                Expected Name: HIMANSHU, Date: ${todayStr}, Status: Successful.
-                Return JSON: {"verified": true} OR {"verified": false, "reason": "WRONG_AMOUNT"}`;
+                const prompt = `Strict Audit. Expected: ${activeProduct.price}, Name: HIMANSHU, Date: ${todayStr}. Status: Paid. Return JSON: {"verified": true} OR {"verified": false, "reason": "MISMATCH"}`;
 
                 try {
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
@@ -375,27 +276,31 @@
                     const result = JSON.parse(textRes);
 
                     if (result.verified) unlockSuccess();
-                    else handleFailure();
+                    else handleFailure("AI: " + result.reason);
 
                 } catch (e) {
-                    fallbackOCR(file);
+                    fallbackStrictOCR(file, todayStr);
                 }
             };
         }
 
-        async function fallbackOCR(file) {
+        async function fallbackStrictOCR(file, todayStr) {
             try {
                 const worker = await Tesseract.createWorker('eng', 1);
                 const { data: { text } } = await worker.recognize(file);
                 await worker.terminate();
                 const lower = text.toLowerCase();
+                
+                // Strict Regex for Amount (1 vs 19)
+                const price = activeProduct.price;
+                const priceRegex = new RegExp(`(^|\\s|₹|Rs\\.?)${price}(\\s|$|\\.00)`, 'i');
+                const hasStrictPrice = priceRegex.test(lower) || lower.includes(`₹${price}.00`);
+                const hasDate = lower.includes(todayStr.toLowerCase()) || lower.includes("today") || lower.includes("2025");
+                const hasSuccess = lower.includes("success") || lower.includes("paid");
 
-                if (lower.includes(activeProduct.price.toString()) && (lower.includes('success') || lower.includes('paid'))) {
-                    unlockSuccess();
-                } else {
-                    handleFailure();
-                }
-            } catch(e) { handleFailure(); }
+                if (hasStrictPrice && hasDate && hasSuccess) unlockSuccess();
+                else handleFailure("OCR Mismatch");
+            } catch(e) { handleFailure("Error"); }
         }
 
         function unlockSuccess() {
@@ -403,26 +308,26 @@
             closeModal();
             renderProductPage(activeProduct.id);
             updateCart();
-            alert("Payment Verified! Unlocked.");
+            alert("✅ Payment Verified! Unlocked.");
         }
 
-        function handleFailure() {
-            const statusMsg = document.getElementById('statusMsg');
-            const loader = document.getElementById('loader');
-            const verifyBtn = document.getElementById('verifyBtn');
-            loader.style.display = 'none';
-            verifyBtn.style.display = 'block';
-            statusMsg.innerText = "❌ Verification Failed (Check Amount/Date)";
-            statusMsg.style.color = "red";
+        function handleFailure(reason) {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('verifyBtn').style.display = 'block';
+            document.getElementById('statusMsg').innerText = "❌ Failed: Check Amount/Date";
+            document.getElementById('statusMsg').style.color = "red";
         }
 
         function downloadSecure() {
-            try {
-                const url = atob(SECURE_LINK_1);
-                window.open(url, '_blank');
-            } catch(e) { alert("Link Error"); }
+            if(activeProduct.id === 1) {
+                try {
+                    const url = atob(SECURE_LINK_1);
+                    window.open(url, '_blank');
+                } catch(e) { alert("Link Error"); }
+            } else {
+                alert("Demo Product");
+            }
         }
-
     </script>
 </body>
 </html>
