@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { href: "https://gklearnstudy.in/index.html", text: "Home" },
             { href: "https://gklearnstudy.in/education.html", text: "Education" },
             { href: "https://gklearnstudy.in/all-formulas.html", text: "All Formula" },
-            { href: "https://gklearnstudy.in/calculator.html", text: "Calculator" },
+          
             { href: "https://gklearnstudy.in/computer.html", text: "Computer" },
             { href: "https://gklearnstudy.in/kaise-karen.html", text: "How to" },
             { href: "https://gklearnstudy.in/gk-quiz.html", text: "GK Quiz" },
