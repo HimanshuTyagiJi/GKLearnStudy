@@ -10,7 +10,7 @@
         />
         <meta name="author" content="Himanshu" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+       
         <meta name="robots" content="index,follow" />
         <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
         <!-- Open Graph Meta Tags -->
@@ -30,7 +30,12 @@
         <link rel="stylesheet" href="../css/theme.css" />
         <link rel="stylesheet" href="../css/main-theme.css" />
         <link rel="stylesheet" href="../css/topic-menu.css" />
-
+ <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+        <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
+            crossorigin="anonymous"
+        ></script>
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -273,7 +278,17 @@
             </nav>
         </aside>
             <main class="container">
-                <div id="root">
+                <div id="root"><!-- Hero wrapper for Chemical Formulas page -->
+<div id="chem-formula-hero-wrapper" style="max-width: 100%; margin: 20px auto;">
+    <canvas
+        id="chemFormulaHeroCanvas"
+        width="1600"
+        height="650"
+        style="width: 100%; height: auto; display: block; border-radius: 18px;"
+        role="img"
+        aria-label="Colorful chemistry formula illustration with beakers, molecules and important formulas like H2O, NaCl and H2SO4 with gklearnstudy watermark"
+    ></canvas>
+</div>
                     <header class="education-header">
                         <div class="header-content">
                             <div class="header-icon">
@@ -2643,47 +2658,197 @@
                             </div>
                         </details>
                     </section>
-
-                    <div class="comments-wrapper">
-                        <hr />
-                        <div class="firebase-comments-widget" id="custom-comment-section">
-                            <h3>टिप्पणियाँ (Comments)</h3>
-                            <div class="comment-form-shell" id="comment-form-shell">
-                                <form class="comment-form" id="comment-form">
-                                    <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                                    <input type="text" id="name" placeholder="आपका नाम" maxlength="50" required aria-label="Your name" />
-                                    <textarea id="comment" placeholder="आपकी टिप्पणी" maxlength="1000" required aria-label="Your comment"></textarea>
-                                    <input type="hidden" id="parent-id" value="" />
-                                    <div class="form-footer">
-                                        <div id="char-counter">0 / 1000</div>
-                                        <div class="actions">
-                                            <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                            <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div id="comments-list">
-                                <div class="spinner"></div>
-                                <p class="muted">टिप्पणियाँ लोड हो रही हैं…</p>
-                            </div>
+ <!-- ===== COMMENTS & RATING ===== -->
+        <div id="comments-and-ratings-container">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                        </div>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
                         </div>
                     </div>
                 </div>
-            </main>
 
-            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+                <div id="rating-widget" class="rating-content">
+                    <h2>Rate this Page</h2>
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="breakdown-row" data-star-level="5">
+                                <span class="star-label">5 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-5"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="4">
+                                <span class="star-label">4 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-4"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="3">
+                                <span class="star-label">3 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-3"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="2">
+                                <span class="star-label">2 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-2"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="1">
+                                <span class="star-label">1 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-1"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                    </div>
+                    <div id="rating-login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to rate.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-           <footer class="app-footer">  
-        <div class="footer-content">
-            <!-- Footer content will be injected by header.js -->
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4"
+                                ></path>
+                                <path
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853"
+                                ></path>
+                                <path
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                    fill="#FBBC05"
+                                ></path>
+                                <path
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                    fill="#EA4335"
+                                ></path>
+                                <path d="M1 1h22v22H1z" fill="none"></path>
+                            </svg>
+                            Sign in with Google
+                        </button>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+                    <div id="login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to comment.
+                        </p>
+                    </div>
+                    <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
+                            <textarea
+                                id="comment"
+                                placeholder="Add a public comment..."
+                                maxlength="1000"
+                                required
+                                aria-label="Comment input"
+                            ></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="comments-list" class="comment-list">
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer-bottom">
-            &copy; 2024 GK Learn Study | All Rights Reserved
-        </div>
-    </footer>
 
-            <button id="back-to-top-btn" title="Go to top">↑</button>
+        <!-- ===== FOOTER ===== -->
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+            </div>
+            <script>
+                document.getElementById("year").textContent = new Date().getFullYear();
+            </script>
+        </footer>
+
         </div>
 
         <script src="../js/theme.js" defer></script>
@@ -2752,6 +2917,357 @@
                 visibleRowsCount = rowsPerPage;
                 applyFilters();
             });
-        </script>
+        </script><script>
+(function () {
+    var canvas = document.getElementById("chemFormulaHeroCanvas");
+    if (!canvas || !canvas.getContext) return;
+
+    var ctx = canvas.getContext("2d");
+
+    function roundedRectPath(ctx, x, y, w, h, r) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
+
+    // ===== BACKGROUND =====
+    var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bg.addColorStop(0, "#041424");
+    bg.addColorStop(0.5, "#111b3c");
+    bg.addColorStop(1, "#241144");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Soft particles / dots
+    ctx.save();
+    ctx.globalAlpha = 0.14;
+    ctx.fillStyle = "#ffffff";
+    for (var i = 0; i < 200; i++) {
+        var x = Math.random() * canvas.width;
+        var y = Math.random() * canvas.height;
+        var s = Math.random() * 3;
+        ctx.beginPath();
+        ctx.arc(x, y, s, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.restore();
+
+    // Big diagonal watermark
+    ctx.save();
+    ctx.globalAlpha = 0.05;
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-0.32);
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.font = "bold 200px Arial";
+    ctx.fillText("gklearnstudy", 0, 50);
+    ctx.restore();
+
+    // Bottom watermark small
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.font = "bold 60px Arial";
+    ctx.fillText("gklearnstudy", 40, canvas.height - 40);
+    ctx.textAlign = "right";
+    ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
+    ctx.restore();
+
+    // ===== MAIN LEFT PANEL (TEXT) =====
+    var panelX = 80;
+    var panelY = 90;
+    var panelW = 780;
+    var panelH = 430;
+
+    roundedRectPath(ctx, panelX, panelY, panelW, panelH, 32);
+    var panelGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
+    panelGrad.addColorStop(0, "rgba(255,255,255,0.22)");
+    panelGrad.addColorStop(1, "rgba(255,255,255,0.06)");
+    ctx.fillStyle = panelGrad;
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Text content
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+
+    ctx.font = "bold 50px Arial";
+    ctx.fillText("Important Chemical Formulas", panelX + 30, panelY + 60);
+
+    ctx.font = "bold 34px Arial";
+    ctx.fillText("For NEET · JEE · Board Exams", panelX + 30, panelY + 105);
+
+    ctx.globalAlpha = 0.95;
+    ctx.font = "22px Arial";
+    var text =
+        "Quick visual sheet of some of the most important chemistry formulas: " +
+        "molecular, ionic and acid–base equations that students repeatedly use " +
+        "in school and competitive exams.";
+
+    var words = text.split(" ");
+    var line = "";
+    var xText = panelX + 30;
+    var yText = panelY + 145;
+    var maxWidth = panelW - 60;
+
+    for (var n = 0; n < words.length; n++) {
+        var testLine = line + words[n] + " ";
+        var metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+            ctx.fillText(line, xText, yText);
+            line = words[n] + " ";
+            yText += 28;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, xText, yText);
+
+    // Bullet list of formula categories
+    yText += 50;
+    ctx.font = "22px Arial";
+    var bullets = [
+        "• Molecular formulas (e.g., H₂O, CO₂, C₂H₆O)",
+        "• Ionic compounds (e.g., NaCl, CaCO₃, KNO₃)",
+        "• Acids, bases and salts (e.g., HCl, NaOH, Na₂SO₄)",
+        "• Organic functional groups and common reagents"
+    ];
+    bullets.forEach(function (b) {
+        ctx.fillText(b, xText, yText);
+        yText += 30;
+    });
+
+    ctx.restore();
+
+    // ===== SMALL BEAKER + FLASK ILLUSTRATION (LEFT BOTTOM) =====
+    function drawBeaker(x, y, w, h, liquidColor, bubblesColor) {
+        ctx.save();
+        roundedRectPath(ctx, x, y, w, h, 18);
+        ctx.strokeStyle = "rgba(255,255,255,0.7)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Liquid
+        var liquidHeight = h * 0.55;
+        var liquidY = y + h - liquidHeight;
+        roundedRectPath(ctx, x + 4, liquidY, w - 8, liquidHeight - 4, 14);
+        var lg = ctx.createLinearGradient(x, liquidY, x, liquidY + liquidHeight);
+        lg.addColorStop(0, liquidColor);
+        lg.addColorStop(1, "rgba(0,0,0,0.25)");
+        ctx.fillStyle = lg;
+        ctx.fill();
+
+        // Bubbles
+        ctx.fillStyle = bubblesColor;
+        for (var i = 0; i < 6; i++) {
+            var bx = x + w * (0.2 + 0.6 * Math.random());
+            var by = liquidY + liquidHeight * (0.2 + 0.7 * Math.random());
+            var br = 3 + Math.random() * 4;
+            ctx.beginPath();
+            ctx.arc(bx, by, br, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    function drawFlask(x, y, size, liquidColor, glowColor) {
+        ctx.save();
+
+        // Outer glow
+        var rg = ctx.createRadialGradient(
+            x, y + size * 0.3, size * 0.1,
+            x, y + size * 0.3, size * 0.8
+        );
+        rg.addColorStop(0, glowColor);
+        rg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = rg;
+        ctx.beginPath();
+        ctx.arc(x, y + size * 0.3, size * 0.8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Neck
+        ctx.strokeStyle = "rgba(255,255,255,0.8)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x - size * 0.15, y);
+        ctx.lineTo(x - size * 0.1, y + size * 0.3);
+        ctx.lineTo(x + size * 0.1, y + size * 0.3);
+        ctx.lineTo(x + size * 0.15, y);
+        ctx.stroke();
+
+        // Body
+        ctx.beginPath();
+        ctx.arc(x, y + size * 0.5, size * 0.35, 0.2 * Math.PI, 0.8 * Math.PI);
+        ctx.stroke();
+
+        // Liquid
+        ctx.beginPath();
+        ctx.moveTo(x - size * 0.25, y + size * 0.55);
+        ctx.quadraticCurveTo(x, y + size * 0.45, x + size * 0.25, y + size * 0.55);
+        ctx.lineTo(x + size * 0.2, y + size * 0.65);
+        ctx.quadraticCurveTo(x, y + size * 0.7, x - size * 0.2, y + size * 0.65);
+        ctx.closePath();
+        ctx.fillStyle = liquidColor;
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    // Draw beaker + flask group
+    drawBeaker(panelX + panelW - 210, panelY + panelH - 150, 180, 130, "rgba(129,212,250,0.85)", "rgba(255,255,255,0.9)");
+    drawFlask(panelX + 150, panelY + panelH - 200, 120, "rgba(255,138,128,0.9)", "rgba(255,138,128,0.35)");
+
+    // ===== RIGHT SIDE FORMULA CARDS =====
+    function drawFormulaCard(x, y, colorTop, colorBottom, heading, formula, note) {
+        roundedRectPath(ctx, x, y, 260, 140, 22);
+        var cg = ctx.createLinearGradient(x, y, x + 260, y + 140);
+        cg.addColorStop(0, colorTop);
+        cg.addColorStop(1, colorBottom);
+        ctx.fillStyle = cg;
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(0,0,0,0.22)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.textAlign = "left";
+        ctx.fillStyle = "rgba(0,0,0,0.8)";
+
+        ctx.font = "bold 20px Arial";
+        ctx.fillText(heading, x + 18, y + 30);
+
+        ctx.font = "bold 42px Arial";
+        ctx.fillText(formula, x + 18, y + 75);
+
+        ctx.font = "18px Arial";
+        ctx.fillText(note, x + 18, y + 105);
+
+        ctx.restore();
+    }
+
+    var rightBaseX = 920;
+    var row1Y = 145;
+    var row2Y = 320;
+    var row3Y = 495;
+
+    drawFormulaCard(
+        rightBaseX,
+        row1Y,
+        "rgba(255,204,128,0.95)",
+        "rgba(255,171,145,0.95)",
+        "Water",
+        "H₂O",
+        "Neutral molecule formed by H⁺ and OH⁻."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row1Y,
+        "rgba(144,202,249,0.95)",
+        "rgba(129,212,250,0.95)",
+        "Table Salt",
+        "NaCl",
+        "Ionic compound of Na⁺ and Cl⁻."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row1Y,
+        "rgba(206,147,216,0.95)",
+        "rgba(171,71,188,0.95)",
+        "Sulfuric Acid",
+        "H₂SO₄",
+        "Strong diprotic mineral acid."
+    );
+
+    drawFormulaCard(
+        rightBaseX,
+        row2Y,
+        "rgba(165,214,167,0.95)",
+        "rgba(129,199,132,0.95)",
+        "Carbon Dioxide",
+        "CO₂",
+        "Product of respiration & combustion."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row2Y,
+        "rgba(255,224,130,0.95)",
+        "rgba(255,213,79,0.95)",
+        "Calcium Carbonate",
+        "CaCO₃",
+        "Found in chalk, marble, shells."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row2Y,
+        "rgba(255,171,145,0.95)",
+        "rgba(255,138,128,0.95)",
+        "Acetic Acid",
+        "CH₃COOH",
+        "Main acid in vinegar (weak acid)."
+    );
+
+    drawFormulaCard(
+        rightBaseX,
+        row3Y,
+        "rgba(179,229,252,0.95)",
+        "rgba(79,195,247,0.95)",
+        "Ammonia",
+        "NH₃",
+        "Important base & fertilizer compound."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row3Y,
+        "rgba(248,187,208,0.95)",
+        "rgba(244,143,177,0.95)",
+        "Glucose",
+        "C₆H₁₂O₆",
+        "Basic energy source in living cells."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row3Y,
+        "rgba(200,230,201,0.95)",
+        "rgba(174,213,129,0.95)",
+        "Sodium Hydroxide",
+        "NaOH",
+        "Strong base used in many reactions."
+    );
+
+    // ===== FOOTER TEXT: examples row =====
+    ctx.save();
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 28px Arial";
+    ctx.fillText("Sample Balanced Equations", panelX + 30, canvas.height - 95);
+
+    ctx.font = "22px Arial";
+    ctx.globalAlpha = 0.96;
+    ctx.fillText("2H₂  +  O₂  →  2H₂O", panelX + 30, canvas.height - 60);
+    ctx.fillText("CaCO₃  →  CaO  +  CO₂", panelX + 380, canvas.height - 60);
+    ctx.fillText("NaOH  +  HCl  →  NaCl  +  H₂O", panelX + 720, canvas.height - 60);
+    ctx.restore();
+})();
+</script>
+
     </body>
 </html>
