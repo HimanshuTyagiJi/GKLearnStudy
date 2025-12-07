@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -717,7 +717,376 @@ This is a useful resource for students and aspirants preparing for exams.</p>
                 }
             });
         });
-    </script>
+    </script><script>
+(function() {
+    const c = document.getElementById("gkQuizHeroCanvas");
+    const x = c.getContext("2d");
+
+    // Disable right-click ONLY on this canvas
+    c.addEventListener("contextmenu", e => e.preventDefault());
+    c.setAttribute("draggable","false");
+
+    // Helper
+    const R = (ctx, X, Y, W, H, r) => {
+        ctx.beginPath();
+        ctx.moveTo(X+r, Y);
+        ctx.arcTo(X+W, Y, X+W, Y+H, r);
+        ctx.arcTo(X+W, Y+H, X, Y+H, r);
+        ctx.arcTo(X, Y+H, X, Y, r);
+        ctx.arcTo(X, Y, X+r, Y, r);
+        ctx.closePath();
+    };
+
+    // BG gradient
+    let g = x.createLinearGradient(0,0,c.width,c.height);
+    g.addColorStop(0,"#0d91ff");
+    g.addColorStop(0.45,"#37c0ff");
+    g.addColorStop(0.75,"#36d38b");
+    g.addColorStop(1,"#12b36a");
+    x.fillStyle=g;
+    x.fillRect(0,0,c.width,c.height);
+
+    // Soft white blobs
+    x.save();
+    x.globalAlpha=0.35;
+    x.fillStyle="#fff";
+    x.beginPath();
+    x.ellipse(380,210,260,150,-0.4,0,Math.PI*2);
+    x.fill();
+    x.beginPath();
+    x.ellipse(1180,220,260,160,0.3,0,Math.PI*2);
+    x.fill();
+    x.restore();
+
+    // Dots
+    x.save();
+    x.globalAlpha=0.18;
+    x.fillStyle="#fff";
+    for(let i=0;i<150;i++){
+        let X = Math.random()*c.width;
+        let Y = Math.random()*c.height;
+        let S = Math.random()*3;
+        x.beginPath();
+        x.arc(X,Y,S,0,Math.PI*2);
+        x.fill();
+    }
+    x.restore();
+
+    // BIG diagonal watermark
+    x.save();
+    x.globalAlpha=0.07;
+    x.translate(c.width/2,c.height/2);
+    x.rotate(-0.32);
+    x.fillStyle="#fff";
+    x.textAlign="center";
+    x.font="bold 190px Arial";
+    x.fillText("GKLearnStudy.in",0,60);
+    x.restore();
+
+    // TOP-LEFT FAINT watermark
+    x.save();
+    x.globalAlpha=0.10;
+    x.fillStyle="#ffffff";
+    x.textAlign="left";
+    x.font="bold 50px Arial";
+    x.fillText("GKLearnStudy.in",40,60);
+    x.restore();
+
+    // BOTTOM RIGHT watermark
+    x.save();
+    x.globalAlpha=0.9;
+    x.fillStyle="#000";
+    x.textAlign="right";
+    x.font="bold 42px Arial";
+    x.fillText("GKLearnStudy.in",c.width-40,c.height-40);
+    x.restore();
+
+    // BOTTOM LEFT watermark
+    x.save();
+    x.globalAlpha=0.9;
+    x.fillStyle="#000";
+    x.textAlign="left";
+    x.font="bold 42px Arial";
+    x.fillText("GKLearnStudy.in",40,c.height-40);
+    x.restore();
+
+    // Background repeated faint watermark rows
+    x.save();
+    x.globalAlpha=0.05;
+    x.fillStyle="#fff";
+    x.font="bold 46px Arial";
+    x.textAlign="center";
+    for(let i=0;i<5;i++){
+        for(let j=0;j<3;j++){
+            x.fillText("GKLearnStudy",300+ j*520,120 + i*100);
+        }
+    }
+    x.restore();
+
+    // -------------------------------------
+    //   BOOKS (SIMPLIFIED BUT SAME LOOK)
+    // -------------------------------------
+    function standBook(X,Y,W,H,c1,c2,label){
+        x.save();
+        x.globalAlpha=0.25;
+        x.fillStyle="rgba(0,0,0,0.4)";
+        x.beginPath();
+        x.ellipse(X+W/2,Y+H+14,W*0.6,16,0,0,Math.PI*2);
+        x.fill();
+        x.globalAlpha=1;
+
+        let gg = x.createLinearGradient(X,Y,X+W,Y+H);
+        gg.addColorStop(0,c1);
+        gg.addColorStop(1,c2);
+        R(x,X,Y,W,H,20);
+        x.fillStyle=gg;
+        x.fill();
+
+        R(x,X+10,Y+10,18,H-20,9);
+        x.fillStyle="rgba(255,255,255,0.4)";
+        x.fill();
+
+        x.translate(X+W-38,Y+H/2);
+        x.rotate(-Math.PI/2);
+        x.fillStyle="#fff";
+        x.textAlign="center";
+        x.font="bold 38px Arial";
+        x.fillText(label,0,12);
+
+        x.restore();
+    }
+
+    function bigBook(X,Y,W,H,c1,c2){
+        x.save();
+        x.globalAlpha=0.25;
+        x.fillStyle="rgba(0,0,0,0.4)";
+        x.beginPath();
+        x.ellipse(X+W/2,Y+H+18,W*0.7,18,0,0,Math.PI*2);
+        x.fill();
+        x.globalAlpha=1;
+
+        let gg= x.createLinearGradient(X,Y,X+W,Y+H);
+        gg.addColorStop(0,c1);
+        gg.addColorStop(1,c2);
+        R(x,X,Y,W,H,26);
+        x.fillStyle=gg;
+        x.fill();
+
+        x.fillStyle="rgba(255,255,255,0.8)";
+        R(x,X+35,Y+25,70,14,7);
+        x.fill();
+        R(x,X+35,Y+45,70,14,7);
+        x.fill();
+
+        x.fillStyle="#ffe100";
+        x.textAlign="center";
+        x.font="bold 92px Arial";
+        x.fillText("GK",X+W/2,Y+160);
+        x.restore();
+    }
+
+    let bY = 210;
+    standBook(330,bY+70,120,250,"#1ca04a","#14773b","Quiz");
+    standBook(430,bY+40,120,280,"#f24141","#c3262e","Quiz");
+    bigBook(520,bY,220,320,"#2273f4","#2053c7");
+
+    // -------------------------------------
+    //    MAGNIFIER + GLOBE + QUIZ
+    // -------------------------------------
+    (function(){
+        let cx=680, cy=bY+190, r=140;
+
+        x.save();
+        x.beginPath();
+        x.arc(cx,cy,r,0,Math.PI*2);
+        let g = x.createRadialGradient(cx,cy,r*0.2,cx,cy,r);
+        g.addColorStop(0,"rgba(255,255,255,0.95)");
+        g.addColorStop(1,"rgba(180,200,255,0.9)");
+        x.fillStyle=g;
+        x.fill();
+
+        x.lineWidth=10;
+        x.strokeStyle="rgba(80,80,80,0.9)";
+        x.stroke();
+
+        x.lineWidth=16;
+        x.strokeStyle="#9e6a3c";
+        x.beginPath();
+        x.moveTo(cx+r*0.6,cy+r*0.6);
+        x.lineTo(cx+r*1.3,cy+r*1.3);
+        x.stroke();
+
+        x.lineWidth=18;
+        x.strokeStyle="rgba(70,70,70,0.95)";
+        x.beginPath();
+        x.moveTo(cx+r*0.4,cy+r*0.4);
+        x.lineTo(cx+r*0.8,cy+r*0.8);
+        x.stroke();
+
+        x.beginPath();
+        x.arc(cx,cy+25,70,0,Math.PI*2);
+        x.fillStyle="#24baf3";
+        x.fill();
+
+        x.strokeStyle="#ffe35a";
+        x.lineWidth=3;
+        for(let i=-2;i<=2;i++){
+            x.beginPath();
+            x.ellipse(cx,cy+25,70-Math.abs(i)*8,70,0,0,Math.PI*2);
+            x.stroke();
+        }
+        x.beginPath();
+        x.arc(cx,cy+25,40,0,Math.PI*2);
+        x.stroke();
+
+        x.fillStyle="#20407d";
+        x.textAlign="center";
+        x.font="bold 60px Arial";
+        x.fillText("Quiz",cx,cy-30);
+
+        x.restore();
+    })();
+
+    // -------------------------------------
+    // LIGHT BULB
+    // -------------------------------------
+    (function(){
+        let bx=1160,by=130;
+        x.save();
+        let rg=x.createRadialGradient(bx,by,20,bx,by,90);
+        rg.addColorStop(0,"rgba(255,255,160,0.9)");
+        rg.addColorStop(1,"rgba(255,255,160,0)");
+        x.fillStyle=rg;
+        x.beginPath();
+        x.arc(bx,by,90,0,Math.PI*2);
+        x.fill();
+
+        x.beginPath();
+        x.arc(bx,by,45,0,Math.PI*2);
+        x.fillStyle="#ffd54f";
+        x.fill();
+
+        R(x,bx-20,by+38,40,40,8);
+        x.fillStyle="#888";
+        x.fill();
+
+        x.strokeStyle="#ffb300";
+        x.lineWidth=3;
+        x.beginPath();
+        x.moveTo(bx-15,by+15);
+        x.quadraticCurveTo(bx,by-5,bx+15,by+15);
+        x.stroke();
+
+        x.strokeStyle="#ffea6f";
+        x.lineWidth=4;
+        for(let i=0;i<10;i++){
+            let a=(i/10)*Math.PI*2;
+            let r1=58, r2=86;
+            x.beginPath();
+            x.moveTo(bx+Math.cos(a)*r1,by+Math.sin(a)*r1);
+            x.lineTo(bx+Math.cos(a)*r2,by+Math.sin(a)*r2);
+            x.stroke();
+        }
+        x.restore();
+    })();
+
+    // -------------------------------------
+    // STACKED BOOKS + PENCIL
+    // -------------------------------------
+    (function(){
+        let sx=1000, sy=380, w=260, h=40;
+
+        function SB(Y,cover,edge,mark){
+            R(x,sx,Y,w,h+10,16);
+            x.fillStyle=cover;
+            x.fill();
+            R(x,sx+6,Y+6,w-12,h-2,12);
+            x.fillStyle=edge;
+            x.fill();
+            if(mark){
+                x.fillStyle="#fff";
+                x.textAlign="center";
+                x.font="bold 46px Arial";
+                x.fillText("?",sx+w/2,Y+h+5);
+            }
+        }
+
+        x.save();
+        x.globalAlpha=0.25;
+        x.fillStyle="rgba(0,0,0,0.5)";
+        x.beginPath();
+        x.ellipse(sx+w/2,sy+120,w*0.7,20,0,0,Math.PI*2);
+        x.fill();
+        x.restore();
+
+        SB(sy,"#ff8a65","#ffe0b2",false);
+        SB(sy+45,"#4dd0e1","#b2ebf2",true);
+        SB(sy+90,"#9575cd","#d1c4e9",false);
+
+        let p1x=sx-40, p1y=sy+140, p2x=sx+w+40, p2y=sy+140;
+
+        x.save();
+        x.lineWidth=16;
+        x.strokeStyle="#ffca28";
+        x.lineCap="round";
+        x.beginPath();
+        x.moveTo(p1x,p1y);
+        x.lineTo(p2x,p2y);
+        x.stroke();
+
+        x.lineWidth=10;
+        x.strokeStyle="#424242";
+        x.beginPath();
+        x.moveTo(p2x,p2y);
+        x.lineTo(p2x+28,p2y);
+        x.stroke();
+
+        x.lineWidth=18;
+        x.strokeStyle="#f48fb1";
+        x.beginPath();
+        x.moveTo(p1x,p1y);
+        x.lineTo(p1x-26,p1y);
+        x.stroke();
+        x.restore();
+    })();
+
+    // -------------------------------------
+    // ANSWER BUBBLES
+    // -------------------------------------
+    function bubble(X,Y,col,txt){
+        x.save();
+        x.globalAlpha=0.3;
+        x.fillStyle="rgba(0,0,0,0.4)";
+        x.beginPath();
+        x.ellipse(X,Y+18,26,10,0,0,Math.PI*2);
+        x.fill();
+        x.globalAlpha=1;
+
+        let g=x.createRadialGradient(X-8,Y-8,5,X,Y,28);
+        g.addColorStop(0,"#fff");
+        g.addColorStop(1,col);
+        x.fillStyle=g;
+        x.beginPath();
+        x.arc(X,Y,28,0,Math.PI*2);
+        x.fill();
+
+        x.fillStyle="#fff";
+        x.textAlign="center";
+        x.font="bold 26px Arial";
+        x.fillText(txt,X,Y+8);
+        x.restore();
+    }
+
+    bubble(260,210,"#ff7043","A");
+    bubble(310,320,"#42a5f5","B");
+    bubble(840,210,"#66bb6a","C");
+    bubble(1220,310,"#5c6bc0","B");
+    bubble(1320,380,"#ffa726","C");
+    bubble(1180,460,"#29b6f6","D");
+
+})();
+</script>
+
     
 </body>
 </html>
