@@ -9,7 +9,12 @@
         <meta name="keywords" content="power conversion, convert watts to horsepower, convert hp to kw, power converter, watt, kilowatt, horsepower, physics, engineering, unit conversion tool" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Mr. Himanshu Tyagi" />
-        <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+       <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+        <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
+            crossorigin="anonymous"
+        ></script>
         <meta name="robots" content="index, follow" />
         <meta name="copyright" content="© 2024 GK Learn Study" />
         <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
@@ -240,7 +245,129 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><div style="max-width:100%;margin:20px auto;">
+<canvas id="powerConv" width="1600" height="360"
+style="width:100%;height:auto;display:block;border-radius:22px;"></canvas>
+</div>
+
+<script>
+(function(){
+
+let c=document.getElementById("powerConv");
+let x=c.getContext("2d");
+
+c.oncontextmenu=e=>e.preventDefault();
+c.setAttribute("draggable","false");
+
+// ===== CYBERPUNK NEON BACKGROUND =====
+let g=x.createLinearGradient(0,0,1600,360);
+g.addColorStop(0,"#0f0c29");
+g.addColorStop(0.4,"#302b63");
+g.addColorStop(1,"#24243e");
+x.fillStyle=g;
+x.fillRect(0,0,1600,360);
+
+// ===== NEON GRID LINES =====
+x.save();
+x.globalAlpha=0.08;
+x.strokeStyle="#00eaff";
+for(let i=0;i<35;i++){
+ x.beginPath(); x.moveTo(i*50,0); x.lineTo(i*50,360); x.stroke();
+ x.beginPath(); x.moveTo(0,i*50); x.lineTo(1600,i*50); x.stroke();
+}
+x.restore();
+
+// ===== LIGHTNING ENERGY WAVES =====
+x.save();
+x.globalAlpha=0.15;
+x.strokeStyle="#00ffe7";
+x.lineWidth=6;
+for(let w=0;w<3;w++){
+ x.beginPath();
+ let yy = 80 + w*90;
+ for(let xx=0; xx<=1600; xx+=40){
+   let yv = yy + Math.sin(xx*0.02 + w)*20;
+   x.lineTo(xx,yv);
+ }
+ x.stroke();
+}
+x.restore();
+
+// ===== DIAGONAL BIG WATERMARK =====
+x.save();
+x.globalAlpha=0.06;
+x.translate(800,180);
+x.rotate(-0.28);
+x.fillStyle="#ffffff";
+x.font="bold 155px Arial";
+x.textAlign="center";
+x.fillText("GKLearnStudy",0,50);
+x.restore();
+
+// ===== TITLE =====
+x.fillStyle="#00f6ff";
+x.textAlign="left";
+x.font="bold 78px Arial";
+x.fillText("Power Conversion",120,170);
+
+// ===== CENTRAL LIGHTNING BOLT =====
+x.save();
+x.globalAlpha=0.90;
+x.fillStyle="#00fff2";
+x.font="150px Arial";
+x.fillText("⚡", 480, 240);
+x.restore();
+
+// ===== UNIT CHAIN =====
+x.fillStyle="#ffffff";
+x.textAlign="center";
+x.font="bold 58px Arial";
+
+x.fillText("W",   650, 150);
+x.fillText("↔",   750, 150);
+x.fillText("kW",  850, 150);
+x.fillText("↔",   950, 150);
+x.fillText("HP", 1050, 150);
+
+// ===== POWER FORMULAS =====
+let formulas=[
+ {t:"P = VI",     x:640,  y:260, s:48},
+ {t:"P = W / t",  x:860,  y:260, s:48},
+ {t:"P = I²R",    x:1080, y:260, s:48},
+];
+
+formulas.forEach(f=>{
+ x.save();
+ x.globalAlpha=0.90;
+ x.fillStyle="#00ffe5";
+ x.font="bold "+f.s+"px Arial";
+ x.textAlign="center";
+ x.fillText(f.t,f.x,f.y);
+ x.restore();
+});
+
+// ===== FLOATING ICONS (TECH STYLE) =====
+let icons=[
+ {t:"⚡", x:1180,y:105,s:80},
+ {t:"🔌", x:1320,y:220,s:65},
+ {t:"🔋", x:1440,y:170,s:65},
+ {t:"✨", x:1020,y:260,s:55},
+ {t:"🔧", x:950, y:110,s:55},
+];
+
+icons.forEach(o=>{
+ x.save();
+ x.globalAlpha=0.28;
+ x.fillStyle="#00fff0";
+ x.font="bold "+o.s+"px Arial";
+ x.textAlign="center";
+ x.fillText(o.t,o.x,o.y);
+ x.restore();
+});
+
+})();
+</script>
+
 
                     <article class="article-content">
                         <h2>Understanding Power Measurements</h2>
@@ -697,74 +824,202 @@
     </div>
 </aside>
 
-                    <div class="comments-wrapper">
-                        <hr />
-                        <div class="firebase-comments-widget" id="custom-comment-section">
-                            <h2>Comments</h2>
-                            <div class="comment-form-shell" id="comment-form-shell">
-                                <form class="comment-form" id="comment-form">
-                                    <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                                    <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-                                    <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-                                    <input type="hidden" id="parent-id" value="" />
-                                    <div class="form-footer">
-                                        <div id="char-counter">0 / 1000</div>
-                                        <div class="actions">
-                                            <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                            <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div id="comments-list">
-                                <div class="spinner"></div>
-                                <p class="muted">Loading comments…</p>
-                            </div>
+                 
+            
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+           <!-- ===== COMMENTS & RATING ===== -->
+        <div id="comments-and-ratings-container">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                        </div>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
                         </div>
                     </div>
                 </div>
-            </main>
-            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
-            <footer class="app-footer">
-                <div class="footer-content">
-                    <div class="footer-section footer-about">
-                        <h3>About GK Learn Study</h3>
-                        <p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p>
+
+                <div id="rating-widget" class="rating-content">
+                    <h2>Rate this Page</h2>
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="breakdown-row" data-star-level="5">
+                                <span class="star-label">5 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-5"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="4">
+                                <span class="star-label">4 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-4"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="3">
+                                <span class="star-label">3 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-3"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="2">
+                                <span class="star-label">2 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-2"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="1">
+                                <span class="star-label">1 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-1"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="footer-section">
-                        <h4>About Us</h4>
-                        <ul>
-                            <li><a href="../about.html">About Us</a></li>
-                            <li><a href="../contact.html">Contact Us</a></li>
-                            <li><a href="../privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="../terms.html">Terms of Service</a></li>
-                        </ul>
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
                     </div>
-                    <div class="footer-section">
-                        <h4>For you</h4>
-                        <ul>
-                            <li><a href="../gk-quiz/ancient-indian-history">Ancient Indian History</a></li>
-                            <li><a href="../gk-quiz/medieval-indian-history">Medieval Indian History</a></li>
-                            <li><a href="../gk-quiz/modern-indian-history">Modern Indian History</a></li>
-                            <li><a href="../gk-quiz/indian-geography-mcq-quiz">Indian Geography</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Science & Computer</h4>
-                        <ul>
-                            <li><a href="../conversion.html">Conversion</a></li>
-                            <li><a href="../all-formulas.html">All formulas</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h4>Follow Us</h4>
-                        <ul class="footer-socials"></ul>
+                    <div id="rating-login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to rate.
+                        </p>
                     </div>
                 </div>
-                <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
-            </footer>
-            <button id="back-to-top-btn" title="Go to top">↑</button>
+            </div>
+
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4"
+                                ></path>
+                                <path
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853"
+                                ></path>
+                                <path
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                    fill="#FBBC05"
+                                ></path>
+                                <path
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                    fill="#EA4335"
+                                ></path>
+                                <path d="M1 1h22v22H1z" fill="none"></path>
+                            </svg>
+                            Sign in with Google
+                        </button>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+                    <div id="login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to comment.
+                        </p>
+                    </div>
+                    <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
+                            <textarea
+                                id="comment"
+                                placeholder="Add a public comment..."
+                                maxlength="1000"
+                                required
+                                aria-label="Comment input"
+                            ></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="comments-list" class="comment-list">
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+                </div></main>
+        <!-- ===== FOOTER ===== -->
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+            </div>
+            <script>
+                document.getElementById("year").textContent = new Date().getFullYear();
+            </script>
+        </footer>
+
+     
+        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
         <script src="../js/theme.js" defer></script>
         <script src="../js/topic-menu.js" defer></script>
         <script src="../js/convert.js" defer></script>
@@ -772,6 +1027,7 @@
         <script type="module" src="../js/comment.js" defer></script>
     </body>
 </html>
+
 
 
 
