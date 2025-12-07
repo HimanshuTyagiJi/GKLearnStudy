@@ -224,187 +224,6 @@
             }
         </script>
 
-        <style>
-            .education-header {
-                display: grid;
-                grid-template-columns: auto 1fr;
-                gap: 20px;
-                align-items: center;
-                background: #0a0f1f;
-                color: #ffffff;
-                padding: 20px;
-                border-radius: 12px;
-                position: relative;
-                overflow: hidden;
-                margin-bottom: 24px;
-            }
-            .education-header::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.2), transparent),
-                    radial-gradient(circle at bottom right, rgba(147, 51, 234, 0.2), transparent);
-                opacity: 0.9;
-            }
-            .education-header .header-content {
-                display: flex;
-                align-items: center;
-                gap: 20px;
-                position: relative;
-                z-index: 1;
-            }
-            .education-header .header-icon svg {
-                max-width: 150px;
-                height: auto;
-            }
-            .education-header .header-text h1 {
-                margin: 0 0 8px;
-                font-size: 2rem;
-                color: #fef3c7;
-            }
-            .education-header .education-description {
-                margin: 0;
-                color: #e5e7eb;
-                line-height: 1.5;
-                font-size: 0.98rem;
-            }
-            @media (max-width: 768px) {
-                .education-header {
-                    grid-template-columns: 1fr;
-                }
-                .education-header .header-content {
-                    flex-direction: column;
-                    text-align: center;
-                }
-            }
-
-            .elements-hero {
-                margin: 24px auto 16px;
-                max-width: 100%;
-            }
-            .elements-hero figure {
-                margin: 0;
-            }
-            #elementsCanvas {
-                width: 100%;
-                max-width: 100%;
-                display: block;
-                border-radius: 12px;
-            }
-            .elements-hero figcaption {
-                font-size: 0.9rem;
-                color: #6b7280;
-                margin-top: 8px;
-                text-align: center;
-            }
-
-            .language-switch {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                margin: 16px 0 8px;
-                flex-wrap: wrap;
-            }
-            .language-switch span {
-                font-size: 0.95rem;
-                font-weight: 600;
-            }
-            .language-switch button {
-                border-radius: 999px;
-                border: 1px solid #d1d5db;
-                background: #f9fafb;
-                padding: 6px 14px;
-                font-size: 0.9rem;
-                cursor: pointer;
-                transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
-            }
-            .language-switch button.active {
-                background: #4f46e5;
-                color: #ffffff;
-                border-color: #4f46e5;
-                transform: translateY(-1px);
-            }
-
-            .table-container {
-                overflow-x: auto;
-                margin-top: 8px;
-            }
-            .table-container table {
-                width: 100%;
-                border-collapse: collapse;
-                min-width: 600px;
-            }
-            .table-container th,
-            .table-container td {
-                border: 1px solid #e5e7eb;
-                padding: 8px 10px;
-                text-align: left;
-                font-size: 0.9rem;
-            }
-            .table-container thead {
-                background: #f3f4f6;
-            }
-            .table-container tbody tr:nth-child(even) {
-                background: #f9fafb;
-            }
-
-            .section-title {
-                margin-top: 24px;
-                margin-bottom: 8px;
-                font-size: 1.4rem;
-            }
-
-            .rating-section {
-                margin: 32px 0 16px;
-            }
-            .rating-card {
-                border-radius: 12px;
-                border: 1px solid #e5e7eb;
-                padding: 16px 18px;
-                background: #f9fafb;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-            }
-            .rating-card h2 {
-                margin: 0 0 8px;
-                font-size: 1.2rem;
-            }
-            .rating-stars {
-                display: inline-flex;
-                gap: 4px;
-            }
-            .rating-stars button {
-                border: none;
-                background: transparent;
-                font-size: 1.6rem;
-                line-height: 1;
-                cursor: pointer;
-                padding: 2px 4px;
-                transition: transform 0.1s;
-            }
-            .rating-stars button:hover {
-                transform: translateY(-1px);
-            }
-            .rating-stars button.selected,
-            .rating-stars button.selected ~ button {
-                color: #d1d5db;
-            }
-            .rating-stars button.selected {
-                color: #f59e0b;
-            }
-            .rating-message {
-                font-size: 0.9rem;
-                color: #4b5563;
-            }
-
-            .comments-wrapper {
-                margin-top: 24px;
-            }
-            .firebase-comments-widget h3 {
-                margin-top: 0;
-            }
-        </style>
     </head>
     <body>
         <header class="header" id="header">
@@ -592,20 +411,16 @@
                     </div>
                 </header>
 
-                <section class="elements-hero" aria-label="Chemistry elements banner">
-                    <figure>
-                        <canvas
-                            id="elementsCanvas"
-                            width="1200"
-                            height="380"
-                            role="img"
-                            aria-label="Illustration of 118 chemistry elements with atomic number, symbol and atomic mass for NEET, JEE and board exams. Watermark GKLearnStudy is visible in the background."
-                        ></canvas>
-                        <figcaption>
-                            Illustration: chemical elements with atomic number, symbol and atomic mass – useful for NEET, JEE and school chemistry preparation.
-                        </figcaption>
-                    </figure>
-                </section>
+               <div id="element-hero-wrapper" style="max-width: 100%; margin: 20px auto;">
+    <canvas
+        id="elementHeroCanvas"
+        width="1600"
+        height="650"
+        style="width: 100%; height: auto; display: block; border-radius: 18px;"
+        role="img"
+        aria-label="Chemistry elements and atomic mass illustration with formulas and gklearnstudy watermark"
+    ></canvas>
+</div>
 
                 <section aria-labelledby="elements-table-title">
                     <div class="language-switch" aria-label="Toggle table and FAQ language">
@@ -774,7 +589,7 @@
                         <details><summary>17. Are all elements stable?</summary><div class="faq-answer"><p>No. Many elements have isotopes that are radioactive, meaning their atomic nuclei are unstable and decay over time, emitting radiation. All elements with an atomic number greater than 83 (Bismuth) are entirely radioactive, meaning they have no stable isotopes. Elements like Technetium (43) and Promethium (61) are also notable for having no stable isotopes.</p></div></details>
                         <details><summary>18. What is the difference between ionic and covalent compounds?</summary><div class="faq-answer"><p>The main difference lies in how atoms are bonded. Ionic compounds are typically formed between a metal and a non-metal where electrons are transferred from the metal to the non-metal, creating charged ions that attract each other (e.g., NaCl). Covalent compounds are formed between two non-metals where electrons are shared between atoms to form a stable molecule (e.g., H₂O).</p></div></details>
                         <details><summary>19. What were the first elements discovered?</summary><div class="faq-answer"><p>Several elements that exist in their native form were known to ancient civilizations, though they weren't understood as elements in the modern sense. These include Carbon (C), Sulfur (S), Iron (Fe), Copper (Cu), Silver (Ag), Tin (Sn), Gold (Au), Mercury (Hg), and Lead (Pb).</p></div></details>
-                        <details><summary>20. Can new elements be discovered?</summary><div class="faq-answer"><p>Yes, but today "discovery" usually means "creation." New elements are synthesized in particle accelerators by bombarding heavy elements with lighter ones. These new elements are typically superheavy, highly radioactive, and exist for only fractions of a second. Scientists are currently trying to create elements 119 and 120.</p></div></details>
+                        <details><summary>20. Can new elements be discovered?</summary><div class="faq-answer"><p>Yes, but today 'discovery' usually means 'creation.' New elements are synthesized in particle accelerators by bombarding heavy elements with lighter ones. These new elements are typically superheavy, highly radioactive, and exist for only fractions of a second. Scientists are currently trying to create elements 119 and 120.</p></div></details>
                         <details><summary>21. How are elements classified?</summary><div class="faq-answer"><p>Elements are broadly classified based on their properties into three main categories: Metals (which are typically shiny, conductive, and malleable), Non-metals (which are generally dull, poor conductors, and brittle), and Metalloids (which have properties intermediate between metals and non-metals). They are further organized into groups (like Alkali Metals, Halogens, Noble Gases) in the periodic table based on their electron configurations and chemical behavior.</p></div></details>
                         <details><summary>22. Which elements are radioactive?</summary><div class="faq-answer"><p>An element is considered radioactive if all its isotopes are unstable. The most well-known radioactive elements are the actinides, such as Uranium (U), Thorium (Th), and Plutonium (Pu). Other key examples include Radium (Ra), Francium (Fr), Polonium (Po), Astatine (At), Radon (Rn), Technetium (Tc), and Promethium (Pm). In reality, many other elements have at least one radioactive isotope, but they also have stable ones.</p></div></details>
                     </div>
@@ -805,49 +620,190 @@
                     </div>
                 </section>
 
-                <section class="rating-section" aria-label="Rate this page">
-                    <div class="rating-card">
-                        <h2>Rate this page</h2>
-                        <div class="rating-stars" role="radiogroup" aria-label="Page rating">
-                            <button type="button" aria-label="1 star" aria-pressed="false" data-value="1">★</button>
-                            <button type="button" aria-label="2 stars" aria-pressed="false" data-value="2">★</button>
-                            <button type="button" aria-label="3 stars" aria-pressed="false" data-value="3">★</button>
-                            <button type="button" aria-label="4 stars" aria-pressed="false" data-value="4">★</button>
-                            <button type="button" aria-label="5 stars" aria-pressed="false" data-value="5">★</button>
+ <!-- ===== COMMENTS & RATING ===== -->
+        <div id="comments-and-ratings-container">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
                         </div>
-                        <p class="rating-message" id="rating-message">Tap a star to rate this elements table.</p>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                        </div>
                     </div>
-                </section>
+                </div>
 
-                <div class="comments-wrapper">
-                    <hr />
-                    <div class="firebase-comments-widget" id="custom-comment-section">
-                        <h3>Comments</h3>
-                        <div class="comment-form-shell" id="comment-form-shell">
-                            <form class="comment-form" id="comment-form">
-                                <div class="replying-to" id="replying-to" style="display: none;" aria-live="polite"></div>
-                                <input type="text" id="name" placeholder="Your name" maxlength="50" required aria-label="Your name" />
-                                <textarea id="comment" placeholder="Your comment" maxlength="1000" required aria-label="Your comment"></textarea>
-                                <input type="hidden" id="parent-id" value="" />
-                                <div class="form-footer">
-                                    <div id="char-counter">0 / 1000</div>
-                                    <div class="actions">
-                                        <button type="submit" class="btn primary" id="submit-button">Submit</button>
-                                        <button type="button" class="btn" id="cancel-reply" style="display: none;">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
+                <div id="rating-widget" class="rating-content">
+                    <h2>Rate this Page</h2>
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
                         </div>
-                        <div id="comments-list">
-                            <div class="spinner"></div>
-                            <p class="muted">Loading comments…</p>
+                        <div class="rating-breakdown">
+                            <div class="breakdown-row" data-star-level="5">
+                                <span class="star-label">5 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-5"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="4">
+                                <span class="star-label">4 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-4"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="3">
+                                <span class="star-label">3 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-3"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="2">
+                                <span class="star-label">2 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-2"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="1">
+                                <span class="star-label">1 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-1"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                    </div>
+                    <div id="rating-login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to rate.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4"
+                                ></path>
+                                <path
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853"
+                                ></path>
+                                <path
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                    fill="#FBBC05"
+                                ></path>
+                                <path
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                    fill="#EA4335"
+                                ></path>
+                                <path d="M1 1h22v22H1z" fill="none"></path>
+                            </svg>
+                            Sign in with Google
+                        </button>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+                    <div id="login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to comment.
+                        </p>
+                    </div>
+                    <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
+                            <textarea
+                                id="comment"
+                                placeholder="Add a public comment..."
+                                maxlength="1000"
+                                required
+                                aria-label="Comment input"
+                            ></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="comments-list" class="comment-list">
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+      </div>
+    </main>
 
-       <footer class="app-footer">
+        <!-- ===== FOOTER ===== -->
+        <footer class="app-footer">
             <div class="footer-content"></div>
             <div class="footer-bottom" id="footer-year">
                 © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
@@ -857,91 +813,205 @@
             </script>
         </footer>
 
-      
         <script src="../js/theme.js" defer></script>
         <script src="../js/topic-menu.js" defer></script>
         <script src="../js/search-data.js" defer></script>
         <script type="module" src="../js/comment.js" defer></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var canvas = document.getElementById("elementsCanvas");
-                if (canvas && canvas.getContext) {
-                    var ctx = canvas.getContext("2d");
-                    var w = canvas.width;
-                    var h = canvas.height;
-                    var gradient = ctx.createLinearGradient(0, 0, w, h);
-                    gradient.addColorStop(0, "#0f172a");
-                    gradient.addColorStop(1, "#1e293b");
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, w, h);
-                    ctx.save();
-                    ctx.globalAlpha = 0.3;
-                    ctx.fillStyle = "#38bdf8";
-                    ctx.beginPath();
-                    ctx.arc(w * 0.2, h * 0.25, 70, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = "#a855f7";
-                    ctx.beginPath();
-                    ctx.arc(w * 0.75, h * 0.3, 90, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = "#22c55e";
-                    ctx.beginPath();
-                    ctx.arc(w * 0.55, h * 0.7, 80, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
+           (function () {
+    var canvas = document.getElementById("elementHeroCanvas");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
 
-                    function drawOrbit(cx, cy, rx, ry, rotation) {
-                        ctx.save();
-                        ctx.translate(cx, cy);
-                        ctx.rotate(rotation);
-                        ctx.strokeStyle = "rgba(148, 163, 184, 0.6)";
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        for (var i = 0; i <= 360; i++) {
-                            var rad = (i * Math.PI) / 180;
-                            var x = rx * Math.cos(rad);
-                            var y = ry * Math.sin(rad);
-                            if (i === 0) ctx.moveTo(x, y);
-                            else ctx.lineTo(x, y);
-                        }
-                        ctx.stroke();
-                        ctx.restore();
-                    }
+    function roundedRectPath(ctx, x, y, w, h, r) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
 
-                    drawOrbit(w * 0.25, h * 0.6, 80, 30, 0.2);
-                    drawOrbit(w * 0.25, h * 0.6, 80, 30, -1);
-                    ctx.fillStyle = "#fbbf24";
-                    ctx.beginPath();
-                    ctx.arc(w * 0.25, h * 0.6, 18, 0, Math.PI * 2);
-                    ctx.fill();
+    var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bg.addColorStop(0, "#0c1230");
+    bg.addColorStop(0.5, "#151f4b");
+    bg.addColorStop(1, "#211244");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                    ctx.fillStyle = "#e5e7eb";
-                    ctx.font = "28px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-                    ctx.fillText("118 Chemical Elements", w * 0.07, h * 0.25);
-                    ctx.font = "18px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-                    ctx.fillText("Atomic number, symbol, name and atomic mass", w * 0.07, h * 0.25 + 28);
-                    ctx.font = "16px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-                    ctx.fillText("Quick reference for NEET, JEE & Board Exams", w * 0.07, h * 0.25 + 52);
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = "#ffffff";
+    for (var i = 0; i < 180; i++) {
+        var x = Math.random() * canvas.width;
+        var y = Math.random() * canvas.height;
+        var s = Math.random() * 3;
+        ctx.beginPath();
+        ctx.arc(x, y, s, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.restore();
 
-                    ctx.save();
-                    ctx.globalAlpha = 0.08;
-                    ctx.fillStyle = "#ffffff";
-                    ctx.font = "32px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-                    var watermarkText = "GKLearnStudy";
-                    var stepX = 260;
-                    var stepY = 80;
-                    for (var y = 60; y < h + stepY; y += stepY) {
-                        for (var x = -100; x < w + stepX; x += stepX) {
-                            ctx.save();
-                            ctx.translate(x, y);
-                            ctx.rotate(-0.4);
-                            ctx.fillText(watermarkText, 0, 0);
-                            ctx.restore();
-                        }
-                    }
-                    ctx.restore();
-                }
+    ctx.save();
+    ctx.globalAlpha = 0.05;
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-0.35);
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.font = "bold 220px Arial";
+    ctx.fillText("gklearnstudy", 0, 60);
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.font = "bold 64px Arial";
+    ctx.fillText("gklearnstudy", 40, canvas.height - 40);
+    ctx.textAlign = "right";
+    ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
+    ctx.restore();
+
+    roundedRectPath(ctx, 80, 80, 720, 420, 32);
+    var panelGrad = ctx.createLinearGradient(80, 80, 800, 500);
+    panelGrad.addColorStop(0, "rgba(255,255,255,0.2)");
+    panelGrad.addColorStop(1, "rgba(255,255,255,0.05)");
+    ctx.fillStyle = panelGrad;
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(255,255,255,0.35)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.font = "bold 46px Arial";
+    ctx.fillText("Chemical Elements", 110, 150);
+    ctx.font = "bold 38px Arial";
+    ctx.fillText("with Atomic Number & Mass", 110, 195);
+
+    ctx.globalAlpha = 0.9;
+    ctx.font = "22px Arial";
+    var text =
+        "A quick visual overview of important elements used in school chemistry, " +
+        "with their symbols, atomic numbers and approximate atomic masses.";
+    var words = text.split(" ");
+    var line = "";
+    var x = 110;
+    var y = 235;
+    var maxWidth = 680;
+    for (var n = 0; n < words.length; n++) {
+        var testLine = line + words[n] + " ";
+        var metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + " ";
+            y += 28;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, x, y);
+
+    ctx.restore();
+
+    ctx.save();
+    var centerX = 220;
+    var centerY = 360;
+    ctx.globalAlpha = 0.9;
+    var orbitGrad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, 120);
+    orbitGrad.addColorStop(0, "rgba(129, 212, 250, 0.4)");
+    orbitGrad.addColorStop(1, "rgba(129, 212, 250, 0)");
+    ctx.fillStyle = orbitGrad;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 120, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(255,255,255,0.6)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(centerX, centerY, 110, 55, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(centerX, centerY, 110, 55, Math.PI / 3, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(centerX, centerY, 110, 55, -Math.PI / 3, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = "#ffeb3b";
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 16, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(centerX + 110, centerY, 6, 0, Math.PI * 2);
+    ctx.arc(centerX - 110, centerY, 6, 0, Math.PI * 2);
+    ctx.arc(centerX, centerY + 55, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    function drawElementCard(x, y, color, z, sym, name, mass) {
+        roundedRectPath(ctx, x, y, 210, 130, 18);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(0,0,0,0.15)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.font = "18px Arial";
+        ctx.textAlign = "left";
+        ctx.fillText("Z = " + z, x + 14, y + 26);
+
+        ctx.textAlign = "right";
+        ctx.fillText("≈ " + mass + " u", x + 196, y + 26);
+
+        ctx.textAlign = "left";
+        ctx.font = "bold 52px Arial";
+        ctx.fillText(sym, x + 18, y + 75);
+
+        ctx.font = "20px Arial";
+        ctx.fillText(name, x + 18, y + 105);
+    }
+
+    var rightBaseX = 920;
+    var rowY1 = 150;
+    var rowY2 = 320;
+    var rowY3 = 490;
+
+    drawElementCard(rightBaseX, rowY1, "#ffcc80", 1, "H", "Hydrogen", "1.008");
+    drawElementCard(rightBaseX + 240, rowY1, "#80deea", 8, "O", "Oxygen", "15.999");
+    drawElementCard(rightBaseX + 480, rowY1, "#b39ddb", 26, "Fe", "Iron", "55.845");
+
+    drawElementCard(rightBaseX, rowY2, "#ffe082", 11, "Na", "Sodium", "22.990");
+    drawElementCard(rightBaseX + 240, rowY2, "#a5d6a7", 17, "Cl", "Chlorine", "35.45");
+    drawElementCard(rightBaseX + 480, rowY2, "#ffab91", 6, "C", "Carbon", "12.011");
+
+    drawElementCard(rightBaseX, rowY3, "#ce93d8", 7, "N", "Nitrogen", "14.007");
+    drawElementCard(rightBaseX + 240, rowY3, "#90caf9", 12, "Mg", "Magnesium", "24.305");
+    drawElementCard(rightBaseX + 480, rowY3, "#ffe0b2", 79, "Au", "Gold", "196.97");
+
+    ctx.save();
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 30px Arial";
+    ctx.fillText("Famous Chemistry Formulas", 110, 540);
+
+    ctx.font = "24px Arial";
+    ctx.globalAlpha = 0.95;
+    ctx.fillText("H₂O  →  Water (Hydrogen + Oxygen)", 110, 575);
+    ctx.fillText("CO₂  →  Carbon Dioxide (Carbon + Oxygen)", 110, 610);
+    ctx.fillText("NaCl →  Table Salt (Sodium + Chlorine)", 110, 645);
+    ctx.restore();
+})();
+           
 
                 var langButtons = document.querySelectorAll(".language-switch button");
                 var tbody = document.querySelector(".table-container table tbody");
@@ -1232,32 +1302,7 @@
                 });
                 setLanguage("en");
 
-                var ratingStars = document.querySelectorAll(".rating-stars button");
-                var ratingMessage = document.getElementById("rating-message");
-
-                function updateRating(value) {
-                    ratingStars.forEach(function (btn) {
-                        var starValue = parseInt(btn.getAttribute("data-value"), 10);
-                        var isSelected = starValue <= value;
-                        btn.classList.toggle("selected", isSelected);
-                        btn.setAttribute("aria-pressed", isSelected ? "true" : "false");
-                    });
-                    if (!ratingMessage) return;
-                    if (value === 0) ratingMessage.textContent = "Tap a star to rate this elements table.";
-                    else if (value <= 2) ratingMessage.textContent = "Thanks for the feedback. We will try to improve this page.";
-                    else if (value === 3) ratingMessage.textContent = "Nice! Thanks for rating this page.";
-                    else if (value === 4) ratingMessage.textContent = "Great! We are glad this table is helping you.";
-                    else if (value === 5) ratingMessage.textContent = "Awesome! Thanks for the 5-star rating.";
-                }
-
-                ratingStars.forEach(function (btn) {
-                    btn.addEventListener("click", function () {
-                        var value = parseInt(this.getAttribute("data-value"), 10);
-                        updateRating(value);
-                    });
-                });
-                updateRating(0);
-            });
+                
         </script>
     </body>
 </html>
