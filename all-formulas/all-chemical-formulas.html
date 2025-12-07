@@ -278,8 +278,8 @@
             </nav>
         </aside>
             <main class="container">
-                <div id="root"><!-- Hero wrapper for Chemical Formulas page -->
-<div id="chem-formula-hero-wrapper" style="max-width: 100%; margin: 20px auto;">
+                <div id="root">
+                    <div id="chem-formula-hero-wrapper" style="max-width: 100%; margin: 20px auto;">
     <canvas
         id="chemFormulaHeroCanvas"
         width="1600"
@@ -2856,69 +2856,25 @@
         <script src="../js/topic-menu.js" defer></script>
         <script src="../js/search-data.js" defer></script>
         <script type="module" src="../js/comment.js" defer></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const table = document.getElementById("myTable");
-                if (!table) return;
+   <script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
 
-                const headers = Array.from(table.querySelectorAll("thead th")).map((th) => th.textContent.trim());
+HTMLCanvasElement.prototype.toDataURL = function(){ return ""; };
+HTMLCanvasElement.prototype.toBlob = function(cb){ cb(new Blob([])); };
 
-                const allTableRows = table.querySelectorAll("tbody tr");
-                allTableRows.forEach((row, rowIndex) => {
-                    const snoCell = document.createElement("td");
-                    snoCell.textContent = rowIndex + 1;
-                    row.insertBefore(snoCell, row.firstChild);
+document.addEventListener("DOMContentLoaded", () => {
+    const c = document.getElementById("chemFormulaHeroCanvas");
+    if (!c) return;
 
-                    const allCellsInRow = row.querySelectorAll("td");
-                    allCellsInRow.forEach((cell, cellIndex) => {
-                        if (headers[cellIndex]) {
-                            cell.setAttribute("data-label", headers[cellIndex]);
-                        }
-                    });
-                });
+    c.setAttribute("draggable", "false");
+    c.onselectstart = () => false;
+    c.onmousedown = e => e.preventDefault();
+});
+</script>
 
-                const searchInput = document.getElementById("table-search-input");
-                const loadMoreBtn = document.getElementById("loadMoreBtn");
-                const rows = Array.from(table.querySelectorAll("tbody tr"));
-                const rowsPerPage = 150;
-                let visibleRowsCount = 0;
-
-                function applyFilters() {
-                    const query = searchInput.value.toLowerCase().trim();
-
-                    const matchingRows = rows.filter((row) => {
-                        return row.textContent.toLowerCase().includes(query);
-                    });
-
-                    rows.forEach((row) => (row.style.display = "none"));
-
-                    matchingRows.forEach((row, index) => {
-                        if (index < visibleRowsCount) {
-                            row.style.display = "";
-                        }
-                    });
-
-                    if (visibleRowsCount >= matchingRows.length) {
-                        loadMoreBtn.style.display = "none";
-                    } else {
-                        loadMoreBtn.style.display = "block";
-                    }
-                }
-
-                loadMoreBtn.addEventListener("click", () => {
-                    visibleRowsCount += rowsPerPage;
-                    applyFilters();
-                });
-
-                searchInput.addEventListener("input", () => {
-                    visibleRowsCount = rowsPerPage;
-                    applyFilters();
-                });
-
-                visibleRowsCount = rowsPerPage;
-                applyFilters();
-            });
-        </script><script>
+<!-- MAIN CANVAS DRAWING -->
+<script>
 (function () {
     var canvas = document.getElementById("chemFormulaHeroCanvas");
     if (!canvas || !canvas.getContext) return;
@@ -2937,7 +2893,6 @@
         ctx.closePath();
     }
 
-    // ===== BACKGROUND =====
     var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     bg.addColorStop(0, "#041424");
     bg.addColorStop(0.5, "#111b3c");
@@ -2945,7 +2900,6 @@
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Soft particles / dots
     ctx.save();
     ctx.globalAlpha = 0.14;
     ctx.fillStyle = "#ffffff";
@@ -2959,7 +2913,6 @@
     }
     ctx.restore();
 
-    // Big diagonal watermark
     ctx.save();
     ctx.globalAlpha = 0.05;
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -2970,7 +2923,6 @@
     ctx.fillText("gklearnstudy", 0, 50);
     ctx.restore();
 
-    // Bottom watermark small
     ctx.save();
     ctx.globalAlpha = 0.12;
     ctx.fillStyle = "#ffffff";
@@ -2981,7 +2933,6 @@
     ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
     ctx.restore();
 
-    // ===== MAIN LEFT PANEL (TEXT) =====
     var panelX = 80;
     var panelY = 90;
     var panelW = 780;
@@ -2998,7 +2949,6 @@
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Text content
     ctx.save();
     ctx.fillStyle = "#ffffff";
     ctx.textAlign = "left";
@@ -3035,7 +2985,6 @@
     }
     ctx.fillText(line, xText, yText);
 
-    // Bullet list of formula categories
     yText += 50;
     ctx.font = "22px Arial";
     var bullets = [
@@ -3051,7 +3000,6 @@
 
     ctx.restore();
 
-    // ===== SMALL BEAKER + FLASK ILLUSTRATION (LEFT BOTTOM) =====
     function drawBeaker(x, y, w, h, liquidColor, bubblesColor) {
         ctx.save();
         roundedRectPath(ctx, x, y, w, h, 18);
@@ -3059,7 +3007,6 @@
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Liquid
         var liquidHeight = h * 0.55;
         var liquidY = y + h - liquidHeight;
         roundedRectPath(ctx, x + 4, liquidY, w - 8, liquidHeight - 4, 14);
@@ -3069,7 +3016,6 @@
         ctx.fillStyle = lg;
         ctx.fill();
 
-        // Bubbles
         ctx.fillStyle = bubblesColor;
         for (var i = 0; i < 6; i++) {
             var bx = x + w * (0.2 + 0.6 * Math.random());
@@ -3086,7 +3032,6 @@
     function drawFlask(x, y, size, liquidColor, glowColor) {
         ctx.save();
 
-        // Outer glow
         var rg = ctx.createRadialGradient(
             x, y + size * 0.3, size * 0.1,
             x, y + size * 0.3, size * 0.8
@@ -3098,7 +3043,6 @@
         ctx.arc(x, y + size * 0.3, size * 0.8, 0, Math.PI * 2);
         ctx.fill();
 
-        // Neck
         ctx.strokeStyle = "rgba(255,255,255,0.8)";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -3108,12 +3052,10 @@
         ctx.lineTo(x + size * 0.15, y);
         ctx.stroke();
 
-        // Body
         ctx.beginPath();
         ctx.arc(x, y + size * 0.5, size * 0.35, 0.2 * Math.PI, 0.8 * Math.PI);
         ctx.stroke();
 
-        // Liquid
         ctx.beginPath();
         ctx.moveTo(x - size * 0.25, y + size * 0.55);
         ctx.quadraticCurveTo(x, y + size * 0.45, x + size * 0.25, y + size * 0.55);
@@ -3126,11 +3068,9 @@
         ctx.restore();
     }
 
-    // Draw beaker + flask group
     drawBeaker(panelX + panelW - 210, panelY + panelH - 150, 180, 130, "rgba(129,212,250,0.85)", "rgba(255,255,255,0.9)");
     drawFlask(panelX + 150, panelY + panelH - 200, 120, "rgba(255,138,128,0.9)", "rgba(255,138,128,0.35)");
 
-    // ===== RIGHT SIDE FORMULA CARDS =====
     function drawFormulaCard(x, y, colorTop, colorBottom, heading, formula, note) {
         roundedRectPath(ctx, x, y, 260, 140, 22);
         var cg = ctx.createLinearGradient(x, y, x + 260, y + 140);
@@ -3254,7 +3194,6 @@
         "Strong base used in many reactions."
     );
 
-    // ===== FOOTER TEXT: examples row =====
     ctx.save();
     ctx.textAlign = "left";
     ctx.fillStyle = "#ffffff";
@@ -3267,6 +3206,7 @@
     ctx.fillText("CaCO₃  →  CaO  +  CO₂", panelX + 380, canvas.height - 60);
     ctx.fillText("NaOH  +  HCl  →  NaCl  +  H₂O", panelX + 720, canvas.height - 60);
     ctx.restore();
+
 })();
 </script>
 
