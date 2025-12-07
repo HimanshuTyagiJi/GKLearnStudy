@@ -40,6 +40,7 @@
 
         <link rel="stylesheet" href="css/topic-menu.css" />
         <link rel="stylesheet" href="css/conversion.css" />
+          <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
           <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
  
     </head>
@@ -436,6 +437,96 @@
                                 <a href="conversion/temperature-unit-conversion" class="read-more-btn">Read More about Temperature Unit Conversion</a>
                             </div>
                         </div>
+<div style="max-width:100%;margin:20px auto;">
+<canvas id="allConvMega" width="1600" height="350"
+style="width:100%;height:auto;display:block;border-radius:18px;"></canvas>
+</div>
+
+<script>
+(function(){
+
+let c = document.getElementById("allConvMega");
+let x = c.getContext("2d");
+
+c.oncontextmenu = e => e.preventDefault();
+c.setAttribute("draggable","false");
+
+// ===== BACKGROUND =====
+let g = x.createLinearGradient(0,0,1600,350);
+g.addColorStop(0,"#0061ff");
+g.addColorStop(0.5,"#2ad3ff");
+g.addColorStop(1,"#25ffb0");
+x.fillStyle = g;
+x.fillRect(0,0,1600,350);
+
+// soft particles
+x.save();
+x.globalAlpha=0.20;
+x.fillStyle="#fff";
+for(let i=0;i<140;i++){
+ let xx=Math.random()*1600,
+     yy=Math.random()*350,
+     r=2+Math.random()*4;
+ x.beginPath();
+ x.arc(xx,yy,r,0,6.28);
+ x.fill();
+}
+x.restore();
+
+// ===== DIAGONAL WATERMARK =====
+x.save();
+x.globalAlpha=0.06;
+x.translate(800,175);
+x.rotate(-0.30);
+x.fillStyle="#fff";
+x.textAlign="center";
+x.font="bold 150px Arial";
+x.fillText("GKLearnStudy",0,50);
+x.restore();
+
+// ===== TITLE =====
+x.fillStyle="#ffffff";
+x.textAlign="left";
+x.font="bold 78px Arial";
+x.fillText("ALL CONVERSIONS",110,185);
+
+// ===== ICONS (universal 12 symbols) =====
+
+let symbols = [
+ {t:"∠",   size:60},
+ {t:"▢",   size:60},
+ {t:"📏",  size:55},
+ {t:"🚀",  size:55},
+ {t:"🌡",  size:55},
+ {t:"⏱",  size:55},
+ {t:"🧪",  size:55},
+ {t:"⚖️",  size:55},
+ {t:"⚡",  size:60},
+ {t:"🧭",  size:55},
+ {t:"🔄",  size:55},
+ {t:"➗",  size:60}
+];
+
+symbols.forEach((obj)=>{
+ let X = 900 + Math.random()*550;
+ let Y = 70  + Math.random()*220;
+
+ x.save();
+ x.globalAlpha=0.30;
+ x.beginPath();
+ x.ellipse(X, Y+18, 25, 10, 0, 0, 6.28);
+ x.fillStyle="rgba(0,0,0,0.45)";
+ x.fill();
+ x.restore();
+
+ x.fillStyle="#ffffff";
+ x.font = "bold "+obj.size+"px Arial";
+ x.textAlign="center";
+ x.fillText(obj.t,X,Y);
+});
+
+})();
+</script>
 
                         <div id="Power" class="converter-card">
                             <div class="converter-tool">
@@ -1466,6 +1557,7 @@
 </html>
       
         
+
 
 
 
