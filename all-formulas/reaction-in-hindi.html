@@ -934,6 +934,177 @@
         <script src="../js/topic-menu.js" defer></script>
         <script src="../js/search-data.js" defer></script>
         <script type="module" src="../js/comment.js" defer></script>
+            <script>
+        // sirf is canvas par right-click / drag / select disable
+        document.addEventListener("DOMContentLoaded", function () {
+            var c = document.getElementById("reactionCanvas");
+            if (!c) return;
+
+            c.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            });
+
+            c.addEventListener("mousedown", function (e) {
+                e.preventDefault();
+            });
+
+            c.onselectstart = function () {
+                return false;
+            };
+
+            c.setAttribute("draggable", "false");
+        });
+    </script>
+
+    <script>
+        (function () {
+            var canvas = document.getElementById("reactionCanvas");
+            if (!canvas || !canvas.getContext) return;
+
+            var ctx = canvas.getContext("2d");
+
+            function roundedRectPath(ctx, x, y, w, h, r) {
+                if (w < 2 * r) r = w / 2;
+                if (h < 2 * r) r = h / 2;
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.arcTo(x + w, y, x + w, y + h, r);
+                ctx.arcTo(x + w, y + h, x, y + h, r);
+                ctx.arcTo(x, y + h, x, y, r);
+                ctx.arcTo(x, y, x + w, y, r);
+                ctx.closePath();
+            }
+
+            // ===== BACKGROUND =====
+            var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            bg.addColorStop(0, "#132033");
+            bg.addColorStop(0.5, "#171d3f");
+            bg.addColorStop(1, "#1f0f3a");
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // soft dots
+            ctx.save();
+            ctx.globalAlpha = 0.15;
+            ctx.fillStyle = "#ffffff";
+            for (var i = 0; i < 150; i++) {
+                var x = Math.random() * canvas.width;
+                var y = Math.random() * canvas.height;
+                var s = Math.random() * 3;
+                ctx.beginPath();
+                ctx.arc(x, y, s, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+
+            // diagonal watermark
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(-0.32);
+            ctx.globalAlpha = 0.09;
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 180px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("GKLEARNSTUDY", 0, 60);
+            ctx.restore();
+
+            // top main heading
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 48px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText("Important Chemical Reaction", 60, 80);
+
+            ctx.font = "bold 30px Arial";
+            ctx.fillStyle = "#7cf0ff";
+            ctx.fillText("महत्वपूर्ण रासायनिक अभिक्रिया (Hindi + English)", 60, 125);
+
+            // reaction main box
+            var boxX = 60;
+            var boxY = 160;
+            var boxW = canvas.width - 120;
+            var boxH = 260;
+
+            roundedRectPath(ctx, boxX, boxY, boxW, boxH, 28);
+            var boxGrad = ctx.createLinearGradient(boxX, boxY, boxX + boxW, boxY + boxH);
+            boxGrad.addColorStop(0, "rgba(255,255,255,0.18)");
+            boxGrad.addColorStop(1, "rgba(255,255,255,0.06)");
+            ctx.fillStyle = boxGrad;
+            ctx.fill();
+
+            ctx.strokeStyle = "rgba(255,255,255,0.45)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // English reaction
+            ctx.save();
+            ctx.textAlign = "left";
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 42px Arial";
+            ctx.fillText("2H₂ + O₂ → 2H₂O", boxX + 40, boxY + 90);
+
+            ctx.font = "24px Arial";
+            ctx.fillStyle = "#cfe7ff";
+            ctx.fillText("Formation of Water (Combination Reaction)", boxX + 40, boxY + 130);
+
+            // Hindi reaction
+            ctx.fillStyle = "#fffbd1";
+            ctx.font = "bold 30px Arial";
+            ctx.fillText("जल (Water) का निर्माण – संयोजन अभिक्रिया", boxX + 40, boxY + 185);
+
+            ctx.font = "24px Arial";
+            ctx.fillStyle = "#ffe6aa";
+            ctx.fillText("2H₂ (हाइड्रोजन) + O₂ (ऑक्सीजन) → 2H₂O (जल)", boxX + 40, boxY + 225);
+
+            ctx.restore();
+
+            // small decorative molecules (simple circles + bonds)
+            function drawMolecule(cx, cy, scale) {
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.scale(scale, scale);
+                ctx.strokeStyle = "rgba(124,240,255,0.8)";
+                ctx.lineWidth = 3;
+
+                ctx.beginPath();
+                ctx.moveTo(-25, 0);
+                ctx.lineTo(0, -20);
+                ctx.lineTo(25, 0);
+                ctx.stroke();
+
+                ctx.fillStyle = "#7cf0ff";
+                ctx.beginPath();
+                ctx.arc(-25, 0, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(25, 0, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(0, -20, 10, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            drawMolecule(canvas.width - 260, 120, 1.1);
+            drawMolecule(canvas.width - 200, 190, 0.9);
+            drawMolecule(canvas.width - 300, 260, 0.8);
+
+            // bottom watermark text
+            ctx.save();
+            ctx.globalAlpha = 0.18;
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 60px Arial";
+            ctx.textAlign = "left";
+            ctx.fillText("gklearnstudy", 80, canvas.height - 40);
+            ctx.textAlign = "right";
+            ctx.fillText("gklearnstudy", canvas.width - 80, canvas.height - 40);
+            ctx.restore();
+        })();
+    </script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
              
