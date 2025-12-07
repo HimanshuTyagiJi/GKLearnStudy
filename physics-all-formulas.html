@@ -289,387 +289,7 @@
 
     <main class="container">
       <div id="root"><!-- Physics All Formulas Hero (Canvas) -->
-        <div id="physics-formula-hero-wrapper"
-          style="max-width: 100%; margin: 20px auto;">
-          <canvas id="physicsFormulaHeroCanvas" width="1600" height="650"
-            style="width: 100%; height: auto; display: block; border-radius: 18px;"
-            role="img"
-            aria-label="Physics all formulas banner with gradient background, diagrams and gklearnstudy watermark for class 9 to 12"></canvas>
-        </div>
-
-        <script>
-(function () {
-    var canvas = document.getElementById("physicsFormulaHeroCanvas");
-    if (!canvas || !canvas.getContext) return;
-
-    // sirf is canvas par right-click / save image as disable
-    canvas.addEventListener("contextmenu", function (e) {
-        e.preventDefault();
-    });
-    canvas.addEventListener("dragstart", function (e) {
-        e.preventDefault();
-    });
-    canvas.setAttribute("draggable", "false");
-
-    var ctx = canvas.getContext("2d");
-
-    function roundedRectPath(ctx, x, y, w, h, r) {
-        if (w < 2 * r) r = w / 2;
-        if (h < 2 * r) r = h / 2;
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y, x + w, y, r);
-        ctx.closePath();
-    }
-
-    // background
-    var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    bg.addColorStop(0, "#020617");
-    bg.addColorStop(0.4, "#0f172a");
-    bg.addColorStop(1, "#1e293b");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // soft dots
-    ctx.save();
-    ctx.globalAlpha = 0.18;
-    ctx.fillStyle = "#ffffff";
-    for (var i = 0; i < 180; i++) {
-        var x = Math.random() * canvas.width;
-        var y = Math.random() * canvas.height;
-        var s = Math.random() * 3;
-        ctx.beginPath();
-        ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fill();
-    }
-    ctx.restore();
-
-    // big diagonal watermark
-    ctx.save();
-    ctx.globalAlpha = 0.06;
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(-0.3);
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "center";
-    ctx.font = "bold 200px Arial";
-    ctx.fillText("gklearnstudy", 0, 50);
-    ctx.restore();
-
-    // small bottom watermark
-    ctx.save();
-    ctx.globalAlpha = 0.14;
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "left";
-    ctx.font = "bold 60px Arial";
-    ctx.fillText("gklearnstudy", 40, canvas.height - 40);
-    ctx.textAlign = "right";
-    ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
-    ctx.restore();
-
-    // left panel
-    var panelX = 80;
-    var panelY = 90;
-    var panelW = 780;
-    var panelH = 430;
-
-    roundedRectPath(ctx, panelX, panelY, panelW, panelH, 32);
-    var panelGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
-    panelGrad.addColorStop(0, "rgba(248,250,252,0.18)");
-    panelGrad.addColorStop(1, "rgba(148,163,184,0.10)");
-    ctx.fillStyle = panelGrad;
-    ctx.fill();
-
-    ctx.strokeStyle = "rgba(148,163,184,0.7)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // text inside panel
-    ctx.save();
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "left";
-
-    ctx.font = "bold 50px Arial";
-    ctx.fillText("Physics All Formulas", panelX + 30, panelY + 60);
-
-    ctx.font = "bold 34px Arial";
-    ctx.fillText("Class 9 – 12 | NEET · JEE", panelX + 30, panelY + 105);
-
-    ctx.globalAlpha = 0.96;
-    ctx.font = "22px Arial";
-    var text =
-        "Quick visual banner of key physics formulas and concepts – kinematics, " +
-        "Newton's laws, electricity and power – useful for Class 9–12 and " +
-        "competitive exam preparation.";
-
-    var words = text.split(" ");
-    var line = "";
-    var xText = panelX + 30;
-    var yText = panelY + 145;
-    var maxWidth = panelW - 60;
-
-    for (var i = 0; i < words.length; i++) {
-        var test = line + words[i] + " ";
-        var m = ctx.measureText(test);
-        if (m.width > maxWidth && i > 0) {
-            ctx.fillText(line, xText, yText);
-            line = words[i] + " ";
-            yText += 28;
-        } else {
-            line = test;
-        }
-    }
-    ctx.fillText(line, xText, yText);
-
-    // bullet points
-    yText += 50;
-    ctx.font = "22px Arial";
-    var bullets = [
-        "• Kinematics: v = u + at, s = ut + ½at²",
-        "• Newton's laws: F = ma, weight = mg",
-        "• Electricity: V = IR, P = VI",
-        "• Magnetic left-hand rule & field directions"
-    ];
-    bullets.forEach(function (b) {
-        ctx.fillText(b, xText, yText);
-        yText += 30;
-    });
-
-    ctx.restore();
-
-    // small diagram: projectile arc + vectors
-    ctx.save();
-    var baseX = panelX + 120;
-    var baseY = panelY + panelH - 90;
-
-    ctx.strokeStyle = "rgba(148,163,184,0.8)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(baseX - 60, baseY);
-    ctx.lineTo(baseX + 220, baseY);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(baseX - 20, baseY + 40);
-    ctx.lineTo(baseX - 20, baseY - 160);
-    ctx.stroke();
-
-    ctx.strokeStyle = "rgba(96,165,250,0.9)";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(baseX - 10, baseY);
-    ctx.quadraticCurveTo(baseX + 80, baseY - 140, baseX + 190, baseY);
-    ctx.stroke();
-
-    ctx.fillStyle = "rgba(96,165,250,0.9)";
-    ctx.beginPath();
-    ctx.arc(baseX - 10, baseY, 7, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "18px Arial";
-    ctx.fillText("Projectile", baseX + 20, baseY - 120);
-    ctx.fillText("s, u, v, a, t", baseX + 20, baseY - 95);
-
-    ctx.restore();
-
-    // left-hand rule diagram (right side of panel)
-    function drawLeftHandRule(cx, cy, size) {
-        ctx.save();
-        ctx.translate(cx, cy);
-
-        ctx.strokeStyle = "rgba(248,250,252,0.9)";
-        ctx.lineWidth = 3;
-
-        // thumb (F)
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(size * 0.9, -size * 0.1);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(size * 0.9, -size * 0.1);
-        ctx.lineTo(size * 0.7, -size * 0.18);
-        ctx.lineTo(size * 0.78, 0);
-        ctx.closePath();
-        ctx.fillStyle = "rgba(248,250,252,0.9)";
-        ctx.fill();
-
-        // first finger (Field B)
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, -size);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(0, -size);
-        ctx.lineTo(-6, -size + 16);
-        ctx.lineTo(6, -size + 16);
-        ctx.closePath();
-        ctx.fill();
-
-        // second finger (Current I)
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(size * 0.7, size * 0.7);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(size * 0.7, size * 0.7);
-        ctx.lineTo(size * 0.58, size * 0.54);
-        ctx.lineTo(size * 0.84, size * 0.54);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.fillStyle = "rgba(129,230,217,0.95)";
-        ctx.font = "18px Arial";
-        ctx.fillText("F", size * 0.95, -size * 0.15);
-        ctx.fillText("B", -20, -size - 10);
-        ctx.fillText("I", size * 0.82, size * 0.85);
-
-        ctx.restore();
-    }
-
-    drawLeftHandRule(panelX + panelW - 150, panelY + 200, 70);
-
-    // right side formula cards
-    function drawFormulaCard(x, y, colorTop, colorBottom, heading, formula, note) {
-        roundedRectPath(ctx, x, y, 260, 140, 22);
-        var cg = ctx.createLinearGradient(x, y, x + 260, y + 140);
-        cg.addColorStop(0, colorTop);
-        cg.addColorStop(1, colorBottom);
-        ctx.fillStyle = cg;
-        ctx.fill();
-
-        ctx.strokeStyle = "rgba(15,23,42,0.4)";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.textAlign = "left";
-        ctx.fillStyle = "rgba(15,23,42,0.92)";
-
-        ctx.font = "bold 20px Arial";
-        ctx.fillText(heading, x + 18, y + 30);
-
-        ctx.font = "bold 42px Arial";
-        ctx.fillText(formula, x + 18, y + 75);
-
-        ctx.font = "18px Arial";
-        ctx.fillText(note, x + 18, y + 105);
-
-        ctx.restore();
-    }
-
-    var rightBaseX = 920;
-    var row1Y = 145;
-    var row2Y = 320;
-    var row3Y = 495;
-
-    drawFormulaCard(
-        rightBaseX,
-        row1Y,
-        "rgba(96,165,250,0.98)",
-        "rgba(56,189,248,0.98)",
-        "Kinematics",
-        "v = u + at",
-        "Final velocity after uniform acceleration."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 280,
-        row1Y,
-        "rgba(52,211,153,0.98)",
-        "rgba(45,212,191,0.98)",
-        "Displacement",
-        "s = ut + ½at²",
-        "Distance covered in time t."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 560,
-        row1Y,
-        "rgba(251,191,36,0.98)",
-        "rgba(248,113,113,0.98)",
-        "Newton's 2nd Law",
-        "F = ma",
-        "Net force equals mass × acceleration."
-    );
-
-    drawFormulaCard(
-        rightBaseX,
-        row2Y,
-        "rgba(129,140,248,0.98)",
-        "rgba(168,85,247,0.98)",
-        "Ohm's Law",
-        "V = IR",
-        "Potential difference across a resistor."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 280,
-        row2Y,
-        "rgba(248,250,252,0.98)",
-        "rgba(148,163,184,0.98)",
-        "Electric Power",
-        "P = VI",
-        "Rate of doing electrical work."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 560,
-        row2Y,
-        "rgba(248,113,113,0.98)",
-        "rgba(251,146,60,0.98)",
-        "Gravitation",
-        "W = mg",
-        "Weight of a body near Earth's surface."
-    );
-
-    drawFormulaCard(
-        rightBaseX,
-        row3Y,
-        "rgba(74,222,128,0.98)",
-        "rgba(52,211,153,0.98)",
-        "Kinetic Energy",
-        "KE = ½mv²",
-        "Energy due to motion of object."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 280,
-        row3Y,
-        "rgba(56,189,248,0.98)",
-        "rgba(96,165,250,0.98)",
-        "Work Done",
-        "W = F·s",
-        "Constant force over displacement."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 560,
-        row3Y,
-        "rgba(234,179,8,0.98)",
-        "rgba(248,250,252,0.98)",
-        "Momentum",
-        "p = mv",
-        "Product of mass and velocity."
-    );
-
-    // footer equations
-    ctx.save();
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 28px Arial";
-    ctx.fillText("Sample Important Equations", panelX + 30, canvas.height - 95);
-
-    ctx.font = "22px Arial";
-    ctx.globalAlpha = 0.96;
-    ctx.fillText("v² − u² = 2as", panelX + 30, canvas.height - 60);
-    ctx.fillText("P = VI = I²R = V²/R", panelX + 330, canvas.height - 60);
-    ctx.fillText("F = qvB sinθ (magnetic force)", panelX + 680, canvas.height - 60);
-    ctx.restore();
-})();
-</script>
+        
 
         <style>
                             /*
@@ -1104,7 +724,387 @@
                 <!-- Sidebar content will be generated by JS -->
               </nav>
             </aside>
+<div id="physics-formula-hero-wrapper"
+          style="max-width: 100%; margin: 20px auto;">
+          <canvas id="physicsFormulaHeroCanvas" width="1600" height="650"
+            style="width: 100%; height: auto; display: block; border-radius: 18px;"
+            role="img"
+            aria-label="Physics all formulas banner with gradient background, diagrams and gklearnstudy watermark for class 9 to 12"></canvas>
+        </div>
 
+        <script>
+(function () {
+    var canvas = document.getElementById("physicsFormulaHeroCanvas");
+    if (!canvas || !canvas.getContext) return;
+
+    // sirf is canvas par right-click / save image as disable
+    canvas.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+    });
+    canvas.addEventListener("dragstart", function (e) {
+        e.preventDefault();
+    });
+    canvas.setAttribute("draggable", "false");
+
+    var ctx = canvas.getContext("2d");
+
+    function roundedRectPath(ctx, x, y, w, h, r) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+    }
+
+    // background
+    var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bg.addColorStop(0, "#020617");
+    bg.addColorStop(0.4, "#0f172a");
+    bg.addColorStop(1, "#1e293b");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // soft dots
+    ctx.save();
+    ctx.globalAlpha = 0.18;
+    ctx.fillStyle = "#ffffff";
+    for (var i = 0; i < 180; i++) {
+        var x = Math.random() * canvas.width;
+        var y = Math.random() * canvas.height;
+        var s = Math.random() * 3;
+        ctx.beginPath();
+        ctx.arc(x, y, s, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.restore();
+
+    // big diagonal watermark
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-0.3);
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.font = "bold 200px Arial";
+    ctx.fillText("gklearnstudy", 0, 50);
+    ctx.restore();
+
+    // small bottom watermark
+    ctx.save();
+    ctx.globalAlpha = 0.14;
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.font = "bold 60px Arial";
+    ctx.fillText("gklearnstudy", 40, canvas.height - 40);
+    ctx.textAlign = "right";
+    ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
+    ctx.restore();
+
+    // left panel
+    var panelX = 80;
+    var panelY = 90;
+    var panelW = 780;
+    var panelH = 430;
+
+    roundedRectPath(ctx, panelX, panelY, panelW, panelH, 32);
+    var panelGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
+    panelGrad.addColorStop(0, "rgba(248,250,252,0.18)");
+    panelGrad.addColorStop(1, "rgba(148,163,184,0.10)");
+    ctx.fillStyle = panelGrad;
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(148,163,184,0.7)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // text inside panel
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+
+    ctx.font = "bold 50px Arial";
+    ctx.fillText("Physics All Formulas", panelX + 30, panelY + 60);
+
+    ctx.font = "bold 34px Arial";
+    ctx.fillText("Class 9 – 12 | NEET · JEE", panelX + 30, panelY + 105);
+
+    ctx.globalAlpha = 0.96;
+    ctx.font = "22px Arial";
+    var text =
+        "Quick visual banner of key physics formulas and concepts – kinematics, " +
+        "Newton's laws, electricity and power – useful for Class 9–12 and " +
+        "competitive exam preparation.";
+
+    var words = text.split(" ");
+    var line = "";
+    var xText = panelX + 30;
+    var yText = panelY + 145;
+    var maxWidth = panelW - 60;
+
+    for (var i = 0; i < words.length; i++) {
+        var test = line + words[i] + " ";
+        var m = ctx.measureText(test);
+        if (m.width > maxWidth && i > 0) {
+            ctx.fillText(line, xText, yText);
+            line = words[i] + " ";
+            yText += 28;
+        } else {
+            line = test;
+        }
+    }
+    ctx.fillText(line, xText, yText);
+
+    // bullet points
+    yText += 50;
+    ctx.font = "22px Arial";
+    var bullets = [
+        "• Kinematics: v = u + at, s = ut + ½at²",
+        "• Newton's laws: F = ma, weight = mg",
+        "• Electricity: V = IR, P = VI",
+        "• Magnetic left-hand rule & field directions"
+    ];
+    bullets.forEach(function (b) {
+        ctx.fillText(b, xText, yText);
+        yText += 30;
+    });
+
+    ctx.restore();
+
+    // small diagram: projectile arc + vectors
+    ctx.save();
+    var baseX = panelX + 120;
+    var baseY = panelY + panelH - 90;
+
+    ctx.strokeStyle = "rgba(148,163,184,0.8)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(baseX - 60, baseY);
+    ctx.lineTo(baseX + 220, baseY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(baseX - 20, baseY + 40);
+    ctx.lineTo(baseX - 20, baseY - 160);
+    ctx.stroke();
+
+    ctx.strokeStyle = "rgba(96,165,250,0.9)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(baseX - 10, baseY);
+    ctx.quadraticCurveTo(baseX + 80, baseY - 140, baseX + 190, baseY);
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(96,165,250,0.9)";
+    ctx.beginPath();
+    ctx.arc(baseX - 10, baseY, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "18px Arial";
+    ctx.fillText("Projectile", baseX + 20, baseY - 120);
+    ctx.fillText("s, u, v, a, t", baseX + 20, baseY - 95);
+
+    ctx.restore();
+
+    // left-hand rule diagram (right side of panel)
+    function drawLeftHandRule(cx, cy, size) {
+        ctx.save();
+        ctx.translate(cx, cy);
+
+        ctx.strokeStyle = "rgba(248,250,252,0.9)";
+        ctx.lineWidth = 3;
+
+        // thumb (F)
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size * 0.9, -size * 0.1);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(size * 0.9, -size * 0.1);
+        ctx.lineTo(size * 0.7, -size * 0.18);
+        ctx.lineTo(size * 0.78, 0);
+        ctx.closePath();
+        ctx.fillStyle = "rgba(248,250,252,0.9)";
+        ctx.fill();
+
+        // first finger (Field B)
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -size);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -size);
+        ctx.lineTo(-6, -size + 16);
+        ctx.lineTo(6, -size + 16);
+        ctx.closePath();
+        ctx.fill();
+
+        // second finger (Current I)
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(size * 0.7, size * 0.7);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(size * 0.7, size * 0.7);
+        ctx.lineTo(size * 0.58, size * 0.54);
+        ctx.lineTo(size * 0.84, size * 0.54);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(129,230,217,0.95)";
+        ctx.font = "18px Arial";
+        ctx.fillText("F", size * 0.95, -size * 0.15);
+        ctx.fillText("B", -20, -size - 10);
+        ctx.fillText("I", size * 0.82, size * 0.85);
+
+        ctx.restore();
+    }
+
+    drawLeftHandRule(panelX + panelW - 150, panelY + 200, 70);
+
+    // right side formula cards
+    function drawFormulaCard(x, y, colorTop, colorBottom, heading, formula, note) {
+        roundedRectPath(ctx, x, y, 260, 140, 22);
+        var cg = ctx.createLinearGradient(x, y, x + 260, y + 140);
+        cg.addColorStop(0, colorTop);
+        cg.addColorStop(1, colorBottom);
+        ctx.fillStyle = cg;
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(15,23,42,0.4)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.textAlign = "left";
+        ctx.fillStyle = "rgba(15,23,42,0.92)";
+
+        ctx.font = "bold 20px Arial";
+        ctx.fillText(heading, x + 18, y + 30);
+
+        ctx.font = "bold 42px Arial";
+        ctx.fillText(formula, x + 18, y + 75);
+
+        ctx.font = "18px Arial";
+        ctx.fillText(note, x + 18, y + 105);
+
+        ctx.restore();
+    }
+
+    var rightBaseX = 920;
+    var row1Y = 145;
+    var row2Y = 320;
+    var row3Y = 495;
+
+    drawFormulaCard(
+        rightBaseX,
+        row1Y,
+        "rgba(96,165,250,0.98)",
+        "rgba(56,189,248,0.98)",
+        "Kinematics",
+        "v = u + at",
+        "Final velocity after uniform acceleration."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row1Y,
+        "rgba(52,211,153,0.98)",
+        "rgba(45,212,191,0.98)",
+        "Displacement",
+        "s = ut + ½at²",
+        "Distance covered in time t."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row1Y,
+        "rgba(251,191,36,0.98)",
+        "rgba(248,113,113,0.98)",
+        "Newton's 2nd Law",
+        "F = ma",
+        "Net force equals mass × acceleration."
+    );
+
+    drawFormulaCard(
+        rightBaseX,
+        row2Y,
+        "rgba(129,140,248,0.98)",
+        "rgba(168,85,247,0.98)",
+        "Ohm's Law",
+        "V = IR",
+        "Potential difference across a resistor."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row2Y,
+        "rgba(248,250,252,0.98)",
+        "rgba(148,163,184,0.98)",
+        "Electric Power",
+        "P = VI",
+        "Rate of doing electrical work."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row2Y,
+        "rgba(248,113,113,0.98)",
+        "rgba(251,146,60,0.98)",
+        "Gravitation",
+        "W = mg",
+        "Weight of a body near Earth's surface."
+    );
+
+    drawFormulaCard(
+        rightBaseX,
+        row3Y,
+        "rgba(74,222,128,0.98)",
+        "rgba(52,211,153,0.98)",
+        "Kinetic Energy",
+        "KE = ½mv²",
+        "Energy due to motion of object."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 280,
+        row3Y,
+        "rgba(56,189,248,0.98)",
+        "rgba(96,165,250,0.98)",
+        "Work Done",
+        "W = F·s",
+        "Constant force over displacement."
+    );
+
+    drawFormulaCard(
+        rightBaseX + 560,
+        row3Y,
+        "rgba(234,179,8,0.98)",
+        "rgba(248,250,252,0.98)",
+        "Momentum",
+        "p = mv",
+        "Product of mass and velocity."
+    );
+
+    // footer equations
+    ctx.save();
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 28px Arial";
+    ctx.fillText("Sample Important Equations", panelX + 30, canvas.height - 95);
+
+    ctx.font = "22px Arial";
+    ctx.globalAlpha = 0.96;
+    ctx.fillText("v² − u² = 2as", panelX + 30, canvas.height - 60);
+    ctx.fillText("P = VI = I²R = V²/R", panelX + 330, canvas.height - 60);
+    ctx.fillText("F = qvB sinθ (magnetic force)", panelX + 680, canvas.height - 60);
+    ctx.restore();
+})();
+</script>
             <!-- Main Content -->
             <main id="container" class="py-8 w-full">
               <!-- Class 9th -->
