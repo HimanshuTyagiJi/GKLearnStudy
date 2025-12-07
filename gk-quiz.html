@@ -293,7 +293,184 @@ style="width:100%;height:auto;display:block;border-radius:18px;"></canvas>
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        
+        <div style="max-width:100%;margin:20px auto;">
+<canvas id="kaiseKarenFunCanvas" width="1600" height="650"
+style="width:100%;height:auto;display:block;border-radius:20px;"></canvas>
+</div>
+
+<script>
+(function(){
+
+const c = document.getElementById("kaiseKarenFunCanvas");
+const x = c.getContext("2d");
+
+c.addEventListener("contextmenu", e=>e.preventDefault());
+c.setAttribute("draggable","false");
+
+// FUN GRADIENT
+let bg = x.createLinearGradient(0,0,c.width,c.height);
+bg.addColorStop(0,"#ff9df2");  
+bg.addColorStop(0.5,"#91d2ff");
+bg.addColorStop(1,"#7affc8");
+x.fillStyle = bg;
+x.fillRect(0,0,c.width,c.height);
+
+// fun bubbles
+x.save();
+x.globalAlpha=0.25;
+x.fillStyle="#fff";
+for(let i=0;i<140;i++){
+    let xx=Math.random()*c.width;
+    let yy=Math.random()*c.height;
+    let rr=5+Math.random()*18;
+    x.beginPath();
+    x.arc(xx,yy,rr,0,Math.PI*2);
+    x.fill();
+}
+x.restore();
+
+// diagonal watermark
+x.save();
+x.globalAlpha=0.06;
+x.translate(c.width/2,c.height/2);
+x.rotate(-0.3);
+x.fillStyle="#fff";
+x.textAlign="center";
+x.font="bold 180px Arial";
+x.fillText("GKLearnStudy",0,60);
+x.restore();
+
+// decorative tiny stickers
+x.save();
+x.globalAlpha=0.15;
+x.fillStyle="#fff";
+x.font="bold 42px Arial";
+let sx=[300,550,900,1200,1450], sy=[80,180,310,430,550];
+sx.forEach(a=>{
+    sy.forEach(b=>{
+        x.fillText("★",a,b);
+    });
+});
+x.restore();
+
+// LEFT FUN NOTEBOOK
+function R(ctx,X,Y,W,H,r){
+    ctx.beginPath();
+    ctx.moveTo(X+r,Y);
+    ctx.arcTo(X+W,Y,X+W,Y+H,r);
+    ctx.arcTo(X+W,Y+H,X,Y+H,r);
+    ctx.arcTo(X,Y+H,X,Y,r);
+    ctx.arcTo(X,Y,X+r,Y,r);
+    ctx.closePath();
+}
+
+let bx=140, by=110, bw=500, bh=430;
+
+// shadow
+x.save();
+x.globalAlpha=0.32;
+x.fillStyle="rgba(0,0,0,0.35)";
+x.beginPath();
+x.ellipse(bx+bw/2,by+bh+25,bw*0.55,25,0,0,Math.PI*2);
+x.fill();
+x.restore();
+
+// notebook body
+let gbook=x.createLinearGradient(bx,by,bx+bw,by+bh);
+gbook.addColorStop(0,"#ffffff");
+gbook.addColorStop(1,"#f6faff");
+
+R(x,bx,by,bw,bh,40);
+x.fillStyle=gbook;
+x.fill();
+
+x.strokeStyle="rgba(0,0,0,0.15)";
+x.lineWidth=5;
+x.stroke();
+
+// Fun title
+x.fillStyle="#ff2dbb";
+x.textAlign="center";
+x.font="bold 64px Arial";
+x.fillText("Kaise Karen?",bx+bw/2,by+90);
+
+// cute doodle arrows
+x.fillStyle="#ff5d5d";
+x.font="bold 40px Arial";
+x.fillText("➤",bx+60,by+135);
+x.fillText("➤",bx+bw-80,by+150);
+
+x.fillStyle="#00bcd4";
+x.font="bold 36px Arial";
+x.fillText("★",bx+90,by+165);
+x.fillText("★",bx+bw-110,by+190);
+
+// steps fun style
+x.fillStyle="#000";
+x.textAlign="left";
+x.font="32px Arial";
+let ly=by+160;
+
+[
+"✔ Sab kuch simple steps mein",
+"✔ Fun style me guide",
+"✔ Practical real examples",
+"✔ Easy language tips",
+"✔ Har cheez ka solution"
+].forEach(t=>{
+    x.fillText(t,bx+40,ly);
+    ly+=60;
+});
+
+// ==== RIGHT FUN SCATTERED ICONS ====
+
+const funIcons=[
+    "😂","📱","🌐","📝","🔒","⚙️","🎯","🚗","🏍️","💬","📡","😎"
+];
+
+const colors=[
+    "#ff5a79","#33b5ff","#6cff77","#ffb84a","#8e6bff",
+    "#3fe0ff","#ff6ccd","#ffa83c","#ae60ff","#47ffa1"
+];
+
+function funIcon(X,Y,emoji,color,scale){
+    x.save();
+
+    x.globalAlpha=0.35;
+    x.beginPath();
+    x.ellipse(X,Y+22*scale,25*scale,12*scale,0,0,Math.PI*2);
+    x.fillStyle="rgba(0,0,0,0.35)";
+    x.fill();
+
+    let g=x.createRadialGradient(X-10,Y-10,8,X,Y,40*scale);
+    g.addColorStop(0,"#fff");
+    g.addColorStop(1,color);
+
+    x.globalAlpha=1;
+    x.fillStyle=g;
+    x.beginPath();
+    x.arc(X,Y,40*scale,0,Math.PI*2);
+    x.fill();
+
+    x.fillStyle="#fff";
+    x.textAlign="center";
+    x.font=`bold ${40*scale}px Arial`;
+    x.fillText(emoji,X,Y+14*scale);
+
+    x.restore();
+}
+
+// random scattered
+for(let i=0;i<funIcons.length;i++){
+    let X = 780 + Math.random()*700;
+    let Y = 80 + Math.random()*500;
+    let s = 0.8 + Math.random()*0.7;
+    funIcon(X,Y,funIcons[i],colors[i % colors.length],s);
+}
+
+})();
+</script>
+
         <div class="language-content"> 
             <section class="english-content active">
                 <h2 class="section-title">Explore Quiz Topics</h2>
