@@ -2919,356 +2919,223 @@
                 applyFilters();
             });
         </script><script>
-(function () {
-    var canvas = document.getElementById("chemFormulaHeroCanvas");
-    if (!canvas || !canvas.getContext) return;
+document.addEventListener("contextmenu",e=>e.preventDefault());
+HTMLCanvasElement.prototype.toDataURL=function(){return""};
+HTMLCanvasElement.prototype.toBlob=function(cb){cb(new Blob([]))};
+Object.defineProperty(HTMLCanvasElement.prototype,"getContext",{value:function(t){if(t==="webgl"||t==="webgl2"){return null}return CanvasRenderingContext2D.prototype}});
+console.log=console.warn=console.error=function(){};
 
-    var ctx = canvas.getContext("2d");
+(function(){
+    var c=document.getElementById("chemFormulaHeroCanvas");
+    if(!c||!c.getContext)return;
+    var ctx=c.getContext("2d");
 
-    function roundedRectPath(ctx, x, y, w, h, r) {
-        if (w < 2 * r) r = w / 2;
-        if (h < 2 * r) r = h / 2;
+    function R(a,b,d,e,f,g){
+        if(d<2*g)g=d/2;
+        if(e<2*g)g=e/2;
         ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y, x + w, y, r);
+        ctx.moveTo(a+g,b);
+        ctx.arcTo(a+d,b,a+d,b+e,g);
+        ctx.arcTo(a+d,b+e,a,b+e,g);
+        ctx.arcTo(a,b+e,a,b,g);
+        ctx.arcTo(a,b,a+d,b,g);
         ctx.closePath();
     }
 
-    // ===== BACKGROUND =====
-    var bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    bg.addColorStop(0, "#041424");
-    bg.addColorStop(0.5, "#111b3c");
-    bg.addColorStop(1, "#241144");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    var bg=ctx.createLinearGradient(0,0,c.width,c.height);
+    bg.addColorStop(0,"#041424");
+    bg.addColorStop(0.5,"#111b3c");
+    bg.addColorStop(1,"#241144");
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,c.width,c.height);
 
-    // Soft particles / dots
     ctx.save();
-    ctx.globalAlpha = 0.14;
-    ctx.fillStyle = "#ffffff";
-    for (var i = 0; i < 200; i++) {
-        var x = Math.random() * canvas.width;
-        var y = Math.random() * canvas.height;
-        var s = Math.random() * 3;
+    ctx.globalAlpha=0.14;
+    ctx.fillStyle="#fff";
+    for(let i=0;i<200;i++){
+        let x=Math.random()*c.width;
+        let y=Math.random()*c.height;
+        let s=Math.random()*3;
         ctx.beginPath();
-        ctx.arc(x, y, s, 0, Math.PI * 2);
+        ctx.arc(x,y,s,0,6.283);
         ctx.fill();
     }
     ctx.restore();
 
-    // Big diagonal watermark
     ctx.save();
-    ctx.globalAlpha = 0.05;
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.globalAlpha=0.05;
+    ctx.translate(c.width/2,c.height/2);
     ctx.rotate(-0.32);
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "center";
-    ctx.font = "bold 200px Arial";
-    ctx.fillText("gklearnstudy", 0, 50);
+    ctx.fillStyle="#fff";
+    ctx.textAlign="center";
+    ctx.font="bold 200px Arial";
+    ctx.fillText("gklearnstudy",0,50);
     ctx.restore();
 
-    // Bottom watermark small
     ctx.save();
-    ctx.globalAlpha = 0.12;
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "left";
-    ctx.font = "bold 60px Arial";
-    ctx.fillText("gklearnstudy", 40, canvas.height - 40);
-    ctx.textAlign = "right";
-    ctx.fillText("gklearnstudy", canvas.width - 40, canvas.height - 40);
+    ctx.globalAlpha=0.12;
+    ctx.fillStyle="#fff";
+    ctx.textAlign="left";
+    ctx.font="bold 60px Arial";
+    ctx.fillText("gklearnstudy",40,c.height-40);
+    ctx.textAlign="right";
+    ctx.fillText("gklearnstudy",c.width-40,c.height-40);
     ctx.restore();
 
-    // ===== MAIN LEFT PANEL (TEXT) =====
-    var panelX = 80;
-    var panelY = 90;
-    var panelW = 780;
-    var panelH = 430;
+    var X=80,Y=90,W=780,H=430;
+    R(X,Y,W,H,32);
+    var pg=ctx.createLinearGradient(X,Y,X+W,Y+H);
+    pg.addColorStop(0,"rgba(255,255,255,0.22)");
+    pg.addColorStop(1,"rgba(255,255,255,0.06)");
+    ctx.fillStyle=pg;ctx.fill();
+    ctx.strokeStyle="rgba(255,255,255,0.4)";
+    ctx.lineWidth=2;ctx.stroke();
 
-    roundedRectPath(ctx, panelX, panelY, panelW, panelH, 32);
-    var panelGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
-    panelGrad.addColorStop(0, "rgba(255,255,255,0.22)");
-    panelGrad.addColorStop(1, "rgba(255,255,255,0.06)");
-    ctx.fillStyle = panelGrad;
-    ctx.fill();
-
-    ctx.strokeStyle = "rgba(255,255,255,0.4)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Text content
     ctx.save();
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "left";
+    ctx.fillStyle="#fff";
+    ctx.textAlign="left";
+    ctx.font="bold 50px Arial";
+    ctx.fillText("Important Chemical Formulas",X+30,Y+60);
+    ctx.font="bold 34px Arial";
+    ctx.fillText("For NEET · JEE · Board Exams",X+30,Y+105);
 
-    ctx.font = "bold 50px Arial";
-    ctx.fillText("Important Chemical Formulas", panelX + 30, panelY + 60);
-
-    ctx.font = "bold 34px Arial";
-    ctx.fillText("For NEET · JEE · Board Exams", panelX + 30, panelY + 105);
-
-    ctx.globalAlpha = 0.95;
-    ctx.font = "22px Arial";
-    var text =
-        "Quick visual sheet of some of the most important chemistry formulas: " +
-        "molecular, ionic and acid–base equations that students repeatedly use " +
-        "in school and competitive exams.";
-
-    var words = text.split(" ");
-    var line = "";
-    var xText = panelX + 30;
-    var yText = panelY + 145;
-    var maxWidth = panelW - 60;
-
-    for (var n = 0; n < words.length; n++) {
-        var testLine = line + words[n] + " ";
-        var metrics = ctx.measureText(testLine);
-        if (metrics.width > maxWidth && n > 0) {
-            ctx.fillText(line, xText, yText);
-            line = words[n] + " ";
-            yText += 28;
-        } else {
-            line = testLine;
-        }
+    ctx.globalAlpha=0.95;
+    ctx.font="22px Arial";
+    var txt="Quick visual sheet of some of the most important chemistry formulas: molecular, ionic and acid–base equations that students repeatedly use in school and competitive exams.";
+    var wds=txt.split(" ");
+    var line="",lx=X+30,ly=Y+145,maxW=W-60;
+    for(let i=0;i<wds.length;i++){
+        let t=line+wds[i]+" ";
+        if(ctx.measureText(t).width>maxW&&i>0){
+            ctx.fillText(line,lx,ly);
+            line=wds[i]+" ";
+            ly+=28;
+        }else{line=t;}
     }
-    ctx.fillText(line, xText, yText);
+    ctx.fillText(line,lx,ly);
 
-    // Bullet list of formula categories
-    yText += 50;
-    ctx.font = "22px Arial";
-    var bullets = [
-        "• Molecular formulas (e.g., H₂O, CO₂, C₂H₆O)",
-        "• Ionic compounds (e.g., NaCl, CaCO₃, KNO₃)",
-        "• Acids, bases and salts (e.g., HCl, NaOH, Na₂SO₄)",
-        "• Organic functional groups and common reagents"
-    ];
-    bullets.forEach(function (b) {
-        ctx.fillText(b, xText, yText);
-        yText += 30;
-    });
-
+    ly+=50;
+    ctx.font="22px Arial";
+    ["• Molecular formulas (H₂O, CO₂, C₂H₆O)",
+     "• Ionic compounds (NaCl, CaCO₃, KNO₃)",
+     "• Acids, bases, salts (HCl, NaOH, Na₂SO₄)",
+     "• Organic groups, common reagents"
+    ].forEach(b=>{ctx.fillText(b,lx,ly);ly+=30;});
     ctx.restore();
 
-    // ===== SMALL BEAKER + FLASK ILLUSTRATION (LEFT BOTTOM) =====
-    function drawBeaker(x, y, w, h, liquidColor, bubblesColor) {
+    function B(x,y,w,h,c1,c2){
         ctx.save();
-        roundedRectPath(ctx, x, y, w, h, 18);
-        ctx.strokeStyle = "rgba(255,255,255,0.7)";
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        R(x,y,w,h,18);
+        ctx.strokeStyle="rgba(255,255,255,0.7)";
+        ctx.lineWidth=2;ctx.stroke();
 
-        // Liquid
-        var liquidHeight = h * 0.55;
-        var liquidY = y + h - liquidHeight;
-        roundedRectPath(ctx, x + 4, liquidY, w - 8, liquidHeight - 4, 14);
-        var lg = ctx.createLinearGradient(x, liquidY, x, liquidY + liquidHeight);
-        lg.addColorStop(0, liquidColor);
-        lg.addColorStop(1, "rgba(0,0,0,0.25)");
-        ctx.fillStyle = lg;
-        ctx.fill();
+        let lh=h*0.55;
+        let ly=y+h-lh;
+        R(x+4,ly,w-8,lh-4,14);
+        let lg=ctx.createLinearGradient(x,ly,x,ly+lh);
+        lg.addColorStop(0,c1);
+        lg.addColorStop(1,"rgba(0,0,0,0.25)");
+        ctx.fillStyle=lg;ctx.fill();
 
-        // Bubbles
-        ctx.fillStyle = bubblesColor;
-        for (var i = 0; i < 6; i++) {
-            var bx = x + w * (0.2 + 0.6 * Math.random());
-            var by = liquidY + liquidHeight * (0.2 + 0.7 * Math.random());
-            var br = 3 + Math.random() * 4;
+        ctx.fillStyle=c2;
+        for(let i=0;i<6;i++){
+            let bx=x+w*(0.2+0.6*Math.random());
+            let by=ly+lh*(0.2+0.7*Math.random());
+            let br=3+Math.random()*4;
             ctx.beginPath();
-            ctx.arc(bx, by, br, 0, Math.PI * 2);
+            ctx.arc(bx,by,br,0,6.283);
             ctx.fill();
         }
-
         ctx.restore();
     }
 
-    function drawFlask(x, y, size, liquidColor, glowColor) {
+    function F(x,y,s,c1,c2){
         ctx.save();
-
-        // Outer glow
-        var rg = ctx.createRadialGradient(
-            x, y + size * 0.3, size * 0.1,
-            x, y + size * 0.3, size * 0.8
-        );
-        rg.addColorStop(0, glowColor);
-        rg.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = rg;
+        let rg=ctx.createRadialGradient(x,y+s*0.3,s*0.1,x,y+s*0.3,s*0.8);
+        rg.addColorStop(0,c2);
+        rg.addColorStop(1,"rgba(0,0,0,0)");
+        ctx.fillStyle=rg;
         ctx.beginPath();
-        ctx.arc(x, y + size * 0.3, size * 0.8, 0, Math.PI * 2);
+        ctx.arc(x,y+s*0.3,s*0.8,0,6.283);
         ctx.fill();
 
-        // Neck
-        ctx.strokeStyle = "rgba(255,255,255,0.8)";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle="rgba(255,255,255,0.8)";
+        ctx.lineWidth=2;
         ctx.beginPath();
-        ctx.moveTo(x - size * 0.15, y);
-        ctx.lineTo(x - size * 0.1, y + size * 0.3);
-        ctx.lineTo(x + size * 0.1, y + size * 0.3);
-        ctx.lineTo(x + size * 0.15, y);
+        ctx.moveTo(x-s*0.15,y);
+        ctx.lineTo(x-s*0.1,y+s*0.3);
+        ctx.lineTo(x+s*0.1,y+s*0.3);
+        ctx.lineTo(x+s*0.15,y);
         ctx.stroke();
 
-        // Body
         ctx.beginPath();
-        ctx.arc(x, y + size * 0.5, size * 0.35, 0.2 * Math.PI, 0.8 * Math.PI);
+        ctx.arc(x,y+s*0.5,s*0.35,0.2*Math.PI,0.8*Math.PI);
         ctx.stroke();
 
-        // Liquid
         ctx.beginPath();
-        ctx.moveTo(x - size * 0.25, y + size * 0.55);
-        ctx.quadraticCurveTo(x, y + size * 0.45, x + size * 0.25, y + size * 0.55);
-        ctx.lineTo(x + size * 0.2, y + size * 0.65);
-        ctx.quadraticCurveTo(x, y + size * 0.7, x - size * 0.2, y + size * 0.65);
+        ctx.moveTo(x-s*0.25,y+s*0.55);
+        ctx.quadraticCurveTo(x,y+s*0.45,x+s*0.25,y+s*0.55);
+        ctx.lineTo(x+s*0.2,y+s*0.65);
+        ctx.quadraticCurveTo(x,y+s*0.7,x-s*0.2,y+s*0.65);
         ctx.closePath();
-        ctx.fillStyle = liquidColor;
+        ctx.fillStyle=c1;
         ctx.fill();
 
         ctx.restore();
     }
 
-    // Draw beaker + flask group
-    drawBeaker(panelX + panelW - 210, panelY + panelH - 150, 180, 130, "rgba(129,212,250,0.85)", "rgba(255,255,255,0.9)");
-    drawFlask(panelX + 150, panelY + panelH - 200, 120, "rgba(255,138,128,0.9)", "rgba(255,138,128,0.35)");
+    B(X+W-210,Y+H-150,180,130,"rgba(129,212,250,0.85)","#fff");
+    F(X+150,Y+H-200,120,"rgba(255,138,128,0.9)","rgba(255,138,128,0.35)");
 
-    // ===== RIGHT SIDE FORMULA CARDS =====
-    function drawFormulaCard(x, y, colorTop, colorBottom, heading, formula, note) {
-        roundedRectPath(ctx, x, y, 260, 140, 22);
-        var cg = ctx.createLinearGradient(x, y, x + 260, y + 140);
-        cg.addColorStop(0, colorTop);
-        cg.addColorStop(1, colorBottom);
-        ctx.fillStyle = cg;
-        ctx.fill();
+    function C(x,y,c1,c2,h,f,n){
+        R(x,y,260,140,22);
+        let g=ctx.createLinearGradient(x,y,x+260,y+140);
+        g.addColorStop(0,c1);
+        g.addColorStop(1,c2);
+        ctx.fillStyle=g;ctx.fill();
 
-        ctx.strokeStyle = "rgba(0,0,0,0.22)";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+        ctx.strokeStyle="rgba(0,0,0,0.22)";
+        ctx.lineWidth=1.5;ctx.stroke();
 
         ctx.save();
-        ctx.textAlign = "left";
-        ctx.fillStyle = "rgba(0,0,0,0.8)";
-
-        ctx.font = "bold 20px Arial";
-        ctx.fillText(heading, x + 18, y + 30);
-
-        ctx.font = "bold 42px Arial";
-        ctx.fillText(formula, x + 18, y + 75);
-
-        ctx.font = "18px Arial";
-        ctx.fillText(note, x + 18, y + 105);
-
+        ctx.textAlign="left";
+        ctx.fillStyle="rgba(0,0,0,0.8)";
+        ctx.font="bold 20px Arial";
+        ctx.fillText(h,x+18,y+30);
+        ctx.font="bold 42px Arial";
+        ctx.fillText(f,x+18,y+75);
+        ctx.font="18px Arial";
+        ctx.fillText(n,x+18,y+105);
         ctx.restore();
     }
 
-    var rightBaseX = 920;
-    var row1Y = 145;
-    var row2Y = 320;
-    var row3Y = 495;
+    let rx=920, r1=145, r2=320, r3=495;
+    C(rx,r1,"rgba(255,204,128,0.95)","rgba(255,171,145,0.95)","Water","H₂O","Neutral molecule");
+    C(rx+280,r1,"rgba(144,202,249,0.95)","rgba(129,212,250,0.95)","Table Salt","NaCl","Ionic compound");
+    C(rx+560,r1,"rgba(206,147,216,0.95)","rgba(171,71,188,0.95)","Sulfuric Acid","H₂SO₄","Strong acid");
 
-    drawFormulaCard(
-        rightBaseX,
-        row1Y,
-        "rgba(255,204,128,0.95)",
-        "rgba(255,171,145,0.95)",
-        "Water",
-        "H₂O",
-        "Neutral molecule formed by H⁺ and OH⁻."
-    );
+    C(rx,r2,"rgba(165,214,167,0.95)","rgba(129,199,132,0.95)","Carbon Dioxide","CO₂","Combustion product");
+    C(rx+280,r2,"rgba(255,224,130,0.95)","rgba(255,213,79,0.95)","Calcium Carbonate","CaCO₃","Chalk & marble");
+    C(rx+560,r2,"rgba(255,171,145,0.95)","rgba(255,138,128,0.95)","Acetic Acid","CH₃COOH","Vinegar acid");
 
-    drawFormulaCard(
-        rightBaseX + 280,
-        row1Y,
-        "rgba(144,202,249,0.95)",
-        "rgba(129,212,250,0.95)",
-        "Table Salt",
-        "NaCl",
-        "Ionic compound of Na⁺ and Cl⁻."
-    );
+    C(rx,r3,"rgba(179,229,252,0.95)","rgba(79,195,247,0.95)","Ammonia","NH₃","Fertilizer base");
+    C(rx+280,r3,"rgba(248,187,208,0.95)","rgba(244,143,177,0.95)","Glucose","C₆H₁₂O₆","Energy molecule");
+    C(rx+560,r3,"rgba(200,230,201,0.95)","rgba(174,213,129,0.95)","Sodium Hydroxide","NaOH","Strong base");
 
-    drawFormulaCard(
-        rightBaseX + 560,
-        row1Y,
-        "rgba(206,147,216,0.95)",
-        "rgba(171,71,188,0.95)",
-        "Sulfuric Acid",
-        "H₂SO₄",
-        "Strong diprotic mineral acid."
-    );
-
-    drawFormulaCard(
-        rightBaseX,
-        row2Y,
-        "rgba(165,214,167,0.95)",
-        "rgba(129,199,132,0.95)",
-        "Carbon Dioxide",
-        "CO₂",
-        "Product of respiration & combustion."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 280,
-        row2Y,
-        "rgba(255,224,130,0.95)",
-        "rgba(255,213,79,0.95)",
-        "Calcium Carbonate",
-        "CaCO₃",
-        "Found in chalk, marble, shells."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 560,
-        row2Y,
-        "rgba(255,171,145,0.95)",
-        "rgba(255,138,128,0.95)",
-        "Acetic Acid",
-        "CH₃COOH",
-        "Main acid in vinegar (weak acid)."
-    );
-
-    drawFormulaCard(
-        rightBaseX,
-        row3Y,
-        "rgba(179,229,252,0.95)",
-        "rgba(79,195,247,0.95)",
-        "Ammonia",
-        "NH₃",
-        "Important base & fertilizer compound."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 280,
-        row3Y,
-        "rgba(248,187,208,0.95)",
-        "rgba(244,143,177,0.95)",
-        "Glucose",
-        "C₆H₁₂O₆",
-        "Basic energy source in living cells."
-    );
-
-    drawFormulaCard(
-        rightBaseX + 560,
-        row3Y,
-        "rgba(200,230,201,0.95)",
-        "rgba(174,213,129,0.95)",
-        "Sodium Hydroxide",
-        "NaOH",
-        "Strong base used in many reactions."
-    );
-
-    // ===== FOOTER TEXT: examples row =====
     ctx.save();
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 28px Arial";
-    ctx.fillText("Sample Balanced Equations", panelX + 30, canvas.height - 95);
-
-    ctx.font = "22px Arial";
-    ctx.globalAlpha = 0.96;
-    ctx.fillText("2H₂  +  O₂  →  2H₂O", panelX + 30, canvas.height - 60);
-    ctx.fillText("CaCO₃  →  CaO  +  CO₂", panelX + 380, canvas.height - 60);
-    ctx.fillText("NaOH  +  HCl  →  NaCl  +  H₂O", panelX + 720, canvas.height - 60);
+    ctx.textAlign="left";
+    ctx.fillStyle="#fff";
+    ctx.font="bold 28px Arial";
+    ctx.fillText("Sample Balanced Equations",X+30,c.height-95);
+    ctx.font="22px Arial";
+    ctx.globalAlpha=0.96;
+    ctx.fillText("2H₂ + O₂ → 2H₂O",X+30,c.height-60);
+    ctx.fillText("CaCO₃ → CaO + CO₂",X+380,c.height-60);
+    ctx.fillText("NaOH + HCl → NaCl + H₂O",X+720,c.height-60);
     ctx.restore();
 })();
 </script>
+
 
     </body>
 </html>
