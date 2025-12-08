@@ -1,5 +1,4 @@
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let deferredPrompt;
     
@@ -598,238 +597,144 @@ function activateLink(link) {
   link.classList.add('active');
 }
 
-/* ============================================================
-   GK LEARN STUDY — OLD VERSION FOOTER CLEAN REPLACEMENT SYSTEM
-   JUST AS YOU SAID — NOTHING MORE, NOTHING LESS
-===============================================================*/
 
-document.addEventListener("DOMContentLoaded", function () {
+// 📌 Contact Function
+  function goToUrl() {
+    window.location.href = "mailto:contact@gklearnstudy.in";
+  }
 
-    /* ------------------------------------------------------------
-       1️⃣ Old footer को पूरी तरह disable कर दो
-    -------------------------------------------------------------*/
-    const oldFooter = document.querySelector("footer .custom-row");
+  // 📌 Footer Paragraph Injection - Link content in next line and center
+ document.getElementById("my-paragraph").innerHTML = `
+  <div class="footer-container">
+    <div class="footer-links">
+      <a href="https://www.gklearnstudy.in/about" target="_blank" rel="noopener">About</a> |
+      <a href="https://www.gklearnstudy.in/terms" target="_blank" rel="noopener">Terms</a> |
+      <a href="https://www.gklearnstudy.in/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 
+      <a href="https://www.gklearnstudy.in" target="_blank" rel="noopener">GK Learn Study</a> All rights reserved
+    </div>
+  </div>
+`;
 
-    if (oldFooter) {
-        oldFooter.style.opacity = "0";
-        oldFooter.style.pointerEvents = "none";
-        oldFooter.style.height = "0px";
-        oldFooter.style.overflow = "hidden";
+
+
+
+
+
+
+
+
+
+// Social icons
+const svgLinks = [
+    {
+        svg: `<svg viewBox="0 0 512 512" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path d="M501.299,132.766c-5.888,-22.03 -23.234,-39.377 -45.264,-45.264
+                    c-39.932,-10.701 -200.037,-10.701 -200.037,-10.701
+                    c0,0 -160.105,0 -200.038,10.701
+                    c-22.025,5.887 -39.376,23.234 -45.264,45.264
+                    c-10.696,39.928 -10.696,123.236 -10.696,123.236
+                    c0,0 0,83.308 10.696,123.232
+                    c5.888,22.03 23.239,39.381 45.264,45.268
+                    c39.933,10.697 200.038,10.697 200.038,10.697
+                    c0,0 160.105,0 200.037,-10.697
+                    c22.03,-5.887 39.376,-23.238 45.264,-45.268
+                    c10.701,-39.924 10.701,-123.232 10.701,-123.232
+                    c0,0 0,-83.308 -10.701,-123.236Z"
+                    fill="#ed1f24"/>
+                    <path d="M204.796,332.803l133.018,-76.801l-133.018,-76.801l0,153.602Z"
+                    fill="#fff"/>
+                </g>
+            </svg>`,
+        href: 'https://youtube.com/@gklearnstudy',
+        label: 'GK Learn Study YouTube channel'
+    },
+    {
+        svg: `<svg viewBox="0 0 512 512" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path d="M512,256c0,-141.385 -114.615,-256 -256,-256
+                    c-141.385,0 -256,114.615 -256,256
+                    c0,127.777 93.616,233.685 216,252.89l0,-178.89l-65,0l0,-74l65,0
+                    l0,-56.4c0,-64.16 38.219,-99.6 96.695,-99.6
+                    c28.009,0 57.305,5 57.305,5l0,63l-32.281,0
+                    c-31.801,0 -41.719,19.733 -41.719,39.978l0,48.022l71,0
+                    l-11.35,74l-59.65,0l0,178.89
+                    c122.385,-19.205 216,-125.113 216,-252.89Z" fill="#1877f2"/>
+                    <path d="M355.65,330l11.35,-74l-71,0l0,-48.022
+                    c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63
+                    c0,0 -29.297,-5 -57.305,-5
+                    c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89
+                    c13.033,2.045 26.392,3.11 40,3.11
+                    c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z" fill="#fff"/>
+                </g>
+            </svg>`,
+        href: 'https://www.facebook.com/GoluLiv',
+        label: 'GK Learn Study Facebook page'
     }
+,
+  {
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="25" height="25">
+    <defs>
+      <radialGradient id="InstagramGradient" cx="19.1111" cy="128.4444" r="163.5519" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#FFB140"/>
+        <stop offset="0.2559" stop-color="#FF5445"/>
+        <stop offset="0.599" stop-color="#FC2B82"/>
+        <stop offset="1" stop-color="#8E40B7"/>
+      </radialGradient>
+    </defs>
+    <path fill="url(#InstagramGradient)" d="M105.843,29.837c0,4.242-3.439,7.68-7.68,7.68c-4.241,0-7.68-3.438-7.68-7.68
+      c0-4.242,3.439-7.68,7.68-7.68C102.405,22.157,105.843,25.595,105.843,29.837z M64,85.333c-11.782,0-21.333-9.551-21.333-21.333
+      c0-11.782,9.551-21.333,21.333-21.333c11.782,0,21.333,9.551,21.333,21.333C85.333,75.782,75.782,85.333,64,85.333z 
+      M64,31.135c-18.151,0-32.865,14.714-32.865,32.865c0,18.151,14.714,32.865,32.865,32.865c18.151,0,32.865-14.714,32.865-32.865
+      C96.865,45.849,82.151,31.135,64,31.135z M64,11.532c17.089,0,19.113,0.065,25.861,0.373c6.24,0.285,9.629,1.327,11.884,2.204
+      c2.987,1.161,5.119,2.548,7.359,4.788c2.24,2.239,3.627,4.371,4.788,7.359c0.876,2.255,1.919,5.644,2.204,11.884
+      c0.308,6.749,0.373,8.773,0.373,25.862c0,17.089-0.065,19.113-0.373,25.861c-0.285,6.24-1.327,9.629-2.204,11.884
+      c-1.161,2.987-2.548,5.119-4.788,7.359c-2.239,2.24-4.371,3.627-7.359,4.788c-2.255,0.876-5.644,1.919-11.884,2.204
+      c-6.748,0.308-8.772,0.373-25.861,0.373c-17.09,0-19.114-0.065-25.862-0.373c-6.24-0.285-9.629-1.327-11.884-2.204
+      c-2.987-1.161-5.119-2.548-7.359-4.788c-2.239-2.239-3.627-4.371-4.788-7.359c-0.876-2.255-1.919-5.644-2.204-11.884
+      c-0.308-6.749-0.373-8.773-0.373-25.861c0-17.089,0.065-19.113,0.373-25.862c0.285-6.24,1.327-9.629,2.204-11.884
+      c1.161-2.987,2.548-5.119,4.788-7.359c2.239-2.24,4.371-3.627,7.359-4.788c2.255-0.876,5.644-1.919,11.884-2.204
+      C44.887,11.597,46.911,11.532,64,11.532z M64,0C46.619,0,44.439,0.074,37.613,0.385C30.801,0.696,26.148,1.778,22.078,3.36
+      c-4.209,1.635-7.778,3.824-11.336,7.382C7.184,14.3,4.995,17.869,3.36,22.078c-1.582,4.071-2.664,8.723-2.975,15.535
+      C0.074,44.439,0,46.619,0,64c0,17.381,0.074,19.561,0.385,26.387c0.311,6.812,1.393,11.464,2.975,15.535
+      c1.635,4.209,3.824,7.778,7.382,11.336c3.558,3.558,7.127,5.746,11.336,7.382c4.071,1.582,8.723,2.664,15.535,2.975
+      C44.439,127.926,46.619,128,64,128c17.381,0,19.561-0.074,26.387-0.385c6.812-0.311,11.464-1.393,15.535-2.975
+      c4.209-1.636,7.778-3.824,11.336-7.382c3.558-3.558,5.746-7.127,7.382-11.336c1.582-4.071,2.664-8.723,2.975-15.535
+      C127.926,83.561,128,81.381,128,64c0-17.381-0.074-19.561-0.385-26.387c-0.311-6.812-1.393-11.464-2.975-15.535
+      c-1.636-4.209-3.824-7.778-7.382-11.336c-3.558-3.558-7.127-5.746-11.336-7.382c-4.071-1.582-8.723-2.664-15.535-2.975
+      C83.561,0.074,81.381,0,64,0z"/>
+  </svg>`,
+  href: 'https://www.instagram.com/gklearnstudy',
+  label: 'GK Learn Study Instagram page'
+}
 
-    /* old footer functions disable */
-    const oldBtn = document.querySelector("footer button");
-    if (oldBtn) oldBtn.style.display = "none";
+];
 
-    const oldPara = document.getElementById("my-paragraph");
-    if (oldPara) oldPara.style.display = "none";
+// Container to hold icons
+const socialLinksDiv = document.getElementById('social-links');
 
-    const oldSocial = document.getElementById("social-links");
-    if (oldSocial) oldSocial.innerHTML = "";
+// Loop through each social icon
+svgLinks.forEach(linkInfo => {
+    const div = document.createElement('div');
+    div.className = 'svg-link';
 
-    /* ------------------------------------------------------------
-       2️⃣ Insert NEW footer + rating/comment — हमेशा <footer> के ऊपर
-    -------------------------------------------------------------*/
-    const footerTag = document.querySelector("footer");
+    const link = document.createElement('a');
+    link.href = linkInfo.href;
+    link.target = "_blank";
+    link.setAttribute('aria-label', linkInfo.label);
 
-    if (footerTag) {
-        footerTag.insertAdjacentHTML("beforebegin", `
-
-            <div id="comments-and-ratings-container">
-
-                <!-- ⭐ NEW VERSION — RATING BOX ⭐ -->
-                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
-                    <div class="rating-skeleton">
-                        <div class="rating-skeleton-display">
-                            <div class="skeleton-summary">
-                                <div class="skeleton-circle"></div>
-                                <div class="skeleton-line short"></div>
-                            </div>
-                            <div class="skeleton-breakdown">
-                                <div class="skeleton-line"></div>
-                                <div class="skeleton-line"></div>
-                                <div class="skeleton-line"></div>
-                                <div class="skeleton-line"></div>
-                                <div class="skeleton-line"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="rating-widget" class="rating-content">
-                        <h2>Rate this Page</h2>
-
-                        <div id="rating-display">
-                            <div class="average-summary">
-                                <div id="average-rating-value">0.0</div>
-                                <div id="total-ratings-count">0 ratings</div>
-                            </div>
-                        </div>
-
-                        <div id="rating-stars">
-                            <svg class="star" data-value="1" viewBox="0 0 24 24"></svg>
-                            <svg class="star" data-value="2" viewBox="0 0 24 24"></svg>
-                            <svg class="star" data-value="3" viewBox="0 0 24 24"></svg>
-                            <svg class="star" data-value="4" viewBox="0 0 24 24"></svg>
-                            <svg class="star" data-value="5" viewBox="0 0 24 24"></svg>
-                        </div>
-
-                        <div id="rating-login-prompt" style="display:none;">
-                            <p>Please sign in to rate.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 💬 COMMENTS BOX -->
-                <div class="comments-wrapper comments-loading" id="comments-main-container">
-                    <div class="firebase-comments-widget" id="custom-comment-section">
-                        <h2><span id="comment-count">0</span> Comments</h2>
-
-                        <div id="auth-container">
-                            <div id="user-info"></div>
-                            <button id="login-btn" class="btn primary">Sign in with Google</button>
-                            <button id="logout-btn" class="btn">Logout</button>
-                        </div>
-
-                        <div id="login-prompt" style="display:none;">
-                            <p>Please sign in to comment.</p>
-                        </div>
-
-                        <div class="comment-form-shell" id="comment-form-shell" style="display:none;">
-                            <form id="comment-form">
-                                <textarea id="comment" maxlength="1000" placeholder="Add a public comment..." required></textarea>
-                                <input type="hidden" id="parent-id" />
-                                <div class="form-footer">
-                                    <div id="char-counter">0 / 1000</div>
-                                    <button type="submit" class="btn primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div id="comments-list"></div>
-                    </div>
-                </div>
-
-                <!-- 🌐 NEW FINAL FOOTER -->
-                <footer class="app-footer">
-                    <div class="footer-content"></div>
-                    <div class="footer-bottom" id="footer-year">
-                        © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
-                    </div>
-                </footer>
-
-            </div>
-        `);
-    }
-
-    /* ------------------------------------------------------------
-       3️⃣ Apply Footer Content (जो तूने exact दिया)
-    -------------------------------------------------------------*/
-    function initFooterContent() {
-        const footerContent = document.querySelector('.app-footer .footer-content');
-        if (!footerContent) return;
-
-        const footerData = {
-            about: {
-                title: "About GK Learn Study",
-                text: "Your one-stop destination for knowledge, tools, and tutorials..."
-            },
-            company: {
-                title: "About Us",
-                links: [
-                    { href: "/about.html", text: "About Us" },
-                    { href: "/contact.html", text: "Contact Us" },
-                    { href: "/privacy-policy.html", text: "Privacy Policy" },
-                    { href: "/terms.html", text: "Terms of Service" },
-                    { href: "/comments.html", text: "Owner Dashboard", id: "dashboard-link" }
-                ]
-            },
-            foryou: {
-                title: "For you",
-                links: [
-                    { href: "https://gklearnstudy.in/gk-quiz/ancient-indian-history", text: "Ancient Indian History" },
-                    { href: "https://gklearnstudy.in/gk-quiz/medieval-indian-history", text: "Medieval Indian History" }
-                ]
-            },
-            science: {
-                title: "Science & Computer",
-                links: [
-                    { href: "conversion.html", text: "Conversion" },
-                    { href: "all-formulas.html", text: "All formulas" },
-                    { href: "calculator.html", text: "Calculator" }
-                ]
-            },
-            socials: {
-                title: "Follow Us",
-                links: [
-                    {
-                        href: "https://www.youtube.com/@GKLearnStudy",
-                        label: "YouTube",
-                        svg: '<svg viewBox="0 0 24 24" style="width:28px;"><path d="M21.5..."/></svg>'
-                    }
-                ]
-            }
-        };
-
-        const makeLinks = arr =>
-            arr.map(x => `<li ${x.id ? `id="${x.id}"` : ""}><a href="${x.href}">${x.text}</a></li>`).join("");
-
-        const makeSocial = arr =>
-            arr.map(x => `<li><a href="${x.href}" target="_blank">${x.svg}</a></li>`).join("");
-
-        footerContent.innerHTML = `
-            <div class="footer-section footer-about">
-                <h3>${footerData.about.title}</h3>
-                <p>${footerData.about.text}</p>
-            </div>
-
-            <div class="footer-section">
-                <h4>${footerData.company.title}</h4>
-                <ul>${makeLinks(footerData.company.links)}</ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>${footerData.foryou.title}</h4>
-                <ul>${makeLinks(footerData.foryou.links)}</ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>${footerData.science.title}</h4>
-                <ul>${makeLinks(footerData.science.links)}</ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>${footerData.socials.title}</h4>
-                <ul class="footer-socials">${makeSocial(footerData.socials.links)}</ul>
-            </div>
-        `;
-    }
-
-    initFooterContent();
-
-    /* ------------------------------------------------------------
-       4️⃣ Dynamic Year Set
-    -------------------------------------------------------------*/
-    const yr = document.getElementById("year");
-    if (yr) yr.textContent = new Date().getFullYear();
-
-    /* ------------------------------------------------------------
-       5️⃣ Auto load needed scripts once
-    -------------------------------------------------------------*/
-    function loadOnce(src) {
-        if (!document.querySelector(`script[src="${src}"]`)) {
-            const s = document.createElement("script");
-            s.src = src;
-            s.defer = true;
-            document.body.appendChild(s);
-        }
-    }
-
-    loadOnce("https://gklearnstudy.in/js/comment.js");
-    loadOnce("https://gklearnstudy.in/js/notification.js");
-    loadOnce("https://gklearnstudy.in/js/search-data.js");
- loadOnce("https://gklearnstudy.in/css/theme.css");
-     loadOnce("https://gklearnstudy.in/css/comment.css");
+    link.innerHTML = linkInfo.svg;
+    div.appendChild(link);
+    socialLinksDiv.appendChild(div);
 });
+
+
+
+
+
 
 
 
