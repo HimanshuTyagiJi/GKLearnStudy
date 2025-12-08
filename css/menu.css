@@ -454,52 +454,9 @@ td a:hover::after {
     opacity: 1
 }
 
-.placeholder {
-    width: 200px;
-    height: 150px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: #fff;
-    font-weight: 700;
-    text-transform: capitalize;
-    border-radius: 10px;
-    margin: 10px;
-    animation: bgchange 4s infinite alternate;
-    transition: background 0.5s,transform 0.3s;
-    text-align: center;
-    box-shadow: 0 4px 10px rgb(0 0 0 / .2)
-}
 
-.placeholder:hover {
-    background: linear-gradient(135deg,#f7971e,#ffd200);
-    transform: scale(1.05)
-}
 
-.placeholder .emoji {
-    font-size: 32px;
-    margin-bottom: 8px
-}
 
-@keyframes bgchange {
-    0% {
-        background: linear-gradient(45deg,#4e54c8,#8f94fb)
-    }
-
-    50% {
-        background: linear-gradient(45deg,#ff6a00,#ee0979)
-    }
-
-    100% {
-        background: linear-gradient(45deg,#11998e,#38ef7d)
-    }
-}
-
-.menu-inner a.active {
-    color: var(--logo)
-}
 
 .link-container {
     display: flex;
@@ -540,60 +497,6 @@ summary::-webkit-details-marker {
     display: none
 }
 
-#social-links {
-    display: flex;
-    gap: 10px;
-    justify-content: center
-}
-
-.svg-link svg {
-    width: 25px;
-    height: 100%
-}
-
-.svg-link svg path {
-    fill-rule: evenodd;
-    clip-rule: evenodd;
-    stroke-linejoin: round;
-    stroke-miterlimit: 2
-}
-
-.svg-link a:hover svg path {
-    opacity: .8;
-    transition: opacity 0.3s ease
-}
-
-.result-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-    background: #f9f9f9;
-    border-radius: 8px;
-    transition: background 0.3s
-}
-
-.result-card:hover {
-    background: #efefef
-}
-
-.result-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px
-}
-
-.search-container .search-input {
-    display: none;
-    width: 0
-}
-
-.search-container.active .search-input {
-    display: inline-block
-}
 
 .fade-in {
     opacity: 0;
