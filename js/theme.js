@@ -288,10 +288,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function toggleMenu() {
-    const menu = document.getElementById("menuList");
-    const btn = document.querySelector(".menu-toggle");
 
-    menu.classList.toggle("open");
-    btn.classList.toggle("open");
-}
