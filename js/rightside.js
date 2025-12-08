@@ -1,84 +1,135 @@
-const linkList = document.getElementById('link-list');
+// ================================
+//  1️⃣  Inject CSS (no external file)
+// ================================
+const style = document.createElement("style");
+style.innerHTML = `
+#link-list { list-style:none; padding:0; margin:0; }
 
-const links = [
-  {name: "Mathematics All formulas", url: "https://gklearnstudy.in/mathematics-all-formulas"},
-  {name: "Physics formulas", url: "https://gklearnstudy.in/physics-all-formulas"},
-  {name: "Chemical formulas", url: "https://gklearnstudy.in/all-formulas/all-chemical-formulas"},
-  {name: "Periodic table", url: "https://gklearnstudy.in/all-formulas/periodic-table"},
-  {name: "Ancient Indian History", url: "https://gklearnstudy.in/gk-quiz/ancient-indian-history"},
-  {name: "Medieval Indian History", url: "https://gklearnstudy.in/gk-quiz/medieval-indian-history"},
-  {name: "Meodern Indian History", url: "https://gklearnstudy.in/gk-quiz/modern-indian-history"},
-  {name: "World History", url: "https://gklearnstudy.in/gk-quiz/world-history"},
-  {name: "Science & Technology", url: "https://gklearnstudy.in/gk-quiz/science-and-technology-mcq-quiz"},
-  {name: "Rivers & Lakes", url: "https://gklearnstudy.in/gk-quiz/rivers-and-lakes-mcq-quiz"},
-  {name: "Spacea & Universe", url: "https://gklearnstudy.in/gk-quiz/space-and-universe-mcq-quiz"},
-];
-
-function addLinks() {
-  links.forEach(link => {
-    linkList.innerHTML += `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.name}</a></li>`;
-  });
+/* App Box */
+.app-box {
+    text-align:center;
+    padding:15px;
+    border-radius:12px;
+    background:#111;
+    color:#fff;
+    margin-top:15px;
+    border:1px solid #222;
 }
-
-
-addLinks();
-
-
-
-function toggleMenu() {
-  var menuList = document.getElementById('menuList');
-  var menuToggle = document.querySelector('.menu-toggle');
-  if (menuList.style.display === 'none' || menuList.style.display === '') {
-    menuList.style.display = 'block';
-    menuToggle.style.display = 'none';
-    document.addEventListener('click', closeMenuOnClickOutside);
-  } else {
-    menuList.style.display = 'none';
-    menuToggle.style.display = 'block'; 
-    document.removeEventListener('click', closeMenuOnClickOutside);
-  }
+.app-icon {
+    width:80px;
+    height:80px;
+    border-radius:14px;
+    margin-bottom:8px;
 }
-
-
-function closeMenuOnClickOutside(event) {
-  var menuList = document.getElementById('menuList');
-  var menuToggle = document.querySelector('.menu-toggle');
-  if (!menuList.contains(event.target) && event.target !== menuToggle) {
-    menuList.style.display = 'none';
-    menuToggle.style.display = 'block'; 
-    document.removeEventListener('click', closeMenuOnClickOutside);
-  }
+.app-box h3 {
+    font-size:18px;
+    margin:6px 0;
 }
-const rowsPerPage = 50;
-let currentIndex = 0;
-
-function showRows() {
-  const rows = document.querySelectorAll("#myTable tbody tr");
-  for (let i = currentIndex; i < currentIndex + rowsPerPage && i < rows.length; i++) {
-    rows[i].style.display = "";
-  }
-  currentIndex += rowsPerPage;
-  if (currentIndex >= rows.length) {
-    const btn = document.getElementById("loadMoreBtn");
-    if (btn) btn.style.display = "none";
-  }
+.small {
+    font-size:13px;
+    opacity:0.8;
+    margin-bottom:8px;
 }
-
-function initRows() {
-  const rows = document.querySelectorAll("#myTable tbody tr");
-  rows.forEach(row => row.style.display = "none");
-  currentIndex = 0;
-  showRows();
+/* Buttons */
+.install-btn, .installed-btn, .uninstall-btn {
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border-radius:8px;
+    border:none;
+    font-size:15px;
+    cursor:pointer;
 }
+.install-btn { background:#4cd964; color:#000; }
+.installed-btn { background:#3498db; color:#fff; cursor:default; }
+.uninstall-btn { background:#e74c3c; color:#fff; }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const loadMoreBtn = document.getElementById("loadMoreBtn");
-  const table = document.getElementById("myTable");
+.playstore {
+    display:block;
+    margin-top:10px;
+    color:#58a6ff;
+    font-size:14px;
+    text-decoration:none;
+}
+`;
+document.head.appendChild(style);
 
-  // ✅ Check if both table and button exist
-  if (loadMoreBtn && table) {
-    loadMoreBtn.addEventListener("click", showRows);
-    initRows();
-  }
+// ================================
+//  2️⃣  APP Install Logic
+// ================================
+const linkList = document.getElementById("link-list");
+
+const APP_NAME = "GK Learn Study App";
+const APP_ICON = "https://gklearnstudy.in/GK-Learn-Study.png";
+const PLAYSTORE_URL = "#";  // Coming soon
+
+let deferredPrompt = null;
+let isInstalled = false;
+
+// Capture install event
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    renderAppBox();
 });
 
+window.addEventListener("appinstalled", () => {
+    isInstalled = true;
+    updateButtons();
+});
+
+// ================================
+//  3️⃣  Render App Box
+// ================================
+function renderAppBox() {
+    linkList.innerHTML = `
+        <li>
+        <div class="app-box">
+            <img src="${APP_ICON}" class="app-icon">
+            <h3>${APP_NAME}</h3>
+            <p class="small">Coming Soon on Play Store</p>
+
+            <button id="installBtn" class="install-btn">Install</button>
+            <button id="installedBtn" class="installed-btn" style="display:none;">Installed ✓</button>
+            <button id="uninstallBtn" class="uninstall-btn" style="display:none;">Uninstall</button>
+
+            <a href="${PLAYSTORE_URL}" class="playstore">Play Store (Coming Soon)</a>
+        </div>
+        </li>
+    `;
+
+    document.getElementById("installBtn").onclick = installApp;
+}
+
+// ================================
+//  4️⃣  Install button action
+// ================================
+async function installApp() {
+    if (!deferredPrompt) {
+        alert("Browser install support nahi deta.");
+        return;
+    }
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+        console.log("App installed");
+    }
+    deferredPrompt = null;
+}
+
+// ================================
+//  5️⃣  Buttons update after install
+// ================================
+function updateButtons() {
+    document.getElementById("installBtn").style.display = "none";
+    document.getElementById("installedBtn").style.display = "block";
+    document.getElementById("uninstallBtn").style.display = "block";
+
+    document.getElementById("uninstallBtn").onclick = () => {
+        alert("Uninstall manually from Home Screen.\nBrowser auto-uninstall allow nahi karta.");
+    };
+}
+
+// Load default box at start
+renderAppBox();
