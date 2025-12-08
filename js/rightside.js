@@ -66,19 +66,11 @@ style.innerHTML = `
     color:#fff;
 }
 
-/* Coming Soon Title */
+/* Coming Soon Section */
 .coming-title {
-    font-size:16px;
+    font-size:15px;
     margin-top:18px;
-    margin-bottom:6px;
-    font-weight:bold;
-}
-
-/* Coming Soon Items */
-.coming-item {
-    font-size:14px;
-    opacity:0.85;
-    padding:4px 0;
+    opacity:0.9;
 }
 `;
 document.head.appendChild(style);
@@ -105,7 +97,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
     renderAppBox();
 });
 
-// Detect app installed
+// Detect when installed
 window.addEventListener("appinstalled", () => {
     isInstalled = true;
     updateButtons();
@@ -122,16 +114,13 @@ function renderAppBox() {
             <img src="${APP_ICON}" class="app-icon" alt="App Icon">
 
             <h3>${APP_NAME}</h3>
-            <p class="small">अभी इंस्टॉल करें (PWA)</p>
+            <p class="small">Install our PWA App</p>
 
             <button id="installBtn" class="install-btn">Install App</button>
             <button id="installedBtn" class="installed-btn" style="display:none;">Installed ✓</button>
             <button id="uninstallBtn" class="uninstall-btn" style="display:none;">Uninstall</button>
 
-            <h4 class="coming-title">नई ऐप्स जल्द आ रही हैं</h4>
-            <div class="coming-item">• GK Learn Study Test App</div>
-            <div class="coming-item">• GK Learn Study NCERT Notes App</div>
-            <div class="coming-item">• GK Learn Study Video App</div>
+            <p class="coming-title">More apps are coming soon...</p>
         </div>
         </li>
     `;
@@ -145,7 +134,7 @@ function renderAppBox() {
 // =========================
 async function installApp() {
     if (!deferredPrompt) {
-        window.location.href = PWA_URL;  // fallback: open app
+        window.location.href = PWA_URL;  // fallback
         return;
     }
 
@@ -161,18 +150,19 @@ async function installApp() {
 
 
 // =========================
-//  Installed → Buttons Update
+//  Update Buttons on Install
 // =========================
 function updateButtons() {
     document.getElementById("installBtn").style.display = "none";
     document.getElementById("installedBtn").style.display = "block";
     document.getElementById("uninstallBtn").style.display = "block";
 
+    // Browser cannot uninstall PWAs → show info only
     document.getElementById("uninstallBtn").onclick = () => {
-        alert("अपने मोबाइल की होम स्क्रीन से ऐप को Long-Press करके Remove करें।\nBrowser uninstall सपोर्ट नहीं देता।");
+        alert("To uninstall, please remove the app from your device's home screen manually.");
     };
 }
 
 
-// Load UI initially
+// Load the app box initially
 renderAppBox();
