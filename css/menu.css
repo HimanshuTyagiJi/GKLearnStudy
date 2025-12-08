@@ -555,3 +555,50 @@ caption {
     /* Center horizontally */
     margin-top: 20px;
 }
+.menu-toggle {
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 22px;
+    border: none;
+    background: #641ef9;
+    color: white;
+    border-radius: 5px;
+    transition: .3s;
+    margin-top: 20px !important;z-index:99;
+    
+}
+
+.menu-toggle.open {
+    transform: rotate(90deg);
+}
+
+/* Menu List */
+.menu-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+    background: #f2f2f2;
+    padding-left: 0;
+    margin: 10px;
+    border-radius: 6px;
+}
+
+.menu-list.open {
+    max-height: 2000px; /* enough height to show whole list */
+}
+
+.menu-list li {
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-list li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #000;
+}
+
+.menu-list li a:hover {
+    background: #ddd;
+}
