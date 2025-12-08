@@ -287,3 +287,11 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.appendChild(script);
     }
 });
+
+function toggleMenu() {
+    const menu = document.getElementById("menuList");
+    const btn = document.querySelector(".menu-toggle");
+
+    menu.classList.toggle("open");
+    btn.classList.toggle("open");
+}
