@@ -783,3 +783,120 @@ function myFunction() {
         }       
     }
 }
+/* ========== GK LEARN — INJECT RATING + COMMENTS + FOOTER (OLD VERSION SAFE MODE) ========== */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const socialBox = document.getElementById("social-links");
+    if (!socialBox) return;  // Agar footer me element na ho
+
+    /* ❌ Purane footer ke contact / paragraph ko disable karna */
+    const contactBtn = document.querySelector("footer .custom-column button");
+    if (contactBtn) contactBtn.style.display = "none";
+
+    const para = document.getElementById("my-paragraph");
+    if (para) para.style.display = "none";
+
+    /* ⭐ Inject Rating + Comment + New Footer inside social-links */
+    socialBox.insertAdjacentHTML("beforeend", `
+
+        <div id="comments-and-ratings-container" style="margin-top:25px;">
+
+            <!-- ⭐ Rating Box ⭐ -->
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rating-widget" class="rating-content">
+                    <h2>Rate this Page</h2>
+
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
+                        </div>
+                    </div>
+
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24"><path d="M12 17..."/></svg>
+                        <svg class="star" data-value="2" viewBox="0 0 24 24"><path d="M12 17..."/></svg>
+                        <svg class="star" data-value="3" viewBox="0 0 24 24"><path d="M12 17..."/></svg>
+                        <svg class="star" data-value="4" viewBox="0 0 24 24"><path d="M12 17..."/></svg>
+                        <svg class="star" data-value="5" viewBox="0 0 24 24"><path d="M12 17..."/></svg>
+                    </div>
+
+                    <div id="rating-login-prompt" style="display:none;">
+                        <p>Please sign in to rate.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💬 Comment Box -->
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+
+                    <h2><span id="comment-count">0</span> Comments</h2>
+
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">Sign in with Google</button>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+
+                    <div id="login-prompt" style="display:none;">
+                        <p>Please sign in to comment.</p>
+                    </div>
+
+                    <div class="comment-form-shell" id="comment-form-shell" style="display:none;">
+                        <form id="comment-form">
+                            <textarea id="comment" maxlength="1000" placeholder="Add a public comment..." required></textarea>
+                            <input type="hidden" id="parent-id" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <button type="submit" class="btn primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="comments-list"></div>
+
+                </div>
+            </div>
+
+            <!-- NEW FOOTER -->
+            <div class="footer-bottom" style="margin-top:20px;text-align:center;">
+                © 2024 - <span id="yearNew"></span> GK Learn Study | All Rights Reserved
+            </div>
+
+        </div>
+    `);
+
+    // Dynamic Year Update
+    const y = document.getElementById("yearNew");
+    if (y) y.textContent = new Date().getFullYear();
+
+    /* Load Required JS Modules */
+    function autoLoad(src) {
+        if (document.querySelector('script[src="'+src+'"]')) return;
+        const s = document.createElement("script");
+        s.src = src;
+        s.defer = true;
+        document.body.appendChild(s);
+    }
+
+    autoLoad("https://gklearnstudy.in/js/comment.js");
+    autoLoad("https://gklearnstudy.in/js/notification.js");
+    autoLoad("https://gklearnstudy.in/js/search-data.js");
+});
