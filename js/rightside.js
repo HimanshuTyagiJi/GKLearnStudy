@@ -168,7 +168,6 @@ function updateButtons() {
 renderAppBox();
 
 
-
 function toggleMenu() {
     const menu = document.getElementById("menuList");
     const btn = document.querySelector(".menu-toggle");
@@ -176,3 +175,20 @@ function toggleMenu() {
     menu.classList.toggle("open");
     btn.classList.toggle("open");
 }
+
+// AUTO BEHAVIOR CONTROL
+function setMenuMode() {
+    const menu = document.getElementById("menuList");
+    const btn = document.querySelector(".menu-toggle");
+
+    if (window.innerWidth >= 769.01) {
+        menu.classList.add("open");   // desktop always open
+        btn.style.display = "none";   // hide button
+    } else {
+        menu.classList.remove("open"); // mobile starts closed
+        btn.style.display = "inline-block"; // show button
+    }
+}
+
+window.addEventListener("resize", setMenuMode);
+window.addEventListener("load", setMenuMode);
