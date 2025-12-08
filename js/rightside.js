@@ -166,3 +166,13 @@ function updateButtons() {
 
 // Load the app box initially
 renderAppBox();
+
+
+
+function toggleMenu() {
+    const menu = document.getElementById("menuList");
+    const btn = document.querySelector(".menu-toggle");
+
+    menu.classList.toggle("open");
+    btn.classList.toggle("open");
+}
