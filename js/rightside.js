@@ -1,6 +1,6 @@
-// ================================
-//  1️⃣  Inject CSS (no external file)
-// ================================
+// =========================
+//  Inject CSS dynamically
+// =========================
 const style = document.createElement("style");
 style.innerHTML = `
 #link-list { list-style:none; padding:0; margin:0; }
@@ -9,27 +9,33 @@ style.innerHTML = `
 .app-box {
     text-align:center;
     padding:15px;
-    border-radius:12px;
-    background:#111;
+    border-radius:10px;
+    background: transparent;
     color:#fff;
     margin-top:15px;
-    border:1px solid #222;
 }
+
+/* App Icon */
 .app-icon {
-    width:80px;
-    height:80px;
-    border-radius:14px;
-    margin-bottom:8px;
+    width:75px;
+    height:75px;
+    border-radius:15px;
+    margin-bottom:10px;
 }
+
+/* Main Title */
 .app-box h3 {
     font-size:18px;
-    margin:6px 0;
+    margin:5px 0 3px 0;
 }
+
+/* Subtitle */
 .small {
     font-size:13px;
-    opacity:0.8;
+    opacity:0.9;
     margin-bottom:8px;
 }
+
 /* Buttons */
 .install-btn, .installed-btn, .uninstall-btn {
     width:100%;
@@ -40,60 +46,92 @@ style.innerHTML = `
     font-size:15px;
     cursor:pointer;
 }
-.install-btn { background:#4cd964; color:#000; }
-.installed-btn { background:#3498db; color:#fff; cursor:default; }
-.uninstall-btn { background:#e74c3c; color:#fff; }
 
-.playstore {
-    display:block;
-    margin-top:10px;
-    color:#58a6ff;
+/* Install Button */
+.install-btn {
+    background:#4cd964;
+    color:#000;
+}
+
+/* Installed Button */
+.installed-btn {
+    background:#3498db;
+    color:#fff;
+    cursor:default;
+}
+
+/* Uninstall Button */
+.uninstall-btn {
+    background:#e74c3c;
+    color:#fff;
+}
+
+/* Coming Soon Title */
+.coming-title {
+    font-size:16px;
+    margin-top:18px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+/* Coming Soon Items */
+.coming-item {
     font-size:14px;
-    text-decoration:none;
+    opacity:0.85;
+    padding:4px 0;
 }
 `;
 document.head.appendChild(style);
 
-// ================================
-//  2️⃣  APP Install Logic
-// ================================
+
+
+// =========================
+//  PWA INSTALL HANDLING
+// =========================
+
 const linkList = document.getElementById("link-list");
 
 const APP_NAME = "GK Learn Study App";
 const APP_ICON = "https://gklearnstudy.in/GK-Learn-Study.png";
-const PLAYSTORE_URL = "#";  // Coming soon
+const PWA_URL = "https://gklearnstudy.in/?source=pwa";
 
 let deferredPrompt = null;
 let isInstalled = false;
 
-// Capture install event
+// Detect PWA install availability
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
     renderAppBox();
 });
 
+// Detect app installed
 window.addEventListener("appinstalled", () => {
     isInstalled = true;
     updateButtons();
 });
 
-// ================================
-//  3️⃣  Render App Box
-// ================================
+
+// =========================
+//  Render APP INSTALL BOX
+// =========================
 function renderAppBox() {
     linkList.innerHTML = `
         <li>
         <div class="app-box">
-            <img src="${APP_ICON}" class="app-icon">
-            <h3>${APP_NAME}</h3>
-            <p class="small">Coming Soon on Play Store</p>
+            <img src="${APP_ICON}" class="app-icon" alt="App Icon">
 
-            <button id="installBtn" class="install-btn">Install</button>
+            <h3>${APP_NAME}</h3>
+            <p class="small">अभी इंस्टॉल करें (PWA)</p>
+
+            <button id="installBtn" class="install-btn">Install App</button>
             <button id="installedBtn" class="installed-btn" style="display:none;">Installed ✓</button>
             <button id="uninstallBtn" class="uninstall-btn" style="display:none;">Uninstall</button>
 
-            <a href="${PLAYSTORE_URL}" class="playstore">Play Store (Coming Soon)</a>
+            <h4 class="coming-title">नई ऐप्स जल्द आ रही हैं</h4>
+            <div class="coming-item">• GK Learn Study Test App</div>
+            <div class="coming-item">• GK Learn Study NCERT Notes App</div>
+            <div class="coming-item">• GK Learn Study Video App</div>
         </div>
         </li>
     `;
@@ -101,35 +139,40 @@ function renderAppBox() {
     document.getElementById("installBtn").onclick = installApp;
 }
 
-// ================================
-//  4️⃣  Install button action
-// ================================
+
+// =========================
+//  Install App
+// =========================
 async function installApp() {
     if (!deferredPrompt) {
-        alert("Browser install support nahi deta.");
+        window.location.href = PWA_URL;  // fallback: open app
         return;
     }
+
     deferredPrompt.prompt();
     const choice = await deferredPrompt.userChoice;
 
     if (choice.outcome === "accepted") {
-        console.log("App installed");
+        console.log("App Installed");
     }
+
     deferredPrompt = null;
 }
 
-// ================================
-//  5️⃣  Buttons update after install
-// ================================
+
+// =========================
+//  Installed → Buttons Update
+// =========================
 function updateButtons() {
     document.getElementById("installBtn").style.display = "none";
     document.getElementById("installedBtn").style.display = "block";
     document.getElementById("uninstallBtn").style.display = "block";
 
     document.getElementById("uninstallBtn").onclick = () => {
-        alert("Uninstall manually from Home Screen.\nBrowser auto-uninstall allow nahi karta.");
+        alert("अपने मोबाइल की होम स्क्रीन से ऐप को Long-Press करके Remove करें।\nBrowser uninstall सपोर्ट नहीं देता।");
     };
 }
 
-// Load default box at start
+
+// Load UI initially
 renderAppBox();
