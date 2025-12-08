@@ -827,7 +827,8 @@ document.addEventListener("DOMContentLoaded", function () {
     loadOnce("https://gklearnstudy.in/js/comment.js");
     loadOnce("https://gklearnstudy.in/js/notification.js");
     loadOnce("https://gklearnstudy.in/js/search-data.js");
-
+ loadOnce("https://gklearnstudy.in/css/theme.css");
+     loadOnce("https://gklearnstudy.in/css/comment.css");
 });
 
 
