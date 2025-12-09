@@ -37,11 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 1️⃣ Check if topic menu exists → tabhi right bar enable hoga
+    // Check topic menu exists
     const topicMenu = document.querySelector("nav#topic-nav");
-    if (!topicMenu) return;  // If no topic menu → stop
+    if (!topicMenu) return;
 
-    // 2️⃣ Sidebar already exists? → Do NOT create again
+    // Prevent duplicate sidebar
     if (!document.getElementById("right-sidebar")) {
         const rightBar = document.createElement("div");
         rightBar.id = "right-sidebar";
@@ -50,32 +50,56 @@ document.addEventListener("DOMContentLoaded", function () {
             <ul id="link-list"></ul>
         `;
 
-        // ⭐ PAGE के RIGHT SIDE में जोड़ना है → body में सबसे आख़िर में append
+        // 📌 Desktop: right side (default)
         document.body.appendChild(rightBar);
     }
 
-    // 3️⃣ Add CSS only if missing
-    const existingCSS = document.querySelector(
-        'link[href="https://gklearnstudy.in/css/rightside.css"]'
-    );
-
-    if (!existingCSS) {
+    // Inject CSS if missing
+    if (!document.querySelector('link[href="https://gklearnstudy.in/css/rightside.css"]')) {
         const css = document.createElement("link");
         css.rel = "stylesheet";
         css.href = "https://gklearnstudy.in/css/rightside.css";
         document.head.appendChild(css);
     }
 
-    // 4️⃣ Add JS only if missing
-    const existingJS = document.querySelector(
-        'script[src="https://gklearnstudy.in/js/rightside.js"]'
-    );
-
-    if (!existingJS) {
+    // Inject JS if missing
+    if (!document.querySelector('script[src="https://gklearnstudy.in/js/rightside.js"]')) {
         const script = document.createElement("script");
         script.src = "https://gklearnstudy.in/js/rightside.js";
         script.defer = true;
         document.body.appendChild(script);
     }
+
+    /* 
+    ===================================================
+    📱 MOBILE MODE → Sidebar को comments के ऊपर ले जाना
+    ===================================================
+    */
+
+    function moveSidebarForMobile() {
+        const sidebar = document.getElementById("right-sidebar");
+        if (!sidebar) return;
+
+        const commentsBlock = document.getElementById("comments-and-ratings-container");
+        if (!commentsBlock) return;
+
+        if (window.innerWidth <= 768) {
+            // Mobile → comments block के पहले insert करें
+            if (sidebar.parentNode !== commentsBlock.parentNode) {
+                commentsBlock.parentNode.insertBefore(sidebar, commentsBlock);
+            }
+        } else {
+            // Desktop → body में right side पर रखें
+            if (sidebar.parentNode !== document.body) {
+                document.body.appendChild(sidebar);
+            }
+        }
+    }
+
+    // On load
+    moveSidebarForMobile();
+
+    // On resize
+    window.addEventListener("resize", moveSidebarForMobile);
 
 });
