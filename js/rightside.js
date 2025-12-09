@@ -192,3 +192,37 @@ function setMenuMode() {
 
 window.addEventListener("resize", setMenuMode);
 window.addEventListener("load", setMenuMode);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const head = document.head;
+
+    const META_TAG = `meta[name="google-adsense-account"]`;
+    const SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503";
+
+    // --- CHECK EXISTING TAGS ---
+    const hasMeta = document.querySelector(META_TAG);
+    const hasScript = document.querySelector(`script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]`);
+
+    // --- ADD META IF MISSING ---
+    if (!hasMeta) {
+        const meta = document.createElement("meta");
+        meta.setAttribute("name", "google-adsense-account");
+        meta.setAttribute("content", "ca-pub-7067722696020503");
+        head.appendChild(meta);
+        console.log("✔ Meta tag added");
+    }
+
+    // --- ADD SCRIPT IF MISSING ---
+    if (!hasScript) {
+        const script = document.createElement("script");
+        script.setAttribute("async", "");
+        script.setAttribute("src", SCRIPT_SRC);
+        script.setAttribute("crossorigin", "anonymous");
+        head.appendChild(script);
+        console.log("✔ Adsense script added");
+    }
+
+});
+
