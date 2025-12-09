@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 1️⃣ Check if topic menu exists
     const topicMenu = document.querySelector("nav#topic-nav");
-    if (!topicMenu) return; // No topic menu → no sidebar needed
+    if (!topicMenu) return; // No topic menu → stop
 
-    // 2️⃣ Check if Right Sidebar already exists
+    // 2️⃣ Inject Right Sidebar only if not exists
     if (!document.getElementById("right-sidebar")) {
         const rightBar = document.createElement("div");
         rightBar.id = "right-sidebar";
@@ -49,23 +49,31 @@ document.addEventListener("DOMContentLoaded", function () {
             <strong>Our App</strong>
             <ul id="link-list"></ul>
         `;
-
-        // Insert after topic navigation
         topicMenu.insertAdjacentElement("afterend", rightBar);
     }
 
-    // 3️⃣ Check if rightside.js already loaded
-    const existingScript = document.querySelector(
+    // 3️⃣ Inject rightside.js only if not already added
+    const existingJS = document.querySelector(
         'script[src="https://gklearnstudy.in/js/rightside.js"]'
     );
 
-    if (!existingScript) {
-        const rightSideScript = document.createElement("script");
-        rightSideScript.src = "https://gklearnstudy.in/js/rightside.js";
-        rightSideScript.defer = true;
-        document.body.appendChild(rightSideScript);
+    if (!existingJS) {
+        const script = document.createElement("script");
+        script.src = "https://gklearnstudy.in/js/rightside.js";
+        script.defer = true;
+        document.body.appendChild(script);
+    }
+
+    // 4️⃣ Inject rightside.css only if not already loaded
+    const existingCSS = document.querySelector(
+        'link[href="https://gklearnstudy.in/css/rightside.css"]'
+    );
+
+    if (!existingCSS) {
+        const cssLink = document.createElement("link");
+        cssLink.rel = "stylesheet";
+        cssLink.href = "https://gklearnstudy.in/css/rightside.css";
+        document.head.appendChild(cssLink);
     }
 
 });
-
-
