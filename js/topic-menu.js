@@ -35,5 +35,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+
+    // 1️⃣ Check if topic menu exists
+    const topicMenu = document.querySelector("nav#topic-nav");
+    if (!topicMenu) return; // No topic menu → no sidebar needed
+
+    // 2️⃣ Check if Right Sidebar already exists
+    if (!document.getElementById("right-sidebar")) {
+        const rightBar = document.createElement("div");
+        rightBar.id = "right-sidebar";
+        rightBar.innerHTML = `
+            <strong>Our App</strong>
+            <ul id="link-list"></ul>
+        `;
+
+        // Insert after topic navigation
+        topicMenu.insertAdjacentElement("afterend", rightBar);
+    }
+
+    // 3️⃣ Check if rightside.js already loaded
+    const existingScript = document.querySelector(
+        'script[src="https://gklearnstudy.in/js/rightside.js"]'
+    );
+
+    if (!existingScript) {
+        const rightSideScript = document.createElement("script");
+        rightSideScript.src = "https://gklearnstudy.in/js/rightside.js";
+        rightSideScript.defer = true;
+        document.body.appendChild(rightSideScript);
+    }
+
+});
 
 
