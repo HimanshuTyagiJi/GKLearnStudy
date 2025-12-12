@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fcgvhbjn | GK Learn Study</title>
-<meta name="description" content="vbnm">
+<title>fcgvb | GK Learn Study</title>
+<meta name="description" content="vbn">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/kaise-karen.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
@@ -25,7 +25,7 @@
 <nav class="breadcrumb-nav"><a href="https://gklearnstudy.in/">Home</a> <span>›</span> <span>himanshu</span></nav>
 <header class="article-header">
 <span class="category-link">himanshu</span>
-<h1>fcgvhbjn</h1>
+<h1>fcgvb</h1>
 <div class="article-meta"><span>By GK Learn Study</span> <span>|</span> <span>12/12/2025</span></div>
 </header>
 <div class="article-body"><!DOCTYPE html>
@@ -34,8 +34,8 @@
 <meta charset="UTF-8">
 <base href="file:///">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fcgvhbjn</title>
-<meta name="description" content="vbnm">
+<title>fcgvb</title>
+<meta name="description" content="vbn">
 <meta property="article:section" content="himanshu">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
@@ -208,12 +208,575 @@ th, td { border: 1px solid #ddd; padding: 10px; } th { background: #f4f4f4; }
 <div class="main-content-wrapper">
 <main class="container">
 <div id="root">
-<h1>fcgvhbjn</h1>
+<h1>fcgvb</h1>
 <p class="meta-info">By GK Learn Study | 12/12/2025</p>
 <hr />
 
                 <!-- Top Add Zone -->
+                <div style="margin-bottom: 1.5em;">
                 
+                
+
+
+<meta charset="UTF-8">
+<title>Trigonometry Thumbnail Generator</title>
+<style>
+    body {
+        background:#111;
+        color:white;
+        font-family:Poppins, Arial;
+        text-align:center;
+        padding:20px;
+    }
+    .panel {
+        max-width:900px;
+        margin:auto;
+    }
+    input[type="text"], input[type="color"], input[type="range"] {
+        padding:8px;
+        margin:6px;
+        border-radius:6px;
+        border:none;
+    }
+    canvas {
+        margin-top:20px;
+        background:#222;
+        border-radius:12px;
+        box-shadow:0 0 20px rgba(0,0,0,0.6);
+        max-width:100%;
+    }
+</style>
+
+
+
+<h1>Trigonometry Thumbnail Generator (16:9)</h1>
+
+<div class="panel">
+    <input type="text" id="img-txt" value="Trigonometry"><br>
+    <label>Font Size</label>
+    <input type="range" id="img-size" min="40" max="130" value="85"><br>
+
+    <label>Color 1</label>
+    <input type="color" id="c1" value="#2f2eff">
+    <label>Color 2</label>
+    <input type="color" id="c2" value="#005f61">
+    <label>Text Color</label>
+    <input type="color" id="tc" value="#ffffff">
+
+    <br><br>
+    <button style="padding:10px 20px; font-size:18px;">Generate</button>
+    <button style="padding:10px 20px; font-size:18px;">Download</button>
+</div>
+
+<canvas id="ctx" width="1280" height="720"></canvas>
+
+<script>
+// =================== HELPER FUNCTIONS =======================
+function roundRectFill(ctx, x, y, w, h, r, fillStyle){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+}
+
+function roundRectStroke(ctx, x, y, w, h, r, strokeStyle, lineWidth){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+    const words = text.split(" ");
+    let line = "";
+    for(let word of words){
+        let test = line + word + " ";
+        if(ctx.measureText(test).width > maxWidth){
+            ctx.fillText(line, x, y);
+            line = word + " ";
+            y += lineHeight;
+        } else line = test;
+    }
+    ctx.fillText(line, x, y);
+}
+
+// ===================== MAIN DRAW FUNCTION =====================
+function drawImg(){
+    const cvs = document.getElementById("ctx");
+    const cx = cvs.getContext("2d");
+
+    const W = 1280, H = 720;
+    cvs.width = W;
+    cvs.height = H;
+
+    const text = document.getElementById("img-txt").value;
+    const size = parseInt(document.getElementById("img-size").value);
+    const c1 = document.getElementById("c1").value;
+    const c2 = document.getElementById("c2").value;
+    const tc = document.getElementById("tc").value;
+
+    // BG gradient
+    let g = cx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,c1);
+    g.addColorStop(1,c2);
+    cx.fillStyle = g;
+    cx.fillRect(0,0,W,H);
+
+    // glow
+    let glow = cx.createRadialGradient(W*0.7,H*0.35,10,W*0.7,H*0.35,600);
+    glow.addColorStop(0,'rgba(255,255,255,0.12)');
+    glow.addColorStop(1,'transparent');
+    cx.fillStyle = glow;
+    cx.fillRect(0,0,W,H);
+
+    // diagonal lines
+    cx.strokeStyle = "rgba(255,255,255,0.06)";
+    for(let i=-400;i<1500;i+=45){
+        cx.beginPath();
+        cx.moveTo(i,0);
+        cx.lineTo(i+500,H);
+        cx.stroke();
+    }
+
+    // glass card
+    const cardX = W*0.40, cardY = H*0.2, cardW = W*0.55, cardH = H*0.6;
+    roundRectFill(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.10)");
+    roundRectStroke(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.15)",2);
+
+    // draw triangle
+    const Ax=200, Ay=550, sizeT=300;
+    const Bx=Ax+sizeT, By=Ay;
+    const Cx=Ax, Cy=Ay-sizeT*0.6;
+
+    cx.beginPath();
+    cx.moveTo(Ax,Ay);
+    cx.lineTo(Bx,By);
+    cx.lineTo(Cx,Cy);
+    cx.closePath();
+    cx.fillStyle="rgba(255,255,255,0.12)";
+    cx.fill();
+    cx.strokeStyle="white";
+    cx.lineWidth=3;
+    cx.stroke();
+
+    // title
+    cx.fillStyle=tc;
+    cx.font = `bold ${size}px Poppins`;
+    cx.shadowColor="rgba(0,0,0,0.4)";
+    cx.shadowBlur=18;
+    wrapText(cx,text,cardX+40,cardY+100,cardW-80,size+10);
+    cx.shadowBlur=0;
+
+    // branding
+    cx.font="22px Poppins";
+    cx.fillStyle="rgba(255,255,255,0.9)";
+    cx.textAlign="right";
+    cx.fillText("GK Learn Study",W-20,H-20);
+}
+
+// download the canvas
+function downloadImg(){
+    const link = document.createElement("a");
+    link.download = "trigonometry-thumbnail.png";
+    link.href = document.getElementById("ctx").toDataURL();
+    link.click();
+}
+
+drawImg(); // auto draw first time
+</script>
+
+
+
+            </div><div style="margin-bottom: 1.5em;">
+                
+                <div class="layout-media-text">
+                    <div class="layout-col-media">
+                        
+
+
+<meta charset="UTF-8">
+<title>Trigonometry Thumbnail Generator</title>
+<style>
+    body {
+        background:#111;
+        color:white;
+        font-family:Poppins, Arial;
+        text-align:center;
+        padding:20px;
+    }
+    .panel {
+        max-width:900px;
+        margin:auto;
+    }
+    input[type="text"], input[type="color"], input[type="range"] {
+        padding:8px;
+        margin:6px;
+        border-radius:6px;
+        border:none;
+    }
+    canvas {
+        margin-top:20px;
+        background:#222;
+        border-radius:12px;
+        box-shadow:0 0 20px rgba(0,0,0,0.6);
+        max-width:100%;
+    }
+</style>
+
+
+
+<h1>Trigonometry Thumbnail Generator (16:9)</h1>
+
+<div class="panel">
+    <input type="text" id="img-txt" value="Trigonometry"><br>
+    <label>Font Size</label>
+    <input type="range" id="img-size" min="40" max="130" value="85"><br>
+
+    <label>Color 1</label>
+    <input type="color" id="c1" value="#2f2eff">
+    <label>Color 2</label>
+    <input type="color" id="c2" value="#005f61">
+    <label>Text Color</label>
+    <input type="color" id="tc" value="#ffffff">
+
+    <br><br>
+    <button style="padding:10px 20px; font-size:18px;">Generate</button>
+    <button style="padding:10px 20px; font-size:18px;">Download</button>
+</div>
+
+<canvas id="ctx"></canvas>
+
+<script>
+// =================== HELPER FUNCTIONS =======================
+function roundRectFill(ctx, x, y, w, h, r, fillStyle){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+}
+
+function roundRectStroke(ctx, x, y, w, h, r, strokeStyle, lineWidth){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+    const words = text.split(" ");
+    let line = "";
+    for(let word of words){
+        let test = line + word + " ";
+        if(ctx.measureText(test).width > maxWidth){
+            ctx.fillText(line, x, y);
+            line = word + " ";
+            y += lineHeight;
+        } else line = test;
+    }
+    ctx.fillText(line, x, y);
+}
+
+// ===================== MAIN DRAW FUNCTION =====================
+function drawImg(){
+    const cvs = document.getElementById("ctx");
+    const cx = cvs.getContext("2d");
+
+    const W = 1280, H = 720;
+    cvs.width = W;
+    cvs.height = H;
+
+    const text = document.getElementById("img-txt").value;
+    const size = parseInt(document.getElementById("img-size").value);
+    const c1 = document.getElementById("c1").value;
+    const c2 = document.getElementById("c2").value;
+    const tc = document.getElementById("tc").value;
+
+    // BG gradient
+    let g = cx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,c1);
+    g.addColorStop(1,c2);
+    cx.fillStyle = g;
+    cx.fillRect(0,0,W,H);
+
+    // glow
+    let glow = cx.createRadialGradient(W*0.7,H*0.35,10,W*0.7,H*0.35,600);
+    glow.addColorStop(0,'rgba(255,255,255,0.12)');
+    glow.addColorStop(1,'transparent');
+    cx.fillStyle = glow;
+    cx.fillRect(0,0,W,H);
+
+    // diagonal lines
+    cx.strokeStyle = "rgba(255,255,255,0.06)";
+    for(let i=-400;i<1500;i+=45){
+        cx.beginPath();
+        cx.moveTo(i,0);
+        cx.lineTo(i+500,H);
+        cx.stroke();
+    }
+
+    // glass card
+    const cardX = W*0.40, cardY = H*0.2, cardW = W*0.55, cardH = H*0.6;
+    roundRectFill(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.10)");
+    roundRectStroke(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.15)",2);
+
+    // draw triangle
+    const Ax=200, Ay=550, sizeT=300;
+    const Bx=Ax+sizeT, By=Ay;
+    const Cx=Ax, Cy=Ay-sizeT*0.6;
+
+    cx.beginPath();
+    cx.moveTo(Ax,Ay);
+    cx.lineTo(Bx,By);
+    cx.lineTo(Cx,Cy);
+    cx.closePath();
+    cx.fillStyle="rgba(255,255,255,0.12)";
+    cx.fill();
+    cx.strokeStyle="white";
+    cx.lineWidth=3;
+    cx.stroke();
+
+    // title
+    cx.fillStyle=tc;
+    cx.font = `bold ${size}px Poppins`;
+    cx.shadowColor="rgba(0,0,0,0.4)";
+    cx.shadowBlur=18;
+    wrapText(cx,text,cardX+40,cardY+100,cardW-80,size+10);
+    cx.shadowBlur=0;
+
+    // branding
+    cx.font="22px Poppins";
+    cx.fillStyle="rgba(255,255,255,0.9)";
+    cx.textAlign="right";
+    cx.fillText("GK Learn Study",W-20,H-20);
+}
+
+// download the canvas
+function downloadImg(){
+    const link = document.createElement("a");
+    link.download = "trigonometry-thumbnail.png";
+    link.href = document.getElementById("ctx").toDataURL();
+    link.click();
+}
+
+drawImg(); // auto draw first time
+</script>
+
+
+
+                    </div>
+                    <div class="layout-col-text">
+                        <div class="editable-area"></div>
+                        
+                    </div>
+                </div>
+            </div><div style="margin-bottom: 1.5em;">
+                
+                
+
+
+<meta charset="UTF-8">
+<title>Trigonometry Thumbnail Generator</title>
+<style>
+    body {
+        background:#111;
+        color:white;
+        font-family:Poppins, Arial;
+        text-align:center;
+        padding:20px;
+    }
+    .panel {
+        max-width:900px;
+        margin:auto;
+    }
+    input[type="text"], input[type="color"], input[type="range"] {
+        padding:8px;
+        margin:6px;
+        border-radius:6px;
+        border:none;
+    }
+    canvas {
+        margin-top:20px;
+        background:#222;
+        border-radius:12px;
+        box-shadow:0 0 20px rgba(0,0,0,0.6);
+        max-width:100%;
+    }
+</style>
+
+
+
+<h1>Trigonometry Thumbnail Generator (16:9)</h1>
+
+<div class="panel">
+    <input type="text" id="img-txt" value="Trigonometry"><br>
+    <label>Font Size</label>
+    <input type="range" id="img-size" min="40" max="130" value="85"><br>
+
+    <label>Color 1</label>
+    <input type="color" id="c1" value="#2f2eff">
+    <label>Color 2</label>
+    <input type="color" id="c2" value="#005f61">
+    <label>Text Color</label>
+    <input type="color" id="tc" value="#ffffff">
+
+    <br><br>
+    <button style="padding:10px 20px; font-size:18px;">Generate</button>
+    <button style="padding:10px 20px; font-size:18px;">Download</button>
+</div>
+
+<canvas id="ctx"></canvas>
+
+<script>
+// =================== HELPER FUNCTIONS =======================
+function roundRectFill(ctx, x, y, w, h, r, fillStyle){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+}
+
+function roundRectStroke(ctx, x, y, w, h, r, strokeStyle, lineWidth){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+    const words = text.split(" ");
+    let line = "";
+    for(let word of words){
+        let test = line + word + " ";
+        if(ctx.measureText(test).width > maxWidth){
+            ctx.fillText(line, x, y);
+            line = word + " ";
+            y += lineHeight;
+        } else line = test;
+    }
+    ctx.fillText(line, x, y);
+}
+
+// ===================== MAIN DRAW FUNCTION =====================
+function drawImg(){
+    const cvs = document.getElementById("ctx");
+    const cx = cvs.getContext("2d");
+
+    const W = 1280, H = 720;
+    cvs.width = W;
+    cvs.height = H;
+
+    const text = document.getElementById("img-txt").value;
+    const size = parseInt(document.getElementById("img-size").value);
+    const c1 = document.getElementById("c1").value;
+    const c2 = document.getElementById("c2").value;
+    const tc = document.getElementById("tc").value;
+
+    // BG gradient
+    let g = cx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,c1);
+    g.addColorStop(1,c2);
+    cx.fillStyle = g;
+    cx.fillRect(0,0,W,H);
+
+    // glow
+    let glow = cx.createRadialGradient(W*0.7,H*0.35,10,W*0.7,H*0.35,600);
+    glow.addColorStop(0,'rgba(255,255,255,0.12)');
+    glow.addColorStop(1,'transparent');
+    cx.fillStyle = glow;
+    cx.fillRect(0,0,W,H);
+
+    // diagonal lines
+    cx.strokeStyle = "rgba(255,255,255,0.06)";
+    for(let i=-400;i<1500;i+=45){
+        cx.beginPath();
+        cx.moveTo(i,0);
+        cx.lineTo(i+500,H);
+        cx.stroke();
+    }
+
+    // glass card
+    const cardX = W*0.40, cardY = H*0.2, cardW = W*0.55, cardH = H*0.6;
+    roundRectFill(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.10)");
+    roundRectStroke(cx,cardX,cardY,cardW,cardH,20,"rgba(255,255,255,0.15)",2);
+
+    // draw triangle
+    const Ax=200, Ay=550, sizeT=300;
+    const Bx=Ax+sizeT, By=Ay;
+    const Cx=Ax, Cy=Ay-sizeT*0.6;
+
+    cx.beginPath();
+    cx.moveTo(Ax,Ay);
+    cx.lineTo(Bx,By);
+    cx.lineTo(Cx,Cy);
+    cx.closePath();
+    cx.fillStyle="rgba(255,255,255,0.12)";
+    cx.fill();
+    cx.strokeStyle="white";
+    cx.lineWidth=3;
+    cx.stroke();
+
+    // title
+    cx.fillStyle=tc;
+    cx.font = `bold ${size}px Poppins`;
+    cx.shadowColor="rgba(0,0,0,0.4)";
+    cx.shadowBlur=18;
+    wrapText(cx,text,cardX+40,cardY+100,cardW-80,size+10);
+    cx.shadowBlur=0;
+
+    // branding
+    cx.font="22px Poppins";
+    cx.fillStyle="rgba(255,255,255,0.9)";
+    cx.textAlign="right";
+    cx.fillText("GK Learn Study",W-20,H-20);
+}
+
+// download the canvas
+function downloadImg(){
+    const link = document.createElement("a");
+    link.download = "trigonometry-thumbnail.png";
+    link.href = document.getElementById("ctx").toDataURL();
+    link.click();
+}
+
+drawImg(); // auto draw first time
+</script>
+
+
+
+            </div>
 
                 <!-- Default Block -->
                 <div style="margin-bottom: 1.5em;">
@@ -293,172 +856,7 @@ th, td { border: 1px solid #ddd; padding: 10px; } th { background: #f4f4f4; }
                 </div>
 
                 <!-- Bottom Add Zone -->
-                <div style="margin-bottom: 1.5em;">
                 
-                
-
-
-    <meta charset="UTF-8">
-    <title>Inline CSS &amp; JS Example</title>
-
-    <!-- INLINE CSS -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            padding: 20px;
-            color: #222;
-        }
-
-        h1 {
-            color: #2271b1;
-        }
-
-        .card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            width: 300px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-
-        button {
-            background: #2271b1;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        button:hover {
-            background: #135e96;
-        }
-
-        #msg {
-            margin-top: 10px;
-            font-weight: bold;
-            color: green;
-        }
-    </style>
-
-
-
-    <h1>Inline CSS + JS वाला छोटा HTML Example</h1>
-
-    <p>यह छोटा सा demo है जिसमें CSS और JS दोनों inline हैं।</p>
-
-    <div class="card">
-        <h3>बटन पर क्लिक करके मैसेज दिखाओ</h3>
-        <button>क्लिक करो</button>
-
-        <div id="msg"></div>
-    </div>
-
-    <!-- INLINE JAVASCRIPT -->
-    <script>
-        function showMessage() {
-            document.getElementById("msg").innerHTML = "✔ बटन क्लिक किया गया!";
-        }
-    </script>
-
-
-
-            </div><div style="margin-bottom: 1.5em;">
-                
-                <div class="layout-media-text">
-                    <div class="layout-col-media">
-                        
-
-
-    <meta charset="UTF-8">
-    <title>Inline CSS &amp; JS Example</title>
-
-    <!-- INLINE CSS -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            padding: 20px;
-            color: #222;
-        }
-
-        h1 {
-            color: #2271b1;
-        }
-
-        .card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            width: 300px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: 20px;
-        }
-
-        button {
-            background: #2271b1;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        button:hover {
-            background: #135e96;
-        }
-
-        #msg {
-            margin-top: 10px;
-            font-weight: bold;
-            color: green;
-        }
-    </style>
-
-
-
-    <h1>Inline CSS + JS वाला छोटा HTML Example</h1>
-
-    <p>यह छोटा सा demo है जिसमें CSS और JS दोनों inline हैं।</p>
-
-    <div class="card">
-        <h3>बटन पर क्लिक करके मैसेज दिखाओ</h3>
-        <button>क्लिक करो</button>
-
-        <div id="msg"></div>
-    </div>
-
-    <!-- INLINE JAVASCRIPT -->
-    <script>
-        function showMessage() {
-            document.getElementById("msg").innerHTML = "✔ बटन क्लिक किया गया!";
-        }
-    </script>
-
-
-
-                    </div>
-                    <div class="layout-col-text">
-                        <div class="editable-area"></div>
-                        
-                    </div>
-                </div>
-            </div><div style="margin-bottom: 1.5em;">
-                
-                <div class="layout-media-text">
-                    <div class="layout-col-media">
-                        <div class="iframe-container"><iframe src="https://www.youtube.com/embed/eAZcvCdllII" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-                    </div>
-                    <div class="layout-col-text">
-                        <div class="editable-area">szdxfcgvhbjn</div>
-                        
-                    </div>
-                </div>
-            </div>
             
 </div>
 <hr />
@@ -664,10 +1062,10 @@ th, td { border: 1px solid #ddd; padding: 10px; } th { background: #f4f4f4; }
                             const ul = sidebarNav.querySelector('ul') || document.createElement('ul');
                             if(!sidebarNav.querySelector('ul')) sidebarNav.appendChild(ul);
                             
-                            const exists = Array.from(ul.querySelectorAll('a')).some(a => a.textContent === "fcgvhbjn");
+                            const exists = Array.from(ul.querySelectorAll('a')).some(a => a.textContent === "fcgvb");
                             if(!exists) {
                                 const li = document.createElement('li');
-                                li.innerHTML = '<a href="#" class="active">fcgvhbjn</a>';
+                                li.innerHTML = '<a href="#" class="active">fcgvb</a>';
                                 ul.appendChild(li);
                             }
                         }
