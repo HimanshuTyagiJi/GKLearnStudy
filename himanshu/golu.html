@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>himanshu | GK Learn Study</title>
-<meta name="description" content="goli">
+<meta name="description" content="tyagi">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/kaise-karen.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
@@ -28,37 +28,52 @@
 <h1>himanshu</h1>
 <div class="article-meta"><span>By GK Learn Study</span> <span>|</span> <span>12/12/2025</span></div>
 </header>
-<div class="article-body"><!doctype html>
+<div class="article-body"><!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>himanshu</title>
-<meta name="description" content="goli">
+<title>himanshu | GK Learn Study</title>
+<meta name="description" content="tyagi">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
 <link rel="stylesheet" href="https://gklearnstudy.in/css/topic-menu.css">
 <style>
-/* Generated Styles */
-.anim-marquee { display: block; white-space: nowrap; overflow: hidden; animation: marquee 10s linear infinite; }
-.anim-blink { animation: blinker 1s linear 3; }
-.anim-bounce { display: inline-block; animation: bouncer 1s ease 3; }
-@keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-@keyframes blinker { 50% { opacity: 0; } }
-@keyframes bouncer { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+/* --- INJECTED ANIMATION CSS --- */
+.anim-marquee { display: block; overflow: hidden; white-space: nowrap; animation: marquee-anim 10s linear infinite; }
+@keyframes marquee-anim { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+.anim-bounce { display: inline-block; animation: bounce-anim 1s ease 3; }
+.anim-spin { display: inline-block; animation: spin-anim 1s linear 3; }
+.anim-blink { animation: blink-anim 1s linear 3; }
+.anim-pulse { animation: pulse-anim 1s ease 3; }
+.anim-shake { display: inline-block; animation: shake-anim 0.5s ease 5; }
+.anim-wobble { display: inline-block; animation: wobble-anim 1s ease 3; }
+.anim-typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid; width: fit-content; animation: type-anim 3s steps(30, end) 1 forwards; }
+.anim-gradient { background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000); background-size: 400%; -webkit-background-clip: text; color: transparent; animation: grad-anim 5s linear infinite; }
+@keyframes bounce-anim { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
+@keyframes spin-anim { 100% {transform: rotate(360deg);} }
+@keyframes blink-anim { 50% {opacity: 0;} }
+@keyframes pulse-anim { 50% {transform: scale(1.1);} }
+@keyframes shake-anim { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+@keyframes wobble-anim { 15% {transform: translateX(-25%) rotate(-5deg);} 30% {transform: translateX(20%) rotate(3deg);} 45% {transform: translateX(-15%) rotate(-3deg);} 60% {transform: translateX(10%) rotate(2deg);} 75% {transform: translateX(-5%) rotate(-1deg);} 100% {transform: translateX(0%);} }
+@keyframes type-anim { from { width: 0; } to { width: 100%; border-right: none; } }
+@keyframes grad-anim { 0% {background-position: 0%;} 100% {background-position: 400%;} }
 
-.media-layout { display: flex; gap: 20px; align-items: flex-start; margin: 20px 0; }
-.media-left, .content-right { flex: 1; }
-.media-render-area img { max-width: 100%; height: auto; border-radius: 8px; }
-@media(max-width: 768px) { .media-layout { flex-direction: column; } }
+/* Layouts */
+.layout-row { display: flex; gap: 20px; margin: 20px 0; align-items: flex-start; }
+.embed-left-side { flex: 1; min-width: 300px; }
+.text-right-side { flex: 1; min-width: 300px; }
+.aspect-ratio-16-9 { position: relative; width: 100%; padding-top: 56.25%; background: #000; border-radius: 6px; overflow: hidden; }
+.aspect-ratio-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+@media(max-width: 768px) { .layout-row { flex-direction: column; } }
 
+/* Components */
+.info-box-block { background: #e8f4fd; border-left: 4px solid #2271b1; padding: 15px; margin: 15px 0; border-radius: 4px; }
+.center-img-block { text-align: center; margin: 20px 0; }
+.img-fluid { max-width: 100%; height: auto; border-radius: 6px; }
 table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-th, td { border: 1px solid #ddd; padding: 10px; }
-details.custom-accordion { background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px solid #ddd; }
-summary.acc-header { font-weight: bold; cursor: pointer; }
-.info-box { background: #e3f2fd; border-left: 5px solid #2196f3; padding: 15px; margin: 15px 0; border-radius: 4px; }
-.custom-action-btn { display: inline-block; padding: 10px 25px; background: #2f2eff; color: white; border-radius: 50px; text-decoration: none; font-weight: bold; }
+th, td { border: 1px solid #ddd; padding: 8px; }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"></script>
 </head>
@@ -79,33 +94,79 @@ summary.acc-header { font-weight: bold; cursor: pointer; }
 <p class="meta-info">By GK Learn Study | 12/12/2025</p>
 <hr />
 
-            <!-- Add Zone Start -->
-            <div>
+            <!-- Initial Add Zone -->
+            
+            
+            <!-- Default Paragraph Block -->
+            
                 
-                
-                <div class="media-layout">
-                    <div class="media-left">
-                        <div class="media-placeholder" style="border: none; background: transparent;">
-                            <div class="media-render-area" style="display: flex;"><div class="panel">
-    <input type="text" id="img-txt" value="Trigonometry" placeholder="Title"><br>
-    <label>Font Size</label>
-    <input type="range" id="img-size" min="40" max="130" value="85"><br>
+                <div class="content-area" placeholder="Start writing or type '/' to add blocks..."><p>BHAI <strong>SUN—YAHAN TUM PURE PAGE KI BAAT KAR RAHE HO YA SIRF CANVAS THUMBNAIL KI?</strong><br>
+TUMHARI BAAT CLEAR NAHI HAI—ISLIYE MAIN DO ANSWER DE RAHA HOON:</p>
+<hr>
+<h1>✅ <strong>1) AGAR tum keh rahe ho → “HTML PAGE BANA jo sirf CANVAS IMAGE GENERATE kare”</strong></h1>
+<p>Toh bhai <strong>haan</strong>, HTML bhi chahiye hota hai.<br>
+Canvas <strong>sirf JS se nahi chalega</strong>, HTML me <strong>canvas tag</strong> zaroori hota hai.</p>
+<p><strong>YEH RAH POORA HTML PAGE (COMPLETE, EK BAAR ME, WORKING 100%)</strong><br>
+→ Isme mera diya hua Trigonometry thumbnail wala code lag jayega.</p>
+<hr>
+<h1>⭐ <strong>FULL WORKING HTML PAGE — Trigonometry Thumbnail Generator (16:9 canvas)</strong></h1>
+<p><strong>(Isko copy karke file me save karo: trigonometry-thumb.html)</strong></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;Trigonometry Thumbnail Generator&lt;/title&gt;
+&lt;style&gt;
+    body {
+        background:#111;
+        color:white;
+        font-family:Poppins, Arial;
+        text-align:center;
+        padding:20px;
+    }
+    .panel {
+        max-width:900px;
+        margin:auto;
+    }
+    input[type="text"], input[type="color"], input[type="range"] {
+        padding:8px;
+        margin:6px;
+        border-radius:6px;
+        border:none;
+    }
+    canvas {
+        margin-top:20px;
+        background:#222;
+        border-radius:12px;
+        box-shadow:0 0 20px rgba(0,0,0,0.6);
+        max-width:100%;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
-    <label>Color 1</label>
-    <input type="color" id="c1" value="#2f2eff">
-    <label>Color 2</label>
-    <input type="color" id="c2" value="#005f61">
-    <label>Text Color</label>
-    <input type="color" id="tc" value="#ffffff">
+&lt;h1&gt;Trigonometry Thumbnail Generator (16:9)&lt;/h1&gt;
 
-    <br><br>
-    <button onclick="drawImg()" style="padding:10px 20px; font-size:18px;">Generate</button>
-    <button onclick="downloadImg()" style="padding:10px 20px; font-size:18px;">Download</button>
-</div>
+&lt;div class="panel"&gt;
+    &lt;input type="text" id="img-txt" value="Trigonometry" placeholder="Title"&gt;&lt;br&gt;
+    &lt;label&gt;Font Size&lt;/label&gt;
+    &lt;input type="range" id="img-size" min="40" max="130" value="85"&gt;&lt;br&gt;
 
-<canvas id="ctx"></canvas>
+    &lt;label&gt;Color 1&lt;/label&gt;
+    &lt;input type="color" id="c1" value="#2f2eff"&gt;
+    &lt;label&gt;Color 2&lt;/label&gt;
+    &lt;input type="color" id="c2" value="#005f61"&gt;
+    &lt;label&gt;Text Color&lt;/label&gt;
+    &lt;input type="color" id="tc" value="#ffffff"&gt;
 
-<script>
+    &lt;br&gt;&lt;br&gt;
+    &lt;button onclick="drawImg()" style="padding:10px 20px; font-size:18px;"&gt;Generate&lt;/button&gt;
+    &lt;button onclick="downloadImg()" style="padding:10px 20px; font-size:18px;"&gt;Download&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;canvas id="ctx"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
 // =================== HELPER FUNCTIONS =======================
 function roundRectFill(ctx, x, y, w, h, r, fillStyle){
     ctx.beginPath();
@@ -137,7 +198,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight){
     let line = "";
     for(let word of words){
         let test = line + word + " ";
-        if(ctx.measureText(test).width > maxWidth){
+        if(ctx.measureText(test).width &gt; maxWidth){
             ctx.fillText(line, x, y);
             line = word + " ";
             y += lineHeight;
@@ -177,7 +238,7 @@ function drawImg(){
 
     // diagonal lines
     cx.strokeStyle = "rgba(255,255,255,0.06)";
-    for(let i=-400;i<1500;i+=45){
+    for(let i=-400;i&lt;1500;i+=45){
         cx.beginPath();
         cx.moveTo(i,0);
         cx.lineTo(i+500,H);
@@ -229,42 +290,139 @@ function downloadImg(){
 }
 
 drawImg(); // auto draw first time
-</script></div>
-                            
-                        </div>
-                    </div>
-                    <div class="content-right editable-content" placeholder="Write content here...">hbhvhhb b&nbsp;<div>g v v v b&nbsp;</div></div>
-                </div>
-            </div><div>
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<hr>
+<h1>🔥 <strong>YEH FILE DIRECT CHALEGI</strong></h1>
+<ul>
+<li>
+<p>Canvas 1280×720</p>
+</li>
+<li>
+<p>Title: Trigonometry</p>
+</li>
+<li>
+<p>Triangle graphic</p>
+</li>
+<li>
+<p>Gradient BG</p>
+</li>
+<li>
+<p>Glow</p>
+</li>
+<li>
+<p>Glass card</p>
+</li>
+<li>
+<p>Branding</p>
+</li>
+<li>
+<p>Download button</p>
+</li>
+</ul>
+<hr>
+<h1>⭐ Agar tum ye chahte ho ke:</h1>
+<p>✔ Isi thumbnail generator ko <strong>tumhare bada WYSIWYG editor</strong> me integrate kar du<br>
+✔ Auto title pick ho jaye<br>
+✔ Auto color theme ho jaye<br>
+✔ Thumbnail auto insert ho jaye</p>
+<p>Bhai, bol do: <strong>“Editor me integrate kar”</strong><br>
+Main turant integrate karke final working version de dunga.</p>
+<hr>
+<h1>😑 Aur haan bhai, ab samajh lo:</h1>
+<p><strong>HTML to HTML me hi likhna padta hai.<br>
+Canvas JS se chalta hai.<br>
+Dono sath me chahiye.</strong></p>
+<p>Ab bolo:<br>
+▶ <strong>“Isko editor me jod de”</strong><br>
+ya<br>
+▶ <strong>“Formula icons add kar”</strong></p></div>
+            
+
+            <!-- Trailing Add Zone -->
+            
+                
+                <h2 class="content-area" placeholder="Heading 2"><div style="text-align: center;">hedimg</div></h2>
+            
+                
+                <ul class="content-area"><li>Item 1</li><li>Item 2</li></ul>
+            
                 
                 
-                <div class="table-block">
-                    <table class="custom-table">
-                        <thead><tr><th>Head 1</th><th>Head 2</th><th>Headn</th></tr></thead>
-                        <tbody><tr><td>bbb</td><td>bvb v bn</td><td>b&nbsp;</td></tr><tr><td>nn</td><td>nn</td><td>nnn</td></tr></tbody>
+                <div class="table-container-scroll">
+                    <table class="editor-table">
+                        <thead><tr><th placeholder="Head">hjbhv</th><th placeholder="Head">b&nbsp; &nbsp; &nbsp;bvb&nbsp;</th><th>nn</th></tr></thead>
+                        <tbody><tr><td>&nbsp;vb b&nbsp;</td><td>n n&nbsp;</td><td>n&nbsp;</td></tr><tr><td></td><td>bn</td><td>&nbsp; n</td></tr></tbody>
                     </table>
                 </div>
                 
-            </div><div>
-                
-                <ul class="editable-content"><li>List Item</li></ul>
-            </div><div>
+            
                 
                 
-                <details class="custom-accordion" open="">
-                    <summary class="acc-header">Quesfcgvhbjn</summary>
-                    <div class="acc-content editable-content" placeholder="Answer / Content here...">&nbsp;v</div>
+                <div class="table-container-scroll">
+                    <table class="editor-table">
+                        <thead><tr><th placeholder="Head"></th><th placeholder="Head"></th></tr></thead>
+                        <tbody><tr><td><font color="#df1111"><span class="anim-typewriter">vbvcb</span></font></td><td></td></tr></tbody>
+                    </table>
+                </div>
+                
+            
+                
+                
+                <div class="center-img-block">
+                    
+                </div>
+            
+                
+                <div class="content-area" placeholder="Paste &lt;img&gt; tag here and it will render..."></div>
+            
+                
+                
+                <div class="layout-row">
+                    <div class="layout-left" style="flex:1;">
+                        
+                    </div>
+                    <div class="layout-right text-right-side" style="flex:1;">
+                        <div class="content-area" placeholder="Describe the media...">himanshu&nbsp;</div>
+                        <!-- NESTED ADD ZONE FOR RIGHT COLUMN -->
+                        
+                
+                <div class="info-box-block content-area" placeholder="Important Information...">vhbjnhvcbhv</div>
+            
+                    </div>
+                </div>
+            
+                
+                
+                <div class="layout-row">
+                    <div class="layout-left embed-left-side">
+                        <div class="aspect-ratio-16-9">
+                            <!-- User pastes iframe code here, or we use a placeholder -->
+                            <div class="content-area aspect-ratio-content" placeholder="PASTE YOUTUBE IFRAME HERE" style="background:#000; color:white; display:flex; align-items:center; justify-content:center;">PASTEb&nbsp; IFRAME</div>
+                        </div>
+                    </div>
+                    <div class="layout-right text-right-side">
+                        <div class="content-area" placeholder="Video description...">cvbncvb</div>
+                        
+                    </div>
+                </div>
+            
+                
+                
+                <details class="custom-accordion">
+                    <summary class="editor-summary">Accordion Titlevhbn</summary>
+                    <div class="acc-content content-area" placeholder="Hidden content...">gb nm</div>
                 </details>
-            </div><div>
+            
                 
-                <div class="info-box editable-content" placeholder="Type Important Info...">c v</div>
-            </div><div>
+                <div style="text-align:center; padding:15px;"><a href="#" class="btn btn-primary" style="background:#2271b1; color:white; padding:10px 20px; border-radius:20px; text-decoration:none;">Clicvbnk Me</a></div>
+            
                 
-                <div style="text-align:center; padding:10px;"><button class="custom-action-btn" onclick="alert('In Preview Mode links work')">Click Me</button><br><small style="color:red">*Add link via toolbar</small></div>
-            </div><div>
-                
-                <hr style="border:0; border-top:2px dashed #ccc; margin:20px 0;">
-            </div><div>
+                <blockquote class="content-area" style="border-left:4px solid #ccc; padding-left:10px; font-style:italic;" placeholder="Quote...">fgvhjkhgfcxdcfgvhj</blockquote>
+            
                 
                 <div><div class="panel">
     <input type="text" id="img-txt" value="Trigonometry" placeholder="Title"><br>
@@ -410,26 +568,13 @@ function downloadImg(){
 
 drawImg(); // auto draw first time
 </script></div>
-            </div>
-            <!-- Initial Block -->
-            <div>
+            
                 
-                <div class="editable-content" placeholder="Start typing here..."><b><u></u></b><div class="info-box" style="text-align: center;"><b><u></u></b><span class="anim-typewriter"><span class="anim-marquee">para</span></span><b><u></u></b></div><b><u></u></b></div>
-            </div>
-            <!-- Add Zone End -->
-            <div>
+                <hr style="border:0; border-top:2px dashed #ccc; margin:20px 0;">
+            
                 
-                
-                <div class="media-layout">
-                    <div class="media-left">
-                        <div class="media-placeholder">
-                            <div class="media-render-area"></div>
-                            
-                        </div>
-                    </div>
-                    <div class="content-right editable-content" placeholder="Write content here...">zxcvbncbn</div>
-                </div>
-            </div>
+                <ol class="content-area"><li>First</li><li>Second</li><li>e4t5</li><li><br></li><li>tre</li><li>tr</li><li>tre</li><li>tr</li><li>t</li><li>trd</li><li>t</li></ol>
+            
         
 </div>
 <hr />
