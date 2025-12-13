@@ -45,7 +45,7 @@
 
             /* Dark Mode Specific Fixes */
             html[data-theme="dark"] .editor-paper { background: #1e1e1e; color: #e0e0e0; }
-            html[data-theme="dark"] .post-title-input { color: #fff; }
+            html[data-theme="dark"] .post-title-input { color: #fff; background: transparent; }
             html[data-theme="dark"] .post-desc-input { background: #2d2d2d; color: #ccc; border-left-color: #555; }
             html[data-theme="dark"] .block-wrapper:hover { background-color: #252525; border-color: #444; }
             html[data-theme="dark"] .media-placeholder { background: #252525; border-color: #444; }
@@ -55,6 +55,7 @@
             html[data-theme="dark"] .card-item { background: #252525; border-color: #444; }
             html[data-theme="dark"] .card-img-area { background: #333; }
             html[data-theme="dark"] h4 { color: #fff; }
+            html[data-theme="dark"] .control-btn { background: #333; color: #fff; border-color: #555; }
 
             * {
                 box-sizing: border-box;
@@ -229,22 +230,50 @@
             html[data-theme="dark"] .theme-switcher .moon { display: block; }
             html:not([data-theme="dark"]) .theme-switcher .moon { display: none; }
 
+            /* Header Tool Buttons (Undo/Redo) */
+            .header-tool-btn {
+                background: none; border: 1px solid var(--border-light); cursor: pointer; color: var(--text-main);
+                padding: 6px 12px; border-radius: 4px; font-size: 16px; margin-right: 5px;
+                transition: 0.2s;
+            }
+            .header-tool-btn:hover { background: rgba(0,0,0,0.05); border-color: var(--primary); color: var(--primary); }
+
+            /* Mobile Menu Overlay */
+            .mobile-overlay {
+                display: none;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 4999;
+                backdrop-filter: blur(2px);
+            }
+            .mobile-overlay.active { display: block; }
+
+            /* Draft Status Indicator */
+            .draft-status {
+                font-size: 12px; color: var(--text-light); font-style: italic; margin-right: 10px;
+                display: none; align-items: center; gap: 5px;
+            }
+            .draft-status.saving { display: flex; color: var(--warning); }
+            .draft-status.saved { display: flex; color: var(--success); }
+
             /* --- RESPONSIVE HEADER (MOBILE) --- */
             @media (max-width: 900px) {
                 .mobile-menu-toggle { display: block; }
                 
                 .meta-inputs-container {
                     display: none; /* Hide inputs by default */
-                    position: absolute;
-                    top: 100%;
+                    position: fixed;
+                    top: 0;
                     left: 0;
-                    width: 100%;
+                    width: 80%;
+                    height: 100vh;
                     background: var(--surface);
                     flex-direction: column;
-                    padding: 20px;
-                    border-bottom: 2px solid var(--primary);
-                    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-                    gap: 15px;
+                    padding: 25px;
+                    box-shadow: 2px 0 15px rgba(0,0,0,0.3);
+                    gap: 20px;
+                    z-index: 5001; /* Above overlay */
+                    overflow-y: auto;
+                    transition: transform 0.3s ease;
                 }
                 .meta-inputs-container.active { display: flex; }
                 .meta-label { display: block; }
@@ -349,6 +378,9 @@
                     border-radius: 4px;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                     border: 1px solid #ddd;
+                    
+                    /* Fix for clicking issues on desktop/touch */
+                    z-index: 101; 
                 }
             }
 
@@ -466,13 +498,8 @@
            6. COMPLEX BLOCKS (Media, Cards, etc.)
            ========================================================================== */
 
-            /* GENERAL IMAGE SAFEGUARD (Fixes 15000px issue) - STRICT FORCE */
-            img,
-            video,
-            iframe,
-            svg,
-            canvas,
-            .generated-text-img {
+            /* GENERAL IMAGE SAFEGUARD */
+            img, video, iframe, svg, canvas, .generated-text-img {
                 max-width: 100% !important;
                 height: auto !important;
                 border-radius: 6px;
@@ -782,7 +809,7 @@
                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
                 transform: translateX(-50%);
                 flex-wrap: wrap;
-                max-width: 650px;
+                max-width: 380px; /* Constrain width */
                 align-items: center;
                 border: 1px solid #333;
             }
@@ -819,10 +846,6 @@
                 background: var(--primary);
             }
             
-            .undo-redo-group {
-                display: flex; gap: 4px; border-right: 1px solid #555; padding-right: 4px; margin-right: 4px;
-            }
-
             .tb-select {
                 background: #2c3338;
                 color: white;
@@ -1125,8 +1148,11 @@
     <body>
         <!-- 1. TOP HEADER (Refactored for Mobile Menu & Theme) -->
         <div class="editor-top-bar">
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-overlay" onclick="window.toggleMobileMenu()"></div>
+
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" onclick="document.querySelector('.meta-inputs-container').classList.toggle('active')">
+            <button class="mobile-menu-toggle" onclick="window.toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -1151,8 +1177,15 @@
 
             <!-- Right Side Controls -->
             <div class="right-actions">
+                <div id="draft-status" class="draft-status"><i class="fas fa-save"></i> <span>Saving...</span></div>
                 <div id="auth-status" class="auth-indicator"><i class="fas fa-spinner fa-spin"></i> Checking...</div>
                 
+                <!-- NEW UNDO/REDO BUTTONS -->
+                <div style="display:flex; margin-right: 10px;">
+                    <button class="header-tool-btn" onmousedown="window.fmt(event,'undo')" title="Undo"><i class="fas fa-undo"></i></button>
+                    <button class="header-tool-btn" onmousedown="window.fmt(event,'redo')" title="Redo"><i class="fas fa-redo"></i></button>
+                </div>
+
                 <!-- Theme Switcher -->
                 <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
                     <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -1167,17 +1200,8 @@
             </div>
         </div>
 
-        <!-- 2. FLOATING TOOLBAR (Added Undo/Redo) -->
+        <!-- 2. FLOATING TOOLBAR -->
         <div id="floating-toolbar">
-            <div class="undo-redo-group">
-                <button class="tb-btn" onmousedown="window.fmt(event,'undo')" title="Undo">
-                    <i class="fas fa-undo"></i>
-                </button>
-                <button class="tb-btn" onmousedown="window.fmt(event,'redo')" title="Redo">
-                    <i class="fas fa-redo"></i>
-                </button>
-            </div>
-            
             <button class="tb-btn" onmousedown="window.fmt(event,'bold')" title="Bold">
                 <i class="fas fa-bold"></i>
             </button>
@@ -1432,6 +1456,9 @@
             // New Global for Media Modal
             let activeMediaElement = null; // The element triggering the media modal
 
+            // AUTO-SAVE KEY
+            const DRAFT_KEY = "gk_editor_autosave_v1";
+
             // AUTH LISTENER
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
@@ -1447,6 +1474,9 @@
                 if (params.get("id")) {
                     editingDocId = params.get("id");
                     loadContent(editingDocId);
+                } else {
+                    // If no ID, attempt to restore local draft
+                    restoreLocalDraft();
                 }
             });
 
@@ -1469,7 +1499,86 @@
                 }
             }
 
+            // --- AUTO-SAVE LOGIC ---
+            const saveStatusEl = document.getElementById('draft-status');
+            
+            function showSaveStatus(state) {
+                saveStatusEl.className = `draft-status ${state}`;
+                saveStatusEl.innerHTML = state === 'saving' 
+                    ? '<i class="fas fa-pen-nib"></i> <span>Saving...</span>' 
+                    : '<i class="fas fa-check"></i> <span>Draft Saved</span>';
+                saveStatusEl.style.display = 'flex';
+                
+                if(state === 'saved') {
+                    setTimeout(() => { saveStatusEl.style.display = 'none'; }, 2000);
+                }
+            }
+
+            const debouncedSave = (function() {
+                let timer;
+                return function() {
+                    showSaveStatus('saving');
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        const data = {
+                            title: document.getElementById("doc-h1").value,
+                            desc: document.getElementById("doc-desc").value,
+                            folder: document.getElementById("folderName").value,
+                            file: document.getElementById("fileName").value,
+                            img: document.getElementById("imgName").value,
+                            content: document.getElementById("editor-canvas").innerHTML,
+                            timestamp: Date.now()
+                        };
+                        localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+                        showSaveStatus('saved');
+                    }, 1000); // 1 sec delay
+                };
+            })();
+
+            // Attach Auto-Save Listeners
+            function initAutoSave() {
+                document.querySelectorAll('#doc-h1, #doc-desc, #folderName, #fileName, #imgName')
+                    .forEach(el => el.addEventListener('input', debouncedSave));
+                
+                const canvas = document.getElementById("editor-canvas");
+                const observer = new MutationObserver(debouncedSave);
+                observer.observe(canvas, { childList: true, subtree: true, characterData: true });
+                
+                // Catch input events in contenteditable areas too
+                canvas.addEventListener('input', debouncedSave);
+            }
+
+            function restoreLocalDraft() {
+                const saved = localStorage.getItem(DRAFT_KEY);
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        // Optional: Check timestamp freshness
+                        document.getElementById("doc-h1").value = data.title || "";
+                        document.getElementById("doc-desc").value = data.desc || "";
+                        document.getElementById("folderName").value = data.folder || "";
+                        document.getElementById("fileName").value = data.file || "";
+                        document.getElementById("imgName").value = data.img || "";
+                        if (data.content && data.content.trim() !== "") {
+                            document.getElementById("editor-canvas").innerHTML = data.content;
+                        }
+                        console.log("Draft Restored from Local Storage");
+                    } catch(e) {
+                        console.error("Failed to restore draft", e);
+                    }
+                }
+            }
+
+            // Init listeners once DOM is ready
+            initAutoSave();
+
+
             // --- GLOBAL EXPORTS (FOR HTML ONCLICK) ---
+
+            window.toggleMobileMenu = () => {
+                document.querySelector('.meta-inputs-container').classList.toggle('active');
+                document.querySelector('.mobile-overlay').classList.toggle('active');
+            };
 
             // 1. TOOLBAR FUNCTIONS
             window.fmt = (e, cmd, val) => {
@@ -1529,7 +1638,7 @@
                 }
             };
 
-            // Toolbar Position - FIXED LOGIC
+            // Toolbar Position - FIXED LOGIC (CLAMPING)
             document.addEventListener("selectionchange", () => {
                 const sel = window.getSelection();
                 const bar = document.getElementById("floating-toolbar");
@@ -1544,18 +1653,34 @@
 
                     bar.style.display = "flex";
                     
-                    // Logic: Position roughly 120px above to give clear view of text
-                    // Use a slightly larger gap to prevent hover flicker issues
-                    let topPos = window.scrollY + rect.top - 120;
+                    const barWidth = bar.offsetWidth || 380;
+                    const barHeight = bar.offsetHeight || 80;
                     
-                    // Safety check: ensure it doesn't disappear under the sticky header
-                    if (topPos < window.scrollY + 70) {
-                         // If no space above, push it below selection
-                         topPos = window.scrollY + rect.bottom + 20;
+                    // Center horizontal logic with clamping
+                    let left = rect.left + (rect.width / 2) - (barWidth / 2);
+                    
+                    // Clamp Left Edge
+                    if (left < 10) left = 10;
+                    // Clamp Right Edge
+                    if (left + barWidth > window.innerWidth - 10) left = window.innerWidth - barWidth - 10;
+
+                    // Vertical logic
+                    let top = rect.top - barHeight - 15; // Standard offset above text
+                    
+                    // If selection is near top of screen (or scrolled under header)
+                    // Push below selection
+                    if (top < 70) { 
+                         top = rect.bottom + 15;
                     }
                     
-                    bar.style.top = `${topPos}px`;
-                    bar.style.left = `${rect.left + rect.width / 2}px`;
+                    // Mobile specific safe offset if needed
+                    if (window.innerWidth < 768) {
+                        // On mobile, ensure it's high enough not to be covered by finger
+                        if (top === rect.bottom + 15) top += 20;
+                    }
+                    
+                    bar.style.top = `${top}px`;
+                    bar.style.left = `${left}px`;
                 } else {
                     // Small timeout to allow clicking buttons without immediate hide
                     setTimeout(() => {
@@ -1981,7 +2106,7 @@
                 renderDiv.style.display = "none";
                 btnGroup.style.display = "flex";
                 ph.style.border = "2px dashed #c3c4c7";
-                ph.style.background = "rgba(0,0,0,0.03)";
+                ph.style.background = "#f6f7f7";
                 ph.style.padding = "30px 10px";
             };
 
@@ -2079,6 +2204,10 @@
                         date: new Date().toISOString(),
                         status: status,
                     });
+                    
+                    // CLEAR LOCAL STORAGE ON SUCCESSFUL SAVE
+                    localStorage.removeItem(DRAFT_KEY);
+                    
                     alert("Success! Saved as " + status);
                     if (!editingDocId) window.location.href = "admin.html";
                     else window.close();
