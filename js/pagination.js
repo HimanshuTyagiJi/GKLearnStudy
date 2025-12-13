@@ -1,71 +1,99 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // 1. DYNAMIC PAGINATION BUTTONS
     const mountPoint = document.getElementById('dynamic-pagination');
-    if (!mountPoint) return;
-
-    const categoryKey = mountPoint.dataset.category;
-    const currentFileName = window.location.pathname.split('/').pop();
     
-    let currentPage = 1;
-    // Logic: if file ends with -part-X.html, extract X. Else it's page 1.
-    const match = currentFileName.match(/-part-(\d+)\.html$/);
-    if (match) {
-        currentPage = parseInt(match[1]);
+    // Helper to get current part number
+    const getCurrentPart = () => {
+        const match = window.location.pathname.match(/-part-(\d+)\.html$/);
+        return match ? parseInt(match[1]) : 1;
+    };
+
+    const currentPage = getCurrentPart();
+
+    if (mountPoint) {
+        const categoryKey = mountPoint.dataset.category;
+        
+        try {
+            // Force fetch fresh JSON (bypass cache)
+            const res = await fetch('/data/page-counts.json?t=' + Date.now());
+            if (res.ok) {
+                const data = await res.json();
+                const totalPages = data[categoryKey] || 1;
+
+                if (totalPages > 1) {
+                    renderPagination(mountPoint, currentPage, totalPages);
+                }
+            }
+        } catch (e) {
+            console.error("Pagination load failed:", e);
+        }
     }
 
-    try {
-        const res = await fetch('/data/page-counts.json?t=' + Date.now());
-        if (!res.ok) throw new Error("Failed to load page counts");
-        
-        const data = await res.json();
-        const totalPages = data[categoryKey] || 1;
-
-        if (totalPages <= 1) return; 
-
-        let html = '<div class="pagination">';
-        
-        // Base URL Logic (remove .html or -part-X.html)
-        let baseUrl = currentFileName.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
-        
-        const getLink = (page) => {
-            if (page === 1) return `${baseUrl}.html`;
-            return `${baseUrl}-part-${page}.html`;
-        };
-
-        // PREV
-        if (currentPage > 1) {
-            html += `<a href="${getLink(currentPage - 1)}" class="button prev">Prev</a>`;
-        }
-
-        // NUMBERS (Smart range)
-        const range = [];
-        const delta = 2; 
-        for (let i = 1; i <= totalPages; i++) {
-            if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
-                range.push(i);
-            }
-        }
-
-        let l;
-        for (let i of range) {
-            if (l) {
-                if (i - l === 2) html += `<a href="${getLink(l + 1)}" class="button">${l + 1}</a>`;
-                else if (i - l !== 1) html += `<span class="dots">...</span>`;
-            }
-            if (i === currentPage) html += `<span class="button active">${i}</span>`;
-            else html += `<a href="${getLink(i)}" class="button">${i}</a>`;
-            l = i;
-        }
-
-        // NEXT
-        if (currentPage < totalPages) {
-            html += `<a href="${getLink(currentPage + 1)}" class="button next">Next</a>`;
-        }
-
-        html += '</div>';
-        mountPoint.innerHTML = html;
-
-    } catch (e) {
-        console.error("Pagination Error:", e);
-    }
+    // 2. SMART LANGUAGE SWITCHER (Link Sync)
+    // Finds the link button and updates href to match the current part
+    updateLanguageLink(currentPage);
 });
+
+function renderPagination(container, current, total) {
+    let html = '<div class="pagination">';
+    
+    // Clean Base URL (remove -part-X.html or .html)
+    let path = window.location.pathname;
+    let filename = path.split('/').pop();
+    let baseUrl = filename.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
+    
+    // Construct Link Function
+    const getLink = (p) => p === 1 ? `${baseUrl}.html` : `${baseUrl}-part-${p}.html`;
+
+    // PREV
+    if (current > 1) {
+        html += `<a href="${getLink(current - 1)}" class="button prev">Prev</a>`;
+    }
+
+    // LOGIC: Show 1, current-1, current, current+1, last
+    const showPages = new Set([1, total, current, current-1, current+1]);
+    let prevShown = 0;
+
+    for (let i = 1; i <= total; i++) {
+        if (showPages.has(i)) {
+            if (i - prevShown > 1) html += `<span class="dots">...</span>`;
+            
+            if (i === current) html += `<span class="button active">${i}</span>`;
+            else html += `<a href="${getLink(i)}" class="button">${i}</a>`;
+            
+            prevShown = i;
+        }
+    }
+
+    // NEXT
+    if (current < total) {
+        html += `<a href="${getLink(current + 1)}" class="button next">Next</a>`;
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function updateLanguageLink(currentPart) {
+    // Determine target file name structure based on current page
+    // Needs manual mapping or strict naming convention. 
+    // Assuming simple mapping based on known files.
+    
+    const linkBtn = document.querySelector('.link-container .link-button');
+    if (!linkBtn) return;
+
+    const currentHref = linkBtn.getAttribute('href');
+    if (!currentHref) return;
+
+    // Logic: If we are on Part 3, append -part-3 to the base filename of the target
+    if (currentPart > 1) {
+        // Strip existing extension
+        let baseTarget = currentHref.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
+        linkBtn.setAttribute('href', `${baseTarget}-part-${currentPart}.html`);
+    } else {
+        // If on Part 1, ensure link goes to base file (remove part info if present in href cache)
+        let baseTarget = currentHref.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
+        linkBtn.setAttribute('href', `${baseTarget}.html`);
+    }
+}
