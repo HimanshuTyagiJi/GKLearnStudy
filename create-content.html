@@ -345,6 +345,27 @@
                 transform: rotate(90deg) scale(1.1);
             }
 
+            /* --- MOBILE FIX FOR ADD ZONE --- */
+            @media (max-width: 768px) {
+                .add-zone {
+                    opacity: 1 !important; /* Always visible on mobile */
+                    height: 40px; /* Larger touch target */
+                    margin: 15px 0;
+                }
+                .add-line {
+                    background-color: #e0e0e0; /* Subtle line always visible */
+                    transform: scaleX(1);
+                }
+                .add-btn {
+                    background-color: var(--primary);
+                    opacity: 0.9;
+                    transform: scale(1); /* No rotation needed initially */
+                }
+                .add-zone:active .add-btn {
+                    transform: scale(0.95); /* Touch feedback */
+                }
+            }
+
             /* ==========================================================================
            6. COMPLEX BLOCKS (Media, Cards, etc.)
            ========================================================================== */
@@ -1384,8 +1405,20 @@
                     const rect = range.getBoundingClientRect();
 
                     bar.style.display = "flex";
-                    // OFFSET FIX: Increased vertical gap to 70px to prevent overlapping text
-                    bar.style.top = `${window.scrollY + rect.top - 70}px`;
+                    
+                    // Fixed logic: push toolbar much higher (approx 2 lines above)
+                    // 120px offset gives good clearance
+                    const offset = 120;
+                    let topPos = window.scrollY + rect.top - offset;
+                    
+                    // Safety check: ensure it doesn't disappear under the sticky header
+                    // (Header height ~60px)
+                    if (topPos < window.scrollY + 70) {
+                         // If no space above, push it below selection
+                         topPos = window.scrollY + rect.bottom + 20;
+                    }
+                    
+                    bar.style.top = `${topPos}px`;
                     bar.style.left = `${rect.left + rect.width / 2}px`;
                 } else {
                     setTimeout(() => {
