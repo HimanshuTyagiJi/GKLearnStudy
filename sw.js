@@ -1,69 +1,103 @@
-const CACHE_NAME = 'gklearnstudy-dynamic-v7';
 
-// The install event is now very simple and does not pre-cache any assets, avoiding the 'addAll' error.
+const CACHE_NAME = 'gklearnstudy-v9-network-first'; // Version bump to v9 to force update
+
+// Files to cache immediately (Core App Shell)
+const PRECACHE_URLS = [
+  '/css/theme.css',
+  '/js/theme.js',
+  '/offline.html'
+];
+
+// 1. INSTALL: Force the new Service Worker to activate immediately
 self.addEventListener('install', event => {
-  event.waitUntil(self.skipWaiting());
-  console.log('Service Worker: Installed');
+  self.skipWaiting(); // IMPORTANT: Forces this new SW to become active instantly, replacing the old one
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      // Pre-cache core files, but don't stop installation if one fails
+      return cache.addAll(PRECACHE_URLS).catch(err => console.log('Precache warning:', err));
+    })
+  );
+  console.log('SW: Installed and skipped waiting.');
 });
 
+// 2. ACTIVATE: Delete all old caches to remove stale data
 self.addEventListener('activate', event => {
-  // Clean up old caches.
-  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Service Worker: Deleting old cache', cacheName);
+          if (cacheName !== CACHE_NAME) {
+            console.log('SW: Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     }).then(() => {
-        // Take control of the page immediately.
-        return self.clients.claim();
+      console.log('SW: Claiming clients (taking control).');
+      return self.clients.claim(); // Take control of all open tabs immediately
     })
   );
-  console.log('Service Worker: Activated');
 });
 
+// 3. FETCH: The "Automatic Hard Reload" Logic
 self.addEventListener('fetch', event => {
-  const requestUrl = new URL(event.request.url);
+  const url = new URL(event.request.url);
 
-  // Only handle GET requests for local assets.
-  if (event.request.method !== 'GET' || requestUrl.origin !== self.location.origin) {
+  // Ignore non-GET requests (like POST to Firebase) and external links (mostly)
+  if (event.request.method !== 'GET') return;
+
+  // STRATEGY: Network First (Freshness over Speed)
+  // For HTML, CSS, JS, and JSON, we ALWAYS try the network first.
+  // This ensures the user sees your updates immediately.
+  if (
+    url.origin === self.location.origin && (
+    url.pathname.endsWith('.html') || 
+    url.pathname.endsWith('/') || 
+    url.pathname.endsWith('.css') || 
+    url.pathname.endsWith('.js') || 
+    url.pathname.endsWith('.json'))
+  ) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          // 1. Network success: Return fresh content
+          // 2. Also update the cache with this fresh content for next time (or offline use)
+          const clonedResponse = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clonedResponse);
+          });
+          return networkResponse;
+        })
+        .catch(() => {
+          // Network failed (Offline): Fallback to Cache
+          console.log('SW: Network failed, serving cached version for:', url.pathname);
+          return caches.match(event.request).then(cachedResponse => {
+            // If cache has it, return it. If not, maybe show offline page.
+            return cachedResponse || caches.match('/offline.html'); 
+          });
+        })
+    );
     return;
   }
 
-  // Caching strategy for CSS and JS files: Cache First, falling back to Network.
-  // This is the "automatic" caching the user requested.
-  if (requestUrl.pathname.endsWith('.css') || requestUrl.pathname.endsWith('.js')) {
+  // STRATEGY: Stale-While-Revalidate (Speed)
+  // For Images, Fonts, and other static assets that rarely change.
+  // Shows cached version instantly, but updates cache in background.
+  if (
+    event.request.destination === 'image' || 
+    event.request.destination === 'font'
+  ) {
     event.respondWith(
-      caches.open(CACHE_NAME).then(cache => {
-        return cache.match(event.request).then(response => {
-          // If we have a cached response, return it (fast).
-          if (response) {
-            return response;
-          }
-
-          // Otherwise, fetch from the network.
-          return fetch(event.request).then(networkResponse => {
-            // Put a copy of the response in the cache for next time.
-            // We clone the response because it's a stream and can be consumed only once.
+      caches.match(event.request).then(cachedResponse => {
+        const fetchPromise = fetch(event.request).then(networkResponse => {
+          caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          }).catch(error => {
-            console.error('Fetch failed for CSS/JS:', event.request.url, error);
-            // If fetching fails (e.g., offline) and it's not in the cache, the request will fail.
-            // This is expected behavior for a cache-first strategy on the first visit.
           });
+          return networkResponse;
         });
+        return cachedResponse || fetchPromise;
       })
     );
-  } else {
-    // For all other requests (HTML, images, etc.), just go to the network.
-    // This follows the instruction to ONLY cache CSS and JS.
-    // It means other assets won't be available offline.
     return;
   }
 });
