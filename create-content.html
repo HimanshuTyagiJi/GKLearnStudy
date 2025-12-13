@@ -6,6 +6,8 @@
         <title>Ultimate Content Editor Pro | GK Learn Study</title>
         <!-- FontAwesome for Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="css/theme.css">
 
         <style>
             /* ==========================================================================
@@ -30,6 +32,30 @@
                 --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
 
+            /* Dark Mode Overrides */
+            html[data-theme="dark"] {
+                --bg-body: #121212;
+                --surface: #1e1e1e;
+                --text-main: #e0e0e0;
+                --text-light: #aaa;
+                --border-light: #333;
+                --primary: #64b5f6;
+                --toolbar-bg: #000;
+            }
+
+            /* Dark Mode Specific Fixes */
+            html[data-theme="dark"] .editor-paper { background: #1e1e1e; color: #e0e0e0; }
+            html[data-theme="dark"] .post-title-input { color: #fff; }
+            html[data-theme="dark"] .post-desc-input { background: #2d2d2d; color: #ccc; border-left-color: #555; }
+            html[data-theme="dark"] .block-wrapper:hover { background-color: #252525; border-color: #444; }
+            html[data-theme="dark"] .media-placeholder { background: #252525; border-color: #444; }
+            html[data-theme="dark"] .media-action-btn { background: #333; color: #fff; border-color: #555; }
+            html[data-theme="dark"] .meta-field { background: #2d2d2d; color: #fff; border-color: #444; }
+            html[data-theme="dark"] .file-extension { background: #444; color: #ccc; border-color: #444; }
+            html[data-theme="dark"] .card-item { background: #252525; border-color: #444; }
+            html[data-theme="dark"] .card-img-area { background: #333; }
+            html[data-theme="dark"] h4 { color: #fff; }
+
             * {
                 box-sizing: border-box;
                 outline: none;
@@ -53,17 +79,27 @@
                 top: 0;
                 background: var(--surface);
                 border-bottom: 1px solid var(--border-light);
-                padding: 12px 24px;
+                padding: 10px 15px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 z-index: 5000;
                 box-shadow: var(--shadow-sm);
-                flex-wrap: wrap;
                 gap: 15px;
             }
 
-            .meta-inputs {
+            /* Mobile Toggle Button */
+            .mobile-menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: var(--text-main);
+                cursor: pointer;
+                padding: 5px;
+            }
+
+            .meta-inputs-container {
                 display: flex;
                 gap: 10px;
                 flex: 2;
@@ -71,13 +107,26 @@
                 align-items: center;
             }
 
+            .meta-field-wrapper {
+                position: relative;
+                flex: 1;
+            }
+            .meta-label {
+                display: none; 
+                font-size: 11px;
+                font-weight: bold;
+                color: var(--primary);
+                margin-bottom: 2px;
+            }
+
             .meta-field {
-                padding: 10px 15px;
+                padding: 8px 12px;
                 border: 1px solid #8c8f94;
                 border-radius: 4px;
                 font-size: 14px;
                 width: 100%;
                 transition: all 0.2s;
+                height: 36px;
             }
             .meta-field:focus {
                 border-color: var(--primary);
@@ -97,7 +146,7 @@
             }
             .file-extension {
                 background: #e0e0e0;
-                padding: 10px 12px;
+                padding: 0 10px;
                 border: 1px solid #8c8f94;
                 border-left: none;
                 border-top-right-radius: 4px;
@@ -105,13 +154,22 @@
                 color: #555;
                 font-size: 14px;
                 font-weight: 600;
+                height: 36px;
+                display: flex;
+                align-items: center;
+            }
+
+            .right-actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
             }
 
             .auth-indicator {
                 font-size: 13px;
                 font-weight: 600;
                 color: var(--text-light);
-                background: #f0f0f1;
+                background: rgba(0,0,0,0.05);
                 padding: 6px 12px;
                 border-radius: 20px;
                 display: flex;
@@ -128,7 +186,7 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                padding: 10px 20px;
+                padding: 8px 16px;
                 font-size: 13px;
                 font-weight: 600;
                 border-radius: 4px;
@@ -137,7 +195,8 @@
                 transition: all 0.2s;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                gap: 8px;
+                gap: 5px;
+                height: 36px;
             }
             .btn:hover {
                 transform: translateY(-1px);
@@ -145,7 +204,7 @@
             }
 
             .btn-preview {
-                background: #fff;
+                background: var(--surface);
                 border: 1px solid var(--primary);
                 color: var(--primary);
             }
@@ -157,6 +216,42 @@
                 background: var(--success);
                 color: white;
                 box-shadow: 0 2px 5px rgba(0, 138, 32, 0.3);
+            }
+
+            /* Theme Switcher */
+            .theme-switcher {
+                background: none; border: none; cursor: pointer; color: var(--text-main);
+                padding: 0.5rem; display: flex; align-items: center; justify-content: center;
+            }
+            .theme-switcher:hover { background-color: rgba(0,0,0,0.05); border-radius: 50%; }
+            .theme-switcher svg { width: 20px; height: 20px; }
+            html[data-theme="dark"] .theme-switcher .sun { display: none; }
+            html[data-theme="dark"] .theme-switcher .moon { display: block; }
+            html:not([data-theme="dark"]) .theme-switcher .moon { display: none; }
+
+            /* --- RESPONSIVE HEADER (MOBILE) --- */
+            @media (max-width: 900px) {
+                .mobile-menu-toggle { display: block; }
+                
+                .meta-inputs-container {
+                    display: none; /* Hide inputs by default */
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background: var(--surface);
+                    flex-direction: column;
+                    padding: 20px;
+                    border-bottom: 2px solid var(--primary);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                    gap: 15px;
+                }
+                .meta-inputs-container.active { display: flex; }
+                .meta-label { display: block; }
+                
+                .auth-indicator { display: none; }
+                .btn span { display: none; } /* Hide text on buttons, icons only */
+                .btn { padding: 8px 12px; }
             }
 
             /* ==========================================================================
@@ -191,6 +286,7 @@
                 color: var(--text-main);
                 padding: 10px 0;
                 line-height: 1.2;
+                background: transparent;
             }
             .post-title-input::placeholder {
                 color: #e0e0e0;
@@ -225,7 +321,7 @@
             }
             .block-wrapper:hover {
                 border-color: #e2e4e7;
-                background-color: #fcfcfc;
+                background-color: rgba(0,0,0,0.01);
             }
 
             .side-controls {
@@ -248,7 +344,7 @@
                     right: 0;
                     top: -35px;
                     flex-direction: row;
-                    background: white;
+                    background: var(--surface);
                     padding: 5px;
                     border-radius: 4px;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -259,7 +355,7 @@
             .control-btn {
                 width: 28px;
                 height: 28px;
-                background: #fff;
+                background: var(--surface);
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 display: flex;
@@ -413,7 +509,7 @@
                 border: 1px dashed #ccc;
                 padding: 20px;
                 border-radius: 8px;
-                background: #fff;
+                background: var(--surface);
                 margin-bottom: 15px;
             }
             .layout-col-media {
@@ -469,7 +565,7 @@
             }
 
             .card-item {
-                background: #fff;
+                background: var(--surface);
                 border: 1px solid #e2e4e7;
                 border-radius: 8px;
                 padding: 20px;
@@ -530,7 +626,7 @@
 
             /* 6.3 Media Handlers (New 2-Option Style) */
             .media-placeholder {
-                background: #f6f7f7;
+                background: rgba(0,0,0,0.03);
                 border: 2px dashed #c3c4c7;
                 border-radius: 6px;
                 padding: 30px 10px;
@@ -544,7 +640,7 @@
                 min-height: 100px;
             }
             .media-placeholder:hover {
-                background: #fff;
+                background: var(--surface);
                 border-color: var(--primary);
             }
 
@@ -556,7 +652,7 @@
             }
             .media-action-btn {
                 padding: 8px 16px;
-                background: white;
+                background: var(--surface);
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 cursor: pointer;
@@ -565,6 +661,7 @@
                 display: flex;
                 align-items: center;
                 gap: 5px;
+                color: var(--text-main);
             }
             .media-action-btn:hover {
                 border-color: var(--primary);
@@ -640,6 +737,7 @@
                 padding: 20px;
                 border-radius: 0 4px 4px 0;
                 margin: 10px 0;
+                color: #1d2327; /* Force dark text for readability on light bg */
             }
 
             /* 6.6 Tables */
@@ -659,11 +757,11 @@
                 min-width: 100px;
             }
             .dynamic-table th {
-                background: #f8f9fa;
+                background: rgba(0,0,0,0.05);
                 font-weight: bold;
             }
             .table-tools {
-                background: #f1f1f1;
+                background: rgba(0,0,0,0.03);
                 padding: 5px;
                 display: flex;
                 gap: 10px;
@@ -719,6 +817,10 @@
             }
             .tb-btn.active {
                 background: var(--primary);
+            }
+            
+            .undo-redo-group {
+                display: flex; gap: 4px; border-right: 1px solid #555; padding-right: 4px; margin-right: 4px;
             }
 
             .tb-select {
@@ -850,7 +952,7 @@
                 backdrop-filter: blur(3px);
             }
             .modal-content {
-                background: white;
+                background: var(--surface);
                 width: 800px;
                 max-width: 95%;
                 max-height: 85vh;
@@ -868,6 +970,7 @@
                 margin-bottom: 20px;
                 border-bottom: 1px solid #eee;
                 padding-bottom: 10px;
+                color: var(--text-main);
             }
             .close-modal {
                 background: none;
@@ -889,8 +992,8 @@
             }
 
             .block-option {
-                background: #f8f9fa;
-                border: 1px solid #e2e4e7;
+                background: rgba(0,0,0,0.03);
+                border: 1px solid var(--border-light);
                 border-radius: 8px;
                 padding: 20px 10px;
                 text-align: center;
@@ -902,7 +1005,7 @@
                 gap: 10px;
             }
             .block-option:hover {
-                background: #fff;
+                background: var(--surface);
                 border-color: var(--primary);
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -910,7 +1013,7 @@
             }
             .block-option i {
                 font-size: 24px;
-                color: #50575e;
+                color: var(--text-light);
             }
             .block-option:hover i {
                 color: var(--primary);
@@ -918,7 +1021,7 @@
             .block-label {
                 font-size: 12px;
                 font-weight: 700;
-                color: #3c434a;
+                color: var(--text-main);
             }
 
             /* ==========================================================================
@@ -1020,26 +1123,61 @@
         </style>
     </head>
     <body>
-        <!-- 1. TOP HEADER -->
+        <!-- 1. TOP HEADER (Refactored for Mobile Menu & Theme) -->
         <div class="editor-top-bar">
-            <div class="meta-inputs">
-                <input type="text" id="folderName" class="meta-field" placeholder="📂 Category Folder (e.g. Science)" />
-                <div class="file-input-group">
-                    <input type="text" id="fileName" class="meta-field" placeholder="📄 File Name (e.g. gravity)" />
-                    <span class="file-extension">.html</span>
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" onclick="document.querySelector('.meta-inputs-container').classList.toggle('active')">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Collapsible Inputs -->
+            <div class="meta-inputs-container">
+                <div class="meta-field-wrapper">
+                    <label class="meta-label">Category Folder</label>
+                    <input type="text" id="folderName" class="meta-field" placeholder="📂 Category Folder (e.g. Science)" />
                 </div>
-                <input type="text" id="imgName" class="meta-field" placeholder="🖼️ SEO Image Name" />
+                <div class="meta-field-wrapper">
+                    <label class="meta-label">File Name</label>
+                    <div class="file-input-group">
+                        <input type="text" id="fileName" class="meta-field" placeholder="📄 File Name (e.g. gravity)" />
+                        <span class="file-extension">.html</span>
+                    </div>
+                </div>
+                <div class="meta-field-wrapper">
+                    <label class="meta-label">Image Alt/SEO</label>
+                    <input type="text" id="imgName" class="meta-field" placeholder="🖼️ SEO Image Name" />
+                </div>
             </div>
-            <div id="auth-status" class="auth-indicator"><i class="fas fa-spinner fa-spin"></i> Checking Auth...</div>
-            <div class="action-buttons">
-                <button class="btn btn-preview" onclick="window.previewPost()">👁️ Preview</button>
-                <button class="btn btn-draft" onclick="window.savePost('draft')">💾 Draft</button>
-                <button class="btn btn-publish" onclick="window.savePost('pending')">🚀 Submit</button>
+
+            <!-- Right Side Controls -->
+            <div class="right-actions">
+                <div id="auth-status" class="auth-indicator"><i class="fas fa-spinner fa-spin"></i> Checking...</div>
+                
+                <!-- Theme Switcher -->
+                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+
+                <div class="action-buttons">
+                    <button class="btn btn-preview" onclick="window.previewPost()"><i class="fas fa-eye"></i><span> Preview</span></button>
+                    <button class="btn btn-draft" onclick="window.savePost('draft')"><i class="fas fa-save"></i><span> Draft</span></button>
+                    <button class="btn btn-publish" onclick="window.savePost('pending')"><i class="fas fa-rocket"></i><span> Submit</span></button>
+                </div>
             </div>
         </div>
 
-        <!-- 2. FLOATING TOOLBAR -->
+        <!-- 2. FLOATING TOOLBAR (Added Undo/Redo) -->
         <div id="floating-toolbar">
+            <div class="undo-redo-group">
+                <button class="tb-btn" onmousedown="window.fmt(event,'undo')" title="Undo">
+                    <i class="fas fa-undo"></i>
+                </button>
+                <button class="tb-btn" onmousedown="window.fmt(event,'redo')" title="Redo">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+            
             <button class="tb-btn" onmousedown="window.fmt(event,'bold')" title="Bold">
                 <i class="fas fa-bold"></i>
             </button>
@@ -1391,7 +1529,7 @@
                 }
             };
 
-            // Toolbar Position
+            // Toolbar Position - FIXED LOGIC
             document.addEventListener("selectionchange", () => {
                 const sel = window.getSelection();
                 const bar = document.getElementById("floating-toolbar");
@@ -1406,13 +1544,11 @@
 
                     bar.style.display = "flex";
                     
-                    // Fixed logic: push toolbar much higher (approx 2 lines above)
-                    // 120px offset gives good clearance
-                    const offset = 120;
-                    let topPos = window.scrollY + rect.top - offset;
+                    // Logic: Position roughly 120px above to give clear view of text
+                    // Use a slightly larger gap to prevent hover flicker issues
+                    let topPos = window.scrollY + rect.top - 120;
                     
                     // Safety check: ensure it doesn't disappear under the sticky header
-                    // (Header height ~60px)
                     if (topPos < window.scrollY + 70) {
                          // If no space above, push it below selection
                          topPos = window.scrollY + rect.bottom + 20;
@@ -1421,6 +1557,7 @@
                     bar.style.top = `${topPos}px`;
                     bar.style.left = `${rect.left + rect.width / 2}px`;
                 } else {
+                    // Small timeout to allow clicking buttons without immediate hide
                     setTimeout(() => {
                         if (window.getSelection().isCollapsed) bar.style.display = "none";
                     }, 200);
@@ -1844,7 +1981,7 @@
                 renderDiv.style.display = "none";
                 btnGroup.style.display = "flex";
                 ph.style.border = "2px dashed #c3c4c7";
-                ph.style.background = "#f6f7f7";
+                ph.style.background = "rgba(0,0,0,0.03)";
                 ph.style.padding = "30px 10px";
             };
 
@@ -2385,5 +2522,8 @@ ${previewMenuScript}
 </html>`;
             }
         </script>
+        
+        <!-- Inject Theme Logic -->
+        <script src="js/theme.js"></script>
     </body>
 </html>
