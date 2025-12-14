@@ -265,6 +265,67 @@
 
             onScroll();
         });
-    </script>
+    </script><script>(function () {
+
+    // ===== CONFIG =====
+    const DESKTOP_MIN_WIDTH = 992;
+
+    // 🔑 FIXED ANCHOR
+    // YAHAN ad insert hoga (safe & predictable)
+    // example: body ke start me
+    const INSERT_POSITION = "afterbegin"; // afterbegin | beforeend
+
+    // Topic menu ka exact ID (jo tumne bataya)
+    const TOPIC_MENU_ID = "topic-sidebar";
+
+    // ==================
+
+    function ready(fn) {
+        if (document.readyState !== "loading") {
+            fn();
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }
+
+    ready(function () {
+
+        // ❌ Mobile → kuch bhi mat karo
+        if (window.innerWidth <= DESKTOP_MIN_WIDTH) return;
+
+        // ❌ Topic menu already hai → STOP
+        if (document.getElementById(TOPIC_MENU_ID)) return;
+
+        // ❌ Duplicate inject mat hone dena
+        if (document.getElementById("left-auto-ad-wrapper")) return;
+
+        // ===== CREATE CONTAINER =====
+        const adWrapper = document.createElement("aside");
+        adWrapper.id = "left-auto-ad-wrapper";
+        adWrapper.setAttribute("aria-label", "Advertisement");
+
+        // ===== INLINE CSS (SAFE) =====
+        adWrapper.style.width = "12%";
+        adWrapper.style.height = "90vh";
+        adWrapper.style.position = "sticky";
+        adWrapper.style.top = "5vh";
+        adWrapper.style.float = "left";
+        adWrapper.style.zIndex = "1";
+        adWrapper.style.display = "block";
+
+        // (optional visual clarity – remove if not needed)
+        adWrapper.style.background = "transparent";
+
+        // ===== INSERT AT FIXED PLACE =====
+        document.body.insertAdjacentElement(INSERT_POSITION, adWrapper);
+
+        // NOTE:
+        // Auto Ads khud yahan ad place karega
+        // Hum manually kuch inject nahi kar rahe
+
+    });
+
+})();
+</script>
 </body>
 </html>
