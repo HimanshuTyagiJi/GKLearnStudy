@@ -31,24 +31,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 2. SMART LANGUAGE SWITCHER (Link Sync)
-    // Finds the link button and updates href to match the current part
     updateLanguageLink(currentPage);
 });
 
 function renderPagination(container, current, total) {
-    let html = '<div class="pagination">';
+    let html = '<div class="pagination" style="display:flex; justify-content:center; gap:10px; margin:20px 0; flex-wrap:wrap;">';
     
-    // Clean Base URL (remove -part-X.html or .html)
+    // Clean Base URL
     let path = window.location.pathname;
     let filename = path.split('/').pop();
     let baseUrl = filename.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
     
-    // Construct Link Function
     const getLink = (p) => p === 1 ? `${baseUrl}.html` : `${baseUrl}-part-${p}.html`;
 
     // PREV
     if (current > 1) {
-        html += `<a href="${getLink(current - 1)}" class="button prev">Prev</a>`;
+        html += `<a href="${getLink(current - 1)}" class="button" style="border:1px solid #ccc; padding:5px 12px; border-radius:4px; text-decoration:none; color:#333;">Prev</a>`;
     }
 
     // LOGIC: Show 1, current-1, current, current+1, last
@@ -57,10 +55,10 @@ function renderPagination(container, current, total) {
 
     for (let i = 1; i <= total; i++) {
         if (showPages.has(i)) {
-            if (i - prevShown > 1) html += `<span class="dots">...</span>`;
+            if (i - prevShown > 1) html += `<span class="dots" style="padding:5px;">...</span>`;
             
-            if (i === current) html += `<span class="button active">${i}</span>`;
-            else html += `<a href="${getLink(i)}" class="button">${i}</a>`;
+            if (i === current) html += `<span class="button active" style="background:#2271b1; color:white; padding:5px 12px; border-radius:4px;">${i}</span>`;
+            else html += `<a href="${getLink(i)}" class="button" style="border:1px solid #ccc; padding:5px 12px; border-radius:4px; text-decoration:none; color:#333;">${i}</a>`;
             
             prevShown = i;
         }
@@ -68,7 +66,7 @@ function renderPagination(container, current, total) {
 
     // NEXT
     if (current < total) {
-        html += `<a href="${getLink(current + 1)}" class="button next">Next</a>`;
+        html += `<a href="${getLink(current + 1)}" class="button" style="border:1px solid #ccc; padding:5px 12px; border-radius:4px; text-decoration:none; color:#333;">Next</a>`;
     }
 
     html += '</div>';
@@ -76,24 +74,18 @@ function renderPagination(container, current, total) {
 }
 
 function updateLanguageLink(currentPart) {
-    // Determine target file name structure based on current page
-    // Needs manual mapping or strict naming convention. 
-    // Assuming simple mapping based on known files.
-    
     const linkBtn = document.querySelector('.link-container .link-button');
     if (!linkBtn) return;
 
     const currentHref = linkBtn.getAttribute('href');
     if (!currentHref) return;
 
-    // Logic: If we are on Part 3, append -part-3 to the base filename of the target
+    let baseTarget = currentHref.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
+    
     if (currentPart > 1) {
-        // Strip existing extension
-        let baseTarget = currentHref.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
         linkBtn.setAttribute('href', `${baseTarget}-part-${currentPart}.html`);
     } else {
-        // If on Part 1, ensure link goes to base file (remove part info if present in href cache)
-        let baseTarget = currentHref.replace(/-part-\d+\.html$/, '').replace(/\.html$/, '');
         linkBtn.setAttribute('href', `${baseTarget}.html`);
     }
 }
+
