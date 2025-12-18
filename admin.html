@@ -1,350 +1,665 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | GK Learn Study</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/theme.css">
-    <style>
-        :root { --sidebar-width: 260px; --header-height: 70px; --admin-bg: #f4f6f8; --primary-color: #2271b1; }
-        body { background-color: var(--admin-bg); margin: 0; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-
-        /* --- LOGIN OVERLAY --- */
-        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1e3a8a, #000046); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .login-card { background: white; padding: 40px; border-radius: 16px; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; }
-        .login-card h2 { margin-top: 0; color: var(--primary-color); }
-        .login-card input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; background: #f9f9f9; }
-        .login-btn { width: 100%; padding: 14px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .login-btn:hover { background: #135e96; transform: translateY(-2px); }
-        
-        /* --- LAYOUT --- */
-        #admin-app { display: none; height: 100vh; flex-direction: column; }
-        
-        /* Sidebar */
-        .sidebar { width: var(--sidebar-width); background: #ffffff; height: 100vh; position: fixed; top: 0; left: 0; border-right: 1px solid #e0e0e0; display: flex; flex-direction: column; z-index: 100; transition: transform 0.3s ease; }
-        .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.4rem; color: var(--primary-color); border-bottom: 1px solid #f0f0f0; background: #fff; }
-        .menu-items { list-style: none; padding: 20px 10px; margin: 0; flex-grow: 1; overflow-y: auto; }
-        .menu-items a { display: flex; align-items: center; padding: 12px 15px; color: #555; text-decoration: none; font-weight: 600; border-radius: 8px; margin-bottom: 5px; transition: 0.2s; }
-        .menu-items a:hover, .menu-items a.active { background: #e3f2fd; color: var(--primary-color); }
-        .menu-items i { width: 25px; font-size: 1.1rem; }
-
-        /* Header */
-        .admin-header { height: var(--header-height); background: white; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90; transition: left 0.3s; }
-        
-        /* Profile Icon in Header */
-        .profile-wrapper { display: flex; align-items: center; gap: 10px; }
-        .profile-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; cursor: pointer; text-transform: uppercase; }
-        .admin-name { font-weight: 600; color: #333; font-size: 0.95rem; }
-
-        /* Content */
-        .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; transition: margin-left 0.3s; }
-        
-        /* Cards & Tables */
-        .dashboard-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; }
-        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .stat-info h3 { margin: 0; font-size: 1.5rem; color: #333; }
-        .stat-info p { margin: 0; color: #777; font-size: 0.9rem; }
-
-        .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
-        th { color: #555; font-weight: 700; background: #f8f9fa; }
-        td { color: #333; }
-        
-        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-published { background: #d4edda; color: #155724; }
-        .status-rejected { background: #f8d7da; color: #721c24; }
-
-        .btn-action { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; background: #eee; color: #333; text-decoration: none; display: inline-block;}
-        .btn-action:hover { background: #ddd; }
-        .btn-delete { background: #fee2e2; color: #c53030; }
-        .btn-delete:hover { background: #fecaca; }
-
-        /* Mobile Sidebar & Overlay */
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; background:none; border:none; color: #333; }
-        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 95; }
-
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .content-area { margin-left: 0; padding: 15px; }
-            .admin-header { left: 0; padding: 0 15px; }
-            .hamburger { display: block; }
-            .sidebar-overlay.active { display: block; }
-            .admin-name { display: none; } /* Hide name on mobile to save space */
-        }
-    </style>
-</head>
-<body>
-
-    <!-- LOGIN SCREEN -->
-    <div id="login-overlay">
-        <div class="login-card">
-            <h2><i class="fas fa-lock"></i> Admin Login</h2>
-            <p style="color:#666; margin-bottom:20px;">Please sign in to access your dashboard</p>
-            <form id="loginForm">
-                <input type="email" id="adminEmail" placeholder="Email Address" required>
-                <input type="password" id="adminPass" placeholder="Password" required>
-                <button type="submit" class="login-btn">Login to Dashboard</button>
-                <p id="loginError" style="color:red; margin-top:15px; display:none;"></p>
-            </form>
-        </div>
-    </div>
-
-    <!-- MAIN DASHBOARD -->
-    <div id="admin-app">
-        
-        <!-- Sidebar Overlay for Mobile -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
-
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="brand-logo">GK Admin Panel</div>
-            <ul class="menu-items">
-                <li><a href="#" class="active" onclick="loadMyPosts()"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a></li>
-                <li><a href="gkquizformat.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a></li>
-                <li><a href="kaisekarenformat.html" target="_blank"><i class="fas fa-lightbulb"></i> Add Kaise Karen</a></li>
-                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </aside>
-
-        <!-- Header -->
-        <header class="admin-header">
-            <div style="display:flex; align-items:center; gap:15px;">
-                <button class="hamburger" onclick="toggleSidebar(true)"><i class="fas fa-bars"></i></button>
-                <h3 style="margin:0;">My Dashboard</h3>
-            </div>
-            <div class="profile-wrapper">
-                <span class="admin-name" id="headerAdminName">Admin</span>
-                <div class="profile-circle" id="headerProfileIcon">A</div>
-            </div>
-        </header>
-
-        <!-- Content -->
-        <div class="content-area">
-            
-            <!-- Quick Stats -->
-            <div class="dashboard-stats">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background:#e3f2fd; color:#2271b1;"><i class="fas fa-file-alt"></i></div>
-                    <div class="stat-info">
-                        <h3 id="statTotal">0</h3>
-                        <p>Total Posts</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background:#fff3cd; color:#856404;"><i class="fas fa-clock"></i></div>
-                    <div class="stat-info">
-                        <h3 id="statPending">0</h3>
-                        <p>Pending</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background:#d4edda; color:#155724;"><i class="fas fa-check-circle"></i></div>
-                    <div class="stat-info">
-                        <h3 id="statPublished">0</h3>
-                        <p>Published</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Posts Table -->
-            <div class="table-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                    <h3 style="margin:0;">Recent Posts</h3>
-                    <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh</button>
-                </div>
-                <table id="postsTable">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Date (Recent)</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="4" style="text-align:center;">Loading your data...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, doc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-        // FIREBASE CONFIG
-        const firebaseConfig = {
-            apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
-            authDomain: "gklearnstudy-c298c.firebaseapp.com",
-            projectId: "gklearnstudy-c298c",
-            storageBucket: "gklearnstudy-c298c.firebasestorage.app",
-            messagingSenderId: "307990626713",
-            appId: "1:307990626713:web:e7b650c718c0cade4e5308"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-
-        // AUTH STATE
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('admin-app').style.display = 'flex';
-                setupProfile(user);
-                loadMyPosts();
-            } else {
-                document.getElementById('login-overlay').style.display = 'flex';
-                document.getElementById('admin-app').style.display = 'none';
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Dashboard | GK Learn Study</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="stylesheet" href="css/theme.css" />
+        <style>
+            :root {
+                --sidebar-width: 260px;
+                --header-height: 70px;
+                --admin-bg: #f4f6f8;
+                --primary-color: #2271b1;
             }
-        });
-
-        // PROFILE SETUP
-        function setupProfile(user) {
-            // Extract name from email (e.g. himanshu from himanshu@gmail.com)
-            let name = user.displayName;
-            if(!name && user.email) {
-                name = user.email.split('@')[0];
-                // Capitalize first letter
-                name = name.charAt(0).toUpperCase() + name.slice(1);
+            body {
+                background-color: var(--admin-bg);
+                margin: 0;
+                font-family: "Segoe UI", sans-serif;
+                overflow-x: hidden;
             }
-            
-            document.getElementById('headerAdminName').innerText = name || "Admin";
-            // Set circle text to first letter
-            document.getElementById('headerProfileIcon').innerText = name ? name.charAt(0).toUpperCase() : "A";
-        }
 
-        // LOGIN
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emai = document.getElementById('adminEmail').value;
-            const pass = document.getElementById('adminPass').value;
-            signInWithEmailAndPassword(auth, emai, pass).catch(error => {
-                const errEl = document.getElementById('loginError');
-                errEl.innerText = error.message;
-                errEl.style.display = 'block';
+            /* --- LOGIN OVERLAY --- */
+            #login-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #1e3a8a, #000046);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+            .login-card {
+                background: white;
+                padding: 40px;
+                border-radius: 16px;
+                width: 90%;
+                max-width: 400px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
+            .login-card h2 {
+                margin-top: 0;
+                color: var(--primary-color);
+            }
+            .login-card input {
+                width: 100%;
+                padding: 14px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-sizing: border-box;
+                font-size: 1rem;
+                background: #f9f9f9;
+            }
+            .login-btn {
+                width: 100%;
+                padding: 14px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s;
+                font-size: 1rem;
+            }
+            .login-btn:hover {
+                background: #135e96;
+                transform: translateY(-2px);
+            }
+
+            /* --- LAYOUT --- */
+            #admin-app {
+                display: none;
+                height: 100vh;
+                flex-direction: column;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: var(--sidebar-width);
+                background: #ffffff;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                border-right: 1px solid #e0e0e0;
+                display: flex;
+                flex-direction: column;
+                z-index: 100;
+                transition: transform 0.3s ease;
+            }
+            .brand-logo {
+                height: var(--header-height);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 800;
+                font-size: 1.4rem;
+                color: var(--primary-color);
+                border-bottom: 1px solid #f0f0f0;
+                background: #fff;
+            }
+            .menu-items {
+                list-style: none;
+                padding: 20px 10px;
+                margin: 0;
+                flex-grow: 1;
+                overflow-y: auto;
+            }
+            .menu-items a {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                color: #555;
+                text-decoration: none;
+                font-weight: 600;
+                border-radius: 8px;
+                margin-bottom: 5px;
+                transition: 0.2s;
+            }
+            .menu-items a:hover,
+            .menu-items a.active {
+                background: #e3f2fd;
+                color: var(--primary-color);
+            }
+            .menu-items i {
+                width: 25px;
+                font-size: 1.1rem;
+            }
+
+            /* Header */
+            .admin-header {
+                height: var(--header-height);
+                background: white;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 20px;
+                position: fixed;
+                top: 0;
+                left: var(--sidebar-width);
+                right: 0;
+                z-index: 90;
+                transition: left 0.3s;
+            }
+
+            /* Profile Icon in Header */
+            .profile-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .profile-circle {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.2rem;
+                cursor: pointer;
+                text-transform: uppercase;
+            }
+            .admin-name {
+                font-weight: 600;
+                color: #333;
+                font-size: 0.95rem;
+            }
+
+            /* Content */
+            .content-area {
+                margin-left: var(--sidebar-width);
+                margin-top: var(--header-height);
+                padding: 30px;
+                transition: margin-left 0.3s;
+            }
+
+            /* Cards & Tables */
+            .dashboard-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            .stat-btn {
+                background: white;
+                padding: 15px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border: 2px solid transparent;
+                cursor: pointer;
+                transition: 0.2s;
+                text-align: left;
+            }
+            .stat-btn:hover {
+                transform: translateY(-2px);
+                border-color: var(--primary-color);
+            }
+            .stat-btn.active {
+                border-color: var(--primary-color);
+                background: #e3f2fd;
+            }
+            .stat-icon {
+                width: 45px;
+                height: 45px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+                flex-shrink: 0;
+            }
+            .stat-info h3 {
+                margin: 0;
+                font-size: 1.3rem;
+                color: #333;
+            }
+            .stat-info p {
+                margin: 0;
+                color: #777;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            .table-card {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                padding: 20px;
+                overflow-x: auto;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                min-width: 600px;
+            }
+            th,
+            td {
+                text-align: left;
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+            th {
+                color: #555;
+                font-weight: 700;
+                background: #f8f9fa;
+            }
+            td {
+                color: #333;
+            }
+
+            .status-badge {
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+            .status-draft {
+                background: #e2e8f0;
+                color: #475569;
+            }
+            .status-pending {
+                background: #fff3cd;
+                color: #856404;
+            }
+            .status-published {
+                background: #d4edda;
+                color: #155724;
+            }
+            .status-rejected {
+                background: #f8d7da;
+                color: #721c24;
+            }
+
+            .btn-action {
+                padding: 6px 12px;
+                border-radius: 6px;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                font-size: 0.8rem;
+                background: white;
+                color: #333;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-weight: 600;
+            }
+            .btn-action:hover {
+                background: #f8f9fa;
+                border-color: #bbb;
+            }
+            .btn-delete {
+                background: #fee2e2;
+                color: #c53030;
+                border-color: #fecaca;
+            }
+            .btn-delete:hover {
+                background: #fecaca;
+            }
+
+            /* Mobile Sidebar & Overlay */
+            .hamburger {
+                display: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                background: none;
+                border: none;
+                color: #333;
+            }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 95;
+            }
+
+            @media (max-width: 768px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                }
+                .sidebar.active {
+                    transform: translateX(0);
+                }
+                .content-area {
+                    margin-left: 0;
+                    padding: 15px;
+                }
+                .admin-header {
+                    left: 0;
+                    padding: 0 15px;
+                }
+                .hamburger {
+                    display: block;
+                }
+                .sidebar-overlay.active {
+                    display: block;
+                }
+                .admin-name {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- LOGIN SCREEN -->
+        <div id="login-overlay">
+            <div class="login-card">
+                <h2><i class="fas fa-lock"></i> Admin Login</h2>
+                <p style="color: #666; margin-bottom: 20px">Please sign in to access your dashboard</p>
+                <form id="loginForm">
+                    <input type="email" id="adminEmail" placeholder="Email Address" required />
+                    <input type="password" id="adminPass" placeholder="Password" required />
+                    <button type="submit" class="login-btn">Login to Dashboard</button>
+                    <p id="loginError" style="color: red; margin-top: 15px; display: none"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- MAIN DASHBOARD -->
+        <div id="admin-app">
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+
+            <aside class="sidebar" id="sidebar">
+                <div class="brand-logo">GK Admin Panel</div>
+                <ul class="menu-items">
+                    <li>
+                        <a href="#" class="active" onclick="loadMyPosts()"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a>
+                    </li>
+                    <li>
+                        <a href="gkquizformat.html" target="_blank"
+                            ><i class="fas fa-question-circle"></i> Add GK Question</a
+                        >
+                    </li>
+                    <li>
+                        <a href="kaisekarenformat.html" target="_blank"
+                            ><i class="fas fa-lightbulb"></i> Add Kaise Karen</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </aside>
+
+            <header class="admin-header">
+                <div style="display: flex; align-items: center; gap: 15px">
+                    <button class="hamburger" onclick="toggleSidebar(true)"><i class="fas fa-bars"></i></button>
+                    <h3 style="margin: 0" id="currentViewTitle">My Dashboard</h3>
+                </div>
+                <div class="profile-wrapper">
+                    <span class="admin-name" id="headerAdminName">Admin</span>
+                    <div class="profile-circle" id="headerProfileIcon">A</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="dashboard-stats">
+                    <button class="stat-btn active" id="filter-all" onclick="setFilter('all')">
+                        <div class="stat-icon" style="background: #e3f2fd; color: #2271b1">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statTotal">0</h3>
+                            <p>Total</p>
+                        </div>
+                    </button>
+                    <button class="stat-btn" id="filter-draft" onclick="setFilter('draft')">
+                        <div class="stat-icon" style="background: #f1f5f9; color: #475569">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statDraft">0</h3>
+                            <p>Drafts</p>
+                        </div>
+                    </button>
+                    <button class="stat-btn" id="filter-pending" onclick="setFilter('pending')">
+                        <div class="stat-icon" style="background: #fff3cd; color: #856404">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statPending">0</h3>
+                            <p>Pending</p>
+                        </div>
+                    </button>
+                    <button class="stat-btn" id="filter-published" onclick="setFilter('published')">
+                        <div class="stat-icon" style="background: #d4edda; color: #155724">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statPublished">0</h3>
+                            <p>Live</p>
+                        </div>
+                    </button>
+                    <button class="stat-btn" id="filter-rejected" onclick="setFilter('rejected')">
+                        <div class="stat-icon" style="background: #fee2e2; color: #c53030">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="statRejected">0</h3>
+                            <p>Rejected</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="table-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px"
+                    >
+                        <h3 style="margin: 0">Recent Posts</h3>
+                        <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh</button>
+                    </div>
+                    <table id="postsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import {
+                getAuth,
+                signInWithEmailAndPassword,
+                signOut,
+                onAuthStateChanged,
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+            import {
+                getFirestore,
+                collection,
+                getDocs,
+                doc,
+                deleteDoc,
+                query,
+                where,
+                orderBy,
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
+                authDomain: "gklearnstudy-c298c.firebaseapp.com",
+                projectId: "gklearnstudy-c298c",
+                storageBucket: "gklearnstudy-c298c.firebasestorage.app",
+                messagingSenderId: "307990626713",
+                appId: "1:307990626713:web:e7b650c718c0cade4e5308",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+
+            let currentUser = null;
+            let allPostsData = [];
+            let currentFilter = "all";
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    document.getElementById("login-overlay").style.display = "none";
+                    document.getElementById("admin-app").style.display = "flex";
+                    setupProfile(user);
+                    loadMyPosts();
+                } else {
+                    document.getElementById("login-overlay").style.display = "flex";
+                    document.getElementById("admin-app").style.display = "none";
+                }
             });
-        });
 
-        // LOGOUT
-        window.logout = () => signOut(auth);
-
-        // UI: TOGGLE SIDEBAR
-        window.toggleSidebar = (show) => {
-            const sb = document.getElementById('sidebar');
-            const ov = document.getElementById('sidebarOverlay');
-            if(show) {
-                sb.classList.add('active');
-                ov.classList.add('active');
-            } else {
-                sb.classList.remove('active');
-                ov.classList.remove('active');
+            function setupProfile(user) {
+                let name = user.displayName || user.email.split("@")[0];
+                name = name.charAt(0).toUpperCase() + name.slice(1);
+                document.getElementById("headerAdminName").innerText = name;
+                document.getElementById("headerProfileIcon").innerText = name.charAt(0).toUpperCase();
             }
-        }
 
-        // LOAD DATA
-        window.loadMyPosts = async () => {
-            if(!currentUser) return;
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Fetching your posts...</td></tr>';
+            document.getElementById("loginForm").addEventListener("submit", (e) => {
+                e.preventDefault();
+                signInWithEmailAndPassword(
+                    auth,
+                    document.getElementById("adminEmail").value,
+                    document.getElementById("adminPass").value
+                ).catch((error) => {
+                    const errEl = document.getElementById("loginError");
+                    errEl.innerText = "Invalid login credentials";
+                    errEl.style.display = "block";
+                });
+            });
 
-            try {
-                // Query: My pending posts, Ordered by Date DESC (Recently first)
-                // Note: If you get an index error in console, follow the link provided by Firebase.
-                // Fallback: If index is missing, we might need to sort client-side.
-                
-                let posts = [];
-                
-                // 1. Pending Posts
-                const qPending = query(
-                    collection(db, "pending_posts"), 
-                    where("author", "==", currentUser.email)
-                );
-                const snapPending = await getDocs(qPending);
-                snapPending.forEach(doc => posts.push({ id: doc.id, ...doc.data(), type: 'pending' }));
+            window.logout = () => signOut(auth);
+            window.toggleSidebar = (show) => {
+                document.getElementById("sidebar").classList.toggle("active", show);
+                document.getElementById("sidebarOverlay").classList.toggle("active", show);
+            };
 
-                // 2. Published Posts (Optional: If we want to show history)
-                // Assuming we track author in published_posts too
-                const qPublished = query(
-                    collection(db, "published_posts"),
-                    where("author", "==", currentUser.email)
-                );
-                const snapPublished = await getDocs(qPublished);
-                snapPublished.forEach(doc => posts.push({ id: doc.id, ...doc.data(), type: 'published' }));
+            window.loadMyPosts = async () => {
+                if (!currentUser) return;
+                const tbody = document.getElementById("tableBody");
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
-                // Client-side Sorting (Date Descending) to ensure "Recently Upper"
-                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                try {
+                    allPostsData = [];
+                    const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
+                    const snapPending = await getDocs(qPending);
+                    snapPending.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
+                    );
 
-                // Update Stats
-                document.getElementById('statTotal').innerText = posts.length;
-                document.getElementById('statPending').innerText = posts.filter(p => p.type === 'pending' || p.status === 'pending').length;
-                document.getElementById('statPublished').innerText = posts.filter(p => p.type === 'published' || p.status === 'published').length;
+                    const qPublished = query(
+                        collection(db, "published_posts"),
+                        where("author", "==", currentUser.email)
+                    );
+                    const snapPublished = await getDocs(qPublished);
+                    snapPublished.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
+                    );
 
-                // Render Table
-                tbody.innerHTML = '';
-                if(posts.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No posts found. <a href="create-content.html" style="color:var(--primary-color);">Create one?</a></td></tr>';
+                    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    updateStats();
+                    renderTable();
+                } catch (error) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Error: ${error.message}</td></tr>`;
+                }
+            };
+
+            function updateStats() {
+                document.getElementById("statTotal").innerText = allPostsData.length;
+                document.getElementById("statDraft").innerText = allPostsData.filter(
+                    (p) => p.status === "draft"
+                ).length;
+                document.getElementById("statPending").innerText = allPostsData.filter(
+                    (p) => p.status === "pending"
+                ).length;
+                document.getElementById("statPublished").innerText = allPostsData.filter(
+                    (p) => p.status === "published" || p.col === "published_posts"
+                ).length;
+                document.getElementById("statRejected").innerText = allPostsData.filter(
+                    (p) => p.status === "rejected"
+                ).length;
+            }
+
+            window.setFilter = (filter) => {
+                currentFilter = filter;
+                document.querySelectorAll(".stat-btn").forEach((btn) => btn.classList.remove("active"));
+                document.getElementById(`filter-${filter}`).classList.add("active");
+                document.getElementById("currentViewTitle").innerText =
+                    filter === "all" ? "All Posts" : filter.charAt(0).toUpperCase() + filter.slice(1) + " Posts";
+                renderTable();
+            };
+
+            function renderTable() {
+                const tbody = document.getElementById("tableBody");
+                tbody.innerHTML = "";
+
+                let filtered = allPostsData;
+                if (currentFilter !== "all") {
+                    filtered = allPostsData.filter((p) => {
+                        if (currentFilter === "published")
+                            return p.status === "published" || p.col === "published_posts";
+                        return p.status === currentFilter;
+                    });
+                }
+
+                if (filtered.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="text-align:center; padding:30px;">No matching posts.</td></tr>';
                     return;
                 }
 
-                posts.forEach(p => {
-                    const tr = document.createElement('tr');
-                    
-                    // Status Badge Logic
-                    let status = p.status || p.type;
-                    let badgeClass = 'status-pending';
-                    if(status === 'published') badgeClass = 'status-published';
-                    if(status === 'rejected') badgeClass = 'status-rejected';
-                    
-                    // Date
-                    const dateStr = p.date ? new Date(p.date).toLocaleString() : 'N/A';
-
-                    // Actions
-                    let actions = '';
-                    if(p.type === 'pending' || p.status === 'draft') {
-                        // Edit links to create-content.html with ID parameter
-                        actions += `<a href="create-content.html?id=${p.id}" class="btn-action" target="_blank"><i class="fas fa-edit"></i> Edit</a> `;
-                        actions += `<button class="btn-action btn-delete" onclick="deleteDraft('${p.id}')"><i class="fas fa-trash"></i></button>`;
-                    } else {
-                        actions += `<a href="${p.url}" target="_blank" class="btn-action"><i class="fas fa-eye"></i> View</a>`;
-                    }
+                filtered.forEach((p) => {
+                    const tr = document.createElement("tr");
+                    const status = p.status || (p.col === "published_posts" ? "published" : "pending");
+                    let editorUrl =
+                        p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
 
                     tr.innerHTML = `
-                        <td><strong>${p.title || 'Untitled'}</strong><br><small style="color:#777">${p.category || 'General'}</small></td>
-                        <td>${dateStr}</td>
-                        <td><span class="status-badge ${badgeClass}">${status.toUpperCase()}</span></td>
-                        <td>${actions}</td>
-                    `;
+                    <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
+                    <td>${new Date(p.date).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${status}">${status}</span></td>
+                    <td>
+                        <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
+                        <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
                     tbody.appendChild(tr);
                 });
-
-            } catch (error) {
-                console.error("Error loading posts:", error);
-                tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Error loading data: ${error.message}</td></tr>`;
             }
-        };
 
-        window.deleteDraft = async (id) => {
-            if(confirm("Are you sure you want to delete this draft permanently?")) {
-                try {
-                    await deleteDoc(doc(db, "pending_posts", id));
-                    loadMyPosts(); // Reload
-                } catch(e) { alert("Error: " + e.message); }
-            }
-        }
-
-    </script>
-</body>
+            window.deletePost = async (id, col) => {
+                if (confirm("Permanently delete this post?")) {
+                    await deleteDoc(doc(db, col, id));
+                    loadMyPosts();
+                }
+            };
+        </script>
+    </body>
 </html>
