@@ -215,5 +215,451 @@
                 <a href="admin.html" class="btn btn-add" style="text-decoration: none">GO TO ADMIN LOGIN</a>
             </div>
         </div>
+
+        <!-- MAIN APP -->
+        <div class="admin-wrapper" id="app" style="display: none">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center">
+                    <h2><i class="fas fa-edit"></i> Add GK Question</h2>
+                    <span id="userEmail" style="font-size: 0.8rem; color: #777"></span>
+                </div>
+
+                <div style="margin-bottom: 20px">
+                    <label>Select Category*</label>
+                    <select id="category" required>
+                        <option value="Ancient Indian History">Ancient Indian History (प्राचीन भारतीय इतिहास)</option>
+                        <option value="Medieval Indian History">
+                            Medieval Indian History (मध्यकालीन भारतीय इतिहास)
+                        </option>
+                        <option value="Modern Indian History">Modern Indian History (आधुनिक भारतीय इतिहास)</option>
+                        <option value="World History">World History (विश्व इतिहास)</option>
+                        <option value="Indian Government and Constitution">
+                            Indian Government and Constitution (भारतीय सरकार और संविधान)
+                        </option>
+                        <option value="Indian Economy">Indian Economy (भारतीय अर्थव्यवस्था)</option>
+                        <option value="Environment and Biodiversity">
+                            Environment and Biodiversity (पर्यावरण और जैव विविधता)
+                        </option>
+                        <option value="Indian Art and Culture">Indian Art and Culture (भारतीय कला और संस्कृति)</option>
+                        <option value="Physics">Physics (भौतिकी)</option>
+                        <option value="Chemistry">Chemistry (रसायन विज्ञान)</option>
+                        <option value="Mathematics">Mathematics (गणित)</option>
+                        <option value="Biology">Biology (जीव विज्ञान)</option>
+                        <option value="Computer">Computer (कंप्यूटर)</option>
+                        <option value="Sanskrit">Sanskrit (संस्कृत)</option>
+                        <option value="Science and Technology">Science and Technology (विज्ञान और प्रौद्योगिकी)</option>
+                        <option value="Books and Authors">Books and Authors (पुस्तकें और लेखक)</option>
+                        <option value="Sports General Knowledge">Sports General Knowledge (खेल सामान्य ज्ञान)</option>
+                        <option value="Famous Personalities">Famous Personalities (प्रसिद्ध व्यक्ति)</option>
+                        <option value="Technology and Inventions">
+                            Technology and Inventions (प्रौद्योगिकी और आविष्कार)
+                        </option>
+                        <option value="Space and Universe">Space and Universe (अंतरिक्ष और ब्रह्मांड)</option>
+                        <option value="Indian Geography">Indian Geography (भारतीय भूगोल)</option>
+                        <option value="World Geography">World Geography (विश्व भूगोल)</option>
+                        <option value="Indian Festivals and Traditions">
+                            Indian Festivals and Traditions (भारतीय त्यौहार और परंपराएँ)
+                        </option>
+                        <option value="World Organizations">World Organizations (विश्व संगठन)</option>
+                        <option value="International Relations">International Relations (अंतरराष्ट्रीय संबंध)</option>
+                        <option value="Awards and Honors">Awards and Honors (पुरस्कार और सम्मान)</option>
+                        <option value="Indian Defense">Indian Defense (भारतीय रक्षा)</option>
+                        <option value="Important Dates and Events">
+                            Important Dates and Events (महत्वपूर्ण तिथियाँ और घटनाएँ)
+                        </option>
+                        <option value="Transport and Communication">
+                            Transport and Communication (परिवहन और संचार)
+                        </option>
+                        <option value="Famous Monuments">Famous Monuments (प्रसिद्ध स्मारक)</option>
+                        <option value="Wildlife and National Parks">
+                            Wildlife and National Parks (वन्यजीव और राष्ट्रीय उद्यान)
+                        </option>
+                        <option value="Rivers and Lakes">Rivers and Lakes (नदियाँ और झीलें)</option>
+                        <option value="Disasters and Accidents">Disasters and Accidents (आपदाएँ और दुर्घटनाएँ)</option>
+                    </select>
+                </div>
+
+                <!-- Question -->
+                <div class="form-row">
+                    <div class="col">
+                        <span class="lang-badge badge-en"
+                            >English Question* <span id="status_q_en" class="trans-status">✓</span></span
+                        >
+                        <textarea
+                            id="q_en"
+                            placeholder="Type in English..."
+                            onblur="translateText('q_en', 'q_hi', 'en', 'hi')"
+                            required
+                        ></textarea>
+                    </div>
+                    <div class="col">
+                        <span class="lang-badge badge-hi"
+                            >Hindi Question* <span id="status_q_hi" class="trans-status">✓</span></span
+                        >
+                        <textarea
+                            id="q_hi"
+                            placeholder="हिंदी में लिखें..."
+                            onblur="translateText('q_hi', 'q_en', 'hi', 'en')"
+                            required
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="form-row">
+                    <div class="col">
+                        <label>Options (English)*</label>
+                        <input
+                            type="text"
+                            id="opt_en_0"
+                            placeholder="Option A"
+                            onblur="translateText('opt_en_0', 'opt_hi_0', 'en', 'hi')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_en_1"
+                            placeholder="Option B"
+                            onblur="translateText('opt_en_1', 'opt_hi_1', 'en', 'hi')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_en_2"
+                            placeholder="Option C"
+                            onblur="translateText('opt_en_2', 'opt_hi_2', 'en', 'hi')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_en_3"
+                            placeholder="Option D"
+                            onblur="translateText('opt_en_3', 'opt_hi_3', 'en', 'hi')"
+                            required
+                        />
+                    </div>
+                    <div class="col">
+                        <label>विकल्प (हिंदी)*</label>
+                        <input
+                            type="text"
+                            id="opt_hi_0"
+                            placeholder="विकल्प A"
+                            onblur="translateText('opt_hi_0', 'opt_en_0', 'hi', 'en')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_hi_1"
+                            placeholder="विकल्प B"
+                            onblur="translateText('opt_hi_1', 'opt_en_1', 'hi', 'en')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_hi_2"
+                            placeholder="विकल्प C"
+                            onblur="translateText('opt_hi_2', 'opt_en_2', 'hi', 'en')"
+                            required
+                        />
+                        <input
+                            type="text"
+                            id="opt_hi_3"
+                            placeholder="विकल्प D"
+                            onblur="translateText('opt_hi_3', 'opt_en_3', 'hi', 'en')"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px">
+                    <label style="color: #008a20">Correct Answer*</label>
+                    <select id="correctOption" style="background: #e8f5e9; border-color: #28a745">
+                        <option value="0">Option A</option>
+                        <option value="1">Option B</option>
+                        <option value="2">Option C</option>
+                        <option value="3">Option D</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label>Explanation (English)* <span id="status_exp_en" class="trans-status">✓</span></label>
+                        <textarea
+                            id="exp_en"
+                            rows="4"
+                            onblur="translateText('exp_en', 'exp_hi', 'en', 'hi')"
+                            required
+                            placeholder="Provide at least 300 characters of high-quality detail..."
+                        ></textarea>
+                        <span id="counter_exp_en" class="char-count">0 / 300</span>
+                    </div>
+                    <div class="col">
+                        <label>व्याख्या (हिंदी)* <span id="status_exp_hi" class="trans-status">✓</span></label>
+                        <textarea
+                            id="exp_hi"
+                            rows="4"
+                            onblur="translateText('exp_hi', 'exp_en', 'hi', 'en')"
+                            required
+                            placeholder="कम से कम 300 अक्षरों में विस्तार से समझाएं..."
+                        ></textarea>
+                        <span id="counter_exp_hi" class="char-count">0 / 300</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-add" id="btnAddQueue" onclick="addToQueue()">Add Question to Queue</button>
+            </div>
+
+            <div class="card">
+                <h2>Queue (<span id="queueCount">0</span>)</h2>
+                <div id="queueList" style="max-height: 500px; overflow-y: auto"></div>
+                <button class="btn btn-save" onclick="uploadToFirebase()">
+                    <i class="fas fa-cloud-upload-alt"></i> Send to Owner
+                </button>
+            </div>
+        </div>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+            import {
+                getFirestore,
+                collection,
+                addDoc,
+                serverTimestamp,
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
+                authDomain: "gklearnstudy-c298c.firebaseapp.com",
+                projectId: "gklearnstudy-c298c",
+                storageBucket: "gklearnstudy-c298c.firebasestorage.app",
+                messagingSenderId: "307990626713",
+                appId: "1:307990626713:web:e7b650c718c0cade4e5308",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+
+            let queue = [];
+            let loggedUserEmail = "";
+
+            // --- AUTH SYNC ---
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById("login-overlay").style.display = "none";
+                    document.getElementById("app").style.display = "grid";
+                    document.getElementById("userEmail").innerText = "Logged in as: " + user.email;
+                    loggedUserEmail = user.email;
+                } else {
+                    document.getElementById("login-overlay").style.display = "flex";
+                    document.getElementById("app").style.display = "none";
+                }
+            });
+
+            // --- CHAR COUNTERS ---
+            const setupCounter = (id) => {
+                const el = document.getElementById(id);
+                const counter = document.getElementById("counter_" + id);
+                el.addEventListener("input", () => {
+                    const len = el.value.trim().length;
+                    counter.innerText = `${len} / 300`;
+                    if (len >= 300) counter.classList.add("valid");
+                    else counter.classList.remove("valid");
+                });
+            };
+            setupCounter("exp_en");
+            setupCounter("exp_hi");
+
+            // --- BI-DIRECTIONAL TRANSLATION ---
+            window.translateText = async (sourceId, targetId, sl, tl) => {
+                const text = document.getElementById(sourceId).value.trim();
+                const targetEl = document.getElementById(targetId);
+                const statusEl = document.getElementById("status_" + targetId);
+
+                if (!text) return;
+                if (targetEl.value !== "") return;
+
+                try {
+                    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`;
+                    const res = await fetch(url);
+                    const data = await res.json();
+
+                    if (data && data[0]) {
+                        let translatedText = "";
+                        data[0].forEach((segment) => {
+                            if (segment[0]) translatedText += segment[0];
+                        });
+                        targetEl.value = translatedText;
+
+                        // Trigger input event for counters if it was an explanation
+                        if (targetId.includes("exp")) {
+                            targetEl.dispatchEvent(new Event("input"));
+                        }
+
+                        if (statusEl) {
+                            statusEl.style.display = "inline";
+                            setTimeout(() => (statusEl.style.display = "none"), 2000);
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Translation failed:", e);
+                }
+            };
+
+            // --- VALIDATION HELPERS ---
+            function validateFields() {
+                const errors = [];
+                const fields = [
+                    { id: "q_en", name: "English Question" },
+                    { id: "q_hi", name: "Hindi Question" },
+                    { id: "opt_en_0", name: "English Option A" },
+                    { id: "opt_en_1", name: "English Option B" },
+                    { id: "opt_en_2", name: "English Option C" },
+                    { id: "opt_en_3", name: "English Option D" },
+                    { id: "opt_hi_0", name: "Hindi Option A" },
+                    { id: "opt_hi_1", name: "Hindi Option B" },
+                    { id: "opt_hi_2", name: "Hindi Option C" },
+                    { id: "opt_hi_3", name: "Hindi Option D" },
+                    { id: "exp_en", name: "English Explanation" },
+                    { id: "exp_hi", name: "Hindi Explanation" },
+                ];
+
+                fields.forEach((f) => {
+                    const el = document.getElementById(f.id);
+                    const val = el.value.trim();
+                    if (!val) {
+                        el.classList.add("error");
+                        errors.push(`${f.name} is required.`);
+                    } else {
+                        el.classList.remove("error");
+                    }
+                });
+
+                // Length Check for Explanations
+                const expEn = document.getElementById("exp_en").value.trim();
+                const expHi = document.getElementById("exp_hi").value.trim();
+
+                if (expEn.length > 0 && expEn.length < 300)
+                    errors.push(`English Explanation must be at least 300 characters (Current: ${expEn.length}).`);
+                if (expHi.length > 0 && expHi.length < 300)
+                    errors.push(`Hindi Explanation must be at least 300 characters (Current: ${expHi.length}).`);
+
+                return errors;
+            }
+
+            // --- QUEUE LOGIC ---
+            window.addToQueue = () => {
+                const errors = validateFields();
+                if (errors.length > 0) {
+                    alert("❌ Validation Errors:\n\n" + errors.join("\n"));
+                    return;
+                }
+
+                const cat = document.getElementById("category").value;
+                const qEn = document.getElementById("q_en").value;
+                const qHi = document.getElementById("q_hi").value;
+
+                const item = {
+                    id: Date.now(),
+                    category: cat,
+                    correctOption: parseInt(document.getElementById("correctOption").value),
+                    english: {
+                        title: qEn,
+                        options: [
+                            document.getElementById("opt_en_0").value,
+                            document.getElementById("opt_en_1").value,
+                            document.getElementById("opt_en_2").value,
+                            document.getElementById("opt_en_3").value,
+                        ],
+                        explanation: document.getElementById("exp_en").value,
+                    },
+                    hindi: {
+                        title: qHi,
+                        options: [
+                            document.getElementById("opt_hi_0").value,
+                            document.getElementById("opt_hi_1").value,
+                            document.getElementById("opt_hi_2").value,
+                            document.getElementById("opt_hi_3").value,
+                        ],
+                        explanation: document.getElementById("exp_hi").value,
+                    },
+                };
+
+                queue.push(item);
+                renderQueue();
+
+                // Clear all fields
+                document.querySelectorAll('input[type="text"], textarea').forEach((el) => {
+                    el.value = "";
+                    el.classList.remove("error");
+                });
+
+                // Reset counters
+                document.getElementById("counter_exp_en").innerText = "0 / 300";
+                document.getElementById("counter_exp_hi").innerText = "0 / 300";
+                document.getElementById("counter_exp_en").classList.remove("valid");
+                document.getElementById("counter_exp_hi").classList.remove("valid");
+
+                document.getElementById("q_en").focus();
+            };
+
+            function renderQueue() {
+                const list = document.getElementById("queueList");
+                list.innerHTML = "";
+                document.getElementById("queueCount").innerText = queue.length;
+                queue
+                    .slice()
+                    .reverse()
+                    .forEach((item, index) => {
+                        const realIndex = queue.length - 1 - index;
+                        const div = document.createElement("div");
+                        div.className = "q-item";
+                        div.innerHTML = `
+                    <button class="del-btn" onclick="removeItem(${realIndex})">Remove</button>
+                    <h4>${item.category}</h4>
+                    <p style="font-size:0.8rem"><strong>EN:</strong> ${item.english.title.substring(0, 50)}...</p>
+                    <p style="font-size:0.8rem"><strong>HI:</strong> ${item.hindi.title.substring(0, 50)}...</p>
+                `;
+                        list.appendChild(div);
+                    });
+            }
+
+            window.removeItem = (index) => {
+                if (confirm("Remove this item?")) {
+                    queue.splice(index, 1);
+                    renderQueue();
+                }
+            };
+
+            window.uploadToFirebase = async () => {
+                if (queue.length === 0) {
+                    alert("Queue is empty!");
+                    return;
+                }
+                const btn = document.querySelector(".btn-save");
+                btn.disabled = true;
+                btn.innerText = "Uploading...";
+
+                try {
+                    await addDoc(collection(db, "pending_gk_batches"), {
+                        category: queue[0].category,
+                        questions: queue,
+                        count: queue.length,
+                        timestamp: serverTimestamp(),
+                        status: "pending",
+                        uploadedBy: loggedUserEmail,
+                    });
+                    alert("Batch sent to Owner Dashboard successfully! ✅");
+                    queue = [];
+                    renderQueue();
+                } catch (e) {
+                    alert("Upload failed: " + e.message);
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Send to Owner';
+                }
+            };
+        </script>
     </body>
 </html>
