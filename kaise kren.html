@@ -1,0 +1,1513 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kaise Karen Editor | GK Learn Study</title>
+        <!-- FontAwesome for Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+        <style>
+            /* ==========================================================================
+               1. CORE VARIABLES & RESET
+               ========================================================================== */
+            :root {
+                --bg-body: #f0f2f5;
+                --surface: #ffffff;
+                --primary: #d35400; /* Orange/Rust for Kaise Karen Theme */
+                --primary-hover: #a04000;
+                --text-main: #1d2327;
+                --text-light: #50575e;
+                --border-light: #dcdcde;
+                --toolbar-bg: #2c3338;
+                --toolbar-text: #f0f0f1;
+                --danger: #d63638;
+                --success: #008a20;
+                --radius: 8px;
+                --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+                --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            * {
+                box-sizing: border-box;
+                outline: none;
+            }
+
+            body {
+                background-color: var(--bg-body);
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                margin: 0;
+                padding-bottom: 300px;
+                color: var(--text-main);
+                line-height: 1.6;
+            }
+
+            /* ==========================================================================
+               2. TOP NAVIGATION BAR
+               ========================================================================== */
+            .editor-top-bar {
+                position: sticky;
+                top: 0;
+                background: var(--surface);
+                border-bottom: 1px solid var(--border-light);
+                padding: 12px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 5000;
+                box-shadow: var(--shadow-sm);
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .meta-inputs {
+                display: flex;
+                gap: 10px;
+                flex: 3; /* More space for inputs */
+                min-width: 300px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .meta-field {
+                padding: 10px 12px;
+                border: 1px solid #8c8f94;
+                border-radius: 4px;
+                font-size: 14px;
+                transition: 0.2s;
+                height: 40px;
+            }
+            .meta-field:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 1px var(--primary);
+            }
+            
+            /* Specific inputs styling */
+            #postCategory {
+                flex: 1;
+                min-width: 150px;
+                background-color: #fff8f0;
+                font-weight: 600;
+                color: var(--primary);
+                cursor: pointer;
+            }
+            
+            #authorNameField {
+                flex: 1; 
+                min-width: 140px;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .file-input-group {
+                display: flex;
+                align-items: center;
+                flex: 2;
+                min-width: 200px;
+            }
+            .file-input-group input {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-right: none;
+                width: 100%;
+            }
+            .file-extension {
+                background: #e0e0e0;
+                padding: 0 12px;
+                border: 1px solid #8c8f94;
+                border-left: none;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                color: #555;
+                font-size: 14px;
+                font-weight: 600;
+                height: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+            .auth-status {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--text-light);
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background: #eef;
+                padding: 5px 10px;
+                border-radius: 20px;
+                white-space: nowrap;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                border: none;
+                font-weight: 600;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: 0.2s;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .btn-preview {
+                background: #fff;
+                border: 1px solid var(--primary);
+                color: var(--primary);
+            }
+            .btn-draft {
+                background: #50575e;
+                color: white;
+            }
+            .btn-publish {
+                background: var(--success);
+                color: white;
+            }
+
+            /* ==========================================================================
+               3. EDITOR CANVAS
+               ========================================================================== */
+            .editor-paper {
+                max-width: 900px;
+                margin: 40px auto;
+                background: var(--surface);
+                padding: 60px;
+                min-height: 1000px;
+                box-shadow: var(--shadow-sm);
+                border-radius: var(--radius);
+                position: relative;
+            }
+
+            .post-title-input {
+                width: 100%;
+                border: none;
+                font-size: 2.5rem;
+                font-weight: 800;
+                margin-bottom: 20px;
+                color: var(--text-main);
+                line-height: 1.2;
+            }
+            .post-title-input::placeholder { color: #e0e0e0; }
+
+            .post-desc-input {
+                width: 100%;
+                border: none;
+                font-size: 1.1rem;
+                color: var(--text-light);
+                resize: none;
+                background: #fff8f0; /* Slight tint for Kaise Karen */
+                padding: 20px;
+                border-left: 4px solid var(--primary);
+                margin-bottom: 40px;
+                border-radius: 0 4px 4px 0;
+            }
+
+            /* ==========================================================================
+               4. BLOCK WRAPPERS & CONTROLS
+               ========================================================================== */
+            .block-wrapper {
+                position: relative;
+                margin-bottom: 15px;
+                padding: 10px;
+                padding-left: 50px; 
+                border: 1px solid transparent;
+                border-radius: var(--radius);
+                transition: 0.2s;
+            }
+            .block-wrapper:hover {
+                border-color: #e2e4e7;
+                background-color: #fafafa;
+            }
+
+            .side-controls {
+                position: absolute;
+                left: 5px;
+                top: 5px;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                z-index: 100;
+                opacity: 0.4; 
+                transition: opacity 0.2s ease;
+            }
+            .block-wrapper:hover .side-controls,
+            .side-controls:hover {
+                opacity: 1;
+            }
+
+            .control-btn {
+                width: 32px;
+                height: 32px;
+                background: #fff;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: #555;
+                font-size: 14px;
+                transition: all 0.2s;
+            }
+            .control-btn:hover {
+                background: #f0f0f0;
+                color: #000;
+                border-color: #999;
+                transform: scale(1.1);
+            }
+            .control-btn.delete {
+                color: var(--danger);
+                border-color: #ffcccc;
+            }
+            .control-btn.delete:hover {
+                background: #fff5f5;
+                border-color: var(--danger);
+            }
+
+            .editable-area {
+                min-height: 1.5em;
+                outline: none;
+            }
+            .editable-area:empty::before {
+                content: attr(placeholder);
+                color: #aaa;
+                pointer-events: none;
+                display: block;
+            }
+
+            /* ==========================================================================
+               5. ADD ZONE & TOOLBAR
+               ========================================================================== */
+            .add-zone {
+                height: 24px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                opacity: 0;
+                transition: 0.2s;
+                margin: 10px 0;
+            }
+            .add-zone:hover { opacity: 1; }
+            
+            .add-line {
+                width: 100%;
+                height: 2px;
+                background-color: var(--primary);
+                transform: scaleX(0.95);
+            }
+            .add-btn {
+                width: 32px;
+                height: 32px;
+                background-color: var(--primary);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                font-size: 18px;
+                transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+            .add-zone:hover .add-btn { transform: rotate(90deg) scale(1.1); }
+
+            /* Floating Formatting Toolbar */
+            #floating-toolbar {
+                position: absolute;
+                background: var(--toolbar-bg);
+                padding: 6px;
+                border-radius: 6px;
+                display: none;
+                gap: 5px;
+                z-index: 10000;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            }
+            .tb-btn {
+                background: #3c434a;
+                border: 1px solid #555;
+                color: #fff;
+                width: 32px;
+                height: 32px;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .tb-btn:hover {
+                background: var(--primary);
+                border-color: var(--primary);
+            }
+
+            /* ==========================================================================
+               6. MODALS
+               ========================================================================== */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.6);
+                z-index: 20000;
+                justify-content: center;
+                align-items: center;
+                backdrop-filter: blur(2px);
+            }
+            .modal-content {
+                background: white;
+                width: 800px;
+                max-width: 95%;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            .modal-header h3 { margin: 0; color: #333; }
+            .close-modal {
+                background: none; border: none; font-size: 24px; cursor: pointer; color: #777;
+            }
+
+            .block-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+            .block-option {
+                background: #f8f9fa;
+                border: 1px solid #e2e4e7;
+                border-radius: 8px;
+                padding: 20px 10px;
+                text-align: center;
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                transition: 0.2s;
+            }
+            .block-option:hover {
+                background: #fff;
+                border-color: var(--primary);
+                color: var(--primary);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            .block-option i { font-size: 24px; color: #555; }
+            .block-option:hover i { color: var(--primary); }
+
+            /* Media Placeholder */
+            .media-placeholder {
+                background: #f0f0f1;
+                border: 2px dashed #ccc;
+                padding: 30px;
+                text-align: center;
+                border-radius: 8px;
+                cursor: pointer;
+                color: #666;
+                transition: 0.2s;
+            }
+            .media-placeholder:hover {
+                border-color: var(--primary);
+                background: #fff;
+                color: var(--primary);
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .editor-paper { padding: 20px; margin: 10px; width: auto; }
+                .block-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+
+            /* Injected Content Styles */
+            img, iframe, video {
+                max-width: 100% !important;
+                height: auto !important;
+                display: block;
+                margin: 15px auto;
+                border-radius: 6px;
+            }
+            .iframe-container {
+                position: relative;
+                width: 100%;
+                padding-bottom: 56.25%; 
+                height: 0;
+            }
+            .iframe-container iframe {
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+            }
+            .info-box {
+                background: #e8f4fd;
+                border-left: 5px solid #2271b1;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 0 4px 4px 0;
+            }
+            
+            /* Table */
+            .table-container { overflow-x: auto; margin: 15px 0; }
+            table { width: 100%; border-collapse: collapse; min-width: 500px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+        </style>
+    </head>
+    <body>
+        <!-- 1. TOP HEADER -->
+        <div class="editor-top-bar">
+            <div class="meta-inputs">
+                <!-- CATEGORY DROPDOWN (12 Options) -->
+                <select id="postCategory" class="meta-field">
+                    <option value="Kaise Karen">General (Kaise Karen)</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Education">Education</option>
+                    <option value="Banking">Banking & Finance</option>
+                    <option value="Government Schemes">Government Schemes</option>
+                    <option value="Documents">Legal Documents</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Mobile Tips">Mobile Tips</option>
+                    <option value="Computer">Computer Tricks</option>
+                    <option value="Career">Career & Jobs</option>
+                    <option value="Health">Health & Fitness</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                </select>
+                
+                <!-- EDITABLE AUTHOR NAME (No Email!) -->
+                <input type="text" id="authorNameField" class="meta-field" placeholder="Author Name (e.g. Himanshu)" />
+
+                <div class="file-input-group">
+                    <input type="text" id="fileName" class="meta-field" placeholder="Filename (e.g. pan-card-apply)" />
+                    <span class="file-extension">.html</span>
+                </div>
+                
+                <input type="text" id="imgName" class="meta-field" placeholder="SEO Image Name (e.g. pan-card-guide)" />
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div id="auth-status" class="auth-status"><i class="fas fa-spinner fa-spin"></i> Checking...</div>
+                <div class="action-buttons">
+                    <button class="btn btn-preview" onclick="window.previewPost()"><i class="fas fa-eye"></i> Preview</button>
+                    <button class="btn btn-draft" onclick="window.savePost('draft')"><i class="fas fa-save"></i> Draft</button>
+                    <button class="btn btn-publish" onclick="window.savePost('pending')"><i class="fas fa-paper-plane"></i> Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. FLOATING TOOLBAR (Text Selection) -->
+        <div id="floating-toolbar">
+            <button class="tb-btn" onmousedown="window.fmt(event,'bold')"><i class="fas fa-bold"></i></button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'italic')"><i class="fas fa-italic"></i></button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'underline')"><i class="fas fa-underline"></i></button>
+            <div style="width:1px; background:#555; height:20px; margin:0 5px;"></div>
+            <button class="tb-btn" onmousedown="window.createLink(event)"><i class="fas fa-link"></i></button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyLeft')"><i class="fas fa-align-left"></i></button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyCenter')"><i class="fas fa-align-center"></i></button>
+            <div style="width:1px; background:#555; height:20px; margin:0 5px;"></div>
+            <select class="tb-select" onchange="window.fmt(event,'formatBlock',this.value);this.value='';" style="background:#333; color:white; border:none; height:30px;">
+                <option value="">Format</option>
+                <option value="H2">Heading 2</option>
+                <option value="H3">Heading 3</option>
+                <option value="P">Paragraph</option>
+            </select>
+        </div>
+
+        <!-- 3. MAIN EDITOR -->
+        <div class="editor-paper">
+            <input type="text" id="doc-h1" class="post-title-input" placeholder="Post Title (e.g. How to Apply for Pan Card Online)" />
+            <textarea id="doc-desc" class="post-desc-input" rows="3" placeholder="Write a short SEO description (Meta Description)..."></textarea>
+
+            <div id="editor-canvas">
+                <!-- Top Add Zone -->
+                <div class="add-zone" onclick="window.openBlockMenu(this)">
+                    <div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>
+                </div>
+                
+                <!-- Default Block -->
+                <div class="block-wrapper">
+                    <div class="side-controls">
+                        <div class="control-btn" onclick="window.moveBlock(this,-1)">▲</div>
+                        <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
+                        <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
+                    </div>
+                    <div class="editable-area" contenteditable="true" placeholder="Start writing the guide step-by-step..."></div>
+                </div>
+
+                <!-- Bottom Add Zone -->
+                <div class="add-zone" onclick="window.openBlockMenu(this)">
+                    <div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BLOCK MENU MODAL -->
+        <div id="block-menu-modal" class="modal-overlay" onclick="if(event.target===this)window.closeBlockMenu()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Element</h3>
+                    <button class="close-modal" onclick="window.closeBlockMenu()">×</button>
+                </div>
+                <div class="block-grid">
+                    <div class="block-option" onclick="window.addBlock('p')"><i class="fas fa-paragraph"></i><span>Paragraph</span></div>
+                    <div class="block-option" onclick="window.addBlock('h2')"><i class="fas fa-heading"></i><span>Heading H2</span></div>
+                    <div class="block-option" onclick="window.addBlock('h3')"><i class="fas fa-heading" style="font-size:18px"></i><span>Heading H3</span></div>
+                    <div class="block-option" onclick="window.addBlock('list-ul')"><i class="fas fa-list-ul"></i><span>Bullet List</span></div>
+                    <div class="block-option" onclick="window.addBlock('list-ol')"><i class="fas fa-list-ol"></i><span>Number List</span></div>
+                    <div class="block-option" onclick="window.addBlock('info-box')"><i class="fas fa-info-circle"></i><span>Info Box</span></div>
+                    <div class="block-option" onclick="window.addBlock('image')"><i class="fas fa-image"></i><span>Image URL</span></div>
+                    <div class="block-option" onclick="window.addBlock('youtube')"><i class="fab fa-youtube"></i><span>YouTube Video</span></div>
+                    <div class="block-option" onclick="window.addBlock('table')"><i class="fas fa-table"></i><span>Table</span></div>
+                    <div class="block-option" onclick="window.addBlock('html')"><i class="fas fa-code"></i><span>Custom HTML</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCRIPTS -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+            import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+            // CONFIG
+            const firebaseConfig = {
+                apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
+                authDomain: "gklearnstudy-c298c.firebaseapp.com",
+                projectId: "gklearnstudy-c298c",
+                storageBucket: "gklearnstudy-c298c.firebasestorage.app",
+                messagingSenderId: "307990626713",
+                appId: "1:307990626713:web:e7b650c718c0cade4e5308"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+
+            // GLOBAL STATE
+            let currentUser = null;
+            let activeAddZone = null;
+            let editingDocId = null;
+
+            // --- WINDOW FUNCTIONS (ATTACHED GLOBALLY) ---
+            window.fmt = (e, cmd, val) => {
+                if(e) e.preventDefault();
+                document.execCommand(cmd, false, val);
+            };
+
+            window.createLink = (e) => {
+                if(e) e.preventDefault();
+                const url = prompt("Enter URL:", "https://");
+                if(url) document.execCommand("createLink", false, url);
+            };
+
+            // Toolbar Positioning
+            document.addEventListener("selectionchange", () => {
+                const sel = window.getSelection();
+                const bar = document.getElementById("floating-toolbar");
+                if(sel.rangeCount > 0 && !sel.isCollapsed && document.getElementById("editor-canvas").contains(sel.anchorNode)) {
+                    const rect = sel.getRangeAt(0).getBoundingClientRect();
+                    bar.style.display = "flex";
+                    bar.style.top = `${window.scrollY + rect.top - 50}px`;
+                    bar.style.left = `${rect.left}px`;
+                } else {
+                    bar.style.display = "none";
+                }
+            });
+
+            // BLOCK MENU FUNCTIONS
+            window.openBlockMenu = (zone) => {
+                activeAddZone = zone;
+                document.getElementById("block-menu-modal").style.display = "flex";
+            };
+            window.closeBlockMenu = () => {
+                document.getElementById("block-menu-modal").style.display = "none";
+            };
+
+            // ADD BLOCKS
+            window.addBlock = (type) => {
+                window.closeBlockMenu();
+                const wrapper = document.createElement("div");
+                wrapper.className = "block-wrapper";
+                let html = "";
+
+                if(type === 'p') html = `<div class="editable-area" contenteditable="true" placeholder="Enter text..."></div>`;
+                else if(type === 'h2') html = `<h2 class="editable-area" contenteditable="true" placeholder="Heading 2"></h2>`;
+                else if(type === 'h3') html = `<h3 class="editable-area" contenteditable="true" placeholder="Heading 3"></h3>`;
+                else if(type === 'list-ul') html = `<ul class="editable-area" contenteditable="true"><li>List Item</li></ul>`;
+                else if(type === 'list-ol') html = `<ol class="editable-area" contenteditable="true"><li>Step 1</li></ol>`;
+                else if(type === 'info-box') html = `<div class="info-box editable-area" contenteditable="true" placeholder="Important Note..."></div>`;
+                
+                else if(type === 'image' || type === 'html') {
+                    html = `<div class="media-placeholder" onclick="window.insertMedia(this, '${type}')"><i class="fas fa-plus-circle"></i> Click to Insert ${type.toUpperCase()}</div>`;
+                }
+                else if(type === 'youtube') {
+                    html = `<div class="media-placeholder" onclick="window.insertMedia(this, 'youtube')"><i class="fab fa-youtube"></i> Click to Embed Video</div>`;
+                }
+                else if(type === 'table') {
+                    html = `<div class="table-container"><table class="dynamic-table"><thead><tr><th contenteditable="true">Header 1</th><th contenteditable="true">Header 2</th></tr></thead><tbody><tr><td contenteditable="true">Data</td><td contenteditable="true">Data</td></tr></tbody></table></div><div class="table-tools"><button onclick="window.tblAddRow(this)">+ Row</button></div>`;
+                }
+
+                wrapper.innerHTML = `
+                    <div class="side-controls">
+                        <div class="control-btn" onclick="window.moveBlock(this,-1)">▲</div>
+                        <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
+                        <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
+                    </div>
+                    ${html}
+                `;
+
+                // Recreate Add Zone
+                const newZone = document.createElement("div");
+                newZone.className = "add-zone";
+                newZone.onclick = function() { window.openBlockMenu(this); };
+                newZone.innerHTML = `<div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>`;
+
+                if(activeAddZone && activeAddZone.parentNode) {
+                    activeAddZone.parentNode.insertBefore(wrapper, activeAddZone.nextSibling);
+                    wrapper.parentNode.insertBefore(newZone, wrapper.nextSibling);
+                } else {
+                    const canvas = document.getElementById("editor-canvas");
+                    canvas.appendChild(wrapper);
+                    canvas.appendChild(newZone);
+                }
+
+                // AUTO FOCUS LOGIC
+                const editable = wrapper.querySelector('[contenteditable="true"]');
+                if (editable) {
+                    setTimeout(() => editable.focus(), 50);
+                }
+            };
+
+            // BLOCK CONTROLS
+            window.moveBlock = (btn, dir) => {
+                const w = btn.closest(".block-wrapper");
+                const z = w.nextElementSibling; // The add zone after it
+                if(dir === -1 && w.previousElementSibling?.previousElementSibling) {
+                    // Move up
+                    w.parentNode.insertBefore(w, w.previousElementSibling.previousElementSibling);
+                    w.parentNode.insertBefore(z, w.nextSibling);
+                } else if(dir === 1 && z.nextElementSibling) {
+                    // Move down
+                    const nextW = z.nextElementSibling;
+                    const nextZ = nextW.nextElementSibling;
+                    w.parentNode.insertBefore(nextW, w);
+                    w.parentNode.insertBefore(nextZ, w.nextSibling);
+                }
+            };
+
+            window.deleteBlock = (btn) => {
+                if(confirm("Delete this block?")) {
+                    const w = btn.closest(".block-wrapper");
+                    w.nextElementSibling.remove(); // Remove add zone
+                    w.remove(); // Remove block
+                }
+            };
+
+            window.tblAddRow = (btn) => {
+                const table = btn.parentElement.previousElementSibling.querySelector('table');
+                const row = table.insertRow();
+                const cols = table.rows[0].cells.length;
+                for(let i=0; i<cols; i++) {
+                    const cell = row.insertCell();
+                    cell.contentEditable = true;
+                    cell.innerText = "Data";
+                }
+            };
+
+            window.insertMedia = (el, type) => {
+                const code = prompt(`Enter ${type} URL or Code:`);
+                if(!code) return;
+                
+                let html = code;
+                if(type === 'image' && (code.startsWith('http') || code.match(/\.(png|jpg|jpeg|gif|webp)/))) {
+                    html = `<img src="${code}" alt="Image">`;
+                } else if (type === 'youtube') {
+                    let v = "";
+                    if(code.includes("watch?v=")) v = code.split("watch?v=")[1];
+                    else if(code.includes("embed/")) v = code.split("embed/")[1];
+                    else if(code.includes("youtu.be/")) v = code.split("youtu.be/")[1];
+                    
+                    if(v) {
+                        v = v.split("&")[0]; 
+                        html = `<div class="iframe-container"><iframe src="https://www.youtube.com/embed/${v}" frameborder="0" allowfullscreen></iframe></div>`;
+                    }
+                }
+                
+                // Replace placeholder with content
+                el.outerHTML = html;
+            };
+
+            // CLEAN HTML GENERATION
+            window.getCleanHTML = () => {
+                const clone = document.getElementById("editor-canvas").cloneNode(true);
+                // Remove UI elements
+                clone.querySelectorAll('.add-zone, .side-controls, .table-tools').forEach(e => e.remove());
+                // Clean attributes
+                clone.querySelectorAll('*').forEach(e => {
+                    e.removeAttribute('contenteditable');
+                    e.removeAttribute('placeholder');
+                    e.removeAttribute('onclick');
+                });
+                // Unwrap wrappers
+                clone.querySelectorAll('.block-wrapper').forEach(w => {
+                    w.removeAttribute('class');
+                    w.style = "margin-bottom: 1.5em;";
+                });
+                return clone.innerHTML;
+            };
+
+            // SAVE POST LOGIC
+            window.savePost = async (status) => {
+                if(!currentUser) { alert("Please login first via Admin Panel!"); return; }
+                
+                const title = document.getElementById("doc-h1").value;
+                const file = document.getElementById("fileName").value;
+                const desc = document.getElementById("doc-desc").value;
+                
+                // Reading values from updated inputs
+                const category = document.getElementById("postCategory").value; 
+                const authorInput = document.getElementById("authorNameField").value;
+                const authorName = authorInput ? authorInput : "GK Learn Study"; // Fallback if empty
+
+                if(!title || !file) { alert("Title & Filename are required!"); return; }
+
+                // FIXED: DIRECT FILE PATH (No /kaise-karen/ folder)
+                const fileUrl = `/${file}.html`;
+                
+                const content = window.getCleanHTML();
+                const fullHtml = generateTemplate(title, desc, content, fileUrl, category, authorName);
+                
+                const docId = editingDocId || `kaise-karen-${file}`;
+
+                try {
+                    await setDoc(doc(db, "pending_posts", docId), {
+                        title: title,
+                        paragraph: desc,
+                        category: category,
+                        url: fileUrl,
+                        content: fullHtml,
+                        raw_blocks: document.getElementById("editor-canvas").innerHTML,
+                        author: currentUser.email, // This is for DB tracking (who saved it)
+                        displayAuthor: authorName, // This is for display (e.g. Himanshu Tyagi)
+                        date: new Date().toISOString(),
+                        status: status
+                    });
+                    alert("Saved Successfully!");
+                    if(!editingDocId) window.location.href = "admin.html";
+                } catch(e) { alert("Error: " + e.message); }
+            };
+
+            window.previewPost = () => {
+                const title = document.getElementById("doc-h1").value;
+                const desc = document.getElementById("doc-desc").value;
+                const content = window.getCleanHTML();
+                
+                const category = document.getElementById("postCategory").value;
+                const author = document.getElementById("authorNameField").value || "Preview Author";
+
+                const html = generateTemplate(title, desc, content, "#", category, author);
+                
+                const win = window.open("","_blank");
+                win.document.write(html);
+                win.document.close();
+            };
+
+            // TEMPLATE GENERATOR WITH FULL SEO META TAGS
+            function generateTemplate(h1, desc, content, pageUrl, category, authorName) {
+                const imgName = document.getElementById("imgName").value;
+                const ogImage = imgName ? `https://gklearnstudy.in/images/${imgName}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
+                const categoryUrl = `https://gklearnstudy.in/categories.html?category=${encodeURIComponent(category)}`;
+                
+                const dateNow = new Date().toISOString();
+
+                // FULL SEO HTML STRUCTURE
+                return `<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${h1} | GK Learn Study</title>
+        <meta name="description" content="${desc}" />
+        <meta name="keywords" content="${h1}, ${category}, how to, step by step guide, GK Learn Study" />
+        <meta name="author" content="${authorName}" />
+        <meta name="robots" content="index, follow" />
+        <meta name="copyright" content="© ${new Date().getFullYear()} GK Learn Study" />
+        <link rel="canonical" href="https://gklearnstudy.in${pageUrl}" />
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="${h1} | GK Learn Study" />
+        <meta property="og:description" content="${desc}" />
+        <meta property="og:image" content="${ogImage}" />
+        <meta property="og:url" content="https://gklearnstudy.in${pageUrl}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="GK Learn Study" />
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="${h1} | GK Learn Study" />
+        <meta name="twitter:description" content="${desc}" />
+        <meta name="twitter:image" content="${ogImage}" />
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/kaise-karen.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/notification.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
+        <link rel="icon" href="https://gklearnstudy.in/favicon.ico" />
+        
+        <!-- Schema -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "${h1}",
+            "description": "${desc}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "${ogImage}"
+            },
+            "author": {
+                "@type": "Person",
+                "name": "${authorName}"
+            },
+            "step": [
+                {
+                    "@type": "HowToStep",
+                    "text": "Read the full guide below for step-by-step instructions."
+                }
+            ],
+            "datePublished": "${dateNow}"
+        }
+        <\/script>
+        
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"><\/script>
+    </head>
+    <body>
+        <header class="header" id="header">
+            <nav class="navbar">
+                <div class="burger" id="burger">
+                    <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer" aria-hidden="true">
+                        <rect width="100" height="7" rx="5"></rect>
+                        <rect y="30" width="100" height="7" rx="5"></rect>
+                        <rect y="60" width="100" height="7" rx="5"></rect>
+                    </svg>
+                </div>
+
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
+                    <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 300 300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        role="img"
+                        aria-label="GK Learn Study logo"
+                    >
+                        <circle cx="150" cy="150" r="150" fill="white" />
+                        <text
+                            x="50%"
+                            y="40%"
+                            font-size="85"
+                            font-weight="bold"
+                            fill="#ff4b5c"
+                            text-anchor="middle"
+                            style="transform-origin: center center"
+                            opacity="0"
+                        >
+                            GK
+                            <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
+                            <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="-20"
+                                to="0"
+                                begin="0.5s"
+                                dur="1.2s"
+                                fill="freeze"
+                                additive="sum"
+                            />
+                            <animateTransform
+                                attributeName="transform"
+                                type="scale"
+                                from="0.5"
+                                to="1"
+                                begin="0.5s"
+                                dur="1.2s"
+                                fill="freeze"
+                                additive="sum"
+                            />
+                        </text>
+                        <text
+                            x="50%"
+                            y="65%"
+                            font-size="45"
+                            fill="#6a4cff"
+                            text-anchor="middle"
+                            style="transform-origin: center center"
+                            opacity="0"
+                        >
+                            Learn Study
+                            <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                            <animateTransform
+                                attributeName="transform"
+                                type="scale"
+                                from="0.7"
+                                to="1"
+                                begin="0.9s"
+                                dur="1.2s"
+                                fill="freeze"
+                            />
+                        </text>
+                        <clipPath id="circleClip">
+                            <circle cx="150" cy="150" r="150" />
+                        </clipPath>
+                        <g clip-path="url(#circleClip)">
+                            <path fill="#ff9f80" fill-opacity="0.8">
+                                <animate
+                                    attributeName="d"
+                                    dur="6s"
+                                    repeatCount="indefinite"
+                                    values="
+                                    M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                                    M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                                    M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                                "
+                                />
+                            </path>
+                            <path fill="#6a4cff" fill-opacity="0.5">
+                                <animate
+                                    attributeName="d"
+                                    dur="7s"
+                                    repeatCount="indefinite"
+                                    values="
+                                    M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                                    M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                                    M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                                "
+                                />
+                            </path>
+                        </g>
+                    </svg>
+                </a>
+
+                <div class="menu" id="menu">
+                    <div class="mobile-menu-header">
+                        <a href="/" class="menu-brand-text">GK Learn Study</a>
+                        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-inner">
+                        <!-- Menu links injected by header.js -->
+                    </div>
+                    <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                        <svg
+                            class="arrow-svg"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                            <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                        </svg>
+                    </button>
+                    <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                        <svg
+                            class="arrow-svg"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                            <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-container">
+                        <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                aria-hidden="true"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                        <svg
+                            class="sun"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg
+                            class="moon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." />
+            <div class="overlay"></div>
+        </header>
+
+        <ul id="suggestions-list" class="suggestions"></ul>
+        <main class="container">
+            <div class="article-layout">
+                <!-- Sidebar TOC (Desktop) -->
+                <aside class="toc-sidebar-container">
+                    <div class="toc-sidebar">
+                        <h3>In this guide</h3>
+                        <ul id="toc-list-desktop"></ul>
+                    </div>
+                </aside>
+
+                <article class="article-container">
+                    <nav class="breadcrumb-nav"><a href="https://gklearnstudy.in/">Home</a> > <a href="${categoryUrl}">${category}</a> > <span>${h1}</span></nav>
+                     <details class="toc-mobile-container">
+                    <summary>In this guide</summary>
+                    <div class="toc-list-wrapper">
+                        <ul id="toc-list-mobile"></ul>
+                    </div>
+                </details>
+                    <header class="article-header">
+                        <a href="${categoryUrl}" class="category-link">${category}</a>
+                        <h1>${h1}</h1>
+                        <div class="article-meta">By ${authorName} | ${new Date().toLocaleDateString()}</div>
+                    </header>
+
+                    <div class="article-body" id="article-content">
+                        ${content}
+                    </div>
+                    
+                    <!-- ADS -->
+                    <ins class="adsbygoogle" style="display:block; margin-top:20px;" data-ad-client="ca-pub-7067722696020503" data-ad-slot="9133141216" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+                </article>
+            </div>
+            
+            <div id="right-sidebar"><strong>Important Links</strong><ul id="link-list"></ul></div>
+        </main>
+
+              <!-- ===== COMMENTS & RATING ===== -->
+        <div id="comments-and-ratings-container">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                        </div>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rating-widget" class="rating-content">
+                    <h2>Rate this Page</h2>
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="breakdown-row" data-star-level="5">
+                                <span class="star-label">5 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-5"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="4">
+                                <span class="star-label">4 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-4"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="3">
+                                <span class="star-label">3 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-3"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="2">
+                                <span class="star-label">2 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-2"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                            <div class="breakdown-row" data-star-level="1">
+                                <span class="star-label">1 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-1"></div>
+                                </div>
+                                <span class="vote-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                            />
+                        </svg>
+                    </div>
+                    <div id="rating-login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to rate.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                <path
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4"
+                                ></path>
+                                <path
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853"
+                                ></path>
+                                <path
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                    fill="#FBBC05"
+                                ></path>
+                                <path
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                    fill="#EA4335"
+                                ></path>
+                                <path d="M1 1h22v22H1z" fill="none"></path>
+                            </svg>
+                            Sign in with Google
+                        </button>
+                        <button id="logout-btn" class="btn">Logout</button>
+                    </div>
+                    <div id="login-prompt" style="display: none">
+                        <p class="muted">
+                            Please
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
+                                >sign in</a
+                            >
+                            to comment.
+                        </p>
+                    </div>
+                    <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
+                            <textarea
+                                id="comment"
+                                placeholder="Add a public comment..."
+                                maxlength="1000"
+                                required
+                                aria-label="Comment input"
+                            ></textarea>
+                            <input type="hidden" id="parent-id" value="" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="comments-list" class="comment-list">
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+            </div>
+            <script>
+                document.getElementById("year").textContent = new Date().getFullYear();
+            <\/script>
+        </footer>
+
+        <!-- JS -->
+        <script src="https://gklearnstudy.in/js/theme.js" defer><\/script>
+        <script src="https://gklearnstudy.in/js/rightside.js" defer><\/script>
+        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer><\/script>
+        
+        
+      
+        <script>
+             document.addEventListener('DOMContentLoaded', () => {
+            const tocLists = document.querySelectorAll('#toc-list-desktop, #toc-list-mobile');
+            const articleContent = document.getElementById('article-content');
+            
+            if (tocLists.length === 0 || !articleContent) {
+                console.error('TOC script: Critical elements are missing.');
+                return;
+            }
+
+            const headings = articleContent.querySelectorAll('h2, h3');
+            
+            if (headings.length === 0) {
+                document.querySelector('.toc-sidebar-container')?.style.setProperty('display', 'none');
+                document.querySelector('.toc-mobile-container')?.style.setProperty('display', 'none');
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            const headingData = []; 
+
+            headings.forEach((heading, index) => {
+                const text = heading.textContent.trim();
+                if (!text) return;
+
+                let id = heading.id;
+                if (!id) {
+                    id = \`toc-heading-\${index}\`;
+                    heading.id = id;
+                }
+
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                
+                a.textContent = text;
+                a.href = \`#\${id}\`;
+                li.appendChild(a);
+
+                if (heading.tagName.toLowerCase() === 'h3') {
+                    li.className = 'toc-level-2';
+                }
+
+                fragment.appendChild(li);
+                headingData.push({ id: id, element: heading });
+            });
+
+            tocLists.forEach(list => {
+                list.innerHTML = '';
+                list.appendChild(fragment.cloneNode(true));
+            });
+
+            const tocLinks = document.querySelectorAll('.toc-sidebar a, .toc-mobile-container a');
+            const topOffset = 90;
+
+            const onScroll = () => {
+                const scrollPosition = window.scrollY;
+                let activeId = null;
+                
+                const visibleHeadings = headingData.filter(h => h.element.offsetTop <= scrollPosition + topOffset);
+                if (visibleHeadings.length > 0) {
+                    activeId = visibleHeadings[visibleHeadings.length - 1].id;
+                }
+
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                    const lastHeading = headingData[headingData.length - 1];
+                    if (lastHeading) {
+                        activeId = lastHeading.id;
+                    }
+                }
+
+                tocLinks.forEach(link => {
+                    const isActive = link.getAttribute('href') === \`#\${activeId}\`;
+                    link.classList.toggle('active', isActive);
+                });
+            };
+
+            let isTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(() => {
+                        onScroll();
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }, { passive: true });
+
+            onScroll();
+        });
+        <\/script>
+    </body>
+</html>`;
+            }
+
+            // AUTH STATE & LOAD CONTENT
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                const status = document.getElementById('auth-status');
+                if(user) {
+                    status.innerHTML = `<span style="color:green"><i class="fas fa-check-circle"></i> Logged In</span>`;
+                    
+                    // PRE-FILL AUTHOR NAME (Name only, fallback to empty or Admin, NO EMAIL)
+                    const authorField = document.getElementById('authorNameField');
+                    if (user.displayName) {
+                        authorField.value = user.displayName;
+                    } else {
+                        // Optional: Default to a generic name or leave blank for him to fill
+                        authorField.value = "Himanshu Tyagi"; 
+                    }
+
+                    // Check for ?id= parameter to load existing post for editing
+                    const params = new URLSearchParams(window.location.search);
+                    if(params.get("id")) loadContent(params.get("id"));
+                } else {
+                    status.innerHTML = `<span style="color:orange"><i class="fas fa-exclamation-triangle"></i> Guest Mode</span>`;
+                }
+            });
+
+            async function loadContent(id) {
+                editingDocId = id;
+                try {
+                    // Try finding in pending_posts first
+                    let snap = await getDoc(doc(db, "pending_posts", id));
+                    // If not found, try published_posts
+                    if(!snap.exists()) snap = await getDoc(doc(db, "published_posts", id));
+                    
+                    if(snap.exists()) {
+                        const data = snap.data();
+                        document.getElementById("doc-h1").value = data.title || "";
+                        document.getElementById("doc-desc").value = data.paragraph || "";
+                        
+                        // Set Category if it exists in the list
+                        const catSelect = document.getElementById("postCategory");
+                        if(data.category) {
+                            catSelect.value = data.category;
+                        }
+
+                        // Set Author Name from saved data
+                        if(data.displayAuthor) {
+                            document.getElementById("authorNameField").value = data.displayAuthor;
+                        }
+
+                        // Extract filename from URL (remove path and extension)
+                        const fname = data.url ? data.url.split('/').pop().replace('.html','') : "";
+                        document.getElementById("fileName").value = fname;
+                        
+                        if(data.raw_blocks) {
+                            document.getElementById("editor-canvas").innerHTML = data.raw_blocks;
+                        }
+                    }
+                } catch(e) { console.error("Load Error:", e); }
+            }
+
+            // Attach Global Functions
+            window.savePost = savePost;
+            window.previewPost = previewPost;
+
+        </script>
+    </body>
+</html>
