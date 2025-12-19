@@ -316,4 +316,51 @@ html[data-theme=dark] .copy-code-btn.copied {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     justify-content: center;
     justify-items: center;
-}
+} 
+
+
+
+        /* Updated Intro Section Style */
+        .intro-section {
+            background-color: var(--input-bg, #f9f9f9) !important;
+            padding: 40px !important;
+            border-radius: 12px !important;
+            margin-bottom: 30px !important;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-color, #d35400);
+            border: 2px solid var(--border-color, #eee);
+            flex-shrink: 0;
+        }
+        .author-avatar a {
+            color: #fff !important;
+            text-decoration: none !important;
+            font-weight: 800;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .post-meta-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+        .byline { display: flex; align-items: center; gap: 15px; }
+
