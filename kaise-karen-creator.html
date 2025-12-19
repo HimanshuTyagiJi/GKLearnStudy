@@ -81,7 +81,7 @@
                 border-color: var(--primary);
                 box-shadow: 0 0 0 1px var(--primary);
             }
-            
+
             /* Specific inputs styling */
             #postCategory {
                 flex: 1;
@@ -91,12 +91,14 @@
                 color: var(--primary);
                 cursor: pointer;
             }
-            
+
             #authorNameField {
-                flex: 1; 
+                flex: 1;
                 min-width: 140px;
                 font-weight: bold;
                 color: #333;
+                background-color: #f9f9f9;
+                cursor: not-allowed;
             }
 
             .file-input-group {
@@ -106,24 +108,11 @@
                 min-width: 200px;
             }
             .file-input-group input {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                border-right: none;
+                border-radius: 4px; /* Fixed: restored symmetry since extension is hidden */
                 width: 100%;
             }
             .file-extension {
-                background: #e0e0e0;
-                padding: 0 12px;
-                border: 1px solid #8c8f94;
-                border-left: none;
-                border-top-right-radius: 4px;
-                border-bottom-right-radius: 4px;
-                color: #555;
-                font-size: 14px;
-                font-weight: 600;
-                height: 40px;
-                display: flex;
-                align-items: center;
+                display: none; /* Hidden as per request */
             }
 
             .auth-status {
@@ -160,7 +149,7 @@
             }
             .btn:hover {
                 transform: translateY(-1px);
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
 
             .btn-preview {
@@ -200,7 +189,9 @@
                 color: var(--text-main);
                 line-height: 1.2;
             }
-            .post-title-input::placeholder { color: #e0e0e0; }
+            .post-title-input::placeholder {
+                color: #e0e0e0;
+            }
 
             .post-desc-input {
                 width: 100%;
@@ -222,7 +213,7 @@
                 position: relative;
                 margin-bottom: 15px;
                 padding: 10px;
-                padding-left: 50px; 
+                padding-left: 50px;
                 border: 1px solid transparent;
                 border-radius: var(--radius);
                 transition: 0.2s;
@@ -240,7 +231,7 @@
                 flex-direction: column;
                 gap: 5px;
                 z-index: 100;
-                opacity: 0.4; 
+                opacity: 0.4;
                 transition: opacity 0.2s ease;
             }
             .block-wrapper:hover .side-controls,
@@ -302,8 +293,10 @@
                 transition: 0.2s;
                 margin: 10px 0;
             }
-            .add-zone:hover { opacity: 1; }
-            
+            .add-zone:hover {
+                opacity: 1;
+            }
+
             .add-line {
                 width: 100%;
                 height: 2px;
@@ -322,9 +315,11 @@
                 position: absolute;
                 font-size: 18px;
                 transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             }
-            .add-zone:hover .add-btn { transform: rotate(90deg) scale(1.1); }
+            .add-zone:hover .add-btn {
+                transform: rotate(90deg) scale(1.1);
+            }
 
             /* Floating Formatting Toolbar */
             #floating-toolbar {
@@ -335,7 +330,7 @@
                 display: none;
                 gap: 5px;
                 z-index: 10000;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             }
             .tb-btn {
                 background: #3c434a;
@@ -360,8 +355,11 @@
             .modal-overlay {
                 display: none;
                 position: fixed;
-                top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.6);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
                 z-index: 20000;
                 justify-content: center;
                 align-items: center;
@@ -373,7 +371,7 @@
                 max-width: 95%;
                 padding: 30px;
                 border-radius: 12px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
                 max-height: 85vh;
                 overflow-y: auto;
             }
@@ -385,9 +383,16 @@
                 border-bottom: 1px solid #eee;
                 padding-bottom: 10px;
             }
-            .modal-header h3 { margin: 0; color: #333; }
+            .modal-header h3 {
+                margin: 0;
+                color: #333;
+            }
             .close-modal {
-                background: none; border: none; font-size: 24px; cursor: pointer; color: #777;
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #777;
             }
 
             .block-grid {
@@ -413,10 +418,15 @@
                 border-color: var(--primary);
                 color: var(--primary);
                 transform: translateY(-3px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
-            .block-option i { font-size: 24px; color: #555; }
-            .block-option:hover i { color: var(--primary); }
+            .block-option i {
+                font-size: 24px;
+                color: #555;
+            }
+            .block-option:hover i {
+                color: var(--primary);
+            }
 
             /* Media Placeholder */
             .media-placeholder {
@@ -437,12 +447,20 @@
 
             /* Responsive */
             @media (max-width: 768px) {
-                .editor-paper { padding: 20px; margin: 10px; width: auto; }
-                .block-grid { grid-template-columns: repeat(2, 1fr); }
+                .editor-paper {
+                    padding: 20px;
+                    margin: 10px;
+                    width: auto;
+                }
+                .block-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
             }
 
             /* Injected Content Styles */
-            img, iframe, video {
+            img,
+            iframe,
+            video {
                 max-width: 100% !important;
                 height: auto !important;
                 display: block;
@@ -452,12 +470,15 @@
             .iframe-container {
                 position: relative;
                 width: 100%;
-                padding-bottom: 56.25%; 
+                padding-bottom: 56.25%;
                 height: 0;
             }
             .iframe-container iframe {
                 position: absolute;
-                top: 0; left: 0; width: 100%; height: 100%;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
             }
             .info-box {
                 background: #e8f4fd;
@@ -466,19 +487,33 @@
                 margin: 15px 0;
                 border-radius: 0 4px 4px 0;
             }
-            
+
             /* Table */
-            .table-container { overflow-x: auto; margin: 15px 0; }
-            table { width: 100%; border-collapse: collapse; min-width: 500px; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
+            .table-container {
+                overflow-x: auto;
+                margin: 15px 0;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                min-width: 500px;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
         </style>
     </head>
     <body>
         <!-- 1. TOP HEADER -->
         <div class="editor-top-bar">
             <div class="meta-inputs">
-                <!-- CATEGORY DROPDOWN (12 Options) -->
+                <!-- CATEGORY DROPDOWN (Expanded to 25 Options) -->
                 <select id="postCategory" class="meta-field">
                     <option value="Kaise Karen">General (Kaise Karen)</option>
                     <option value="Technology">Technology</option>
@@ -492,25 +527,49 @@
                     <option value="Career">Career & Jobs</option>
                     <option value="Health">Health & Fitness</option>
                     <option value="Lifestyle">Lifestyle</option>
+                    <option value="Business">Business</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Food">Food & Cooking</option>
+                    <option value="Home Garden">Home & Garden</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Automobile">Automobile</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="Security">Online Security</option>
+                    <option value="Reviews">Software Reviews</option>
+                    <option value="Freelancing">Freelancing</option>
+                    <option value="Crypto">Cryptocurrency</option>
                 </select>
-                
-                <!-- EDITABLE AUTHOR NAME (No Email!) -->
-                <input type="text" id="authorNameField" class="meta-field" placeholder="Author Name (e.g. Himanshu)" />
+
+                <!-- READ-ONLY AUTHOR NAME -->
+                <input type="text" id="authorNameField" class="meta-field" placeholder="Author Name" readonly />
 
                 <div class="file-input-group">
-                    <input type="text" id="fileName" class="meta-field" placeholder="Filename (e.g. pan-card-apply)" />
+                    <!-- Restricted Filename (A-Z, 0-9 only) -->
+                    <input
+                        type="text"
+                        id="fileName"
+                        class="meta-field"
+                        placeholder="Filename (alphanumeric only)"
+                        oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');"
+                    />
                     <span class="file-extension">.html</span>
                 </div>
-                
-                <input type="text" id="imgName" class="meta-field" placeholder="SEO Image Name (e.g. pan-card-guide)" />
             </div>
-            
-            <div style="display:flex; align-items:center; gap:15px;">
+
+            <div style="display: flex; align-items: center; gap: 15px">
                 <div id="auth-status" class="auth-status"><i class="fas fa-spinner fa-spin"></i> Checking...</div>
                 <div class="action-buttons">
-                    <button class="btn btn-preview" onclick="window.previewPost()"><i class="fas fa-eye"></i> Preview</button>
-                    <button class="btn btn-draft" onclick="window.savePost('draft')"><i class="fas fa-save"></i> Draft</button>
-                    <button class="btn btn-publish" onclick="window.savePost('pending')"><i class="fas fa-paper-plane"></i> Submit</button>
+                    <button class="btn btn-preview" onclick="window.previewPost()">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button class="btn btn-draft" onclick="window.savePost('draft')">
+                        <i class="fas fa-save"></i> Draft
+                    </button>
+                    <button class="btn btn-publish" onclick="window.savePost('pending')">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
                 </div>
             </div>
         </div>
@@ -520,12 +579,20 @@
             <button class="tb-btn" onmousedown="window.fmt(event,'bold')"><i class="fas fa-bold"></i></button>
             <button class="tb-btn" onmousedown="window.fmt(event,'italic')"><i class="fas fa-italic"></i></button>
             <button class="tb-btn" onmousedown="window.fmt(event,'underline')"><i class="fas fa-underline"></i></button>
-            <div style="width:1px; background:#555; height:20px; margin:0 5px;"></div>
+            <div style="width: 1px; background: #555; height: 20px; margin: 0 5px"></div>
             <button class="tb-btn" onmousedown="window.createLink(event)"><i class="fas fa-link"></i></button>
-            <button class="tb-btn" onmousedown="window.fmt(event,'justifyLeft')"><i class="fas fa-align-left"></i></button>
-            <button class="tb-btn" onmousedown="window.fmt(event,'justifyCenter')"><i class="fas fa-align-center"></i></button>
-            <div style="width:1px; background:#555; height:20px; margin:0 5px;"></div>
-            <select class="tb-select" onchange="window.fmt(event,'formatBlock',this.value);this.value='';" style="background:#333; color:white; border:none; height:30px;">
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyLeft')">
+                <i class="fas fa-align-left"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyCenter')">
+                <i class="fas fa-align-center"></i>
+            </button>
+            <div style="width: 1px; background: #555; height: 20px; margin: 0 5px"></div>
+            <select
+                class="tb-select"
+                onchange="window.fmt(event,'formatBlock',this.value);this.value='';"
+                style="background: #333; color: white; border: none; height: 30px"
+            >
                 <option value="">Format</option>
                 <option value="H2">Heading 2</option>
                 <option value="H3">Heading 3</option>
@@ -535,15 +602,26 @@
 
         <!-- 3. MAIN EDITOR -->
         <div class="editor-paper">
-            <input type="text" id="doc-h1" class="post-title-input" placeholder="Post Title (e.g. How to Apply for Pan Card Online)" />
-            <textarea id="doc-desc" class="post-desc-input" rows="3" placeholder="Write a short SEO description (Meta Description)..."></textarea>
+            <input
+                type="text"
+                id="doc-h1"
+                class="post-title-input"
+                placeholder="Post Title (e.g. How to Apply for Pan Card Online)"
+            />
+            <textarea
+                id="doc-desc"
+                class="post-desc-input"
+                rows="3"
+                placeholder="Write a short SEO description (Meta Description)..."
+            ></textarea>
 
             <div id="editor-canvas">
                 <!-- Top Add Zone -->
                 <div class="add-zone" onclick="window.openBlockMenu(this)">
-                    <div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>
+                    <div class="add-line"></div>
+                    <div class="add-btn"><i class="fas fa-plus"></i></div>
                 </div>
-                
+
                 <!-- Default Block -->
                 <div class="block-wrapper">
                     <div class="side-controls">
@@ -551,12 +629,17 @@
                         <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
                         <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
                     </div>
-                    <div class="editable-area" contenteditable="true" placeholder="Start writing the guide step-by-step..."></div>
+                    <div
+                        class="editable-area"
+                        contenteditable="true"
+                        placeholder="Start writing the guide step-by-step..."
+                    ></div>
                 </div>
 
                 <!-- Bottom Add Zone -->
                 <div class="add-zone" onclick="window.openBlockMenu(this)">
-                    <div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>
+                    <div class="add-line"></div>
+                    <div class="add-btn"><i class="fas fa-plus"></i></div>
                 </div>
             </div>
         </div>
@@ -569,16 +652,36 @@
                     <button class="close-modal" onclick="window.closeBlockMenu()">×</button>
                 </div>
                 <div class="block-grid">
-                    <div class="block-option" onclick="window.addBlock('p')"><i class="fas fa-paragraph"></i><span>Paragraph</span></div>
-                    <div class="block-option" onclick="window.addBlock('h2')"><i class="fas fa-heading"></i><span>Heading H2</span></div>
-                    <div class="block-option" onclick="window.addBlock('h3')"><i class="fas fa-heading" style="font-size:18px"></i><span>Heading H3</span></div>
-                    <div class="block-option" onclick="window.addBlock('list-ul')"><i class="fas fa-list-ul"></i><span>Bullet List</span></div>
-                    <div class="block-option" onclick="window.addBlock('list-ol')"><i class="fas fa-list-ol"></i><span>Number List</span></div>
-                    <div class="block-option" onclick="window.addBlock('info-box')"><i class="fas fa-info-circle"></i><span>Info Box</span></div>
-                    <div class="block-option" onclick="window.addBlock('image')"><i class="fas fa-image"></i><span>Image URL</span></div>
-                    <div class="block-option" onclick="window.addBlock('youtube')"><i class="fab fa-youtube"></i><span>YouTube Video</span></div>
-                    <div class="block-option" onclick="window.addBlock('table')"><i class="fas fa-table"></i><span>Table</span></div>
-                    <div class="block-option" onclick="window.addBlock('html')"><i class="fas fa-code"></i><span>Custom HTML</span></div>
+                    <div class="block-option" onclick="window.addBlock('p')">
+                        <i class="fas fa-paragraph"></i><span>Paragraph</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('h2')">
+                        <i class="fas fa-heading"></i><span>Heading H2</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('h3')">
+                        <i class="fas fa-heading" style="font-size: 18px"></i><span>Heading H3</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('list-ul')">
+                        <i class="fas fa-list-ul"></i><span>Bullet List</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('list-ol')">
+                        <i class="fas fa-list-ol"></i><span>Number List</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('info-box')">
+                        <i class="fas fa-info-circle"></i><span>Info Box</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('image')">
+                        <i class="fas fa-image"></i><span>Image URL</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('youtube')">
+                        <i class="fab fa-youtube"></i><span>YouTube Video</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('table')">
+                        <i class="fas fa-table"></i><span>Table</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('html')">
+                        <i class="fas fa-code"></i><span>Custom HTML</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -587,7 +690,12 @@
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
             import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-            import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+            import {
+                getFirestore,
+                doc,
+                setDoc,
+                getDoc,
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             // CONFIG
             const firebaseConfig = {
@@ -596,7 +704,7 @@
                 projectId: "gklearnstudy-c298c",
                 storageBucket: "gklearnstudy-c298c.firebasestorage.app",
                 messagingSenderId: "307990626713",
-                appId: "1:307990626713:web:e7b650c718c0cade4e5308"
+                appId: "1:307990626713:web:e7b650c718c0cade4e5308",
             };
 
             const app = initializeApp(firebaseConfig);
@@ -610,21 +718,25 @@
 
             // --- WINDOW FUNCTIONS (ATTACHED GLOBALLY) ---
             window.fmt = (e, cmd, val) => {
-                if(e) e.preventDefault();
+                if (e) e.preventDefault();
                 document.execCommand(cmd, false, val);
             };
 
             window.createLink = (e) => {
-                if(e) e.preventDefault();
+                if (e) e.preventDefault();
                 const url = prompt("Enter URL:", "https://");
-                if(url) document.execCommand("createLink", false, url);
+                if (url) document.execCommand("createLink", false, url);
             };
 
             // Toolbar Positioning
             document.addEventListener("selectionchange", () => {
                 const sel = window.getSelection();
                 const bar = document.getElementById("floating-toolbar");
-                if(sel.rangeCount > 0 && !sel.isCollapsed && document.getElementById("editor-canvas").contains(sel.anchorNode)) {
+                if (
+                    sel.rangeCount > 0 &&
+                    !sel.isCollapsed &&
+                    document.getElementById("editor-canvas").contains(sel.anchorNode)
+                ) {
                     const rect = sel.getRangeAt(0).getBoundingClientRect();
                     bar.style.display = "flex";
                     bar.style.top = `${window.scrollY + rect.top - 50}px`;
@@ -650,20 +762,23 @@
                 wrapper.className = "block-wrapper";
                 let html = "";
 
-                if(type === 'p') html = `<div class="editable-area" contenteditable="true" placeholder="Enter text..."></div>`;
-                else if(type === 'h2') html = `<h2 class="editable-area" contenteditable="true" placeholder="Heading 2"></h2>`;
-                else if(type === 'h3') html = `<h3 class="editable-area" contenteditable="true" placeholder="Heading 3"></h3>`;
-                else if(type === 'list-ul') html = `<ul class="editable-area" contenteditable="true"><li>List Item</li></ul>`;
-                else if(type === 'list-ol') html = `<ol class="editable-area" contenteditable="true"><li>Step 1</li></ol>`;
-                else if(type === 'info-box') html = `<div class="info-box editable-area" contenteditable="true" placeholder="Important Note..."></div>`;
-                
-                else if(type === 'image' || type === 'html') {
+                if (type === "p")
+                    html = `<div class="editable-area" contenteditable="true" placeholder="Enter text..."></div>`;
+                else if (type === "h2")
+                    html = `<h2 class="editable-area" contenteditable="true" placeholder="Heading 2"></h2>`;
+                else if (type === "h3")
+                    html = `<h3 class="editable-area" contenteditable="true" placeholder="Heading 3"></h3>`;
+                else if (type === "list-ul")
+                    html = `<ul class="editable-area" contenteditable="true"><li>List Item</li></ul>`;
+                else if (type === "list-ol")
+                    html = `<ol class="editable-area" contenteditable="true"><li>Step 1</li></ol>`;
+                else if (type === "info-box")
+                    html = `<div class="info-box editable-area" contenteditable="true" placeholder="Important Note..."></div>`;
+                else if (type === "image" || type === "html") {
                     html = `<div class="media-placeholder" onclick="window.insertMedia(this, '${type}')"><i class="fas fa-plus-circle"></i> Click to Insert ${type.toUpperCase()}</div>`;
-                }
-                else if(type === 'youtube') {
+                } else if (type === "youtube") {
                     html = `<div class="media-placeholder" onclick="window.insertMedia(this, 'youtube')"><i class="fab fa-youtube"></i> Click to Embed Video</div>`;
-                }
-                else if(type === 'table') {
+                } else if (type === "table") {
                     html = `<div class="table-container"><table class="dynamic-table"><thead><tr><th contenteditable="true">Header 1</th><th contenteditable="true">Header 2</th></tr></thead><tbody><tr><td contenteditable="true">Data</td><td contenteditable="true">Data</td></tr></tbody></table></div><div class="table-tools"><button onclick="window.tblAddRow(this)">+ Row</button></div>`;
                 }
 
@@ -679,10 +794,12 @@
                 // Recreate Add Zone
                 const newZone = document.createElement("div");
                 newZone.className = "add-zone";
-                newZone.onclick = function() { window.openBlockMenu(this); };
+                newZone.onclick = function () {
+                    window.openBlockMenu(this);
+                };
                 newZone.innerHTML = `<div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>`;
 
-                if(activeAddZone && activeAddZone.parentNode) {
+                if (activeAddZone && activeAddZone.parentNode) {
                     activeAddZone.parentNode.insertBefore(wrapper, activeAddZone.nextSibling);
                     wrapper.parentNode.insertBefore(newZone, wrapper.nextSibling);
                 } else {
@@ -702,11 +819,11 @@
             window.moveBlock = (btn, dir) => {
                 const w = btn.closest(".block-wrapper");
                 const z = w.nextElementSibling; // The add zone after it
-                if(dir === -1 && w.previousElementSibling?.previousElementSibling) {
+                if (dir === -1 && w.previousElementSibling?.previousElementSibling) {
                     // Move up
                     w.parentNode.insertBefore(w, w.previousElementSibling.previousElementSibling);
                     w.parentNode.insertBefore(z, w.nextSibling);
-                } else if(dir === 1 && z.nextElementSibling) {
+                } else if (dir === 1 && z.nextElementSibling) {
                     // Move down
                     const nextW = z.nextElementSibling;
                     const nextZ = nextW.nextElementSibling;
@@ -716,7 +833,7 @@
             };
 
             window.deleteBlock = (btn) => {
-                if(confirm("Delete this block?")) {
+                if (confirm("Delete this block?")) {
                     const w = btn.closest(".block-wrapper");
                     w.nextElementSibling.remove(); // Remove add zone
                     w.remove(); // Remove block
@@ -724,10 +841,10 @@
             };
 
             window.tblAddRow = (btn) => {
-                const table = btn.parentElement.previousElementSibling.querySelector('table');
+                const table = btn.parentElement.previousElementSibling.querySelector("table");
                 const row = table.insertRow();
                 const cols = table.rows[0].cells.length;
-                for(let i=0; i<cols; i++) {
+                for (let i = 0; i < cols; i++) {
                     const cell = row.insertCell();
                     cell.contentEditable = true;
                     cell.innerText = "Data";
@@ -736,23 +853,23 @@
 
             window.insertMedia = (el, type) => {
                 const code = prompt(`Enter ${type} URL or Code:`);
-                if(!code) return;
-                
+                if (!code) return;
+
                 let html = code;
-                if(type === 'image' && (code.startsWith('http') || code.match(/\.(png|jpg|jpeg|gif|webp)/))) {
+                if (type === "image" && (code.startsWith("http") || code.match(/\.(png|jpg|jpeg|gif|webp)/))) {
                     html = `<img src="${code}" alt="Image">`;
-                } else if (type === 'youtube') {
+                } else if (type === "youtube") {
                     let v = "";
-                    if(code.includes("watch?v=")) v = code.split("watch?v=")[1];
-                    else if(code.includes("embed/")) v = code.split("embed/")[1];
-                    else if(code.includes("youtu.be/")) v = code.split("youtu.be/")[1];
-                    
-                    if(v) {
-                        v = v.split("&")[0]; 
+                    if (code.includes("watch?v=")) v = code.split("watch?v=")[1];
+                    else if (code.includes("embed/")) v = code.split("embed/")[1];
+                    else if (code.includes("youtu.be/")) v = code.split("youtu.be/")[1];
+
+                    if (v) {
+                        v = v.split("&")[0];
                         html = `<div class="iframe-container"><iframe src="https://www.youtube.com/embed/${v}" frameborder="0" allowfullscreen></iframe></div>`;
                     }
                 }
-                
+
                 // Replace placeholder with content
                 el.outerHTML = html;
             };
@@ -761,16 +878,16 @@
             window.getCleanHTML = () => {
                 const clone = document.getElementById("editor-canvas").cloneNode(true);
                 // Remove UI elements
-                clone.querySelectorAll('.add-zone, .side-controls, .table-tools').forEach(e => e.remove());
+                clone.querySelectorAll(".add-zone, .side-controls, .table-tools").forEach((e) => e.remove());
                 // Clean attributes
-                clone.querySelectorAll('*').forEach(e => {
-                    e.removeAttribute('contenteditable');
-                    e.removeAttribute('placeholder');
-                    e.removeAttribute('onclick');
+                clone.querySelectorAll("*").forEach((e) => {
+                    e.removeAttribute("contenteditable");
+                    e.removeAttribute("placeholder");
+                    e.removeAttribute("onclick");
                 });
                 // Unwrap wrappers
-                clone.querySelectorAll('.block-wrapper').forEach(w => {
-                    w.removeAttribute('class');
+                clone.querySelectorAll(".block-wrapper").forEach((w) => {
+                    w.removeAttribute("class");
                     w.style = "margin-bottom: 1.5em;";
                 });
                 return clone.innerHTML;
@@ -778,25 +895,31 @@
 
             // SAVE POST LOGIC
             window.savePost = async (status) => {
-                if(!currentUser) { alert("Please login first via Admin Panel!"); return; }
-                
+                if (!currentUser) {
+                    alert("Please login first via Admin Panel!");
+                    return;
+                }
+
                 const title = document.getElementById("doc-h1").value;
                 const file = document.getElementById("fileName").value;
                 const desc = document.getElementById("doc-desc").value;
-                
+
                 // Reading values from updated inputs
-                const category = document.getElementById("postCategory").value; 
+                const category = document.getElementById("postCategory").value;
                 const authorInput = document.getElementById("authorNameField").value;
                 const authorName = authorInput ? authorInput : "GK Learn Study"; // Fallback if empty
 
-                if(!title || !file) { alert("Title & Filename are required!"); return; }
+                if (!title || !file) {
+                    alert("Title & Filename are required!");
+                    return;
+                }
 
                 // FIXED: DIRECT FILE PATH (No /kaise-karen/ folder)
                 const fileUrl = `/${file}.html`;
-                
+
                 const content = window.getCleanHTML();
                 const fullHtml = generateTemplate(title, desc, content, fileUrl, category, authorName);
-                
+
                 const docId = editingDocId || `kaise-karen-${file}`;
 
                 try {
@@ -810,24 +933,26 @@
                         author: currentUser.email, // This is for DB tracking (who saved it)
                         displayAuthor: authorName, // This is for display (e.g. Himanshu Tyagi)
                         date: new Date().toISOString(),
-                        status: status
+                        status: status,
                     });
                     alert("Saved Successfully!");
-                    if(!editingDocId) window.location.href = "admin.html";
-                } catch(e) { alert("Error: " + e.message); }
+                    if (!editingDocId) window.location.href = "admin.html";
+                } catch (e) {
+                    alert("Error: " + e.message);
+                }
             };
 
             window.previewPost = () => {
                 const title = document.getElementById("doc-h1").value;
                 const desc = document.getElementById("doc-desc").value;
                 const content = window.getCleanHTML();
-                
+
                 const category = document.getElementById("postCategory").value;
                 const author = document.getElementById("authorNameField").value || "Preview Author";
 
                 const html = generateTemplate(title, desc, content, "#", category, author);
-                
-                const win = window.open("","_blank");
+
+                const win = window.open("", "_blank");
                 win.document.write(html);
                 win.document.close();
             };
@@ -835,9 +960,11 @@
             // TEMPLATE GENERATOR WITH FULL SEO META TAGS
             function generateTemplate(h1, desc, content, pageUrl, category, authorName) {
                 const imgName = document.getElementById("imgName").value;
-                const ogImage = imgName ? `https://gklearnstudy.in/images/${imgName}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
+                const ogImage = imgName
+                    ? `https://gklearnstudy.in/images/${imgName}.png`
+                    : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const categoryUrl = `https://gklearnstudy.in/categories.html?category=${encodeURIComponent(category)}`;
-                
+
                 const dateNow = new Date().toISOString();
 
                 // FULL SEO HTML STRUCTURE
@@ -867,7 +994,8 @@
         <meta name="twitter:title" content="${h1} | GK Learn Study" />
         <meta name="twitter:description" content="${desc}" />
         <meta name="twitter:image" content="${ogImage}" />
-        
+         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"><\/script>
+
         <!-- CSS -->
         <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
         <link rel="stylesheet" href="https://gklearnstudy.in/css/menu.css">
@@ -901,8 +1029,7 @@
         }
         <\/script>
         
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"><\/script>
-    </head>
+         </head>
     <body>
         <header class="header" id="header">
             <nav class="navbar">
@@ -1134,11 +1261,84 @@
                         <ul id="toc-list-mobile"></ul>
                     </div>
                 </details>
-                    <header class="article-header">
+                    
+                    
+                    <section class="intro-section" data-ctx-hero>
+    <div class="hero">
+
+        <!-- IMAGE -->
+        <div class="hero-image">
+            <img class="ctx-image" alt="${h1}">
+        </div>
+
+        <div class="hero-text">
+           
+                        
+                        
                         <a href="${categoryUrl}" class="category-link">${category}</a>
-                        <h1>${h1}</h1>
-                        <div class="article-meta">By ${authorName} | ${new Date().toLocaleDateString()}</div>
-                    </header>
+                        <h1 id="pageTitle">${h1}</h1>
+                        
+                         <p id="pageDesc">${desc}</p>
+                         
+                         
+                                            
+
+  <canvas class="ctx-canvas" width="1920" height="1080" hidden></canvas>
+</section>
+                        
+                        
+                        <div class="post-meta-container">
+                        <div class="byline">
+                            <div class="author-avatar">
+
+
+                                <a class="url fn n" href="/profile.html?author=Owner" rel="author" title="GK Learn Study">
+                              ${authorName.charAt(0)}
+                                </a>
+
+
+                            </div>
+
+
+ <div class="article-meta">
+
+
+                            <div class="author-details">
+                                <span class="author vcard">
+                                    by
+                                    <span class="name">
+                                        <a class="url fn n" href="/profile.html?author=${authorName}" rel="author" title="${authorName}">
+                                           ${authorName}
+                                        </a>
+                                    </span>
+                                    <span class="author-status verified">
+                                        <a class="verified-author" title="Verified Author" aria-label="Verified Author" role="img">
+                                            <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                </span>
+                                <span class="entry-modified-date">
+                                     Updated on
+                                    <time class="entry-date updated">
+                                       ${new Date().toLocaleDateString()}
+                                    </time>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="share-button-wrapper">
+                            <button id="shareButton" class="share-button" title="Share this page">
+                                <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path>
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                    </div>
+                       </div>
+                    </div>
 
                     <div class="article-body" id="article-content">
                         ${content}
@@ -1346,7 +1546,8 @@
 
         <!-- JS -->
         <script src="https://gklearnstudy.in/js/theme.js" defer><\/script>
-        <script src="https://gklearnstudy.in/js/rightside.js" defer><\/script>
+         <script src="https://gklearnstudy.in/js/search-data.js" defer><\/script>
+<script src="https://gklearnstudy.in/js/rightside.js" defer><\/script>
         <script type="module" src="https://gklearnstudy.in/js/comment.js" defer><\/script>
         
         
@@ -1448,22 +1649,22 @@
             // AUTH STATE & LOAD CONTENT
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
-                const status = document.getElementById('auth-status');
-                if(user) {
+                const status = document.getElementById("auth-status");
+                if (user) {
                     status.innerHTML = `<span style="color:green"><i class="fas fa-check-circle"></i> Logged In</span>`;
-                    
+
                     // PRE-FILL AUTHOR NAME (Name only, fallback to empty or Admin, NO EMAIL)
-                    const authorField = document.getElementById('authorNameField');
+                    const authorField = document.getElementById("authorNameField");
                     if (user.displayName) {
                         authorField.value = user.displayName;
                     } else {
                         // Optional: Default to a generic name or leave blank for him to fill
-                        authorField.value = "Himanshu Tyagi"; 
+                        authorField.value = "Himanshu Tyagi";
                     }
 
                     // Check for ?id= parameter to load existing post for editing
                     const params = new URLSearchParams(window.location.search);
-                    if(params.get("id")) loadContent(params.get("id"));
+                    if (params.get("id")) loadContent(params.get("id"));
                 } else {
                     status.innerHTML = `<span style="color:orange"><i class="fas fa-exclamation-triangle"></i> Guest Mode</span>`;
                 }
@@ -1475,39 +1676,54 @@
                     // Try finding in pending_posts first
                     let snap = await getDoc(doc(db, "pending_posts", id));
                     // If not found, try published_posts
-                    if(!snap.exists()) snap = await getDoc(doc(db, "published_posts", id));
-                    
-                    if(snap.exists()) {
+                    if (!snap.exists()) snap = await getDoc(doc(db, "published_posts", id));
+
+                    if (snap.exists()) {
                         const data = snap.data();
                         document.getElementById("doc-h1").value = data.title || "";
                         document.getElementById("doc-desc").value = data.paragraph || "";
-                        
+
                         // Set Category if it exists in the list
                         const catSelect = document.getElementById("postCategory");
-                        if(data.category) {
+                        if (data.category) {
                             catSelect.value = data.category;
                         }
 
                         // Set Author Name from saved data
-                        if(data.displayAuthor) {
+                        if (data.displayAuthor) {
                             document.getElementById("authorNameField").value = data.displayAuthor;
                         }
 
                         // Extract filename from URL (remove path and extension)
-                        const fname = data.url ? data.url.split('/').pop().replace('.html','') : "";
+                        const fname = data.url ? data.url.split("/").pop().replace(".html", "") : "";
                         document.getElementById("fileName").value = fname;
-                        
-                        if(data.raw_blocks) {
+
+                        if (data.raw_blocks) {
                             document.getElementById("editor-canvas").innerHTML = data.raw_blocks;
                         }
                     }
-                } catch(e) { console.error("Load Error:", e); }
+                } catch (e) {
+                    console.error("Load Error:", e);
+                }
             }
 
             // Attach Global Functions
             window.savePost = savePost;
             window.previewPost = previewPost;
-
+        </script>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("/firebase-messaging-sw.js")
+                        .then((r) => console.log("Firebase Messaging SW registered.", r.scope))
+                        .catch((e) => console.error("Firebase Messaging SW registration failed:", e));
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .then((r) => console.log("Caching SW registered.", r.scope))
+                        .catch((e) => console.error("Caching SW registration failed:", e));
+                });
+            }
         </script>
     </body>
 </html>
