@@ -298,77 +298,54 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-// 🔒 BASIC IMAGE PROTECTION
+
 document.addEventListener("dragstart",e=>e.preventDefault());
-document.addEventListener("touchstart",e=>{
-    if(e.touches.length>1) e.preventDefault();
-},{passive:false});
 
 (function(){
 
-/* ==================================================
-   🔐 SAFETY GUARDS (MOST IMPORTANT PART)
-   ================================================== */
-
-// 1️⃣ Sirf wahi section jahan data-ctx-hero ho
+/* ========= SAFETY GUARDS ========= */
 const heroSection = document.querySelector("[data-ctx-hero]");
 if (!heroSection) return;
-
-// 2️⃣ Agar pehle se SVG exist karta hai → EXIT
 if (heroSection.querySelector("svg")) return;
 
-// 3️⃣ Agar image ka src pehle se set hai → EXIT
 const img = heroSection.querySelector(".ctx-image");
 if (!img || img.getAttribute("src")) return;
 
-// 4️⃣ Canvas exist na kare → EXIT
 const canvas = heroSection.querySelector(".ctx-canvas");
 if (!canvas) return;
 
-/* ==================================================
-   🎨 CTX IMAGE GENERATION START
-   ================================================== */
-
 const ctx = canvas.getContext("2d");
 
-const category = heroSection.querySelector("#categoryName")?.innerText || "";
-const title    = heroSection.querySelector("#pageTitle")?.innerText || "";
-const desc     = heroSection.querySelector("#pageDesc")?.innerText || "";
+/* ========= DATA FROM EXISTING HTML ========= */
+const categoryLink = heroSection.querySelector(".category-link");
+const category = categoryLink ? categoryLink.textContent.trim() : "";
 
-/* 🔥 50+ PREMIUM COLOR PALETTES */
-const palettes = [
+const title = heroSection.querySelector("#pageTitle")?.innerText || "";
+const desc  = heroSection.querySelector("#pageDesc")?.innerText || "";
+
+/* ========= PREMIUM BACKGROUND ========= */
+const palettes=[
 ["#020617","#1e1b4b"],["#020617","#3b0764"],["#020617","#312e81"],
-["#020617","#1f2937"],["#020617","#0f766e"],["#020617","#1e293b"],
-["#020617","#4c1d95"],["#020617","#155e75"],["#020617","#581c87"],
-["#020617","#3f1d38"],["#020617","#022c22"],["#020617","#1e3a8a"],
-["#020617","#7c2d12"],["#020617","#064e3b"],["#020617","#2e1065"],
-["#020617","#111827"],["#020617","#083344"],["#020617","#020617"],
-["#020617","#0c4a6e"],["#020617","#052e16"]
+["#020617","#1f2937"],["#020617","#0f766e"],["#020617","#4c1d95"],
+["#020617","#581c87"],["#020617","#083344"],["#020617","#111827"]
 ];
+const pick=palettes[Math.floor(Math.random()*palettes.length)];
 
-const pick = palettes[Math.floor(Math.random()*palettes.length)];
-
-/* BACKGROUND */
-const bg = ctx.createLinearGradient(0,0,1920,1080);
+const bg=ctx.createLinearGradient(0,0,1920,1080);
 bg.addColorStop(0,pick[0]);
 bg.addColorStop(1,pick[1]);
-ctx.fillStyle = bg;
+ctx.fillStyle=bg;
 ctx.fillRect(0,0,1920,1080);
 
-/* 3–4 RANDOM 3D GLOW SHAPES */
+/* ========= 3D GLOWS ========= */
 for(let i=0;i<4;i++){
-    ctx.fillStyle = `rgba(167,139,250,${0.12+Math.random()*0.1})`;
+    ctx.fillStyle=`rgba(167,139,250,${0.12+Math.random()*0.1})`;
     ctx.beginPath();
-    ctx.arc(
-        Math.random()*1920,
-        Math.random()*1080,
-        250+Math.random()*300,
-        0,Math.PI*2
-    );
+    ctx.arc(Math.random()*1920,Math.random()*1080,260+Math.random()*280,0,Math.PI*2);
     ctx.fill();
 }
 
-/* WATERMARK (REPEAT WITH GAP) */
+/* ========= WATERMARK ========= */
 ctx.save();
 ctx.translate(960,540);
 ctx.rotate(-0.35);
@@ -382,30 +359,25 @@ for(let y=-1400;y<=1400;y+=260){
 }
 ctx.restore();
 
-/* CATEGORY */
+/* ========= CATEGORY ========= */
 ctx.fillStyle="#ffffffcc";
 ctx.font="600 42px Arial";
 ctx.textAlign="left";
 ctx.fillText(category,80,110);
 
-/* TITLE */
+/* ========= TITLE ========= */
 ctx.fillStyle="#ffffff";
 ctx.font="700 96px Arial";
 ctx.textAlign="center";
 ctx.fillText(title,960,500);
 
-/* DESCRIPTION (AUTO + ..... ONLY WHEN CUT) */
+/* ========= DESCRIPTION ========= */
 ctx.fillStyle="#e9d5ff";
 ctx.font="400 52px Arial";
 ctx.textAlign="center";
 
-const maxWidth=1400;
-const lineHeight=62;
-const maxLines=3;
-
-let words=desc.split(" ");
-let line="", lines=[], cut=false;
-let startY=580;
+const maxWidth=1400, lineHeight=62, maxLines=3;
+let words=desc.split(" "), line="", lines=[], cut=false, y=580;
 
 for(let w of words){
     let test=line+w+" ";
@@ -413,34 +385,25 @@ for(let w of words){
         lines.push(line.trim());
         line=w+" ";
         if(lines.length===maxLines){cut=true;break;}
-    }else{
-        line=test;
-    }
+    }else line=test;
 }
 if(lines.length<maxLines && line) lines.push(line.trim());
+if(cut) lines[maxLines-1]=lines[maxLines-1].replace(/\s+\S*$/,"")+".....";
 
-if(cut){
-    lines[maxLines-1]=lines[maxLines-1].replace(/\s+\S*$/,"")+".....";
-}
+lines.forEach((l,i)=>ctx.fillText(l,960,y+i*lineHeight));
 
-lines.forEach((l,i)=>{
-    ctx.fillText(l,960,startY+i*lineHeight);
-});
-
-/* ROUNDED CORNERS */
+/* ========= ROUND ========= */
 ctx.globalCompositeOperation="destination-in";
-const r=40;
 ctx.beginPath();
-ctx.moveTo(r,0);
-ctx.arcTo(1920,0,1920,1080,r);
-ctx.arcTo(1920,1080,0,1080,r);
-ctx.arcTo(0,1080,0,0,r);
-ctx.arcTo(0,0,1920,0,r);
+ctx.moveTo(40,0);
+ctx.arcTo(1920,0,1920,1080,40);
+ctx.arcTo(1920,1080,0,1080,40);
+ctx.arcTo(0,1080,0,0,40);
+ctx.arcTo(0,0,1920,0,40);
 ctx.closePath();
 ctx.fill();
 ctx.globalCompositeOperation="source-over";
 
-/* OUTPUT IMAGE */
-img.src = canvas.toDataURL("image/png");
+img.src=canvas.toDataURL("image/png");
 
 })();
