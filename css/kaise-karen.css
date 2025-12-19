@@ -363,4 +363,18 @@ html[data-theme=dark] .copy-code-btn.copied {
             margin-top: 10px;
         }
         .byline { display: flex; align-items: center; gap: 15px; }
-
+.intro-section p {
+    color: var(--accent-color);}
+.category-link {
+    display: inline-block !important;
+    background-color: var(--accent-color) !important;
+    color: var(--input-bg) !important;
+    padding: 6px 16px !important;
+    border-radius: 50px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    margin-bottom: 15px !important;
+    letter-spacing: 0.5px !important;
+}
