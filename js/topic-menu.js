@@ -19,77 +19,76 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        // --- 1. फोल्डर ढूंढने का नया और सटीक तरीका ---
-        // उदाहरण: /himanshu/tyagi.html -> segments = ['himanshu', 'tyagi.html']
+        // --- 1. फोल्डर डिटेक्शन ---
         const fullPath = window.location.pathname; 
         const segments = fullPath.split('/').filter(s => s.length > 0);
         
         let currentFolder = "General";
-        
-        // अगर पाथ में कम से कम एक स्लैश है, तो पहला हिस्सा फोल्डर है
         if (segments.length >= 1) {
-            // अगर पहला हिस्सा .html पर खत्म नहीं हो रहा, तो वही फोल्डर है
+            // अगर /himanshu/tyagi.html है तो segments[0] 'himanshu' होगा
             if (!segments[0].includes('.html')) {
                 currentFolder = segments[0];
             }
         }
 
-        console.log("Auto-Detected Folder:", currentFolder);
+        console.log("Detecting links for folder:", currentFolder);
+
+        // --- 2. JSON Fetch (Absolute Path Logic) ---
+        // 'gklearnstudy.in' को बेस मानकर फाइल ढूंढना
+        const domain = window.location.origin;
+        const jsonUrl = (domain.includes('file://') ? '' : domain) + '/data/topic-menu.json?v=' + Date.now();
 
         try {
-            // --- 2. JSON डेटा फेच करना (Cache साफ़ करने के लिए ?v= का उपयोग) ---
-            const response = await fetch('/data/topic-menu.json?v=' + Date.now());
-            if (response.ok) {
-                const menuData = await response.json();
-                
-                // फोल्डर के लिंक निकालें (जैसे 'himanshu')
-                const folderLinks = menuData[currentFolder] || [];
-                
-                let ul = sidebarNav.querySelector('ul');
-                if (!ul) {
-                    ul = document.createElement('ul');
-                    sidebarNav.appendChild(ul);
-                }
+            const response = await fetch(jsonUrl);
+            if (!response.ok) throw new Error("JSON file not found at " + jsonUrl);
+            
+            const menuData = await response.json();
+            const folderLinks = menuData[currentFolder] || [];
+            
+            let ul = sidebarNav.querySelector('ul');
+            if (!ul) {
+                ul = document.createElement('ul');
+                sidebarNav.appendChild(ul);
+            }
 
-                // पुराने लिंक साफ़ करें
-                ul.innerHTML = ''; 
+            ul.innerHTML = ''; 
 
-                if (folderLinks.length > 0) {
-                    folderLinks.forEach(item => {
-                        const li = document.createElement('li');
-                        
-                        // पाथ मैचिंग को आसान बनाना (स्लैश की चिंता छोड़कर)
-                        const normalizedCurrent = fullPath.toLowerCase().replace(/^\/|\/$/g, '');
-                        const normalizedItem = item.url.toLowerCase().replace(/^\/|\/$/g, '');
-                        
-                        const isThisPage = normalizedCurrent === normalizedItem || 
-                                         fullPath.endsWith(item.url) || 
-                                         item.url.includes(segments[segments.length-1]);
-
-                        const activeClass = isThisPage ? 'class="active"' : '';
-                        
-                        li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
-                        ul.appendChild(li);
-                    });
-
-                    // साइडबार टाइटल को फोल्डर के नाम से बदलें
-                    const titleEl = sidebar.querySelector('.sidebar-title');
-                    if(titleEl) {
-                        titleEl.textContent = currentFolder.toUpperCase().replace(/-/g, ' ');
-                    }
+            if (folderLinks.length > 0) {
+                folderLinks.forEach(item => {
+                    const li = document.createElement('li');
                     
-                    // डेस्कटॉप पर साइडबार दिखाना सुनिश्चित करें
-                    if (window.innerWidth > 991) {
-                        sidebar.style.transform = "translateX(0)";
-                        sidebar.style.display = "block";
-                    }
-                } else {
-                    console.warn("No data for folder in JSON:", currentFolder);
-                    ul.innerHTML = '<li><a href="/" class="active">Home / General</a></li>';
+                    // Active link check
+                    const normalizedCurrent = fullPath.toLowerCase().replace(/^\/|\/$/g, '');
+                    const normalizedItem = item.url.toLowerCase().replace(/^\/|\/$/g, '');
+                    
+                    const isThisPage = normalizedCurrent === normalizedItem || 
+                                     fullPath.endsWith(item.url) || 
+                                     item.url.includes(segments[segments.length-1]);
+
+                    const activeClass = isThisPage ? 'class="active"' : '';
+                    
+                    li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
+                    ul.appendChild(li);
+                });
+
+                // Title Update
+                const titleEl = sidebar.querySelector('.sidebar-title');
+                if(titleEl) titleEl.textContent = currentFolder.toUpperCase().replace(/-/g, ' ');
+                
+                // Desktop Sidebar Visible Fix
+                if (window.innerWidth > 991) {
+                    sidebar.style.transform = "translateX(0)";
+                    sidebar.style.display = "block";
                 }
+            } else {
+                console.warn("No links found for:", currentFolder);
+                ul.innerHTML = '<li><a href="/" class="active">Home / No Topic Data</a></li>';
             }
         } catch (error) {
-            console.error("Sidebar logic failed:", error);
+            console.error("Critical Sidebar Error:", error.message);
+            if(window.location.protocol === 'file:') {
+                console.error("TIP: You are opening HTML as a file. Use a local server (like Live Server) for AJAX/Fetch to work.");
+            }
         }
 
         sidebarNav.addEventListener("click", (e) => {
@@ -100,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Right Sidebar Logic (Preserved)
+// Right Sidebar Logic (Unchanged but fixed potential null error from console)
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
@@ -128,9 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function moveSidebarForMobile() {
         const sidebar = document.getElementById("right-sidebar");
-        if (!sidebar) return;
         const commentsBlock = document.getElementById("comments-and-ratings-container");
-        if (!commentsBlock) return;
+        if (!sidebar || !commentsBlock) return;
 
         if (window.innerWidth <= 768) {
             if (sidebar.parentNode !== commentsBlock.parentNode) {
