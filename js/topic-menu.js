@@ -19,21 +19,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        sidebarNav.addEventListener("click", (e) => {
-            if (e.target.tagName === "A") {
-                const currentActive = sidebarNav.querySelector("a.active");
-                if (currentActive) currentActive.classList.remove("active");
-                e.target.classList.add("active");
-                if (window.innerWidth <= 991) closeMobileSidebar();
-            }
-        });
-
-        // --- NEW DYNAMIC LINK LOADING ---
-        const path = window.location.pathname;
+        // --- DYNAMIC FOLDER DETECTION ---
+        const path = window.location.pathname; 
         const segments = path.split('/').filter(s => s.length > 0);
+        // अगर path /himanshu/golu.html है, तो folder 'himanshu' होगा
         const currentFolder = segments.length > 1 ? segments[0] : "General";
 
         try {
+            // Fetch the menu database
             const response = await fetch('/data/topic-menu.json?v=' + Date.now());
             if (response.ok) {
                 const menuData = await response.json();
@@ -45,28 +38,51 @@ document.addEventListener('DOMContentLoaded', async () => {
                     sidebarNav.appendChild(ul);
                 }
 
+                // उस फोल्डर के सभी लिंक्स को लूप करके साइडबार में जोड़ें
                 dynamicLinks.forEach(item => {
-                    // Check if link already exists in manual HTML to avoid duplicates
-                    const exists = Array.from(ul.querySelectorAll('a')).some(a => a.getAttribute('href') === item.url);
-                    if (!exists) {
+                    // चेक करें कि क्या यह लिंक पहले से HTML में मौजूद है (डुप्लीकेट रोकने के लिए)
+                    const existingLinks = Array.from(ul.querySelectorAll('a'));
+                    const isAlreadyInHtml = existingLinks.some(a => {
+                        const href = a.getAttribute('href');
+                        return href === item.url || href === 'https://gklearnstudy.in' + item.url;
+                    });
+
+                    if (!isAlreadyInHtml) {
                         const li = document.createElement('li');
+                        // अगर वर्तमान URL लिंक के URL से मैच करता है, तो active क्लास दें
                         const isActive = path.endsWith(item.url) ? 'class="active"' : '';
                         li.innerHTML = `<a href="${item.url}" ${isActive}>${item.title}</a>`;
                         ul.appendChild(li);
+                    } else {
+                        // अगर पहले से मौजूद है, तो बस चेक करें कि क्या उसे active दिखाना है
+                        existingLinks.forEach(a => {
+                            if(a.getAttribute('href') === item.url && path.endsWith(item.url)) {
+                                a.classList.add('active');
+                            }
+                        });
                     }
                 });
 
+                // साइडबार का टाइटल फोल्डर के नाम पर रखें
                 const titleEl = sidebar.querySelector('.sidebar-title');
-                if (titleEl && currentFolder !== "General") {
+                if(titleEl && currentFolder !== "General") {
                     titleEl.textContent = currentFolder.replace(/-/g, ' ').toUpperCase();
                 }
             }
         } catch (error) {
-            console.warn("Dynamic menu failed to load, keeping manual links:", error);
+            console.warn("Dynamic menu system failed to load folder items:", error);
         }
+
+        // Sidebar click handler for mobile
+        sidebarNav.addEventListener("click", (e) => {
+            if (e.target.tagName === "A") {
+                if (window.innerWidth <= 991) closeMobileSidebar();
+            }
+        });
     }
 });
 
+// Existing Right Sidebar & Mobile Logic
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
