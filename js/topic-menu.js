@@ -19,18 +19,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        // --- DYNAMIC FOLDER DETECTION ---
-        const path = window.location.pathname; 
-        const segments = path.split('/').filter(s => s.length > 0);
-        // अगर path /himanshu/golu.html है, तो folder 'himanshu' होगा
-        const currentFolder = segments.length > 1 ? segments[0] : "General";
+        // --- 1. CURRENT FOLDER & PATH DETECTION ---
+        const fullPath = window.location.pathname; 
+        const segments = fullPath.split('/').filter(s => s.length > 0);
+        
+        // Example: /himanshu/golu.html -> folder is 'himanshu'
+        // If it's a root file like /index.html -> folder is 'General'
+        const currentFolder = (segments.length > 1) ? segments[0] : "General";
 
         try {
-            // Fetch the menu database
+            // --- 2. FETCH THE DATABASE ---
             const response = await fetch('/data/topic-menu.json?v=' + Date.now());
             if (response.ok) {
                 const menuData = await response.json();
-                const dynamicLinks = menuData[currentFolder] || [];
+                const folderLinks = menuData[currentFolder] || [];
                 
                 let ul = sidebarNav.querySelector('ul');
                 if (!ul) {
@@ -38,51 +40,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                     sidebarNav.appendChild(ul);
                 }
 
-                // उस फोल्डर के सभी लिंक्स को लूप करके साइडबार में जोड़ें
-                dynamicLinks.forEach(item => {
-                    // चेक करें कि क्या यह लिंक पहले से HTML में मौजूद है (डुप्लीकेट रोकने के लिए)
-                    const existingLinks = Array.from(ul.querySelectorAll('a'));
-                    const isAlreadyInHtml = existingLinks.some(a => {
-                        const href = a.getAttribute('href');
-                        return href === item.url || href === 'https://gklearnstudy.in' + item.url;
+                // --- 3. DYNAMIC RENDER ---
+                // साफ़ करें ताकि केवल फोल्डर के लिंक्स ही दिखें
+                ul.innerHTML = ''; 
+
+                if (folderLinks.length > 0) {
+                    folderLinks.forEach(item => {
+                        const li = document.createElement('li');
+                        
+                        // Check if this link is the current active page
+                        // We check if the pathname ends with the item.url or matches exactly
+                        const isThisPage = fullPath.endsWith(item.url) || fullPath === item.url;
+                        const activeClass = isThisPage ? 'class="active"' : '';
+                        
+                        li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
+                        ul.appendChild(li);
                     });
 
-                    if (!isAlreadyInHtml) {
-                        const li = document.createElement('li');
-                        // अगर वर्तमान URL लिंक के URL से मैच करता है, तो active क्लास दें
-                        const isActive = path.endsWith(item.url) ? 'class="active"' : '';
-                        li.innerHTML = `<a href="${item.url}" ${isActive}>${item.title}</a>`;
-                        ul.appendChild(li);
-                    } else {
-                        // अगर पहले से मौजूद है, तो बस चेक करें कि क्या उसे active दिखाना है
-                        existingLinks.forEach(a => {
-                            if(a.getAttribute('href') === item.url && path.endsWith(item.url)) {
-                                a.classList.add('active');
-                            }
-                        });
+                    // Update Sidebar Title to Category Name
+                    const titleEl = sidebar.querySelector('.sidebar-title');
+                    if(titleEl) {
+                        titleEl.textContent = currentFolder.replace(/-/g, ' ').toUpperCase();
                     }
-                });
-
-                // साइडबार का टाइटल फोल्डर के नाम पर रखें
-                const titleEl = sidebar.querySelector('.sidebar-title');
-                if(titleEl && currentFolder !== "General") {
-                    titleEl.textContent = currentFolder.replace(/-/g, ' ').toUpperCase();
+                } else {
+                    // Fallback if folder has no links in JSON
+                    ul.innerHTML = '<li><a href="/" class="active">Home</a></li>';
                 }
             }
         } catch (error) {
-            console.warn("Dynamic menu system failed to load folder items:", error);
+            console.error("Dynamic menu render failed:", error);
         }
 
-        // Sidebar click handler for mobile
+        // Handle mobile auto-close
         sidebarNav.addEventListener("click", (e) => {
-            if (e.target.tagName === "A") {
-                if (window.innerWidth <= 991) closeMobileSidebar();
+            if (e.target.tagName === "A" && window.innerWidth <= 991) {
+                closeMobileSidebar();
             }
         });
     }
 });
 
-// Existing Right Sidebar & Mobile Logic
+// Existing Right Sidebar & Mobile Logic (Preserved)
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
