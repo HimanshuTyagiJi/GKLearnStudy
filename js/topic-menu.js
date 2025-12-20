@@ -5,13 +5,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sidebarOverlay = document.getElementById("sidebar-overlay");
     const sidebarNav = document.getElementById("topic-nav");
 
-    // मोबाइल के लिए क्लोज फंक्शन
     function closeMobileSidebar() {
         if (sidebar) sidebar.classList.remove("is-open");
         if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
     }
 
-    // टॉगल बटन इवेंट
     if (sidebarToggle && sidebar && sidebarOverlay) {
         sidebarToggle.addEventListener("click", () => {
             sidebar.classList.toggle("is-open");
@@ -21,31 +19,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        // --- 1. फोल्डर डिटेक्शन (Very Important) ---
+        // --- 1. फोल्डर ढूंढने का नया और सटीक तरीका ---
+        // उदाहरण: /himanshu/tyagi.html -> segments = ['himanshu', 'tyagi.html']
         const fullPath = window.location.pathname; 
         const segments = fullPath.split('/').filter(s => s.length > 0);
         
-        // अगर आप https://gklearnstudy.in/himanshu/golu.html पर हैं:
-        // segments[0] होगा 'himanshu'
         let currentFolder = "General";
         
-        if (segments.length > 1) {
-            currentFolder = segments[0]; // 'himanshu' फोल्डर मिल गया
-        } else if (segments.length === 1 && !segments[0].endsWith('.html')) {
-            currentFolder = segments[0];
+        // अगर पाथ में कम से कम एक स्लैश है, तो पहला हिस्सा फोल्डर है
+        if (segments.length >= 1) {
+            // अगर पहला हिस्सा .html पर खत्म नहीं हो रहा, तो वही फोल्डर है
+            if (!segments[0].includes('.html')) {
+                currentFolder = segments[0];
+            }
         }
 
-        console.log("Current Detected Folder:", currentFolder);
+        console.log("Auto-Detected Folder:", currentFolder);
 
         try {
-            // --- 2. JSON डेटा फेच करना ---
-            // 'v=' वाला हिस्सा ब्राउज़र को मजबूर करता है कि वह पुरानी फाइल न दिखाए (No Cache)
+            // --- 2. JSON डेटा फेच करना (Cache साफ़ करने के लिए ?v= का उपयोग) ---
             const response = await fetch('/data/topic-menu.json?v=' + Date.now());
             if (response.ok) {
-                const data = await response.json();
+                const menuData = await response.json();
                 
-                // फोल्डर के हिसाब से लिंक चुनना
-                const links = data[currentFolder] || [];
+                // फोल्डर के लिंक निकालें (जैसे 'himanshu')
+                const folderLinks = menuData[currentFolder] || [];
                 
                 let ul = sidebarNav.querySelector('ul');
                 if (!ul) {
@@ -53,37 +51,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                     sidebarNav.appendChild(ul);
                 }
 
-                // --- 3. लिंक्स को HTML में डालना ---
-                ul.innerHTML = ''; // पुरानी लिस्ट साफ़ करें
+                // पुराने लिंक साफ़ करें
+                ul.innerHTML = ''; 
 
-                if (links.length > 0) {
-                    links.forEach(item => {
+                if (folderLinks.length > 0) {
+                    folderLinks.forEach(item => {
                         const li = document.createElement('li');
                         
-                        // चेक करना कि क्या यही पेज अभी खुला है (Active link highlight)
-                        const isMatch = fullPath.endsWith(item.url) || fullPath === item.url;
-                        const activeClass = isMatch ? 'class="active"' : '';
+                        // पाथ मैचिंग को आसान बनाना (स्लैश की चिंता छोड़कर)
+                        const normalizedCurrent = fullPath.toLowerCase().replace(/^\/|\/$/g, '');
+                        const normalizedItem = item.url.toLowerCase().replace(/^\/|\/$/g, '');
+                        
+                        const isThisPage = normalizedCurrent === normalizedItem || 
+                                         fullPath.endsWith(item.url) || 
+                                         item.url.includes(segments[segments.length-1]);
+
+                        const activeClass = isThisPage ? 'class="active"' : '';
                         
                         li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
                         ul.appendChild(li);
                     });
 
-                    // साइडबार का हेडर अपडेट करें
-                    const titleEl = document.querySelector('.sidebar-title');
+                    // साइडबार टाइटल को फोल्डर के नाम से बदलें
+                    const titleEl = sidebar.querySelector('.sidebar-title');
                     if(titleEl) {
                         titleEl.textContent = currentFolder.toUpperCase().replace(/-/g, ' ');
                     }
+                    
+                    // डेस्कटॉप पर साइडबार दिखाना सुनिश्चित करें
+                    if (window.innerWidth > 991) {
+                        sidebar.style.transform = "translateX(0)";
+                        sidebar.style.display = "block";
+                    }
                 } else {
-                    // अगर डेटा न मिले
+                    console.warn("No data for folder in JSON:", currentFolder);
                     ul.innerHTML = '<li><a href="/" class="active">Home / General</a></li>';
-                    console.warn("No links found in JSON for folder:", currentFolder);
                 }
             }
         } catch (error) {
-            console.error("Dynamic Sidebar Error:", error);
+            console.error("Sidebar logic failed:", error);
         }
 
-        // मोबाइल पर ऑटो-क्लोज
         sidebarNav.addEventListener("click", (e) => {
             if (e.target.tagName === "A" && window.innerWidth <= 991) {
                 closeMobileSidebar();
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Right Sidebar Logic (Unchanged)
+// Right Sidebar Logic (Preserved)
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
