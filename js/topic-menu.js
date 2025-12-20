@@ -1,4 +1,3 @@
-
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
@@ -11,7 +10,6 @@ const firebaseConfig = {
     appId: "1:307990626713:web:e7b650c718c0cade4e5308",
 };
 
-// Initialize Firebase
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -20,9 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sidebarToggle = document.getElementById("topic-sidebar-toggle");
     const sidebarOverlay = document.getElementById("sidebar-overlay");
     const sidebarNav = document.getElementById("topic-nav");
-    const sidebarTitle = document.querySelector(".sidebar-title");
 
-    // 1. Mobile Toggle Logic
+    // 1. Mobile Toggle Logic (OLD CODE PRESERVED)
     function closeMobileSidebar() {
         if (sidebar) sidebar.classList.remove("is-open");
         if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
@@ -36,64 +33,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebarOverlay.addEventListener("click", closeMobileSidebar);
     }
 
-    // 2. AUTO-FETCH LINKS FROM FIREBASE
-    async function populateSidebarAutomatically() {
-        if (!sidebarNav) return;
+    // 2. Automated Sidebar Logic
+    const metaCat = document.querySelector('meta[property="article:section"]');
+    const currentCategory = metaCat ? metaCat.content.trim() : "";
 
-        // Detect current category from meta tag
-        const metaCat = document.querySelector('meta[property="article:section"]');
-        const currentCategory = metaCat ? metaCat.content.trim() : "";
-
-        if (!currentCategory) {
-            console.warn("Category meta tag not found. Sidebar will remain empty.");
-            return;
-        }
-
-        // Update Sidebar Title to Category Name
+    if (currentCategory && sidebarNav) {
+        const sidebarTitle = document.querySelector(".sidebar-title");
         if (sidebarTitle) sidebarTitle.textContent = currentCategory;
 
         try {
-            // Fetch all published posts in this category from Firestore
             const q = query(
                 collection(db, "published_posts"),
                 where("category", "==", currentCategory),
-                orderBy("date", "asc") // Purane se naya
+                orderBy("date", "asc")
             );
 
-            const querySnapshot = await getDocs(q);
+            const snap = await getDocs(q);
             const ul = document.createElement('ul');
 
-            if (querySnapshot.empty) {
-                ul.innerHTML = '<li><span style="padding:10px; color:#999;">No related topics</span></li>';
-            } else {
-                querySnapshot.forEach((doc) => {
+            if (!snap.empty) {
+                snap.forEach(doc => {
                     const post = doc.data();
                     const li = document.createElement('li');
-                    // Check if current page is this link
-                    const isActive = window.location.pathname.includes(post.url);
+                    const currentPath = window.location.pathname;
+                    const postPath = post.url.startsWith('/') ? post.url : '/' + post.url;
+                    const isActive = currentPath.includes(postPath) || (currentPath === '/' && postPath === '/index.html');
+                    
                     li.innerHTML = `<a href="${post.url}" class="${isActive ? 'active' : ''}">${post.title}</a>`;
                     ul.appendChild(li);
                 });
+                sidebarNav.innerHTML = ''; 
+                sidebarNav.appendChild(ul);
             }
-
-            // Replace existing static list with new dynamic list
-            const oldUl = sidebarNav.querySelector('ul');
-            if (oldUl) oldUl.remove();
-            sidebarNav.appendChild(ul);
-
-        } catch (error) {
-            console.error("Error fetching dynamic sidebar links:", error);
+        } catch (e) { 
+            console.error("Auto-Sidebar Error:", e); 
         }
     }
-
-    populateSidebarAutomatically();
-
-    // Right Sidebar Mobile Move Logic (Existing)
+    
+    // Move Sidebar Logic for Mobile (PRESERVED)
     function moveSidebarForMobile() {
         const rightSidebar = document.getElementById("right-sidebar");
         const commentsBlock = document.getElementById("comments-and-ratings-container");
         if (!rightSidebar || !commentsBlock) return;
-
         if (window.innerWidth <= 768) {
             if (rightSidebar.parentNode !== commentsBlock.parentNode) {
                 commentsBlock.parentNode.insertBefore(rightSidebar, commentsBlock);
