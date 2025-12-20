@@ -5,11 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sidebarOverlay = document.getElementById("sidebar-overlay");
     const sidebarNav = document.getElementById("topic-nav");
 
+    // मोबाइल साइडबार क्लोज करने का फंक्शन
     function closeMobileSidebar() {
         if (sidebar) sidebar.classList.remove("is-open");
         if (sidebarOverlay) sidebarOverlay.classList.remove("is-open");
     }
 
+    // साइडबार टॉगल इवेंट्स
     if (sidebarToggle && sidebar && sidebarOverlay) {
         sidebarToggle.addEventListener("click", () => {
             sidebar.classList.toggle("is-open");
@@ -19,59 +21,71 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        // --- 1. CURRENT FOLDER & PATH DETECTION ---
+        // --- 1. फोल्डर डिटेक्शन (Robust Logic) ---
         const fullPath = window.location.pathname; 
         const segments = fullPath.split('/').filter(s => s.length > 0);
         
-        // Example: /himanshu/golu.html -> folder is 'himanshu'
-        // If it's a root file like /index.html -> folder is 'General'
-        const currentFolder = (segments.length > 1) ? segments[0] : "General";
+        // अगर पाथ /himanshu/golu.html है, तो segments[0] = 'himanshu' होगा
+        let currentFolder = "General";
+        if (segments.length > 1) {
+            currentFolder = segments[0];
+        } else if (segments.length === 1 && !segments[0].endsWith('.html')) {
+            currentFolder = segments[0];
+        }
 
         try {
-            // --- 2. FETCH THE DATABASE ---
+            // --- 2. JSON डेटा लोड करना ---
             const response = await fetch('/data/topic-menu.json?v=' + Date.now());
             if (response.ok) {
                 const menuData = await response.json();
+                
+                // उस फोल्डर के लिंक्स निकालना (जैसे 'himanshu' के अंदर 3 लिंक)
                 const folderLinks = menuData[currentFolder] || [];
                 
+                // आपके HTML में मौजूद UL को ढूंढना
                 let ul = sidebarNav.querySelector('ul');
                 if (!ul) {
                     ul = document.createElement('ul');
                     sidebarNav.appendChild(ul);
                 }
 
-                // --- 3. DYNAMIC RENDER ---
-                // साफ़ करें ताकि केवल फोल्डर के लिंक्स ही दिखें
+                // --- 3. पुराने लिंक साफ़ करके नए इंजेक्ट करना ---
                 ul.innerHTML = ''; 
 
                 if (folderLinks.length > 0) {
                     folderLinks.forEach(item => {
                         const li = document.createElement('li');
                         
-                        // Check if this link is the current active page
-                        // We check if the pathname ends with the item.url or matches exactly
-                        const isThisPage = fullPath.endsWith(item.url) || fullPath === item.url;
+                        // चेक करना कि क्या यही पेज अभी खुला है (Active Link Highlight)
+                        const cleanPath = fullPath.replace(/\/$/, "");
+                        const cleanItemUrl = item.url.replace(/\/$/, "");
+                        
+                        const isThisPage = cleanPath === cleanItemUrl || 
+                                         fullPath.endsWith(item.url) || 
+                                         item.url.endsWith(fullPath.split('/').pop());
+
                         const activeClass = isThisPage ? 'class="active"' : '';
                         
+                        // लिंक को बनाना और जोड़ना
                         li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
                         ul.appendChild(li);
                     });
 
-                    // Update Sidebar Title to Category Name
-                    const titleEl = sidebar.querySelector('.sidebar-title');
+                    // साइडबार का टाइटल फोल्डर के नाम पर सेट करना
+                    const titleEl = document.querySelector('.sidebar-title');
                     if(titleEl) {
                         titleEl.textContent = currentFolder.replace(/-/g, ' ').toUpperCase();
                     }
                 } else {
-                    // Fallback if folder has no links in JSON
-                    ul.innerHTML = '<li><a href="/" class="active">Home</a></li>';
+                    // अगर JSON में उस फोल्डर का कोई डेटा नहीं है
+                    ul.innerHTML = '<li><a href="/" class="active">Home / General</a></li>';
                 }
             }
         } catch (error) {
-            console.error("Dynamic menu render failed:", error);
+            console.warn("Dynamic sidebar injection failed:", error);
         }
 
-        // Handle mobile auto-close
+        // मोबाइल पर लिंक क्लिक होने के बाद साइडबार बंद करना
         sidebarNav.addEventListener("click", (e) => {
             if (e.target.tagName === "A" && window.innerWidth <= 991) {
                 closeMobileSidebar();
@@ -80,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Existing Right Sidebar & Mobile Logic (Preserved)
+// Right Sidebar Logic (Unchanged)
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
