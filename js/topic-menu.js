@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebarOverlay.addEventListener("click", closeMobileSidebar);
     }
 
-    // 2. Automated Sidebar Logic
+    // 2. Automated Sidebar Logic - Fetch ALL posts in this category
     const metaCat = document.querySelector('meta[property="article:section"]');
     const currentCategory = metaCat ? metaCat.content.trim() : "";
 
@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (sidebarTitle) sidebarTitle.textContent = currentCategory;
 
         try {
+            // Query for all posts belonging to the meta category
             const q = query(
                 collection(db, "published_posts"),
                 where("category", "==", currentCategory),
@@ -55,6 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 snap.forEach(doc => {
                     const post = doc.data();
                     const li = document.createElement('li');
+                    
+                    // Logic to mark active link
                     const currentPath = window.location.pathname;
                     const postPath = post.url.startsWith('/') ? post.url : '/' + post.url;
                     const isActive = currentPath.includes(postPath) || (currentPath === '/' && postPath === '/index.html');
@@ -64,6 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
                 sidebarNav.innerHTML = ''; 
                 sidebarNav.appendChild(ul);
+            } else {
+                console.log("No other posts found for category:", currentCategory);
             }
         } catch (e) { 
             console.error("Auto-Sidebar Error:", e); 
