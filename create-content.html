@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ultimate Content Editor Pro | GK Learn Study</title>
+        <!-- FontAwesome for Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Content Editor Pro | GK Learn Study</title>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <style>
-        /* ==========================================================================
+        <style>
+            /* ,jmghngbfvdc
            1. CORE VARIABLES & RESET
            ========================================================================== */
             :root {
@@ -977,407 +976,714 @@
                 color: #fff;
                 border-color: #fff;
             }
-    </style>
-</head>
-
-<body>
-    <!-- 1. TOP HEADER -->
-    <div class="editor-top-bar">
-        <div class="meta-inputs">
-            <input type="text" id="folderName" class="meta-field" placeholder="📂 Category Folder (e.g. Science)" />
-            <div class="file-input-group">
-                <input type="text" id="fileName" class="meta-field" placeholder="📄 File Name (e.g. gravity)" />
-                <span class="file-extension">.html</span>
+        </style>
+    </head>
+    <body>
+        <!-- 1. TOP HEADER -->
+        <div class="editor-top-bar">
+            <div class="meta-inputs">
+                <input type="text" id="folderName" class="meta-field" placeholder="📂 Category Folder (e.g. Science)" />
+                <div class="file-input-group">
+                    <input type="text" id="fileName" class="meta-field" placeholder="📄 File Name (e.g. gravity)" />
+                    <span class="file-extension">.html</span>
+                </div>
+                <input type="text" id="imgName" class="meta-field" placeholder="🖼️ SEO Image Name" />
             </div>
-            <input type="text" id="imgName" class="meta-field" placeholder="🖼️ SEO Image Name" />
-        </div>
-        <div id="auth-status" class="auth-indicator"><i class="fas fa-spinner fa-spin"></i> Checking Auth...</div>
-        <div class="action-buttons">
-            <button class="btn btn-preview" onclick="window.previewPost()">👁️ Preview</button>
-            <button class="btn btn-draft" onclick="window.savePost('draft')">💾 Draft</button>
-            <button class="btn btn-publish" onclick="window.savePost('pending')">🚀 Submit</button>
-        </div>
-    </div>
-
-    <!-- 2. FLOATING TOOLBAR -->
-    <div id="floating-toolbar">
-        <button class="tb-btn" onmousedown="window.fmt(event,'bold')" title="Bold">
-            <i class="fas fa-bold"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'italic')" title="Italic">
-            <i class="fas fa-italic"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'underline')" title="Underline">
-            <i class="fas fa-underline"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'strikethrough')" title="Strike">
-            <i class="fas fa-strikethrough"></i>
-        </button>
-        <div class="tb-divider"></div>
-        <button class="tb-btn" onmousedown="window.createLink(event)" title="Link">
-            <i class="fas fa-link"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'unlink')" title="Unlink">
-            <i class="fas fa-unlink"></i>
-        </button>
-        <div class="tb-divider"></div>
-        <button class="tb-btn" onmousedown="window.fmt(event,'justifyLeft')">
-            <i class="fas fa-align-left"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'justifyCenter')">
-            <i class="fas fa-align-center"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'justifyRight')">
-            <i class="fas fa-align-right"></i>
-        </button>
-        <button class="tb-btn" onmousedown="window.fmt(event,'justifyFull')">
-            <i class="fas fa-align-justify"></i>
-        </button>
-        <div class="tb-divider"></div>
-        <select class="tb-select" onchange="window.fmt(event,'formatBlock',this.value);this.value='';">
-            <option value="">Block</option>
-            <option value="H2">H2 Heading</option>
-            <option value="H3">H3 Heading</option>
-            <option value="P">Paragraph</option>
-            <option value="BLOCKQUOTE">Quote</option>
-        </select>
-        <select class="tb-select" onchange="window.fmt(event,'fontSize',this.value);this.value='';">
-            <option value="">Size</option>
-            <option value="2">Small</option>
-            <option value="3">Normal</option>
-            <option value="5">Large</option>
-            <option value="7">Extra Large</option>
-        </select>
-        <div class="tb-color-wrapper" title="Text Color">
-            <input type="color" onchange="window.fmt(event,'foreColor',this.value)" /><i class="fas fa-font"></i>
-        </div>
-        <div class="tb-color-wrapper" title="Highlight">
-            <input type="color" onchange="window.fmt(event,'hiliteColor',this.value)" /><i class="fas fa-highlighter"></i>
-        </div>
-        <div class="tb-divider"></div>
-        <select class="tb-select" onchange="window.applyAnim(this.value);this.value='';" style="width: 80px">
-            <option value="">✨ Anim</option>
-            <option value="anim-marquee">Marquee (∞)</option>
-            <option value="anim-bounce">Bounce (3s)</option>
-            <option value="anim-flash">Flash (3s)</option>
-            <option value="anim-pulse">Pulse (3s)</option>
-            <option value="anim-shake">Shake (3s)</option>
-            <option value="anim-typewriter">Typewriter</option>
-        </select>
-        <button class="tb-btn" onmousedown="window.clearAnim()" title="Clear Animation" style="color: #ff6b6b">
-            <i class="fas fa-ban"></i>
-        </button>
-    </div>
-
-    <!-- 3. MAIN EDITOR AREA -->
-    <div class="editor-paper">
-        <input type="text" id="doc-h1" class="post-title-input" placeholder="Post Title Here (H1)" />
-        <textarea id="doc-desc" class="post-desc-input" rows="2" placeholder="Meta Description (Summary)..."></textarea>
-
-        <div id="editor-canvas">
-            <!-- Top Add Zone -->
-            <div class="add-zone" onclick="window.openBlockMenu(this)">
-                <div class="add-line"></div>
-                <div class="add-btn"><i class="fas fa-plus"></i></div>
+            <div id="auth-status" class="auth-indicator"><i class="fas fa-spinner fa-spin"></i> Checking Auth...</div>
+            <div class="action-buttons">
+                <button class="btn btn-preview" onclick="window.previewPost()">👁️ Preview</button>
+                <button class="btn btn-draft" onclick="window.savePost('draft')">💾 Draft</button>
+                <button class="btn btn-publish" onclick="window.savePost('pending')">🚀 Submit</button>
             </div>
+        </div>
 
-            <!-- Default Block -->
-            <div class="block-wrapper">
+        <!-- 2. FLOATING TOOLBAR -->
+        <div id="floating-toolbar">
+            <button class="tb-btn" onmousedown="window.fmt(event,'bold')" title="Bold">
+                <i class="fas fa-bold"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'italic')" title="Italic">
+                <i class="fas fa-italic"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'underline')" title="Underline">
+                <i class="fas fa-underline"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'strikethrough')" title="Strike">
+                <i class="fas fa-strikethrough"></i>
+            </button>
+            <div class="tb-divider"></div>
+            <button class="tb-btn" onmousedown="window.createLink(event)" title="Link">
+                <i class="fas fa-link"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'unlink')" title="Unlink">
+                <i class="fas fa-unlink"></i>
+            </button>
+            <div class="tb-divider"></div>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyLeft')">
+                <i class="fas fa-align-left"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyCenter')">
+                <i class="fas fa-align-center"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyRight')">
+                <i class="fas fa-align-right"></i>
+            </button>
+            <button class="tb-btn" onmousedown="window.fmt(event,'justifyFull')">
+                <i class="fas fa-align-justify"></i>
+            </button>
+            <div class="tb-divider"></div>
+            <select class="tb-select" onchange="window.fmt(event,'formatBlock',this.value);this.value='';">
+                <option value="">Block</option>
+                <option value="H2">H2 Heading</option>
+                <option value="H3">H3 Heading</option>
+                <option value="P">Paragraph</option>
+                <option value="BLOCKQUOTE">Quote</option>
+            </select>
+            <select class="tb-select" onchange="window.fmt(event,'fontSize',this.value);this.value='';">
+                <option value="">Size</option>
+                <option value="2">Small</option>
+                <option value="3">Normal</option>
+                <option value="5">Large</option>
+                <option value="7">Extra Large</option>
+            </select>
+            <div class="tb-color-wrapper" title="Text Color">
+                <input type="color" onchange="window.fmt(event,'foreColor',this.value)" /><i class="fas fa-font"></i>
+            </div>
+            <div class="tb-color-wrapper" title="Highlight">
+                <input type="color" onchange="window.fmt(event,'hiliteColor',this.value)" /><i
+                    class="fas fa-highlighter"
+                ></i>
+            </div>
+            <div class="tb-divider"></div>
+            <select class="tb-select" onchange="window.applyAnim(this.value);this.value='';" style="width: 80px">
+                <option value="">✨ Anim</option>
+                <option value="anim-marquee">Marquee (∞)</option>
+                <option value="anim-bounce">Bounce (3s)</option>
+                <option value="anim-flash">Flash (3s)</option>
+                <option value="anim-pulse">Pulse (3s)</option>
+                <option value="anim-shake">Shake (3s)</option>
+                <option value="anim-typewriter">Typewriter</option>
+            </select>
+            <button class="tb-btn" onmousedown="window.clearAnim()" title="Clear Animation" style="color: #ff6b6b">
+                <i class="fas fa-ban"></i>
+            </button>
+        </div>
+
+        <!-- 3. MAIN EDITOR AREA -->
+        <div class="editor-paper">
+            <input type="text" id="doc-h1" class="post-title-input" placeholder="Post Title Here (H1)" />
+            <textarea
+                id="doc-desc"
+                class="post-desc-input"
+                rows="2"
+                placeholder="Meta Description (Summary)..."
+            ></textarea>
+
+            <div id="editor-canvas">
+                <!-- Top Add Zone -->
+                <div class="add-zone" onclick="window.openBlockMenu(this)">
+                    <div class="add-line"></div>
+                    <div class="add-btn"><i class="fas fa-plus"></i></div>
+                </div>
+
+                <!-- Default Block -->
+                <div class="block-wrapper">
+                    <div class="side-controls">
+                        <div class="control-btn" onclick="window.moveBlock(this,-1)">▲</div>
+                        <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
+                        <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
+                    </div>
+                    <div
+                        class="editable-area"
+                        contenteditable="true"
+                        placeholder="Start writing your amazing content..."
+                    ></div>
+                </div>
+
+                <!-- Bottom Add Zone -->
+                <div class="add-zone" onclick="window.openBlockMenu(this)">
+                    <div class="add-line"></div>
+                    <div class="add-btn"><i class="fas fa-plus"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BLOCK MENU (17 BLOCKS) -->
+        <div id="block-menu-modal" class="modal-overlay" onclick="if(event.target===this)window.closeBlockMenu()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Insert Block</h3>
+                    <button class="close-modal" onclick="window.closeBlockMenu()">×</button>
+                </div>
+                <div class="block-grid">
+                    <!-- Text -->
+                    <div class="block-option" onclick="window.addBlock('p')">
+                        <i class="fas fa-paragraph"></i><span class="block-label">Paragraph</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('h2')">
+                        <i class="fas fa-heading"></i><span class="block-label">Heading H2</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('h3')">
+                        <i class="fas fa-heading" style="font-size: 18px"></i
+                        ><span class="block-label">Heading H3</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('quote')">
+                        <i class="fas fa-quote-right"></i><span class="block-label">Quote</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('info-box')">
+                        <i class="fas fa-info-circle"></i><span class="block-label">Info Box</span>
+                    </div>
+
+                    <!-- Lists -->
+                    <div class="block-option" onclick="window.addBlock('list-ul')">
+                        <i class="fas fa-list-ul"></i><span class="block-label">Bullet List</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('list-ol')">
+                        <i class="fas fa-list-ol"></i><span class="block-label">Number List</span>
+                    </div>
+
+                    <!-- Media -->
+                    <div class="block-option" onclick="window.addBlock('image-center')">
+                        <i class="fas fa-image"></i><span class="block-label">Image (Center)</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('media-text')">
+                        <i class="fas fa-columns"></i><span class="block-label">Media + Text</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('embed-text')">
+                        <i class="fab fa-youtube"></i><span class="block-label">Embed + Text</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('card-grid')">
+                        <i class="fas fa-th-large"></i><span class="block-label">Card Grid</span>
+                    </div>
+
+                    <!-- Utility -->
+                    <div class="block-option" onclick="window.addBlock('table')">
+                        <i class="fas fa-table"></i><span class="block-label">Table</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('button')">
+                        <i class="fas fa-mouse-pointer"></i><span class="block-label">Button</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('accordion')">
+                        <i class="fas fa-chevron-down"></i><span class="block-label">Accordion</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('divider')">
+                        <i class="fas fa-minus"></i><span class="block-label">Divider</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('html')">
+                        <i class="fas fa-code"></i><span class="block-label">Custom HTML</span>
+                    </div>
+                    <div class="block-option" onclick="window.addBlock('image-code')">
+                        <i class="fas fa-link"></i><span class="block-label">Image (URL)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. NEW MEDIA & CODE MODAL (Black Box) -->
+        <div id="media-modal">
+            <div class="media-modal-content">
+                <div class="media-modal-tabs">
+                    <button class="media-tab active" onclick="window.switchMediaTab('code')">
+                        Paste Custom HTML / Code
+                    </button>
+                    <button class="media-tab" onclick="window.switchMediaTab('image')">Create Text Image</button>
+                </div>
+
+                <!-- Tab 1: Paste Code -->
+                <div id="tab-code" class="media-tab-content active">
+                    <p style="margin-top: 0; font-size: 0.9rem; color: #aaa">
+                        Paste Image URL, YouTube Link, Iframe, or any HTML Code (Divs, Scripts, etc.):
+                    </p>
+                    <textarea
+                        id="custom-code-input"
+                        class="media-input-field media-textarea"
+                        placeholder="<iframe...> or https://... or <div>...</div>"
+                    ></textarea>
+                </div>
+
+                <!-- Tab 2: Create Image -->
+                <div id="tab-image" class="media-tab-content">
+                    <input type="text" id="img-text" class="media-input-field" placeholder="Enter Text" />
+                    <div style="display: flex; gap: 10px">
+                        <input
+                            type="text"
+                            id="img-bg"
+                            class="media-input-field"
+                            placeholder="Bg Color (e.g. #2271b1)"
+                            value="#2271b1"
+                        />
+                        <input
+                            type="text"
+                            id="img-fg"
+                            class="media-input-field"
+                            placeholder="Text Color (e.g. white)"
+                            value="white"
+                        />
+                    </div>
+                </div>
+
+                <div class="media-modal-footer">
+                    <button class="media-btn-cancel" onclick="window.closeMediaModal()">Cancel</button>
+                    <button class="media-btn-primary" onclick="window.submitMediaModal()">Insert</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden Input for File Upload -->
+        <input type="file" id="fileUploadInput" style="display: none" onchange="window.handleUpload(this)" />
+
+        <!-- ==========================================================================
+         5. JAVASCRIPT LOGIC (MODULE)
+         ========================================================================== -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+            import {
+                getFirestore,
+                doc,
+                setDoc,
+                getDoc,
+            } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+            import {
+                getStorage,
+                ref,
+                uploadBytes,
+                getDownloadURL,
+            } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+
+            // FIREBASE CONFIG
+            const app = initializeApp({
+                apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
+                authDomain: "gklearnstudy-c298c.firebaseapp.com",
+                projectId: "gklearnstudy-c298c",
+                storageBucket: "gklearnstudy-c298c.firebasestorage.app",
+                messagingSenderId: "307990626713",
+                appId: "1:307990626713:web:e7b650c718c0cade4e5308",
+            });
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const storage = getStorage(app);
+
+            // GLOBAL VARS
+            let currentUser = null;
+            let activeAddZone = null;
+            let activeUploadTarget = null;
+            let editingDocId = null;
+
+            // New Global for Media Modal
+            let activeMediaElement = null; // The element triggering the media modal
+
+            // AUTH LISTENER
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                const statusEl = document.getElementById("auth-status");
+                if (user) {
+                    // DISPLAY PROFILE NAME DIRECTLY LIKE kaisekarenformat.html
+                    const nameToDisplay = user.displayName || "Himanshu Tyagi";
+                    statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
+                    statusEl.style.color = "#333";
+                } else {
+                    statusEl.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:orange"></i> Login Required`;
+                }
+
+                const params = new URLSearchParams(window.location.search);
+                if (params.get("id")) {
+                    editingDocId = params.get("id");
+                    loadContent(editingDocId);
+                }
+            });
+
+            // Prevent dots in filename
+            document.getElementById("fileName").addEventListener("input", function (e) {
+                this.value = this.value.replace(/\./g, "");
+            });
+
+            async function loadContent(id) {
+                let snap = await getDoc(doc(db, "pending_posts", id));
+                if (!snap.exists()) snap = await getDoc(doc(db, "published_posts", id));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    document.getElementById("doc-h1").value = data.title;
+                    document.getElementById("doc-desc").value = data.paragraph;
+                    document.getElementById("folderName").value = data.category;
+                    const cleanFileName = data.url.split("/").pop().replace(".html", "");
+                    document.getElementById("fileName").value = cleanFileName;
+                    if (data.raw_blocks) document.getElementById("editor-canvas").innerHTML = data.raw_blocks;
+                }
+            }
+
+            // --- GLOBAL EXPORTS (FOR HTML ONCLICK) ---
+
+            // 1. TOOLBAR FUNCTIONS
+            window.fmt = (e, cmd, val) => {
+                if (e) e.preventDefault(); // Prevent losing focus
+                document.execCommand(cmd, false, val);
+            };
+            window.createLink = (e) => {
+                if (e) e.preventDefault();
+                const url = prompt("Enter URL:", "https://");
+                if (url) document.execCommand("createLink", false, url);
+            };
+
+            window.editLink = (el) => {
+                if (event) event.preventDefault();
+                const currentUrl = el.getAttribute("href");
+                const newUrl = prompt("Enter URL:", currentUrl === "#" ? "https://" : currentUrl);
+                const newText = prompt("Enter Text:", el.innerText);
+
+                if (newUrl) el.setAttribute("href", newUrl);
+                if (newText) el.innerText = newText;
+            };
+
+            // Animation Logic
+            window.applyAnim = (animClass) => {
+                const sel = window.getSelection();
+                if (!sel.rangeCount || !animClass) return;
+
+                let parent = sel.anchorNode.parentElement;
+                if (parent.tagName === "SPAN" && parent.className.includes("anim-")) {
+                    parent.className = animClass;
+                } else {
+                    const span = document.createElement("span");
+                    span.className = animClass;
+                    try {
+                        sel.getRangeAt(0).surroundContents(span);
+                    } catch (e) {
+                        alert("Please select text within a single block only.");
+                    }
+                }
+
+                if (animClass !== "anim-marquee") {
+                    setTimeout(() => {
+                        const spans = document.getElementsByClassName(animClass);
+                        for (let s of spans) {
+                            s.classList.remove(animClass);
+                        }
+                    }, 3000);
+                }
+            };
+
+            window.clearAnim = () => {
+                const sel = window.getSelection();
+                if (!sel.rangeCount) return;
+                let parent = sel.anchorNode.parentElement;
+                if (parent.tagName === "SPAN" && parent.className.includes("anim-")) {
+                    parent.outerHTML = parent.innerHTML;
+                }
+            };
+
+            // Toolbar Position
+            document.addEventListener("selectionchange", () => {
+                const sel = window.getSelection();
+                const bar = document.getElementById("floating-toolbar");
+
+                if (
+                    sel.rangeCount > 0 &&
+                    !sel.isCollapsed &&
+                    document.getElementById("editor-canvas").contains(sel.anchorNode)
+                ) {
+                    const range = sel.getRangeAt(0);
+                    const rect = range.getBoundingClientRect();
+
+                    bar.style.display = "flex";
+                    // OFFSET FIX: Increased vertical gap to 70px to prevent overlapping text
+                    bar.style.top = `${window.scrollY + rect.top - 70}px`;
+                    bar.style.left = `${rect.left + rect.width / 2}px`;
+                } else {
+                    setTimeout(() => {
+                        if (window.getSelection().isCollapsed) bar.style.display = "none";
+                    }, 200);
+                }
+            });
+
+            // 2. BLOCK INSERTION SYSTEM
+            window.openBlockMenu = (zone) => {
+                activeAddZone = zone;
+                document.getElementById("block-menu-modal").style.display = "flex";
+            };
+            window.closeBlockMenu = () => {
+                document.getElementById("block-menu-modal").style.display = "none";
+            };
+
+            window.addBlock = (type) => {
+                window.closeBlockMenu();
+                const wrapper = document.createElement("div");
+                wrapper.className = "block-wrapper";
+
+                let html = "";
+
+                // TEXT BLOCKS
+                if (type === "p")
+                    html = `<div class="editable-area" contenteditable="true" placeholder="Paragraph text..."></div>`;
+                else if (type === "h2")
+                    html = `<h2 class="editable-area" contenteditable="true" placeholder="Heading 2"></h2>`;
+                else if (type === "h3")
+                    html = `<h3 class="editable-area" contenteditable="true" placeholder="Heading 3"></h3>`;
+                else if (type === "quote")
+                    html = `<blockquote class="editable-area" contenteditable="true" style="border-left:4px solid #ccc; padding:10px 20px; font-style:italic; background:#f9f9f9;" placeholder="Quote text..."></blockquote>`;
+                else if (type === "info-box")
+                    html = `<div class="info-box editable-area" contenteditable="true" placeholder="Important Information..."></div>`;
+                // LISTS
+                else if (type === "list-ul")
+                    html = `<ul class="editable-area" contenteditable="true"><li>List Item</li></ul>`;
+                else if (type === "list-ol")
+                    html = `<ol class="editable-area" contenteditable="true"><li>List Item</li></ol>`;
+                // UTILITY
+                else if (type === "html") {
+                    html = `<div class="media-placeholder"><div class="media-render"></div><div class="media-btn-group">
+                        <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Insert HTML / Embed Code</button>
+                    </div></div>`;
+                } else if (type === "divider")
+                    html = `<hr style="border:0; border-top:2px solid #eee; margin:30px 0;">`;
+                else if (type === "accordion")
+                    html = `<details style="background:#f9f9f9; padding:10px; border-radius:5px; border:1px solid #ddd;"><summary style="font-weight:bold; cursor:pointer;" contenteditable="true">Accordion Title</summary><div class="editable-area" contenteditable="true" placeholder="Hidden Content..." style="padding-top:10px;"></div></details>`;
+                // BUTTONS
+                else if (type === "button")
+                    html = `<div class="btn-block-wrapper"><a href="#" class="custom-site-btn btn-style-1" onclick="window.editLink(this); return false;">Click Me</a><br><small style="color:#777">Click to edit link/text</small></div>`;
+                // TABLES
+                else if (type === "table")
+                    html = `<div class="table-container"><table class="dynamic-table"><thead><tr><th contenteditable="true">Header 1</th><th contenteditable="true">Header 2</th></tr></thead><tbody><tr><td contenteditable="true">Cell 1</td><td contenteditable="true">Cell 2</td></tr></tbody></table></div><div class="table-tools"><button class="media-action-btn" onclick="window.tblAddRow(this)">+ Row</button><button class="media-action-btn" onclick="window.tblAddCol(this)">+ Col</button></div>`;
+                // MEDIA - CENTER IMAGE
+                else if (type === "image-center") {
+                    html = `<div class="media-placeholder"><div class="media-render"></div><div class="media-btn-group">
+                    <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Custom HTML / Code</button>
+                    <button class="media-action-btn" onclick="window.createImageDirect(this)"><i class="fas fa-paint-brush"></i> Create Text Image</button>
+                </div></div>`;
+                }
+
+                // MEDIA + TEXT LAYOUT
+                else if (type === "media-text") {
+                    html = `<div class="layout-media-text">
+                    <div class="layout-col-media">
+                        <div class="media-placeholder"><div class="media-render"></div><div class="media-btn-group">
+                            <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Custom HTML / Code</button>
+                            <button class="media-action-btn" onclick="window.createImageDirect(this)"><i class="fas fa-paint-brush"></i> Create Text Image</button>
+                        </div></div>
+                    </div>
+                    <div class="layout-col-text">
+                        <div class="editable-area" contenteditable="true" placeholder="Write description..."></div>
+                        <div class="add-zone" onclick="window.openBlockMenu(this)"><div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div></div>
+                    </div>
+                </div>`;
+                }
+
+                // EMBED + TEXT LAYOUT
+                else if (type === "embed-text") {
+                    html = `<div class="layout-media-text">
+                    <div class="layout-col-media">
+                        <div class="media-placeholder"><div class="media-render"></div><div class="media-btn-group">
+                            <button class="media-action-btn" onclick="window.pasteVideoOnly(this)"><i class="fab fa-youtube"></i> Paste Video Link</button>
+                        </div></div>
+                    </div>
+                    <div class="layout-col-text">
+                        <div class="editable-area" contenteditable="true" placeholder="Video Description..."></div>
+                        <div class="add-zone" onclick="window.openBlockMenu(this)"><div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div></div>
+                    </div>
+                </div>`;
+                }
+
+                // CARD GRID
+                else if (type === "card-grid") {
+                    let cardHtml = `
+                    <div class="card-item">
+                        <div class="card-img-area" onclick="window.chooseMedia(this)">
+                            <span style="color:#999; font-size:12px; pointer-events:none;">+ Add Image/Code</span>
+                        </div>
+                        <h4 contenteditable="true" style="margin:0;">Card Title</h4>
+                        <div class="editable-area" contenteditable="true" style="font-size:14px; color:#555;" placeholder="Desc..."></div>
+                        <a href="#" class="custom-site-btn btn-style-2" style="font-size:12px; padding:6px 15px; align-self:flex-start;" onclick="window.editLink(this); return false;">Read More</a>
+                    </div>`;
+                    html = `<div class="card-grid-container">${cardHtml}</div><div class="add-card-btn-container"><button class="media-action-btn" onclick="window.addCardToGrid(this)">+ Add Card</button></div>`;
+                } else if (type === "image-code") {
+                    html = `<div class="media-placeholder"><div class="media-render"></div><div class="media-btn-group"><button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-link"></i> Image URL</button></div></div>`;
+                }
+
+                // Wrapping
+                wrapper.innerHTML = `
                 <div class="side-controls">
                     <div class="control-btn" onclick="window.moveBlock(this,-1)">▲</div>
                     <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
                     <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
                 </div>
-                <div class="editable-area" contenteditable="true" placeholder="Start writing your amazing content..."></div>
-            </div>
+                ${html}
+            `;
 
-            <!-- Bottom Add Zone -->
-            <div class="add-zone" onclick="window.openBlockMenu(this)">
-                <div class="add-line"></div>
-                <div class="add-btn"><i class="fas fa-plus"></i></div>
-            </div>
-        </div>
-    </div>
+                // Insert Logic
+                const newZone = document.createElement("div");
+                newZone.className = "add-zone";
+                newZone.setAttribute("onclick", "window.openBlockMenu(this)");
+                newZone.innerHTML =
+                    '<div class="add-line"></div><div class="add-btn"><i class="fas fa-plus"></i></div>';
 
-    <!-- 4. BLOCK MENU (17 BLOCKS) -->
-    <div id="block-menu-modal" class="modal-overlay" onclick="if(event.target===this)window.closeBlockMenu()">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Insert Block</h3>
-                <button class="close-modal" onclick="window.closeBlockMenu()">×</button>
-            </div>
-            <div class="block-grid">
-                <!-- Text -->
-                <div class="block-option" onclick="window.addBlock('p')">
-                    <i class="fas fa-paragraph"></i><span class="block-label">Paragraph</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('h2')">
-                    <i class="fas fa-heading"></i><span class="block-label">Heading H2</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('h3')">
-                    <i class="fas fa-heading" style="font-size: 18px"></i
-                        ><span class="block-label">Heading H3</span>
-                    </div>
-                    <div class="block-option" onclick="window.addBlock('quote')">
-                        <i class="fas fa-quote-right"></i><span class="block-label">Quote</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('info-box')">
-                    <i class="fas fa-info-circle"></i><span class="block-label">Info Box</span>
-                </div>
+                if (activeAddZone && activeAddZone.parentNode) {
+                    activeAddZone.parentNode.insertBefore(wrapper, activeAddZone.nextSibling);
+                    wrapper.parentNode.insertBefore(newZone, wrapper.nextSibling);
+                } else {
+                    const canvas = document.getElementById("editor-canvas");
+                    canvas.appendChild(wrapper);
+                    canvas.appendChild(newZone);
+                }
+            };
 
-                <!-- Lists -->
-                <div class="block-option" onclick="window.addBlock('list-ul')">
-                    <i class="fas fa-list-ul"></i><span class="block-label">Bullet List</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('list-ol')">
-                    <i class="fas fa-list-ol"></i><span class="block-label">Number List</span>
-                </div>
+            // 3. UTILITY FUNCTIONS
+            window.moveBlock = (btn, dir) => {
+                const w = btn.closest(".block-wrapper");
+                const z = w.nextElementSibling;
+                if (
+                    dir === -1 &&
+                    w.previousElementSibling?.previousElementSibling?.classList.contains("block-wrapper")
+                ) {
+                    const prev = w.previousElementSibling.previousElementSibling;
+                    w.parentNode.insertBefore(w, prev);
+                    w.parentNode.insertBefore(z, prev);
+                }
+                if (dir === 1 && z.nextElementSibling?.classList.contains("block-wrapper")) {
+                    const next = z.nextElementSibling;
+                    const nextZ = next.nextElementSibling;
+                    w.parentNode.insertBefore(next, w);
+                    w.parentNode.insertBefore(nextZ, w);
+                }
+            };
+            window.deleteBlock = (btn) => {
+                if (confirm("Delete block?")) {
+                    const w = btn.closest(".block-wrapper");
+                    const z = w.nextElementSibling;
+                    w.remove();
+                    if (z && z.classList.contains("add-zone")) z.remove();
+                }
+            };
+            window.tblAddRow = (btn) => {
+                const t = btn.parentElement.previousElementSibling.querySelector("table");
+                const cols = t.rows[0].cells.length;
+                const r = t.insertRow();
+                for (let i = 0; i < cols; i++) {
+                    r.insertCell().contentEditable = "true";
+                    r.cells[i].innerText = "Data";
+                }
+            };
+            window.tblAddCol = (btn) => {
+                const t = btn.parentElement.previousElementSibling.querySelector("table");
+                t.rows[0].appendChild(document.createElement("th")).contentEditable = "true";
+                for (let i = 1; i < t.rows.length; i++) t.rows[i].insertCell().contentEditable = "true";
+            };
 
-                <!-- Media -->
-                <div class="block-option" onclick="window.addBlock('image-center')">
-                    <i class="fas fa-image"></i><span class="block-label">Image (Center)</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('media-text')">
-                    <i class="fas fa-columns"></i><span class="block-label">Media + Text</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('embed-text')">
-                    <i class="fab fa-youtube"></i><span class="block-label">Embed + Text</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('card-grid')">
-                    <i class="fas fa-th-large"></i><span class="block-label">Card Grid</span>
-                </div>
-
-                <!-- Utility -->
-                <div class="block-option" onclick="window.addBlock('table')">
-                    <i class="fas fa-table"></i><span class="block-label">Table</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('button')">
-                    <i class="fas fa-mouse-pointer"></i><span class="block-label">Button</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('accordion')">
-                    <i class="fas fa-chevron-down"></i><span class="block-label">Accordion</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('divider')">
-                    <i class="fas fa-minus"></i><span class="block-label">Divider</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('html')">
-                    <i class="fas fa-code"></i><span class="block-label">Custom HTML</span>
-                </div>
-                <div class="block-option" onclick="window.addBlock('image-code')">
-                    <i class="fas fa-link"></i><span class="block-label">Image (URL)</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. NEW MEDIA & CODE MODAL (Black Box) -->
-    <div id="media-modal">
-        <div class="media-modal-content">
-            <div class="media-modal-tabs">
-                <button class="media-tab active" onclick="window.switchMediaTab('code')">
-                    Paste Custom HTML / Code
-                </button>
-                <button class="media-tab" onclick="window.switchMediaTab('image')">Create Text Image</button>
-            </div>
-
-            <!-- Tab 1: Paste Code -->
-            <div id="tab-code" class="media-tab-content active">
-                <p style="margin-top: 0; font-size: 0.9rem; color: #aaa">
-                    Paste Image URL, YouTube Link, Iframe, or any HTML Code (Divs, Scripts, etc.):
-                </p>
-                <textarea id="custom-code-input" class="media-input-field media-textarea" placeholder="<iframe...> or https://... or <div>...</div>"></textarea>
-            </div>
-
-            <!-- Tab 2: Create Image -->
-            <div id="tab-image" class="media-tab-content">
-                <input type="text" id="img-text" class="media-input-field" placeholder="Enter Text" />
-                <div style="display: flex; gap: 10px">
-                    <input type="text" id="img-bg" class="media-input-field" placeholder="Bg Color (e.g. #2271b1)" value="#2271b1" />
-                    <input type="text" id="img-fg" class="media-input-field" placeholder="Text Color (e.g. white)" value="white" />
-                </div>
-            </div>
-
-            <div class="media-modal-footer">
-                <button class="media-btn-cancel" onclick="window.closeMediaModal()">Cancel</button>
-                <button class="media-btn-primary" onclick="window.submitMediaModal()">Insert</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hidden Input for File Upload -->
-    <input type="file" id="fileUploadInput" style="display: none" onchange="window.handleUpload(this)" />
-
-    <!-- ==========================================================================
-         5. JAVASCRIPT LOGIC (MODULE)
-         ========================================================================== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"; import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js"; import { getFirestore, doc, setDoc, getDoc, } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL, } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js"; // FIREBASE CONFIG const app = initializeApp({ apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0", authDomain: "gklearnstudy-c298c.firebaseapp.com",
-        projectId: "gklearnstudy-c298c", storageBucket: "gklearnstudy-c298c.firebasestorage.app", messagingSenderId: "307990626713", appId: "1:307990626713:web:e7b650c718c0cade4e5308", }); const auth = getAuth(app); const db = getFirestore(app); const
-        storage = getStorage(app); // GLOBAL VARS let currentUser = null; let activeAddZone = null; let activeUploadTarget = null; let editingDocId = null; // New Global for Media Modal let activeMediaElement = null; // The element triggering the media
-        modal // AUTH LISTENER onAuthStateChanged(auth, (user) => { currentUser = user; const statusEl = document.getElementById("auth-status"); if (user) { // DISPLAY PROFILE NAME DIRECTLY LIKE kaisekarenformat.html const nameToDisplay = user.displayName
-        || "Himanshu Tyagi"; statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`; statusEl.style.color = "#333"; } else { statusEl.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:orange"></i>        Login Required`; } const params = new URLSearchParams(window.location.search); if (params.get("id")) { editingDocId = params.get("id"); loadContent(editingDocId); } }); // Prevent dots in filename document.getElementById("fileName").addEventListener("input",
-        function (e) { this.value = this.value.replace(/\./g, ""); }); async function loadContent(id) { let snap = await getDoc(doc(db, "pending_posts", id)); if (!snap.exists()) snap = await getDoc(doc(db, "published_posts", id)); if (snap.exists())
-        { const data = snap.data(); document.getElementById("doc-h1").value = data.title; document.getElementById("doc-desc").value = data.paragraph; document.getElementById("folderName").value = data.category; const cleanFileName = data.url.split("/").pop().replace(".html",
-        ""); document.getElementById("fileName").value = cleanFileName; if (data.raw_blocks) document.getElementById("editor-canvas").innerHTML = data.raw_blocks; } } // --- GLOBAL EXPORTS (FOR HTML ONCLICK) --- // 1. TOOLBAR FUNCTIONS window.fmt = (e,
-        cmd, val) => { if (e) e.preventDefault(); // Prevent losing focus document.execCommand(cmd, false, val); }; window.createLink = (e) => { if (e) e.preventDefault(); const url = prompt("Enter URL:", "https://"); if (url) document.execCommand("createLink",
-        false, url); }; window.editLink = (el) => { if (event) event.preventDefault(); const currentUrl = el.getAttribute("href"); const newUrl = prompt("Enter URL:", currentUrl === "#" ? "https://" : currentUrl); const newText = prompt("Enter Text:",
-        el.innerText); if (newUrl) el.setAttribute("href", newUrl); if (newText) el.innerText = newText; }; // Animation Logic window.applyAnim = (animClass) => { const sel = window.getSelection(); if (!sel.rangeCount || !animClass) return; let parent
-        = sel.anchorNode.parentElement; if (parent.tagName === "SPAN" && parent.className.includes("anim-")) { parent.className = animClass; } else { const span = document.createElement("span"); span.className = animClass; try { sel.getRangeAt(0).surroundContents(span);
-        } catch (e) { alert("Please select text within a single block only."); } } if (animClass !== "anim-marquee") { setTimeout(() => { const spans = document.getElementsByClassName(animClass); for (let s of spans) { s.classList.remove(animClass); }
-        }, 3000); } }; window.clearAnim = () => { const sel = window.getSelection(); if (!sel.rangeCount) return; let parent = sel.anchorNode.parentElement; if (parent.tagName === "SPAN" && parent.className.includes("anim-")) { parent.outerHTML = parent.innerHTML;
-        } }; // Toolbar Position document.addEventListener("selectionchange", () => { const sel = window.getSelection(); const bar = document.getElementById("floating-toolbar"); if ( sel.rangeCount > 0 && !sel.isCollapsed && document.getElementById("editor-canvas").contains(sel.anchorNode)
-        ) { const range = sel.getRangeAt(0); const rect = range.getBoundingClientRect(); bar.style.display = "flex"; // OFFSET FIX: Increased vertical gap to 70px to prevent overlapping text bar.style.top = `${window.scrollY + rect.top - 70}px`; bar.style.left
-        = `${rect.left + rect.width / 2}px`; } else { setTimeout(() => { if (window.getSelection().isCollapsed) bar.style.display = "none"; }, 200); } }); // 2. BLOCK INSERTION SYSTEM window.openBlockMenu = (zone) => { activeAddZone = zone; document.getElementById("block-menu-modal").style.display
-        = "flex"; }; window.closeBlockMenu = () => { document.getElementById("block-menu-modal").style.display = "none"; }; window.addBlock = (type) => { window.closeBlockMenu(); const wrapper = document.createElement("div"); wrapper.className = "block-wrapper";
-        let html = ""; // TEXT BLOCKS if (type === "p") html = `
-        <div class="editable-area" contenteditable="true" placeholder="Paragraph text..."></div>`; else if (type === "h2") html = `
-        <h2 class="editable-area" contenteditable="true" placeholder="Heading 2"></h2>`; else if (type === "h3") html = `
-        <h3 class="editable-area" contenteditable="true" placeholder="Heading 3"></h3>`; else if (type === "quote") html = `
-        <blockquote class="editable-area" contenteditable="true" style="border-left:4px solid #ccc; padding:10px 20px; font-style:italic; background:#f9f9f9;" placeholder="Quote text..."></blockquote>`; else if (type === "info-box") html = `
-        <div class="info-box editable-area" contenteditable="true" placeholder="Important Information..."></div>`; // LISTS else if (type === "list-ul") html = `
-        <ul class="editable-area" contenteditable="true">
-            <li>List Item</li>
-        </ul>`; else if (type === "list-ol") html = `
-        <ol class="editable-area" contenteditable="true">
-            <li>List Item</li>
-        </ol>`; // UTILITY else if (type === "html") { html = `
-        <div class="media-placeholder">
-            <div class="media-render"></div>
-            <div class="media-btn-group">
-                <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Insert HTML / Embed Code</button>
-            </div>
-        </div>`; } else if (type === "divider") html = `
-        <hr style="border:0; border-top:2px solid #eee; margin:30px 0;">`; else if (type === "accordion") html = `
-        <details style="background:#f9f9f9; padding:10px; border-radius:5px; border:1px solid #ddd;">
-            <summary style="font-weight:bold; cursor:pointer;" contenteditable="true">Accordion Title</summary>
-            <div class="editable-area" contenteditable="true" placeholder="Hidden Content..." style="padding-top:10px;"></div>
-        </details>`; // BUTTONS else if (type === "button") html = `
-        <div class="btn-block-wrapper"><a href="#" class="custom-site-btn btn-style-1" onclick="window.editLink(this); return false;">Click Me</a>
-            <br><small style="color:#777">Click to edit link/text</small></div>`; // TABLES else if (type === "table") html = `
-        <div class="table-container">
-            <table class="dynamic-table">
-                <thead>
-                    <tr>
-                        <th contenteditable="true">Header 1</th>
-                        <th contenteditable="true">Header 2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td contenteditable="true">Cell 1</td>
-                        <td contenteditable="true">Cell 2</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="table-tools">
-            <button class="media-action-btn" onclick="window.tblAddRow(this)">+ Row</button>
-            <button class="media-action-btn" onclick="window.tblAddCol(this)">+ Col</button>
-        </div>`; // MEDIA - CENTER IMAGE else if (type === "image-center") { html = `
-        <div class="media-placeholder">
-            <div class="media-render"></div>
-            <div class="media-btn-group">
-                <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Custom HTML / Code</button>
-                <button class="media-action-btn" onclick="window.createImageDirect(this)"><i class="fas fa-paint-brush"></i> Create Text Image</button>
-            </div>
-        </div>`; } // MEDIA + TEXT LAYOUT else if (type === "media-text") { html = `
-        <div class="layout-media-text">
-            <div class="layout-col-media">
-                <div class="media-placeholder">
-                    <div class="media-render"></div>
-                    <div class="media-btn-group">
-                        <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-code"></i> Custom HTML / Code</button>
-                        <button class="media-action-btn" onclick="window.createImageDirect(this)"><i class="fas fa-paint-brush"></i> Create Text Image</button>
-                    </div>
-                </div>
-            </div>
-            <div class="layout-col-text">
-                <div class="editable-area" contenteditable="true" placeholder="Write description..."></div>
-                <div class="add-zone" onclick="window.openBlockMenu(this)">
-                    <div class="add-line"></div>
-                    <div class="add-btn"><i class="fas fa-plus"></i></div>
-                </div>
-            </div>
-        </div>`; } // EMBED + TEXT LAYOUT else if (type === "embed-text") { html = `
-        <div class="layout-media-text">
-            <div class="layout-col-media">
-                <div class="media-placeholder">
-                    <div class="media-render"></div>
-                    <div class="media-btn-group">
-                        <button class="media-action-btn" onclick="window.pasteVideoOnly(this)"><i class="fab fa-youtube"></i> Paste Video Link</button>
-                    </div>
-                </div>
-            </div>
-            <div class="layout-col-text">
-                <div class="editable-area" contenteditable="true" placeholder="Video Description..."></div>
-                <div class="add-zone" onclick="window.openBlockMenu(this)">
-                    <div class="add-line"></div>
-                    <div class="add-btn"><i class="fas fa-plus"></i></div>
-                </div>
-            </div>
-        </div>`; } // CARD GRID else if (type === "card-grid") { let cardHtml = `
-        <div class="card-item">
-            <div class="card-img-area" onclick="window.chooseMedia(this)">
-                <span style="color:#999; font-size:12px; pointer-events:none;">+ Add Image/Code</span>
-            </div>
-            <h4 contenteditable="true" style="margin:0;">Card Title</h4>
-            <div class="editable-area" contenteditable="true" style="font-size:14px; color:#555;" placeholder="Desc..."></div>
-            <a href="#" class="custom-site-btn btn-style-2" style="font-size:12px; padding:6px 15px; align-self:flex-start;" onclick="window.editLink(this); return false;">Read More</a>
-        </div>`; html = `
-        <div class="card-grid-container">${cardHtml}</div>
-        <div class="add-card-btn-container">
-            <button class="media-action-btn" onclick="window.addCardToGrid(this)">+ Add Card</button>
-        </div>`; } else if (type === "image-code") { html = `
-        <div class="media-placeholder">
-            <div class="media-render"></div>
-            <div class="media-btn-group">
-                <button class="media-action-btn" onclick="window.chooseMedia(this)"><i class="fas fa-link"></i> Image URL</button>
-            </div>
-        </div>`; } // Wrapping wrapper.innerHTML = `
-        <div class="side-controls">
-            <div class="control-btn" onclick="window.moveBlock(this,-1)">▲</div>
-            <div class="control-btn" onclick="window.moveBlock(this,1)">▼</div>
-            <div class="control-btn delete" onclick="window.deleteBlock(this)">×</div>
-        </div>
-        ${html} `; // Insert Logic const newZone = document.createElement("div"); newZone.className = "add-zone"; newZone.setAttribute("onclick", "window.openBlockMenu(this)"); newZone.innerHTML = '
-        <div class="add-line"></div>
-        <div class="add-btn"><i class="fas fa-plus"></i></div>'; if (activeAddZone && activeAddZone.parentNode) { activeAddZone.parentNode.insertBefore(wrapper, activeAddZone.nextSibling); wrapper.parentNode.insertBefore(newZone, wrapper.nextSibling); } else { const canvas
-        = document.getElementById("editor-canvas"); canvas.appendChild(wrapper); canvas.appendChild(newZone); } }; // 3. UTILITY FUNCTIONS window.moveBlock = (btn, dir) => { const w = btn.closest(".block-wrapper"); const z = w.nextElementSibling; if (
-        dir === -1 && w.previousElementSibling?.previousElementSibling?.classList.contains("block-wrapper") ) { const prev = w.previousElementSibling.previousElementSibling; w.parentNode.insertBefore(w, prev); w.parentNode.insertBefore(z, prev); } if
-        (dir === 1 && z.nextElementSibling?.classList.contains("block-wrapper")) { const next = z.nextElementSibling; const nextZ = next.nextElementSibling; w.parentNode.insertBefore(next, w); w.parentNode.insertBefore(nextZ, w); } }; window.deleteBlock
-        = (btn) => { if (confirm("Delete block?")) { const w = btn.closest(".block-wrapper"); const z = w.nextElementSibling; w.remove(); if (z && z.classList.contains("add-zone")) z.remove(); } }; window.tblAddRow = (btn) => { const t = btn.parentElement.previousElementSibling.querySelector("table");
-        const cols = t.rows[0].cells.length; const r = t.insertRow(); for (let i = 0; i
-        < cols; i++) { r.insertCell().contentEditable="true" ; r.cells[i].innerText="Data" ; } }; window.tblAddCol=( btn)=> { const t = btn.parentElement.previousElementSibling.querySelector("table"); t.rows[0].appendChild(document.createElement("th")).contentEditable = "true"; for (let i = 1; i
-            < t.rows.length; i++) t.rows[i].insertCell().contentEditable="true" ; }; // CARD GRID LOGIC window.addCardToGrid=( btn)=> { const grid = btn.parentElement.previousElementSibling; const card = document.createElement("div"); card.className = "card-item"; card.innerHTML = `
+            // CARD GRID LOGIC
+            window.addCardToGrid = (btn) => {
+                const grid = btn.parentElement.previousElementSibling;
+                const card = document.createElement("div");
+                card.className = "card-item";
+                card.innerHTML = `
                 <div class="card-img-area" onclick="window.chooseMedia(this)">
                     <span style="color:#999; font-size:12px; pointer-events:none;">+ Add Image/Code</span>
                 </div>
                 <h4 contenteditable="true" style="margin:0;">Card Title</h4>
                 <div class="editable-area" contenteditable="true" style="font-size:14px; color:#555;" placeholder="Desc..."></div>
-                <a href="#" class="custom-site-btn btn-style-2" style="font-size:12px; padding:6px 15px; align-self:flex-start;" onclick="window.editLink(this); return false;">Read More</a> `; grid.appendChild(card); }; // ==========================================================================
-                // 4. NEW MEDIA HANDLERS (MODAL BASED) // ========================================================================== function getRenderArea(element) { const placeholder = element.closest ? element.closest(".media-placeholder") : null;
-                if (placeholder) { return { container: placeholder, renderDiv: placeholder.querySelector(".media-render"), btnGroup: placeholder.querySelector(".media-btn-group"), }; } if (element.classList.contains("card-img-area")) { return { container:
-                element, renderDiv: element, btnGroup: null, }; } return null; } window.chooseMedia = (el) => { if ( el.querySelector("img") || el.querySelector("iframe") || el.querySelector(".generated-text-img") || el.innerHTML.trim().length > 100 )
-                { if (!confirm("Replace current content?")) return; } activeMediaElement = el; document.getElementById("media-modal").style.display = "flex"; window.switchMediaTab("code"); document.getElementById("custom-code-input").value = ""; document.getElementById("img-text").value
-                = ""; }; window.createImageDirect = (el) => { window.chooseMedia(el); window.switchMediaTab("image"); }; window.switchMediaTab = (tabName) => { document.querySelectorAll(".media-tab").forEach((t) => t.classList.remove("active")); document.querySelectorAll(".media-tab-content").forEach((c)
-                => c.classList.remove("active")); if (tabName === "code") { document.querySelectorAll(".media-tab")[0].classList.add("active"); document.getElementById("tab-code").classList.add("active"); } else { document.querySelectorAll(".media-tab")[1].classList.add("active");
-                document.getElementById("tab-image").classList.add("active"); } }; window.closeMediaModal = () => { document.getElementById("media-modal").style.display = "none"; activeMediaElement = null; }; window.submitMediaModal = () => { if (!activeMediaElement)
-                return; const isCodeTab = document.getElementById("tab-code").classList.contains("active"); if (isCodeTab) { const code = document.getElementById("custom-code-input").value.trim(); if (!code) { alert("Please enter some code or URL"); return;
-                } let html = code; // 1. YouTube Logic if (code.includes("youtube.com") || code.includes("youtu.be")) { let v = ""; if (code.includes("watch?v=")) v = code.split("watch?v=")[1]; else if (code.includes("embed/")) v = code.split("embed/")[1];
-                else if (code.includes("youtu.be/")) v = code.split("youtu.be/")[1]; if (v) { v = v.split("&")[0].split("?")[0]; html = `
-                <div class="iframe-container">
-                    <iframe src="https://www.youtube-nocookie.com/embed/${v}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>`; } } // 2. Generic Iframe else if (code.startsWith("<iframe ")) {
-                        let cleanFrame = code.replace(/width="\d+ "/, " ").replace(/height="\d+ "/, " ");
-                        html = `<div class="iframe-container ">${cleanFrame}</div>`;
+                <a href="#" class="custom-site-btn btn-style-2" style="font-size:12px; padding:6px 15px; align-self:flex-start;" onclick="window.editLink(this); return false;">Read More</a>
+            `;
+                grid.appendChild(card);
+            };
+
+            // ==========================================================================
+            // 4. NEW MEDIA HANDLERS (MODAL BASED)
+            // ==========================================================================
+
+            function getRenderArea(element) {
+                const placeholder = element.closest ? element.closest(".media-placeholder") : null;
+                if (placeholder) {
+                    return {
+                        container: placeholder,
+                        renderDiv: placeholder.querySelector(".media-render"),
+                        btnGroup: placeholder.querySelector(".media-btn-group"),
+                    };
+                }
+                if (element.classList.contains("card-img-area")) {
+                    return {
+                        container: element,
+                        renderDiv: element,
+                        btnGroup: null,
+                    };
+                }
+                return null;
+            }
+
+            window.chooseMedia = (el) => {
+                if (
+                    el.querySelector("img") ||
+                    el.querySelector("iframe") ||
+                    el.querySelector(".generated-text-img") ||
+                    el.innerHTML.trim().length > 100
+                ) {
+                    if (!confirm("Replace current content?")) return;
+                }
+                activeMediaElement = el;
+
+                document.getElementById("media-modal").style.display = "flex";
+                window.switchMediaTab("code");
+
+                document.getElementById("custom-code-input").value = "";
+                document.getElementById("img-text").value = "";
+            };
+
+            window.createImageDirect = (el) => {
+                window.chooseMedia(el);
+                window.switchMediaTab("image");
+            };
+
+            window.switchMediaTab = (tabName) => {
+                document.querySelectorAll(".media-tab").forEach((t) => t.classList.remove("active"));
+                document.querySelectorAll(".media-tab-content").forEach((c) => c.classList.remove("active"));
+
+                if (tabName === "code") {
+                    document.querySelectorAll(".media-tab")[0].classList.add("active");
+                    document.getElementById("tab-code").classList.add("active");
+                } else {
+                    document.querySelectorAll(".media-tab")[1].classList.add("active");
+                    document.getElementById("tab-image").classList.add("active");
+                }
+            };
+
+            window.closeMediaModal = () => {
+                document.getElementById("media-modal").style.display = "none";
+                activeMediaElement = null;
+            };
+
+            window.submitMediaModal = () => {
+                if (!activeMediaElement) return;
+
+                const isCodeTab = document.getElementById("tab-code").classList.contains("active");
+
+                if (isCodeTab) {
+                    const code = document.getElementById("custom-code-input").value.trim();
+                    if (!code) {
+                        alert("Please enter some code or URL");
+                        return;
+                    }
+
+                    let html = code;
+
+                    // 1. YouTube Logic
+                    if (code.includes("youtube.com") || code.includes("youtu.be")) {
+                        let v = "";
+                        if (code.includes("watch?v=")) v = code.split("watch?v=")[1];
+                        else if (code.includes("embed/")) v = code.split("embed/")[1];
+                        else if (code.includes("youtu.be/")) v = code.split("youtu.be/")[1];
+
+                        if (v) {
+                            v = v.split("&")[0].split("?")[0];
+                            html = `<div class="iframe-container"><iframe src="https://www.youtube-nocookie.com/embed/${v}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+                        }
+                    }
+                    // 2. Generic Iframe
+                    else if (code.startsWith("<iframe")) {
+                        let cleanFrame = code.replace(/width="\d+"/, "").replace(/height="\d+"/, "");
+                        html = `<div class="iframe-container">${cleanFrame}</div>`;
                     }
                     // 3. Image URL
                     else if (
                         code.match(/\.(jpeg|jpg|gif|png|webp)$/) != null ||
-                        (code.startsWith("http ") && !code.includes(" "))
+                        (code.startsWith("http") && !code.includes(" "))
                     ) {
-                        html = `<img src="${code} " alt="Image ">`;
+                        html = `<img src="${code}" alt="Image">`;
                     } else {
                         html = code;
                     }
@@ -1385,23 +1691,23 @@
                     renderToTarget(activeMediaElement, html);
                 } else {
                     // Create Text Image
-                    const text = document.getElementById("img-text ").value;
-                    const bgColor = document.getElementById("img-bg ").value || "#2271b1 ";
-                    const textColor = document.getElementById("img-fg ").value || "white ";
+                    const text = document.getElementById("img-text").value;
+                    const bgColor = document.getElementById("img-bg").value || "#2271b1";
+                    const textColor = document.getElementById("img-fg").value || "white";
 
                     if (!text) {
-                        alert("Please enter text ");
+                        alert("Please enter text");
                         return;
                     }
 
                     const svg = `
-                    <svg width="600 " height="400 " xmlns="http://www.w3.org/2000/svg ">
-                        <rect width="100% " height="100% " fill="${bgColor} "/>
-                        <text x="50% " y="50% " dominant-baseline="middle " text-anchor="middle " font-family="Arial, sans-serif " font-size="40 " font-weight="bold " fill="${textColor} ">${text}</text>
+                    <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100%" height="100%" fill="${bgColor}"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="${textColor}">${text}</text>
                     </svg>`;
 
-                    const encodedSvg = "data:image/svg+xml;base64, " + btoa(unescape(encodeURIComponent(svg)));
-                    const html = `<img src="${encodedSvg} " class="generated-text-img " alt="${text} " style="max-width:100%; height:auto; display:block; margin:0 auto; ">`;
+                    const encodedSvg = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
+                    const html = `<img src="${encodedSvg}" class="generated-text-img" alt="${text}" style="max-width:100%; height:auto; display:block; margin:0 auto;">`;
 
                     renderToTarget(activeMediaElement, html);
                 }
@@ -1413,36 +1719,36 @@
                 const target = getRenderArea(el);
                 if (!target) return;
 
-                const code = prompt("Paste YouTube Link: ");
+                const code = prompt("Paste YouTube Link:");
                 if (!code) return;
 
-                let v = " ";
-                if (code.includes("watch?v=")) v = code.split(" watch?v=")[1];
-                else if (code.includes(" embed/ ")) v = code.split("embed/ ")[1];
-                else if (code.includes("youtu.be/ ")) v = code.split("youtu.be/ ")[1];
+                let v = "";
+                if (code.includes("watch?v=")) v = code.split("watch?v=")[1];
+                else if (code.includes("embed/")) v = code.split("embed/")[1];
+                else if (code.includes("youtu.be/")) v = code.split("youtu.be/")[1];
 
                 if (v) {
-                    v = v.split("& ")[0].split("? ")[0];
-                    const html = `<div class="iframe-container "><iframe src="https://www.youtube.com/embed/${v} " frameborder="0 " allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture " allowfullscreen></iframe></div>`;
+                    v = v.split("&")[0].split("?")[0];
+                    const html = `<div class="iframe-container"><iframe src="https://www.youtube.com/embed/${v}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
 
                     if (target.btnGroup) {
                         target.renderDiv.innerHTML =
-                            html + `<button class="remove-media " onclick="window.resetMediaState(this) ">×</button>`;
-                        target.renderDiv.style.display = "block ";
-                        target.btnGroup.style.display = "none ";
-                        target.container.style.padding = "0 ";
-                        target.container.style.border = "none ";
+                            html + `<button class="remove-media" onclick="window.resetMediaState(this)">×</button>`;
+                        target.renderDiv.style.display = "block";
+                        target.btnGroup.style.display = "none";
+                        target.container.style.padding = "0";
+                        target.container.style.border = "none";
                     }
                 } else {
-                    alert("Invalid YouTube Link ");
+                    alert("Invalid YouTube Link");
                 }
             };
 
             function executeScripts(container) {
-                const scripts = container.getElementsByTagName("script ");
+                const scripts = container.getElementsByTagName("script");
                 for (let i = 0; i < scripts.length; i++) {
                     const oldScript = scripts[i];
-                    const newScript = document.createElement("script ");
+                    const newScript = document.createElement("script");
                     Array.from(oldScript.attributes).forEach((attr) => newScript.setAttribute(attr.name, attr.value));
                     newScript.appendChild(document.createTextNode(oldScript.innerHTML));
                     oldScript.parentNode.replaceChild(newScript, oldScript);
@@ -1453,28 +1759,28 @@
                 const target = getRenderArea(el);
                 if (!target) return;
 
-                if (el.classList.contains("card-img-area ")) {
+                if (el.classList.contains("card-img-area")) {
                     el.innerHTML =
                         html +
-                        `<button class="remove-media " onclick="window.resetCardMedia(this) " style="position:absolute; top:0; right:0; background:rgba(255,0,0,0.8); color:white; border:none; width:20px; height:20px; cursor:pointer; ">×</button>`;
-                    el.classList.add("has-html ");
-                    el.classList.add("content-active ");
-                    el.style.background = "transparent ";
-                    el.style.display = "block ";
-                    el.style.minHeight = "auto ";
-                    el.style.overflow = "visible ";
+                        `<button class="remove-media" onclick="window.resetCardMedia(this)" style="position:absolute; top:0; right:0; background:rgba(255,0,0,0.8); color:white; border:none; width:20px; height:20px; cursor:pointer;">×</button>`;
+                    el.classList.add("has-html");
+                    el.classList.add("content-active");
+                    el.style.background = "transparent";
+                    el.style.display = "block";
+                    el.style.minHeight = "auto";
+                    el.style.overflow = "visible";
                     executeScripts(el);
                     return;
                 }
 
                 if (target.btnGroup) {
                     target.renderDiv.innerHTML =
-                        html + `<button class="remove-media " onclick="window.resetMediaState(this) ">×</button>`;
-                    target.renderDiv.style.display = "block ";
-                    target.btnGroup.style.display = "none ";
-                    target.container.style.padding = "0 ";
-                    target.container.style.border = "none ";
-                    target.container.style.backgroundColor = "transparent ";
+                        html + `<button class="remove-media" onclick="window.resetMediaState(this)">×</button>`;
+                    target.renderDiv.style.display = "block";
+                    target.btnGroup.style.display = "none";
+                    target.container.style.padding = "0";
+                    target.container.style.border = "none";
+                    target.container.style.backgroundColor = "transparent";
                     executeScripts(target.renderDiv);
                 } else {
                     target.container.innerHTML = html;
@@ -1484,118 +1790,107 @@
 
             window.resetCardMedia = (btn) => {
                 event.stopPropagation();
-                const cardImgArea = btn.closest(".card-img-area ");
+                const cardImgArea = btn.closest(".card-img-area");
                 if (cardImgArea) {
-                    cardImgArea.innerHTML = `<span style="color:#999; font-size:12px; pointer-events:none; ">+ Add Image/Code</span>`;
-                    cardImgArea.classList.remove("has-html ");
-                    cardImgArea.classList.remove("content-active ");
-                    cardImgArea.style.background = "#f0f0f1 ";
-                    cardImgArea.style.display = "flex ";
-                    cardImgArea.style.minHeight = "180px ";
-                    cardImgArea.style.overflow = "hidden ";
+                    cardImgArea.innerHTML = `<span style="color:#999; font-size:12px; pointer-events:none;">+ Add Image/Code</span>`;
+                    cardImgArea.classList.remove("has-html");
+                    cardImgArea.classList.remove("content-active");
+                    cardImgArea.style.background = "#f0f0f1";
+                    cardImgArea.style.display = "flex";
+                    cardImgArea.style.minHeight = "180px";
+                    cardImgArea.style.overflow = "hidden";
                 }
             };
 
             window.resetMediaState = (btn) => {
-                const ph = btn.closest ? btn.closest(".media-placeholder ") : btn;
-                const renderDiv = ph.querySelector(".media-render ");
-                const btnGroup = ph.querySelector(".media-btn-group ");
-                renderDiv.innerHTML = " ";
-                renderDiv.style.display = "none ";
-                btnGroup.style.display = "flex ";
-                ph.style.border = "2px dashed #c3c4c7 ";
-                ph.style.background = "#f6f7f7 ";
-                ph.style.padding = "30px 10px ";
+                const ph = btn.closest ? btn.closest(".media-placeholder") : btn;
+                const renderDiv = ph.querySelector(".media-render");
+                const btnGroup = ph.querySelector(".media-btn-group");
+                renderDiv.innerHTML = "";
+                renderDiv.style.display = "none";
+                btnGroup.style.display = "flex";
+                ph.style.border = "2px dashed #c3c4c7";
+                ph.style.background = "#f6f7f7";
+                ph.style.padding = "30px 10px";
             };
 
             // 5. SAVE & OUTPUT SYSTEM
             window.getCleanHTML = () => {
-                const clone = document.getElementById("editor-canvas ").cloneNode(true);
+                const clone = document.getElementById("editor-canvas").cloneNode(true);
                 const cleanUpSelectors = [
-                    ".add-zone ",
-                    ".side-controls ",
-                    ".media-btn-group ",
-                    ".remove-media ",
-                    ".table-tools ",
-                    ".btn-block-wrapper small ",
-                    ".add-card-btn-container ",
+                    ".add-zone",
+                    ".side-controls",
+                    ".media-btn-group",
+                    ".remove-media",
+                    ".table-tools",
+                    ".btn-block-wrapper small",
+                    ".add-card-btn-container",
                 ];
                 cleanUpSelectors.forEach((sel) => clone.querySelectorAll(sel).forEach((el) => el.remove()));
-                clone.querySelectorAll(".media-placeholder ").forEach((ph) => {
-                    const render = ph.querySelector(".media-render ");
-                    if (render && render.innerHTML.trim() !== " ") {
-                        const btn = render.querySelector(".remove-media ");
+                clone.querySelectorAll(".media-placeholder").forEach((ph) => {
+                    const render = ph.querySelector(".media-render");
+                    if (render && render.innerHTML.trim() !== "") {
+                        const btn = render.querySelector(".remove-media");
                         if (btn) btn.remove();
                         while (render.firstChild) ph.parentNode.insertBefore(render.firstChild, ph);
                         ph.remove();
                     } else ph.remove();
                 });
-                clone.querySelectorAll(".card-img-area ").forEach((area) => {
-                    const btn = area.querySelector(".remove-media ");
+                clone.querySelectorAll(".card-img-area").forEach((area) => {
+                    const btn = area.querySelector(".remove-media");
                     if (btn) btn.remove();
-                    area.removeAttribute("onclick ");
-                    area.classList.remove("has-html ");
-                    area.removeAttribute("style ");
+                    area.removeAttribute("onclick");
+                    area.classList.remove("has-html");
+                    area.removeAttribute("style");
                 });
-                clone.querySelectorAll("* ").forEach((el) => {
-                    el.removeAttribute("contenteditable ");
-                    el.removeAttribute("placeholder ");
-                    if (el.getAttribute("onclick ")) el.removeAttribute("onclick ");
+                clone.querySelectorAll("*").forEach((el) => {
+                    el.removeAttribute("contenteditable");
+                    el.removeAttribute("placeholder");
+                    if (el.getAttribute("onclick")) el.removeAttribute("onclick");
                 });
-                clone.querySelectorAll(".block-wrapper ").forEach((w) => {
-                    w.removeAttribute("class ");
-                    w.style = "margin-bottom: 1.5em; ";
+                clone.querySelectorAll(".block-wrapper").forEach((w) => {
+                    w.removeAttribute("class");
+                    w.style = "margin-bottom: 1.5em;";
                 });
                 return clone.innerHTML;
             };
 
             window.savePost = async (status) => {
-                const h1 = document.getElementById("doc-h1 ").value;
-                const desc = document.getElementById("doc-desc ").value;
-                const folder = document.getElementById("folderName ").value;
-                const fileInput = document.getElementById("fileName ").value;
-                const imgInput = document.getElementById("imgName ").value;
-
+                const h1 = document.getElementById("doc-h1").value;
+                const desc = document.getElementById("doc-desc").value;
+                const folder = document.getElementById("folderName").value;
+                const fileInput = document.getElementById("fileName").value;
+                const imgInput = document.getElementById("imgName").value;
+                
                 if (!h1 || !fileInput || !folder) {
-                    alert("Title, Folder and Filename are required! ");
+                    alert("Title, Folder and Filename are required!");
                     return;
                 }
-
+                
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-                const authorName = currentUser?.displayName || "Himanshu Tyagi ";
-
-                const ogImage = imgInput
-                    ? `https://gklearnstudy.in/images/${imgInput}.png`
-                    : "https://gklearnstudy.in/GK-Learn-Study.png ";
+                const authorName = currentUser?.displayName || "Himanshu Tyagi";
+                
+                const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
-
-                const file = fileInput + ".html ";
+                
+                const file = fileInput + ".html";
                 const bodyContent = window.getCleanHTML();
-                const fullHtml = generateTemplate(
-                    h1,
-                    desc,
-                    bodyContent,
-                    folder,
-                    fileInput,
-                    authorName,
-                    ogImage,
-                    canonical
-                );
+                const fullHtml = generateTemplate(h1, desc, bodyContent, folder, fileInput, authorName, ogImage, canonical);
                 const docId = editingDocId || `${folder}-${fileInput}`;
                 try {
-                    await setDoc(doc(db, "pending_posts ", docId), {
+                    await setDoc(doc(db, "pending_posts", docId), {
                         title: h1,
                         paragraph: desc,
                         category: folder,
                         url: `/${folder}/${file}`,
                         content: fullHtml,
-                        raw_blocks: document.getElementById("editor-canvas ").innerHTML,
+                        raw_blocks: document.getElementById("editor-canvas").innerHTML,
                         author: authorName,
                         date: new Date().toISOString(),
                         status: status,
                     });
                     alert("Success! Saved as " + status);
-                    if (!editingDocId) window.location.href = "admin.html ";
+                    if (!editingDocId) window.location.href = "admin.html";
                     else window.close();
                 } catch (e) {
                     alert("Error: " + e.message);
@@ -1603,434 +1898,456 @@
             };
 
             window.previewPost = () => {
-                const h1 = document.getElementById("doc-h1 ").value;
-                const desc = document.getElementById("doc-desc ").value || "Preview ";
-                const folder = document.getElementById("folderName ").value;
-                const fileInput = document.getElementById("fileName ").value;
-                const imgInput = document.getElementById("imgName ").value;
-
+                const h1 = document.getElementById("doc-h1").value;
+                const desc = document.getElementById("doc-desc").value || "Preview";
+                const folder = document.getElementById("folderName").value;
+                const fileInput = document.getElementById("fileName").value;
+                const imgInput = document.getElementById("imgName").value;
+                
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-                const authorName = currentUser?.displayName || "Himanshu Tyagi ";
-
-                const ogImage = imgInput
-                    ? `https://gklearnstudy.in/images/${imgInput}.png`
-                    : "https://gklearnstudy.in/GK-Learn-Study.png ";
+                const authorName = currentUser?.displayName || "Himanshu Tyagi";
+                
+                const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
-
-                const html = generateTemplate(
-                    h1,
-                    desc,
-                    window.getCleanHTML(),
-                    folder,
-                    fileInput,
-                    authorName,
-                    ogImage,
-                    canonical
-                );
-                const newWindow = window.open(" ", "_blank ");
+                
+                const html = generateTemplate(h1, desc, window.getCleanHTML(), folder, fileInput, authorName, ogImage, canonical);
+                const newWindow = window.open("", "_blank");
                 if (newWindow) {
                     newWindow.document.open();
                     newWindow.document.write(html);
                     newWindow.document.close();
                 } else {
-                    alert("Please allow popups to view the preview. ");
+                    alert("Please allow popups to view the preview.");
                 }
             };
 
             function generateTemplate(h1, desc, content, folderName, fileName, authorName, ogImage, canonical) {
                 const authorInitial = authorName.charAt(0).toUpperCase();
                 return `<!DOCTYPE html>
-<html lang="en ">
+<html lang="en">
     <head>
-        <meta charset="UTF-8 " />
-        <meta name="viewport " content="width=device-width, initial-scale=1.0 " />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${h1} | GK Learn Study</title>
-        <meta name="description " content="${desc} " />
-        <meta name="keywords " content="${h1}, ${desc}, GK Learn Study, today gk " />
-        <meta name="author " content="${authorName} " />
-        <meta name="robots " content="index, follow " />
-        <meta name="copyright " content="© ${new Date().getFullYear()} GK Learn Study " />
-        <link rel="canonical " href="${canonical} " />
+        <meta name="description" content="${desc}" />
+        <meta name="keywords" content="${h1}, ${desc}, GK Learn Study, today gk" />
+        <meta name="author" content="${authorName}" />
+        <meta name="robots" content="index, follow" />
+        <meta name="copyright" content="© ${new Date().getFullYear()} GK Learn Study" />
+        <link rel="canonical" href="${canonical}" />
         
         <!-- Open Graph / Facebook -->
-        <meta property="og:title " content="${h1} | GK Learn Study " />
-        <meta property="og:description " content="${desc} " />
-        <meta property="og:image " content="${ogImage} " />
-        <meta property="og:url " content="${canonical} " />
-        <meta property="og:type " content="article " />
-        <meta property="og:site_name " content="GK Learn Study " />
+        <meta property="og:title" content="${h1} | GK Learn Study" />
+        <meta property="og:description" content="${desc}" />
+        <meta property="og:image" content="${ogImage}" />
+        <meta property="og:url" content="${canonical}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="GK Learn Study" />
         
         <!-- Twitter -->
-        <meta name="twitter:card " content="summary_large_image " />
-        <meta name="twitter:title " content="${h1} | GK Learn Study " />
-        <meta name="twitter:description " content="${desc} " />
-        <meta name="twitter:image " content="${ogImage} " />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="${h1} | GK Learn Study" />
+        <meta name="twitter:description" content="${desc}" />
+        <meta name="twitter:image" content="${ogImage}" />
 
-        <link rel="stylesheet " href="https://gklearnstudy.in/css/theme.css ">
-        <link rel="stylesheet " href="https://gklearnstudy.in/css/rightside.css ">
-        <link rel="stylesheet " href="https://gklearnstudy.in/css/topic-menu.css ">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/theme.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/rightside.css">
+        <link rel="stylesheet" href="https://gklearnstudy.in/css/topic-menu.css">
 
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503 " crossorigin="anonymous "><\/script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503" crossorigin="anonymous"><\/script>
     </head>
     <body>
-             <header class="header " id="header ">
-            <nav class="navbar ">
-                <div class="burger " id="burger ">
-                    <svg id="burgerSvg " width="30 " height="30 " viewBox="0 0 100 80 " cursor="pointer " aria-hidden="true ">
-                        <rect width="100 " height="7 " rx="5 "></rect>
-                        <rect y="30 " width="100 " height="7 " rx="5 "></rect>
-                        <rect y="60 " width="100 " height="7 " rx="5 "></rect>
+             <header class="header" id="header">
+            <nav class="navbar">
+                <div class="burger" id="burger">
+                    <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer" aria-hidden="true">
+                        <rect width="100" height="7" rx="5"></rect>
+                        <rect y="30" width="100" height="7" rx="5"></rect>
+                        <rect y="60" width="100" height="7" rx="5"></rect>
                     </svg>
                 </div>
 
-                <a href="index.html " class="brand " aria-label="GK Learn Study ">
+                <a href="index.html" class="brand" aria-label="GK Learn Study">
                     <svg
-                        width="40 "
-                        height="40 "
-                        viewBox="0 0 300 300 "
-                        xmlns="http://www.w3.org/2000/svg "
-                        role="img "
-                        aria-label="GK Learn Study logo "
+                        width="40"
+                        height="40"
+                        viewBox="0 0 300 300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        role="img"
+                        aria-label="GK Learn Study logo"
                     >
-                        <circle cx="150 " cy="150 " r="150 " fill="white " />
+                        <circle cx="150" cy="150" r="150" fill="white" />
                         <text
-                            x="50% "
-                            y="40% "
-                            font-size="85 "
-                            font-weight="bold "
-                            fill="#ff4b5c "
-                            text-anchor="middle "
-                            style="transform-origin: center center "
-                            opacity="0 "
+                            x="50%"
+                            y="40%"
+                            font-size="85"
+                            font-weight="bold"
+                            fill="#ff4b5c"
+                            text-anchor="middle"
+                            style="transform-origin: center center"
+                            opacity="0"
                         >
                             GK
-                            <animate attributeName="opacity " from="0 " to="1 " begin="0.5s " dur="1.2s " fill="freeze " />
+                            <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
                             <animateTransform
-                                attributeName="transform "
-                                type="rotate "
-                                from="-20 "
-                                to="0 "
-                                begin="0.5s "
-                                dur="1.2s "
-                                fill="freeze "
-                                additive="sum "
+                                attributeName="transform"
+                                type="rotate"
+                                from="-20"
+                                to="0"
+                                begin="0.5s"
+                                dur="1.2s"
+                                fill="freeze"
+                                additive="sum"
                             />
                             <animateTransform
-                                attributeName="transform "
-                                type="scale "
-                                from="0.5 "
-                                to="1 "
-                                begin="0.5s "
-                                dur="1.2s "
-                                fill="freeze "
-                                additive="sum "
+                                attributeName="transform"
+                                type="scale"
+                                from="0.5"
+                                to="1"
+                                begin="0.5s"
+                                dur="1.2s"
+                                fill="freeze"
+                                additive="sum"
                             />
                         </text>
                         <text
-                            x="50% "
-                            y="65% "
-                            font-size="45 "
-                            fill="#6a4cff "
-                            text-anchor="middle "
-                            style="transform-origin: center center "
-                            opacity="0 "
+                            x="50%"
+                            y="65%"
+                            font-size="45"
+                            fill="#6a4cff"
+                            text-anchor="middle"
+                            style="transform-origin: center center"
+                            opacity="0"
                         >
                             Learn Study
-                            <animate attributeName="opacity " from="0 " to="1 " begin="0.9s " dur="1.2s " fill="freeze " />
+                            <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
                             <animateTransform
-                                attributeName="transform "
-                                type="scale "
-                                from="0.7 "
-                                to="1 "
-                                begin="0.9s "
-                                dur="1.2s "
-                                fill="freeze "
+                                attributeName="transform"
+                                type="scale"
+                                from="0.7"
+                                to="1"
+                                begin="0.9s"
+                                dur="1.2s"
+                                fill="freeze"
                             />
                         </text>
-                        <clipPath id="circleClip ">
-                            <circle cx="150 " cy="150 " r="150 " />
+                        <clipPath id="circleClip">
+                            <circle cx="150" cy="150" r="150" />
                         </clipPath>
-                        <g clip-path="url(#circleClip) ">
-                            <path fill="#ff9f80 " fill-opacity="0.8 ">
+                        <g clip-path="url(#circleClip)">
+                            <path fill="#ff9f80" fill-opacity="0.8">
                                 <animate
-                                    attributeName="d "
-                                    dur="6s "
-                                    repeatCount="indefinite "
-                                    values=" M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z; M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z; M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z "
+                                    attributeName="d"
+                                    dur="6s"
+                                    repeatCount="indefinite"
+                                    values="
+                                    M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                                    M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                                    M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                                "
                                 />
                             </path>
-                            <path fill="#6a4cff " fill-opacity="0.5 ">
+                            <path fill="#6a4cff" fill-opacity="0.5">
                                 <animate
-                                    attributeName="d "
-                                    dur="7s "
-                                    repeatCount="indefinite "
-                                    values=" M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z; M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z; M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z "
+                                    attributeName="d"
+                                    dur="7s"
+                                    repeatCount="indefinite"
+                                    values="
+                                    M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                                    M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                                    M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                                "
                                 />
                             </path>
                         </g>
                     </svg>
                 </a>
 
-                <div class="menu " id="menu ">
-                    <div class="mobile-menu-header ">
-                        <a href="/ " class="menu-brand-text ">GK Learn Study</a>
-                        <button class="close-menu-btn " id="closeMenuBtn " aria-label="Close menu ">
+                <div class="menu" id="menu">
+                    <div class="mobile-menu-header">
+                        <a href="/" class="menu-brand-text">GK Learn Study</a>
+                        <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
                             <svg
-                                viewBox="0 0 24 24 "
-                                fill="none "
-                                stroke="currentColor "
-                                stroke-width="2 "
-                                stroke-linecap="round "
-                                stroke-linejoin="round "
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
-                                <line x1="18 " y1="6 " x2="6 " y2="18 "></line>
-                                <line x1="6 " y1="6 " x2="18 " y2="18 "></line>
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
                         </button>
                     </div>
-                    <div class="menu-inner ">
+                    <div class="menu-inner">
                         <!-- Menu links injected by header.js -->
                     </div>
-                    <button class="menu-arrow left " id="menuLeft " aria-label="Scroll menu left ">
+                    <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
                         <svg
-                            class="arrow-svg "
-                            viewBox="0 0 24 24 "
-                            stroke="currentColor "
-                            stroke-width="2.5 "
-                            fill="none "
-                            stroke-linecap="round "
-                            stroke-linejoin="round "
-                            aria-hidden="true "
+                            class="arrow-svg"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
                         >
-                            <polyline points="15 18 9 12 15 6 " class="arrow-static "></polyline>
-                            <polyline points="11 18 5 12 11 6 " class="arrow-animated "></polyline>
+                            <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                            <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
                         </svg>
                     </button>
-                    <button class="menu-arrow right " id="menuRight " aria-label="Scroll menu right ">
+                    <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
                         <svg
-                            class="arrow-svg "
-                            viewBox="0 0 24 24 "
-                            stroke="currentColor "
-                            stroke-width="2.5 "
-                            fill="none "
-                            stroke-linecap="round "
-                            stroke-linejoin="round "
-                            aria-hidden="true "
+                            class="arrow-svg"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
                         >
-                            <polyline points="9 18 15 12 9 6 " class="arrow-static "></polyline>
-                            <polyline points="13 18 19 12 13 6 " class="arrow-animated "></polyline>
+                            <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                            <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
                         </svg>
                     </button>
                 </div>
 
-                <div class="header-actions ">
-                    <div class="search-container ">
-                        <button class="search-icon " id="searchBtn " aria-label="Open search bar ">
+                <div class="header-actions">
+                    <div class="search-container">
+                        <button class="search-icon" id="searchBtn" aria-label="Open search bar">
                             <svg
-                                viewBox="0 0 24 24 "
-                                fill="none "
-                                stroke="currentColor "
-                                stroke-width="2 "
-                                aria-hidden="true "
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                aria-hidden="true"
                             >
-                                <circle cx="11 " cy="11 " r="8 "></circle>
-                                <line x1="21 " y1="21 " x2="16.65 " y2="16.65 "></line>
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </button>
                     </div>
-                    <button class="theme-switcher " id="themeSwitcher " aria-label="Toggle theme ">
+                    <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
                         <svg
-                            class="sun "
-                            viewBox="0 0 24 24 "
-                            fill="none "
-                            stroke="currentColor "
-                            stroke-width="2 "
-                            aria-hidden="true "
+                            class="sun"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
                         >
-                            <circle cx="12 " cy="12 " r="5 "></circle>
-                            <line x1="12 " y1="1 " x2="12 " y2="3 "></line>
-                            <line x1="12 " y1="21 " x2="12 " y2="23 "></line>
-                            <line x1="4.22 " y1="4.22 " x2="5.64 " y2="5.64 "></line>
-                            <line x1="18.36 " y1="18.36 " x2="19.78 " y2="19.78 "></line>
-                            <line x1="1 " y1="12 " x2="3 " y2="12 "></line>
-                            <line x1="21 " y1="12 " x2="23 " y2="12 "></line>
-                            <line x1="4.22 " y1="19.78 " x2="5.64 " y2="18.36 "></line>
-                            <line x1="18.36 " y1="5.64 " x2="19.78 " y2="4.22 "></line>
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                         </svg>
                         <svg
-                            class="moon "
-                            viewBox="0 0 24 24 "
-                            fill="none "
-                            stroke="currentColor "
-                            stroke-width="2 "
-                            aria-hidden="true "
+                            class="moon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
                         >
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z "></path>
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                         </svg>
                     </button>
                 </div>
             </nav>
 
-            <button class="back-icon " id="backBtn " aria-label="Close search bar ">←</button>
-            <input type="text " class="search-input " id="searchInput " autocomplete="off " placeholder="Search... " />
-            <div class="overlay "></div>
+            <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+            <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search..." />
+            <div class="overlay"></div>
         </header>
         
-          <ul id="suggestions-list " class="suggestions "></ul>
+          <ul id="suggestions-list" class="suggestions"></ul>
      
         
-        <div id="sidebar-overlay "></div>
-        <aside id="topic-sidebar ">
-            <h3 class="sidebar-title ">Topic</h3>
-            <nav id="topic-nav "><ul></ul></nav>
+        <div id="sidebar-overlay"></div>
+        <aside id="topic-sidebar">
+            <h3 class="sidebar-title">Topic</h3>
+            <nav id="topic-nav"><ul></ul></nav>
         </aside>
-        <div class="main-content-wrapper ">
-            <main class="container ">
+        
+        
+
+        <div class="main-content-wrapper">
+            <main class="container">
                
-    <section class="intro-section " data-ctx-hero>
-    <div class="hero ">
+               
+               
+               
+    <section class="intro-section" data-ctx-hero>
+    <div class="hero">
 
         <!-- IMAGE -->
-        <div class="hero-image "><img class="ctx-image " alt="${h1} "></div>
+        <div class="hero-image"><img class="ctx-image" alt="${h1}"></div>
 
-        <div class="hero-text ">
-                        <h1 id="pageTitle ">${h1}</h1>
-                         <p id="pageDesc ">${desc}</p>
-                         <canvas class="ctx-canvas " width="1920 " height="1080 " hidden></canvas></div></div>
+        <div class="hero-text">
+           
+                        
+                        
+                       
+                        <h1 id="pageTitle">${h1}</h1>
+                        
+                         <p id="pageDesc">${desc}</p>
+                         
+                         
+                                            
+
+  <canvas class="ctx-canvas" width="1920" height="1080" hidden></canvas></div></div>
 </section>
               
-    
-                   <div class="post-meta-container ">
-                        <div class="byline ">
-                            <div class="author-avatar " style="background:var(--accent-color); color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1.2rem; width:40px; height:40px; border-radius:50%; ">
+             
+                   
+                   
+                 
+               
+                   <div class="post-meta-container">
+                        <div class="byline">
+                            <div class="author-avatar" style="background:var(--accent-color); color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1.2rem; width:40px; height:40px; border-radius:50%;">
                                 ${authorInitial}
                             </div>
-                            <div class="author-details "><span>
-                                <span class="author vcard ">by <a class="url fn n " href="/profile.html?author=${encodeURIComponent(authorName)} ">${authorName}</a></span>
+                            <div class="author-details"><span>
+                                <span class="author vcard">by <a class="url fn n" href="/profile.html?author=${encodeURIComponent(authorName)}">${authorName}</a></span>
                                 
                                 
-                                 <span class="author-status verified ">
-                                        <a class="verified-author " title="Verified Author " aria-label="Verified Author " role="img ">
-                                            <svg width="16 " height="16 " role="img " aria-hidden="true " viewBox="0 0 16 16 ">
-                                                <path fill-rule="evenodd " d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z "></path>
+                                 <span class="author-status verified">
+                                        <a class="verified-author" title="Verified Author" aria-label="Verified Author" role="img">
+                                            <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"></path>
                                             </svg>
                                         </a>
                                     </span></span>
-                                <span class="entry-modified-date "> Updated on ${new Date().toLocaleDateString()}</span>
+                                <span class="entry-modified-date"> Updated on ${new Date().toLocaleDateString()}</span>
                             </div>
-                        </div> <div class="share-button-wrapper ">
-                            <button id="shareButton " class="share-button " title="Share this page ">
-                                <svg class="share-icon " viewBox="0 0 24 24 " width="20 " height="20 " role="img " aria-hidden="true ">
-                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66
-                0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z "></path>
+                        </div> <div class="share-button-wrapper">
+                            <button id="shareButton" class="share-button" title="Share this page">
+                                <svg class="share-icon" viewBox="0 0 24 24" width="20" height="20" role="img" aria-hidden="true">
+                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path>
                                 </svg>
                                 <span>Share</span>
                             </button>
                         </div>
                     </div>
-            
-                    <div class="article-body ">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="article-body">
                         ${content}
                     </div>
 
-                    <div id="right-sidebar "><strong>Important Links</strong><ul id="link-list "></ul></div>
+                    <div id="right-sidebar"><strong>Important Links</strong><ul id="link-list"></ul></div>
                
                 
                   <!-- ===== COMMENTS & RATING ===== -->
-        <div id="comments-and-ratings-container ">
-            <div id="rating-widget-wrapper " class="rating-widget-wrapper rating-loading ">
-                <div class="rating-skeleton ">
-                    <div class="rating-skeleton-display ">
-                        <div class="skeleton-summary ">
-                            <div class="skeleton-circle "></div>
-                            <div class="skeleton-line short " style="width: 80%; margin: 0 auto "></div>
+        <div id="comments-and-ratings-container">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                <div class="rating-skeleton">
+                    <div class="rating-skeleton-display">
+                        <div class="skeleton-summary">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
                         </div>
-                        <div class="skeleton-breakdown ">
-                            <div class="skeleton-line " style="height: 10px "></div>
-                            <div class="skeleton-line " style="height: 10px "></div>
-                            <div class="skeleton-line " style="height: 10px "></div>
-                            <div class="skeleton-line " style="height: 10px "></div>
-                            <div class="skeleton-line " style="height: 10px "></div>
+                        <div class="skeleton-breakdown">
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
+                            <div class="skeleton-line" style="height: 10px"></div>
                         </div>
                     </div>
                 </div>
 
-                <div id="rating-widget " class="rating-content ">
+                <div id="rating-widget" class="rating-content">
                     <h2>Rate this Page</h2>
-                    <div id="rating-display ">
-                        <div class="average-summary ">
-                            <div id="average-rating-value ">0.0</div>
-                            <div id="total-ratings-count ">0 ratings</div>
+                    <div id="rating-display">
+                        <div class="average-summary">
+                            <div id="average-rating-value">0.0</div>
+                            <div id="total-ratings-count">0 ratings</div>
                         </div>
-                        <div class="rating-breakdown ">
-                            <div class="breakdown-row " data-star-level="5 ">
-                                <span class="star-label ">5 star</span>
-                                <div class="progress-bar-container ">
-                                    <div class="progress-bar progress-bar-5 "></div>
+                        <div class="rating-breakdown">
+                            <div class="breakdown-row" data-star-level="5">
+                                <span class="star-label">5 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-5"></div>
                                 </div>
-                                <span class="vote-count ">0</span>
+                                <span class="vote-count">0</span>
                             </div>
-                            <div class="breakdown-row " data-star-level="4 ">
-                                <span class="star-label ">4 star</span>
-                                <div class="progress-bar-container ">
-                                    <div class="progress-bar progress-bar-4 "></div>
+                            <div class="breakdown-row" data-star-level="4">
+                                <span class="star-label">4 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-4"></div>
                                 </div>
-                                <span class="vote-count ">0</span>
+                                <span class="vote-count">0</span>
                             </div>
-                            <div class="breakdown-row " data-star-level="3 ">
-                                <span class="star-label ">3 star</span>
-                                <div class="progress-bar-container ">
-                                    <div class="progress-bar progress-bar-3 "></div>
+                            <div class="breakdown-row" data-star-level="3">
+                                <span class="star-label">3 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-3"></div>
                                 </div>
-                                <span class="vote-count ">0</span>
+                                <span class="vote-count">0</span>
                             </div>
-                            <div class="breakdown-row " data-star-level="2 ">
-                                <span class="star-label ">2 star</span>
-                                <div class="progress-bar-container ">
-                                    <div class="progress-bar progress-bar-2 "></div>
+                            <div class="breakdown-row" data-star-level="2">
+                                <span class="star-label">2 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-2"></div>
                                 </div>
-                                <span class="vote-count ">0</span>
+                                <span class="vote-count">0</span>
                             </div>
-                            <div class="breakdown-row " data-star-level="1 ">
-                                <span class="star-label ">1 star</span>
-                                <div class="progress-bar-container ">
-                                    <div class="progress-bar progress-bar-1 "></div>
+                            <div class="breakdown-row" data-star-level="1">
+                                <span class="star-label">1 star</span>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar progress-bar-1"></div>
                                 </div>
-                                <span class="vote-count ">0</span>
+                                <span class="vote-count">0</span>
                             </div>
                         </div>
                     </div>
-                    <div id="rating-stars ">
-                        <svg class="star " data-value="1 " viewBox="0 0 24 24 " fill="currentColor ">
+                    <div id="rating-stars">
+                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z "
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                             />
                         </svg>
-                        <svg class="star " data-value="2 " viewBox="0 0 24 24 " fill="currentColor ">
+                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z "
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                             />
                         </svg>
-                        <svg class="star " data-value="3 " viewBox="0 0 24 24 " fill="currentColor ">
+                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z "
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                             />
                         </svg>
-                        <svg class="star " data-value="4 " viewBox="0 0 24 24 " fill="currentColor ">
+                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z "
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                             />
                         </svg>
-                        <svg class="star " data-value="5 " viewBox="0 0 24 24 " fill="currentColor ">
+                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
                             <path
-                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z "
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
                             />
                         </svg>
                     </div>
-                    <div id="rating-login-prompt " style="display: none ">
-                        <p class="muted ">
+                    <div id="rating-login-prompt" style="display: none">
+                        <p class="muted">
                             Please
-                            <a href="# " onclick="document.getElementById( 'login-btn').click(); return false; "
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
                                 >sign in</a
                             >
                             to rate.
@@ -2039,60 +2356,60 @@
                 </div>
             </div>
 
-            <div class="comments-wrapper comments-loading " id="comments-main-container ">
-                <div class="firebase-comments-widget " id="custom-comment-section ">
-                    <h2 id="comment-count-header "><span id="comment-count ">0</span> Comments</h2>
-                    <div id="auth-container ">
-                        <div id="user-info "></div>
-                        <button id="login-btn " class="btn primary ">
-                            <svg viewBox="0 0 24 24 " width="18 " height="18 " fill="currentColor " aria-hidden="true ">
+            <div class="comments-wrapper comments-loading" id="comments-main-container">
+                <div class="firebase-comments-widget" id="custom-comment-section">
+                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <div id="auth-container">
+                        <div id="user-info"></div>
+                        <button id="login-btn" class="btn primary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                                 <path
-                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z "
-                                    fill="#4285F4 "
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                    fill="#4285F4"
                                 ></path>
                                 <path
-                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z "
-                                    fill="#34A853 "
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                    fill="#34A853"
                                 ></path>
                                 <path
-                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z "
-                                    fill="#FBBC05 "
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                    fill="#FBBC05"
                                 ></path>
                                 <path
-                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z "
-                                    fill="#EA4335 "
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                    fill="#EA4335"
                                 ></path>
-                                <path d="M1 1h22v22H1z " fill="none "></path>
+                                <path d="M1 1h22v22H1z" fill="none"></path>
                             </svg>
                             Sign in with Google
                         </button>
-                        <button id="logout-btn " class="btn ">Logout</button>
+                        <button id="logout-btn" class="btn">Logout</button>
                     </div>
-                    <div id="login-prompt " style="display: none ">
-                        <p class="muted ">
+                    <div id="login-prompt" style="display: none">
+                        <p class="muted">
                             Please
-                            <a href="# " onclick="document.getElementById( 'login-btn').click(); return false; "
+                            <a href="#" onclick="document.getElementById('login-btn').click(); return false;"
                                 >sign in</a
                             >
                             to comment.
                         </p>
                     </div>
-                    <div class="comment-form-shell " id="comment-form-shell " style="display: none ">
-                        <form class="comment-form " id="comment-form ">
-                            <div class="replying-to " id="replying-to " style="display: none " aria-live="polite "></div>
+                    <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                        <form class="comment-form" id="comment-form">
+                            <div class="replying-to" id="replying-to" style="display: none" aria-live="polite"></div>
                             <textarea
-                                id="comment "
-                                placeholder="Add a public comment... "
-                                maxlength="1000 "
+                                id="comment"
+                                placeholder="Add a public comment..."
+                                maxlength="1000"
                                 required
-                                aria-label="Comment input "
+                                aria-label="Comment input"
                             ></textarea>
-                            <input type="hidden " id="parent-id " value=" " />
-                            <div class="form-footer ">
-                                <div id="char-counter ">0 / 1000</div>
-                                <div class="actions ">
-                                    <button type="submit " class="btn primary " id="submit-button ">Submit</button>
-                                    <button type="button " class="btn " id="cancel-reply " style="display: none ">
+                            <input type="hidden" id="parent-id" value="" />
+                            <div class="form-footer">
+                                <div id="char-counter">0 / 1000</div>
+                                <div class="actions">
+                                    <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                    <button type="button" class="btn" id="cancel-reply" style="display: none">
                                         Cancel
                                     </button>
                                 </div>
@@ -2100,16 +2417,16 @@
                         </form>
                     </div>
 
-                    <div id="comments-list " class="comment-list ">
-                        <div class="skeleton-comment ">
-                            <div class="skeleton-line header "></div>
-                            <div class="skeleton-line "></div>
-                            <div class="skeleton-line short "></div>
+                    <div id="comments-list" class="comment-list">
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
                         </div>
-                        <div class="skeleton-comment ">
-                            <div class="skeleton-line header "></div>
-                            <div class="skeleton-line "></div>
-                            <div class="skeleton-line short "></div>
+                        <div class="skeleton-comment">
+                            <div class="skeleton-line header"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
                         </div>
                     </div>
                 </div>
@@ -2118,39 +2435,105 @@
             </main>
         </div>
 
-         <footer class="app-footer ">
-            <div class="footer-content "></div>
-            <div class="footer-bottom " id="footer-year ">
-                © 2024 - <span id="year "></span> GK Learn Study | All Rights Reserved
+         <footer class="app-footer">
+            <div class="footer-content"></div>
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
             </div>
             <script>
-                document.getElementById("year ").textContent = new Date().getFullYear();
+                document.getElementById("year").textContent = new Date().getFullYear();
             <\/script>
         </footer>
 
-        <script src="https://gklearnstudy.in/js/theme.js " defer><\/script>
-        <script src="https://gklearnstudy.in/js/search-data.js " defer><\/script>
-        <script type="module " src="https://gklearnstudy.in/js/comment.js " defer><\/script>
-        <script type="module " src="https://gklearnstudy.in/js/notification.js " defer><\/script>
-        <script src="https://gklearnstudy.in/js/topic-menu.js " defer><\/script>
-        <script src="https://gklearnstudy.in/js/rightside.js " defer><\/script>
+        <script src="https://gklearnstudy.in/js/theme.js" defer><\/script>
+        <script src="https://gklearnstudy.in/js/search-data.js" defer><\/script>
+        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer><\/script>
+        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer><\/script>
+        <script src="https://gklearnstudy.in/js/topic-menu.js" defer><\/script>
+        <script src="https://gklearnstudy.in/js/rightside.js" defer><\/script>
+        
+        <script>
+            (async function() {
+                const sidebar = document.getElementById("topic-sidebar");
+                const toggleBtn = document.getElementById("topic-sidebar-toggle");
+                const ul = document.querySelector("#topic-nav ul");
+                if (!sidebar || !ul) return;
+                if (ul.children.length > 0) return;
+                const canonical = document.querySelector('link[rel="canonical"]')?.href;
+                let folder = "General";
+                if (canonical) {
+                    try {
+                        const path = new URL(canonical).pathname;
+                        const segments = path.split('/').filter(s => s.length > 0);
+                        if (segments.length > 0 && !segments[0].endsWith('.html')) {
+                            folder = segments[0];
+                        }
+                    } catch(e) {}
+                }
+                try {
+                    const res = await fetch('https://gklearnstudy.in/data/topic-menu.json?v=' + Date.now());
+                    const data = await res.json();
+                    const key = Object.keys(data).find(k => k.toLowerCase() === folder.toLowerCase());
+                    const links = key ? data[key] : [];
+                    if (links.length >= 2) {
+                        ul.innerHTML = links.map(item => '<li><a href="' + item.url + '">' + item.title + '</a></li>').join('');
+                        const title = document.querySelector(".sidebar-title");
+                        if (title) title.innerText = key.toUpperCase();
+                        sidebar.style.display = ""; 
+                        if(toggleBtn) toggleBtn.style.display = "";
+                    } else {
+                        sidebar.style.display = "none";
+                        if(toggleBtn) toggleBtn.style.display = "none";
+                    }
+                } catch (e) { 
+                    sidebar.style.display = "none";
+                    if(toggleBtn) toggleBtn.style.display = "none";
+                }
+            })();
+        <\/script>
+        
+        
          <script>
-                if ("serviceWorker " in navigator) {
-                    window.addEventListener("load ", () => {
+                if ("serviceWorker" in navigator) {
+                    window.addEventListener("load", () => {
                         navigator.serviceWorker
-                            .register("/firebase-messaging-sw.js ")
-                            .then((r) => console.log("Firebase Messaging SW registered. ", r.scope))
-                            .catch((e) => console.error("Firebase Messaging SW registration failed: ", e));
+                            .register("/firebase-messaging-sw.js")
+                            .then((r) => console.log("Firebase Messaging SW registered.", r.scope))
+                            .catch((e) => console.error("Firebase Messaging SW registration failed:", e));
                         navigator.serviceWorker
-                            .register("/sw.js ")
-                            .then((r) => console.log("Caching SW registered. ", r.scope))
-                            .catch((e) => console.error("Caching SW registration failed: ", e));
+                            .register("/sw.js")
+                            .then((r) => console.log("Caching SW registered.", r.scope))
+                            .catch((e) => console.error("Caching SW registration failed:", e));
                     });
                 }
             <\/script>
     </body>
 </html>`;
             }
+
+            window.getCleanHTML = getCleanHTML;
+            window.savePost = savePost;
+            window.previewPost = previewPost;
+            window.openBlockMenu = openBlockMenu;
+            window.closeBlockMenu = closeBlockMenu;
+            window.addBlock = addBlock;
+            window.moveBlock = moveBlock;
+            window.deleteBlock = deleteBlock;
+            window.tblAddRow = tblAddRow;
+            window.tblAddCol = tblAddCol;
+            window.addCardToGrid = addCardToGrid;
+            window.chooseMedia = chooseMedia;
+            window.createImageDirect = createImageDirect;
+            window.closeMediaModal = closeMediaModal;
+            window.submitMediaModal = submitMediaModal;
+            window.pasteVideoOnly = pasteVideoOnly;
+            window.resetMediaState = resetMediaState;
+            window.resetCardMedia = resetCardMedia;
+            window.switchMediaTab = switchMediaTab;
+            window.applyAnim = applyAnim;
+            window.clearAnim = clearAnim;
+            window.editLink = editLink;
+            window.createLink = createLink;
         </script>
     </body>
 </html>
