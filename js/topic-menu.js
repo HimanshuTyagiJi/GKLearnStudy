@@ -19,31 +19,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (sidebarNav) {
-        // --- 1. फोल्डर डिटेक्शन ---
-        const fullPath = window.location.pathname; 
-        const segments = fullPath.split('/').filter(s => s.length > 0);
+        // --- 1. फोल्डर डिटेक्शन (Smarter Path Detection) ---
+        const currentPath = window.location.pathname; 
+        const segments = currentPath.split('/').filter(s => s.length > 0);
         
         let currentFolder = "General";
+        // अगर आप /himanshu/tyagi.html पर हैं, तो segments[0] 'himanshu' होगा
         if (segments.length >= 1) {
-            // अगर /himanshu/tyagi.html है तो segments[0] 'himanshu' होगा
             if (!segments[0].includes('.html')) {
                 currentFolder = segments[0];
             }
         }
 
-        console.log("Detecting links for folder:", currentFolder);
-
-        // --- 2. JSON Fetch (Absolute Path Logic) ---
-        // 'gklearnstudy.in' को बेस मानकर फाइल ढूंढना
-        const domain = window.location.origin;
-        const jsonUrl = (domain.includes('file://') ? '' : domain) + '/data/topic-menu.json?v=' + Date.now();
+        console.log("Active Category Folder:", currentFolder);
 
         try {
-            const response = await fetch(jsonUrl);
-            if (!response.ok) throw new Error("JSON file not found at " + jsonUrl);
+            // --- 2. JSON Fetch (Direct Root Path) ---
+            // GitHub या Website पर '/data/...' हमेशा Root से फाइल उठाता है
+            const response = await fetch('/data/topic-menu.json?v=' + Date.now());
+            if (!response.ok) throw new Error("Could not load menu data");
             
             const menuData = await response.json();
-            const folderLinks = menuData[currentFolder] || [];
+            const links = menuData[currentFolder] || [];
             
             let ul = sidebarNav.querySelector('ul');
             if (!ul) {
@@ -53,42 +50,43 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             ul.innerHTML = ''; 
 
-            if (folderLinks.length > 0) {
-                folderLinks.forEach(item => {
+            if (links.length > 0) {
+                links.forEach(item => {
                     const li = document.createElement('li');
                     
-                    // Active link check
-                    const normalizedCurrent = fullPath.toLowerCase().replace(/^\/|\/$/g, '');
-                    const normalizedItem = item.url.toLowerCase().replace(/^\/|\/$/g, '');
+                    // --- 3. URL FIX: Ensure Root-Relative ---
+                    let cleanUrl = item.url;
+                    // अगर लिंक में पहले से '/' नहीं है, तो जोड़ दो (e.g. 'himanshu/a.html' -> '/himanshu/a.html')
+                    if (!cleanUrl.startsWith('/') && !cleanUrl.startsWith('http')) {
+                        cleanUrl = '/' + cleanUrl;
+                    }
                     
-                    const isThisPage = normalizedCurrent === normalizedItem || 
-                                     fullPath.endsWith(item.url) || 
-                                     item.url.includes(segments[segments.length-1]);
-
-                    const activeClass = isThisPage ? 'class="active"' : '';
+                    // Active Link check
+                    const normalizedCurrent = currentPath.toLowerCase().replace(/\/$/, '');
+                    const normalizedTarget = cleanUrl.toLowerCase().replace(/\/$/, '');
+                    const isMatch = normalizedCurrent === normalizedTarget || currentPath.endsWith(cleanUrl);
                     
-                    li.innerHTML = `<a href="${item.url}" ${activeClass}>${item.title}</a>`;
+                    const activeClass = isMatch ? 'class="active"' : '';
+                    
+                    // लिंक में सीधे cleanUrl डालना ताकि browser domain के साथ उसे सही जोड़े
+                    li.innerHTML = `<a href="${cleanUrl}" ${activeClass}>${item.title}</a>`;
                     ul.appendChild(li);
                 });
 
                 // Title Update
                 const titleEl = sidebar.querySelector('.sidebar-title');
-                if(titleEl) titleEl.textContent = currentFolder.toUpperCase().replace(/-/g, ' ');
+                if(titleEl) titleEl.textContent = currentFolder.toUpperCase();
                 
-                // Desktop Sidebar Visible Fix
+                // Show sidebar on desktop
                 if (window.innerWidth > 991) {
                     sidebar.style.transform = "translateX(0)";
                     sidebar.style.display = "block";
                 }
             } else {
-                console.warn("No links found for:", currentFolder);
-                ul.innerHTML = '<li><a href="/" class="active">Home / No Topic Data</a></li>';
+                ul.innerHTML = '<li><a href="/" class="active">Home / GK Study</a></li>';
             }
         } catch (error) {
-            console.error("Critical Sidebar Error:", error.message);
-            if(window.location.protocol === 'file:') {
-                console.error("TIP: You are opening HTML as a file. Use a local server (like Live Server) for AJAX/Fetch to work.");
-            }
+            console.error("Sidebar Sync Error:", error);
         }
 
         sidebarNav.addEventListener("click", (e) => {
@@ -99,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Right Sidebar Logic (Unchanged but fixed potential null error from console)
+// Right Sidebar & Other Logic (Fixed potential errors)
 document.addEventListener("DOMContentLoaded", function () {
     const topicMenu = document.querySelector("nav#topic-nav");
     if (!topicMenu) return;
@@ -111,18 +109,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(rightBar);
     }
 
-    if (!document.querySelector('link[href="https://gklearnstudy.in/css/rightside.css"]')) {
+    if (!document.querySelector('link[href*="rightside.css"]')) {
         const css = document.createElement("link");
         css.rel = "stylesheet";
         css.href = "https://gklearnstudy.in/css/rightside.css";
         document.head.appendChild(css);
-    }
-
-    if (!document.querySelector('script[src="https://gklearnstudy.in/js/rightside.js"]')) {
-        const script = document.createElement("script");
-        script.src = "https://gklearnstudy.in/js/rightside.js";
-        script.defer = true;
-        document.body.appendChild(script);
     }
 
     function moveSidebarForMobile() {
