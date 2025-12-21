@@ -1,4 +1,4 @@
-const CACHE_NAME = "gklearnstudy-v10";
+const CACHE_NAME = "gklearnstudy-v11";
 
 const PRECACHE_URLS = [
   "/css/theme.css",
@@ -9,21 +9,35 @@ const PRECACHE_URLS = [
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.all(
+        PRECACHE_URLS.map(url =>
+          fetch(url)
+            .then(res => {
+              if (res && res.ok) {
+                return cache.put(url, res.clone());
+              }
+            })
+            .catch(() => {})
+        )
+      )
+    )
   );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
+    caches.keys()
+      .then(keys =>
+        Promise.all(
+          keys.map(key => {
+            if (key !== CACHE_NAME) {
+              return caches.delete(key);
+            }
+          })
+        )
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 
@@ -35,7 +49,7 @@ self.addEventListener("fetch", event => {
   if (
     url.origin === self.location.origin &&
     (
-      url.pathname.endsWith("/") ||
+      url.pathname === "/" ||
       url.pathname.endsWith(".html") ||
       url.pathname.endsWith(".css") ||
       url.pathname.endsWith(".js") ||
@@ -57,11 +71,11 @@ self.addEventListener("fetch", event => {
           }
           return response;
         })
-        .catch(() => {
-          return caches.match(event.request).then(res => {
-            return res || caches.match("/offline.html");
-          });
-        })
+        .catch(() =>
+          caches.match(event.request).then(res =>
+            res || caches.match("/offline.html")
+          )
+        )
     );
     return;
   }
@@ -71,8 +85,9 @@ self.addEventListener("fetch", event => {
     event.request.destination === "font"
   ) {
     event.respondWith(
-      caches.match(event.request).then(cached => {
-        const fetchPromise = fetch(event.request).then(response => {
+      caches.match(event.request).then(cached =>
+        cached ||
+        fetch(event.request).then(response => {
           if (
             response &&
             response.status === 200 &&
@@ -83,9 +98,8 @@ self.addEventListener("fetch", event => {
             });
           }
           return response;
-        });
-        return cached || fetchPromise;
-      })
+        })
+      )
     );
   }
 });
