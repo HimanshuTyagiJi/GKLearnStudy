@@ -16,7 +16,7 @@ const db = firebase.firestore();
 const messaging = firebase.messaging(); // For notifications
 
 // --- CONSTANTS ---
-const OWNER_UID = "Pq5f4jTfiEOJCtXBLG0mZyyikIC2"; // The owner's UID from your Cloud Function
+const OWNER_UID = "yIUdX2RGoqfzgaHtE8qdX4rHEEy2";
 
 // --- STATE ---
 let currentUser = null; // Current logged-in user
