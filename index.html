@@ -212,6 +212,21 @@
 
         <ul id="suggestions-list" class="suggestions"></ul>
 
+         <aside id="topic-sidebar">
+            <p class="sidebar-title">Conversion Topics</p>
+            <nav id="topic-nav">
+                <ul>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7067722696020503"
+     data-ad-slot="8188086907"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                </ul></nav></aside>
         <main class="container">
             <div id="root">
                 <section class="intro-section">
@@ -1188,13 +1203,17 @@
                     </div>
                 </div>
             </div>
+            <div id="right-sidebar"><strong>Important Links</strong><ul id="link-list"></ul></div>
         </main>
 
         <footer class="app-footer">
             <div class="footer-content"></div>
-            <div class="footer-bottom">
-                &copy; 2024 GK Learn Study | All Rights Reserved
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
             </div>
+            <script>
+                document.getElementById("year").textContent = new Date().getFullYear();
+            <\/script>
         </footer>
 
         <script>
@@ -1298,5 +1317,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
         <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
         <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
+            <script src="https://gklearnstudy.in/js/rightside.js" defer><\/script>
     </body>
 </html>
