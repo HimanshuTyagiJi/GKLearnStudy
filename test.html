@@ -471,11 +471,16 @@
         
         <footer class="app-footer">
             <div class="footer-content"></div>
-            <div class="footer-bottom">&copy; 2024 GK Learn Study | All Rights Reserved</div>
+            <div class="footer-bottom" id="footer-year">
+                © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+            </div>
+            <script>
+                document.getElementById("year").textContent = new Date().getFullYear();
+            </script>
         </footer>
 
-        <script src="/js/theme.js" defer></script>
-        <script src="/js/search-data.js" defer></script>
+        <script src="https://gklearnstudy.in/js/theme.js" defer></script>
+        <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
         
         <script>
             if ('serviceWorker' in navigator) {

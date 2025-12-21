@@ -1,99 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Terms & Conditions for using the GK Learn Study platform."/>
-  <title>Terms & Conditions | GK Learn Study</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f1f1f1;
-      margin: 0;
-      padding: 0;
-      line-height: 1.9;
-      color: #333;
-    }
-    .container {
-      max-width: 960px;
-      margin: auto;
-      padding: 40px 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
-    h1 {
-      color: #007bff;
-    }
-    h2 {
-      color: #007bff;
-      margin-top: 20px;
-    }
-    p {
-      color: #444;
-      font-size: 1.1em;
-      margin-bottom: 20px;
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions | GK Learn Study</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --accent: #eff6ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 50px 20px;
+        }
+
+        .wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f8fafd 0%, #ffffff 100%);
+            padding: 70px 50px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -1.5px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .content-body {
+            padding: 60px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+            margin-left: 20px;
+        }
+
+        .text-content {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .info-card {
+            background: var(--accent);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        ul {
+            margin: 20px 0 20px 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .contact-panel {
+            background: #0f172a;
+            color: white;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .contact-panel h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .email-link {
+            color: #60a5fa;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid #60a5fa;
+            transition: 0.3s;
+        }
+
+        .email-link:hover {
+            color: white;
+            border-color: white;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .header, .content-body, .contact-panel { padding: 40px 20px; }
+            .header h1 { font-size: 2.2rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Terms & Conditions</h1>
 
-    <p>Welcome to GK Learn Study. Please read these Terms and Conditions carefully before using our website. These terms govern your use of our platform and its services.</p>
+<div class="wrapper">
+    <div class="header">
+        <span class="badge">Revision 2.1</span>
+        <h1>Terms & Conditions</h1>
+        <p>Effective Date: December 21, 2025</p>
+    </div>
 
-    <h2>1. Website Use</h2>
-    <p>By accessing GK Learn Study, you agree to abide by the terms outlined below. The website is intended solely for educational purposes.</p>
+    <div class="content-body">
+        
+        <div class="section">
+            <div class="section-header">1. Agreement to Terms</div>
+            <div class="text-content">
+                Welcome to <strong>GK Learn Study</strong>. By accessing or using our website, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these terms, you are prohibited from using the platform. These terms apply to all visitors, users, and others who access the service.
+            </div>
+        </div>
 
-    <h2>2. Copyright</h2>
-    <p>All content available on this website (such as text, images, graphics, etc.) is the property of GK Learn Study. Reproduction, republishing, or commercial use without prior permission is strictly prohibited.</p>
+        <div class="section">
+            <div class="section-header">2. Educational Use Only</div>
+            <div class="text-content">
+                The content provided on GK Learn Study is for general educational and informational purposes only. While we aim to provide accurate notes for competitive exams (SSC, UPSC, etc.) and school classes, we do not guarantee that the information is error-free or suitable for any specific purpose.
+            </div>
+        </div>
 
-    <h2>3. Copyright & Content Correction Policy</h2>
-    <p>If you believe any content on our site infringes on your copyright or contains factual errors, please contact us at:</p>
-    <p><strong>📧 Email:</strong> <a href="mailto:contact@gklearnstudy.in">contact@gklearnstudy.in</a></p>
-    <p>We will review your concern and take appropriate action, including updating or removing the content if necessary.</p>
+        <div class="section">
+            <div class="section-header">3. Intellectual Property Rights</div>
+            <div class="text-content">
+                Unless otherwise stated, GK Learn Study owns the intellectual property rights for all material on this website. This includes text, graphics, logos, and downloadable PDFs. 
+                <ul>
+                    <li>You may view and print pages for your personal, non-commercial use.</li>
+                    <li>You must not republish, sell, rent, or sub-license material from this site.</li>
+                    <li>Redistributing our premium content without written consent is strictly prohibited and may lead to legal action.</li>
+                </ul>
+            </div>
+        </div>
 
-    <h2>4. Children’s Policy</h2>
-    <p>GKLearnStudy.in does not knowingly collect any personal information from children under the age of 13. We respect the online privacy of children.</p>
+        <div class="section">
+            <div class="section-header">4. Premium Content & Payments</div>
+            <div class="text-content">
+                We offer premium PDF notes and study materials for purchase.
+                <div class="info-card">
+                    <strong>Refund Policy:</strong> Since our products are digital downloads, all sales are final. Once a PDF is purchased and delivered, we do not offer refunds or exchanges. Please review the sample content (if available) before making a payment via our secure gateways (Paytm, etc.).
+                </div>
+            </div>
+        </div>
 
-    <h2>5. Personal Information</h2>
-    <p>We do not collect any personal information such as your name, email, or phone number. Our platform does not require login or registration to access content.</p>
+        <div class="section">
+            <div class="section-header">5. Advertisements & Third-Party Links</div>
+            <div class="text-content">
+                To keep our platform running, we display advertisements from third-party networks like Google AdSense. We do not endorse the products or services advertised. Additionally, our site may contain links to external websites. We have no control over the content, accuracy, or privacy practices of these third-party sites.
+            </div>
+        </div>
 
-    <h2>6. Limitation of Liability</h2>
-    <p>GK Learn Study is not liable for any damage or loss resulting from the use of the information, material, or links provided on our website.</p>
+        <div class="section">
+            <div class="section-header">6. Limitation of Liability</div>
+            <div class="text-content">
+                In no event shall GK Learn Study, its owners, or its team be liable for any direct, indirect, incidental, or consequential damages (including, but not limited to, loss of data, loss of exam marks, or financial loss) arising out of the use or inability to use the materials on this website. Your use of the site is at your own risk.
+            </div>
+        </div>
 
-    <h2>7. Privacy Policy</h2>
-    <p>We respect your privacy and do not share any information with third parties unless required by law.</p>
+        <div class="section">
+            <div class="section-header">7. Content Correction & Copyright Claims</div>
+            <div class="text-content">
+                We respect the intellectual property of others. If you believe that any material on our site infringes upon any copyright you own or control, or if you find any factual error in our notes, please notify us immediately at our official email address.
+            </div>
+        </div>
 
-    <h2>8. Content Changes</h2>
-    <p>We may update or change the content on GK Learn Study at any time. We will try to notify you of major changes where possible.</p>
+        <div class="section">
+            <div class="section-header">8. User Responsibilities</div>
+            <div class="text-content">
+                As a user, you agree not to use the website in any way that causes, or may cause, damage to the website or impairment of the availability or accessibility of the platform. Using automated scripts or data mining tools on our site is strictly forbidden.
+            </div>
+        </div>
 
-    <h2>9. External Links</h2>
-    <p>Our website may contain links to external websites. We are not responsible for the content, privacy policies, or practices of any third-party websites.</p>
+        <div class="section">
+            <div class="section-header">9. Modifications to Service</div>
+            <div class="text-content">
+                GK Learn Study reserves the right to change, suspend, or discontinue any aspect of the website or the services provided at any time without prior notice. This includes the price of premium materials and the availability of certain topics.
+            </div>
+        </div>
 
-    <h2>10. Service Modifications</h2>
-    <p>We reserve the right to suspend, modify, or discontinue any part of the website at any time without prior notice.</p>
+    </div>
 
-    <h2>11. Compliance with Laws</h2>
-    <p>Users are responsible for complying with local, state, and national laws while using our platform. GK Learn Study is not liable for any legal issues arising from misuse.</p>
+    <div class="contact-panel">
+        <h2>Contact Our Legal Team</h2>
+        <p>For any queries regarding these terms, please contact us at:</p>
+        <a href="mailto:contact@gklearnstudy.in" class="email-link">contact@gklearnstudy.in</a>
+        <footer>
+            &copy; 2024 GK Learn Study | All Rights Reserved.
+            <br>
+            Last Updated: December 21, 2025
+        </footer>
+    </div>
+</div>
 
-    <h2>12. Acceptance of Terms</h2>
-    <p>By using our website, you agree to these terms. If you do not accept any part of these terms, please do not use the website.</p>
-
-    <h2>13. Contact Us</h2>
-    <p>If you have any questions or concerns about these Terms & Conditions, please feel free to contact us at:</p>
-    <p><a href="mailto:contact@gklearnstudy.in">contact@gklearnstudy.in</a></p>
-
-    <p>Thank you for using GK Learn Study!</p>
-    <p><strong>Last Updated:</strong> <span id="current-date">28/03/2025</span></p>
-
-  </div>
 </body>
 </html>

@@ -4,89 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | GK Learn Study</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #0062ff;
+            --bg: #fdfdfd;
+            --card: #ffffff;
+            --text-dark: #1a1f36;
+            --text-light: #4f566b;
+            --accent: #eef2ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 2em;
-            line-height: 1.6;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.8;
+            padding: 50px 20px;
         }
-        h1, h2 {
-            color: #2c3e50;
+
+        .wrapper {
+            max-width: 950px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid #e3e8ee;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(50,50,93,0.05), 0 5px 15px rgba(0,0,0,0.03);
         }
-        a {
-            color: #2980b9;
+
+        .header {
+            background: linear-gradient(to right, #f8fafd, #ffffff);
+            padding: 60px 50px;
+            border-bottom: 1px solid #e3e8ee;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .content-body {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 18px;
+        }
+
+        .section-title span {
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+
+        .text-block {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            margin-left: 47px;
+        }
+
+        .highlight-card {
+            background: #fbfcfe;
+            border: 1px solid #edf2f7;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0 20px 47px;
+        }
+
+        .contact-footer {
+            background: #1a1f36;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .contact-footer h3 {
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .contact-footer a {
+            color: #4cd137;
             text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
-        a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            margin-top: 3em;
-            font-size: 0.9em;
-            color: #777;
+
+        @media (max-width: 768px) {
+            .header, .content-body, .contact-footer { padding: 30px 20px; }
+            .header h1 { font-size: 2rem; }
+            .text-block { margin-left: 0; }
+            .section-title span { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Privacy Policy</h1>
-    <p><strong>Effective Date:</strong> <span id="last-updated">March 28, 2025</span></p>
+<div class="wrapper">
+    <div class="header">
+        <span class="badge">Updated on 21 Dec 2025</span>
+        <h1>Privacy Policy</h1>
+        <p>Transparency and data protection at GK Learn Study</p>
+    </div>
 
-    <h2>1. Introduction</h2>
-    <p>
-        At <strong>GK Learn Study</strong>, we are committed to safeguarding the privacy of our users. This Privacy Policy outlines how we handle user information and the measures we take to protect it.
-    </p>
+    <div class="content-body">
+        
+        <div class="section">
+            <div class="section-title"><span>01</span> Overview</div>
+            <div class="text-block">
+                Welcome to <strong>GK Learn Study</strong>. We value your trust and are committed to protecting your privacy. This document outlines how we operate and ensures that your experience on our website is safe and secure.
+            </div>
+        </div>
 
-    <h2>2. Information We Do Not Collect</h2>
-    <p>
-        We respect your privacy and do not collect any personal information. Specifically:
-    </p>
-    <ul>
-        <li>No collection of names, email addresses, or contact details.</li>
-        <li>No requirement for account creation or login.</li>
-        <li>No tracking of device information or browsing habits.</li>
-    </ul>
+        <div class="section">
+            <div class="section-title"><span>02</span> Data Collection</div>
+            <div class="text-block">
+                We do not track your personal identity or browsing habits. Our platform is open for everyone to browse freely. We only collect data that you voluntarily provide:
+                <ul>
+                    <li style="margin-top: 10px;"><strong>Email:</strong> To communicate and solve your queries.</li>
+                    <li style="margin-top: 10px;"><strong>Transaction Info:</strong> Basic details required to process your PDF purchases.</li>
+                </ul>
+            </div>
+        </div>
 
-    <h2>3. Cookies and Tracking</h2>
-    <p>
-        Our website does not use cookies or any tracking technologies. Your browsing experience is entirely anonymous.
-    </p>
+        <div class="section">
+            <div class="section-title"><span>03</span> Secure Payments</div>
+            <div class="text-block">
+                For our premium PDF resources, we use <strong>Paytm</strong> and other verified payment gateways. 
+                <div class="highlight-card">
+                    <strong>Note:</strong> We do not store, save, or record any sensitive banking information, Credit/Debit card numbers, or CVV. All payments are processed through encrypted third-party servers.
+                </div>
+            </div>
+        </div>
 
-    <h2>4. Data Security</h2>
-    <p>
-        We implement high-level security measures to protect our website from unauthorized access and cyber threats. Our infrastructure is designed to ensure the integrity and confidentiality of our content.
-    </p>
+        <div class="section">
+            <div class="section-title"><span>04</span> Cookies & Advertising</div>
+            <div class="text-block">
+                GK Learn Study does not use personal cookies for tracking. However, we may display advertisements from third-party networks (like Google AdSense). These partners may use cookies to show relevant ads based on your interests. You can opt-out of this via your browser settings.
+            </div>
+        </div>
 
-    <h2>5. Third-Party Links</h2>
-    <p>
-        Our website may contain links to external sites. We are not responsible for the privacy practices or content of these third-party websites.
-    </p>
+        <div class="section">
+            <div class="section-title"><span>05</span> Content Disclaimer</div>
+            <div class="text-block">
+                We aim for 100% accuracy, but we do not guarantee the completeness or absolute correctness of the educational material. 
+                <br><br>
+                <strong>No Liability:</strong> GK Learn Study and its owners will not be held responsible for any losses, damages, or errors arising from the use of the content on this website. Users are encouraged to cross-verify facts with official sources.
+            </div>
+        </div>
 
-    <h2>6. Children's Privacy</h2>
-    <p>
-        Our website is intended for a general audience and does not knowingly collect information from children under the age of 13.
-    </p>
+        <div class="section">
+            <div class="section-title"><span>06</span> External Links</div>
+            <div class="text-block">
+                Our site may link to other websites. We are not responsible for the privacy practices or content of those external platforms.
+            </div>
+        </div>
 
-    <h2>7. Changes to This Privacy Policy</h2>
-    <p>
-        We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.
-    </p>
+    </div>
 
-    <h2>8. Contact Us</h2>
-    <p>
-        If you have any questions or concerns about this Privacy Policy, please contact us at:
-    </p>
-    <p>
-        <strong>Email:</strong> <a href="mailto:contact@gklearnstudy.in">contact@gklearnstudy.in</a>
-    </p>
-
-    <footer>
-        <p>&copy; 2025 GK Learn Study. All rights reserved.</p>
-    </footer>
-
-  
+    <div class="contact-footer">
+        <h3>Need Help?</h3>
+        <p>If you have questions about our policies, contact us at:</p>
+        <a href="mailto:contact@gklearnstudy.in">contact@gklearnstudy.in</a>
+        <p style="margin-top: 25px; font-size: 0.8rem; opacity: 0.6;">&copy; 2024 GK Learn Study | All Rights Reserved</p>
+    </div>
+</div>
 
 </body>
 </html>

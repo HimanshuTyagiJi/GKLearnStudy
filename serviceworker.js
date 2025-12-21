@@ -1,54 +1,56 @@
-const CACHE_NAME = "cache-v1.004";
+const CACHE_NAME = "cache-v1.1";
+
 const STATIC_ASSETS = [
   "/",
-  "index.html",
-  "manifest.json",
-  "https://gklearnstudy.in/GK-Learn-Study.png"
+  "/index.html",
+  "/manifest.json",
+  "/GK-Learn-Study.png"
 ];
 
-// Install Event
-self.addEventListener("install", (event) => {
-  console.log("Service Worker Installing...");
+self.addEventListener("install", event => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("Caching Static Assets");
-      return cache.addAll(STATIC_ASSETS);
-    })
-  );
-});
-
-// Activate Event (पुराना Cache हटाएं)
-self.addEventListener("activate", (event) => {
-  console.log("Service Worker Activating...");
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
+    caches.open(CACHE_NAME).then(cache =>
       Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log("Clearing Old Cache:", cache);
-            return caches.delete(cache);
-          }
-        })
+        STATIC_ASSETS.map(url =>
+          fetch(url)
+            .then(res => {
+              if (res.ok) {
+                return cache.put(url, res.clone());
+              }
+            })
+            .catch(() => {})
+        )
       )
     )
   );
-  return self.clients.claim();
 });
 
-// Fetch Event (हमेशा लाइव अपडेट दिखाने के लिए)
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") {
-    return;
-  }
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => key !== CACHE_NAME && caches.delete(key))
+      )
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request) // हमेशा नया डेटा लाने की कोशिश करें
-      .then((response) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, response.clone()); // नया डेटा स्टोर करें
-          return response; // लाइव डेटा दिखाएं
-        });
+    fetch(event.request)
+      .then(res => {
+        if (res && res.status === 200 && res.type === "basic") {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clone);
+          });
+        }
+        return res;
       })
-      .catch(() => caches.match(event.request)) // अगर इंटरनेट नहीं है, तो कैश से दिखाएं
+      .catch(() => caches.match(event.request))
   );
 });
