@@ -1,0 +1,81 @@
+
+
+.notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notification-btn:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.notification-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+.notification-btn .spinner-icon {
+    display: none;
+}
+
+.notification-btn.loading .bell-icon {
+    opacity: 0.2;
+}
+
+.notification-btn.loading .spinner-icon {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+.notification-btn.subscribed .bell-icon {
+    color: var(--green);
+    fill: rgba(7, 102, 0, 0.1);
+    animation: ring 0.8s ease-out;
+}
+
+html[data-theme="dark"] .notification-btn.subscribed .bell-icon {
+    color: #66bb6a;
+    fill: rgba(102, 187, 106, 0.15);
+}
+
+.notification-btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@keyframes ring {
+    0% { transform: rotate(0); }
+    10% { transform: rotate(30deg); }
+    20% { transform: rotate(-25deg); }
+    30% { transform: rotate(20deg); }
+    40% { transform: rotate(-15deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(-5deg); }
+    70% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+}
+
+.notification-btn .bell-off-icon {
+    display: none;
+}
+.notification-btn.disabled .bell-icon {
+    display: none;
+}
+.notification-btn.disabled .bell-off-icon {
+    display: block;
+}
