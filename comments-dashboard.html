@@ -1,4 +1,90 @@
-<!DOCTYPE html>
+<div id='comment-pwa-popup' style='display:none;'>
+  <div class='comment-pwa-content'>
+    <span class='comment-close' onclick='closeCommentPWA()'>&times;</span>
+    <img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-A1gPiV2jFrCm3xv9P6K1Mv5ciyhSh5gfGxzBaHCKtIhh3J80xp7xt2H99WLLFeWgXZL2_SO2fdn3UDFENxbvkpy_u7yxYFutm8li5gKyxcISAuKB3V_mHjLiQDwFoJq-ITl0PyPIScJSWEAZY4lWYOBBVjrD0oH8NNbOY0AMBwC2fpCy6uWkDx2V1Yiv/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2002_55_35%20PM.png'/>
+    <div class='comment-pwa-info'>
+      <b>Comment Dashboard</b>
+      <p>Manage all comments instantly!</p>
+    </div>
+    <button id='comment-install-btn'>INSTALL</button>
+  </div>
+</div>
+
+<style>
+#comment-pwa-popup {
+    position: fixed; bottom: 20px; left: 15px; right: 15px; 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px);
+    border-radius: 25px; padding: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 999999;
+    border: 1px solid rgba(255,255,255,0.5); 
+    animation: commentSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes commentSlideUp { from {transform: translateY(130%)} to {transform: translateY(0%)} }
+.comment-pwa-content { display: flex; align-items: center; gap: 15px; position: relative; }
+.comment-pwa-content img { width: 60px; height: 60px; border-radius: 18px; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.comment-pwa-info { flex: 1; font-family: 'Segoe UI', sans-serif; }
+.comment-pwa-info b { font-size: 17px; color: #333; display: block; letter-spacing: -0.5px; }
+.comment-pwa-info p { font-size: 12px; color: #666; margin: 2px 0 0; }
+#comment-install-btn { 
+    background: #FF4B2B; 
+    background: linear-gradient(to right, #FF416C, #FF4B2B);
+    color: #fff; border: none; padding: 10px 18px; border-radius: 12px; 
+    font-weight: 700; cursor: pointer; font-size: 13px;
+    box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3);
+}
+.comment-close { position: absolute; top: -12px; right: -5px; font-size: 24px; color: #999; cursor: pointer; }
+</style>
+
+<script>
+let commentPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    commentPrompt = e;
+    if(!localStorage.getItem('comment_pwa_closed')) {
+        document.getElementById('comment-pwa-popup').style.display = 'block';
+    }
+});
+
+document.getElementById('comment-install-btn').addEventListener('click', async () => {
+    if (commentPrompt) {
+        commentPrompt.prompt();
+        const { outcome } = await commentPrompt.userChoice;
+        if (outcome === 'accepted') {
+            document.getElementById('comment-pwa-popup').style.display = 'none';
+        }
+    } else {
+        alert('Browser Menu > Install par click karein.');
+    }
+});
+
+function closeCommentPWA() {
+    document.getElementById('comment-pwa-popup').style.display = 'none';
+    localStorage.setItem('comment_pwa_closed', 'true');
+}
+
+// Comment Dashboard Manifest Setup
+(function() {
+    var m = document.createElement('link');
+    m.rel = 'manifest';
+    var manifestData = {
+        "name": "Comment Dashboard",
+        "short_name": "Comments",
+        "start_url": window.location.href,
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#FF4B2B",
+        "icons": [{
+            "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-A1gPiV2jFrCm3xv9P6K1Mv5ciyhSh5gfGxzBaHCKtIhh3J80xp7xt2H99WLLFeWgXZL2_SO2fdn3UDFENxbvkpy_u7yxYFutm8li5gKyxcISAuKB3V_mHjLiQDwFoJq-ITl0PyPIScJSWEAZY4lWYOBBVjrD0oH8NNbOY0AMBwC2fpCy6uWkDx2V1Yiv/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2002_55_35%20PM.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }]
+    };
+    m.href = 'data:application/json;base64,' + btoa(JSON.stringify(manifestData));
+    document.head.appendChild(m);
+})();
+</script><!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -241,90 +327,4 @@
         <script src="js/comments-dashboard.js" defer></script>
     </body>
 </html>
-<div id='comment-pwa-popup' style='display:none;'>
-  <div class='comment-pwa-content'>
-    <span class='comment-close' onclick='closeCommentPWA()'>&times;</span>
-    <img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-A1gPiV2jFrCm3xv9P6K1Mv5ciyhSh5gfGxzBaHCKtIhh3J80xp7xt2H99WLLFeWgXZL2_SO2fdn3UDFENxbvkpy_u7yxYFutm8li5gKyxcISAuKB3V_mHjLiQDwFoJq-ITl0PyPIScJSWEAZY4lWYOBBVjrD0oH8NNbOY0AMBwC2fpCy6uWkDx2V1Yiv/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2002_55_35%20PM.png'/>
-    <div class='comment-pwa-info'>
-      <b>Comment Dashboard</b>
-      <p>Manage all comments instantly!</p>
-    </div>
-    <button id='comment-install-btn'>INSTALL</button>
-  </div>
-</div>
 
-<style>
-#comment-pwa-popup {
-    position: fixed; bottom: 20px; left: 15px; right: 15px; 
-    background: rgba(255, 255, 255, 0.95); 
-    backdrop-filter: blur(10px);
-    border-radius: 25px; padding: 15px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 999999;
-    border: 1px solid rgba(255,255,255,0.5); 
-    animation: commentSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-@keyframes commentSlideUp { from {transform: translateY(130%)} to {transform: translateY(0%)} }
-.comment-pwa-content { display: flex; align-items: center; gap: 15px; position: relative; }
-.comment-pwa-content img { width: 60px; height: 60px; border-radius: 18px; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-.comment-pwa-info { flex: 1; font-family: 'Segoe UI', sans-serif; }
-.comment-pwa-info b { font-size: 17px; color: #333; display: block; letter-spacing: -0.5px; }
-.comment-pwa-info p { font-size: 12px; color: #666; margin: 2px 0 0; }
-#comment-install-btn { 
-    background: #FF4B2B; 
-    background: linear-gradient(to right, #FF416C, #FF4B2B);
-    color: #fff; border: none; padding: 10px 18px; border-radius: 12px; 
-    font-weight: 700; cursor: pointer; font-size: 13px;
-    box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3);
-}
-.comment-close { position: absolute; top: -12px; right: -5px; font-size: 24px; color: #999; cursor: pointer; }
-</style>
-
-<script>
-let commentPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    commentPrompt = e;
-    if(!localStorage.getItem('comment_pwa_closed')) {
-        document.getElementById('comment-pwa-popup').style.display = 'block';
-    }
-});
-
-document.getElementById('comment-install-btn').addEventListener('click', async () => {
-    if (commentPrompt) {
-        commentPrompt.prompt();
-        const { outcome } = await commentPrompt.userChoice;
-        if (outcome === 'accepted') {
-            document.getElementById('comment-pwa-popup').style.display = 'none';
-        }
-    } else {
-        alert('Browser Menu > Install par click karein.');
-    }
-});
-
-function closeCommentPWA() {
-    document.getElementById('comment-pwa-popup').style.display = 'none';
-    localStorage.setItem('comment_pwa_closed', 'true');
-}
-
-// Comment Dashboard Manifest Setup
-(function() {
-    var m = document.createElement('link');
-    m.rel = 'manifest';
-    var manifestData = {
-        "name": "Comment Dashboard",
-        "short_name": "Comments",
-        "start_url": window.location.href,
-        "display": "standalone",
-        "background_color": "#ffffff",
-        "theme_color": "#FF4B2B",
-        "icons": [{
-            "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-A1gPiV2jFrCm3xv9P6K1Mv5ciyhSh5gfGxzBaHCKtIhh3J80xp7xt2H99WLLFeWgXZL2_SO2fdn3UDFENxbvkpy_u7yxYFutm8li5gKyxcISAuKB3V_mHjLiQDwFoJq-ITl0PyPIScJSWEAZY4lWYOBBVjrD0oH8NNbOY0AMBwC2fpCy6uWkDx2V1Yiv/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2002_55_35%20PM.png",
-            "sizes": "1024x1024",
-            "type": "image/png"
-        }]
-    };
-    m.href = 'data:application/json;base64,' + btoa(JSON.stringify(manifestData));
-    document.head.appendChild(m);
-})();
-</script>
