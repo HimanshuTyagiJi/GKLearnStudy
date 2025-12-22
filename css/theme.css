@@ -1784,7 +1784,7 @@ details[open]> .faq-answer {
     gap: 1.5rem;
     justify-content: center;
     justify-items: center;
-    min-height: 80vh;
+   
     grid-template-columns: repeat(auto-fit,minmax(290px,1fr));
 }
 
