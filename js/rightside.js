@@ -48,7 +48,7 @@ function renderAppBox(){
   linkList.innerHTML = `
     <li>
       <div class="app-box">
-        <img src="${APP_ICON}" class="app-icon">
+        <img src="${APP_ICON}" class="app-icon" alt="GK Learn Study App Icon">
         <h3>${APP_NAME}</h3>
         <p class="small">Install our PWA App</p>
         <button id="installBtn" class="install-btn">Install App</button>
