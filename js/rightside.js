@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function injectAd() {
     if (!window.adsbygoogle || !Array.isArray(window.adsbygoogle)) {
-      setTimeout(injectAd, 500);
+      setTimeout(injectAd, 300);
       return;
     }
 
@@ -131,7 +131,10 @@ document.addEventListener("DOMContentLoaded", function () {
         data-full-width-responsive="true"></ins>
     `;
 
-    document.body.appendChild(aside);
+    // 🔥 YAHI MAIN FIX HAI
+    // body ke FIRST CHILD ke turant baad
+    document.body.insertBefore(aside, document.body.firstChild);
+
     window.adsbygoogle.push({});
   }
 
