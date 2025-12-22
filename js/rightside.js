@@ -10,9 +10,10 @@
       width: 16%;
       display: block;
       overflow-y: auto;
-      margin: -10px;
+         height: 100%;
+    border: 1px solid #ccc;
       left: 0;
-      z-index: 99;
+      z-index: 0;
     }
     @media (max-width:768px){
       .menu-list{
