@@ -108,12 +108,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ul.innerHTML = `
       <li>
-        <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-7067722696020503"
-          data-ad-slot="8188086907"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
+      <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7067722696020503"
+     data-ad-slot="8188086907"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
       </li>
     `;
 
