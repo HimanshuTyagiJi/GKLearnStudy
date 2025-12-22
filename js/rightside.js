@@ -12,7 +12,7 @@
       overflow-y: auto;
       margin: -10px;
       left: 0;
-      z-index: 0;
+      z-index: 99;
     }
     @media (max-width:768px){
       .menu-list{
