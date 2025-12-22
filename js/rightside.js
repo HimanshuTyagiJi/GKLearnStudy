@@ -91,14 +91,12 @@ window.addEventListener("load", setMenuMode);
 
 document.addEventListener("DOMContentLoaded", () => {
   const h = document.head;
-
   if (!document.querySelector('meta[name="google-adsense-account"]')) {
     const m = document.createElement("meta");
     m.name = "google-adsense-account";
     m.content = "ca-pub-7067722696020503";
     h.appendChild(m);
   }
-
   if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
     const s = document.createElement("script");
     s.async = true;
@@ -108,35 +106,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   if (window.innerWidth <= 768) return;
+  if (document.getElementById("topic-sidebar")) return;
   if (document.getElementById("auto-vertical-ad")) return;
 
-  function injectAd() {
-    if (!window.adsbygoogle || !Array.isArray(window.adsbygoogle)) {
-      setTimeout(injectAd, 300);
-      return;
-    }
+  const aside = document.createElement("aside");
+  aside.id = "auto-vertical-ad";
+  aside.innerHTML = `
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-7067722696020503"
+      data-ad-slot="8188086907"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  `;
+  document.body.appendChild(aside);
 
-    const aside = document.createElement("aside");
-    aside.id = "auto-vertical-ad";
-    aside.style.margin = "20px auto";
-
-    aside.innerHTML = `
-      <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-7067722696020503"
-        data-ad-slot="8188086907"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    `;
-
-    // 🔥 YAHI MAIN FIX HAI
-    // body ke FIRST CHILD ke turant baad
-    document.body.insertBefore(aside, document.body.firstChild);
-
+  if (window.adsbygoogle && Array.isArray(window.adsbygoogle)) {
     window.adsbygoogle.push({});
   }
-
-  injectAd();
-});
+})();
