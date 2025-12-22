@@ -4,7 +4,21 @@
 (function () {
   const css = document.createElement("style");
   css.innerHTML = `
-  
+    .menu-list{
+      position: fixed;
+      top: 60px;
+      width: 16%;
+      display: block;
+      overflow-y: auto;
+      margin: -10px;
+      left: 0;
+      z-index: 0;
+    }
+    @media (max-width:768px){
+      .menu-list{
+        display:none !important;
+      }
+    }
     #link-list{list-style:none;padding:0;margin:0}
     .app-box{text-align:center;padding:15px;border-radius:10px;background:transparent;color:#fff;margin-top:15px}
     .app-icon{width:75px;height:75px;border-radius:15px;margin-bottom:10px}
@@ -70,3 +84,47 @@ async function installApp(){
   deferredPrompt=null;
 }
 
+/* =========================
+   LEFT SIDE ADS (MENU-LIST LOGIC)
+========================= */
+document.addEventListener("DOMContentLoaded", function () {
+
+  if(window.innerWidth <= 768) return;
+
+  if(document.getElementById("menuList")) return;
+
+  if(document.getElementById("auto-left-ad")) return;
+
+  function injectAd(){
+    if(!window.adsbygoogle || !Array.isArray(window.adsbygoogle)){
+      setTimeout(injectAd,300);
+      return;
+    }
+
+    const ul = document.createElement("ul");
+    ul.className = "menu-list";
+    ul.id = "auto-left-ad";
+
+    ul.innerHTML = `
+      <li>
+        <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-7067722696020503"
+          data-ad-slot="8188086907"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      </li>
+    `;
+
+    const main = document.querySelector("main") || document.querySelector("article");
+    if(main){
+      document.body.insertBefore(ul, main);
+    }else{
+      document.body.insertBefore(ul, document.body.firstChild);
+    }
+
+    window.adsbygoogle.push({});
+  }
+
+  injectAd();
+});
