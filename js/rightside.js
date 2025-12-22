@@ -108,13 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+/* ===== VERTICAL AD : DESKTOP ONLY, ALWAYS ===== */
 (function () {
   if (window.innerWidth <= 768) return;
-  if (document.getElementById("topic-sidebar")) return;
   if (document.getElementById("auto-vertical-ad")) return;
 
   const aside = document.createElement("aside");
   aside.id = "auto-vertical-ad";
+  aside.style.margin = "20px auto";
   aside.innerHTML = `
     <ins class="adsbygoogle"
       style="display:block"
@@ -123,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
       data-ad-format="auto"
       data-full-width-responsive="true"></ins>
   `;
+
   document.body.appendChild(aside);
 
   if (window.adsbygoogle && Array.isArray(window.adsbygoogle)) {
