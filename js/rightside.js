@@ -20,6 +20,14 @@ const PWA_URL = "https://gklearnstudy.in/?source=pwa";
 
 let deferredPrompt = null;
 
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (linkList) renderAppBox();
+});
+
+window.addEventListener("appinstalled", () => updateButtons());
+
 function renderAppBox() {
   if (!linkList) return;
   linkList.innerHTML = `
@@ -38,24 +46,6 @@ function renderAppBox() {
   document.getElementById("installBtn").onclick = installApp;
 }
 
-if (linkList) renderAppBox();
-
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-window.addEventListener("appinstalled", () => {
-  const i = document.getElementById("installBtn");
-  const d = document.getElementById("installedBtn");
-  const u = document.getElementById("uninstallBtn");
-  if (i && d && u) {
-    i.style.display = "none";
-    d.style.display = "block";
-    u.style.display = "block";
-  }
-});
-
 async function installApp() {
   if (!deferredPrompt) {
     location.href = PWA_URL;
@@ -63,6 +53,17 @@ async function installApp() {
   }
   deferredPrompt.prompt();
   deferredPrompt = null;
+}
+
+function updateButtons() {
+  const i = document.getElementById("installBtn");
+  const d = document.getElementById("installedBtn");
+  const u = document.getElementById("uninstallBtn");
+  if (!i || !d || !u) return;
+  i.style.display = "none";
+  d.style.display = "block";
+  u.style.display = "block";
+  u.onclick = () => alert("Remove app from home screen");
 }
 
 function toggleMenu() {
@@ -91,14 +92,12 @@ window.addEventListener("load", setMenuMode);
 
 document.addEventListener("DOMContentLoaded", () => {
   const h = document.head;
-
   if (!document.querySelector('meta[name="google-adsense-account"]')) {
     const m = document.createElement("meta");
     m.name = "google-adsense-account";
     m.content = "ca-pub-7067722696020503";
     h.appendChild(m);
   }
-
   if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
     const s = document.createElement("script");
     s.async = true;
@@ -108,32 +107,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   if (window.innerWidth <= 768) return;
+  if (document.getElementById("topic-sidebar")) return;
   if (document.getElementById("auto-vertical-ad")) return;
 
-  function injectAd() {
-    if (!window.adsbygoogle || !Array.isArray(window.adsbygoogle)) {
-      setTimeout(injectAd, 500);
-      return;
-    }
+  const aside = document.createElement("aside");
+  aside.id = "auto-vertical-ad";
+  aside.innerHTML = `
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-7067722696020503"
+      data-ad-slot="8188086907"
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  `;
+  document.body.appendChild(aside);
 
-    const aside = document.createElement("aside");
-    aside.id = "auto-vertical-ad";
-    aside.style.margin = "20px auto";
-
-    aside.innerHTML = `
-      <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-7067722696020503"
-        data-ad-slot="8188086907"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    `;
-
-    document.body.appendChild(aside);
+  if (window.adsbygoogle && Array.isArray(window.adsbygoogle)) {
     window.adsbygoogle.push({});
   }
-
-  injectAd();
-});
+})();
