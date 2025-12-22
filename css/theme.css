@@ -1798,6 +1798,7 @@ details[open]> .faq-answer {
     max-width: 380px;
     display: flex;
     flex-direction: column;
+        height: fit-content;
 }
 
 .card:hover {
@@ -1859,7 +1860,7 @@ details[open]> .faq-answer {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    flex-grow: 1;
+   
 }
 
 .card-title {
@@ -1885,14 +1886,10 @@ details[open]> .faq-answer {
 }
 
 .card-summary {
-    font-size: 0.875rem;
+     
     color: var(--text-secondary);
     line-height: 1.5;
-    margin: 0;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+  
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 12px;
