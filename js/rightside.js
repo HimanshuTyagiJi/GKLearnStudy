@@ -20,14 +20,6 @@ const PWA_URL = "https://gklearnstudy.in/?source=pwa";
 
 let deferredPrompt = null;
 
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (linkList) renderAppBox();
-});
-
-window.addEventListener("appinstalled", () => updateButtons());
-
 function renderAppBox() {
   if (!linkList) return;
   linkList.innerHTML = `
@@ -45,6 +37,15 @@ function renderAppBox() {
   `;
   document.getElementById("installBtn").onclick = installApp;
 }
+
+if (linkList) renderAppBox();
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+window.addEventListener("appinstalled", () => updateButtons());
 
 async function installApp() {
   if (!deferredPrompt) {
