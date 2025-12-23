@@ -1,4 +1,167 @@
+const style = document.createElement("style");
+style.innerHTML = `
+#link-list { list-style:none; padding:0; margin:0; }
 
+/* App Box */
+.app-box {
+    text-align:center;
+    padding:15px;
+    border-radius:10px;
+    background: transparent;
+    color:#fff;
+    margin-top:15px;
+}
+
+/* App Icon */
+.app-icon {
+    width:75px;
+    height:75px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+/* Main Title */
+.app-box h3 {
+    font-size:18px;
+    margin:5px 0 3px 0;
+}
+
+/* Subtitle */
+.small {
+    font-size:13px;
+    opacity:0.9;
+    margin-bottom:8px;
+}
+
+/* Buttons */
+.install-btn, .installed-btn, .uninstall-btn {
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border-radius:8px;
+    border:none;
+    font-size:15px;
+    cursor:pointer;
+}
+
+/* Install Button */
+.install-btn {
+    background:#4cd964;
+    color:#000;
+}
+
+/* Installed Button */
+.installed-btn {
+    background:#3498db;
+    color:#fff;
+    cursor:default;
+}
+
+/* Uninstall Button */
+.uninstall-btn {
+    background:#e74c3c;
+    color:#fff;
+}
+
+/* Coming Soon Section */
+.coming-title {
+    font-size:15px;
+    margin-top:18px;
+    opacity:0.9;
+}
+`;
+document.head.appendChild(style);
+
+
+
+// =========================
+//  PWA INSTALL HANDLING
+// =========================
+
+const linkList = document.getElementById("link-list");
+
+const APP_NAME = "GK Learn Study App";
+const APP_ICON = "https://gklearnstudy.in/GK-Learn-Study.png";
+const PWA_URL = "https://gklearnstudy.in/?source=pwa";
+
+let deferredPrompt = null;
+let isInstalled = false;
+
+// Detect PWA install availability
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    renderAppBox();
+});
+
+// Detect when installed
+window.addEventListener("appinstalled", () => {
+    isInstalled = true;
+    updateButtons();
+});
+
+
+// =========================
+//  Render APP INSTALL BOX
+// =========================
+function renderAppBox() {
+    linkList.innerHTML = `
+        <li>
+        <div class="app-box">
+            <img src="${APP_ICON}" class="app-icon" alt="App Icon">
+
+            <h3>${APP_NAME}</h3>
+            <p class="small">Install our PWA App</p>
+
+            <button id="installBtn" class="install-btn">Install App</button>
+            <button id="installedBtn" class="installed-btn" style="display:none;">Installed ✓</button>
+            <button id="uninstallBtn" class="uninstall-btn" style="display:none;">Uninstall</button>
+
+            <p class="coming-title">More apps are coming soon...</p>
+        </div>
+        </li>
+    `;
+
+    document.getElementById("installBtn").onclick = installApp;
+}
+
+
+// =========================
+//  Install App
+// =========================
+async function installApp() {
+    if (!deferredPrompt) {
+        window.location.href = PWA_URL;  // fallback
+        return;
+    }
+
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+        console.log("App Installed");
+    }
+
+    deferredPrompt = null;
+}
+
+
+// =========================
+//  Update Buttons on Install
+// =========================
+function updateButtons() {
+    document.getElementById("installBtn").style.display = "none";
+    document.getElementById("installedBtn").style.display = "block";
+    document.getElementById("uninstallBtn").style.display = "block";
+
+    // Browser cannot uninstall PWAs → show info only
+    document.getElementById("uninstallBtn").onclick = () => {
+        alert("To uninstall, please remove the app from your device's home screen manually.");
+    };
+}
+
+
+// Load the app box initially
 renderAppBox();
 
 
@@ -24,97 +187,10 @@ function setMenuMode() {
     }
 }
 
+window.addEventListener("resize", setMenuMode);
+window.addEventListener("load", setMenuMode);
 
-/* =========================
-   Inject CSS
-========================= */
-(function () {
-  const css = document.createElement("style");
-  css.innerHTML = `
-    .menu-list{
-      position: fixed;
-      top: 60px;
-      width: 16%;
-      display: block;
-      overflow-y: auto;
-         height: 100%;
-    border: 1px solid #ccc;
-      left: 0;
-      z-index: 0;
-    }
-    @media (max-width:768px){
-      .menu-list{
-        display:none !important;
-      }
-    }
-    #link-list{list-style:none;padding:0;margin:0}
-    .app-box{text-align:center;padding:15px;border-radius:10px;background:transparent;color:#fff;margin-top:15px}
-    .app-icon{width:75px;height:75px;border-radius:15px;margin-bottom:10px}
-    .app-box h3{font-size:18px;margin:5px 0 3px 0}
-    .small{font-size:13px;opacity:.9;margin-bottom:8px}
-    .install-btn,.installed-btn,.uninstall-btn{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:none;font-size:15px;cursor:pointer}
-    .install-btn{background:#4cd964;color:#000}
-    .installed-btn{background:#3498db;color:#fff}
-    .uninstall-btn{background:#e74c3c;color:#fff}
-    .coming-title{font-size:15px;margin-top:18px;opacity:.9}
-  `;
-  document.head.appendChild(css);
-})();
 
-/* =========================
-   APP INSTALL BOX
-========================= */
-const linkList = document.getElementById("link-list");
-const APP_NAME = "GK Learn Study App";
-const APP_ICON = "https://gklearnstudy.in/GK-Learn-Study.png";
-const PWA_URL = "https://gklearnstudy.in/?source=pwa";
-let deferredPrompt = null;
-
-function renderAppBox(){
-  if(!linkList) return;
-  linkList.innerHTML = `
-    <li>
-      <div class="app-box">
-        <img src="${APP_ICON}" class="app-icon" alt="GK Learn Study App Icon">
-        <h3>${APP_NAME}</h3>
-        <p class="small">Install our PWA App</p>
-        <button id="installBtn" class="install-btn">Install App</button>
-        <button id="installedBtn" class="installed-btn" style="display:none">Installed ✓</button>
-        <button id="uninstallBtn" class="uninstall-btn" style="display:none">Uninstall</button>
-        <p class="coming-title">More apps are coming soon...</p>
-      </div>
-    </li>
-  `;
-  document.getElementById("installBtn").onclick = installApp;
-}
-if(linkList) renderAppBox();
-
-window.addEventListener("beforeinstallprompt", e=>{
-  e.preventDefault();
-  deferredPrompt = e;
-});
-window.addEventListener("appinstalled", ()=>{
-  const i=document.getElementById("installBtn");
-  const d=document.getElementById("installedBtn");
-  const u=document.getElementById("uninstallBtn");
-  if(i&&d&&u){
-    i.style.display="none";
-    d.style.display="block";
-    u.style.display="block";
-  }
-});
-async function installApp(){
-  if(!deferredPrompt){
-    location.href=PWA_URL;
-    return;
-  }
-  deferredPrompt.prompt();
-  deferredPrompt=null;
-}
-
-/* =========================
-   LEFT SIDE ADS (MENU-LIST LOGIC)
-========================= */
 document.addEventListener("DOMContentLoaded", function () {
 
   if(window.innerWidth <= 768) return;
@@ -156,3 +232,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
   injectAd();
 });
+
