@@ -410,93 +410,82 @@ img.src=canvas.toDataURL("image/png");
 
 
 
+/* ---------- 1. Mapping and Transliteration Logic ---------- */
+const charMap = {
+    'a': 'अ', 'aa': 'आ', 'i': 'इ', 'ee': 'ई', 'u': 'उ', 'oo': 'ऊ',
+    'e': 'ए', 'ai': 'ऐ', 'o': 'ओ', 'au': 'औ',
+    'k': 'क', 'kh': 'ख', 'g': 'ग', 'gh': 'घ',
+    'ch': 'च', 'j': 'ज', 't': 'त', 'th': 'थ', 'd': 'द', 'dh': 'ध',
+    'n': 'न', 'p': 'प', 'b': 'ब', 'bh': 'भ', 'm': 'म',
+    'y': 'य', 'r': 'र', 'l': 'ल', 'v': 'व', 's': 'स', 'h': 'ह'
+};
 
-
-function engToHindi(word) {
-  const map = {
-    a:"अ", aa:"आ", i:"इ", ee:"ई", u:"उ", oo:"ऊ",
-    e:"ए", ai:"ऐ", o:"ओ", au:"औ",
-    k:"क", kh:"ख", g:"ग", gh:"घ",
-    ch:"च", j:"ज", t:"त", th:"थ", d:"द", dh:"ध",
-    n:"न", p:"प", b:"ब", bh:"भ", m:"म",
-    y:"य", r:"र", l:"ल", v:"व", s:"स", h:"ह"
-  };
-
-  let result = "";
-  let i = 0;
-  word = word.toLowerCase();
-
-  while (i < word.length) {
-    let two = word.substring(i, i + 2);
-    if (map[two]) {
-      result += map[two];
-      i += 2;
-    } else if (map[word[i]]) {
-      result += map[word[i]];
-      i++;
-    } else {
-      i++;
+// English ko Hindi characters mein badalne ke liye
+function toHindiScript(text) {
+    let result = "";
+    let i = 0;
+    let word = text.toLowerCase();
+    while (i < word.length) {
+        let two = word.substring(i, i + 2);
+        if (charMap[two]) { result += charMap[two]; i += 2; }
+        else if (charMap[word[i]]) { result += charMap[word[i]]; i++; }
+        else { result += word[i]; i++; }
     }
-  }
-  return result;
+    return result;
 }
 
-/* ---------- Levenshtein (Controlled Fuzzy) ---------- */
+/* ---------- 2. Levenshtein (Spelling mistake check) ---------- */
 function levenshtein(a, b) {
-  const dp = Array.from({ length: a.length + 1 }, () =>
-    Array(b.length + 1).fill(0)
-  );
-
-  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
-  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
-
-  for (let i = 1; i <= a.length; i++) {
-    for (let j = 1; j <= b.length; j++) {
-      dp[i][j] =
-        a[i - 1] === b[j - 1]
-          ? dp[i - 1][j - 1]
-          : Math.min(
-              dp[i - 1][j] + 1,
-              dp[i][j - 1] + 1,
-              dp[i - 1][j - 1] + 1
-            );
+    const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+    for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+    for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+            dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] : 
+                       Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + 1);
+        }
     }
-  }
-  return dp[a.length][b.length];
+    return dp[a.length][b.length];
 }
 
-/* ---------- FINAL SEARCH ---------- */
+/* ---------- 3. MAIN SEARCH LOGIC ---------- */
 document.getElementById("search").addEventListener("input", function () {
-  const input = this.value.trim().toLowerCase();
-  const hindiInput = engToHindi(input);
-  const rows = document.querySelectorAll("#myTable tbody tr");
+    const query = this.value.trim().toLowerCase();
+    const queryInHindi = toHindiScript(query); // English input ka Hindi version
+    const rows = document.querySelectorAll("#myTable tbody tr");
 
-  if (input === "") {
-    rows.forEach(r => r.style.display = "");
-    return;
-  }
-
-  rows.forEach(row => {
-    const words = row.textContent.toLowerCase().split(/\s+/);
-    let match = false;
-
-    for (let w of words) {
-      if (w.includes(input) || w.includes(hindiInput)) {
-        match = true;
-        break;
-      }
-
-      if (input.length <= 6) {
-        if (
-          levenshtein(w, input) <= 2 ||
-          levenshtein(w, hindiInput) <= 2
-        ) {
-          match = true;
-          break;
-        }
-      }
+    if (query === "") {
+        rows.forEach(r => r.style.display = "");
+        return;
     }
 
-    row.style.display = match ? "" : "none";
-  });
+    rows.forEach(row => {
+        // Table cell ka text nikalen
+        const cellText = row.textContent.toLowerCase();
+        const cellTextInHindi = toHindiScript(cellText); // Table text ka Hindi version (agar wo Eng hai)
+        
+        let isMatch = false;
+
+        // Direct Match Check (Fastest)
+        if (cellText.includes(query) || 
+            cellText.includes(queryInHindi) || 
+            cellTextInHindi.includes(queryInHindi)) {
+            isMatch = true;
+        }
+
+        // Fuzzy Match Check (Spelling Mistake)
+        if (!isMatch && query.length > 2) {
+            const words = cellText.split(/\s+/);
+            for (let word of words) {
+                const wordInHindi = toHindiScript(word);
+                if (levenshtein(word, query) <= 2 || 
+                    levenshtein(wordInHindi, queryInHindi) <= 1) {
+                    isMatch = true;
+                    break;
+                }
+            }
+        }
+
+        row.style.display = isMatch ? "" : "none";
+    });
 });
