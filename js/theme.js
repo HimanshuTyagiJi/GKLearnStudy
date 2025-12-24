@@ -412,3 +412,91 @@ img.src=canvas.toDataURL("image/png");
 
 
 
+function engToHindi(word) {
+  const map = {
+    a:"अ", aa:"आ", i:"इ", ee:"ई", u:"उ", oo:"ऊ",
+    e:"ए", ai:"ऐ", o:"ओ", au:"औ",
+    k:"क", kh:"ख", g:"ग", gh:"घ",
+    ch:"च", j:"ज", t:"त", th:"थ", d:"द", dh:"ध",
+    n:"न", p:"प", b:"ब", bh:"भ", m:"म",
+    y:"य", r:"र", l:"ल", v:"व", s:"स", h:"ह"
+  };
+
+  let result = "";
+  let i = 0;
+  word = word.toLowerCase();
+
+  while (i < word.length) {
+    let two = word.substring(i, i + 2);
+    if (map[two]) {
+      result += map[two];
+      i += 2;
+    } else if (map[word[i]]) {
+      result += map[word[i]];
+      i++;
+    } else {
+      i++;
+    }
+  }
+  return result;
+}
+
+/* ---------- Levenshtein (Controlled Fuzzy) ---------- */
+function levenshtein(a, b) {
+  const dp = Array.from({ length: a.length + 1 }, () =>
+    Array(b.length + 1).fill(0)
+  );
+
+  for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] =
+        a[i - 1] === b[j - 1]
+          ? dp[i - 1][j - 1]
+          : Math.min(
+              dp[i - 1][j] + 1,
+              dp[i][j - 1] + 1,
+              dp[i - 1][j - 1] + 1
+            );
+    }
+  }
+  return dp[a.length][b.length];
+}
+
+/* ---------- FINAL SEARCH ---------- */
+document.getElementById("search").addEventListener("input", function () {
+  const input = this.value.trim().toLowerCase();
+  const hindiInput = engToHindi(input);
+  const rows = document.querySelectorAll("#myTable tbody tr");
+
+  if (input === "") {
+    rows.forEach(r => r.style.display = "");
+    return;
+  }
+
+  rows.forEach(row => {
+    const words = row.textContent.toLowerCase().split(/\s+/);
+    let match = false;
+
+    for (let w of words) {
+      if (w.includes(input) || w.includes(hindiInput)) {
+        match = true;
+        break;
+      }
+
+      if (input.length <= 6) {
+        if (
+          levenshtein(w, input) <= 2 ||
+          levenshtein(w, hindiInput) <= 2
+        ) {
+          match = true;
+          break;
+        }
+      }
+    }
+
+    row.style.display = match ? "" : "none";
+  });
+});
