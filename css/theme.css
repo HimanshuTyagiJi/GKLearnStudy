@@ -4493,3 +4493,6 @@ th, td {
 a {
     color: var(--muted-text-color)
 }
+.app-footer ins.adsbygoogle {
+  display: none !important;
+}
