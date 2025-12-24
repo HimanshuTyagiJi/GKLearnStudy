@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Power Conversion Tool & Guide | GK Learn Study</title>
+    <meta name="description"
+        content="An interactive tool and detailed guide for power unit conversion. Easily convert between watts (W), kilowatts (kW), and horsepower (hp). Learn the formulas, history, and practical applications in physics, engineering, and electronics." />
+    <meta name="keywords"
+        content="power conversion, convert watts to horsepower, convert hp to kw, power converter, watt, kilowatt, horsepower, physics, engineering, unit conversion tool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Mr. Himanshu Tyagi" />
+    <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
+        crossorigin="anonymous"></script>
+    <meta name="robots" content="index, follow" />
+    <meta name="copyright" content="© 2024 GK Learn Study" />
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+    <link rel="canonical" href="https://gklearnstudy.in/conversion/power-unit-conversion.html" />
+    <meta property="og:title" content="Power Conversion Tool & Guide | Watts, Horsepower, kW" />
+    <meta property="og:description"
+        content="A comprehensive guide and tool for converting power units like watts, kilowatts, and horsepower. Includes formulas, examples, and applications." />
+    <meta property="og:image" content="https://gklearnstudy.in/images/power-unit-conversion.webp" />
+    <meta property="og:url" content="https://gklearnstudy.in/conversion/power-unit-conversion.html" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/conversion.css" />
+    <link rel="stylesheet" href="../css/topic-menu.css" />
+
+</head>
+
+<body>
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="burger" id="burger">
+                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                    <rect width="100" height="7" rx="5"></rect>
+                    <rect y="30" width="100" height="7" rx="5"></rect>
+                    <rect y="60" width="100" height="7" rx="5"></rect>
+                </svg>
+            </div>
+
+            <a href="index.html" class="brand" aria-label="GK Learn Study">
+                <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="150" cy="150" r="150" fill="white" />
+                    <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        GK
+                        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                        <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                    </text>
+                    <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        Learn Study
+                        <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s"
+                            dur="1.2s" fill="freeze" />
+                    </text>
+                    <clipPath id="circleClip">
+                        <circle cx="150" cy="150" r="150" />
+                    </clipPath>
+                    <g clip-path="url(#circleClip)">
+                        <path fill="#ff9f80" fill-opacity="0.8">
+                            <animate attributeName="d" dur="6s" repeatCount="indefinite" values="
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                          M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                        " />
+                        </path>
+                        <path fill="#6a4cff" fill-opacity="0.5">
+                            <animate attributeName="d" dur="7s" repeatCount="indefinite" values="
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                          M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                        " />
+                        </path>
+                    </g>
+                </svg>
+            </a>
+
+            <div class="menu" id="menu">
+                <div class="mobile-menu-header">
+                    <a href="/" class="menu-brand-text">GK Learn Study</a>
+                    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="menu-inner">
+                    <!-- Menu links will be injected by header.js -->
+                </div>
+                <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                        <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+                <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                        <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search...">
+        <div class="overlay"></div>
+    </header>
+
+    <ul id="suggestions-list" class="suggestions"></ul>
+
+    <div id="sidebar-overlay"></div>
+    <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+    <aside id="topic-sidebar">
+        <p class="sidebar-title">Conversion Topics</p>
+        <nav id="topic-nav">
+            <ul>
+                <li><a href="../conversion.html">Conversion</a></li>
+                <li><a href="angle-unit-conversion.html">Angle Conversion</a></li>
+                <li><a href="area-unit-conversion.html">Area Conversion</a></li>
+                <li><a href="length-unit-conversion.html">Length Conversion</a></li>
+                <li><a class="active" href="power-unit-conversion.html">Power Conversion</a></li>
+                <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+                <li><a href="speed-unit-conversion.html">Speed Conversion</a></li>
+                <li><a href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+                <li><a href="time-unit-conversion.html">Time Conversion</a></li>
+                <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
+                <li><a href="weight-mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+
+    <main class="container">
+        <div id="root">
+            <header class="education-header">
+                <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                    <svg viewBox="0 0 200 200" role="img" aria-labelledby="powerTitle">
+                        <title id="powerTitle">Animated Power Conversion Icon</title>
+                        <style>
+                            .bolt-main {
+                                fill: #facc15;
+                                stroke: #f59e0b;
+                                stroke-width: 4;
+                                stroke-linecap: round;
+                                stroke-linejoin: round;
+                                filter: drop-shadow(0 0 8px #f59e0b);
+                                animation: flash 1.5s ease-in-out infinite;
+                            }
+
+                            .spark {
+                                fill: #fde047;
+                                animation: burst 1.5s ease-out infinite;
+                                transform-origin: center;
+                            }
+
+                            @keyframes flash {
+                                50% {
+                                    transform: scale(1.05);
+                                    opacity: 0.8;
+                                }
+                            }
+
+                            @keyframes burst {
+                                0% {
+                                    transform: scale(0);
+                                    opacity: 1;
+                                }
+
+                                100% {
+                                    transform: scale(1.5);
+                                    opacity: 0;
+                                }
+                            }
+                        </style>
+                        <g>
+                            <path class="bolt-main" d="M115,30 L80,95 L110,95 L85,170 L135,90 L100,90 Z" />
+                            <circle class="spark" cx="70" cy="70" r="8" style="animation-delay: 0.1s;" />
+                            <circle class="spark" cx="140" cy="120" r="10" style="animation-delay: 0.3s;" />
+                            <circle class="spark" cx="90" cy="140" r="6" style="animation-delay: 0.5s;" />
+                        </g>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Power Unit Conversion</h1>
+                    <p class="education-description">
+                        <strong>Power unit conversion</strong> is the process of changing the measurement of power from
+                        one unit to another, such as from <strong>watts (W)</strong> to <strong>horsepower
+                            (hp)</strong>. Power is the
+                        rate at which work is done or energy is transferred. Different fields use different units:
+                        engineering and automotive fields often use horsepower, while electrical and scientific fields
+                        use watts and
+                        kilowatts. Converting between them allows us to compare the energy output of engines, motors,
+                        and appliances on a like-for-like basis, making it a crucial skill in technology and physics.
+                    </p>
+                </div>
+            </header>
+
+            <div class="conversion-tool-container">
+                <div class="conversion-tool-grid">
+                    <div class="converter-widget">
+                        <h2>Power Converter Tool</h2>
+                        <table class="converter-table">
+                            <tr>
+                                <td>Watts (W)</td>
+                                <td><input type="number" id="inputWatts" oninput="powerConverter(this.id, this.value)"
+                                        placeholder="e.g., 745.7" /></td>
+                            </tr>
+                            <tr>
+                                <td>Kilowatts (kW)</td>
+                                <td><input type="number" id="inputKilowatts"
+                                        oninput="powerConverter(this.id, this.value)" placeholder="e.g., 0.7457" /></td>
+                            </tr>
+                            <tr>
+                                <td>Horsepower (hp)</td>
+                                <td><input type="number" id="inputHorsepower"
+                                        oninput="powerConverter(this.id, this.value)" placeholder="e.g., 1" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="converter-widget">
+                        <h2>Quick Formulas</h2>
+                        <div class="quick-formulas-grid">
+                            <div class="example-formula">Kilowatts ≈ HP &times; 0.7457</div>
+                            <div class="example-formula">Horsepower ≈ kW &times; 1.341</div>
+                            <div class="example-formula">Watts = Kilowatts &times; 1000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="max-width:100%;margin:20px auto;">
+                <canvas id="powerConv" width="1600" height="360"
+                    style="width:100%;height:auto;display:block;border-radius:22px;"></canvas>
+            </div>
+
+            <script>
+                (function () {
+
+                    let c = document.getElementById("powerConv");
+                    let x = c.getContext("2d");
+
+                    c.oncontextmenu = e => e.preventDefault();
+                    c.setAttribute("draggable", "false");
+
+                    // ===== CYBERPUNK NEON BACKGROUND =====
+                    let g = x.createLinearGradient(0, 0, 1600, 360);
+                    g.addColorStop(0, "#0f0c29");
+                    g.addColorStop(0.4, "#302b63");
+                    g.addColorStop(1, "#24243e");
+                    x.fillStyle = g;
+                    x.fillRect(0, 0, 1600, 360);
+
+                    // ===== NEON GRID LINES =====
+                    x.save();
+                    x.globalAlpha = 0.08;
+                    x.strokeStyle = "#00eaff";
+                    for (let i = 0; i < 35; i++) {
+                        x.beginPath(); x.moveTo(i * 50, 0); x.lineTo(i * 50, 360); x.stroke();
+                        x.beginPath(); x.moveTo(0, i * 50); x.lineTo(1600, i * 50); x.stroke();
+                    }
+                    x.restore();
+
+                    // ===== LIGHTNING ENERGY WAVES =====
+                    x.save();
+                    x.globalAlpha = 0.15;
+                    x.strokeStyle = "#00ffe7";
+                    x.lineWidth = 6;
+                    for (let w = 0; w < 3; w++) {
+                        x.beginPath();
+                        let yy = 80 + w * 90;
+                        for (let xx = 0; xx <= 1600; xx += 40) {
+                            let yv = yy + Math.sin(xx * 0.02 + w) * 20;
+                            x.lineTo(xx, yv);
+                        }
+                        x.stroke();
+                    }
+                    x.restore();
+
+                    // ===== DIAGONAL BIG WATERMARK =====
+                    x.save();
+                    x.globalAlpha = 0.06;
+                    x.translate(800, 180);
+                    x.rotate(-0.28);
+                    x.fillStyle = "#ffffff";
+                    x.font = "bold 155px Arial";
+                    x.textAlign = "center";
+                    x.fillText("GKLearnStudy", 0, 50);
+                    x.restore();
+
+                    // ===== TITLE =====
+                    x.fillStyle = "#00f6ff";
+                    x.textAlign = "left";
+                    x.font = "bold 78px Arial";
+                    x.fillText("Power Conversion", 120, 170);
+
+                    // ===== CENTRAL LIGHTNING BOLT =====
+                    x.save();
+                    x.globalAlpha = 0.90;
+                    x.fillStyle = "#00fff2";
+                    x.font = "150px Arial";
+                    x.fillText("⚡", 480, 240);
+                    x.restore();
+
+                    // ===== UNIT CHAIN =====
+                    x.fillStyle = "#ffffff";
+                    x.textAlign = "center";
+                    x.font = "bold 58px Arial";
+
+                    x.fillText("W", 650, 150);
+                    x.fillText("↔", 750, 150);
+                    x.fillText("kW", 850, 150);
+                    x.fillText("↔", 950, 150);
+                    x.fillText("HP", 1050, 150);
+
+                    // ===== POWER FORMULAS =====
+                    let formulas = [
+                        { t: "P = VI", x: 640, y: 260, s: 48 },
+                        { t: "P = W / t", x: 860, y: 260, s: 48 },
+                        { t: "P = I²R", x: 1080, y: 260, s: 48 },
+                    ];
+
+                    formulas.forEach(f => {
+                        x.save();
+                        x.globalAlpha = 0.90;
+                        x.fillStyle = "#00ffe5";
+                        x.font = "bold " + f.s + "px Arial";
+                        x.textAlign = "center";
+                        x.fillText(f.t, f.x, f.y);
+                        x.restore();
+                    });
+
+                    // ===== FLOATING ICONS (TECH STYLE) =====
+                    let icons = [
+                        { t: "⚡", x: 1180, y: 105, s: 80 },
+                        { t: "🔌", x: 1320, y: 220, s: 65 },
+                        { t: "🔋", x: 1440, y: 170, s: 65 },
+                        { t: "✨", x: 1020, y: 260, s: 55 },
+                        { t: "🔧", x: 950, y: 110, s: 55 },
+                    ];
+
+                    icons.forEach(o => {
+                        x.save();
+                        x.globalAlpha = 0.28;
+                        x.fillStyle = "#00fff0";
+                        x.font = "bold " + o.s + "px Arial";
+                        x.textAlign = "center";
+                        x.fillText(o.t, o.x, o.y);
+                        x.restore();
+                    });
+
+                })();
+            </script>
+
+
+            <article class="article-content">
+                <h2>Understanding Power Measurements</h2>
+                <p>
+                    Power is one of the most essential concepts in physics and engineering. It describes not just the
+                    total amount of energy but the rate at which energy is transferred, consumed, or converted into
+                    work. In everyday
+                    terms, power tells us how fast a machine or system can perform its task. For example, if two engines
+                    are given the same job, a more powerful engine can complete it in less time, while a less powerful
+                    one will
+                    take longer. This distinction is crucial when comparing machines, engines, or even electrical
+                    devices. The standard unit for measuring power is the <strong>watt (W)</strong>, but historical and
+                    industry-specific
+                    units like <strong>horsepower (hp)</strong> are still widely used. Each has its own background,
+                    usage, and relevance in different fields.
+                </p>
+                <h3>The Primary Units of Power Measurement</h3>
+                <h4>1. Watt (W), Kilowatt (kW), and Beyond</h4>
+                <p>
+                    The <strong>watt</strong>, named after the Scottish inventor James Watt, is the internationally
+                    recognized SI (International System of Units) measurement for power. By definition, one watt is
+                    equal to one joule
+                    of energy used per second. This simple relationship makes it a universal standard for measuring both
+                    electrical and mechanical power. It helps engineers, scientists, and consumers compare devices of
+                    very
+                    different types on a common scale.
+                </p>
+                <ul>
+                    <li><b>Watt (W):</b> Applied to small-scale devices like LED bulbs, mobile phone chargers, and small
+                        fans.</li>
+                    <li><b>Kilowatt (kW):</b> Equal to 1,000 watts. Used for medium to large machines such as
+                        refrigerators, air conditioners, elevators, and car motors.</li>
+                    <li><b>Megawatt (MW):</b> Equal to one million watts. Reserved for industrial-scale operations such
+                        as power plants, wind farms, and large factories.</li>
+                </ul>
+                <div class="example-formula">1 W = 1 Joule/second &nbsp;&nbsp;|&nbsp;&nbsp; 1 kW = 1000 W</div>
+                <p>
+                    To give perspective, a typical household light bulb might consume 60 watts, an electric water heater
+                    might require 2 kilowatts, while a medium-sized power plant might generate hundreds of megawatts.
+                    This shows
+                    the wide range of scales where power measurement plays a role.
+                </p>
+                <h4>2. Horsepower (hp)</h4>
+                <p>
+                    <strong>Horsepower</strong> is an older but still widely used unit of power. The term was introduced
+                    by James Watt in the late 18th century as a way to market his steam engines. At that time, horses
+                    were the
+                    primary source of mechanical power for transportation and agriculture. Watt calculated that a horse
+                    could lift 550 pounds one foot high in one second, and he used this as the definition of one
+                    horsepower.
+                </p>
+                <p>
+                    Today, horsepower remains popular in industries such as automotive, aviation, and sometimes marine
+                    engineering. While the scientific community prefers watts, many consumers still find horsepower a
+                    more intuitive
+                    unit, especially when describing cars or aircraft. For example, when people hear that a sports car
+                    has 500 horsepower, they immediately picture a very powerful engine, even if they are not familiar
+                    with the
+                    equivalent number in kilowatts.
+                </p>
+                <p>
+                    There are different types of horsepower—mechanical horsepower, metric horsepower, and electrical
+                    horsepower. However, <strong>mechanical horsepower</strong> is the most common, defined as
+                    approximately 745.7
+                    watts.
+                </p>
+                <div class="example-formula">1 mechanical hp ≈ 745.7 W</div>
+                <h3>Why Conversion is Necessary</h3>
+                <p>
+                    In the modern world, conversion between different units of power is not just an academic exercise
+                    but a practical necessity. With the rise of electric vehicles, renewable energy, and global
+                    engineering projects,
+                    engineers and consumers frequently encounter both watts and horsepower. For instance, electric
+                    motors are almost always rated in kilowatts, while gasoline engines are usually measured in
+                    horsepower. To make a
+                    fair comparison between the two, a conversion must be performed.
+                </p>
+                <p>
+                    This becomes even more critical in industries that deal with international standards. A European car
+                    manufacturer might advertise engine performance in kilowatts, while an American manufacturer uses
+                    horsepower.
+                    Without proper conversion, customers would struggle to compare vehicles accurately. The same
+                    challenge arises when integrating electrical systems with mechanical ones in large engineering
+                    projects.
+                </p>
+                <h3>Practical Applications of Power Conversions</h3>
+                <ul>
+                    <li>
+                        <strong>Automotive Industry:</strong> Electric vehicles (EVs) are rated in kilowatts, while
+                        traditional cars are rated in horsepower. Conversions allow buyers and engineers to compare
+                        their performance side
+                        by side.
+                    </li>
+                    <li>
+                        <strong>Household Appliances:</strong> Most devices list their consumption in watts. Knowing
+                        this helps consumers estimate electricity usage and calculate their monthly energy bills, which
+                        are typically
+                        measured in kilowatt-hours (kWh).
+                    </li>
+                    <li>
+                        <strong>Engineering and Industry:</strong> Mechanical machines, such as pumps and compressors,
+                        are sometimes rated in horsepower, while the electrical systems powering them are in kilowatts.
+                        Accurate
+                        conversion ensures proper system integration and efficiency.
+                    </li>
+                    <li>
+                        <strong>Renewable Energy:</strong> Solar panels and wind turbines are usually measured in
+                        kilowatts or megawatts, while older systems may still refer to horsepower for motors and
+                        turbines. Conversion ensures
+                        consistent understanding across technologies.
+                    </li>
+                </ul>
+                <h3>Conclusion</h3>
+                <p>
+                    Power measurement may sound like a purely technical topic, but in reality, it influences our daily
+                    lives more than we realize. From the electricity bill we pay at home to the car we choose to drive,
+                    understanding
+                    power helps us make better decisions. The <strong>watt</strong> provides a precise scientific
+                    standard, while <strong>horsepower</strong> carries historical and practical importance, especially
+                    in consumer
+                    industries like automobiles. Converting between the two is not just about numbers; it is about
+                    bridging the gap between tradition and modern technology. As we move toward an energy-driven future
+                    dominated by
+                    renewables and electric mobility, having a clear understanding of power units and conversions will
+                    remain vital for engineers, policymakers, and everyday consumers alike.
+                </p>
+            </article>
+            <section class="solved-examples-section">
+                <h2>Solved Examples: Step-by-Step Power Conversions</h2>
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <h3>1. Convert 150 hp to Kilowatts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>150 × 0.7457 = 111.855</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 111.86 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>2. Convert 80 kW to Horsepower</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>80 × 1.34102 = 107.2816</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 107.3 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>3. Convert 1200 Watts to Horsepower</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (W to kW):</b> <code>1200 W / 1000 = 1.2 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>1.2 kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>1.2 × 1.34102 = 1.609</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 1.61 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>4. Convert 2 hp to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = hp × 745.7</code></p>
+                            <p><b>Calculation:</b> <code>2 × 745.7 = 1491.4</code></p>
+                            <p class="example-answer"><b>Answer:</b> 1491.4 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>5. Convert 500 Watts to Kilowatts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = W / 1000</code></p>
+                            <p><b>Calculation:</b> <code>500 / 1000 = 0.5</code></p>
+                            <p class="example-answer"><b>Answer:</b> 0.5 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>6. Convert 3.5 kW to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = kW × 1000</code></p>
+                            <p><b>Calculation:</b> <code>3.5 × 1000 = 3500</code></p>
+                            <p class="example-answer"><b>Answer:</b> 3500 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>7. Convert a 100 hp motor to kW</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>100 × 0.7457 = 74.57</code></p>
+                            <p class="example-answer"><b>Answer:</b> 74.57 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>8. Convert a 250 kW generator to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>250 × 1.34102 = 335.255</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 335.3 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>9. A light bulb is 60 W. How many hp is that?</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (W to kW):</b> <code>60 / 1000 = 0.06 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>0.06 × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>0.06 × 1.34102 = 0.08046</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 0.08 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>10. Convert 0.5 hp to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = hp × 745.7</code></p>
+                            <p><b>Calculation:</b> <code>0.5 × 745.7 = 372.85</code></p>
+                            <p class="example-answer"><b>Answer:</b> 372.85 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>11. Convert 75 kW to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>75 × 1.34102 = 100.5765</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 100.6 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>12. A car engine produces 200 hp. How many kW is this?</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>200 × 0.7457 = 149.14</code></p>
+                            <p class="example-answer"><b>Answer:</b> 149.14 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>13. Convert 1 Watt to Horsepower</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = W / 745.7</code></p>
+                            <p><b>Calculation:</b> <code>1 / 745.7 = 0.001341</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 0.00134 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>14. Convert 1 hp to kW</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>1 × 0.7457 = 0.7457</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 0.746 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>15. A microwave is 900 W. Convert to kW.</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = W / 1000</code></p>
+                            <p><b>Calculation:</b> <code>900 / 1000 = 0.9</code></p>
+                            <p class="example-answer"><b>Answer:</b> 0.9 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>16. An electric motor is rated 5.5 kW. What is its hp?</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>5.5 × 1.34102 = 7.37561</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 7.38 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>17. Convert 300 hp to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = hp × 745.7</code></p>
+                            <p><b>Calculation:</b> <code>300 × 745.7 = 223710</code></p>
+                            <p class="example-answer"><b>Answer:</b> 223,710 W or 223.71 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>18. Convert 10 kW to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = kW × 1000</code></p>
+                            <p><b>Calculation:</b> <code>10 × 1000 = 10000</code></p>
+                            <p class="example-answer"><b>Answer:</b> 10,000 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>19. A small pump is 0.25 hp. How many Watts is it?</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = hp × 745.7</code></p>
+                            <p><b>Calculation:</b> <code>0.25 × 745.7 = 186.425</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 186.4 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>20. An EV motor is 150 kW. What's its horsepower?</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>150 × 1.34102 = 201.153</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 201.2 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>21. Convert 2000 W to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (W to kW):</b> <code>2000 / 1000 = 2 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>2 × 1.34102 = 2.682</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 2.68 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>22. Convert 1.5 hp to kW</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>1.5 × 0.7457 = 1.11855</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 1.12 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>23. Convert 100 W to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (W to kW):</b> <code>100 / 1000 = 0.1 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>0.1 × 1.34102 = 0.1341</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 0.134 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>24. Convert 400 hp to kW</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>400 × 0.7457 = 298.28</code></p>
+                            <p class="example-answer"><b>Answer:</b> 298.28 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>25. Convert 300 kW to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>300 × 1.34102 = 402.306</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 402.3 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>26. A blender uses 500 W. What is this in hp?</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (W to kW):</b> <code>500 / 1000 = 0.5 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>0.5 × 1.34102 = 0.67051</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 0.67 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>27. Convert 10 hp to Watts</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>W = hp × 745.7</code></p>
+                            <p><b>Calculation:</b> <code>10 × 745.7 = 7457</code></p>
+                            <p class="example-answer"><b>Answer:</b> 7457 W</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>28. Convert 2.2 kW to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>hp = kW × 1.34102</code></p>
+                            <p><b>Calculation:</b> <code>2.2 × 1.34102 = 2.950244</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 2.95 hp</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>29. Convert 50 hp to kW</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>kW = hp × 0.7457</code></p>
+                            <p><b>Calculation:</b> <code>50 × 0.7457 = 37.285</code></p>
+                            <p class="example-answer"><b>Answer:</b> 37.285 kW</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>30. Convert 1 Megawatt (MW) to hp</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (MW to kW):</b> <code>1 MW = 1000 kW</code></p>
+                            <p><b>Step 2 (kW to hp):</b> <code>1000 × 1.34102 = 1341.02</code></p>
+                            <p class="example-answer"><b>Answer:</b> 1341.02 hp</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <aside class="sidebar">
+                <div class="sidebar-widget">
+                    <h2>Next Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="pressure-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Pressure Conversion</span>
+                                    <small class="post-date">February 19, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="speed-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">February 20, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>
+                        After this chapter, you can continue to explore these conversions to learn how to convert
+                        different units accurately.
+                    </p>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Popular Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="length-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Length Conversion</span>
+                                    <small class="post-date">February 17, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="power-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Power Conversion</span>
+                                    <small class="post-date">February 18, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="pressure-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Pressure Conversion</span>
+                                    <small class="post-date">February 19, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="speed-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">February 20, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="temperature-unit-conversion.html">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Temperature Conversion</span>
+                                    <small class="post-date">February 21, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Suggestion Pages</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="length-unit-conversion.html" class="page-button">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Length Conversion</span>
+                                    <small class="post-date">February 17, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="weight-mass-unit-conversion.html" class="page-button">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Weight & Mass Conversion</span>
+                                    <small class="post-date">February 24, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="volume-unit-conversion.html" class="page-button">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Volume Conversion</span>
+                                    <small class="post-date">February 23, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="temperature-unit-conversion.html" class="page-button">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Temperature Conversion</span>
+                                    <small class="post-date">February 21, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="speed-unit-conversion.html" class="page-button">
+                                <span class="link-icon">...</span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">February 20, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+
+
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+            <!-- ===== COMMENTS & RATING ===== -->
+            <div id="comments-and-ratings-container">
+                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                    <div class="rating-skeleton">
+                        <div class="rating-skeleton-display">
+                            <div class="skeleton-summary">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                            </div>
+                            <div class="skeleton-breakdown">
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rating-widget" class="rating-content">
+                        <h2>Rate this Page</h2>
+                        <div id="rating-display">
+                            <div class="average-summary">
+                                <div id="average-rating-value">0.0</div>
+                                <div id="total-ratings-count">0 ratings</div>
+                            </div>
+                            <div class="rating-breakdown">
+                                <div class="breakdown-row" data-star-level="5">
+                                    <span class="star-label">5 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-5"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="4">
+                                    <span class="star-label">4 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-4"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="3">
+                                    <span class="star-label">3 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-3"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="2">
+                                    <span class="star-label">2 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-2"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="1">
+                                    <span class="star-label">1 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-1"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rating-stars">
+                            <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <div id="rating-login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to rate.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comments-wrapper comments-loading" id="comments-main-container">
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                        <div id="auth-container">
+                            <div id="user-info"></div>
+                            <button id="login-btn" class="btn primary">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                    <path
+                                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                        fill="#4285F4"></path>
+                                    <path
+                                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                        fill="#34A853"></path>
+                                    <path
+                                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                        fill="#FBBC05"></path>
+                                    <path
+                                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                        fill="#EA4335"></path>
+                                    <path d="M1 1h22v22H1z" fill="none"></path>
+                                </svg>
+                                Sign in with Google
+                            </button>
+                            <button id="logout-btn" class="btn">Logout</button>
+                        </div>
+                        <div id="login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to comment.
+                            </p>
+                        </div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                            <form class="comment-form" id="comment-form">
+                                <div class="replying-to" id="replying-to" style="display: none" aria-live="polite">
+                                </div>
+                                <textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required
+                                    aria-label="Comment input"></textarea>
+                                <input type="hidden" id="parent-id" value="" />
+                                <div class="form-footer">
+                                    <div id="char-counter">0 / 1000</div>
+                                    <div class="actions">
+                                        <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                        <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="comments-list" class="comment-list">
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FOOTER ===== -->
+            <footer class="app-footer">
+                <div class="footer-content"></div>
+                <div class="footer-bottom" id="footer-year">
+                    © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+                </div>
+                <script>
+                    document.getElementById("year").textContent = new Date().getFullYear();
+                </script>
+            </footer>
+        </div>
+    </main>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("/firebase-messaging-sw.js")
+                    .then((r) => console.log("Firebase Messaging SW registered.", r.scope))
+                    .catch((e) => console.error("Firebase Messaging SW registration failed:", e));
+                navigator.serviceWorker
+                    .register("/sw.js")
+                    .then((r) => console.log("Caching SW registered.", r.scope))
+                    .catch((e) => console.error("Caching SW registration failed:", e));
+            });
+        }
+    </script>
+    <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+    <script src="../js/topic-menu.js" defer></script>
+    <script src="../js/convert.js" defer></script>
+    <script src="../js/search-data.js" defer></script>
+    <script type="module" src="../js/comment.js" defer></script>
+</body>
+
+</html>

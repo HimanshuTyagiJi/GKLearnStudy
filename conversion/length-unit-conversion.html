@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Length Conversion Tool & Guide | GK Learn Study</title>
+    <meta name="description"
+        content="An interactive tool and comprehensive guide for length unit conversion. Easily convert between meters, feet, inches, kilometers, miles, and more. Learn the formulas, definitions, and practical examples for all major length units." />
+    <meta name="keywords"
+        content="length conversion, convert meters to feet, convert inches to cm, length converter, metric conversion, imperial conversion, unit conversion tool, measurement converter" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Mr. Himanshu Tyagi" />
+    <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
+        crossorigin="anonymous"></script>
+    <meta name="robots" content="index, follow" />
+    <meta name="copyright" content="© 2024 GK Learn Study" />
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+    <link rel="canonical" href="https://gklearnstudy.in/conversion/length-unit-conversion.html" />
+    <meta property="og:title" content="Length Unit Conversion - Meters, Feet, Inches, and More" />
+    <meta property="og:description"
+        content="Learn about length conversion and how to convert between different units of measurement. An interactive tool with practical examples and clear formulas." />
+    <meta property="og:image" content="https://gklearnstudy.in/images/length-unit-conversion.webp" />
+    <meta property="og:url" content="https://gklearnstudy.in/conversion/length-unit-conversion.html" />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/topic-menu.css" />
+    <link rel="stylesheet" href="../css/conversion.css" />
+
+
+</head>
+<>
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="burger" id="burger">
+                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                    <rect width="100" height="7" rx="5"></rect>
+                    <rect y="30" width="100" height="7" rx="5"></rect>
+                    <rect y="60" width="100" height="7" rx="5"></rect>
+                </svg>
+            </div>
+
+            <a href="index.html" class="brand" aria-label="GK Learn Study">
+                <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="150" cy="150" r="150" fill="white" />
+                    <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        GK
+                        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                        <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                    </text>
+                    <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        Learn Study
+                        <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s"
+                            dur="1.2s" fill="freeze" />
+                    </text>
+                    <clipPath id="circleClip">
+                        <circle cx="150" cy="150" r="150" />
+                    </clipPath>
+                    <g clip-path="url(#circleClip)">
+                        <path fill="#ff9f80" fill-opacity="0.8">
+                            <animate attributeName="d" dur="6s" repeatCount="indefinite" values="
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                          M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                        " />
+                        </path>
+                        <path fill="#6a4cff" fill-opacity="0.5">
+                            <animate attributeName="d" dur="7s" repeatCount="indefinite" values="
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                          M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                        " />
+                        </path>
+                    </g>
+                </svg>
+            </a>
+
+            <div class="menu" id="menu">
+                <div class="mobile-menu-header">
+                    <a href="/" class="menu-brand-text">GK Learn Study</a>
+                    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="menu-inner">
+                    <!-- Menu links will be injected by header.js -->
+                </div>
+                <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                        <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+                <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                        <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search...">
+        <div class="overlay"></div>
+    </header>
+
+    <ul id="suggestions-list" class="suggestions"></ul>
+
+    <div id="sidebar-overlay"></div>
+    <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+    <aside id="topic-sidebar">
+        <p class="sidebar-title">Conversion Topics</p>
+        <nav id="topic-nav">
+            <ul>
+                <li><a href="../conversion.html">All Conversions</a></li>
+                <li><a href="../conversion/angle-unit-conversion.html">Angle Conversion</a></li>
+                <li><a href="../conversion/area-unit-conversion.html">Area Conversion</a></li>
+                <li><a class="active" href="../conversion/length-unit-conversion.html">Length Conversion</a></li>
+                <li><a href="../conversion/power-unit-conversion.html">Power Conversion</a></li>
+                <li><a href="../conversion/pressure-unit-conversion.html">Pressure Conversion</a></li>
+                <li><a href="../conversion/speed-unit-conversion.html">Speed Conversion</a></li>
+                <li><a href="../conversion/temperature-unit-conversion.html">Temperature Conversion</a></li>
+                <li><a href="../conversion/time-unit-conversion.html">Time Conversion</a></li>
+                <li><a href="../conversion/volume-unit-conversion.html">Volume Conversion</a></li>
+                <li><a href="../conversion/weight-mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="container">
+        <="root">
+            <header class="education-header">
+                <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                    <svg viewBox="0 0 200 200" role="img" aria-labelledby="lengthTitle">
+                        <title id="lengthTitle">Animated Length Measurement Icon</title>
+                        <style>
+                            .ruler-body {
+                                fill: #fef08a;
+                                stroke: #ca8a04;
+                                stroke-width: 4;
+                            }
+
+                            .ruler-mark {
+                                stroke: #a16207;
+                                stroke-width: 2;
+                            }
+
+                            .measure-line {
+                                stroke: #f97316;
+                                stroke-width: 4;
+                                stroke-dasharray: 120;
+                                stroke-dashoffset: 120;
+                                animation: draw-line 3s ease-in-out infinite alternate;
+                            }
+
+                            @keyframes draw-line {
+                                to {
+                                    stroke-dashoffset: 0;
+                                }
+                            }
+                        </style>
+                        <rect class="ruler-body" x="20" y="80" width="160" height="40" rx="5" />
+                        <line class="ruler-mark" x1="40" y1="80" x2="40" y2="120" />
+                        <line class="ruler-mark" x1="60" y1="80" x2="60" y2="100" />
+                        <line class="ruler-mark" x1="80" y1="80" x2="80" y2="120" />
+                        <line class="ruler-mark" x1="100" y1="80" x2="100" y2="100" />
+                        <line class="ruler-mark" x1="120" y1="80" x2="120" y2="120" />
+                        <line class="ruler-mark" x1="140" y1="80" x2="140" y2="100" />
+                        <line class="ruler-mark" x1="160" y1="80" x2="160" y2="120" />
+                        <path class="measure-line" d="M30 60 H 150" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Length Unit Conversion</h1>
+                    <p class="education-description">
+                        <strong>Length unit conversion</strong> is the process of converting measurements of length from
+                        one unit to another. It's a fundamental concept used in various fields, including science,
+                        engineering, and
+                        everyday life. Learn about different length units, how to convert between them, and practical
+                        examples of length conversions.
+                    </p>
+                </div>
+            </header>
+
+            <div class="conversion-tool-container">
+                <div class="conversion-tool-grid">
+                    <div class="converter-widget">
+                        <h2>Length Converter Tool</h2>
+                        <div class="card-column-layout">
+                            <div class="input-group"><label for="inputnm">Nanometres</label><input type="number"
+                                    id="inputnm" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputmicrons">Microns</label><input type="number"
+                                    id="inputmicrons" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputMillimetres">Millimetres</label><input
+                                    type="number" id="inputMillimetres" oninput="lengthConverter(this.id,this.value)" />
+                            </div>
+                            <div class="input-group"><label for="inputcm">Centimetres</label><input type="number"
+                                    id="inputcm" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputMetres">Metres</label><input type="number"
+                                    id="inputMetres" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputKilometres">Kilometres</label><input type="number"
+                                    id="inputKilometres" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputInches">Inches</label><input type="number"
+                                    id="inputInches" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputFeet">Feet</label><input type="number"
+                                    id="inputFeet" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputYards">Yards</label><input type="number"
+                                    id="inputYards" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputMiles">Miles</label><input type="number"
+                                    id="inputMiles" oninput="lengthConverter(this.id,this.value)" /></div>
+                            <div class="input-group"><label for="inputNauticalMiles">Nautical Miles</label><input
+                                    type="number" id="inputNauticalMiles"
+                                    oninput="lengthConverter(this.id,this.value)" /></div>
+                        </div>
+                    </div>
+                    <div class="converter-widget">
+                        <h2>Quick Formulas</h2>
+                        <div class="quick-formulas-grid">
+                            <div class="example-formula">1 cm = 10 mm</div>
+                            <div class="example-formula">1 m = 100 cm</div>
+                            <div class="example-formula">1 km = 1000 m</div>
+                            <div class="example-formula">1 in = 2.54 cm</div>
+                            <div class="example-formula">1 ft = 12 in</div>
+                            <div class="example-formula">1 yd = 3 ft</div>
+                            <div class="example-formula">1 mi &approx; 1.609 km</div>
+                            <div class="example-formula">1 light-year &approx; 9.461e12 km</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <article class="article-content">
+                <h2>Understanding Length Measurements</h2>
+                <p>
+                    Length is one of the most fundamental quantities in measurement. From the distance between two
+                    cities to the thickness of a sheet of paper, length plays an essential role in how we describe,
+                    analyze, and interact
+                    with the world around us. To make sense of these measurements, different systems of units have been
+                    developed over centuries. These units not only reflect scientific precision but also carry
+                    historical and
+                    cultural influences. Converting between units of length is crucial for science, engineering, trade,
+                    construction, and everyday tasks. Without proper conversion, a simple miscalculation could lead to
+                    errors in
+                    building design, manufacturing tolerances, or even scientific experiments. Understanding length
+                    units and their conversions ensures clear communication and accurate calculations across borders,
+                    industries, and
+                    disciplines.
+                </p>
+                <div style="max-width:100%;margin:20px auto;">
+                    <canvas id="lengthConv" width="1600" height="360"
+                        style="width:100%;height:auto;display:block;border-radius:22px;"></canvas>
+                </div>
+
+                <script>
+                    (function () {
+
+                        let c = document.getElementById("lengthConv");
+                        let x = c.getContext("2d");
+
+                        c.oncontextmenu = e => e.preventDefault();
+                        c.setAttribute("draggable", "false");
+
+                        // ===== BACKGROUND MODERN GRADIENT =====
+                        let g = x.createLinearGradient(0, 0, 1600, 360);
+                        g.addColorStop(0, "#4e54c8");
+                        g.addColorStop(0.5, "#8f94fb");
+                        g.addColorStop(1, "#ff80bf");
+                        x.fillStyle = g;
+                        x.fillRect(0, 0, 1600, 360);
+
+                        // ===== SOFT PARTICLE GLOW =====
+                        x.save();
+                        x.globalAlpha = 0.16;
+                        x.fillStyle = "#fff";
+                        for (let i = 0; i < 160; i++) {
+                            let xx = Math.random() * 1600,
+                                yy = Math.random() * 360,
+                                r = 2 + Math.random() * 5;
+                            x.beginPath();
+                            x.arc(xx, yy, r, 0, 6.28);
+                            x.fill();
+                        }
+                        x.restore();
+
+                        // ===== TITLE =====
+                        x.fillStyle = "#ffffff";
+                        x.textAlign = "left";
+                        x.font = "bold 78px Arial";
+                        x.fillText("Length Conversion", 120, 170);
+
+                        // ===== DIAGONAL WATERMARK =====
+                        x.save();
+                        x.globalAlpha = 0.06;
+                        x.translate(800, 180);
+                        x.rotate(-0.27);
+                        x.fillStyle = "#fff";
+                        x.textAlign = "center";
+                        x.font = "bold 155px Arial";
+                        x.fillText("GKLearnStudy", 0, 50);
+                        x.restore();
+
+                        // ===== LONG RULER SHAPE =====
+                        x.save();
+                        x.globalAlpha = 0.35;
+                        x.fillStyle = "#ffffff";
+                        x.fillRect(420, 220, 760, 35);
+                        x.restore();
+
+                        // TICKS on the ruler
+                        x.save();
+                        x.strokeStyle = "rgba(255,255,255,0.9)";
+                        for (let i = 0; i <= 38; i++) {
+                            let X = 420 + (i * 20);
+                            let h = (i % 5 === 0) ? 28 : 16;
+                            x.beginPath();
+                            x.moveTo(X, 220);
+                            x.lineTo(X, 220 + h);
+                            x.stroke();
+                        }
+                        x.restore();
+
+                        // ===== LENGTH UNITS =====
+                        x.fillStyle = "#ffffff";
+                        x.textAlign = "center";
+                        x.font = "bold 56px Arial";
+                        x.fillText("m", 600, 150);
+                        x.fillText("↔", 730, 150);
+                        x.fillText("cm", 850, 150);
+                        x.fillText("↔", 980, 150);
+                        x.fillText("km", 1120, 150);
+
+                        // ===== FLOATING MATH & MEASURE ICONS =====
+                        let icons = [
+                            { t: "📏", x: 1030, y: 260, s: 60 },
+                            { t: "📐", x: 1180, y: 140, s: 60 },
+                            { t: "📏", x: 1320, y: 220, s: 60 },
+                            { t: "➗", x: 980, y: 100, s: 55 },
+                            { t: "✨", x: 1440, y: 160, s: 55 },
+                        ];
+
+                        icons.forEach(o => {
+                            x.save();
+                            x.globalAlpha = 0.28;
+                            x.fillStyle = "#fff";
+                            x.font = "bold " + o.s + "px Arial";
+                            x.textAlign = "center";
+                            x.fillText(o.t, o.x, o.y);
+                            x.restore();
+                        });
+
+                        // ===== GEOMETRY LINES (MODERN LOOK) =====
+                        x.save();
+                        x.globalAlpha = 0.12;
+                        x.strokeStyle = "#ffffff";
+                        x.lineWidth = 3;
+
+                        x.beginPath();
+                        x.moveTo(1100, 60);
+                        x.lineTo(1450, 300);
+                        x.stroke();
+
+                        x.beginPath();
+                        x.moveTo(980, 70);
+                        x.lineTo(870, 300);
+                        x.stroke();
+
+                        x.restore();
+
+                    })();
+                </script>
+
+                <h3>Types of Length Units</h3>
+                <p>
+                    Length units are broadly categorized into two main systems: the metric system (used worldwide and in
+                    science) and the imperial system (still common in the United States and a few other regions). Let’s
+                    explore the
+                    most important units:
+                </p>
+                <ul>
+                    <li>
+                        <b>Millimeter (mm):</b> The millimeter is a tiny metric unit, equal to 1/1000th of a meter. It
+                        is widely used for measuring very small objects such as screws, the thickness of paper, or
+                        medical instruments.
+                        For example, a credit card is about 0.76 mm thick.
+                    </li>
+                    <li>
+                        <b>Centimeter (cm):</b> A centimeter equals 1/100th of a meter, making it ideal for everyday
+                        measurements such as the length of a notebook, the size of a pen, or the width of a smartphone.
+                        Tailors, for
+                        instance, commonly use centimeters when taking clothing measurements.
+                    </li>
+                    <li>
+                        <b>Meter (m):</b> The meter is the <strong>base unit of length</strong> in the metric system. It
+                        is universally accepted in science and engineering. A meter is roughly the height of a doorknob
+                        from the floor.
+                        Room dimensions, a person’s height, and laboratory experiments often rely on meters for
+                        precision and clarity.
+                    </li>
+                    <li>
+                        <b>Kilometer (km):</b> A kilometer equals 1000 meters. It is used to measure long distances such
+                        as roads, geographical distances, or marathon races. For instance, a standard marathon is 42.195
+                        kilometers
+                        long.
+                    </li>
+                    <li>
+                        <b>Inch (in):</b> The inch belongs to the imperial system, and one inch equals exactly 2.54
+                        centimeters. In many countries, inches are commonly used for measuring screen sizes (like
+                        televisions and laptops),
+                        small tools, or even rainfall depth.
+                    </li>
+                    <li>
+                        <b>Foot (ft):</b> A foot equals 12 inches (about 30.48 cm). This unit is widely used in the
+                        United States and the United Kingdom to measure human height, room sizes, or furniture
+                        dimensions. For example, a
+                        person might be described as being 6 feet tall instead of 183 cm.
+                    </li>
+                    <li><b>Yard (yd):</b> A yard equals 3 feet, or 36 inches. It is often used for sports fields,
+                        fabrics, and gardening. For example, in American football, the playing field is measured in
+                        yards.</li>
+                    <li>
+                        <b>Mile (mi):</b> A mile is a long imperial unit equal to approximately 1.609 kilometers. In the
+                        U.S. and U.K., road distances and speed limits are typically expressed in miles. For instance,
+                        if you drive 60
+                        miles per hour, you are covering nearly 96 kilometers per hour.
+                    </li>
+                </ul>
+                <h3>Conversion Factors Between Units</h3>
+                <p>To make sense of different systems, it is important to know the key conversion relationships:</p>
+                <ul>
+                    <li>1 cm = 10 mm</li>
+                    <li>1 m = 100 cm = 1000 mm</li>
+                    <li>1 km = 1000 m</li>
+                    <li>1 in = 2.54 cm</li>
+                    <li>1 ft = 12 in = 30.48 cm</li>
+                    <li>1 yd = 3 ft = 91.44 cm</li>
+                    <li>1 mi ≈ 1.609 km</li>
+                </ul>
+                <p>These conversion factors allow us to move seamlessly between systems. For instance, a person who is 5
+                    ft 9 in tall can be converted into the metric system as approximately 175 cm.</p>
+                <h3>Why Length Conversion Matters</h3>
+                <p>Length conversion is not just academic—it has practical importance in almost every sector:</p>
+                <ul>
+                    <li><strong>Construction and Architecture:</strong> Blueprints and designs must use consistent
+                        measurements. A miscalculation between inches and centimeters can result in serious structural
+                        errors.</li>
+                    <li>
+                        <strong>Manufacturing:</strong> Factories that produce goods for global markets must often
+                        convert between metric and imperial units. For example, car parts manufactured in Japan (metric)
+                        may be assembled in
+                        the U.S. (imperial), requiring exact conversions.
+                    </li>
+                    <li>
+                        <strong>Science and Engineering:</strong> Research publications and international collaborations
+                        require standardized units. Scientists generally use meters, but engineers in the U.S. may still
+                        work with feet
+                        and inches. Accurate conversions ensure reliable data exchange.
+                    </li>
+                    <li>
+                        <strong>Everyday Life:</strong> People encounter length conversions in daily activities, such as
+                        following recipes that list pan sizes in inches, purchasing fabric measured in yards, or
+                        tracking running
+                        distances in kilometers versus miles.
+                    </li>
+                </ul>
+                <h3>Examples of Length Conversions</h3>
+                <ul>
+                    <li>A smartphone screen of 6.5 inches equals 16.5 cm diagonally.</li>
+                    <li>A 10-kilometer running race equals approximately 6.2 miles.</li>
+                    <li>A football field in the U.S. is 100 yards long, which equals 91.44 meters.</li>
+                    <li>A person 6 feet tall measures about 183 cm.</li>
+                </ul>
+                <h3>Global Usage of Length Units</h3>
+                <p>
+                    Today, the metric system dominates worldwide usage, particularly in science and international trade.
+                    However, imperial units remain deeply rooted in daily life in countries like the United States and,
+                    to some
+                    extent, the United Kingdom. For example, while a British road sign might still show miles, the
+                    country also uses meters for height restrictions and construction. This dual usage often requires
+                    people to switch
+                    between systems depending on context.
+                </p>
+                <p>
+                    The increasing globalization of technology, education, and commerce highlights the importance of
+                    mastering unit conversions. A multinational company designing smartphones, for instance, must be
+                    able to
+                    communicate screen sizes in both inches and millimeters. Similarly, international athletes may train
+                    using kilometers but compete in events measured in miles or yards.
+                </p>
+                <h3>Conclusion</h3>
+                <p>
+                    Length measurement forms the foundation of how humans quantify the world around them. From tiny
+                    millimeters to vast miles, each unit has specific applications shaped by history, culture, and
+                    practicality. The
+                    metric system offers universal scientific clarity, while the imperial system remains important in
+                    certain countries and industries. Converting between the two is essential not only for precision but
+                    also for
+                    global communication and cooperation. Whether in construction, manufacturing, scientific research,
+                    or everyday life, accurate length conversions prevent errors and foster understanding. As the world
+                    grows more
+                    interconnected, the ability to work confidently with multiple length units becomes not just a useful
+                    skill but an absolute necessity.
+                </p>
+            </article>
+
+            <section class="solved-examples-section">
+                <h2>Solved Examples: Step-by-Step Length Conversions</h2>
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <h3>1. Convert 1 meter to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 1 m</p>
+                            <p><b>Conversion factor:</b> 1 m = 100 cm</p>
+                            <p><b>Set-up (unit fraction):</b> 1 m × (100 cm / 1 m)</p>
+                            <p><b>Calculation:</b> 1 × 100 = 100</p>
+                            <p class="example-answer"><b>Answer:</b> 100 cm</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>2. Convert 250 centimeters to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 250 cm</p>
+                            <p><b>Conversion factor:</b> 100 cm = 1 m</p>
+                            <p><b>Set-up:</b> 250 cm × (1 m / 100 cm)</p>
+                            <p><b>Calculation:</b> 250 ÷ 100 = 2.5</p>
+                            <p class="example-answer"><b>Answer:</b> 2.5 m</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>3. Convert 5 kilometers to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 5 km</p>
+                            <p><b>Conversion factor:</b> 1 km = 1000 m</p>
+                            <p><b>Set-up:</b> 5 km × (1000 m / 1 km)</p>
+                            <p><b>Calculation:</b> 5 × 1000 = 5000</p>
+                            <p class="example-answer"><b>Answer:</b> 5000 m</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>4. Convert 7200 meters to kilometers</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 7200 m</p>
+                            <p><b>Conversion factor:</b> 1000 m = 1 km</p>
+                            <p><b>Set-up:</b> 7200 m × (1 km / 1000 m)</p>
+                            <p><b>Calculation:</b> 7200 ÷ 1000 = 7.2</p>
+                            <p class="example-answer"><b>Answer:</b> 7.2 km</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>5. Convert 12 inches to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 12 in</p>
+                            <p><b>Conversion factor:</b> 1 in = 2.54 cm (exact)</p>
+                            <p><b>Set-up:</b> 12 in × (2.54 cm / 1 in)</p>
+                            <p><b>Calculation:</b> 12 × 2.54 = 30.48</p>
+                            <p class="example-answer"><b>Answer:</b> 30.48 cm</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>6. Convert 100 millimeters to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 100 mm</p>
+                            <p><b>Conversion factor:</b> 10 mm = 1 cm</p>
+                            <p><b>Set-up:</b> 100 mm × (1 cm / 10 mm)</p>
+                            <p><b>Calculation:</b> 100 ÷ 10 = 10</p>
+                            <p class="example-answer"><b>Answer:</b> 10 cm</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>7. Convert 3 meters to millimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 3 m</p>
+                            <p><b>Conversion factor:</b> 1 m = 1000 mm</p>
+                            <p><b>Set-up:</b> 3 m × (1000 mm / 1 m)</p>
+                            <p><b>Calculation:</b> 3 × 1000 = 3000</p>
+                            <p class="example-answer"><b>Answer:</b> 3000 mm</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>8. Convert 1 foot to inches</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 1 ft</p>
+                            <p><b>Conversion factor:</b> 1 ft = 12 in</p>
+                            <p><b>Set-up:</b> 1 ft × (12 in / 1 ft)</p>
+                            <p><b>Calculation:</b> 1 × 12 = 12</p>
+                            <p class="example-answer"><b>Answer:</b> 12 inches</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>9. Convert 36 inches to feet</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 36 in</p>
+                            <p><b>Conversion factor:</b> 12 in = 1 ft</p>
+                            <p><b>Set-up:</b> 36 in × (1 ft / 12 in)</p>
+                            <p><b>Calculation:</b> 36 ÷ 12 = 3</p>
+                            <p class="example-answer"><b>Answer:</b> 3 ft</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>10. Convert 5280 feet to miles</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 5280 ft</p>
+                            <p><b>Conversion factor:</b> 5280 ft = 1 mile</p>
+                            <p><b>Set-up:</b> 5280 ft × (1 mile / 5280 ft)</p>
+                            <p><b>Calculation:</b> 5280 ÷ 5280 = 1</p>
+                            <p class="example-answer"><b>Answer:</b> 1 mile</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>11. Convert 2 miles to feet</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 2 miles</p>
+                            <p><b>Conversion factor:</b> 1 mile = 5280 ft</p>
+                            <p><b>Set-up:</b> 2 miles × (5280 ft / 1 mile)</p>
+                            <p><b>Calculation:</b> 2 × 5280 = 10560</p>
+                            <p class="example-answer"><b>Answer:</b> 10560 feet</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>12. Convert 1 yard to inches</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 1 yd</p>
+                            <p><b>Conversion factor:</b> 1 yd = 36 in</p>
+                            <p><b>Set-up:</b> 1 yd × (36 in / 1 yd)</p>
+                            <p><b>Calculation:</b> 1 × 36 = 36</p>
+                            <p class="example-answer"><b>Answer:</b> 36 inches</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>13. Convert 2.5 kilometers to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 2.5 km</p>
+                            <p><b>Conversion factor:</b> 1 km = 1000 m</p>
+                            <p><b>Set-up:</b> 2.5 km × (1000 m / 1 km)</p>
+                            <p><b>Calculation:</b> 2.5 × 1000 = 2500</p>
+                            <p class="example-answer"><b>Answer:</b> 2500 m</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>14. Convert 4500 millimeters to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 4500 mm</p>
+                            <p><b>Conversion factor:</b> 1000 mm = 1 m</p>
+                            <p><b>Set-up:</b> 4500 mm × (1 m / 1000 mm)</p>
+                            <p><b>Calculation:</b> 4500 ÷ 1000 = 4.5</p>
+                            <p class="example-answer"><b>Answer:</b> 4.5 m</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>15. Convert 15 feet to inches</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 15 ft</p>
+                            <p><b>Conversion factor:</b> 1 ft = 12 in</p>
+                            <p><b>Set-up:</b> 15 ft × (12 in / 1 ft)</p>
+                            <p><b>Calculation:</b> 15 × 12 = 180</p>
+                            <p class="example-answer"><b>Answer:</b> 180 inches</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>16. Convert 72 inches to yards</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 72 in</p>
+                            <p><b>Conversion factor:</b> 36 in = 1 yd</p>
+                            <p><b>Set-up:</b> 72 in × (1 yd / 36 in)</p>
+                            <p><b>Calculation:</b> 72 ÷ 36 = 2</p>
+                            <p class="example-answer"><b>Answer:</b> 2 yards</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>17. Convert 1 mile to kilometers</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 1 mile</p>
+                            <p><b>Conversion factor (approx.):</b> 1 mile ≈ 1.60934 km</p>
+                            <p><b>Set-up:</b> 1 mile × (1.60934 km / 1 mile)</p>
+                            <p><b>Calculation:</b> 1 × 1.60934 = 1.60934</p>
+                            <p class="example-answer"><b>Answer (to 3 d.p.):</b> 1.609 km</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>18. Convert 10 kilometers to miles</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 10 km</p>
+                            <p><b>Conversion factor (approx.):</b> 1 km ≈ 0.621371 miles</p>
+                            <p><b>Set-up:</b> 10 km × (0.621371 miles / 1 km)</p>
+                            <p><b>Calculation:</b> 10 × 0.621371 = 6.21371</p>
+                            <p class="example-answer"><b>Answer (to 2 d.p.):</b> 6.21 miles</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>19. Convert 5 yards to feet</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 5 yd</p>
+                            <p><b>Conversion factor:</b> 1 yd = 3 ft</p>
+                            <p><b>Set-up:</b> 5 yd × (3 ft / 1 yd)</p>
+                            <p><b>Calculation:</b> 5 × 3 = 15</p>
+                            <p class="example-answer"><b>Answer:</b> 15 feet</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>20. Convert 1.5 meters to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Given:</b> 1.5 m</p>
+                            <p><b>Conversion factor:</b> 1 m = 100 cm</p>
+                            <p><b>Set-up:</b> 1.5 m × (100 cm / 1 m)</p>
+                            <p><b>Calculation:</b> 1.5 × 100 = 150</p>
+                            <p class="example-answer"><b>Answer:</b> 150 cm</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>21. Convert 2000 meters to kilometers</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>km = m / 1000</code></p>
+                            <p><b>Calculation:</b> 2000 ÷ 1000 = 2</p>
+                            <p class="example-answer"><b>Answer:</b> 2 km</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>22. Convert 75 centimeters to millimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>mm = cm × 10</code></p>
+                            <p><b>Calculation:</b> 75 × 10 = 750</p>
+                            <p class="example-answer"><b>Answer:</b> 750 mm</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>23. Convert 2.5 miles to kilometers</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>km ≈ miles × 1.60934</code></p>
+                            <p><b>Calculation:</b> 2.5 × 1.60934 = 4.02335</p>
+                            <p class="example-answer"><b>Answer:</b> ≈ 4.02 km</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>24. Convert 150 inches to feet</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>ft = inches ÷ 12</code></p>
+                            <p><b>Calculation:</b> 150 ÷ 12 = 12.5</p>
+                            <p class="example-answer"><b>Answer:</b> 12.5 ft</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>25. Convert 5 yards to inches</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>inches = yards × 36</code></p>
+                            <p><b>Calculation:</b> 5 × 36 = 180</p>
+                            <p class="example-answer"><b>Answer:</b> 180 inches</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>26. Convert 0.5 kilometers to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>m = km × 1000</code></p>
+                            <p><b>Calculation:</b> 0.5 × 1000 = 500</p>
+                            <p class="example-answer"><b>Answer:</b> 500 m</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>27. Convert 60 inches to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>cm = inches × 2.54</code></p>
+                            <p><b>Calculation:</b> 60 × 2.54 = 152.4</p>
+                            <p class="example-answer"><b>Answer:</b> 152.4 cm</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>28. Convert 400 centimeters to meters</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>m = cm ÷ 100</code></p>
+                            <p><b>Calculation:</b> 400 ÷ 100 = 4</p>
+                            <p class="example-answer"><b>Answer:</b> 4 m</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>29. Convert 2 kilometers to miles</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>miles ≈ km × 0.621371</code></p>
+                            <p><b>Calculation:</b> 2 × 0.621371 = 1.242742</p>
+                            <p class="example-answer"><b>Answer:</b> ≈ 1.24 miles</p>
+                        </div>
+                    </div>
+
+                    <div class="example-item">
+                        <h3>30. Convert 9000 millimeters to centimeters</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>cm = mm ÷ 10</code></p>
+                            <p><b>Calculation:</b> 9000 ÷ 10 = 900</p>
+                            <p class="example-answer"><b>Answer:</b> 900 cm</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <aside class="sidebar">
+                <div class="sidebar-widget">
+                    <h2>Next Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="power-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Power Conversion</span>
+                                    <small class="post-date">February 18, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="pressure-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Pressure Conversion</span>
+                                    <small class="post-date">February 19, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>
+                        After this chapter, you can continue to explore these conversions to learn how to convert
+                        different units accurately.
+                    </p>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Popular Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="length-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Length Conversion</span>
+                                    <small class="post-date">February 17, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="speed-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">February 20, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="temperature-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Temperature Conversion</span>
+                                    <small class="post-date">February 21, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="volume-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Weight & Mass Conversion</span>
+                                    <small class="post-date">February 24, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Suggestion Pages</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="all-conversions.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>All Conversions</span>
+                                    <small class="post-date">February 14, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="angle-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Angle Conversion</span>
+                                    <small class="post-date">February 15, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="area-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Area Conversion</span>
+                                    <small class="post-date">February 16, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="time-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Time Conversion</span>
+                                    <small class="post-date">February 22, 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+
+            <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
+
+            <!-- ===== COMMENTS & RATING ===== -->
+            <div id="comments-and-ratings-container">
+                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                    <div class="rating-skeleton">
+                        <div class="rating-skeleton-display">
+                            <div class="skeleton-summary">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                            </div>
+                            <div class="skeleton-breakdown">
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rating-widget" class="rating-content">
+                        <h2>Rate this Page</h2>
+                        <div id="rating-display">
+                            <div class="average-summary">
+                                <div id="average-rating-value">0.0</div>
+                                <div id="total-ratings-count">0 ratings</div>
+                            </div>
+                            <div class="rating-breakdown">
+                                <div class="breakdown-row" data-star-level="5">
+                                    <span class="star-label">5 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-5"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="4">
+                                    <span class="star-label">4 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-4"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="3">
+                                    <span class="star-label">3 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-3"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="2">
+                                    <span class="star-label">2 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-2"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="1">
+                                    <span class="star-label">1 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-1"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rating-stars">
+                            <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <div id="rating-login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to rate.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comments-wrapper comments-loading" id="comments-main-container">
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                        <div id="auth-container">
+                            <div id="user-info"></div>
+                            <button id="login-btn" class="btn primary">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                    <path
+                                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                        fill="#4285F4"></path>
+                                    <path
+                                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                        fill="#34A853"></path>
+                                    <path
+                                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                        fill="#FBBC05"></path>
+                                    <path
+                                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                        fill="#EA4335"></path>
+                                    <path d="M1 1h22v22H1z" fill="none"></path>
+                                </svg>
+                                Sign in with Google
+                            </button>
+                            <button id="logout-btn" class="btn">Logout</button>
+                        </div>
+                        <div id="login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to comment.
+                            </p>
+                        </div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                            <form class="comment-form" id="comment-form">
+                                <div class="replying-to" id="replying-to" style="display: none" aria-live="polite">
+                                </div>
+                                <textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required
+                                    aria-label="Comment input"></textarea>
+                                <input type="hidden" id="parent-id" value="" />
+                                <div class="form-footer">
+                                    <div id="char-counter">0 / 1000</div>
+                                    <div class="actions">
+                                        <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                        <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="comments-list" class="comment-list">
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FOOTER ===== -->
+            <footer class="app-footer">
+                <div class="footer-content"></div>
+                <div class="footer-bottom" id="footer-year">
+                    © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+                </div>
+                <script>
+                    document.getElementById("year").textContent = new Date().getFullYear();
+                </script>
+            </footer>
+    </div>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("/firebase-messaging-sw.js")
+                    .then((r) => console.log("Firebase Messaging SW registered.", r.scope))
+                    .catch((e) => console.error("Firebase Messaging SW registration failed:", e));
+                navigator.serviceWorker
+                    .register("/sw.js")
+                    .then((r) => console.log("Caching SW registered.", r.scope))
+                    .catch((e) => console.error("Caching SW registration failed:", e));
+            });
+        }
+    </script>
+    <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+    <script src="../js/topic-menu.js" defer></script>
+    <script src="../js/convert.js" defer></script>
+    <script src="../js/search-data.js" defer></script>
+    <script type="module" src="../js/comment.js" defer></script>
+    </body>
+
+</html>

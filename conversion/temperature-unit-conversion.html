@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Temperature Conversion Tool & Guide | GK Learn Study</title>
+    <meta name="description"
+        content="An interactive tool and comprehensive guide for temperature unit conversion. Easily convert between Celsius, Fahrenheit, and Kelvin. Learn the formulas, history, and practical applications in science, cooking, and weather." />
+    <meta name="keywords"
+        content="temperature conversion, convert celsius to fahrenheit, convert fahrenheit to celsius, kelvin, temperature converter, science, cooking, unit conversion tool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Mr. Himanshu Tyagi" />
+    <meta name="google-adsense-account" content="ca-pub-7067722696020503" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7067722696020503"
+        crossorigin="anonymous"></script>
+    <meta name="robots" content="index, follow" />
+    <meta name="copyright" content="© 2024 GK Learn Study" />
+    <meta name="msvalidate.01" content="63D3DE99AA18A86BEC082BCA9812780E" />
+    <link rel="canonical" href="https://gklearnstudy.in/conversion/temperature-unit-conversion.html" />
+    <meta property="og:title" content="Temperature Conversion Tool & Guide | Celsius, Fahrenheit, Kelvin" />
+    <meta property="og:description"
+        content="A complete guide and tool for converting temperature units like Celsius, Fahrenheit, and Kelvin. Includes formulas, detailed examples, and practical uses." />
+    <meta property="og:image" content="https://gklearnstudy.in/images/temperature-unit-conversion.webp" />
+    <meta property="og:url" content="https://gklearnstudy.in/conversion/temperature-unit-conversion.html" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/conversion.css" />
+    <link rel="stylesheet" href="../css/topic-menu.css" />
+
+</head>
+
+<body>
+
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="burger" id="burger">
+                <svg id="burgerSvg" width="30" height="30" viewBox="0 0 100 80" cursor="pointer">
+                    <rect width="100" height="7" rx="5"></rect>
+                    <rect y="30" width="100" height="7" rx="5"></rect>
+                    <rect y="60" width="100" height="7" rx="5"></rect>
+                </svg>
+            </div>
+
+            <a href="index.html" class="brand" aria-label="GK Learn Study">
+                <svg width="40" height="40" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="150" cy="150" r="150" fill="white" />
+                    <text x="50%" y="40%" font-size="85" font-weight="bold" fill="#ff4b5c" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        GK
+                        <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="rotate" from="-20" to="0" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                        <animateTransform attributeName="transform" type="scale" from="0.5" to="1" begin="0.5s"
+                            dur="1.2s" fill="freeze" additive="sum" />
+                    </text>
+                    <text x="50%" y="65%" font-size="45" fill="#6a4cff" text-anchor="middle"
+                        style="transform-origin: center center;" opacity="0">
+                        Learn Study
+                        <animate attributeName="opacity" from="0" to="1" begin="0.9s" dur="1.2s" fill="freeze" />
+                        <animateTransform attributeName="transform" type="scale" from="0.7" to="1" begin="0.9s"
+                            dur="1.2s" fill="freeze" />
+                    </text>
+                    <clipPath id="circleClip">
+                        <circle cx="150" cy="150" r="150" />
+                    </clipPath>
+                    <g clip-path="url(#circleClip)">
+                        <path fill="#ff9f80" fill-opacity="0.8">
+                            <animate attributeName="d" dur="6s" repeatCount="indefinite" values="
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z;
+                          M0 230 Q75 240, 150 230 T300 220 L300 300 L0 300 Z;
+                          M0 220 Q75 200, 150 220 T300 210 L300 300 L0 300 Z
+                        " />
+                        </path>
+                        <path fill="#6a4cff" fill-opacity="0.5">
+                            <animate attributeName="d" dur="7s" repeatCount="indefinite" values="
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z;
+                          M0 230 Q75 200, 150 230 T300 210 L300 300 L0 300 Z;
+                          M0 210 Q75 230, 150 210 T300 220 L300 300 L0 300 Z
+                        " />
+                        </path>
+                    </g>
+                </svg>
+            </a>
+
+            <div class="menu" id="menu">
+                <div class="mobile-menu-header">
+                    <a href="/" class="menu-brand-text">GK Learn Study</a>
+                    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="menu-inner">
+                    <!-- Menu links will be injected by header.js -->
+                </div>
+                <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
+                        <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+                <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                    <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
+                        <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <button class="search-icon" id="searchBtn" aria-label="Open search bar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <button class="back-icon" id="backBtn" aria-label="Close search bar">←</button>
+        <input type="text" class="search-input" id="searchInput" autocomplete="off" placeholder="Search...">
+        <div class="overlay"></div>
+    </header>
+
+    <ul id="suggestions-list" class="suggestions"></ul>
+
+
+    <div id="sidebar-overlay"></div>
+    <button id="topic-sidebar-toggle" aria-label="Toggle topics navigation">☰ Topics</button>
+    <aside id="topic-sidebar">
+        <p class="sidebar-title">Conversion Topics</p>
+        <nav id="topic-nav">
+            <ul>
+                <li><a href="../conversion.html">Conversion</a></li>
+                <li><a href="angle-unit-conversion.html">Angle Conversion</a></li>
+                <li><a href="area-unit-conversion.html">Area Conversion</a></li>
+                <li><a href="length-unit-conversion.html">Length Conversion</a></li>
+                <li><a href="power-unit-conversion.html">Power Conversion</a></li>
+                <li><a href="pressure-unit-conversion.html">Pressure Conversion</a></li>
+                <li><a href="speed-unit-conversion.html">Speed Conversion</a></li>
+                <li><a class="active" href="temperature-unit-conversion.html">Temperature Conversion</a></li>
+                <li><a href="time-unit-conversion.html">Time Conversion</a></li>
+                <li><a href="volume-unit-conversion.html">Volume Conversion</a></li>
+                <li><a href="weight-mass-unit-conversion.html">Weight & Mass Conversion</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+
+    <main class="container">
+        <div id="root">
+            <header class="education-header">
+                <div class="logo" style="max-width: 200px; margin: 0 auto 1rem auto;">
+                    <svg viewBox="0 0 200 200" role="img" aria-labelledby="tempTitle">
+                        <title id="tempTitle">Animated Temperature Conversion Icon</title>
+                        <style>
+                            .thermo-glass {
+                                fill: #e0f2fe;
+                                stroke: #38bdf8;
+                                stroke-width: 6;
+                            }
+
+                            .mercury-fill {
+                                fill: #ef4444;
+                            }
+
+                            #mercury-column {
+                                animation: rise 4s ease-in-out infinite alternate;
+                            }
+
+                            .tick {
+                                stroke: #0ea5e9;
+                                stroke-width: 3;
+                                stroke-linecap: round;
+                            }
+
+                            .sun {
+                                fill: #facc15;
+                                animation: spin 10s linear infinite;
+                                transform-origin: 160px 40px;
+                            }
+
+                            .snowflake {
+                                fill: #a5f3fc;
+                                animation: spin 10s linear infinite reverse;
+                                transform-origin: 40px 160px;
+                            }
+
+                            @keyframes rise {
+                                from {
+                                    y: 140;
+                                    height: 10;
+                                }
+
+                                to {
+                                    y: 40;
+                                    height: 110;
+                                }
+                            }
+
+                            @keyframes spin {
+                                to {
+                                    transform: rotate(360deg);
+                                }
+                            }
+                        </style>
+                        <g class="sun">
+                            <circle cx="160" cy="40" r="20" />
+                            <line x1="160" y1="10" x2="160" y2="20" stroke="#facc15" stroke-width="4" />
+                            <line x1="160" y1="60" x2="160" y2="70" stroke="#facc15" stroke-width="4" />
+                            <line x1="130" y1="40" x2="140" y2="40" stroke="#facc15" stroke-width="4" />
+                            <line x1="180" y1="40" x2="190" y2="40" stroke="#facc15" stroke-width="4" />
+                        </g>
+                        <g class="snowflake">
+                            <path d="M40 150 L40 170 M30 160 L50 160 M33 153 L47 167 M33 167 L47 153" stroke="#a5f3fc"
+                                stroke-width="4" stroke-linecap="round" />
+                        </g>
+                        <path class="thermo-glass" d="M100 150 V 30 A 20 20 0 0 1 100 30 H 100 A 20 20 0 0 1 100 30" />
+                        <rect x="90" y="30" width="20" height="120" rx="10" class="thermo-glass" />
+                        <circle cx="100" cy="150" r="30" class="thermo-glass" />
+                        <rect id="mercury-column" x="92" y="140" width="16" height="10" rx="8" class="mercury-fill" />
+                        <circle cx="100" cy="150" r="22" class="mercury-fill" />
+                        <line class="tick" x1="115" y1="130" x2="125" y2="130" />
+                        <line class="tick" x1="115" y1="80" x2="125" y2="80" />
+                        <line class="tick" x1="115" y1="30" x2="125" y2="30" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Temperature Unit Conversion</h1>
+                    <p class="education-description">
+                        <strong>Temperature conversion</strong> is the process of changing a temperature value from one
+                        scale to another, like from <strong>Celsius (°C)</strong> to <strong>Fahrenheit (°F)</strong>,
+                        or to
+                        <strong>Kelvin (K)</strong>. Each scale has different reference points for measurements like the
+                        freezing and boiling points of water. Understanding how to convert between them is essential for
+                        science,
+                        cooking, weather forecasting, and international communication, ensuring that temperature values
+                        are understood correctly everywhere.
+                    </p>
+                </div>
+            </header>
+
+            <div class="conversion-tool-container">
+                <div class="conversion-tool-grid">
+                    <div class="converter-widget">
+                        <h2>Temperature Converter Tool</h2>
+                        <table class="converter-table">
+                            <tr>
+                                <td><label for="inputCelsius">Celsius (°C)</label></td>
+                                <td><input type="number" id="inputCelsius"
+                                        oninput="temperatureConverter(this.id, this.value)" placeholder="e.g., 20" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputFahrenheit">Fahrenheit (°F)</label></td>
+                                <td><input type="number" id="inputFahrenheit"
+                                        oninput="temperatureConverter(this.id, this.value)" placeholder="e.g., 68" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="inputKelvin">Kelvin (K)</label></td>
+                                <td><input type="number" id="inputKelvin"
+                                        oninput="temperatureConverter(this.id, this.value)"
+                                        placeholder="e.g., 293.15" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="converter-widget">
+                        <h2>Quick Formulas</h2>
+                        <div class="quick-formulas-grid">
+                            <div class="example-formula">°F = (°C &times; 9/5) + 32</div>
+                            <div class="example-formula">°C = (°F - 32) &times; 5/9</div>
+                            <div class="example-formula">K = °C + 273.15</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <article class="article-content">
+                <h2>Understanding Temperature Scales</h2>
+                <p>
+                    Temperature is one of the most fundamental physical quantities that influences nearly every aspect
+                    of our daily lives and scientific understanding. At its core, temperature expresses the degree of
+                    hotness or
+                    coldness of a substance, but scientifically, it reflects the average kinetic energy of the atoms or
+                    molecules within a system. When particles move faster, the temperature increases, and when they move
+                    slower, the
+                    temperature decreases. This concept is central not only in physics and chemistry but also in
+                    biology, meteorology, medicine, and engineering. Although the idea of temperature feels
+                    intuitive—such as feeling warm
+                    in the sun or cold in the snow—the act of measuring it has been carefully standardized through
+                    several scales. These scales, developed in different historical and cultural contexts, provide
+                    universal references
+                    that allow scientists, industries, and everyday people to communicate temperature accurately.
+                </p>
+                <div style="max-width:100%;margin:20px auto;">
+                    <canvas id="tempConvCanvas" width="1600" height="900"
+                        style="width:100%;height:auto;display:block;border-radius:22px;"></canvas>
+                </div>
+
+                <script>
+                    (function () {
+                        let c = document.getElementById("tempConvCanvas");
+                        let x = c.getContext("2d");
+
+                        c.oncontextmenu = e => e.preventDefault();
+                        c.setAttribute("draggable", "false");
+
+                        // ===== BACKGROUND FIRE + ICE =====
+                        let g = x.createLinearGradient(0, 0, 1600, 900);
+                        g.addColorStop(0, "#00111f");
+                        g.addColorStop(0.4, "#004d8a");
+                        g.addColorStop(0.7, "#ff4b2b");
+                        g.addColorStop(1, "#ff0000");
+                        x.fillStyle = g;
+                        x.fillRect(0, 0, 1600, 900);
+
+                        // ===== ICE PARTICLES LEFT =====
+                        x.save();
+                        for (let i = 0; i < 120; i++) {
+                            let xx = Math.random() * 700;
+                            let yy = Math.random() * 900;
+                            let s = Math.random() * 4;
+                            x.fillStyle = "rgba(200,240,255,0.6)";
+                            x.beginPath();
+                            x.arc(xx, yy, s, 0, 6.28);
+                            x.fill();
+                        }
+                        x.restore();
+
+                        // ===== FIRE SPARKS RIGHT =====
+                        x.save();
+                        for (let i = 0; i < 120; i++) {
+                            let xx = 800 + Math.random() * 800;
+                            let yy = Math.random() * 900;
+                            let s = Math.random() * 4;
+                            x.fillStyle = "rgba(255,200,120,0.6)";
+                            x.beginPath();
+                            x.arc(xx, yy, s, 0, 6.28);
+                            x.fill();
+                        }
+                        x.restore();
+
+                        // ===== WATERMARK =====
+                        x.save();
+                        x.globalAlpha = 0.06;
+                        x.translate(800, 450);
+                        x.rotate(-0.28);
+                        x.fillStyle = "#fff";
+                        x.font = "bold 170px Arial";
+                        x.textAlign = "center";
+                        x.fillText("GKLearnStudy", 0, 60);
+                        x.restore();
+
+                        // ===== TITLE =====
+                        x.fillStyle = "#ffffff";
+                        x.textAlign = "left";
+                        x.font = "bold 82px Arial";
+                        x.fillText("Temperature Conversion", 120, 170);
+
+                        x.font = "30px Arial";
+                        x.fillStyle = "#ffeb3b";
+                        x.fillText("°C  ·  °F  ·  Kelvin (K)", 120, 220);
+
+                        // ===== THERMOMETER (CENTER) =====
+                        x.save();
+                        x.globalAlpha = 0.9;
+                        x.fillStyle = "#222";
+                        x.fillRect(700, 260, 40, 350);
+
+                        let tempGrad = x.createLinearGradient(0, 260, 0, 610);
+                        tempGrad.addColorStop(0, "#0099ff");
+                        tempGrad.addColorStop(1, "#ff3300");
+                        x.fillStyle = tempGrad;
+                        x.fillRect(705, 265, 30, 340);
+
+                        // bulb
+                        x.beginPath();
+                        x.arc(720, 630, 40, 0, 6.28);
+                        x.fillStyle = "#ff3300";
+                        x.fill();
+                        x.restore();
+
+                        // ===== UNIT CHAIN =====
+                        x.save();
+                        x.fillStyle = "#ffffff";
+                        x.textAlign = "center";
+                        x.font = "bold 64px Arial";
+
+                        x.fillText("°C", 850, 300);
+                        x.fillText("↔", 930, 300);
+                        x.fillText("°F", 1000, 300);
+                        x.fillText("↔", 1080, 300);
+                        x.fillText("K", 1150, 300);
+                        x.restore();
+
+                        // ===== FORMULAS =====
+                        let f = [
+                            { t: "°F = (°C × 9/5) + 32", x: 950, y: 390 },
+                            { t: "°C = (°F − 32) × 5/9", x: 950, y: 450 },
+                            { t: "K  = °C + 273.15", x: 950, y: 510 }
+                        ];
+                        f.forEach(o => {
+                            x.save();
+                            x.globalAlpha = 0.95;
+                            x.fillStyle = "#00ffe5";
+                            x.font = "bold 48px Arial";
+                            x.textAlign = "center";
+                            x.fillText(o.t, o.x, o.y);
+                            x.restore();
+                        });
+
+                        // ===== FIRE + ICE SYMBOLS =====
+                        let icons = [
+                            { t: "❄️", x: 250, y: 300, s: 90 },
+                            { t: "❄️", x: 350, y: 500, s: 70 },
+                            { t: "🔥", x: 1250, y: 450, s: 100 },
+                            { t: "🔥", x: 1350, y: 650, s: 80 }
+                        ];
+                        icons.forEach(o => {
+                            x.save();
+                            x.globalAlpha = 0.35;
+                            x.font = "bold " + o.s + "px Arial";
+                            x.textAlign = "center";
+                            x.fillText(o.t, o.x, o.y);
+                            x.restore();
+                        });
+
+                    })();
+                </script>
+
+                <h3>The Primary Units of Temperature Measurement</h3>
+                <h4>1. Celsius (°C)</h4>
+                <p>
+                    The Celsius scale is one of the most widely used temperature measurement systems in the world.
+                    Developed by Swedish astronomer <strong>Anders Celsius</strong> in 1742, it was originally designed
+                    as a “centigrade”
+                    scale because it divides the temperature interval between the freezing and boiling points of water
+                    into 100 equal parts. This metric-based system makes it both logical and practical, especially for
+                    scientific
+                    work and daily use across most countries.
+                </p>
+                <ul>
+                    <li><b>0°C:</b> The freezing point of water at standard atmospheric pressure.</li>
+                    <li><b>100°C:</b> The boiling point of water at standard atmospheric pressure.</li>
+                </ul>
+                <p>
+                    The Celsius scale’s alignment with the physical properties of water is no coincidence. Water plays
+                    such a vital role in human survival and natural processes that it became a natural choice for
+                    calibration. For
+                    example, weather forecasts in most of the world use Celsius, cooking temperatures in recipes are
+                    often written in Celsius, and scientific laboratories universally rely on this scale when reporting
+                    results. Its
+                    simplicity ensures that temperature differences and conversions can be easily understood and applied
+                    in both everyday life and scientific research.
+                </p>
+                <h4>2. Fahrenheit (°F)</h4>
+                <p>
+                    The <strong>Fahrenheit scale</strong> was proposed by German physicist <strong>Daniel Gabriel
+                        Fahrenheit</strong> in 1724. It is primarily used in the United States and a few Caribbean
+                    nations, where it has
+                    become deeply integrated into daily life. Unlike Celsius, Fahrenheit’s reference points are less
+                    intuitive, but they were practical in the context of 18th-century experimentation.
+                </p>
+                <ul>
+                    <li><b>0°F:</b> Originally defined as the freezing point of a brine solution of salt and water.</li>
+                    <li><b>32°F:</b> The freezing point of pure water.</li>
+                    <li><b>212°F:</b> The boiling point of pure water.</li>
+                </ul>
+                <p>
+                    Between the freezing and boiling points of water, the Fahrenheit scale contains 180 divisions,
+                    compared to 100 in Celsius. As a result, each Fahrenheit degree represents a smaller interval than a
+                    Celsius degree,
+                    allowing for more precise temperature descriptions in some everyday contexts. For instance, a
+                    weather forecast reporting 70°F might feel more relatable to an American audience than the
+                    equivalent 21°C. However,
+                    for scientific work, Fahrenheit is less convenient because it lacks the metric system’s decimal
+                    alignment.
+                </p>
+                <h4>3. Kelvin (K)</h4>
+                <p>
+                    The <strong>Kelvin scale</strong> is the foundation of modern scientific temperature measurement.
+                    Proposed by <strong>William Thomson, Lord Kelvin</strong>, in 1848, it is unique in being an
+                    <strong>absolute scale</strong>. Its zero point, 0 K, is known as <strong>absolute zero</strong>,
+                    the theoretical temperature at which all molecular motion ceases. This makes Kelvin indispensable
+                    for physics,
+                    chemistry, astronomy, and engineering, where extremely low and high temperatures must be measured
+                    with precision.
+                </p>
+                <p>
+                    One of the most important features of the Kelvin scale is that the size of one Kelvin is identical
+                    to one degree Celsius. This means temperature differences are measured the same way on both scales.
+                    For example,
+                    a temperature increase of 10°C is exactly the same as an increase of 10 K. However, Kelvin values
+                    never use the degree symbol and never drop below zero, since negative values are not possible in
+                    this absolute
+                    system.
+                </p>
+                <div class="example-formula">0 K = -273.15 °C = -459.67 °F</div>
+                <p>
+                    Kelvin is particularly critical in fields such as thermodynamics, quantum mechanics, and space
+                    science. Astronomers, for example, describe the surface temperature of stars in Kelvins, while
+                    material scientists
+                    use Kelvin to understand superconductivity at extremely low temperatures.
+                </p>
+                <h3>Why Temperature Conversion is Important</h3>
+                <p>
+                    In our interconnected world, temperature conversion is not just an academic exercise but a practical
+                    necessity. Different regions and industries continue to rely on different scales, and without
+                    conversion,
+                    communication and accuracy would suffer. For instance, a scientist in the United States reading a
+                    European research paper must convert Celsius to Fahrenheit or Kelvin to correctly interpret
+                    experimental data.
+                    Similarly, a baker in Europe using an American recipe must convert Fahrenheit oven settings into
+                    Celsius to avoid overcooking or undercooking food.
+                </p>
+                <p>
+                    Global industries highlight the importance of standardized conversions even more. In
+                    <strong>aviation</strong>, temperature readings are critical for engine performance, air density
+                    calculations, and weather
+                    assessments, making consistency a matter of safety. In <strong>manufacturing</strong>, processes
+                    such as metal forging or chemical reactions often operate within specific temperature ranges,
+                    requiring precise
+                    conversions between scales when working across international teams. Even in
+                    <strong>medicine</strong>, accurate conversion is vital—whether interpreting a patient’s fever from
+                    Celsius to Fahrenheit or calibrating
+                    sensitive laboratory instruments in Kelvin.
+                </p>
+                <h3>Conclusion</h3>
+                <p>
+                    Temperature scales are more than just numbers; they are tools that bridge history, science, and
+                    daily life. The <strong>Celsius scale</strong> offers simplicity and global practicality, the
+                    <strong>Fahrenheit scale</strong> provides familiarity and fine detail for those accustomed to it,
+                    and the <strong>Kelvin scale</strong> anchors scientific precision with its absolute foundation.
+                    Understanding
+                    these systems, and knowing how to convert between them, ensures clarity in research, safety in
+                    industry, and convenience in everyday living. As technology continues to bring the world closer
+                    together, the ability
+                    to move seamlessly between temperature scales will remain an essential skill for scientists,
+                    engineers, professionals, and ordinary people alike.
+                </p>
+            </article>
+            <section class="solved-examples-section">
+                <h2>Solved Examples: Step-by-Step Temperature Conversions</h2>
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <h3>1. Convert 25°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 9/5) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(25 × 1.8) + 32 = 45 + 32 = 77</code></p>
+                            <p class="example-answer"><b>Answer:</b> 77°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>2. Convert 68°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(68 - 32) × 5/9 = 36 × 0.555... = 20</code></p>
+                            <p class="example-answer"><b>Answer:</b> 20°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>3. Convert 100°C to Kelvin</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>K = °C + 273.15</code></p>
+                            <p><b>Calculation:</b> <code>100 + 273.15 = 373.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> 373.15 K</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>4. Convert 0 K to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = K - 273.15</code></p>
+                            <p><b>Calculation:</b> <code>0 - 273.15 = -273.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> -273.15°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>5. Convert 37°C (Body Temp) to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 9/5) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(37 × 1.8) + 32 = 66.6 + 32 = 98.6</code></p>
+                            <p class="example-answer"><b>Answer:</b> 98.6°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>6. Convert 98.6°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(98.6 - 32) × 5/9 = 66.6 × 5/9 = 37</code></p>
+                            <p class="example-answer"><b>Answer:</b> 37°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>7. Convert 0°C (Freezing) to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (0 × 9/5) + 32</code></p>
+                            <p><b>Calculation:</b> <code>0 + 32 = 32</code></p>
+                            <p class="example-answer"><b>Answer:</b> 32°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>8. Convert 212°F (Boiling) to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (212 - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>180 × 5/9 = 100</code></p>
+                            <p class="example-answer"><b>Answer:</b> 100°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>9. Convert -40°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (-40 × 9/5) + 32</code></p>
+                            <p><b>Calculation:</b> <code>-72 + 32 = -40</code></p>
+                            <p class="example-answer"><b>Answer:</b> -40°F (The crossover point)</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>10. Convert 300 K to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = K - 273.15</code></p>
+                            <p><b>Calculation:</b> <code>300 - 273.15 = 26.85</code></p>
+                            <p class="example-answer"><b>Answer:</b> 26.85°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>11. Convert 50°F to Kelvin</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (°F to °C):</b> <code>(50 - 32) × 5/9 = 10°C</code></p>
+                            <p><b>Step 2 (°C to K):</b> <code>10 + 273.15 = 283.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> 283.15 K</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>12. Convert 10 K to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (K to °C):</b> <code>10 - 273.15 = -263.15°C</code></p>
+                            <p><b>Step 2 (°C to °F):</b> <code>(-263.15 × 1.8) + 32 = -473.67 + 32 = -441.67</code></p>
+                            <p class="example-answer"><b>Answer:</b> -441.67°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>13. Convert 180°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(180 × 1.8) + 32 = 324 + 32 = 356</code></p>
+                            <p class="example-answer"><b>Answer:</b> 356°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>14. Convert 450°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(450 - 32) × 5/9 = 418 × 0.555... = 232.22</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 232.2°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>15. Convert -10°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(-10 × 1.8) + 32 = -18 + 32 = 14</code></p>
+                            <p class="example-answer"><b>Answer:</b> 14°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>16. Convert 10°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(10 - 32) × 5/9 = -22 × 5/9 = -12.22</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; -12.2°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>17. Convert 250 K to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (K to °C):</b> <code>250 - 273.15 = -23.15°C</code></p>
+                            <p><b>Step 2 (°C to °F):</b> <code>(-23.15 × 1.8) + 32 = -41.67 + 32 = -9.67</code></p>
+                            <p class="example-answer"><b>Answer:</b> -9.67°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>18. Convert 500°F to Kelvin</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (°F to °C):</b> <code>(500 - 32) × 5/9 = 260°C</code></p>
+                            <p><b>Step 2 (°C to K):</b> <code>260 + 273.15 = 533.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> 533.15 K</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>19. Convert 40°C to Kelvin</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>K = °C + 273.15</code></p>
+                            <p><b>Calculation:</b> <code>40 + 273.15 = 313.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> 313.15 K</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>20. Convert 100°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(100 - 32) × 5/9 = 68 × 5/9 = 37.77</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 37.8°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>21. Convert 20°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(20 × 1.8) + 32 = 36 + 32 = 68</code></p>
+                            <p class="example-answer"><b>Answer:</b> 68°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>22. Convert 77 K (Liquid Nitrogen) to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = K - 273.15</code></p>
+                            <p><b>Calculation:</b> <code>77 - 273.15 = -196.15</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; -196°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>23. Convert 0°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(0 - 32) × 5/9 = -32 × 5/9 = -17.77</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; -17.8°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>24. Convert 295 K to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (K to °C):</b> <code>295 - 273.15 = 21.85°C</code></p>
+                            <p><b>Step 2 (°C to °F):</b> <code>(21.85 × 1.8) + 32 = 39.33 + 32 = 71.33</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 71.3°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>25. Convert 350°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(350 × 1.8) + 32 = 630 + 32 = 662</code></p>
+                            <p class="example-answer"><b>Answer:</b> 662°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>26. Convert 1000°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(1000 - 32) × 5/9 = 968 × 5/9 = 537.77</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; 537.8°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>27. Convert -273.15°C (Absolute Zero) to K</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>K = °C + 273.15</code></p>
+                            <p><b>Calculation:</b> <code>-273.15 + 273.15 = 0</code></p>
+                            <p class="example-answer"><b>Answer:</b> 0 K</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>28. Convert 15°C to Fahrenheit</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°F = (°C × 1.8) + 32</code></p>
+                            <p><b>Calculation:</b> <code>(15 × 1.8) + 32 = 27 + 32 = 59</code></p>
+                            <p class="example-answer"><b>Answer:</b> 59°F</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>29. Convert 5°F to Celsius</h3>
+                        <div class="example-solution">
+                            <p><b>Formula:</b> <code>°C = (°F - 32) × 5/9</code></p>
+                            <p><b>Calculation:</b> <code>(5 - 32) × 5/9 = -27 × 5/9 = -15</code></p>
+                            <p class="example-answer"><b>Answer:</b> -15°C</p>
+                        </div>
+                    </div>
+                    <div class="example-item">
+                        <h3>30. Convert 4 K (Liquid Helium) to °F</h3>
+                        <div class="example-solution">
+                            <p><b>Step 1 (K to °C):</b> <code>4 - 273.15 = -269.15°C</code></p>
+                            <p><b>Step 2 (°C to °F):</b> <code>(-269.15 × 1.8) + 32 = -484.47 + 32 = -452.47</code></p>
+                            <p class="example-answer"><b>Answer:</b> &approx; -452.5°F</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <aside class="sidebar">
+                <div class="sidebar-widget">
+                    <h2>Next Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="time-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Time Conversion</span>
+                                    <small class="post-date">22 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="volume-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Volume Conversion</span>
+                                    <small class="post-date">23 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>
+                        After this chapter, you can continue to explore these conversions to learn how to convert
+                        different units accurately.
+                    </p>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Popular Conversions</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="length-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Length Conversion</span>
+                                    <small class="post-date">17 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="power-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Power Conversion</span>
+                                    <small class="post-date">18 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="pressure-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Pressure Conversion</span>
+                                    <small class="post-date">19 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="speed-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">20 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="temperature-unit-conversion.html">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Temperature Conversion</span>
+                                    <small class="post-date">21 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h2>Suggestion Pages</h2>
+                    <ul class="sidebar-link-list">
+                        <li>
+                            <a href="length-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Length Conversion</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="weight-mass-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Weight & Mass Conversion</span>
+                                    <small class="post-date">24 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="volume-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Volume Conversion</span>
+                                    <small class="post-date">23 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="temperature-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Temperature Conversion</span>
+                                    <small class="post-date">21 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="speed-unit-conversion.html" class="page-button">
+                                <span class="link-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <div class="link-text">
+                                    <span>Speed Conversion</span>
+                                    <small class="post-date">20 Feb 2025</small>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- ===== COMMENTS & RATING ===== -->
+            <div id="comments-and-ratings-container">
+                <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+                    <div class="rating-skeleton">
+                        <div class="rating-skeleton-display">
+                            <div class="skeleton-summary">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-line short" style="width: 80%; margin: 0 auto"></div>
+                            </div>
+                            <div class="skeleton-breakdown">
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                                <div class="skeleton-line" style="height: 10px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rating-widget" class="rating-content">
+                        <h2>Rate this Page</h2>
+                        <div id="rating-display">
+                            <div class="average-summary">
+                                <div id="average-rating-value">0.0</div>
+                                <div id="total-ratings-count">0 ratings</div>
+                            </div>
+                            <div class="rating-breakdown">
+                                <div class="breakdown-row" data-star-level="5">
+                                    <span class="star-label">5 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-5"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="4">
+                                    <span class="star-label">4 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-4"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="3">
+                                    <span class="star-label">3 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-3"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="2">
+                                    <span class="star-label">2 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-2"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                                <div class="breakdown-row" data-star-level="1">
+                                    <span class="star-label">1 star</span>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar progress-bar-1"></div>
+                                    </div>
+                                    <span class="vote-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rating-stars">
+                            <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                        </div>
+                        <div id="rating-login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to rate.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comments-wrapper comments-loading" id="comments-main-container">
+                    <div class="firebase-comments-widget" id="custom-comment-section">
+                        <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                        <div id="auth-container">
+                            <div id="user-info"></div>
+                            <button id="login-btn" class="btn primary">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                                    <path
+                                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                        fill="#4285F4"></path>
+                                    <path
+                                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                        fill="#34A853"></path>
+                                    <path
+                                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                        fill="#FBBC05"></path>
+                                    <path
+                                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                        fill="#EA4335"></path>
+                                    <path d="M1 1h22v22H1z" fill="none"></path>
+                                </svg>
+                                Sign in with Google
+                            </button>
+                            <button id="logout-btn" class="btn">Logout</button>
+                        </div>
+                        <div id="login-prompt" style="display: none">
+                            <p class="muted">
+                                Please
+                                <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign
+                                    in</a>
+                                to comment.
+                            </p>
+                        </div>
+                        <div class="comment-form-shell" id="comment-form-shell" style="display: none">
+                            <form class="comment-form" id="comment-form">
+                                <div class="replying-to" id="replying-to" style="display: none" aria-live="polite">
+                                </div>
+                                <textarea id="comment" placeholder="Add a public comment..." maxlength="1000" required
+                                    aria-label="Comment input"></textarea>
+                                <input type="hidden" id="parent-id" value="" />
+                                <div class="form-footer">
+                                    <div id="char-counter">0 / 1000</div>
+                                    <div class="actions">
+                                        <button type="submit" class="btn primary" id="submit-button">Submit</button>
+                                        <button type="button" class="btn" id="cancel-reply" style="display: none">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="comments-list" class="comment-list">
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                            <div class="skeleton-comment">
+                                <div class="skeleton-line header"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FOOTER ===== -->
+            <footer class="app-footer">
+                <div class="footer-content"></div>
+                <div class="footer-bottom" id="footer-year">
+                    © 2024 - <span id="year"></span> GK Learn Study | All Rights Reserved
+                </div>
+                <script>
+                    document.getElementById("year").textContent = new Date().getFullYear();
+                </script>
+            </footer>
+        </div>
+    </main>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("/firebase-messaging-sw.js")
+                    .then((r) => console.log("Firebase Messaging SW registered.", r.scope))
+                    .catch((e) => console.error("Firebase Messaging SW registration failed:", e));
+                navigator.serviceWorker
+                    .register("/sw.js")
+                    .then((r) => console.log("Caching SW registered.", r.scope))
+                    .catch((e) => console.error("Caching SW registration failed:", e));
+            });
+        }
+    </script>
+    <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+    <script src="../js/topic-menu.js" defer></script>
+    <script src="../js/convert.js" defer></script>
+    <script src="../js/search-data.js" defer></script>
+    <script type="module" src="../js/comment.js" defer></script>
+</body>
+
+</html>
