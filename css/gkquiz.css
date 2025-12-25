@@ -1,1 +1,69 @@
-h3{text-align:left;color:var(--text)}.container{margin-top:100px}.questions{padding:10px;border-radius:15px;margin:0 0 20px;border:1px solid #ccc;font-weight:700;font-size:15px}.options{font-weight:450;list-style-type:none;padding:0}.options li{padding:10px;margin:5px 0;cursor:pointer;border:1px solid #ccc;border-radius:15px;width:300px}.options li.correct{background-color:green;color:#fff}.options li.wrong{background-color:red;color:#fff}.explanation{display:none;margin-top:10px;border-left:5px solid green;padding-left:10px}
+h3{text-align:left;color:var(--text)}.container{margin-top:100px}.questions{padding:10px;border-radius:15px;margin:0 0 20px;border:1px solid #ccc;font-size:15px}.options{font-weight:450;list-style-type:none;padding:0}.options li{padding:10px;margin:5px 0;cursor:pointer;border:1px solid #ccc;border-radius:15px;width:300px}.options li.correct{background-color:green;color:#fff}.options li.wrong{background-color:red;color:#fff}.explanation{border-radius:20px;display:none;margin-top:10px;border-left:5px solid green;padding-left:10px}
+
+.menu-toggle {
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 22px;
+    border: none;
+    background: #641ef9;
+    color: white;
+    border-radius: 5px;
+    transition: .3s;
+    margin-top: 20px !important;z-index:99;
+    
+}
+
+.menu-toggle.open {
+    transform: rotate(90deg);
+}
+
+/* Menu List */
+.menu-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+    background: #f2f2f2;
+    padding-left: 0;
+    margin: 10px;
+    border-radius: 6px;
+}
+
+.menu-list.open {
+    max-height: 2000px; /* enough height to show whole list */
+}
+
+.menu-list li {
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-list li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #000;
+}
+
+.menu-list li a:hover {
+    background: #ddd;
+}
+
+
+
+
+
+.link-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px
+}
+
+.link-button {
+    color: var(--text);
+    background: var(--body-bg);
+    font-size: 24px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none
+}
