@@ -957,17 +957,23 @@
             </script>
         </footer>
 
-        <!-- ===== EXTERNAL SCRIPTS ===== -->
-        <script src="https://gklearnstudy.in/js/theme.js" defer></script>
-        <script src="https://gklearnstudy.in/js/search-data.js" defer></script>
-        <script type="module" src="https://gklearnstudy.in/js/comment.js" defer></script>
-        <script type="module" src="https://gklearnstudy.in/js/notification.js" defer></script>
-<script src="https://gklearnstudy.in/js/gkquiz.js" defer></script> 
-    </div>
-    
-    <script
-      src="https://gklearnstudy.in/js/rightside.js"
-      defer="defer"
-    ></script>
-    </body>
-</html>
+           <script src="https://gklearnstudy.in/js/theme.js" defer=""></script>
+    <script src="https://gklearnstudy.in/js/search-data.js" defer=""></script>
+    <script type="module" src="https://gklearnstudy.in/js/comment.js" defer=""></script>
+    <script type="module" src="https://gklearnstudy.in/js/notification.js" defer=""></script>
+    <script src="https://gklearnstudy.in/js/gkquiz.js" defer=""></script>
+    <script src="https://gklearnstudy.in/js/pagination.js" defer=""></script>
+    <script src="https://gklearnstudy.in/js/rightside.js" defer=""></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration.scope);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+    </script>
+  
+</body></html>
