@@ -15,27 +15,31 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 2. Logic: Determine Starting Question Number
-    // owner2.html uses QUESTIONS_PER_PAGE = 5
+    // owner2.html uses QUESTIONS_PER_PAGE = 30
     function getStartingNumber() {
-        const QUESTIONS_PER_PAGE = 5; 
+        const QUESTIONS_PER_PAGE = 30; 
         const pageNumber = getPageNumber();
         return ((pageNumber - 1) * QUESTIONS_PER_PAGE) + 1;
     }
 
     // 3. Apply Numbering to Questions
-    function autoNumberQuestions() {
-        let questionElements = document.querySelectorAll(".questions");
-        let currentNum = getStartingNumber();
+ function autoNumberQuestions() {
+    let questionElements = document.querySelectorAll(".questions");
+    let currentNum = getStartingNumber();
 
-        questionElements.forEach(question => {
-            const titleEl = question.querySelector("h3");
-            // Remove any existing prefix like "Q-1: " to avoid double prefixing
-            let text = titleEl.textContent.replace(/^Q-\d+:\s*/, '');
-            
-            titleEl.textContent = `Q-${currentNum}: ${text}`;
-            currentNum++;
-        });
-    }
+    questionElements.forEach(question => {
+        const titleEl = question.querySelector("h3");
+
+        // Remove any old prefixes like Q-1 / bold ones
+        let text = titleEl.textContent.replace(/^Q-\d+:\s*/, '').trim();
+
+        // Set new prefix where only Q-n is bold
+        titleEl.innerHTML = `<strong>Q -${currentNum}</strong>: ${text}`;
+
+        currentNum++;
+    });
+}
+
 
     // 4. Initialize Interactive Features (Click to show answer)
     function initializeQuestionInteractions() {
