@@ -116,7 +116,14 @@
                 border-radius: 20px;
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
+            }
+            .auth-indicator img {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 1px solid #ccc;
             }
 
             .action-buttons {
@@ -1269,15 +1276,27 @@
             let activeAddZone = null;
             let editingDocId = null;
             let activeMediaElement = null; 
+            let currentDisplayName = "Admin";
 
             // AUTH LISTENER
-            onAuthStateChanged(auth, (user) => {
+            onAuthStateChanged(auth, async (user) => {
                 currentUser = user;
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
-                    // FIXED: Use user.displayName for the Google Name
-                    const nameToDisplay = user.displayName || user.email.split('@')[0];
-                    statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
+                    // FIXED: Handle Owner Email Override and Profile Photo
+                    let name = user.displayName;
+                    let photo = user.photoURL;
+
+                    if (user.email === "officialhimanshutyagi@gmail.com") {
+                        name = "Mr. Himanshu Tyagi";
+                        if (!photo) photo = "https://gklearnstudy.in/GK-Learn-Study.png";
+                    }
+
+                    if (!name) name = user.email.split('@')[0];
+                    currentDisplayName = name;
+
+                    const avatarHtml = photo ? `<img src="${photo}" alt="">` : '<i class="fas fa-user-circle"></i>';
+                    statusEl.innerHTML = `${avatarHtml} <span>${name}</span>`;
                     statusEl.style.color = "#333";
                     
                     const params = new URLSearchParams(window.location.search);
@@ -1863,8 +1882,7 @@
                     return;
                 }
                 
-                // FIXED: Use user.displayName for the Google Name
-                const authorName = currentUser?.displayName || currentUser?.email.split('@')[0] || "Admin";
+                const authorName = currentDisplayName;
                 const authorEmail = currentUser?.email || "";
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
@@ -1882,9 +1900,9 @@
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        // 'author' must be email for security rules, authorName for display
+                        // 'author' must be email for security rules
                         author: authorEmail,
-                        authorName: authorName,
+                        displayAuthor: authorName,
                         date: new Date().toISOString(),
                         status: status,
                     });
@@ -1903,8 +1921,7 @@
                 const fileInput = document.getElementById("fileName").value;
                 const imgInput = document.getElementById("imgName").value;
                 
-                // FIXED: Use user.displayName
-                const authorName = currentUser?.displayName || currentUser?.email.split('@')[0] || "Admin";
+                const authorName = currentDisplayName;
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
