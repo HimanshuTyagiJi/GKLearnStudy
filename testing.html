@@ -26,6 +26,8 @@
                 width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
                 text-align: center;
             }
+            .login-card h2 { margin-bottom: 5px; color: #333; }
+            .login-card p { color: #666; margin-bottom: 25px; font-size: 0.9rem; }
             .login-card input {
                 width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd;
                 border-radius: 8px; box-sizing: border-box; font-size: 1rem;
@@ -54,20 +56,17 @@
                 padding: 0 20px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90;
             }
 
-            .profile-wrapper { 
-                display: flex; align-items: center; gap: 12px; cursor: pointer; 
-                padding: 6px 14px; border-radius: 35px; border: 1px solid #eee; transition: 0.2s;
+            .profile-display { 
+                display: flex; align-items: center; gap: 12px; 
+                padding: 6px 14px; border-radius: 35px; background: #f8f9fa; border: 1px solid #eee;
             }
-            .profile-wrapper:hover { background: #f8f9fa; border-color: var(--primary-color); }
             
             .profile-circle {
-                width: 42px; height: 42px; border-radius: 50%; background: var(--primary-color);
+                width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color);
                 color: white; display: flex; align-items: center; justify-content: center;
-                font-weight: bold; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                font-weight: bold; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
-            .profile-circle span { font-size: 1.2rem; }
-            
             .admin-name { font-weight: 700; color: #1d2327; font-size: 0.95rem; }
 
             .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; }
@@ -76,16 +75,6 @@
             th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
             th { color: #555; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-            /* --- MODAL --- */
-            .modal-overlay {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
-            }
-            .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-            .modal-content h3 { margin-top: 0; color: var(--primary-color); display: flex; align-items: center; gap: 10px; }
-            .modal-content label { display: block; margin-top: 15px; font-size: 0.8rem; font-weight: bold; color: #666; }
-            .modal-content input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-            
             @media (max-width: 768px) {
                 .sidebar { transform: translateX(-100%); }
                 .content-area { margin-left: 0; padding: 15px; }
@@ -98,13 +87,13 @@
         <!-- LOGIN SCREEN -->
         <div id="login-overlay">
             <div class="login-card">
-                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="80" style="margin-bottom:20px;">
-                <h2>Admin Login</h2>
-                <p style="color: #666; margin-bottom: 25px;">Master Access Panel</p>
+                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="70" style="margin-bottom:15px;">
+                <h2>Master Access</h2>
+                <p>Authorized personnel only</p>
                 <form id="loginForm">
                     <input type="email" id="adminEmail" placeholder="Email Address" required />
                     <input type="password" id="adminPass" placeholder="Password" required />
-                    <button type="submit" class="login-btn" id="loginBtn">Login to Dashboard</button>
+                    <button type="submit" class="login-btn" id="loginBtn">Authenticate</button>
                     <p id="loginError" style="color: red; margin-top: 15px; display: none; font-size: 0.8rem;"></p>
                 </form>
             </div>
@@ -115,32 +104,31 @@
             <aside class="sidebar">
                 <div class="brand-logo">GK ADMIN</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-feather-alt"></i> Create Post</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-tasks"></i> Add Quiz</a></li>
-                    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Summary</a></li>
+                    <li><a href="create-content.html" target="_blank"><i class="fas fa-plus-circle"></i> Create Content</a></li>
+                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Quiz Portal</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a></li>
                 </ul>
             </aside>
 
             <header class="admin-header">
-                <h3 style="margin: 0; color: #1d2327;">Welcome Back</h3>
-                <div class="profile-wrapper" onclick="openProfileModal()" title="Edit Profile">
+                <h3 style="margin: 0; color: #1d2327;">Dashboard</h3>
+                <div class="profile-display" id="profileDisplay">
                     <div class="profile-circle" id="headerProfileIcon">
                         <i class="fas fa-user"></i>
                     </div>
-                    <span class="admin-name" id="headerAdminName">Admin User</span>
-                    <i class="fas fa-cog" style="color: #999; font-size: 0.8rem;"></i>
+                    <span class="admin-name" id="headerAdminName">Loading...</span>
                 </div>
             </header>
 
             <div class="content-area">
-                <div style="margin-bottom: 25px; display:flex; justify-content:space-between; align-items:flex-end;">
+                <div style="margin-bottom: 25px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <h2 id="totalCountDisplay" style="margin:0; color: var(--primary-color);">My Submissions: 0</h2>
-                        <p style="margin:0; color:#888; font-size:0.9rem;">Real-time sync with database</p>
+                        <h2 id="totalCountDisplay" style="margin:0; color: var(--primary-color);">Posts in Queue: 0</h2>
+                        <span style="font-size: 0.8rem; color: #999;">Security verified access</span>
                     </div>
-                    <button class="btn" style="background:#fff; border: 1px solid #ddd; color:#555; padding: 8px 16px;" onclick="loadData()">
-                        <i class="fas fa-sync-alt"></i> Refresh
+                    <button class="btn" style="background:#fff; border: 1px solid #ddd; color:#555; padding: 10px 20px; border-radius: 8px; cursor:pointer;" onclick="loadData()">
+                        <i class="fas fa-sync"></i> Sync Data
                     </button>
                 </div>
 
@@ -148,9 +136,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th style="width: 60%;">Article Title</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Article Title</th>
+                                <th>Verification</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -159,29 +147,10 @@
             </div>
         </div>
 
-        <!-- PROFILE MODAL -->
-        <div id="profile-modal" class="modal-overlay">
-            <div class="modal-content">
-                <h3><i class="fas fa-user-circle"></i> Update Profile</h3>
-                <p style="font-size:0.8rem; color:#666;">This name and photo will represent you as the author.</p>
-                
-                <label>Display Name</label>
-                <input type="text" id="editName" placeholder="Full Name (e.g., Himanshu Tyagi)">
-                
-                <label>Profile Image URL</label>
-                <input type="text" id="editPhoto" placeholder="Link to your photo (Optional)">
-                
-                <div style="display:flex; gap:10px; margin-top: 25px;">
-                    <button style="flex:2; background:var(--primary-color); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="saveProfile()">Save Changes</button>
-                    <button style="flex:1; background:#eee; border:none; padding:12px; border-radius:8px; cursor:pointer;" onclick="closeProfileModal()">Cancel</button>
-                </div>
-            </div>
-        </div>
-
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
             import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-            import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+            import { getFirestore, collection, query, where, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
@@ -200,7 +169,7 @@
                 if (user) {
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
-                    await syncMasterProfile(user);
+                    setupSecurityHeader(user);
                     loadData();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
@@ -208,84 +177,48 @@
                 }
             });
 
-            async function syncMasterProfile(user) {
-                const nameHeader = document.getElementById("headerAdminName");
-                const iconHeader = document.getElementById("headerProfileIcon");
-                
-                let finalName = "";
-                let finalPhoto = "";
+            /**
+             * Strict Header Sync: Only uses Google Auth Data
+             * No manual overrides allowed.
+             */
+            function setupSecurityHeader(user) {
+                const nameEl = document.getElementById("headerAdminName");
+                const iconEl = document.getElementById("headerProfileIcon");
 
-                // 1. Hierarchy Check: FIRESTORE FIRST
-                try {
-                    const snap = await getDoc(doc(db, "users", user.uid));
-                    if (snap.exists()) {
-                        const data = snap.data();
-                        if (data.name) finalName = data.name;
-                        if (data.photo) finalPhoto = data.photo;
-                    }
-                } catch (e) { console.error("Profile sync error:", e); }
+                let finalName = user.displayName;
+                let finalPhoto = user.photoURL;
 
-                // 2. Auth Provider Second (Google Name)
-                if (!finalName && user.displayName) finalName = user.displayName;
-                if (!finalPhoto && user.photoURL) finalPhoto = user.photoURL;
-
-                // 3. Owner Special Override (Highest Priority for specific email)
+                // OWNER IDENTITY CHECK (Based on Email)
                 if (user.email === "officialhimanshutyagi@gmail.com") {
-                    if (!finalName) finalName = "Mr. Himanshu Tyagi";
-                    if (!finalPhoto) finalPhoto = "https://gklearnstudy.in/GK-Learn-Study.png";
+                    finalName = "Mr. Himanshu Tyagi";
+                    finalPhoto = "https://gklearnstudy.in/GK-Learn-Study.png";
                 }
 
-                // 4. Ultimate Fallback (No email showing)
-                if (!finalName) finalName = "GK Administrator";
+                // Fallback if Google name is missing
+                if (!finalName) finalName = "Verified Editor";
 
-                // UPDATE UI
-                nameHeader.innerText = finalName;
-                document.getElementById("editName").value = finalName;
-                document.getElementById("editPhoto").value = finalPhoto;
+                nameEl.innerText = finalName;
 
                 if (finalPhoto) {
-                    iconHeader.innerHTML = `<img src="${finalPhoto}" alt="Avatar" onerror="this.parentElement.innerHTML='${finalName.charAt(0).toUpperCase()}'">`;
+                    iconEl.innerHTML = `<img src="${finalPhoto}" alt="User" onerror="this.parentElement.innerHTML='${finalName.charAt(0).toUpperCase()}'">`;
                 } else {
-                    iconHeader.innerHTML = `<span>${finalName.charAt(0).toUpperCase()}</span>`;
+                    iconEl.innerHTML = `<span>${finalName.charAt(0).toUpperCase()}</span>`;
                 }
             }
-
-            window.openProfileModal = () => document.getElementById("profile-modal").style.display = "flex";
-            window.closeProfileModal = () => document.getElementById("profile-modal").style.display = "none";
-
-            window.saveProfile = async () => {
-                const user = auth.currentUser;
-                if (!user) return;
-                const nameInput = document.getElementById("editName").value.trim();
-                const photoInput = document.getElementById("editPhoto").value.trim();
-                if (!nameInput) return alert("Please enter your name!");
-
-                try {
-                    await setDoc(doc(db, "users", user.uid), {
-                        name: nameInput,
-                        photo: photoInput,
-                        updatedAt: new Date().toISOString()
-                    }, { merge: true });
-                    
-                    alert("Profile updated successfully! ✅");
-                    closeProfileModal();
-                    await syncMasterProfile(user);
-                } catch (e) { alert("Save Error: " + e.message); }
-            };
 
             document.getElementById("loginForm").addEventListener("submit", (e) => {
                 e.preventDefault();
                 const btn = document.getElementById("loginBtn");
                 btn.disabled = true;
-                btn.innerText = "Verifying Credentials...";
+                btn.innerText = "Verifying...";
                 
                 signInWithEmailAndPassword(auth, document.getElementById("adminEmail").value, document.getElementById("adminPass").value)
                     .catch(err => {
                         const errEl = document.getElementById("loginError");
-                        errEl.innerText = err.message;
+                        errEl.innerText = "Authentication Failed: " + err.message;
                         errEl.style.display = "block";
                         btn.disabled = false;
-                        btn.innerText = "Login to Dashboard";
+                        btn.innerText = "Authenticate";
                     });
             });
 
@@ -293,15 +226,17 @@
 
             async function loadData() {
                 const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px;">Searching database...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px">Syncing with encrypted database...</td></tr>';
+                
                 try {
                     const q = query(collection(db, "pending_posts"), where("author", "==", auth.currentUser.email));
                     const snap = await getDocs(q);
-                    tbody.innerHTML = "";
-                    document.getElementById("totalCountDisplay").innerText = "My Submissions: " + snap.size;
                     
+                    tbody.innerHTML = "";
+                    document.getElementById("totalCountDisplay").innerText = "Posts in Queue: " + snap.size;
+
                     if (snap.empty) {
-                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No articles found in your account.</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#aaa;">No active drafts found.</td></tr>';
                         return;
                     }
 
@@ -310,18 +245,18 @@
                         const tr = document.createElement("tr");
                         tr.innerHTML = `
                             <td style="padding:15px; font-weight:600;">${p.title}</td>
-                            <td><span style="background: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">PENDING APPROVAL</span></td>
-                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:5px 12px; font-size:0.8rem; border:1px solid #fecaca;" onclick="deletePost('${d.id}')">Delete</button></td>
+                            <td><span style="background:#fff3cd; color:#856404; padding:4px 10px; border-radius:4px; font-size:0.7rem; font-weight:bold;">PENDING</span></td>
+                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:6px 12px; font-size:0.8rem; border:1px solid #fecaca; cursor:pointer;" onclick="deletePost('${d.id}')">Remove</button></td>
                         `;
                         tbody.appendChild(tr);
                     });
                 } catch(e) { 
-                    tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Error connecting to database.</td></tr>'; 
+                    tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Sync Error. Please check connectivity.</td></tr>'; 
                 }
             }
 
             window.deletePost = async (id) => {
-                if (confirm("Permanently delete this submission? This cannot be undone.")) {
+                if (confirm("Permanently delete this secure draft?")) {
                     await deleteDoc(doc(db, "pending_posts", id));
                     loadData();
                 }
