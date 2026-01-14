@@ -1236,20 +1236,20 @@
          5. JAVASCRIPT LOGIC (MODULE)
          ========================================================================== -->
         <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
             import {
                 getFirestore,
                 doc,
                 setDoc,
                 getDoc,
-            } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
             import {
                 getStorage,
                 ref,
                 uploadBytes,
                 getDownloadURL,
-            } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-storage.js";
 
             // FIREBASE CONFIG
             const app = initializeApp({
@@ -1267,18 +1267,15 @@
             // GLOBAL VARS
             let currentUser = null;
             let activeAddZone = null;
-            let activeUploadTarget = null;
             let editingDocId = null;
-
-            // New Global for Media Modal
-            let activeMediaElement = null; // The element triggering the media modal
+            let activeMediaElement = null; 
 
             // AUTH LISTENER
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
-                    // सुधार: 'Himanshu Tyagi' की जगह यूजर का असली Google Profile Name
+                    // FIXED: Use user.displayName for the Google Name
                     const nameToDisplay = user.displayName || user.email.split('@')[0];
                     statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
                     statusEl.style.color = "#333";
@@ -1386,7 +1383,6 @@
                     const rect = range.getBoundingClientRect();
 
                     bar.style.display = "flex";
-                    // OFFSET FIX: Increased vertical gap to 70px to prevent overlapping text
                     bar.style.top = `${window.scrollY + rect.top - 70}px`;
                     bar.style.left = `${rect.left + rect.width / 2}px`;
                 } else {
@@ -1867,7 +1863,7 @@
                     return;
                 }
                 
-                // सुधार: लॉगिन यूजर का असली नाम और ईमेल
+                // FIXED: Use user.displayName for the Google Name
                 const authorName = currentUser?.displayName || currentUser?.email.split('@')[0] || "Admin";
                 const authorEmail = currentUser?.email || "";
                 
@@ -1886,7 +1882,7 @@
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        // सुधार:author में ईमेल आईडी ताकि Rules काम करें, और authorName में असली नाम
+                        // 'author' must be email for security rules, authorName for display
                         author: authorEmail,
                         authorName: authorName,
                         date: new Date().toISOString(),
@@ -1907,7 +1903,7 @@
                 const fileInput = document.getElementById("fileName").value;
                 const imgInput = document.getElementById("imgName").value;
                 
-                // सुधार: लॉगिन यूजर का असली नाम
+                // FIXED: Use user.displayName
                 const authorName = currentUser?.displayName || currentUser?.email.split('@')[0] || "Admin";
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
