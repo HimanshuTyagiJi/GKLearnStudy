@@ -9,139 +9,139 @@
         <style>
             :root {
                 --sidebar-width: 260px;
-                --header-height: 70px;
-                --admin-bg: #f4f6f8;
-                --primary-color: #2271b1;
+                --header-height: 75px;
+                --admin-bg: #f0f2f5;
+                --primary: #1a73e8;
+                --surface: #ffffff;
+                --text-dark: #202124;
             }
-            body { background-color: var(--admin-bg); margin: 0; font-family: "Segoe UI", sans-serif; overflow-x: hidden; }
+            body { background-color: var(--admin-bg); margin: 0; font-family: "Google Sans", Roboto, Arial, sans-serif; color: var(--text-dark); }
 
-            /* --- LOGIN OVERLAY --- */
+            /* --- LOGIN --- */
             #login-overlay {
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: linear-gradient(135deg, #1e3a8a, #000046);
-                display: flex; justify-content: center; align-items: center; z-index: 9999;
+                background: #000; display: flex; justify-content: center; align-items: center; z-index: 9999;
             }
             .login-card {
-                background: white; padding: 40px; border-radius: 16px;
-                width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-                text-align: center;
+                background: white; padding: 40px; border-radius: 12px; width: 350px; text-align: center;
             }
-            .login-card h2 { margin-bottom: 5px; color: #333; }
-            .login-card p { color: #666; margin-bottom: 25px; font-size: 0.9rem; }
             .login-card input {
-                width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd;
-                border-radius: 8px; box-sizing: border-box; font-size: 1rem;
+                width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;
             }
             .login-btn {
-                width: 100%; padding: 14px; background: var(--primary-color);
-                color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
+                width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
             }
 
-            /* --- APP LAYOUT --- */
-            #admin-app { display: none; height: 100vh; flex-direction: column; }
+            /* --- LAYOUT --- */
+            #admin-app { display: none; min-height: 100vh; flex-direction: column; }
 
             .sidebar {
-                width: var(--sidebar-width); background: #ffffff; height: 100vh;
-                position: fixed; top: 0; left: 0; border-right: 1px solid #e0e0e0;
+                width: var(--sidebar-width); background: var(--surface); height: 100vh;
+                position: fixed; top: 0; left: 0; border-right: 1px solid #dadce0;
                 display: flex; flex-direction: column; z-index: 100;
             }
-            .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.4rem; color: var(--primary-color); border-bottom: 1px solid #f0f0f0; }
-            .menu-items { list-style: none; padding: 20px 10px; margin: 0; }
-            .menu-items a { display: flex; align-items: center; padding: 12px 15px; color: #555; text-decoration: none; font-weight: 600; border-radius: 8px; margin-bottom: 5px; }
-            .menu-items a:hover, .menu-items a.active { background: #e3f2fd; color: var(--primary-color); }
+            .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; color: var(--primary); border-bottom: 1px solid #eee; }
+            .menu-items { list-style: none; padding: 20px 12px; margin: 0; }
+            .menu-items a { display: flex; align-items: center; padding: 12px 16px; color: #5f6368; text-decoration: none; border-radius: 25px; margin-bottom: 4px; font-weight: 500; }
+            .menu-items a:hover, .menu-items a.active { background: #e8f0fe; color: var(--primary); }
+            .menu-items i { margin-right: 15px; width: 20px; text-align: center; }
 
             .admin-header {
-                height: var(--header-height); background: white; border-bottom: 1px solid #e0e0e0;
+                height: var(--header-height); background: var(--surface); border-bottom: 1px solid #dadce0;
                 display: flex; align-items: center; justify-content: space-between;
-                padding: 0 20px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90;
+                padding: 0 30px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90;
             }
 
-            .profile-display { 
-                display: flex; align-items: center; gap: 12px; 
-                padding: 6px 14px; border-radius: 35px; background: #f8f9fa; border: 1px solid #eee;
+            /* --- REAL PROFILE BOX --- */
+            .profile-container {
+                display: flex; align-items: center; gap: 12px; padding: 5px 15px;
+                border-radius: 40px; background: #f8f9fa; border: 1px solid #eee;
             }
+            .profile-img {
+                width: 42px; height: 42px; border-radius: 50%; overflow: hidden;
+                border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background: #ccc; display: flex; align-items: center; justify-content: center;
+            }
+            .profile-img img { width: 100%; height: 100%; object-fit: cover; }
+            .profile-info { display: flex; flex-direction: column; }
+            .profile-info .name { font-weight: 600; font-size: 0.95rem; color: #3c4043; }
+            .profile-info .role { font-size: 0.75rem; color: #70757a; text-transform: uppercase; letter-spacing: 0.5px; }
+
+            .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 40px; }
+            .stats-bar { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
+            .card { background: white; border-radius: 12px; border: 1px solid #dadce0; padding: 25px; box-shadow: var(--shadow-sm); }
             
-            .profile-circle {
-                width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color);
-                color: white; display: flex; align-items: center; justify-content: center;
-                font-weight: bold; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
-            .admin-name { font-weight: 700; color: #1d2327; font-size: 0.95rem; }
-
-            .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; }
-            .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px; }
             table { width: 100%; border-collapse: collapse; }
-            th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
-            th { color: #555; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+            th { text-align: left; padding: 15px; border-bottom: 2px solid #f1f3f4; color: #80868b; font-size: 0.8rem; text-transform: uppercase; }
+            td { padding: 18px 15px; border-bottom: 1px solid #f1f3f4; }
 
-            @media (max-width: 768px) {
-                .sidebar { transform: translateX(-100%); }
-                .content-area { margin-left: 0; padding: 15px; }
+            @media (max-width: 850px) {
+                .sidebar { display: none; }
                 .admin-header { left: 0; }
-                .admin-name { display: none; }
+                .content-area { margin-left: 0; padding: 20px; }
+                .profile-info .name { max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
             }
         </style>
     </head>
     <body>
-        <!-- LOGIN SCREEN -->
+        <!-- LOGIN -->
         <div id="login-overlay">
             <div class="login-card">
-                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="70" style="margin-bottom:15px;">
-                <h2>Master Access</h2>
-                <p>Authorized personnel only</p>
+                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="60" style="margin-bottom:15px;">
+                <h2 style="margin-bottom:20px;">Master Access</h2>
                 <form id="loginForm">
-                    <input type="email" id="adminEmail" placeholder="Email Address" required />
-                    <input type="password" id="adminPass" placeholder="Password" required />
-                    <button type="submit" class="login-btn" id="loginBtn">Authenticate</button>
-                    <p id="loginError" style="color: red; margin-top: 15px; display: none; font-size: 0.8rem;"></p>
+                    <input type="email" id="email" placeholder="Email Address" required />
+                    <input type="password" id="pass" placeholder="Password" required />
+                    <button type="submit" class="login-btn" id="loginBtn">Enter Dashboard</button>
+                    <p id="error" style="color:red; font-size:12px; margin-top:10px; display:none;"></p>
                 </form>
             </div>
         </div>
 
-        <!-- MAIN APP -->
+        <!-- APP -->
         <div id="admin-app">
             <aside class="sidebar">
-                <div class="brand-logo">GK ADMIN</div>
+                <div class="brand-logo">GK CONTROL</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Summary</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-plus-circle"></i> Create Content</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Quiz Portal</a></li>
-                    <li><a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Overview</a></li>
+                    <li><a href="create-content.html" target="_blank"><i class="fas fa-plus"></i> New Post</a></li>
+                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-tasks"></i> Quiz Panel</a></li>
+                    <li style="margin-top:auto;"><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </aside>
 
             <header class="admin-header">
-                <h3 style="margin: 0; color: #1d2327;">Dashboard</h3>
-                <div class="profile-display" id="profileDisplay">
-                    <div class="profile-circle" id="headerProfileIcon">
-                        <i class="fas fa-user"></i>
+                <h2 style="margin:0; font-size:1.4rem;">Panel</h2>
+                <div class="profile-container">
+                    <div class="profile-img" id="userAvatar"><i class="fas fa-user"></i></div>
+                    <div class="profile-info">
+                        <span class="name" id="userName">Syncing...</span>
+                        <span class="role" id="userRole">Authorized User</span>
                     </div>
-                    <span class="admin-name" id="headerAdminName">Loading...</span>
                 </div>
             </header>
 
             <div class="content-area">
-                <div style="margin-bottom: 25px; display:flex; justify-content:space-between; align-items:center;">
+                <div class="stats-bar">
                     <div>
-                        <h2 id="totalCountDisplay" style="margin:0; color: var(--primary-color);">Posts in Queue: 0</h2>
-                        <span style="font-size: 0.8rem; color: #999;">Security verified access</span>
+                        <h1 id="countText" style="margin:0; font-size:1.8rem; color:var(--primary);">Pending: 0</h1>
+                        <p style="margin:0; color:#5f6368;">Current active drafts awaiting review</p>
                     </div>
-                    <button class="btn" style="background:#fff; border: 1px solid #ddd; color:#555; padding: 10px 20px; border-radius: 8px; cursor:pointer;" onclick="loadData()">
-                        <i class="fas fa-sync"></i> Sync Data
+                    <button class="btn" style="background:#fff; border:1px solid #ccc; padding:10px 20px; border-radius:8px; cursor:pointer;" onclick="loadData()">
+                        <i class="fas fa-sync"></i> Refresh Data
                     </button>
                 </div>
 
-                <div class="table-card">
+                <div class="card">
                     <table>
                         <thead>
                             <tr>
                                 <th>Article Title</th>
-                                <th>Verification</th>
-                                <th>Actions</th>
+                                <th>Category</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody"></tbody>
+                        <tbody id="table"></tbody>
                     </table>
                 </div>
             </div>
@@ -165,11 +165,11 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            onAuthStateChanged(auth, async (user) => {
+            onAuthStateChanged(auth, user => {
                 if (user) {
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
-                    setupSecurityHeader(user);
+                    renderAuthenticProfile(user);
                     loadData();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
@@ -178,85 +178,71 @@
             });
 
             /**
-             * Strict Header Sync: Only uses Google Auth Data
-             * No manual overrides allowed.
+             * Renders only REAL profile data from Google Auth
              */
-            function setupSecurityHeader(user) {
-                const nameEl = document.getElementById("headerAdminName");
-                const iconEl = document.getElementById("headerProfileIcon");
+            function renderAuthenticProfile(user) {
+                const nameEl = document.getElementById("userName");
+                const avatarEl = document.getElementById("userAvatar");
+                const roleEl = document.getElementById("userRole");
 
-                let finalName = user.displayName;
-                let finalPhoto = user.photoURL;
-
-                // OWNER IDENTITY CHECK (Based on Email)
+                // Owner Detection Logic
                 if (user.email === "officialhimanshutyagi@gmail.com") {
-                    finalName = "Mr. Himanshu Tyagi";
-                    finalPhoto = "https://gklearnstudy.in/GK-Learn-Study.png";
-                }
-
-                // Fallback if Google name is missing
-                if (!finalName) finalName = "Verified Editor";
-
-                nameEl.innerText = finalName;
-
-                if (finalPhoto) {
-                    iconEl.innerHTML = `<img src="${finalPhoto}" alt="User" onerror="this.parentElement.innerHTML='${finalName.charAt(0).toUpperCase()}'">`;
+                    nameEl.innerText = "Mr. Himanshu Tyagi";
+                    roleEl.innerText = "Master Administrator";
+                    avatarEl.innerHTML = `<img src="https://gklearnstudy.in/GK-Learn-Study.png" alt="Owner">`;
                 } else {
-                    iconEl.innerHTML = `<span>${finalName.charAt(0).toUpperCase()}</span>`;
+                    // Real Google Profile Sync for Users
+                    nameEl.innerText = user.displayName || user.email.split('@')[0];
+                    roleEl.innerText = "Verified Editor";
+                    if (user.photoURL) {
+                        avatarEl.innerHTML = `<img src="${user.photoURL}" alt="Profile" onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\'></i>'">`;
+                    } else {
+                        avatarEl.innerHTML = `<i class="fas fa-user-circle" style="font-size:2rem; color:#ccc;"></i>`;
+                    }
                 }
             }
 
-            document.getElementById("loginForm").addEventListener("submit", (e) => {
+            document.getElementById("loginForm").onsubmit = (e) => {
                 e.preventDefault();
                 const btn = document.getElementById("loginBtn");
-                btn.disabled = true;
-                btn.innerText = "Verifying...";
-                
-                signInWithEmailAndPassword(auth, document.getElementById("adminEmail").value, document.getElementById("adminPass").value)
+                btn.disabled = true; btn.innerText = "Verifying...";
+                signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("pass").value)
                     .catch(err => {
-                        const errEl = document.getElementById("loginError");
-                        errEl.innerText = "Authentication Failed: " + err.message;
+                        const errEl = document.getElementById("error");
+                        errEl.innerText = "Access Denied: " + err.message;
                         errEl.style.display = "block";
-                        btn.disabled = false;
-                        btn.innerText = "Authenticate";
+                        btn.disabled = false; btn.innerText = "Enter Dashboard";
                     });
-            });
+            };
 
             window.logout = () => signOut(auth);
 
             async function loadData() {
-                const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px">Syncing with encrypted database...</td></tr>';
-                
+                const tbody = document.getElementById("table");
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#999;">Fetching secure records...</td></tr>';
                 try {
                     const q = query(collection(db, "pending_posts"), where("author", "==", auth.currentUser.email));
                     const snap = await getDocs(q);
-                    
                     tbody.innerHTML = "";
-                    document.getElementById("totalCountDisplay").innerText = "Posts in Queue: " + snap.size;
-
+                    document.getElementById("countText").innerText = "Pending: " + snap.size;
                     if (snap.empty) {
-                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#aaa;">No active drafts found.</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#999;">No pending submissions in your account.</td></tr>';
                         return;
                     }
-
                     snap.forEach(d => {
                         const p = d.data();
-                        const tr = document.createElement("tr");
-                        tr.innerHTML = `
-                            <td style="padding:15px; font-weight:600;">${p.title}</td>
-                            <td><span style="background:#fff3cd; color:#856404; padding:4px 10px; border-radius:4px; font-size:0.7rem; font-weight:bold;">PENDING</span></td>
-                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:6px 12px; font-size:0.8rem; border:1px solid #fecaca; cursor:pointer;" onclick="deletePost('${d.id}')">Remove</button></td>
-                        `;
-                        tbody.appendChild(tr);
+                        tbody.innerHTML += `
+                            <tr>
+                                <td><strong>${p.title}</strong></td>
+                                <td><span style="background:#eee; padding:4px 8px; border-radius:4px; font-size:12px;">${p.category}</span></td>
+                                <td><button style="background:none; border:1px solid #ff4d4d; color:#ff4d4d; padding:5px 12px; border-radius:4px; cursor:pointer;" onclick="deletePost('${d.id}')">Remove</button></td>
+                            </tr>`;
                     });
-                } catch(e) { 
-                    tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Sync Error. Please check connectivity.</td></tr>'; 
-                }
+                } catch(e) { tbody.innerHTML = '<tr><td colspan="3">Failed to load.</td></tr>'; }
             }
 
             window.deletePost = async (id) => {
-                if (confirm("Permanently delete this secure draft?")) {
+                if (confirm("Delete this draft permanently?")) {
                     await deleteDoc(doc(db, "pending_posts", id));
                     loadData();
                 }
