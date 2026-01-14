@@ -61,26 +61,30 @@
             .profile-wrapper:hover { background: #f8f9fa; border-color: var(--primary-color); }
             
             .profile-circle {
-                width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color);
+                width: 42px; height: 42px; border-radius: 50%; background: var(--primary-color);
                 color: white; display: flex; align-items: center; justify-content: center;
-                font-weight: bold; overflow: hidden; border: 2px solid #fff;
+                font-weight: bold; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
             .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
-            .admin-name { font-weight: 600; color: #333; font-size: 0.95rem; }
+            .profile-circle span { font-size: 1.2rem; }
+            
+            .admin-name { font-weight: 700; color: #1d2327; font-size: 0.95rem; }
 
             .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; }
             .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px; }
             table { width: 100%; border-collapse: collapse; }
             th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
+            th { color: #555; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
             /* --- MODAL --- */
             .modal-overlay {
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
             }
-            .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; }
-            .modal-content h3 { margin-top: 0; color: var(--primary-color); }
-            .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+            .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+            .modal-content h3 { margin-top: 0; color: var(--primary-color); display: flex; align-items: center; gap: 10px; }
+            .modal-content label { display: block; margin-top: 15px; font-size: 0.8rem; font-weight: bold; color: #666; }
+            .modal-content input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
             
             @media (max-width: 768px) {
                 .sidebar { transform: translateX(-100%); }
@@ -95,11 +99,12 @@
         <div id="login-overlay">
             <div class="login-card">
                 <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="80" style="margin-bottom:20px;">
-                <h2>Master Login</h2>
+                <h2>Admin Login</h2>
+                <p style="color: #666; margin-bottom: 25px;">Master Access Panel</p>
                 <form id="loginForm">
-                    <input type="email" id="adminEmail" placeholder="Admin Email" required />
+                    <input type="email" id="adminEmail" placeholder="Email Address" required />
                     <input type="password" id="adminPass" placeholder="Password" required />
-                    <button type="submit" class="login-btn" id="loginBtn">Enter Dashboard</button>
+                    <button type="submit" class="login-btn" id="loginBtn">Login to Dashboard</button>
                     <p id="loginError" style="color: red; margin-top: 15px; display: none; font-size: 0.8rem;"></p>
                 </form>
             </div>
@@ -110,34 +115,40 @@
             <aside class="sidebar">
                 <div class="brand-logo">GK ADMIN</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-edit"></i> Write Article</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-plus-square"></i> Add Quiz</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                    <li><a href="create-content.html" target="_blank"><i class="fas fa-feather-alt"></i> Create Post</a></li>
+                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-tasks"></i> Add Quiz</a></li>
                     <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </aside>
 
             <header class="admin-header">
-                <h3><i class="fas fa-user-shield"></i> Profile & Posts</h3>
-                <div class="profile-wrapper" onclick="openProfileModal()">
+                <h3 style="margin: 0; color: #1d2327;">Welcome Back</h3>
+                <div class="profile-wrapper" onclick="openProfileModal()" title="Edit Profile">
                     <div class="profile-circle" id="headerProfileIcon">
                         <i class="fas fa-user"></i>
                     </div>
-                    <span class="admin-name" id="headerAdminName">Syncing...</span>
+                    <span class="admin-name" id="headerAdminName">Admin User</span>
+                    <i class="fas fa-cog" style="color: #999; font-size: 0.8rem;"></i>
                 </div>
             </header>
 
             <div class="content-area">
-                <div style="margin-bottom: 20px; display:flex; justify-content:space-between; align-items:center;">
-                    <h2 id="totalCountDisplay">My Submissions: 0</h2>
-                    <button class="btn" style="background:#eee; color:#333; padding: 5px 15px;" onclick="loadData()"><i class="fas fa-sync"></i> Refresh List</button>
+                <div style="margin-bottom: 25px; display:flex; justify-content:space-between; align-items:flex-end;">
+                    <div>
+                        <h2 id="totalCountDisplay" style="margin:0; color: var(--primary-color);">My Submissions: 0</h2>
+                        <p style="margin:0; color:#888; font-size:0.9rem;">Real-time sync with database</p>
+                    </div>
+                    <button class="btn" style="background:#fff; border: 1px solid #ddd; color:#555; padding: 8px 16px;" onclick="loadData()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
                 </div>
 
                 <div class="table-card">
                     <table>
                         <thead>
-                            <tr style="background:#f9f9f9;">
-                                <th style="padding:15px">Article Title</th>
+                            <tr>
+                                <th style="width: 60%;">Article Title</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -151,17 +162,17 @@
         <!-- PROFILE MODAL -->
         <div id="profile-modal" class="modal-overlay">
             <div class="modal-content">
-                <h3><i class="fas fa-id-card"></i> Profile Info</h3>
-                <p style="font-size:0.8rem; color:#666; margin-bottom:20px;">Your name and photo will be used in the articles you publish.</p>
+                <h3><i class="fas fa-user-circle"></i> Update Profile</h3>
+                <p style="font-size:0.8rem; color:#666;">This name and photo will represent you as the author.</p>
                 
-                <label style="font-size:0.8rem; font-weight:bold;">Display Name</label>
-                <input type="text" id="editName" placeholder="e.g. Himanshu Tyagi">
+                <label>Display Name</label>
+                <input type="text" id="editName" placeholder="Full Name (e.g., Himanshu Tyagi)">
                 
-                <label style="font-size:0.8rem; font-weight:bold;">Profile Image URL</label>
-                <input type="text" id="editPhoto" placeholder="https://domain.com/your-image.jpg">
+                <label>Profile Image URL</label>
+                <input type="text" id="editPhoto" placeholder="Link to your photo (Optional)">
                 
-                <div style="display:flex; gap:10px;">
-                    <button style="flex:2; background:var(--primary-color); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="saveProfile()">Save Profile</button>
+                <div style="display:flex; gap:10px; margin-top: 25px;">
+                    <button style="flex:2; background:var(--primary-color); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="saveProfile()">Save Changes</button>
                     <button style="flex:1; background:#eee; border:none; padding:12px; border-radius:8px; cursor:pointer;" onclick="closeProfileModal()">Cancel</button>
                 </div>
             </div>
@@ -189,7 +200,7 @@
                 if (user) {
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
-                    await syncProfile(user);
+                    await syncMasterProfile(user);
                     loadData();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
@@ -197,41 +208,45 @@
                 }
             });
 
-            async function syncProfile(user) {
-                const nameEl = document.getElementById("headerAdminName");
-                const iconEl = document.getElementById("headerProfileIcon");
+            async function syncMasterProfile(user) {
+                const nameHeader = document.getElementById("headerAdminName");
+                const iconHeader = document.getElementById("headerProfileIcon");
+                
+                let finalName = "";
+                let finalPhoto = "";
 
-                let displayName = "";
-                let photoURL = "";
-
-                // 1. Hard Override for YOU
-                if (user.email === "officialhimanshutyagi@gmail.com") {
-                    displayName = "Mr. Himanshu Tyagi";
-                    photoURL = "https://gklearnstudy.in/GK-Learn-Study.png";
-                }
-
-                // 2. Fetch from Firestore (Overwrites override if exists)
+                // 1. Hierarchy Check: FIRESTORE FIRST
                 try {
                     const snap = await getDoc(doc(db, "users", user.uid));
                     if (snap.exists()) {
                         const data = snap.data();
-                        if (data.name) displayName = data.name;
-                        if (data.photo) photoURL = data.photo;
+                        if (data.name) finalName = data.name;
+                        if (data.photo) finalPhoto = data.photo;
                     }
-                } catch (e) { console.error("Sync Error:", e); }
+                } catch (e) { console.error("Profile sync error:", e); }
 
-                // 3. Fallback
-                if (!displayName) displayName = user.email.split("@")[0];
+                // 2. Auth Provider Second (Google Name)
+                if (!finalName && user.displayName) finalName = user.displayName;
+                if (!finalPhoto && user.photoURL) finalPhoto = user.photoURL;
 
-                // Update UI
-                nameEl.innerText = displayName;
-                document.getElementById("editName").value = displayName;
-                document.getElementById("editPhoto").value = photoURL;
+                // 3. Owner Special Override (Highest Priority for specific email)
+                if (user.email === "officialhimanshutyagi@gmail.com") {
+                    if (!finalName) finalName = "Mr. Himanshu Tyagi";
+                    if (!finalPhoto) finalPhoto = "https://gklearnstudy.in/GK-Learn-Study.png";
+                }
 
-                if (photoURL) {
-                    iconEl.innerHTML = `<img src="${photoURL}" alt="User" onerror="this.parentElement.innerHTML='${displayName.charAt(0).toUpperCase()}'">`;
+                // 4. Ultimate Fallback (No email showing)
+                if (!finalName) finalName = "GK Administrator";
+
+                // UPDATE UI
+                nameHeader.innerText = finalName;
+                document.getElementById("editName").value = finalName;
+                document.getElementById("editPhoto").value = finalPhoto;
+
+                if (finalPhoto) {
+                    iconHeader.innerHTML = `<img src="${finalPhoto}" alt="Avatar" onerror="this.parentElement.innerHTML='${finalName.charAt(0).toUpperCase()}'">`;
                 } else {
-                    iconEl.innerHTML = `<span>${displayName.charAt(0).toUpperCase()}</span>`;
+                    iconHeader.innerHTML = `<span>${finalName.charAt(0).toUpperCase()}</span>`;
                 }
             }
 
@@ -241,29 +256,36 @@
             window.saveProfile = async () => {
                 const user = auth.currentUser;
                 if (!user) return;
-                const name = document.getElementById("editName").value.trim();
-                const photo = document.getElementById("editPhoto").value.trim();
-                if (!name) return alert("Name is required!");
+                const nameInput = document.getElementById("editName").value.trim();
+                const photoInput = document.getElementById("editPhoto").value.trim();
+                if (!nameInput) return alert("Please enter your name!");
 
                 try {
-                    await setDoc(doc(db, "users", user.uid), { name, photo, email: user.email }, { merge: true });
-                    alert("Profile updated!");
+                    await setDoc(doc(db, "users", user.uid), {
+                        name: nameInput,
+                        photo: photoInput,
+                        updatedAt: new Date().toISOString()
+                    }, { merge: true });
+                    
+                    alert("Profile updated successfully! ✅");
                     closeProfileModal();
-                    syncProfile(user);
-                } catch (e) { alert("Error: " + e.message); }
+                    await syncMasterProfile(user);
+                } catch (e) { alert("Save Error: " + e.message); }
             };
 
             document.getElementById("loginForm").addEventListener("submit", (e) => {
                 e.preventDefault();
                 const btn = document.getElementById("loginBtn");
                 btn.disabled = true;
-                btn.innerText = "Authenticating...";
+                btn.innerText = "Verifying Credentials...";
+                
                 signInWithEmailAndPassword(auth, document.getElementById("adminEmail").value, document.getElementById("adminPass").value)
                     .catch(err => {
-                        document.getElementById("loginError").innerText = err.message;
-                        document.getElementById("loginError").style.display = "block";
+                        const errEl = document.getElementById("loginError");
+                        errEl.innerText = err.message;
+                        errEl.style.display = "block";
                         btn.disabled = false;
-                        btn.innerText = "Enter Dashboard";
+                        btn.innerText = "Login to Dashboard";
                     });
             });
 
@@ -271,27 +293,35 @@
 
             async function loadData() {
                 const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px">Fetching your posts...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px;">Searching database...</td></tr>';
                 try {
                     const q = query(collection(db, "pending_posts"), where("author", "==", auth.currentUser.email));
                     const snap = await getDocs(q);
                     tbody.innerHTML = "";
                     document.getElementById("totalCountDisplay").innerText = "My Submissions: " + snap.size;
+                    
+                    if (snap.empty) {
+                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No articles found in your account.</td></tr>';
+                        return;
+                    }
+
                     snap.forEach(d => {
                         const p = d.data();
                         const tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td style="padding:15px"><strong>${p.title}</strong></td>
-                            <td><span style="color:#e67e22; font-weight:bold; font-size:0.75rem;">PENDING</span></td>
-                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:5px 10px; font-size:0.8rem;" onclick="deletePost('${d.id}')">Delete</button></td>
+                            <td style="padding:15px; font-weight:600;">${p.title}</td>
+                            <td><span style="background: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">PENDING APPROVAL</span></td>
+                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:5px 12px; font-size:0.8rem; border:1px solid #fecaca;" onclick="deletePost('${d.id}')">Delete</button></td>
                         `;
                         tbody.appendChild(tr);
                     });
-                } catch(e) { tbody.innerHTML = '<tr><td colspan="3">Failed to load posts.</td></tr>'; }
+                } catch(e) { 
+                    tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Error connecting to database.</td></tr>'; 
+                }
             }
 
             window.deletePost = async (id) => {
-                if (confirm("Delete this draft permanently?")) {
+                if (confirm("Permanently delete this submission? This cannot be undone.")) {
                     await deleteDoc(doc(db, "pending_posts", id));
                     loadData();
                 }
