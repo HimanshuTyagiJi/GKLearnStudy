@@ -1279,7 +1279,8 @@
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
                     // DISPLAY PROFILE NAME DIRECTLY LIKE kaisekarenformat.html
-                    const nameToDisplay = user.displayName || "Himanshu Tyagi";
+const nameToDisplay = user.displayName || "User";
+
                     statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
                     statusEl.style.color = "#333";
                 } else {
@@ -1867,8 +1868,8 @@
                     return;
                 }
                 
-                // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-             const authorName = currentUser.email;
+     const authorName = currentUser.displayName || "User";
+
 
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
@@ -1886,7 +1887,9 @@
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        author: authorName,
+                        authorName: authorName,
+authorEmail: currentUser.email,
+
                         date: new Date().toISOString(),
                         status: status,
                     });
@@ -1906,7 +1909,8 @@
                 const imgInput = document.getElementById("imgName").value;
                 
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-                const authorName = currentUser.email;
+               const authorName = currentUser.displayName || "User";
+
 
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
