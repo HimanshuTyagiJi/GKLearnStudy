@@ -10,12 +10,12 @@
             :root {
                 --sidebar-width: 260px;
                 --header-height: 75px;
-                --admin-bg: #f8f9fa;
+                --admin-bg: #f0f2f5;
                 --primary: #1a73e8;
                 --surface: #ffffff;
-                --border: #dee2e6;
+                --text-dark: #202124;
             }
-            body { background-color: var(--admin-bg); margin: 0; font-family: "Google Sans", sans-serif; color: #3c4043; }
+            body { background-color: var(--admin-bg); margin: 0; font-family: "Google Sans", Roboto, sans-serif; color: var(--text-dark); }
 
             /* --- LOGIN --- */
             #login-overlay {
@@ -26,56 +26,57 @@
                 background: white; padding: 40px; border-radius: 16px; width: 360px; text-align: center;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             }
-            .login-card input {
-                width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 8px;
-                font-size: 1rem;
+            .google-login-btn {
+                width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 8px;
+                background: #fff; color: #3c4043; font-weight: 600; cursor: pointer;
+                display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;
+                transition: background 0.2s;
             }
-            .login-btn {
-                width: 100%; padding: 14px; background: var(--primary); color: white; border: none;
-                border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem;
-            }
+            .google-login-btn:hover { background: #f8f9fa; border-color: #d2d2d2; }
+            .divider { margin: 20px 0; border-bottom: 1px solid #eee; position: relative; }
+            .divider::after { content: "OR"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #fff; padding: 0 10px; font-size: 12px; color: #777; }
 
-            /* --- DASHBOARD LAYOUT --- */
+            .login-card input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; }
+            .login-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+            /* --- DASHBOARD --- */
             #admin-app { display: none; min-height: 100vh; flex-direction: column; }
 
             .sidebar {
                 width: var(--sidebar-width); background: var(--surface); height: 100vh;
-                position: fixed; top: 0; left: 0; border-right: 1px solid var(--border);
+                position: fixed; top: 0; left: 0; border-right: 1px solid #dadce0;
                 display: flex; flex-direction: column; z-index: 100;
             }
-            .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.3rem; color: var(--primary); border-bottom: 1px solid #f1f3f4; }
+            .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.3rem; color: var(--primary); border-bottom: 1px solid #f1f3f4; }
             .menu-items { list-style: none; padding: 25px 15px; margin: 0; }
-            .menu-items a { display: flex; align-items: center; padding: 12px 20px; color: #5f6368; text-decoration: none; border-radius: 30px; margin-bottom: 8px; font-weight: 500; transition: 0.2s; }
+            .menu-items a { display: flex; align-items: center; padding: 12px 20px; color: #5f6368; text-decoration: none; border-radius: 30px; margin-bottom: 5px; font-weight: 500; transition: 0.2s; }
             .menu-items a:hover, .menu-items a.active { background: #e8f0fe; color: var(--primary); }
             .menu-items i { margin-right: 15px; width: 20px; text-align: center; }
 
             .admin-header {
-                height: var(--header-height); background: var(--surface); border-bottom: 1px solid var(--border);
+                height: var(--header-height); background: var(--surface); border-bottom: 1px solid #dadce0;
                 display: flex; align-items: center; justify-content: space-between;
                 padding: 0 30px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90;
             }
 
-            /* --- USER PROFILE DISPLAY --- */
+            /* --- PROFLE BOX --- */
             .profile-box {
-                display: flex; align-items: center; gap: 12px; padding: 6px 18px;
-                background: #f1f3f4; border-radius: 50px; border: 1px solid #e0e0e0;
+                display: flex; align-items: center; gap: 12px; padding: 5px 15px;
+                background: #f8f9fa; border-radius: 40px; border: 1px solid #eee;
             }
             .profile-box img {
-                width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
-                border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+                border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #eee;
             }
-            .profile-box .user-name { font-weight: 600; font-size: 0.95rem; color: #202124; }
-            .profile-box .initials {
-                width: 36px; height: 36px; border-radius: 50%; background: var(--primary);
-                color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;
-            }
+            .profile-box .name-label { font-weight: 600; font-size: 0.95rem; color: #3c4043; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .profile-box .badge { font-size: 0.7rem; color: #1a73e8; background: #e8f0fe; padding: 2px 8px; border-radius: 10px; font-weight: 700; margin-left: 5px; text-transform: uppercase; }
 
             .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 40px; }
-            .card { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+            .card { background: white; border-radius: 12px; border: 1px solid #dadce0; padding: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
             
             table { width: 100%; border-collapse: collapse; }
-            th { text-align: left; padding: 15px; border-bottom: 2px solid #f1f3f4; color: #70757a; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
-            td { padding: 18px 15px; border-bottom: 1px solid #f1f3f4; font-size: 0.95rem; }
+            th { text-align: left; padding: 15px; border-bottom: 2px solid #f1f3f4; color: #70757a; font-size: 0.75rem; text-transform: uppercase; }
+            td { padding: 18px 15px; border-bottom: 1px solid #f1f3f4; }
 
             @media (max-width: 850px) {
                 .sidebar { display: none; }
@@ -89,44 +90,52 @@
         <div id="login-overlay">
             <div class="login-card">
                 <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="60" style="margin-bottom:15px;">
-                <h2 style="margin-bottom:20px;">Admin Access</h2>
+                <h2 style="margin-bottom:25px;">Admin Login</h2>
+                
+                <button class="google-login-btn" id="googleLoginBtn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="20">
+                    Sign in with Google
+                </button>
+
+                <div class="divider"></div>
+
                 <form id="loginForm">
                     <input type="email" id="email" placeholder="Email Address" required />
                     <input type="password" id="password" placeholder="Password" required />
-                    <button type="submit" class="login-btn" id="loginBtn">Secure Login</button>
+                    <button type="submit" class="login-btn" id="loginBtn">Login</button>
                     <p id="error-msg" style="color:red; font-size:12px; margin-top:10px; display:none;"></p>
                 </form>
             </div>
         </div>
 
-        <!-- MAIN DASHBOARD -->
+        <!-- APP -->
         <div id="admin-app">
             <aside class="sidebar">
-                <div class="brand-logo">GK ADMIN</div>
+                <div class="brand-logo">GK CONTROL</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active"><i class="fas fa-layer-group"></i> My Submissions</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-file-signature"></i> Create Article</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-tasks"></i> Quiz Portal</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-columns"></i> My Dashboard</a></li>
+                    <li><a href="create-content.html" target="_blank"><i class="fas fa-edit"></i> Create Article</a></li>
+                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-tasks"></i> Quiz Editor</a></li>
                     <li style="margin-top: auto;"><a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
                 </ul>
             </aside>
 
             <header class="admin-header">
-                <h2 style="margin:0; font-size:1.2rem;">Author Dashboard</h2>
-                <div class="profile-box" id="profileDisplay">
-                    <div id="profileImageSlot"></div>
-                    <span class="user-name" id="profileNameSlot">Authenticating...</span>
+                <h2 style="margin:0; font-size:1.3rem;">Overview</h2>
+                <div class="profile-box" id="profileBox">
+                    <div id="avatarSlot"></div>
+                    <span class="name-label" id="nameSlot">Synchronizing...</span>
                 </div>
             </header>
 
             <div class="content-area">
                 <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
                     <div>
-                        <h1 id="countHeader" style="margin:0; font-size:1.8rem; color:var(--primary);">Pending Articles: 0</h1>
-                        <p style="margin:0; color:#70757a;">Verified records linked to your Google Account</p>
+                        <h1 id="countText" style="margin:0; font-size:1.8rem; color:var(--primary);">Pending: 0</h1>
+                        <p style="margin:0; color:#70757a;">Secured articles for your account</p>
                     </div>
-                    <button class="btn" style="background:#fff; border:1px solid #dadce0; padding:10px 20px; border-radius:8px; cursor:pointer;" onclick="loadUserSubmissions()">
-                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    <button style="background:#fff; border:1px solid #dadce0; padding:10px 20px; border-radius:8px; cursor:pointer;" onclick="loadData()">
+                        <i class="fas fa-sync-alt"></i> Refresh
                     </button>
                 </div>
 
@@ -134,12 +143,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Submission Title</th>
+                                <th>Article Title</th>
                                 <th>Category</th>
-                                <th>Actions</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="submissionsTable"></tbody>
+                        <tbody id="dataTable"></tbody>
                     </table>
                 </div>
             </div>
@@ -147,7 +156,7 @@
 
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-            import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+            import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
             import { getFirestore, collection, query, where, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             const firebaseConfig = {
@@ -162,13 +171,15 @@
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
+            const provider = new GoogleAuthProvider();
 
+            // --- AUTH OBSERVER ---
             onAuthStateChanged(auth, user => {
                 if (user) {
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
-                    renderSecureIdentity(user);
-                    loadUserSubmissions();
+                    resolveIdentity(user);
+                    loadData();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
                     document.getElementById("admin-app").style.display = "none";
@@ -176,88 +187,100 @@
             });
 
             /**
-             * Renders ONLY the authentic profile information from Google
+             * IDENTITY RESOLUTION ENGINE
+             * Strict prioritisation of Google Profile data
              */
-            function renderSecureIdentity(user) {
-                const nameSlot = document.getElementById("profileNameSlot");
-                const imageSlot = document.getElementById("profileImageSlot");
+            function resolveIdentity(user) {
+                const nameSlot = document.getElementById("nameSlot");
+                const avatarSlot = document.getElementById("avatarSlot");
 
-                let finalName = user.displayName;
-                let finalPhoto = user.photoURL;
+                let finalName = "User";
+                let finalPhoto = "";
 
-                // Owner Identity Logic (Override for specific management email)
+                // 1. OWNER CHECK (Your Email)
                 if (user.email === "officialhimanshutyagi@gmail.com") {
                     finalName = "Mr. Himanshu Tyagi";
                     finalPhoto = "https://gklearnstudy.in/GK-Learn-Study.png";
+                    nameSlot.innerHTML = `${finalName} <span class="badge">Admin</span>`;
+                } else {
+                    // 2. FETCH FROM GOOGLE PROVIDER
+                    if (user.providerData && user.providerData.length > 0) {
+                        user.providerData.forEach(profile => {
+                            if (profile.displayName) finalName = profile.displayName;
+                            if (profile.photoURL) finalPhoto = profile.photoURL;
+                        });
+                    }
+
+                    // 3. FALLBACK TO MAIN AUTH OBJECT
+                    if (finalName === "User" && user.displayName) finalName = user.displayName;
+                    if (!finalPhoto && user.photoURL) finalPhoto = user.photoURL;
+
+                    // 4. LAST RESORT (Email Prefix)
+                    if (finalName === "User") finalName = user.email.split('@')[0];
+                    
+                    nameSlot.innerText = finalName;
                 }
 
-                // If Google doesn't return a name for some reason, use the part before @ in email
-                if (!finalName) finalName = user.email.split('@')[0];
-
-                nameSlot.innerText = finalName;
-
+                // Render Photo
                 if (finalPhoto) {
-                    imageSlot.innerHTML = `<img src="${finalPhoto}" alt="Profile" onerror="this.parentElement.innerHTML='<div class=\'initials\'>${finalName.charAt(0).toUpperCase()}</div>'">`;
+                    avatarSlot.innerHTML = `<img src="${finalPhoto}" alt="Profile" onerror="this.parentElement.innerHTML='<div style=\'width:38px; height:38px; background:#1a73e8; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;\'>${finalName.charAt(0).toUpperCase()}</div>'">`;
                 } else {
-                    imageSlot.innerHTML = `<div class="initials">${finalName.charAt(0).toUpperCase()}</div>`;
+                    avatarSlot.innerHTML = `<div style="width:38px; height:38px; background:#1a73e8; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">${finalName.charAt(0).toUpperCase()}</div>`;
                 }
             }
 
-            document.getElementById("loginForm").addEventListener("submit", (e) => {
+            // --- GOOGLE LOGIN ---
+            document.getElementById("googleLoginBtn").onclick = () => {
+                signInWithPopup(auth, provider).catch(err => alert(err.message));
+            };
+
+            // --- EMAIL LOGIN ---
+            document.getElementById("loginForm").onsubmit = (e) => {
                 e.preventDefault();
                 const btn = document.getElementById("loginBtn");
-                const err = document.getElementById("error-msg");
-                
-                btn.disabled = true;
-                btn.innerText = "Verifying...";
-                err.style.display = "none";
+                const errEl = document.getElementById("error-msg");
+                btn.disabled = true; btn.innerText = "Processing..."; errEl.style.display = "none";
 
                 signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value)
-                    .catch(error => {
-                        err.innerText = "Access Denied: " + error.message;
-                        err.style.display = "block";
-                        btn.disabled = false;
-                        btn.innerText = "Secure Login";
+                    .catch(err => {
+                        errEl.innerText = "Login Failed: " + err.message;
+                        errEl.style.display = "block";
+                        btn.disabled = false; btn.innerText = "Login";
                     });
-            });
+            };
 
             window.handleLogout = () => signOut(auth);
 
-            async function loadUserSubmissions() {
-                const tbody = document.getElementById("submissionsTable");
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#aaa;">Synchronizing data...</td></tr>';
-                
+            async function loadData() {
+                const tbody = document.getElementById("dataTable");
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#aaa;">Synchronizing articles...</td></tr>';
                 try {
-                    // Always filter by current user's email for security
                     const q = query(collection(db, "pending_posts"), where("author", "==", auth.currentUser.email));
                     const snap = await getDocs(q);
-                    
                     tbody.innerHTML = "";
-                    document.getElementById("countHeader").innerText = "Pending Articles: " + snap.size;
+                    document.getElementById("countText").innerText = "Pending: " + snap.size;
 
                     if (snap.empty) {
-                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#999;">You have no pending submissions.</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No drafts found for your account.</td></tr>';
                         return;
                     }
 
                     snap.forEach(d => {
-                        const post = d.data();
+                        const p = d.data();
                         tbody.innerHTML += `
                             <tr>
-                                <td style="font-weight:600;">${post.title}</td>
-                                <td><span style="background:#f1f3f4; padding:5px 12px; border-radius:4px; font-size:0.8rem;">${post.category}</span></td>
-                                <td><button style="background:none; border:1px solid #ea4335; color:#ea4335; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8rem;" onclick="deleteSubmission('${d.id}')">Remove</button></td>
+                                <td style="font-weight:600;">${p.title}</td>
+                                <td><span style="background:#eee; padding:3px 8px; border-radius:4px; font-size:12px;">${p.category}</span></td>
+                                <td><button style="background:none; border:1px solid #ea4335; color:#ea4335; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="deletePost('${d.id}')">Delete</button></td>
                             </tr>`;
                     });
-                } catch(e) { 
-                    tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Database Sync Error.</td></tr>'; 
-                }
+                } catch(e) { tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Sync Error.</td></tr>'; }
             }
 
-            window.deleteSubmission = async (id) => {
-                if (confirm("Permanently remove this submission?")) {
+            window.deletePost = async (id) => {
+                if (confirm("Delete this submission forever?")) {
                     await deleteDoc(doc(db, "pending_posts", id));
-                    loadUserSubmissions();
+                    loadData();
                 }
             };
         </script>
