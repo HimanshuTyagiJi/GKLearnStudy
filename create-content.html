@@ -1868,7 +1868,8 @@
                 }
                 
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-                const authorName = currentUser?.displayName || "Himanshu Tyagi";
+             const authorName = currentUser.email;
+
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
@@ -1905,7 +1906,8 @@
                 const imgInput = document.getElementById("imgName").value;
                 
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-                const authorName = currentUser?.displayName || "Himanshu Tyagi";
+                const authorName = currentUser.email;
+
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
@@ -2537,4 +2539,5 @@
         </script>
     </body>
 </html>
+
 
