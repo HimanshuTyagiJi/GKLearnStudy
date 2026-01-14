@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -519,7 +518,6 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            const OWNER_EMAIL = "officialhimanshutyagi@gmail.com";
             let currentUser = null;
             let allPostsData = [];
             let currentFilter = "all";
@@ -569,28 +567,17 @@
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
                 try {
-                    const isOwner = currentUser.email === OWNER_EMAIL;
                     allPostsData = [];
-
-                    // Fetch Pending Posts
-                    let qPending;
-                    if (isOwner) {
-                        qPending = query(collection(db, "pending_posts"));
-                    } else {
-                        qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
-                    }
+                    const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
                     const snapPending = await getDocs(qPending);
                     snapPending.forEach((doc) =>
                         allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
                     );
 
-                    // Fetch Published Posts
-                    let qPublished;
-                    if (isOwner) {
-                        qPublished = query(collection(db, "published_posts"));
-                    } else {
-                        qPublished = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
-                    }
+                    const qPublished = query(
+                        collection(db, "published_posts"),
+                        where("author", "==", currentUser.email)
+                    );
                     const snapPublished = await getDocs(qPublished);
                     snapPublished.forEach((doc) =>
                         allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
@@ -675,4 +662,86 @@
             };
         </script>
     </body>
-</html>
+</html><div id='admin-pwa-popup' style='display:none;'>
+  <div class='admin-pwa-content'>
+    <span class='admin-close' onclick='closeAdminPWA()'>&times;</span>
+    <img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_PqIxy5JxLWeaULAPy_rkIFmaHw4-VwNJocMaX2DNxsWeTVeB5Zsej4y4yh8ynjmyy4tDGKDJ72YpRt5p0QWSv_EYc78H2uARhY3Nwd65TYS7IzqB3ZZ6Yr_AeW2RQH_XM0hJSn8b6t4-Ay7HHLquIdgpooC9ESjIjatPGbGNqKDUdvS706tR1oznvR8c/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2012_15_00%20PM.png'/>
+    <div class='admin-pwa-info'>
+      <b>Admin App</b>
+      <p>Manage your dashboard easily!</p>
+    </div>
+    <button id='admin-install-btn'>INSTALL</button>
+  </div>
+</div>
+
+<style>
+#admin-pwa-popup {
+    position: fixed; bottom: 20px; left: 15px; right: 15px; 
+    background: #ffffff; border-radius: 25px; padding: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 999999;
+    border: 1px solid #e0e0e0; animation: adminSlideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes adminSlideUp { from {transform: translateY(120%)} to {transform: translateY(0%)} }
+.admin-pwa-content { display: flex; align-items: center; gap: 15px; position: relative; }
+.admin-pwa-content img { width: 60px; height: 60px; border-radius: 15px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.admin-pwa-info { flex: 1; font-family: 'Segoe UI', Roboto, sans-serif; }
+.admin-pwa-info b { font-size: 18px; color: #1a1a1a; display: block; margin-bottom: 2px; }
+.admin-pwa-info p { font-size: 13px; color: #777; margin: 0; }
+#admin-install-btn { background: #007bff; color: #fff; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 14px; }
+#admin-install-btn:hover { background: #0056b3; }
+.admin-close { position: absolute; top: -10px; right: -5px; font-size: 24px; color: #ccc; cursor: pointer; padding: 5px; }
+</style>
+
+<script>
+let adminPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    adminPrompt = e;
+    if(!localStorage.getItem('admin_pwa_closed')) {
+        document.getElementById('admin-pwa-popup').style.display = 'block';
+    }
+});
+
+document.getElementById('admin-install-btn').addEventListener('click', async () => {
+    if (adminPrompt) {
+        adminPrompt.prompt();
+        const { outcome } = await adminPrompt.userChoice;
+        if (outcome === 'accepted') {
+            document.getElementById('admin-pwa-popup').style.display = 'none';
+        }
+    } else {
+        alert('Chrome Menu > Install App par click karein.');
+    }
+});
+
+function closeAdminPWA() {
+    document.getElementById('admin-pwa-popup').style.display = 'none';
+    localStorage.setItem('admin_pwa_closed', 'true');
+}
+
+// Admin Manifest Setup
+(function() {
+    var m = document.createElement('link');
+    m.rel = 'manifest';
+    var manifestData = {
+        "name": "Admin",
+        "short_name": "Admin",
+        "start_url": window.location.href,
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#007bff",
+        "icons": [{
+            "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_PqIxy5JxLWeaULAPy_rkIFmaHw4-VwNJocMaX2DNxsWeTVeB5Zsej4y4yh8ynjmyy4tDGKDJ72YpRt5p0QWSv_EYc78H2uARhY3Nwd65TYS7IzqB3ZZ6Yr_AeW2RQH_XM0hJSn8b6t4-Ay7HHLquIdgpooC9ESjIjatPGbGNqKDUdvS706tR1oznvR8c/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2012_15_00%20PM.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }]
+    };
+    m.href = 'data:application/json;base64,' + btoa(JSON.stringify(manifestData));
+    document.head.appendChild(m);
+})();
+</script>
+
+
+
+
