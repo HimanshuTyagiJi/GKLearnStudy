@@ -566,29 +566,33 @@
                 const tbody = document.getElementById("tableBody");
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
-                try {
-                    allPostsData = [];
-                    const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
-                    const snapPending = await getDocs(qPending);
-                    snapPending.forEach((doc) =>
-                        allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
-                    );
+try {
+    allPostsData = [];
 
-                    const qPublished = query(
-                        collection(db, "published_posts"),
-                        where("author", "==", currentUser.email)
-                    );
-                    const snapPublished = await getDocs(qPublished);
-                    snapPublished.forEach((doc) =>
-                        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
-                    );
+    // 🔥 USER -> sirf published_posts dekhega
+    const qPublished = query(
+        collection(db, "published_posts"),
+        where("author", "==", currentUser.email)
+    );
 
-                    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    updateStats();
-                    renderTable();
-                } catch (error) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Error: ${error.message}</td></tr>`;
-                }
+    const snapPublished = await getDocs(qPublished);
+    snapPublished.forEach((doc) =>
+        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
+    );
+
+    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    updateStats();
+    renderTable();
+
+} catch (error) {
+    tbody.innerHTML = 
+    `<tr>
+        <td colspan="4" style="color:red; text-align:center;">
+            Error: ${error.message}
+        </td>
+    </tr>`;
+}
+
             };
 
             function updateStats() {
@@ -741,6 +745,7 @@ function closeAdminPWA() {
     document.head.appendChild(m);
 })();
 </script>
+
 
 
 
