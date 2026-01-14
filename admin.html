@@ -536,8 +536,8 @@
             });
 
             function setupProfile(user) {
+                // सुधार: अब यहाँ Google Display Name को प्राथमिकता दी गई है
                 let name = user.displayName || user.email.split("@")[0];
-                name = name.charAt(0).toUpperCase() + name.slice(1);
                 document.getElementById("headerAdminName").innerText = name;
                 document.getElementById("headerProfileIcon").innerText = name.charAt(0).toUpperCase();
             }
@@ -568,7 +568,7 @@
 
                 try {
                     allPostsData = [];
-                    // सुधार: केवल वर्तमान यूजर की ईमेल से मेल खाने वाली पोस्ट लाएं (Rules के अनुसार)
+                    // सुधार: Security Rules 'author' में ईमेल आईडी चेक करते हैं, इसलिए फिल्टर 'author' पर लगाया गया है
                     const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
                     const snapPending = await getDocs(qPending);
                     snapPending.forEach((doc) =>
@@ -588,6 +588,7 @@
                     updateStats();
                     renderTable();
                 } catch (error) {
+                    console.error("Error loading posts:", error);
                     tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Error: ${error.message}</td></tr>`;
                 }
             };
