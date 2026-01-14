@@ -12,109 +12,84 @@
                 --header-height: 70px;
                 --admin-bg: #f4f6f8;
                 --primary-color: #2271b1;
+                --success-color: #28a745;
             }
-            body {
-                background-color: var(--admin-bg);
-                margin: 0;
-                font-family: "Segoe UI", sans-serif;
-                overflow-x: hidden;
-            }
+            body { background-color: var(--admin-bg); margin: 0; font-family: "Segoe UI", sans-serif; overflow-x: hidden; }
 
-            /* --- ENVIRONMENT WARNING --- */
-            #env-warning {
-                display: none;
-                background: #d63638;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                font-weight: bold;
-                position: fixed;
-                top: 0; width: 100%; z-index: 100000;
+            /* --- DOMAIN ALERT --- */
+            #domain-alert {
+                display: none; background: #fff3cd; color: #856404; padding: 10px;
+                text-align: center; font-size: 0.85rem; border-bottom: 1px solid #ffeeba;
             }
 
             /* --- LOGIN OVERLAY --- */
             #login-overlay {
-                position: fixed;
-                top: 0; left: 0; width: 100%; height: 100%;
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: linear-gradient(135deg, #1e3a8a, #000046);
-                display: flex; justify-content: center; align-items: center;
-                z-index: 9999;
+                display: flex; justify-content: center; align-items: center; z-index: 9999;
             }
             .login-card {
                 background: white; padding: 40px; border-radius: 16px;
                 width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
                 text-align: center;
             }
-            .login-card h2 { margin-top: 0; color: var(--primary-color); }
             .login-card input {
                 width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd;
-                border-radius: 8px; box-sizing: border-box; font-size: 1rem; background: #f9f9f9;
+                border-radius: 8px; box-sizing: border-box; font-size: 1rem;
             }
             .login-btn {
                 width: 100%; padding: 14px; background: var(--primary-color);
-                color: white; border: none; border-radius: 8px; font-weight: bold;
-                cursor: pointer; transition: 0.3s; font-size: 1rem;
+                color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
             }
 
-            /* --- LAYOUT --- */
+            /* --- APP LAYOUT --- */
             #admin-app { display: none; height: 100vh; flex-direction: column; }
 
             .sidebar {
                 width: var(--sidebar-width); background: #ffffff; height: 100vh;
                 position: fixed; top: 0; left: 0; border-right: 1px solid #e0e0e0;
-                display: flex; flex-direction: column; z-index: 100; transition: transform 0.3s ease;
+                display: flex; flex-direction: column; z-index: 100;
             }
             .brand-logo { height: var(--header-height); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.4rem; color: var(--primary-color); border-bottom: 1px solid #f0f0f0; }
-            .menu-items { list-style: none; padding: 20px 10px; margin: 0; flex-grow: 1; overflow-y: auto; }
+            .menu-items { list-style: none; padding: 20px 10px; margin: 0; }
             .menu-items a { display: flex; align-items: center; padding: 12px 15px; color: #555; text-decoration: none; font-weight: 600; border-radius: 8px; margin-bottom: 5px; }
             .menu-items a:hover, .menu-items a.active { background: #e3f2fd; color: var(--primary-color); }
-            .menu-items i { width: 25px; font-size: 1.1rem; }
 
             .admin-header {
                 height: var(--header-height); background: white; border-bottom: 1px solid #e0e0e0;
                 display: flex; align-items: center; justify-content: space-between;
-                padding: 0 20px; position: fixed; top: 0; left: var(--sidebar-width);
-                right: 0; z-index: 90; transition: left 0.3s;
+                padding: 0 20px; position: fixed; top: 0; left: var(--sidebar-width); right: 0; z-index: 90;
             }
 
-            .profile-wrapper { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 5px 10px; border-radius: 30px; transition: 0.2s; }
-            .profile-wrapper:hover { background: #f0f0f0; }
+            .profile-wrapper { 
+                display: flex; align-items: center; gap: 12px; cursor: pointer; 
+                padding: 6px 14px; border-radius: 35px; border: 1px solid #eee; transition: 0.2s;
+            }
+            .profile-wrapper:hover { background: #f8f9fa; border-color: var(--primary-color); }
+            
             .profile-circle {
-                width: 40px; height: 40px; border-radius: 50%; background: var(--primary-color);
+                width: 38px; height: 38px; border-radius: 50%; background: var(--primary-color);
                 color: white; display: flex; align-items: center; justify-content: center;
-                font-weight: bold; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                font-weight: bold; overflow: hidden; position: relative;
             }
             .profile-circle img { width: 100%; height: 100%; object-fit: cover; }
-            .admin-name { font-weight: 600; color: #1d2327; font-size: 0.9rem; }
+            .admin-name { font-weight: 600; color: #333; font-size: 0.9rem; max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-            .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; transition: margin-left 0.3s; }
+            .content-area { margin-left: var(--sidebar-width); margin-top: var(--header-height); padding: 30px; }
 
-            .dashboard-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
-            .stat-btn { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); border: 2px solid transparent; cursor: pointer; text-align: left; }
-            .stat-btn.active { border-color: var(--primary-color); background: #e3f2fd; }
-
-            .table-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); padding: 20px; overflow-x: auto; }
-            table { width: 100%; border-collapse: collapse; min-width: 600px; }
-            th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
-            th { color: #555; font-weight: 700; background: #f8f9fa; }
-
-            .status-badge { padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-            .status-published { background: #d4edda; color: #155724; }
-            .status-pending { background: #fff3cd; color: #856404; }
-
-            .btn-action { padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; cursor: pointer; font-size: 0.8rem; background: white; color: #333; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+            .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: var(--card-shadow); display: flex; align-items: center; gap: 15px; }
 
             /* --- MODAL --- */
             .modal-overlay {
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
             }
-            .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+            .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; }
+            .modal-content h3 { margin-top: 0; color: var(--primary-color); }
             .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-
+            
             @media (max-width: 768px) {
                 .sidebar { transform: translateX(-100%); }
-                .sidebar.active { transform: translateX(0); }
                 .content-area { margin-left: 0; padding: 15px; }
                 .admin-header { left: 0; }
                 .admin-name { display: none; }
@@ -122,66 +97,63 @@
         </style>
     </head>
     <body>
-        <!-- PROTOCOL WARNING -->
-        <div id="env-warning">
-            ⚠️ ERROR: You are running this as a local file (file://). Login will NOT work. Please use a local server or upload to GitHub.
+        <div id="domain-alert">
+            ⚠️ <strong>Heads up:</strong> If login fails, please ensure <code>gklearnstudy.in</code> is added to 'Authorized Domains' in Firebase Console.
         </div>
 
         <!-- LOGIN SCREEN -->
         <div id="login-overlay">
             <div class="login-card">
-                <h2><i class="fas fa-lock"></i> Admin Login</h2>
-                <p style="color: #666; margin-bottom: 20px">Sign in to access your dashboard</p>
+                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="60" style="margin-bottom:15px;">
+                <h2>Admin Login</h2>
                 <form id="loginForm">
                     <input type="email" id="adminEmail" placeholder="Email Address" required />
                     <input type="password" id="adminPass" placeholder="Password" required />
-                    <button type="submit" class="login-btn" id="loginBtnMain">Login to Dashboard</button>
-                    <p id="loginError" style="color: red; margin-top: 15px; display: none"></p>
+                    <button type="submit" class="login-btn" id="loginBtn">Login to Dashboard</button>
+                    <p id="loginError" style="color: red; margin-top: 15px; display: none; font-size: 0.8rem;"></p>
                 </form>
             </div>
         </div>
 
-        <!-- MAIN DASHBOARD -->
+        <!-- MAIN APP -->
         <div id="admin-app">
-            <aside class="sidebar" id="sidebar">
-                <div class="brand-logo">GK Admin Panel</div>
+            <aside class="sidebar">
+                <div class="brand-logo">GK Admin</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active" onclick="loadMyPosts()"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a></li>
-                    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="create-content.html" target="_blank"><i class="fas fa-edit"></i> New Article</a></li>
+                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-plus-circle"></i> Add Quiz</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a></li>
                 </ul>
             </aside>
 
             <header class="admin-header">
-                <div style="display: flex; align-items: center; gap: 15px">
-                    <button class="hamburger" onclick="toggleSidebar(true)" style="background:none;border:none;font-size:1.5rem;"><i class="fas fa-bars"></i></button>
-                    <h3 style="margin: 0" id="currentViewTitle">My Dashboard</h3>
-                </div>
+                <h3>Control Panel</h3>
                 <div class="profile-wrapper" onclick="openProfileModal()">
-                    <span class="admin-name" id="headerAdminName">Admin</span>
                     <div class="profile-circle" id="headerProfileIcon">
                         <i class="fas fa-user"></i>
                     </div>
+                    <span class="admin-name" id="headerAdminName">Loading...</span>
+                    <i class="fas fa-chevron-down" style="font-size: 0.7rem; color: #999"></i>
                 </div>
             </header>
 
             <div class="content-area">
-                <div class="dashboard-stats">
-                    <button class="stat-btn active" id="filter-all" onclick="setFilter('all')">
-                        <div class="stat-icon" style="background: #e3f2fd; color: #2271b1"><i class="fas fa-list"></i></div>
-                        <div class="stat-info"><h3 id="statTotal">0</h3><p>Total</p></div>
-                    </button>
-                    <button class="stat-btn" id="filter-published" onclick="setFilter('published')">
-                        <div class="stat-icon" style="background: #d4edda; color: #155724"><i class="fas fa-check-circle"></i></div>
-                        <div class="stat-info"><h3 id="statPublished">0</h3><p>Live</p></div>
-                    </button>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom:30px;">
+                    <div class="stat-card">
+                         <div style="background:#e3f2fd; color:#2271b1; padding:15px; border-radius:10px;"><i class="fas fa-file-alt fa-2x"></i></div>
+                         <div><h2 id="statTotal" style="margin:0">0</h2><p style="margin:0; color:#666">Total Posts</p></div>
+                    </div>
                 </div>
 
-                <div class="table-card">
-                    <table id="postsTable">
+                <div style="background:white; padding:25px; border-radius:12px; box-shadow: var(--card-shadow); overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse;">
                         <thead>
-                            <tr><th>Title</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                            <tr style="text-align:left; border-bottom:2px solid #f0f0f0;">
+                                <th style="padding:15px">Title</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
                     </table>
@@ -189,17 +161,18 @@
             </div>
         </div>
 
-        <!-- PROFILE EDIT MODAL -->
+        <!-- PROFILE MODAL -->
         <div id="profile-modal" class="modal-overlay">
             <div class="modal-content">
-                <h3><i class="fas fa-user-edit"></i> Edit Profile</h3>
-                <label style="font-size:0.8rem;color:#666;">Full Name</label>
-                <input type="text" id="editName" placeholder="Your Name">
-                <label style="font-size:0.8rem;color:#666;">Photo URL (Optional)</label>
-                <input type="text" id="editPhoto" placeholder="https://example.com/photo.jpg">
+                <h3 id="modalHeading">Profile Settings</h3>
+                <p style="font-size:0.8rem; color:#666; margin-bottom:20px;">Update your name and photo to appear as an author.</p>
+                <label style="font-size:0.8rem; font-weight:bold;">Your Name</label>
+                <input type="text" id="editName" placeholder="Full Name">
+                <label style="font-size:0.8rem; font-weight:bold;">Photo URL</label>
+                <input type="text" id="editPhoto" placeholder="https://path-to-image.jpg">
                 <div style="display:flex; gap:10px;">
-                    <button class="btn primary" style="flex:1;background:var(--primary-color);color:white;padding:10px;border:none;border-radius:5px;" onclick="saveProfile()">Save</button>
-                    <button class="btn" style="flex:1;background:#ddd;padding:10px;border:none;border-radius:5px;" onclick="closeProfileModal()">Cancel</button>
+                    <button style="flex:2; background:var(--primary-color); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="saveProfile()">Save Profile</button>
+                    <button style="flex:1; background:#eee; border:none; padding:12px; border-radius:8px; cursor:pointer;" onclick="closeProfileModal()">Cancel</button>
                 </div>
             </div>
         </div>
@@ -207,7 +180,7 @@
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
             import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-            import { getFirestore, collection, getDocs, getDoc, setDoc, doc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+            import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
@@ -218,27 +191,24 @@
                 appId: "1:307990626713:web:e7b650c718c0cade4e5308",
             };
 
-            // Check if protocol is file://
-            if (window.location.protocol === 'file:') {
-                document.getElementById('env-warning').style.display = 'block';
-            }
-
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            let currentUser = null;
-            let allPostsData = [];
+            if (window.location.hostname === 'gklearnstudy.in') {
+                document.getElementById('domain-alert').style.display = 'block';
+            }
 
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    console.info("--- PROFILE DIAGNOSTIC ---");
-                    console.log("Logged In UID:", user.uid);
-                    currentUser = user;
+                    console.info("--- AUTH STATUS ---");
+                    console.log("UID:", user.uid);
+                    console.log("Provider:", user.providerData[0]?.providerId);
+                    
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
                     await setupProfile(user);
-                    loadMyPosts();
+                    loadData();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
                     document.getElementById("admin-app").style.display = "none";
@@ -252,66 +222,77 @@
                 let name = user.displayName;
                 let photo = user.photoURL;
 
-                // 1. Try Firestore First
+                // 1. Force Fetch from Firestore (Primary source for name/photo)
                 try {
                     const userDoc = await getDoc(doc(db, "users", user.uid));
                     if (userDoc.exists()) {
                         const data = userDoc.data();
-                        console.log("Firestore Doc Found:", data);
                         if (data.name) name = data.name;
                         if (data.photo) photo = data.photo;
+                        console.log("Profile Sync: Success from Firestore");
                     }
-                } catch (e) { console.error("Firestore read error:", e); }
+                } catch (e) { console.error("Firestore error:", e.message); }
 
-                // 2. Owner Override
+                // 2. Owner Branding
                 if (user.email === "officialhimanshutyagi@gmail.com") {
-                    name = "Mr. Himanshu Tyagi";
-                    photo = photo || "https://gklearnstudy.in/GK-Learn-Study.png";
+                    if (!name) name = "Mr. Himanshu Tyagi";
+                    if (!photo) photo = "https://gklearnstudy.in/GK-Learn-Study.png";
                 }
 
-                // 3. Fallback to Email Prefix
-                if (!name) name = user.email.split("@")[0];
-
-                nameEl.innerText = name;
-                document.getElementById("editName").value = name;
+                // 3. Fallback
+                const finalName = name || user.email.split("@")[0];
+                nameEl.innerText = finalName;
+                document.getElementById("editName").value = finalName;
                 document.getElementById("editPhoto").value = photo || "";
 
                 if (photo) {
-                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.parentElement.innerHTML='${name.charAt(0).toUpperCase()}'">`;
+                    iconContainer.innerHTML = `<img src="${photo}" alt="${finalName}" onerror="this.parentElement.innerHTML='${finalName.charAt(0).toUpperCase()}'">`;
                 } else {
-                    iconContainer.innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
+                    iconContainer.innerHTML = `<span>${finalName.charAt(0).toUpperCase()}</span>`;
+                    // AUTO-OPEN Modal if data is totally missing
+                    if (!name) {
+                        document.getElementById("modalHeading").innerText = "Finish Your Profile";
+                        openProfileModal();
+                    }
                 }
-                console.info("--- DIAGNOSTIC COMPLETE ---");
             }
 
             window.openProfileModal = () => document.getElementById("profile-modal").style.display = "flex";
             window.closeProfileModal = () => document.getElementById("profile-modal").style.display = "none";
 
             window.saveProfile = async () => {
-                const newName = document.getElementById("editName").value.trim();
-                const newPhoto = document.getElementById("editPhoto").value.trim();
-                if (!newName) return alert("Name is required!");
+                const user = auth.currentUser;
+                if (!user) return;
+
+                const name = document.getElementById("editName").value.trim();
+                const photo = document.getElementById("editPhoto").value.trim();
+
+                if (!name) return alert("Please enter a name.");
 
                 try {
-                    await setDoc(doc(db, "users", currentUser.uid), {
-                        name: newName, photo: newPhoto, updatedAt: new Date().toISOString()
+                    await setDoc(doc(db, "users", user.uid), {
+                        name: name,
+                        photo: photo,
+                        email: user.email,
+                        lastUpdate: new Date().toISOString()
                     }, { merge: true });
+                    
                     alert("Profile Saved!");
-                    window.closeProfileModal();
-                    await setupProfile(currentUser);
-                } catch (e) { alert("Save failed: " + e.message); }
+                    closeProfileModal();
+                    await setupProfile(user);
+                } catch (e) { alert("Error saving: " + e.message); }
             };
 
             document.getElementById("loginForm").addEventListener("submit", (e) => {
                 e.preventDefault();
-                const btn = document.getElementById('loginBtnMain');
-                btn.innerText = "Authenticating...";
+                const btn = document.getElementById("loginBtn");
+                btn.innerText = "Verifying...";
                 btn.disabled = true;
 
                 signInWithEmailAndPassword(auth, document.getElementById("adminEmail").value, document.getElementById("adminPass").value)
-                .catch((error) => {
+                .catch(err => {
                     const errEl = document.getElementById("loginError");
-                    errEl.innerText = "Error: " + error.message;
+                    errEl.innerText = err.message;
                     errEl.style.display = "block";
                     btn.innerText = "Login to Dashboard";
                     btn.disabled = false;
@@ -319,49 +300,39 @@
             });
 
             window.logout = () => signOut(auth);
-            window.toggleSidebar = (show) => document.getElementById("sidebar").classList.toggle("active", show);
 
-            window.loadMyPosts = async () => {
+            async function loadData() {
                 const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="4">Syncing...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" style="padding:20px; text-align:center;">Syncing articles...</td></tr>';
+                
                 try {
-                    allPostsData = [];
-                    const q1 = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
-                    const s1 = await getDocs(q1);
-                    s1.forEach(d => allPostsData.push({ id: d.id, ...d.data(), col: "pending_posts" }));
+                    const q = query(collection(db, "pending_posts"), where("author", "==", auth.currentUser.email));
+                    const snap = await getDocs(q);
+                    
+                    tbody.innerHTML = "";
+                    document.getElementById("statTotal").innerText = snap.size;
 
-                    const q2 = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
-                    const s2 = await getDocs(q2);
-                    s2.forEach(d => allPostsData.push({ id: d.id, ...d.data(), col: "published_posts" }));
-
-                    renderTable();
-                } catch (e) { tbody.innerHTML = '<tr><td colspan="4">Sync Error. Please check Firestore Rules.</td></tr>'; }
-            };
-
-            function renderTable() {
-                const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = "";
-                document.getElementById("statTotal").innerText = allPostsData.length;
-                document.getElementById("statPublished").innerText = allPostsData.filter(p => p.col === "published_posts").length;
-
-                allPostsData.forEach((p) => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td><strong>${p.title}</strong></td>
-                        <td>${new Date(p.date).toLocaleDateString()}</td>
-                        <td><span class="status-badge status-${p.col === 'published_posts' ? 'published' : 'pending'}">${p.col === 'published_posts' ? 'Live' : 'Pending'}</span></td>
-                        <td><button class="btn-action" onclick="deletePost('${p.id}', '${p.col}')">Delete</button></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+                    snap.forEach(d => {
+                        const p = d.data();
+                        const tr = document.createElement("tr");
+                        tr.style.borderBottom = "1px solid #f0f0f0";
+                        tr.innerHTML = `
+                            <td style="padding:15px"><strong>${p.title}</strong></td>
+                            <td><span style="background:#fff3cd; color:#856404; padding:4px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">PENDING</span></td>
+                            <td><button class="btn" style="background:#fee2e2; color:#c53030; padding:5px 10px;" onclick="deletePost('${d.id}')">Delete</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } catch(e) { tbody.innerHTML = '<tr><td colspan="3">Error loading data.</td></tr>'; }
             }
 
-            window.deletePost = async (id, col) => {
-                if (confirm("Delete permanently?")) {
-                    await deleteDoc(doc(db, col, id));
-                    loadMyPosts();
+            window.deletePost = async (id) => {
+                if (confirm("Delete this draft permanently?")) {
+                    await deleteDoc(doc(db, "pending_posts", id));
+                    loadData();
                 }
             };
+
         </script>
     </body>
 </html>
