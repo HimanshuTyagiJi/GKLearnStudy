@@ -36,7 +36,7 @@
             .login-card {
                 background: white;
                 padding: 40px;
-                border-radius: 16px;
+                border-radius: 20px;
                 width: 90%;
                 max-width: 400px;
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
@@ -45,32 +45,38 @@
             .login-card h2 {
                 margin-top: 0;
                 color: var(--primary-color);
+                margin-bottom: 10px;
             }
-            .login-card input {
+            .login-card p {
+                color: #666;
+                margin-bottom: 30px;
+                font-size: 0.95rem;
+            }
+            
+            .google-btn {
                 width: 100%;
                 padding: 14px;
-                margin-bottom: 15px;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                box-sizing: border-box;
-                font-size: 1rem;
-                background: #f9f9f9;
-            }
-            .login-btn {
-                width: 100%;
-                padding: 14px;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                font-weight: bold;
+                border: 1px solid #dadce0;
+                border-radius: 30px;
+                background: #fff;
+                color: #3c4043;
+                font-weight: 600;
                 cursor: pointer;
-                transition: 0.3s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
                 font-size: 1rem;
+                transition: all 0.3s ease;
             }
-            .login-btn:hover {
-                background: #135e96;
-                transform: translateY(-2px);
+            .google-btn:hover {
+                background: #f8f9fa;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                border-color: #d2d2d2;
+            }
+            .google-btn img {
+                width: 22px;
+                height: 22px;
             }
 
             /* --- LAYOUT --- */
@@ -168,7 +174,7 @@
                 font-weight: bold;
                 font-size: 1.2rem;
                 cursor: pointer;
-                overflow: hidden; /* Ensure images are contained in circle */
+                overflow: hidden;
                 text-transform: uppercase;
             }
             .profile-circle img {
@@ -275,22 +281,10 @@
                 font-weight: 700;
                 text-transform: uppercase;
             }
-            .status-draft {
-                background: #e2e8f0;
-                color: #475569;
-            }
-            .status-pending {
-                background: #fff3cd;
-                color: #856404;
-            }
-            .status-published {
-                background: #d4edda;
-                color: #155724;
-            }
-            .status-rejected {
-                background: #f8d7da;
-                color: #721c24;
-            }
+            .status-draft { background: #e2e8f0; color: #475569; }
+            .status-pending { background: #fff3cd; color: #856404; }
+            .status-published { background: #d4edda; color: #155724; }
+            .status-rejected { background: #f8d7da; color: #721c24; }
 
             .btn-action {
                 padding: 6px 12px;
@@ -315,11 +309,8 @@
                 color: #c53030;
                 border-color: #fecaca;
             }
-            .btn-delete:hover {
-                background: #fecaca;
-            }
+            .btn-delete:hover { background: #fecaca; }
 
-            /* Mobile Sidebar & Overlay */
             .hamburger {
                 display: none;
                 font-size: 1.5rem;
@@ -340,29 +331,13 @@
             }
 
             @media (max-width: 768px) {
-                .sidebar {
-                    transform: translateX(-100%);
-                }
-                .sidebar.active {
-                    transform: translateX(0);
-                }
-                .content-area {
-                    margin-left: 0;
-                    padding: 15px;
-                }
-                .admin-header {
-                    left: 0;
-                    padding: 0 15px;
-                }
-                .hamburger {
-                    display: block;
-                }
-                .sidebar-overlay.active {
-                    display: block;
-                }
-                .admin-name {
-                    display: none;
-                }
+                .sidebar { transform: translateX(-100%); }
+                .sidebar.active { transform: translateX(0); }
+                .content-area { margin-left: 0; padding: 15px; }
+                .admin-header { left: 0; padding: 0 15px; }
+                .hamburger { display: block; }
+                .sidebar-overlay.active { display: block; }
+                .admin-name { display: none; }
             }
         </style>
     </head>
@@ -370,14 +345,14 @@
         <!-- LOGIN SCREEN -->
         <div id="login-overlay">
             <div class="login-card">
-                <h2><i class="fas fa-lock"></i> Admin Login</h2>
-                <p style="color: #666; margin-bottom: 20px">Please sign in to access your dashboard</p>
-                <form id="loginForm">
-                    <input type="email" id="adminEmail" placeholder="Email Address" required />
-                    <input type="password" id="adminPass" placeholder="Password" required />
-                    <button type="submit" class="login-btn">Login to Dashboard</button>
-                    <p id="loginError" style="color: red; margin-top: 15px; display: none"></p>
-                </form>
+                <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="70" style="margin-bottom:20px;">
+                <h2>Master Access</h2>
+                <p>Please sign in with your authorized Google Account to manage content.</p>
+                <button class="google-btn" id="googleSignInBtn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google">
+                    Continue with Google
+                </button>
+                <p id="loginError" style="color: red; margin-top: 15px; display: none"></p>
             </div>
         </div>
 
@@ -395,17 +370,13 @@
                         <a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a>
                     </li>
                     <li>
-                        <a href="gk-portal.html" target="_blank"
-                            ><i class="fas fa-question-circle"></i> Add GK Question</a
-                        >
+                        <a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a>
                     </li>
                     <li>
-                        <a href="kaise-karen-creator.html" target="_blank"
-                            ><i class="fas fa-lightbulb"></i>Create How-To Guides</a
-                        >
+                        <a href="kaise-karen-creator.html" target="_blank"><i class="fas fa-lightbulb"></i> How-To Guides</a>
                     </li>
-                    <li>
-                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <li style="margin-top: auto;">
+                        <a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a>
                     </li>
                 </ul>
             </aside>
@@ -416,66 +387,35 @@
                     <h3 style="margin: 0" id="currentViewTitle">My Dashboard</h3>
                 </div>
                 <div class="profile-wrapper">
-                    <span class="admin-name" id="headerAdminName">Admin</span>
-                    <div class="profile-circle" id="headerProfileIcon">A</div>
+                    <span class="admin-name" id="headerAdminName">Authenticating...</span>
+                    <div class="profile-circle" id="headerProfileIcon"></div>
                 </div>
             </header>
 
             <div class="content-area">
                 <div class="dashboard-stats">
                     <button class="stat-btn active" id="filter-all" onclick="setFilter('all')">
-                        <div class="stat-icon" style="background: #e3f2fd; color: #2271b1">
-                            <i class="fas fa-list"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="statTotal">0</h3>
-                            <p>Total</p>
-                        </div>
+                        <div class="stat-icon" style="background: #e3f2fd; color: #2271b1"><i class="fas fa-list"></i></div>
+                        <div class="stat-info"><h3 id="statTotal">0</h3><p>Total</p></div>
                     </button>
                     <button class="stat-btn" id="filter-draft" onclick="setFilter('draft')">
-                        <div class="stat-icon" style="background: #f1f5f9; color: #475569">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="statDraft">0</h3>
-                            <p>Drafts</p>
-                        </div>
+                        <div class="stat-icon" style="background: #f1f5f9; color: #475569"><i class="fas fa-file-alt"></i></div>
+                        <div class="stat-info"><h3 id="statDraft">0</h3><p>Drafts</p></div>
                     </button>
                     <button class="stat-btn" id="filter-pending" onclick="setFilter('pending')">
-                        <div class="stat-icon" style="background: #fff3cd; color: #856404">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="statPending">0</h3>
-                            <p>Pending</p>
-                        </div>
+                        <div class="stat-icon" style="background: #fff3cd; color: #856404"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="statPending">0</h3><p>Pending</p></div>
                     </button>
                     <button class="stat-btn" id="filter-published" onclick="setFilter('published')">
-                        <div class="stat-icon" style="background: #d4edda; color: #155724">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="statPublished">0</h3>
-                            <p>Live</p>
-                        </div>
-                    </button>
-                    <button class="stat-btn" id="filter-rejected" onclick="setFilter('rejected')">
-                        <div class="stat-icon" style="background: #fee2e2; color: #c53030">
-                            <i class="fas fa-times-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="statRejected">0</h3>
-                            <p>Rejected</p>
-                        </div>
+                        <div class="stat-icon" style="background: #d4edda; color: #155724"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3 id="statPublished">0</h3><p>Live</p></div>
                     </button>
                 </div>
 
                 <div class="table-card">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px"
-                    >
-                        <h3 style="margin: 0">Recent Posts</h3>
-                        <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh</button>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px">
+                        <h3 style="margin: 0">Recent Submissions</h3>
+                        <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh Data</button>
                     </div>
                     <table id="postsTable">
                         <thead>
@@ -494,23 +434,8 @@
 
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-            import {
-                getAuth,
-                signInWithEmailAndPassword,
-                signOut,
-                onAuthStateChanged,
-            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-            import {
-                getFirestore,
-                collection,
-                getDocs,
-                getDoc,
-                doc,
-                deleteDoc,
-                query,
-                where,
-                orderBy,
-            } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+            import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+            import { getFirestore, collection, getDocs, getDoc, doc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
@@ -524,6 +449,7 @@
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
+            const provider = new GoogleAuthProvider();
 
             let currentUser = null;
             let allPostsData = [];
@@ -546,11 +472,16 @@
                 const nameEl = document.getElementById("headerAdminName");
                 const iconContainer = document.getElementById("headerProfileIcon");
 
-                // 1. Check current Auth user info
                 let name = user.displayName;
                 let photo = user.photoURL;
 
-                // 2. Fetch from Firestore (Allowed by rules)
+                // Owner Check Override
+                if (user.email === "officialhimanshutyagi@gmail.com") {
+                    name = "Mr. Himanshu Tyagi";
+                    photo = "https://gklearnstudy.in/GK-Learn-Study.png";
+                }
+
+                // Firestore Meta Check
                 try {
                     const userDoc = await getDoc(doc(db, "users", user.uid));
                     if (userDoc.exists()) {
@@ -558,38 +489,33 @@
                         if (data.name) name = data.name;
                         if (data.photo) photo = data.photo;
                     }
-                } catch (e) { console.warn("Could not fetch additional user data."); }
+                } catch (e) { console.warn("Meta fetch failed."); }
 
-                // 3. Owner Check Special Logic
-                if (user.email === "officialhimanshutyagi@gmail.com") {
-                    name = "Mr. Himanshu Tyagi";
-                    if (!photo) photo = "https://gklearnstudy.in/GK-Learn-Study.png";
-                }
-
-                // Fallback to email prefix if still empty
                 if (!name) name = user.email.split("@")[0];
-
                 nameEl.innerText = name;
 
                 if (photo) {
-                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}">`;
+                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.style.display='none';">`;
                 } else {
                     iconContainer.innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
                 }
             }
 
-            document.getElementById("loginForm").addEventListener("submit", (e) => {
-                e.preventDefault();
-                signInWithEmailAndPassword(
-                    auth,
-                    document.getElementById("adminEmail").value,
-                    document.getElementById("adminPass").value
-                ).catch((error) => {
-                    const errEl = document.getElementById("loginError");
-                    errEl.innerText = "Invalid login credentials";
-                    errEl.style.display = "block";
-                });
-            });
+            document.getElementById("googleSignInBtn").onclick = () => {
+                const btn = document.getElementById("googleSignInBtn");
+                const errEl = document.getElementById("loginError");
+                errEl.style.display = "none";
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+                
+                signInWithPopup(auth, provider)
+                    .catch(error => {
+                        errEl.innerText = "Auth failed: " + error.message;
+                        errEl.style.display = "block";
+                        btn.disabled = false;
+                        btn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google"> Continue with Google`;
+                    });
+            };
 
             window.logout = () => signOut(auth);
             window.toggleSidebar = (show) => {
@@ -600,21 +526,17 @@
             window.loadMyPosts = async () => {
                 if (!currentUser) return;
                 const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:#aaa;">Synchronizing records...</td></tr>';
 
                 try {
                     allPostsData = [];
-                    // Security Rules check 'author' against email, so keep this logic
                     const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
                     const snapPending = await getDocs(qPending);
                     snapPending.forEach((doc) =>
                         allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
                     );
 
-                    const qPublished = query(
-                        collection(db, "published_posts"),
-                        where("author", "==", currentUser.email)
-                    );
+                    const qPublished = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
                     const snapPublished = await getDocs(qPublished);
                     snapPublished.forEach((doc) =>
                         allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
@@ -624,25 +546,16 @@
                     updateStats();
                     renderTable();
                 } catch (error) {
-                    console.error("Error loading posts:", error);
-                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Error: ${error.message}</td></tr>`;
+                    console.error("Sync Error:", error);
+                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Sync failed: ${error.message}</td></tr>`;
                 }
             };
 
             function updateStats() {
                 document.getElementById("statTotal").innerText = allPostsData.length;
-                document.getElementById("statDraft").innerText = allPostsData.filter(
-                    (p) => p.status === "draft"
-                ).length;
-                document.getElementById("statPending").innerText = allPostsData.filter(
-                    (p) => p.status === "pending"
-                ).length;
-                document.getElementById("statPublished").innerText = allPostsData.filter(
-                    (p) => p.status === "published" || p.col === "published_posts"
-                ).length;
-                document.getElementById("statRejected").innerText = allPostsData.filter(
-                    (p) => p.status === "rejected"
-                ).length;
+                document.getElementById("statDraft").innerText = allPostsData.filter(p => p.status === "draft").length;
+                document.getElementById("statPending").innerText = allPostsData.filter(p => p.status === "pending").length;
+                document.getElementById("statPublished").innerText = allPostsData.filter(p => p.status === "published" || p.col === "published_posts").length;
             }
 
             window.setFilter = (filter) => {
@@ -650,7 +563,7 @@
                 document.querySelectorAll(".stat-btn").forEach((btn) => btn.classList.remove("active"));
                 document.getElementById(`filter-${filter}`).classList.add("active");
                 document.getElementById("currentViewTitle").innerText =
-                    filter === "all" ? "All Posts" : filter.charAt(0).toUpperCase() + filter.slice(1) + " Posts";
+                    filter === "all" ? "All Submissions" : filter.charAt(0).toUpperCase() + filter.slice(1) + " Submissions";
                 renderTable();
             };
 
@@ -661,70 +574,40 @@
                 let filtered = allPostsData;
                 if (currentFilter !== "all") {
                     filtered = allPostsData.filter((p) => {
-                        if (currentFilter === "published")
-                            return p.status === "published" || p.col === "published_posts";
+                        if (currentFilter === "published") return p.status === "published" || p.col === "published_posts";
                         return p.status === currentFilter;
                     });
                 }
 
                 if (filtered.length === 0) {
-                    tbody.innerHTML =
-                        '<tr><td colspan="4" style="text-align:center; padding:30px;">No matching posts.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px; color:#999;">No matching records found.</td></tr>';
                     return;
                 }
 
                 filtered.forEach((p) => {
                     const tr = document.createElement("tr");
                     const status = p.status || (p.col === "published_posts" ? "published" : "pending");
-                    let editorUrl =
-                        p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
+                    let editorUrl = p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
 
                     tr.innerHTML = `
-                    <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
-                    <td>${new Date(p.date).toLocaleDateString()}</td>
-                    <td><span class="status-badge status-${status}">${status}</span></td>
-                    <td>
-                        <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
-                        <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
+                        <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
+                        <td>${new Date(p.date).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-${status}">${status}</span></td>
+                        <td>
+                            <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
+                            <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    `;
                     tbody.appendChild(tr);
                 });
             }
 
             window.deletePost = async (id, col) => {
-                if (confirm("Permanently delete this post?")) {
+                if (confirm("Permanently delete this submission?")) {
                     await deleteDoc(doc(db, col, id));
                     loadMyPosts();
                 }
             };
-        </script>
-        
-        <div id='admin-pwa-popup' style='display:none;'>
-          <div class='admin-pwa-content'>
-            <span class='admin-close' onclick='closeAdminPWA()'>&times;</span>
-            <img src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_PqIxy5JxLWeaULAPy_rkIFmaHw4-VwNJocMaX2DNxsWeTVeB5Zsej4y4yh8ynjmyy4tDGKDJ72YpRt5p0QWSv_EYc78H2uARhY3Nwd65TYS7IzqB3ZZ6Yr_AeW2RQH_XM0hJSn8b6t4-Ay7HHLquIdgpooC9ESjIjatPGbGNqKDUdvS706tR1oznvR8c/s1024/ChatGPT%20Image%20Dec%2021,%202025,%2012_15_00%20PM.png'/>
-            <div class='admin-pwa-info'><b>Admin App</b><p>Manage your dashboard easily!</p></div>
-            <button id='admin-install-btn'>INSTALL</button>
-          </div>
-        </div>
-        <style>
-        #admin-pwa-popup { position: fixed; bottom: 20px; left: 15px; right: 15px; background: #ffffff; border-radius: 25px; padding: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 999999; border: 1px solid #e0e0e0; animation: adminSlideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-        @keyframes adminSlideUp { from {transform: translateY(120%)} to {transform: translateY(0%)} }
-        .admin-pwa-content { display: flex; align-items: center; gap: 15px; position: relative; }
-        .admin-pwa-content img { width: 60px; height: 60px; border-radius: 15px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .admin-pwa-info { flex: 1; font-family: 'Segoe UI', Roboto, sans-serif; }
-        .admin-pwa-info b { font-size: 18px; color: #1a1a1a; display: block; margin-bottom: 2px; }
-        .admin-pwa-info p { font-size: 13px; color: #777; margin: 0; }
-        #admin-install-btn { background: #007bff; color: #fff; border: none; padding: 12px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 14px; }
-        #admin-install-btn:hover { background: #0056b3; }
-        .admin-close { position: absolute; top: -10px; right: -5px; font-size: 24px; color: #ccc; cursor: pointer; padding: 5px; }
-        </style>
-        <script>
-        let adminPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); adminPrompt = e; if(!localStorage.getItem('admin_pwa_closed')) { document.getElementById('admin-pwa-popup').style.display = 'block'; } });
-        document.getElementById('admin-install-btn').addEventListener('click', async () => { if (adminPrompt) { adminPrompt.prompt(); const { outcome } = await adminPrompt.userChoice; if (outcome === 'accepted') { document.getElementById('admin-pwa-popup').style.display = 'none'; } } else { alert('Chrome Menu > Install App par click karein.'); } });
-        function closeAdminPWA() { document.getElementById('admin-pwa-popup').style.display = 'none'; localStorage.setItem('admin_pwa_closed', 'true'); }
         </script>
     </body>
 </html>
