@@ -303,7 +303,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-               
+                opacity: 0;
                 transition: all 0.2s;
                 margin: 8px 0;
                 z-index: 50;
@@ -1279,8 +1279,7 @@
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
                     // DISPLAY PROFILE NAME DIRECTLY LIKE kaisekarenformat.html
-const nameToDisplay = user.displayName || "User";
-
+                    const nameToDisplay = user.displayName || "Himanshu Tyagi";
                     statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
                     statusEl.style.color = "#333";
                 } else {
@@ -1868,9 +1867,8 @@ const nameToDisplay = user.displayName || "User";
                     return;
                 }
                 
-     const authorName = currentUser.displayName || "User";
-
-
+                // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
+                const authorName = currentUser?.displayName || "Himanshu Tyagi";
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
@@ -1887,9 +1885,7 @@ const nameToDisplay = user.displayName || "User";
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        authorName: authorName,
-authorEmail: currentUser.email,
-
+                        author: authorName,
                         date: new Date().toISOString(),
                         status: status,
                     });
@@ -1909,9 +1905,7 @@ authorEmail: currentUser.email,
                 const imgInput = document.getElementById("imgName").value;
                 
                 // DYNAMIC PROFILE NAME LOGIC LIKE kaisekarenformat.html
-               const authorName = currentUser.displayName || "User";
-
-
+                const authorName = currentUser?.displayName || "Himanshu Tyagi";
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
                 const canonical = `https://gklearnstudy.in/${folder}/${fileInput}.html`;
@@ -2543,5 +2537,3 @@ authorEmail: currentUser.email,
         </script>
     </body>
 </html>
-
-
