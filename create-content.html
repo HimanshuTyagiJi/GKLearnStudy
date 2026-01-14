@@ -1182,51 +1182,49 @@
         <!-- 5. NEW MEDIA & CODE MODAL (Black Box) -->
         <div id="media-modal">
             <div class="media-modal-content">
-                <div class="media-modal-content">
-                    <div class="media-modal-tabs">
-                        <button class="media-tab active" onclick="window.switchMediaTab('code')">
-                            Paste Custom HTML / Code
-                        </button>
-                        <button class="media-tab" onclick="window.switchMediaTab('image')">Create Text Image</button>
-                    </div>
+                <div class="media-modal-tabs">
+                    <button class="media-tab active" onclick="window.switchMediaTab('code')">
+                        Paste Custom HTML / Code
+                    </button>
+                    <button class="media-tab" onclick="window.switchMediaTab('image')">Create Text Image</button>
+                </div>
 
-                    <!-- Tab 1: Paste Code -->
-                    <div id="tab-code" class="media-tab-content active">
-                        <p style="margin-top: 0; font-size: 0.9rem; color: #aaa">
-                            Paste Image URL, YouTube Link, Iframe, or any HTML Code (Divs, Scripts, etc.):
-                        </p>
-                        <textarea
-                            id="custom-code-input"
-                            class="media-input-field media-textarea"
-                            placeholder="<iframe...> or https://... or <div>...</div>"
-                        ></textarea>
-                    </div>
+                <!-- Tab 1: Paste Code -->
+                <div id="tab-code" class="media-tab-content active">
+                    <p style="margin-top: 0; font-size: 0.9rem; color: #aaa">
+                        Paste Image URL, YouTube Link, Iframe, or any HTML Code (Divs, Scripts, etc.):
+                    </p>
+                    <textarea
+                        id="custom-code-input"
+                        class="media-input-field media-textarea"
+                        placeholder="<iframe...> or https://... or <div>...</div>"
+                    ></textarea>
+                </div>
 
-                    <!-- Tab 2: Create Image -->
-                    <div id="tab-image" class="media-tab-content">
-                        <input type="text" id="img-text" class="media-input-field" placeholder="Enter Text" />
-                        <div style="display: flex; gap: 10px">
-                            <input
-                                type="text"
-                                id="img-bg"
-                                class="media-input-field"
-                                placeholder="Bg Color (e.g. #2271b1)"
-                                value="#2271b1"
-                            />
-                            <input
-                                type="text"
-                                id="img-fg"
-                                class="media-input-field"
-                                placeholder="Text Color (e.g. white)"
-                                value="white"
-                            />
-                        </div>
+                <!-- Tab 2: Create Image -->
+                <div id="tab-image" class="media-tab-content">
+                    <input type="text" id="img-text" class="media-input-field" placeholder="Enter Text" />
+                    <div style="display: flex; gap: 10px">
+                        <input
+                            type="text"
+                            id="img-bg"
+                            class="media-input-field"
+                            placeholder="Bg Color (e.g. #2271b1)"
+                            value="#2271b1"
+                        />
+                        <input
+                            type="text"
+                            id="img-fg"
+                            class="media-input-field"
+                            placeholder="Text Color (e.g. white)"
+                            value="white"
+                        />
                     </div>
+                </div>
 
-                    <div class="media-modal-footer">
-                        <button class="media-btn-cancel" onclick="window.closeMediaModal()">Cancel</button>
-                        <button class="media-btn-primary" onclick="window.submitMediaModal()">Insert</button>
-                    </div>
+                <div class="media-modal-footer">
+                    <button class="media-btn-cancel" onclick="window.closeMediaModal()">Cancel</button>
+                    <button class="media-btn-primary" onclick="window.submitMediaModal()">Insert</button>
                 </div>
             </div>
         </div>
@@ -1280,7 +1278,7 @@
                 currentUser = user;
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
-                    // सुधार: 'Himanshu Tyagi' की जगह यूजर का असली नाम
+                    // सुधार: 'Himanshu Tyagi' की जगह यूजर का असली Google Display Name
                     const nameToDisplay = user.displayName || user.email.split('@')[0];
                     statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
                     statusEl.style.color = "#333";
@@ -1888,7 +1886,7 @@
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        // सुधार:author में ईमेल आईडी ताकि Rules काम करें
+                        // सुधार:author में ईमेल आईडी ताकि Rules काम करें, और displayAuthor में असली नाम
                         author: authorEmail,
                         displayAuthor: authorName,
                         date: new Date().toISOString(),
@@ -1909,7 +1907,7 @@
                 const fileInput = document.getElementById("fileName").value;
                 const imgInput = document.getElementById("imgName").value;
                 
-                // सुधार: लॉगिन यूजर का नाम
+                // सुधार: लॉगिन यूजर का असली नाम
                 const authorName = currentUser?.displayName || currentUser?.email.split('@')[0] || "Admin";
                 
                 const ogImage = imgInput ? `https://gklearnstudy.in/images/${imgInput}.png` : "https://gklearnstudy.in/GK-Learn-Study.png";
@@ -2228,7 +2226,7 @@
                                  <span class="author-status verified">
                                         <a class="verified-author" title="Verified Author" aria-label="Verified Author" role="img">
                                             <svg width="16" height="16" role="img" aria-hidden="true" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"></path>
+                                                <path fill-rule="evenodd" d="M16 8c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8 8 3.58 8 8zm-3.28-2.47a.75.75 0 00-1.06-1.06L6.75 9.44l-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l4.97-4.97z"></path>
                                             </svg>
                                         </a>
                                     </span></span>
