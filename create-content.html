@@ -1278,7 +1278,7 @@
                 currentUser = user;
                 const statusEl = document.getElementById("auth-status");
                 if (user) {
-                    // सुधार: 'Himanshu Tyagi' की जगह यूजर का असली Google Display Name
+                    // सुधार: 'Himanshu Tyagi' की जगह यूजर का असली Google Profile Name
                     const nameToDisplay = user.displayName || user.email.split('@')[0];
                     statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:green"></i> ${nameToDisplay}`;
                     statusEl.style.color = "#333";
@@ -1886,9 +1886,9 @@
                         url: `/${folder}/${file}`,
                         content: fullHtml,
                         raw_blocks: document.getElementById("editor-canvas").innerHTML,
-                        // सुधार:author में ईमेल आईडी ताकि Rules काम करें, और displayAuthor में असली नाम
+                        // सुधार:author में ईमेल आईडी ताकि Rules काम करें, और authorName में असली नाम
                         author: authorEmail,
-                        displayAuthor: authorName,
+                        authorName: authorName,
                         date: new Date().toISOString(),
                         status: status,
                     });
