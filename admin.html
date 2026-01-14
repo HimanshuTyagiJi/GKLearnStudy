@@ -168,7 +168,13 @@
                 font-weight: bold;
                 font-size: 1.2rem;
                 cursor: pointer;
+                overflow: hidden; /* Ensure images are contained in circle */
                 text-transform: uppercase;
+            }
+            .profile-circle img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
             .admin-name {
                 font-weight: 600;
@@ -498,6 +504,7 @@
                 getFirestore,
                 collection,
                 getDocs,
+                getDoc,
                 doc,
                 deleteDoc,
                 query,
@@ -522,12 +529,12 @@
             let allPostsData = [];
             let currentFilter = "all";
 
-            onAuthStateChanged(auth, (user) => {
+            onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     currentUser = user;
                     document.getElementById("login-overlay").style.display = "none";
                     document.getElementById("admin-app").style.display = "flex";
-                    setupProfile(user);
+                    await setupProfile(user);
                     loadMyPosts();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
@@ -535,11 +542,40 @@
                 }
             });
 
-            function setupProfile(user) {
-                // FIXED: Use user.displayName for the Google Name
-                let name = user.displayName || user.email.split("@")[0];
-                document.getElementById("headerAdminName").innerText = name;
-                document.getElementById("headerProfileIcon").innerText = name.charAt(0).toUpperCase();
+            async function setupProfile(user) {
+                const nameEl = document.getElementById("headerAdminName");
+                const iconContainer = document.getElementById("headerProfileIcon");
+
+                // 1. Check current Auth user info
+                let name = user.displayName;
+                let photo = user.photoURL;
+
+                // 2. Fetch from Firestore (Allowed by rules)
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        if (data.name) name = data.name;
+                        if (data.photo) photo = data.photo;
+                    }
+                } catch (e) { console.warn("Could not fetch additional user data."); }
+
+                // 3. Owner Check Special Logic
+                if (user.email === "officialhimanshutyagi@gmail.com") {
+                    name = "Mr. Himanshu Tyagi";
+                    if (!photo) photo = "https://gklearnstudy.in/GK-Learn-Study.png";
+                }
+
+                // Fallback to email prefix if still empty
+                if (!name) name = user.email.split("@")[0];
+
+                nameEl.innerText = name;
+
+                if (photo) {
+                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}">`;
+                } else {
+                    iconContainer.innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
+                }
             }
 
             document.getElementById("loginForm").addEventListener("submit", (e) => {
