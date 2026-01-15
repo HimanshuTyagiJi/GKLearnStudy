@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -5,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Dashboard | GK Learn Study</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        <link rel="stylesheet" href="css/theme.css" />
         <style>
             :root {
                 --sidebar-width: 260px;
@@ -330,6 +330,67 @@
                 z-index: 95;
             }
 
+            /* --- PREVIEW MODAL --- */
+            .preview-modal {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.8);
+                z-index: 1000;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 20px;
+            }
+            .preview-toolbar {
+                background: white;
+                padding: 10px 20px;
+                border-radius: 30px;
+                display: flex;
+                gap: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                align-items: center;
+            }
+            .device-btn {
+                font-size: 1.2rem;
+                color: #555;
+                cursor: pointer;
+                transition: 0.2s;
+                padding: 5px;
+            }
+            .device-btn:hover, .device-btn.active {
+                color: var(--primary-color);
+                transform: scale(1.2);
+            }
+            .preview-container {
+                flex-grow: 1;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                padding-bottom: 40px;
+                overflow: hidden;
+            }
+            .preview-frame {
+                background: white;
+                height: 100%;
+                box-shadow: 0 0 30px rgba(0,0,0,0.5);
+                border: none;
+                transition: width 0.3s ease;
+                border-radius: 8px;
+            }
+            .preview-frame.desktop { width: 95%; }
+            .preview-frame.tablet { width: 768px; }
+            .preview-frame.mobile { width: 375px; }
+
+            .close-preview {
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
             @media (max-width: 768px) {
                 .sidebar { transform: translateX(-100%); }
                 .sidebar.active { transform: translateX(0); }
@@ -432,6 +493,21 @@
             </div>
         </div>
 
+        <!-- PREVIEW MODAL -->
+        <div id="previewModal" class="preview-modal">
+            <span class="close-preview" onclick="closePreview()">&times;</span>
+            <div class="preview-toolbar">
+                <i class="fas fa-desktop device-btn active" id="btn-desktop" onclick="setPreviewSize('desktop')" title="Desktop View"></i>
+                <i class="fas fa-tablet-alt device-btn" id="btn-tablet" onclick="setPreviewSize('tablet')" title="Tablet View"></i>
+                <i class="fas fa-mobile-alt device-btn" id="btn-mobile" onclick="setPreviewSize('mobile')" title="Mobile View"></i>
+                <div style="width: 1px; height: 20px; background: #ddd; margin: 0 5px;"></div>
+                <span id="preview-size-text" style="font-size: 0.8rem; font-weight: bold; color: #777;">Desktop</span>
+            </div>
+            <div class="preview-container">
+                <iframe id="previewFrame" class="preview-frame desktop"></iframe>
+            </div>
+        </div>
+
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
             import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
@@ -475,13 +551,11 @@
                 let name = user.displayName;
                 let photo = user.photoURL;
 
-                // Owner Check Override
                 if (user.email === "officialhimanshutyagi@gmail.com") {
                     name = "Mr. Himanshu Tyagi";
                     photo = "https://gklearnstudy.in/GK-Learn-Study.png";
                 }
 
-                // Firestore Meta Check
                 try {
                     const userDoc = await getDoc(doc(db, "users", user.uid));
                     if (userDoc.exists()) {
@@ -594,6 +668,7 @@
                         <td>${new Date(p.date).toLocaleDateString()}</td>
                         <td><span class="status-badge status-${status}">${status}</span></td>
                         <td>
+                            <button class="btn-action" onclick="openPreview('${p.id}', '${p.col}')"><i class="fas fa-eye"></i> Preview</button>
                             <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
                             <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
                         </td>
@@ -601,6 +676,57 @@
                     tbody.appendChild(tr);
                 });
             }
+
+            window.openPreview = async (id, col) => {
+                const modal = document.getElementById("previewModal");
+                const frame = document.getElementById("previewFrame");
+                
+                modal.style.display = "flex";
+                frame.srcdoc = `<html><body style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#777;">Loading Preview...</body></html>`;
+
+                try {
+                    const postDoc = await getDoc(doc(db, col, id));
+                    if (postDoc.exists()) {
+                        const data = postDoc.data();
+                        // Assuming content exists in 'content' or 'body' field
+                        const content = data.content || data.body || "<h1>" + data.title + "</h1><p>No content body found.</p>";
+                        frame.srcdoc = `
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>
+                                    body { font-family: 'Segoe UI', sans-serif; padding: 20px; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; }
+                                    img { max-width: 100%; height: auto; border-radius: 8px; }
+                                    h1 { color: #2271b1; }
+                                </style>
+                            </head>
+                            <body>
+                                ${content}
+                            </body>
+                            </html>
+                        `;
+                    }
+                } catch (e) {
+                    frame.srcdoc = `<html><body style="color:red; padding:20px;">Error loading content.</body></html>`;
+                }
+            };
+
+            window.closePreview = () => {
+                document.getElementById("previewModal").style.display = "none";
+                document.getElementById("previewFrame").srcdoc = "";
+            };
+
+            window.setPreviewSize = (size) => {
+                const frame = document.getElementById("previewFrame");
+                const sizeText = document.getElementById("preview-size-text");
+                
+                frame.className = "preview-frame " + size;
+                sizeText.innerText = size.charAt(0).toUpperCase() + size.slice(1);
+
+                document.querySelectorAll(".device-btn").forEach(btn => btn.classList.remove("active"));
+                document.getElementById("btn-" + size).classList.add("active");
+            };
 
             window.deletePost = async (id, col) => {
                 if (confirm("Permanently delete this submission?")) {
