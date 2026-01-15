@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -304,6 +305,14 @@
                 background: #f8f9fa;
                 border-color: #bbb;
             }
+            .btn-view {
+                background: #e3f2fd;
+                color: #2271b1;
+                border-color: #bbdefb;
+            }
+            .btn-view:hover {
+                background: #bbdefb;
+            }
             .btn-delete {
                 background: #fee2e2;
                 color: #c53030;
@@ -589,13 +598,27 @@
                     const status = p.status || (p.col === "published_posts" ? "published" : "pending");
                     let editorUrl = p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
 
+                    // Handle full live URL
+                    let fullViewUrl = p.url || "";
+                    if (fullViewUrl && !fullViewUrl.startsWith('http')) {
+                        fullViewUrl = "https://gklearnstudy.in" + (fullViewUrl.startsWith('/') ? '' : '/') + fullViewUrl;
+                    }
+
+                    // View button only for published items
+                    const viewAction = (status === 'published') 
+                        ? `<a href="${fullViewUrl}" target="_blank" class="btn-action btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>` 
+                        : '';
+
                     tr.innerHTML = `
                         <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
                         <td>${new Date(p.date).toLocaleDateString()}</td>
                         <td><span class="status-badge status-${status}">${status}</span></td>
                         <td>
-                            <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
-                            <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                ${viewAction}
+                                <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
+                                <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
+                            </div>
                         </td>
                     `;
                     tbody.appendChild(tr);
