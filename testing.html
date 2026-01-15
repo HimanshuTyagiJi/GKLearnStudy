@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -12,7 +13,6 @@
                 --header-height: 70px;
                 --admin-bg: #f4f6f8;
                 --primary-color: #2271b1;
-                --error-red: #ef4444;
             }
             body {
                 background-color: var(--admin-bg);
@@ -70,30 +70,14 @@
                 font-size: 1rem;
                 transition: all 0.3s ease;
             }
-            .google-btn:hover:not(:disabled) {
+            .google-btn:hover {
                 background: #f8f9fa;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
                 border-color: #d2d2d2;
             }
-            .google-btn:disabled {
-                opacity: 0.7;
-                cursor: not-allowed;
-            }
             .google-btn img {
                 width: 22px;
                 height: 22px;
-            }
-            
-            #loginError {
-                background: #fef2f2;
-                color: var(--error-red);
-                padding: 12px;
-                border-radius: 8px;
-                font-size: 0.85rem;
-                margin-top: 20px;
-                border: 1px solid #fee2e2;
-                display: none;
-                font-weight: 600;
             }
 
             /* --- LAYOUT --- */
@@ -205,12 +189,63 @@
                 font-size: 0.95rem;
             }
 
-            /* Content Area */
+            /* Content */
             .content-area {
                 margin-left: var(--sidebar-width);
                 margin-top: var(--header-height);
                 padding: 30px;
                 transition: margin-left 0.3s;
+            }
+
+            /* Cards & Tables */
+            .dashboard-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            .stat-btn {
+                background: white;
+                padding: 15px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border: 2px solid transparent;
+                cursor: pointer;
+                transition: 0.2s;
+                text-align: left;
+            }
+            .stat-btn:hover {
+                transform: translateY(-2px);
+                border-color: var(--primary-color);
+            }
+            .stat-btn.active {
+                border-color: var(--primary-color);
+                background: #e3f2fd;
+            }
+            .stat-icon {
+                width: 45px;
+                height: 45px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+                flex-shrink: 0;
+            }
+            .stat-info h3 {
+                margin: 0;
+                font-size: 1.3rem;
+                color: #333;
+            }
+            .stat-info p {
+                margin: 0;
+                color: #777;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                font-weight: bold;
             }
 
             .table-card {
@@ -225,7 +260,8 @@
                 border-collapse: collapse;
                 min-width: 600px;
             }
-            th, td {
+            th,
+            td {
                 text-align: left;
                 padding: 15px;
                 border-bottom: 1px solid #eee;
@@ -234,6 +270,9 @@
                 color: #555;
                 font-weight: 700;
                 background: #f8f9fa;
+            }
+            td {
+                color: #333;
             }
 
             .status-badge {
@@ -246,6 +285,7 @@
             .status-draft { background: #e2e8f0; color: #475569; }
             .status-pending { background: #fff3cd; color: #856404; }
             .status-published { background: #d4edda; color: #155724; }
+            .status-rejected { background: #f8d7da; color: #721c24; }
 
             .btn-action {
                 padding: 6px 12px;
@@ -261,6 +301,24 @@
                 gap: 5px;
                 font-weight: 600;
             }
+            .btn-action:hover {
+                background: #f8f9fa;
+                border-color: #bbb;
+            }
+            .btn-view {
+                background: #e3f2fd;
+                color: #2271b1;
+                border-color: #bbdefb;
+            }
+            .btn-view:hover {
+                background: #bbdefb;
+            }
+            .btn-delete {
+                background: #fee2e2;
+                color: #c53030;
+                border-color: #fecaca;
+            }
+            .btn-delete:hover { background: #fecaca; }
 
             .hamburger {
                 display: none;
@@ -285,9 +343,10 @@
                 .sidebar { transform: translateX(-100%); }
                 .sidebar.active { transform: translateX(0); }
                 .content-area { margin-left: 0; padding: 15px; }
-                .admin-header { left: 0; }
+                .admin-header { left: 0; padding: 0 15px; }
                 .hamburger { display: block; }
                 .sidebar-overlay.active { display: block; }
+                .admin-name { display: none; }
             }
         </style>
     </head>
@@ -297,12 +356,12 @@
             <div class="login-card">
                 <img src="https://gklearnstudy.in/GK-Learn-Study.png" width="70" style="margin-bottom:20px;">
                 <h2>Master Access</h2>
-                <p>Authorized personnel only. Please sign in with your registered Google Account.</p>
+                <p>Please sign in with your authorized Google Account to manage content.</p>
                 <button class="google-btn" id="googleSignInBtn">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google">
-                    <span id="btnText">Continue with Google</span>
+                    Continue with Google
                 </button>
-                <div id="loginError"></div>
+                <p id="loginError" style="color: red; margin-top: 15px; display: none"></p>
             </div>
         </div>
 
@@ -313,11 +372,21 @@
             <aside class="sidebar" id="sidebar">
                 <div class="brand-logo">GK Admin Panel</div>
                 <ul class="menu-items">
-                    <li><a href="#" class="active" onclick="loadMyPosts()"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a></li>
-                    <li><a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a></li>
-                    <li><a href="kaise-karen-creator.html" target="_blank"><i class="fas fa-lightbulb"></i> How-To Guides</a></li>
-                    <li style="margin-top: auto;"><a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a></li>
+                    <li>
+                        <a href="#" class="active" onclick="loadMyPosts()"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="create-content.html" target="_blank"><i class="fas fa-pen-nib"></i> Write Article</a>
+                    </li>
+                    <li>
+                        <a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a>
+                    </li>
+                    <li>
+                        <a href="kaise-karen-creator.html" target="_blank"><i class="fas fa-lightbulb"></i> How-To Guides</a>
+                    </li>
+                    <li style="margin-top: auto;">
+                        <a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a>
+                    </li>
                 </ul>
             </aside>
 
@@ -333,10 +402,29 @@
             </header>
 
             <div class="content-area">
+                <div class="dashboard-stats">
+                    <button class="stat-btn active" id="filter-all" onclick="setFilter('all')">
+                        <div class="stat-icon" style="background: #e3f2fd; color: #2271b1"><i class="fas fa-list"></i></div>
+                        <div class="stat-info"><h3 id="statTotal">0</h3><p>Total</p></div>
+                    </button>
+                    <button class="stat-btn" id="filter-draft" onclick="setFilter('draft')">
+                        <div class="stat-icon" style="background: #f1f5f9; color: #475569"><i class="fas fa-file-alt"></i></div>
+                        <div class="stat-info"><h3 id="statDraft">0</h3><p>Drafts</p></div>
+                    </button>
+                    <button class="stat-btn" id="filter-pending" onclick="setFilter('pending')">
+                        <div class="stat-icon" style="background: #fff3cd; color: #856404"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="statPending">0</h3><p>Pending</p></div>
+                    </button>
+                    <button class="stat-btn" id="filter-published" onclick="setFilter('published')">
+                        <div class="stat-icon" style="background: #d4edda; color: #155724"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3 id="statPublished">0</h3><p>Live</p></div>
+                    </button>
+                </div>
+
                 <div class="table-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px">
-                        <h3 style="margin: 0">My Submissions</h3>
-                        <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh</button>
+                        <h3 style="margin: 0">Recent Submissions</h3>
+                        <button class="btn-action" onclick="loadMyPosts()"><i class="fas fa-sync"></i> Refresh Data</button>
                     </div>
                     <table id="postsTable">
                         <thead>
@@ -372,124 +460,176 @@
             const db = getFirestore(app);
             const provider = new GoogleAuthProvider();
 
-            const MASTER_ADMIN = "himanshutyagi9710@gmail.com";
             let currentUser = null;
+            let allPostsData = [];
+            let currentFilter = "all";
 
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    // --- SECURITY CHECK ---
-                    const btnText = document.getElementById("btnText");
-                    btnText.innerText = "Verifying Authorization...";
-                    
-                    const isAuthorized = await checkAuthorization(user);
-                    
-                    if (isAuthorized) {
-                        currentUser = user;
-                        document.getElementById("login-overlay").style.display = "none";
-                        document.getElementById("admin-app").style.display = "flex";
-                        setupProfile(user);
-                        loadMyPosts();
-                    } else {
-                        // Unauthorized User
-                        showLoginError("Access Denied: Your email is not authorized for Admin access.");
-                        await signOut(auth);
-                        currentUser = null;
-                    }
+                    currentUser = user;
+                    document.getElementById("login-overlay").style.display = "none";
+                    document.getElementById("admin-app").style.display = "flex";
+                    await setupProfile(user);
+                    loadMyPosts();
                 } else {
                     document.getElementById("login-overlay").style.display = "flex";
                     document.getElementById("admin-app").style.display = "none";
-                    document.getElementById("btnText").innerText = "Continue with Google";
                 }
             });
 
-            async function checkAuthorization(user) {
-                // 1. Master Bypass
-                if (user.email === MASTER_ADMIN) return true;
+            async function setupProfile(user) {
+                const nameEl = document.getElementById("headerAdminName");
+                const iconContainer = document.getElementById("headerProfileIcon");
 
-                // 2. Database Check
-                try {
-                    // Hum check karenge ki user ki email 'authorized_users' collection mein document ID ki tarah saved hai ya nahi
-                    const authDocRef = doc(db, "authorized_users", user.email);
-                    const authDocSnap = await getDoc(authDocRef);
-                    
-                    return authDocSnap.exists();
-                } catch (e) {
-                    console.error("Auth Check Error:", e);
-                    return false;
+                let name = user.displayName;
+                let photo = user.photoURL;
+
+                // Owner Check Override
+                if (user.email === "officialhimanshutyagi@gmail.com") {
+                    name = "Mr. Himanshu Tyagi";
+                    photo = "https://gklearnstudy.in/GK-Learn-Study.png";
                 }
-            }
 
-            function showLoginError(msg) {
-                const errBox = document.getElementById("loginError");
-                errBox.innerText = msg;
-                errBox.style.display = "block";
-                document.getElementById("btnText").innerText = "Continue with Google";
+                // Firestore Meta Check
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        if (data.name) name = data.name;
+                        if (data.photo) photo = data.photo;
+                    }
+                } catch (e) { console.warn("Meta fetch failed."); }
+
+                if (!name) name = user.email.split("@")[0];
+                nameEl.innerText = name;
+
+                if (photo) {
+                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.style.display='none';">`;
+                } else {
+                    iconContainer.innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
+                }
             }
 
             document.getElementById("googleSignInBtn").onclick = () => {
-                const errBox = document.getElementById("loginError");
-                errBox.style.display = "none";
-                signInWithPopup(auth, provider).catch(error => {
-                    showLoginError("Login failed: " + error.message);
-                });
-            };
-
-            function setupProfile(user) {
-                const nameEl = document.getElementById("headerAdminName");
-                const iconContainer = document.getElementById("headerProfileIcon");
-                nameEl.innerText = user.displayName || user.email;
-                if (user.photoURL) {
-                    iconContainer.innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
-                } else {
-                    iconContainer.innerHTML = `<span>${(user.displayName || 'A').charAt(0)}</span>`;
-                }
-            }
-
-            window.loadMyPosts = async () => {
-                if (!currentUser) return;
-                const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">Fetching records...</td></tr>';
-
-                try {
-                    const q = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
-                    const snap = await getDocs(q);
-                    
-                    tbody.innerHTML = "";
-                    if (snap.empty) {
-                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">No posts found.</td></tr>';
-                        return;
-                    }
-
-                    snap.forEach((d) => {
-                        const data = d.data();
-                        const tr = document.createElement("tr");
-                        tr.innerHTML = `
-                            <td><strong>${data.title || "Untitled"}</strong></td>
-                            <td>${new Date(data.date).toLocaleDateString()}</td>
-                            <td><span class="status-badge status-${data.status || 'pending'}">${data.status || 'pending'}</span></td>
-                            <td>
-                                <a href="create-content.html?id=${d.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
-                                <button class="btn-action" style="color:red;" onclick="deletePost('${d.id}')"><i class="fas fa-trash"></i></button>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
+                const btn = document.getElementById("googleSignInBtn");
+                const errEl = document.getElementById("loginError");
+                errEl.style.display = "none";
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+                
+                signInWithPopup(auth, provider)
+                    .catch(error => {
+                        errEl.innerText = "Auth failed: " + error.message;
+                        errEl.style.display = "block";
+                        btn.disabled = false;
+                        btn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google"> Continue with Google`;
                     });
-                } catch (e) {
-                    tbody.innerHTML = `<tr><td colspan="4" style="color:red;">Error: ${e.message}</td></tr>`;
-                }
-            };
-
-            window.deletePost = async (id) => {
-                if (confirm("Delete this post?")) {
-                    await deleteDoc(doc(db, "pending_posts", id));
-                    loadMyPosts();
-                }
             };
 
             window.logout = () => signOut(auth);
             window.toggleSidebar = (show) => {
                 document.getElementById("sidebar").classList.toggle("active", show);
                 document.getElementById("sidebarOverlay").classList.toggle("active", show);
+            };
+
+            window.loadMyPosts = async () => {
+                if (!currentUser) return;
+                const tbody = document.getElementById("tableBody");
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:#aaa;">Synchronizing records...</td></tr>';
+
+                try {
+                    allPostsData = [];
+                    const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
+                    const snapPending = await getDocs(qPending);
+                    snapPending.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
+                    );
+
+                    const qPublished = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
+                    const snapPublished = await getDocs(qPublished);
+                    snapPublished.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
+                    );
+
+                    allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    updateStats();
+                    renderTable();
+                } catch (error) {
+                    console.error("Sync Error:", error);
+                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Sync failed: ${error.message}</td></tr>`;
+                }
+            };
+
+            function updateStats() {
+                document.getElementById("statTotal").innerText = allPostsData.length;
+                document.getElementById("statDraft").innerText = allPostsData.filter(p => p.status === "draft").length;
+                document.getElementById("statPending").innerText = allPostsData.filter(p => p.status === "pending").length;
+                document.getElementById("statPublished").innerText = allPostsData.filter(p => p.status === "published" || p.col === "published_posts").length;
+            }
+
+            window.setFilter = (filter) => {
+                currentFilter = filter;
+                document.querySelectorAll(".stat-btn").forEach((btn) => btn.classList.remove("active"));
+                document.getElementById(`filter-${filter}`).classList.add("active");
+                document.getElementById("currentViewTitle").innerText =
+                    filter === "all" ? "All Submissions" : filter.charAt(0).toUpperCase() + filter.slice(1) + " Submissions";
+                renderTable();
+            };
+
+            function renderTable() {
+                const tbody = document.getElementById("tableBody");
+                tbody.innerHTML = "";
+
+                let filtered = allPostsData;
+                if (currentFilter !== "all") {
+                    filtered = allPostsData.filter((p) => {
+                        if (currentFilter === "published") return p.status === "published" || p.col === "published_posts";
+                        return p.status === currentFilter;
+                    });
+                }
+
+                if (filtered.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px; color:#999;">No matching records found.</td></tr>';
+                    return;
+                }
+
+                filtered.forEach((p) => {
+                    const tr = document.createElement("tr");
+                    const status = p.status || (p.col === "published_posts" ? "published" : "pending");
+                    let editorUrl = p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
+
+                    // Handle full live URL
+                    let fullViewUrl = p.url || "";
+                    if (fullViewUrl && !fullViewUrl.startsWith('http')) {
+                        fullViewUrl = "https://gklearnstudy.in" + (fullViewUrl.startsWith('/') ? '' : '/') + fullViewUrl;
+                    }
+
+                    // View button only for published items
+                    const viewAction = (status === 'published') 
+                        ? `<a href="${fullViewUrl}" target="_blank" class="btn-action btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>` 
+                        : '';
+
+                    tr.innerHTML = `
+                        <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
+                        <td>${new Date(p.date).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-${status}">${status}</span></td>
+                        <td>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                ${viewAction}
+                                <a href="${editorUrl}?id=${p.id}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
+                                <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            window.deletePost = async (id, col) => {
+                if (confirm("Permanently delete this submission?")) {
+                    await deleteDoc(doc(db, col, id));
+                    loadMyPosts();
+                }
             };
         </script>
     </body>
