@@ -88,16 +88,14 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="menu-inner">
-                        <!-- Menu links injected by header.js -->
-                    </div>
-                    <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left">
+                    <div class="menu-inner"><a href="https://gklearnstudy.in/index.html" class="active">Home</a><a href="https://gklearnstudy.in/education.html">Education</a><a href="https://gklearnstudy.in/all-formulas.html">All Formula</a><a href="https://gklearnstudy.in/computer.html">Computer</a><a href="https://gklearnstudy.in/kaise-karen.html">How to</a><a href="https://gklearnstudy.in/gk-quiz.html">GK Quiz</a><a href="https://gklearnstudy.in/test.html">Test</a></div>
+                    <button class="menu-arrow left" id="menuLeft" aria-label="Scroll menu left" style="display: none;">
                         <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="15 18 9 12 15 6" class="arrow-static"></polyline>
                             <polyline points="11 18 5 12 11 6" class="arrow-animated"></polyline>
                         </svg>
                     </button>
-                    <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right">
+                    <button class="menu-arrow right" id="menuRight" aria-label="Scroll menu right" style="display: flex;">
                         <svg class="arrow-svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="9 18 15 12 9 6" class="arrow-static"></polyline>
                             <polyline points="13 18 19 12 13 6" class="arrow-animated"></polyline>
@@ -138,7 +136,7 @@
             <div class="overlay"></div>
         </header>
         
-          <ul id="suggestions-list" class="suggestions"></ul>
+          <ul id="suggestions-list" class="suggestions" style="display: none;"></ul>
      
         
         <div id="sidebar-overlay"></div>
@@ -224,7 +222,7 @@
                 <!-- Default Block -->
                 <div style="margin-bottom: 1.5em;">
                     
-                    <div class="editable-area">kn</div>
+                    <div class="editable-area">knghjkml,;</div>
                 </div>
 
                 <!-- Bottom Add Zone -->
@@ -237,7 +235,7 @@
                 
                   <!-- ===== COMMENTS & RATING ===== -->
         <div id="comments-and-ratings-container">
-            <div id="rating-widget-wrapper" class="rating-widget-wrapper rating-loading">
+            <div id="rating-widget-wrapper" class="rating-widget-wrapper">
                 <div class="rating-skeleton">
                     <div class="rating-skeleton-display">
                         <div class="skeleton-summary">
@@ -258,65 +256,65 @@
                     <h2>Rate this Page</h2>
                     <div id="rating-display">
                         <div class="average-summary">
-                            <div id="average-rating-value">0.0</div>
-                            <div id="total-ratings-count">0 ratings</div>
+                            <div id="average-rating-value">5.0</div>
+                            <div id="total-ratings-count">2 ratings</div>
                         </div>
                         <div class="rating-breakdown">
                             <div class="breakdown-row" data-star-level="5">
                                 <span class="star-label">5 star</span>
                                 <div class="progress-bar-container">
-                                    <div class="progress-bar progress-bar-5"></div>
+                                    <div class="progress-bar progress-bar-5" style="width: 100%;"></div>
                                 </div>
-                                <span class="vote-count">0</span>
+                                <span class="vote-count">2</span>
                             </div>
                             <div class="breakdown-row" data-star-level="4">
                                 <span class="star-label">4 star</span>
                                 <div class="progress-bar-container">
-                                    <div class="progress-bar progress-bar-4"></div>
+                                    <div class="progress-bar progress-bar-4" style="width: 0%;"></div>
                                 </div>
                                 <span class="vote-count">0</span>
                             </div>
                             <div class="breakdown-row" data-star-level="3">
                                 <span class="star-label">3 star</span>
                                 <div class="progress-bar-container">
-                                    <div class="progress-bar progress-bar-3"></div>
+                                    <div class="progress-bar progress-bar-3" style="width: 0%;"></div>
                                 </div>
                                 <span class="vote-count">0</span>
                             </div>
                             <div class="breakdown-row" data-star-level="2">
                                 <span class="star-label">2 star</span>
                                 <div class="progress-bar-container">
-                                    <div class="progress-bar progress-bar-2"></div>
+                                    <div class="progress-bar progress-bar-2" style="width: 0%;"></div>
                                 </div>
                                 <span class="vote-count">0</span>
                             </div>
                             <div class="breakdown-row" data-star-level="1">
                                 <span class="star-label">1 star</span>
                                 <div class="progress-bar-container">
-                                    <div class="progress-bar progress-bar-1"></div>
+                                    <div class="progress-bar progress-bar-1" style="width: 0%;"></div>
                                 </div>
                                 <span class="vote-count">0</span>
                             </div>
                         </div>
                     </div>
                     <div id="rating-stars">
-                        <svg class="star" data-value="1" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="star filled" data-value="1" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
                         </svg>
-                        <svg class="star" data-value="2" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="star filled" data-value="2" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
                         </svg>
-                        <svg class="star" data-value="3" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="star filled" data-value="3" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
                         </svg>
-                        <svg class="star" data-value="4" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="star filled" data-value="4" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
                         </svg>
-                        <svg class="star" data-value="5" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="star filled" data-value="5" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
                         </svg>
                     </div>
-                    <div id="rating-login-prompt" style="display: none">
+                    <div id="rating-login-prompt" style="display: block;">
                         <p class="muted">
                             Please
                             <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a>
@@ -326,9 +324,9 @@
                 </div>
             </div>
 
-            <div class="comments-wrapper comments-loading" id="comments-main-container">
+            <div class="comments-wrapper" id="comments-main-container">
                 <div class="firebase-comments-widget" id="custom-comment-section">
-                    <h2 id="comment-count-header"><span id="comment-count">0</span> Comments</h2>
+                    <h2 id="comment-count-header"><span id="comment-count">1</span> Comment</h2>
                     <div id="auth-container">
                         <div id="user-info"></div>
                         <button id="login-btn" class="btn primary">
@@ -343,7 +341,7 @@
                         </button>
                         <button id="logout-btn" class="btn">Logout</button>
                     </div>
-                    <div id="login-prompt" style="display: none">
+                    <div id="login-prompt" style="display: block;">
                         <p class="muted">
                             Please
                             <a href="#" onclick="document.getElementById('login-btn').click(); return false;">sign in</a>
@@ -367,18 +365,7 @@
                         </form>
                     </div>
 
-                    <div id="comments-list" class="comment-list">
-                        <div class="skeleton-comment">
-                            <div class="skeleton-line header"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                        </div>
-                        <div class="skeleton-comment">
-                            <div class="skeleton-line header"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                        </div>
-                    </div>
+                    <div id="comments-list" class="comment-list"><div class="comment-item"><div class="comment-header"><div class="comment-author-info"><img src="https://lh3.googleusercontent.com/a/ACg8ocKSPaWoXtmU0-vY3czGp8PlYnU0Rj9mYgdxbQ2uaGCjqK57FOWV=s96-c" alt="Himanshu Tyagi" class="comment-avatar" loading="lazy"><div class="comment-author">Himanshu Tyagi</div></div><div class="comment-date">13 Nov 2025, 19:22</div></div><div class="comment-body" style="white-space: pre-wrap;">Great Sir</div><div class="comment-actions" data-comment-id="MJhr9I5okHdcx60OpQSS"><button class="btn small vote-btn like-btn " data-action="like" aria-pressed="false">👍 <span class="count">1</span></button><button class="btn small vote-btn dislike-btn " data-action="dislike" aria-pressed="false">👎 <span class="count">0</span></button><button class="btn small reply-btn" data-action="reply">Reply</button></div><div class="inline-reply-slot"></div></div></div>
                 </div>
             </div>
         </div>
@@ -386,7 +373,13 @@
         </div>
 
          <footer class="app-footer">
-            <div class="footer-content"></div>
+            <div class="footer-content">
+            <div class="footer-section footer-about"><h3>About GK Learn Study</h3><p>Your one-stop destination for knowledge, tools, and tutorials on a wide range of subjects. We aim to make learning easy and accessible for everyone.</p></div>
+            <div class="footer-section"><h4>About Us</h4><ul><li><a href="/about.html">About Us</a></li><li><a href="/contact.html">Contact Us</a></li><li><a href="/privacy-policy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms of Service</a></li><li id="dashboard-link" style="display: none;"><a href="/comments.html">Owner Dashboard</a></li></ul></div>
+            <div class="footer-section"><h4>For you</h4><ul><li><a href="https://gklearnstudy.in/gk-quiz/ancient-indian-history">Ancient Indian History</a></li><li><a href="https://gklearnstudy.in/gk-quiz/medieval-indian-history">Medieval Indian History</a></li></ul></div>
+            <div class="footer-section"><h4>Science &amp; Computer</h4><ul><li><a href="conversion.html">Conversion</a></li><li><a href="all-formulas.html">All formulas</a></li><li><a href="calculator.html">Calculator</a></li></ul></div>
+            <div class="footer-section"><h4>Follow Us</h4><ul class="footer-socials"><li><a href="https://www.youtube.com/@GKLearnStudy" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" style="width:28px; fill:currentColor;"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4S5.746,4,4.186,4.418 c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768 C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.861-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M10,15.464V8.536L16,12L10,15.464z"></path></svg></a></li></ul></div>
+        </div>
             <div class="footer-bottom" id="footer-year">
                 © 2024 - <span id="year">2026</span> GK Learn Study | All Rights Reserved
             </div>
@@ -458,7 +451,23 @@
                 }
             </script>
     
-<div id="right-sidebar"><strong>Important Links</strong><ul id="link-list"></ul></div>
+<div id="right-sidebar"><strong>Important Links</strong><ul id="link-list">
+        <li>
+        <div class="app-box">
+            <img src="https://gklearnstudy.in/GK-Learn-Study.png" class="app-icon" alt="App Icon">
 
-</body>
+            <h3>GK Learn Study App</h3>
+            <p class="small">Install our PWA App</p>
+
+            <button id="installBtn" class="install-btn">Install App</button>
+            <button id="installedBtn" class="installed-btn" style="display:none;">Installed ✓</button>
+            <button id="uninstallBtn" class="uninstall-btn" style="display:none;">Uninstall</button>
+
+            <p class="coming-title">More apps are coming soon...</p>
+        </div>
+        </li>
+    </ul></div>
+
+
+<script src="/js/chat-widget.js" type="module"></script></body>
 </html>
