@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -5,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin Dashboard | GK Learn Study</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="stylesheet" href="css/theme.css" />
         <style>
             :root {
                 --sidebar-width: 260px;
@@ -283,6 +285,7 @@
             .status-draft { background: #e2e8f0; color: #475569; }
             .status-pending { background: #fff3cd; color: #856404; }
             .status-published { background: #d4edda; color: #155724; }
+            .status-rejected { background: #f8d7da; color: #721c24; }
 
             .btn-action {
                 padding: 6px 12px;
@@ -307,11 +310,15 @@
                 color: #2271b1;
                 border-color: #bbdefb;
             }
+            .btn-view:hover {
+                background: #bbdefb;
+            }
             .btn-delete {
                 background: #fee2e2;
                 color: #c53030;
                 border-color: #fecaca;
             }
+            .btn-delete:hover { background: #fecaca; }
 
             .hamburger {
                 display: none;
@@ -374,6 +381,9 @@
                     <li>
                         <a href="gk-portal.html" target="_blank"><i class="fas fa-question-circle"></i> Add GK Question</a>
                     </li>
+                    <li>
+                        <a href="kaise-karen-creator.html" target="_blank"><i class="fas fa-lightbulb"></i> How-To Guides</a>
+                    </li>
                     <li style="margin-top: auto;">
                         <a href="#" onclick="logout()"><i class="fas fa-power-off"></i> Logout</a>
                     </li>
@@ -434,7 +444,7 @@
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
             import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-            import { getFirestore, collection, getDocs, getDoc, doc, deleteDoc, query, where, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+            import { getFirestore, collection, getDocs, getDoc, doc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyAij67tprGMKb7SGJ8v1BNVVqfilUmyHP0",
@@ -449,8 +459,6 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
             const provider = new GoogleAuthProvider();
-
-            const MASTER_OWNER = "officialhimanshutyagi@gmail.com";
 
             let currentUser = null;
             let allPostsData = [];
@@ -472,21 +480,50 @@
             async function setupProfile(user) {
                 const nameEl = document.getElementById("headerAdminName");
                 const iconContainer = document.getElementById("headerProfileIcon");
+
                 let name = user.displayName;
                 let photo = user.photoURL;
-                if (user.email === MASTER_OWNER) {
+
+                // Owner Check Override
+                if (user.email === "officialhimanshutyagi@gmail.com") {
                     name = "Mr. Himanshu Tyagi";
                     photo = "https://gklearnstudy.in/GK-Learn-Study.png";
                 }
-                nameEl.innerText = name || user.email.split("@")[0];
-                iconContainer.innerHTML = photo ? `<img src="${photo}">` : `<span>${name.charAt(0).toUpperCase()}</span>`;
+
+                // Firestore Meta Check
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        if (data.name) name = data.name;
+                        if (data.photo) photo = data.photo;
+                    }
+                } catch (e) { console.warn("Meta fetch failed."); }
+
+                if (!name) name = user.email.split("@")[0];
+                nameEl.innerText = name;
+
+                if (photo) {
+                    iconContainer.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.style.display='none';">`;
+                } else {
+                    iconContainer.innerHTML = `<span>${name.charAt(0).toUpperCase()}</span>`;
+                }
             }
 
             document.getElementById("googleSignInBtn").onclick = () => {
-                signInWithPopup(auth, provider).catch(err => {
-                    document.getElementById("loginError").innerText = err.message;
-                    document.getElementById("loginError").style.display = "block";
-                });
+                const btn = document.getElementById("googleSignInBtn");
+                const errEl = document.getElementById("loginError");
+                errEl.style.display = "none";
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+                
+                signInWithPopup(auth, provider)
+                    .catch(error => {
+                        errEl.innerText = "Auth failed: " + error.message;
+                        errEl.style.display = "block";
+                        btn.disabled = false;
+                        btn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google"> Continue with Google`;
+                    });
             };
 
             window.logout = () => signOut(auth);
@@ -498,44 +535,28 @@
             window.loadMyPosts = async () => {
                 if (!currentUser) return;
                 const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px;">Syncing Dashboard...</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:#aaa;">Synchronizing records...</td></tr>';
 
                 try {
                     allPostsData = [];
-                    const isOwner = currentUser.email === MASTER_OWNER;
-
-                    // Fetch Pending (Drafts & Pending)
-                    let qPending;
-                    if (isOwner) {
-                        qPending = query(collection(db, "pending_posts"), orderBy("date", "desc"));
-                    } else {
-                        qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
-                    }
+                    const qPending = query(collection(db, "pending_posts"), where("author", "==", currentUser.email));
                     const snapPending = await getDocs(qPending);
-                    snapPending.forEach(doc => {
-                        allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" });
-                    });
+                    snapPending.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "pending_posts" })
+                    );
 
-                    // Fetch Published (Live)
-                    let qPublished;
-                    if (isOwner) {
-                        qPublished = query(collection(db, "published_posts"), orderBy("date", "desc"));
-                    } else {
-                        qPublished = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
-                    }
+                    const qPublished = query(collection(db, "published_posts"), where("author", "==", currentUser.email));
                     const snapPublished = await getDocs(qPublished);
-                    snapPublished.forEach(doc => {
-                        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts", status: "published" });
-                    });
+                    snapPublished.forEach((doc) =>
+                        allPostsData.push({ id: doc.id, ...doc.data(), col: "published_posts" })
+                    );
 
-                    // Sort combined data by date
                     allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    
                     updateStats();
                     renderTable();
                 } catch (error) {
-                    console.error("Dashboard Load Error:", error);
-                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Failed to sync data: ${error.message}</td></tr>`;
+                    console.error("Sync Error:", error);
+                    tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center;">Sync failed: ${error.message}</td></tr>`;
                 }
             };
 
@@ -543,48 +564,60 @@
                 document.getElementById("statTotal").innerText = allPostsData.length;
                 document.getElementById("statDraft").innerText = allPostsData.filter(p => p.status === "draft").length;
                 document.getElementById("statPending").innerText = allPostsData.filter(p => p.status === "pending").length;
-                document.getElementById("statPublished").innerText = allPostsData.filter(p => p.status === "published").length;
+                document.getElementById("statPublished").innerText = allPostsData.filter(p => p.status === "published" || p.col === "published_posts").length;
             }
 
             window.setFilter = (filter) => {
                 currentFilter = filter;
-                document.querySelectorAll(".stat-btn").forEach(btn => btn.classList.remove("active"));
+                document.querySelectorAll(".stat-btn").forEach((btn) => btn.classList.remove("active"));
                 document.getElementById(`filter-${filter}`).classList.add("active");
+                document.getElementById("currentViewTitle").innerText =
+                    filter === "all" ? "All Submissions" : filter.charAt(0).toUpperCase() + filter.slice(1) + " Submissions";
                 renderTable();
             };
 
             function renderTable() {
                 const tbody = document.getElementById("tableBody");
                 tbody.innerHTML = "";
-                
+
                 let filtered = allPostsData;
                 if (currentFilter !== "all") {
-                    filtered = allPostsData.filter(p => p.status === currentFilter);
+                    filtered = allPostsData.filter((p) => {
+                        if (currentFilter === "published") return p.status === "published" || p.col === "published_posts";
+                        return p.status === currentFilter;
+                    });
                 }
 
                 if (filtered.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px; color:#999;">No records found in this category.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px; color:#999;">No matching records found.</td></tr>';
                     return;
                 }
 
-                filtered.forEach(p => {
+                filtered.forEach((p) => {
                     const tr = document.createElement("tr");
-                    const status = p.status || "pending";
-                    let fullUrl = p.url || "";
-                    if (fullUrl && !fullUrl.startsWith("http")) {
-                        fullUrl = "https://gklearnstudy.in" + (fullUrl.startsWith("/") ? "" : "/") + fullUrl;
+                    const status = p.status || (p.col === "published_posts" ? "published" : "pending");
+                    let editorUrl = p.url && p.url.includes("kaise-karen") ? "kaisekarenformat.html" : "create-content.html";
+
+                    // Handle full live URL
+                    let fullViewUrl = p.url || "";
+                    if (fullViewUrl && !fullViewUrl.startsWith('http')) {
+                        fullViewUrl = "https://gklearnstudy.in" + (fullViewUrl.startsWith('/') ? '' : '/') + fullViewUrl;
                     }
-                    
+
+                    // View button only for published items
+                    const viewAction = (status === 'published') 
+                        ? `<a href="${fullViewUrl}" target="_blank" class="btn-action btn-view"><i class="fas fa-external-link-alt"></i> View Live</a>` 
+                        : '';
+
+                    // FIX: Pass the collection name (p.col) in the URL
                     tr.innerHTML = `
-                        <td>
-                            <strong>${p.title || "Untitled Article"}</strong>
-                            <br><small style="color:#777">Author: ${p.author || "Guest"}</small>
-                        </td>
+                        <td><strong>${p.title || "Untitled"}</strong><br><small style="color:#777">${p.category || "General"}</small></td>
                         <td>${new Date(p.date).toLocaleDateString()}</td>
                         <td><span class="status-badge status-${status}">${status}</span></td>
                         <td>
-                            <div style="display:flex; gap:8px;">
-                                ${status === "published" ? `<a href="${fullUrl}" target="_blank" class="btn-action btn-view"><i class="fas fa-eye"></i> View</a>` : ""}
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                ${viewAction}
+                                <a href="${editorUrl}?id=${p.id}&col=${p.col}" class="btn-action"><i class="fas fa-edit"></i> Edit</a>
                                 <button class="btn-action btn-delete" onclick="deletePost('${p.id}', '${p.col}')"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
@@ -595,12 +628,8 @@
 
             window.deletePost = async (id, col) => {
                 if (confirm("Permanently delete this submission?")) {
-                    try {
-                        await deleteDoc(doc(db, col, id));
-                        loadMyPosts();
-                    } catch(e) {
-                        alert("Delete failed: " + e.message);
-                    }
+                    await deleteDoc(doc(db, col, id));
+                    loadMyPosts();
                 }
             };
         </script>
