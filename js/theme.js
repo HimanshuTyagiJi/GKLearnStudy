@@ -1,3 +1,18 @@
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Ye line poore page ka text check karegi
+    document.body.innerHTML = document.body.innerHTML.replace(/2024/g, '2025');
+    
+    // Aur ye tere ID wale 'year' span mein current saal (2026) daal degi
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+});
+
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
     // --- UTILITY FUNCTIONS ---
     const debounce = (func, delay = 250) => {
